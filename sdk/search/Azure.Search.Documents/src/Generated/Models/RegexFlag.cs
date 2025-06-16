@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(RegexFlag left, RegexFlag right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RegexFlag"/> values are not the same. </summary>
         public static bool operator !=(RegexFlag left, RegexFlag right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RegexFlag"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RegexFlag"/>. </summary>
         public static implicit operator RegexFlag(string value) => new RegexFlag(value);
 
         /// <inheritdoc />

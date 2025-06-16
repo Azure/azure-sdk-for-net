@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,11 +18,6 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
             writer.WritePropertyName("fields"u8);
             writer.WriteStartArray();
             foreach (var item in _fields)
@@ -108,16 +102,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Normalizers))
-            {
-                writer.WritePropertyName("normalizers"u8);
-                writer.WriteStartArray();
-                foreach (var item in Normalizers)
-                {
-                    writer.WriteObjectValue<LexicalNormalizer>(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
@@ -159,18 +143,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("vectorSearch");
                 }
             }
-            if (Optional.IsDefined(PermissionFilterOption))
-            {
-                if (PermissionFilterOption != null)
-                {
-                    writer.WritePropertyName("permissionFilterOption"u8);
-                    writer.WriteStringValue(PermissionFilterOption.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("permissionFilterOption");
-                }
-            }
             if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
@@ -186,7 +158,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            string description = default;
             IList<SearchField> fields = default;
             IList<ScoringProfile> scoringProfiles = default;
             string defaultScoringProfile = default;
@@ -196,23 +167,16 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<LexicalTokenizer> tokenizers = default;
             IList<TokenFilter> tokenFilters = default;
             IList<CharFilter> charFilters = default;
-            IList<LexicalNormalizer> normalizers = default;
             SearchResourceEncryptionKey encryptionKey = default;
             SimilarityAlgorithm similarity = default;
             SemanticSearch semantic = default;
             VectorSearch vectorSearch = default;
-            SearchIndexPermissionFilterOption? permissionFilterOption = default;
             string odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fields"u8))
@@ -324,20 +288,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     charFilters = array;
                     continue;
                 }
-                if (property.NameEquals("normalizers"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<LexicalNormalizer> array = new List<LexicalNormalizer>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(LexicalNormalizer.DeserializeLexicalNormalizer(item));
-                    }
-                    normalizers = array;
-                    continue;
-                }
                 if (property.NameEquals("encryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -377,16 +327,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorSearch = VectorSearch.DeserializeVectorSearch(property.Value);
                     continue;
                 }
-                if (property.NameEquals("permissionFilterOption"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        permissionFilterOption = null;
-                        continue;
-                    }
-                    permissionFilterOption = new SearchIndexPermissionFilterOption(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("@odata.etag"u8))
                 {
                     odataEtag = property.Value.GetString();
@@ -395,7 +335,6 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new SearchIndex(
                 name,
-                description,
                 fields,
                 scoringProfiles ?? new ChangeTrackingList<ScoringProfile>(),
                 defaultScoringProfile,
@@ -405,12 +344,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 tokenizers ?? new ChangeTrackingList<LexicalTokenizer>(),
                 tokenFilters ?? new ChangeTrackingList<TokenFilter>(),
                 charFilters ?? new ChangeTrackingList<CharFilter>(),
-                normalizers ?? new ChangeTrackingList<LexicalNormalizer>(),
                 encryptionKey,
                 similarity,
                 semantic,
                 vectorSearch,
-                permissionFilterOption,
                 odataEtag);
         }
 
@@ -418,7 +355,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchIndex FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            using var document = JsonDocument.Parse(response.Content);
             return DeserializeSearchIndex(document.RootElement);
         }
 

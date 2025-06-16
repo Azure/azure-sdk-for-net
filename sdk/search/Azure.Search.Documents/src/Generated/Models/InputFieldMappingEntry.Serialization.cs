@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static InputFieldMappingEntry FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            using var document = JsonDocument.Parse(response.Content);
             return DeserializeInputFieldMappingEntry(document.RootElement);
         }
 

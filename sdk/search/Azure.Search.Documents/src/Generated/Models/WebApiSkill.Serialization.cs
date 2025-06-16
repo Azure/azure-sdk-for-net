@@ -17,43 +17,6 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri);
-            if (Optional.IsCollectionDefined(HttpHeaders))
-            {
-                if (HttpHeaders != null)
-                {
-                    writer.WritePropertyName("httpHeaders"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in HttpHeaders)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("httpHeaders");
-                }
-            }
-            if (Optional.IsDefined(HttpMethod))
-            {
-                writer.WritePropertyName("httpMethod"u8);
-                writer.WriteStringValue(HttpMethod);
-            }
-            if (Optional.IsDefined(Timeout))
-            {
-                if (Timeout != null)
-                {
-                    writer.WritePropertyName("timeout"u8);
-                    writer.WriteStringValue(Timeout.Value, "P");
-                }
-                else
-                {
-                    writer.WriteNull("timeout");
-                }
-            }
             if (Optional.IsDefined(BatchSize))
             {
                 if (BatchSize != null)
@@ -77,6 +40,32 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     writer.WriteNull("degreeOfParallelism");
                 }
+            }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("uri"u8);
+                writer.WriteStringValue(Uri);
+            }
+            if (Optional.IsCollectionDefined(HttpHeaders))
+            {
+                writer.WritePropertyName("httpHeaders"u8);
+                writer.WriteStartObject();
+                foreach (var item in HttpHeaders)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(HttpMethod))
+            {
+                writer.WritePropertyName("httpMethod"u8);
+                writer.WriteStringValue(HttpMethod);
+            }
+            if (Optional.IsDefined(Timeout))
+            {
+                writer.WritePropertyName("timeout"u8);
+                writer.WriteStringValue(Timeout.Value, "P");
             }
             if (Optional.IsDefined(AuthResourceId))
             {
@@ -142,22 +131,15 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "#Microsoft.Skills.Custom.ChatCompletionSkill": return ChatCompletionSkill.DeserializeChatCompletionSkill(element);
-                }
-            }
+            int? batchSize = default;
+            int? degreeOfParallelism = default;
             string uri = default;
             IDictionary<string, string> httpHeaders = default;
             string httpMethod = default;
             TimeSpan? timeout = default;
-            int? batchSize = default;
-            int? degreeOfParallelism = default;
             ResourceIdentifier authResourceId = default;
             SearchIndexerDataIdentity authIdentity = default;
-            string odataType = "#Microsoft.Skills.Custom.WebApiSkill";
+            string odataType = default;
             string name = default;
             string description = default;
             string context = default;
@@ -165,6 +147,26 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("batchSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        batchSize = null;
+                        continue;
+                    }
+                    batchSize = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("degreeOfParallelism"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        degreeOfParallelism = null;
+                        continue;
+                    }
+                    degreeOfParallelism = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("uri"u8))
                 {
                     uri = property.Value.GetString();
@@ -174,7 +176,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        httpHeaders = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -194,30 +195,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        timeout = null;
                         continue;
                     }
                     timeout = property.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (property.NameEquals("batchSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        batchSize = null;
-                        continue;
-                    }
-                    batchSize = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("degreeOfParallelism"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        degreeOfParallelism = null;
-                        continue;
-                    }
-                    degreeOfParallelism = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("authResourceId"u8))
@@ -288,12 +268,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 context,
                 inputs,
                 outputs,
+                batchSize,
+                degreeOfParallelism,
                 uri,
                 httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 httpMethod,
                 timeout,
-                batchSize,
-                degreeOfParallelism,
                 authResourceId,
                 authIdentity);
         }
@@ -302,7 +282,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new WebApiSkill FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            using var document = JsonDocument.Parse(response.Content);
             return DeserializeWebApiSkill(document.RootElement);
         }
 

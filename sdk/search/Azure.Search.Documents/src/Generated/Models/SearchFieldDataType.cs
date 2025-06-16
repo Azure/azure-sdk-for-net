@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(SearchFieldDataType left, SearchFieldDataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchFieldDataType"/> values are not the same. </summary>
         public static bool operator !=(SearchFieldDataType left, SearchFieldDataType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchFieldDataType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SearchFieldDataType"/>. </summary>
         public static implicit operator SearchFieldDataType(string value) => new SearchFieldDataType(value);
 
         /// <inheritdoc />

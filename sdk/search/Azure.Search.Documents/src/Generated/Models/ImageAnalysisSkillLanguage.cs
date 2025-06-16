@@ -183,7 +183,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(ImageAnalysisSkillLanguage left, ImageAnalysisSkillLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ImageAnalysisSkillLanguage"/> values are not the same. </summary>
         public static bool operator !=(ImageAnalysisSkillLanguage left, ImageAnalysisSkillLanguage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImageAnalysisSkillLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ImageAnalysisSkillLanguage"/>. </summary>
         public static implicit operator ImageAnalysisSkillLanguage(string value) => new ImageAnalysisSkillLanguage(value);
 
         /// <inheritdoc />

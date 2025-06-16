@@ -2,12 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     [CodeGenModel("EncryptionKey")]
-    [CodeGenSuppress(nameof(SearchResourceEncryptionKey), typeof(string), typeof(string))]
+    [CodeGenSuppress(nameof(SearchResourceEncryptionKey), typeof(string), typeof(string), typeof(string))]
     public partial class SearchResourceEncryptionKey
     {
         /// <summary>

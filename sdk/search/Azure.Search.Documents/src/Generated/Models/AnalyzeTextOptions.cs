@@ -29,15 +29,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="text"> The text to break into tokens. </param>
         /// <param name="analyzerName"> The name of the analyzer to use to break the given text. If this parameter is not specified, you must specify a tokenizer instead. The tokenizer and analyzer parameters are mutually exclusive. </param>
         /// <param name="tokenizerName"> The name of the tokenizer to use to break the given text. If this parameter is not specified, you must specify an analyzer instead. The tokenizer and analyzer parameters are mutually exclusive. </param>
-        /// <param name="normalizerName"> The name of the normalizer to use to normalize the given text. </param>
         /// <param name="tokenFilters"> An optional list of token filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </param>
         /// <param name="charFilters"> An optional list of character filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </param>
-        internal AnalyzeTextOptions(string text, LexicalAnalyzerName? analyzerName, LexicalTokenizerName? tokenizerName, LexicalNormalizerName? normalizerName, IList<TokenFilterName> tokenFilters, IList<string> charFilters)
+        internal AnalyzeTextOptions(string text, LexicalAnalyzerName? analyzerName, LexicalTokenizerName? tokenizerName, IList<TokenFilterName> tokenFilters, IList<string> charFilters)
         {
             Text = text;
             AnalyzerName = analyzerName;
             TokenizerName = tokenizerName;
-            NormalizerName = normalizerName;
             TokenFilters = tokenFilters;
             CharFilters = charFilters;
         }

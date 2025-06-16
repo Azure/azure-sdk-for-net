@@ -32,7 +32,7 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public IndexesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2025-05-01-preview")
+        public IndexesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2024-07-01")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -77,7 +77,7 @@ namespace Azure.Search.Documents
                 case 201:
                     {
                         SearchIndex value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -104,7 +104,7 @@ namespace Azure.Search.Documents
                 case 201:
                     {
                         SearchIndex value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -143,7 +143,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         ListIndexesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         ListIndexesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,7 @@ namespace Azure.Search.Documents
                 case 201:
                     {
                         SearchIndex value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -269,7 +269,7 @@ namespace Azure.Search.Documents
                 case 201:
                     {
                         SearchIndex value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -386,7 +386,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         SearchIndex value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -413,7 +413,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         SearchIndex value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -456,7 +456,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         SearchIndexStatistics value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SearchIndexStatistics.DeserializeSearchIndexStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -483,7 +483,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         SearchIndexStatistics value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SearchIndexStatistics.DeserializeSearchIndexStatistics(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -535,7 +535,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         AnalyzeResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -567,7 +567,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         AnalyzeResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

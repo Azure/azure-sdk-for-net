@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Models
         public static bool operator ==(SemanticErrorReason left, SemanticErrorReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SemanticErrorReason"/> values are not the same. </summary>
         public static bool operator !=(SemanticErrorReason left, SemanticErrorReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SemanticErrorReason"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SemanticErrorReason"/>. </summary>
         public static implicit operator SemanticErrorReason(string value) => new SemanticErrorReason(value);
 
         /// <inheritdoc />

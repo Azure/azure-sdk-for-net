@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(CustomEntityLookupSkillLanguage left, CustomEntityLookupSkillLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomEntityLookupSkillLanguage"/> values are not the same. </summary>
         public static bool operator !=(CustomEntityLookupSkillLanguage left, CustomEntityLookupSkillLanguage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomEntityLookupSkillLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CustomEntityLookupSkillLanguage"/>. </summary>
         public static implicit operator CustomEntityLookupSkillLanguage(string value) => new CustomEntityLookupSkillLanguage(value);
 
         /// <inheritdoc />

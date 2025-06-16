@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary>
     /// Specifies the vectorization method to be used during query time.
     /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
+    /// The available derived classes include <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
     /// </summary>
     public abstract partial class VectorSearchVectorizer
     {

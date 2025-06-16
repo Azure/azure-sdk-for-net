@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new UnknownDataDeletionDetectionPolicy FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            using var document = JsonDocument.Parse(response.Content);
             return DeserializeUnknownDataDeletionDetectionPolicy(document.RootElement);
         }
 

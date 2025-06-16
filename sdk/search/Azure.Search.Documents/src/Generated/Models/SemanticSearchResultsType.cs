@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Models
         public static bool operator ==(SemanticSearchResultsType left, SemanticSearchResultsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SemanticSearchResultsType"/> values are not the same. </summary>
         public static bool operator !=(SemanticSearchResultsType left, SemanticSearchResultsType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SemanticSearchResultsType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SemanticSearchResultsType"/>. </summary>
         public static implicit operator SemanticSearchResultsType(string value) => new SemanticSearchResultsType(value);
 
         /// <inheritdoc />

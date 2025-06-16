@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -29,28 +28,6 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteObjectValue<DataSourceCredentials>(CredentialsInternal);
             writer.WritePropertyName("container"u8);
             writer.WriteObjectValue(Container);
-            if (Optional.IsDefined(Identity))
-            {
-                if (Identity != null)
-                {
-                    writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
-                }
-                else
-                {
-                    writer.WriteNull("identity");
-                }
-            }
-            if (Optional.IsCollectionDefined(IndexerPermissionOptions))
-            {
-                writer.WritePropertyName("indexerPermissionOptions"u8);
-                writer.WriteStartArray();
-                foreach (var item in IndexerPermissionOptions)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(DataChangeDetectionPolicy))
             {
                 if (DataChangeDetectionPolicy != null)
@@ -106,8 +83,6 @@ namespace Azure.Search.Documents.Indexes.Models
             SearchIndexerDataSourceType type = default;
             DataSourceCredentials credentials = default;
             SearchIndexerDataContainer container = default;
-            SearchIndexerDataIdentity identity = default;
-            IList<IndexerPermissionOption> indexerPermissionOptions = default;
             DataChangeDetectionPolicy dataChangeDetectionPolicy = default;
             DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default;
             string odataEtag = default;
@@ -137,30 +112,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (property.NameEquals("container"u8))
                 {
                     container = SearchIndexerDataContainer.DeserializeSearchIndexerDataContainer(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        identity = null;
-                        continue;
-                    }
-                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("indexerPermissionOptions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<IndexerPermissionOption> array = new List<IndexerPermissionOption>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(new IndexerPermissionOption(item.GetString()));
-                    }
-                    indexerPermissionOptions = array;
                     continue;
                 }
                 if (property.NameEquals("dataChangeDetectionPolicy"u8))
@@ -205,8 +156,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 type,
                 credentials,
                 container,
-                identity,
-                indexerPermissionOptions ?? new ChangeTrackingList<IndexerPermissionOption>(),
                 dataChangeDetectionPolicy,
                 dataDeletionDetectionPolicy,
                 odataEtag,
@@ -217,7 +166,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchIndexerDataSourceConnection FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            using var document = JsonDocument.Parse(response.Content);
             return DeserializeSearchIndexerDataSourceConnection(document.RootElement);
         }
 

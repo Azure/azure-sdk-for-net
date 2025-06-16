@@ -80,8 +80,8 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
     AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
     EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");
 
-    OpenAIEmbedding embedding = embeddingClient.GenerateEmbedding(input);
-    return embedding.ToFloats();
+    Embedding embedding = embeddingClient.GenerateEmbedding(input);
+    return embedding.Vector;
 }
 ```
 

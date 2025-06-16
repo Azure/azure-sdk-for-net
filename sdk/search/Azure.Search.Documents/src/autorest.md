@@ -11,9 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/1755004c92eefdc7a66b4cd90df27d0af4cb0456/specification/search/data-plane/Azure.Search/preview/2025-05-01-preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/1755004c92eefdc7a66b4cd90df27d0af4cb0456/specification/search/data-plane/Azure.Search/preview/2025-05-01-preview/searchservice.json
- - https://github.com/Azure/azure-rest-api-specs/blob/1755004c92eefdc7a66b4cd90df27d0af4cb0456/specification/search/data-plane/Azure.Search/preview/2025-05-01-preview/knowledgeagent.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/dc27f9b32787533cd4d07fe0de5245f2f8354dbe/specification/search/data-plane/Azure.Search/stable/2024-07-01/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/dc27f9b32787533cd4d07fe0de5245f2f8354dbe/specification/search/data-plane/Azure.Search/stable/2024-07-01/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -59,37 +58,6 @@ directive:
     $["discriminator"] = "@odata.type";
 ```
 
-### Remove nullable annotations
-
-``` yaml
-directive:
-  from: swagger-document
-  where: $.definitions.SearchIndexerDataSource.properties.indexerPermissionOptions
-  transform: >
-    delete $["x-nullable"]
-```
-
-### Move KnowledgeAgent models to Azure.Search.Documents.Agents.Models
-
-Models in knowledgeagent.json should be moved to Azure.Search.Documents.Agents.Models.
-
-```yaml
-directive:
-  from: knowledgeagent.json
-  where: $.definitions.*
-  transform: >
-    $["x-namespace"] = "Azure.Search.Documents.Agents.Models"
-```
-
-## Renaming models after the AI Studio rebrand to AI Foundry
-These should eventually be fixed in the swagger files.
-```yaml
-directive:
-- from: "searchservice.json"
-  where: $.definitions.AIStudioModelCatalogName
-  transform: $["x-ms-enum"].name = "AIFoundryModelCatalogName";
-```
-
 ### Mark definitions as objects
 The modeler warns about models without an explicit type.
 ``` yaml
@@ -113,18 +81,7 @@ directive:
     $.additionalProperties = true;
 ```
 
-### Fix `SearchResult["@search.documentDebugInfo"]`
-``` yaml
-directive:
-  - from: searchindex.json
-    where: $.definitions.SearchResult.properties
-    transform: >
-      $["@search.documentDebugInfo"]["$ref"] = $["@search.documentDebugInfo"].items["$ref"];
-      delete $["@search.documentDebugInfo"].type;
-      delete $["@search.documentDebugInfo"].items;
-```
-
-### Archboard feedback for 11.6.0
+### Archboard feedback for 2024-07-01
 
 ```yaml
 directive:

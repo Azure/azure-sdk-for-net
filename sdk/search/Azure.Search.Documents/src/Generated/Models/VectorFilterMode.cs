@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Models
         public static bool operator ==(VectorFilterMode left, VectorFilterMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VectorFilterMode"/> values are not the same. </summary>
         public static bool operator !=(VectorFilterMode left, VectorFilterMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorFilterMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VectorFilterMode"/>. </summary>
         public static implicit operator VectorFilterMode(string value) => new VectorFilterMode(value);
 
         /// <inheritdoc />

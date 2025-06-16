@@ -55,18 +55,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("facetable"u8);
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
-            if (Optional.IsDefined(PermissionFilter))
-            {
-                if (PermissionFilter != null)
-                {
-                    writer.WritePropertyName("permissionFilter"u8);
-                    writer.WriteStringValue(PermissionFilter.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("permissionFilter");
-                }
-            }
             if (Optional.IsDefined(AnalyzerName))
             {
                 if (AnalyzerName != null)
@@ -101,18 +89,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 else
                 {
                     writer.WriteNull("indexAnalyzer");
-                }
-            }
-            if (Optional.IsDefined(NormalizerName))
-            {
-                if (NormalizerName != null)
-                {
-                    writer.WritePropertyName("normalizer"u8);
-                    writer.WriteStringValue(NormalizerName.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("normalizer");
                 }
             }
             if (Optional.IsDefined(VectorSearchDimensions))
@@ -189,11 +165,9 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? filterable = default;
             bool? sortable = default;
             bool? facetable = default;
-            PermissionFilter? permissionFilter = default;
             LexicalAnalyzerName? analyzer = default;
             LexicalAnalyzerName? searchAnalyzer = default;
             LexicalAnalyzerName? indexAnalyzer = default;
-            LexicalNormalizerName? normalizer = default;
             int? dimensions = default;
             string vectorSearchProfile = default;
             VectorEncodingFormat? vectorEncoding = default;
@@ -274,16 +248,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     facetable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("permissionFilter"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        permissionFilter = null;
-                        continue;
-                    }
-                    permissionFilter = new PermissionFilter(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("analyzer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -312,16 +276,6 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     indexAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("normalizer"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        normalizer = null;
-                        continue;
-                    }
-                    normalizer = new LexicalNormalizerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dimensions"u8))
@@ -393,11 +347,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 filterable,
                 sortable,
                 facetable,
-                permissionFilter,
                 analyzer,
                 searchAnalyzer,
                 indexAnalyzer,
-                normalizer,
                 dimensions,
                 vectorSearchProfile,
                 vectorEncoding,
@@ -409,7 +361,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchField FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            using var document = JsonDocument.Parse(response.Content);
             return DeserializeSearchField(document.RootElement);
         }
 

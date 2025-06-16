@@ -30,31 +30,15 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeStore"/>. </summary>
         /// <param name="storageConnectionString"> The connection string to the storage account projections will be stored in. </param>
         /// <param name="projections"> A list of additional projections to perform during indexing. </param>
-        /// <param name="identity">
-        /// The user-assigned managed identity used for connections to Azure Storage when writing knowledge store projections. If the connection string indicates an identity (ResourceId) and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared.
-        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
-        /// </param>
-        /// <param name="parameters"> A dictionary of knowledge store-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </param>
-        internal KnowledgeStore(string storageConnectionString, IList<KnowledgeStoreProjection> projections, SearchIndexerDataIdentity identity, SearchIndexerKnowledgeStoreParameters parameters)
+        internal KnowledgeStore(string storageConnectionString, IList<KnowledgeStoreProjection> projections)
         {
             StorageConnectionString = storageConnectionString;
             Projections = projections;
-            Identity = identity;
-            Parameters = parameters;
         }
 
         /// <summary> The connection string to the storage account projections will be stored in. </summary>
         public string StorageConnectionString { get; set; }
         /// <summary> A list of additional projections to perform during indexing. </summary>
         public IList<KnowledgeStoreProjection> Projections { get; }
-        /// <summary>
-        /// The user-assigned managed identity used for connections to Azure Storage when writing knowledge store projections. If the connection string indicates an identity (ResourceId) and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared.
-        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
-        /// </summary>
-        public SearchIndexerDataIdentity Identity { get; set; }
-        /// <summary> A dictionary of knowledge store-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
-        public SearchIndexerKnowledgeStoreParameters Parameters { get; set; }
     }
 }

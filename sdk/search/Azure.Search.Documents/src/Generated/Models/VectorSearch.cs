@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="vectorizers">
         /// Contains configuration options on how to vectorize text vector queries.
         /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
+        /// The available derived classes include <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
         /// </param>
         /// <param name="compressions">
         /// Contains configuration options specific to the compression method used during indexing or querying.
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Contains configuration options on how to vectorize text vector queries.
         /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
+        /// The available derived classes include <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
         /// </summary>
         public IList<VectorSearchVectorizer> Vectorizers { get; }
         /// <summary>

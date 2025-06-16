@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
@@ -12,8 +12,7 @@ namespace Azure.Search.Documents.Models
     /// </summary>
     public partial class QueryCaption
     {
-        private const string QueryCaptionHighlightRaw = "highlight-";
-        private const string QueryCaptionMaxCharLengthRaw = "maxcharlength-";
+        private const string QueryCaptionRawSplitter = "|highlight-";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryCaption"/> class.
@@ -44,71 +43,42 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public bool HighlightEnabled { get; set; } = true;
 
-        /// <summary>
-        /// A value that specifies the maximum character length for captions returned as part of the search response.
-        /// Optional and defaults to null.
-        /// </summary>
-        public int? MaxCharLength { get; set; }
-
-        /// <summary>
-        /// Constructed from <see cref="CaptionType"/>, <see cref="HighlightEnabled"/>, and <see cref="MaxCharLength"/>.
-        /// </summary>
+        /// <summary> Constructed from <see cref="CaptionType"/> and <see cref="HighlightEnabled"/>.</summary>
+        [CodeGenMember("Captions")]
         internal string QueryCaptionRaw
         {
             get
             {
-                StringBuilder queryCaptionStringValue = new(CaptionType.ToString());
-
-                if (CaptionType == QueryCaptionType.Extractive)
-                {
-                    queryCaptionStringValue.Append('|');
-                    queryCaptionStringValue.Append($"{QueryCaptionHighlightRaw}{HighlightEnabled}");
-
-                    // Add maxcharlength if specified.
-                    if (MaxCharLength.HasValue)
+                    if (CaptionType == QueryCaptionType.Extractive)
                     {
-                        queryCaptionStringValue.Append($",{QueryCaptionMaxCharLengthRaw}{MaxCharLength.Value}");
+                        return $"{CaptionType}{QueryCaptionRawSplitter}{HighlightEnabled}";
                     }
-                }
-
-                return queryCaptionStringValue.ToString();
+                    else
+                    {
+                        return CaptionType.ToString();
+                    }
             }
+
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
                     CaptionType = null;
-                    HighlightEnabled = true;
-                    MaxCharLength = null;
                 }
                 else
                 {
-                    string[] parts = value.Split('|');
-                    CaptionType = new QueryCaptionType(parts[0]);
-
-                    HighlightEnabled = true;
-                    MaxCharLength = null;
-
-                    if (CaptionType == QueryCaptionType.Extractive && parts.Length > 1)
+                    int splitIndex = value.IndexOf(QueryCaptionRawSplitter, StringComparison.OrdinalIgnoreCase);
+                    if (splitIndex >= 0)
                     {
-                        string[] parameters = parts[1].Split(',');
+                        var queryCaptionPart = value.Substring(0, splitIndex);
+                        var highlightPart = value.Substring(splitIndex + QueryCaptionRawSplitter.Length);
 
-                        foreach (var param in parameters)
-                        {
-                            if (param.StartsWith(QueryCaptionHighlightRaw, StringComparison.OrdinalIgnoreCase))
-                            {
-                                var highlightPart = param.Substring(QueryCaptionHighlightRaw.Length);
-                                HighlightEnabled = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : true;
-                            }
-                            else if (param.StartsWith(QueryCaptionMaxCharLengthRaw, StringComparison.OrdinalIgnoreCase))
-                            {
-                                var maxCharLengthPart = param.Substring(QueryCaptionMaxCharLengthRaw.Length);
-                                if (int.TryParse(maxCharLengthPart, out int maxCharLengthValue))
-                                {
-                                    MaxCharLength = maxCharLengthValue;
-                                }
-                            }
-                        }
+                        CaptionType = string.IsNullOrEmpty(queryCaptionPart) ? null : new QueryCaptionType(queryCaptionPart);
+                        HighlightEnabled = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : true;
+                    }
+                    else
+                    {
+                        CaptionType = new QueryCaptionType(value);
                     }
                 }
             }

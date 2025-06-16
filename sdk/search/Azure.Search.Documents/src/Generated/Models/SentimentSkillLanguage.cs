@@ -72,7 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(SentimentSkillLanguage left, SentimentSkillLanguage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SentimentSkillLanguage"/> values are not the same. </summary>
         public static bool operator !=(SentimentSkillLanguage left, SentimentSkillLanguage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SentimentSkillLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SentimentSkillLanguage"/>. </summary>
         public static implicit operator SentimentSkillLanguage(string value) => new SentimentSkillLanguage(value);
 
         /// <inheritdoc />

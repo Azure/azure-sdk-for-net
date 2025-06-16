@@ -107,8 +107,8 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
     {
         Dimensions = 256
     };
-    OpenAIEmbedding embedding = embeddingClient.GenerateEmbedding(input, embeddingsOptions);
-    return embedding.ToFloats();
+    Embedding embedding = embeddingClient.GenerateEmbedding(input, embeddingsOptions);
+    return embedding.Vector;
 }
 ```
 

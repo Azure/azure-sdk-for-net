@@ -22,15 +22,8 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(RerankWithOriginalVectors))
             {
-                if (RerankWithOriginalVectors != null)
-                {
-                    writer.WritePropertyName("rerankWithOriginalVectors"u8);
-                    writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
-                }
-                else
-                {
-                    writer.WriteNull("rerankWithOriginalVectors");
-                }
+                writer.WritePropertyName("rerankWithOriginalVectors"u8);
+                writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
             }
             if (Optional.IsDefined(DefaultOversampling))
             {
@@ -42,30 +35,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 else
                 {
                     writer.WriteNull("defaultOversampling");
-                }
-            }
-            if (Optional.IsDefined(RescoringOptions))
-            {
-                if (RescoringOptions != null)
-                {
-                    writer.WritePropertyName("rescoringOptions"u8);
-                    writer.WriteObjectValue(RescoringOptions);
-                }
-                else
-                {
-                    writer.WriteNull("rescoringOptions");
-                }
-            }
-            if (Optional.IsDefined(TruncationDimension))
-            {
-                if (TruncationDimension != null)
-                {
-                    writer.WritePropertyName("truncationDimension"u8);
-                    writer.WriteNumberValue(TruncationDimension.Value);
-                }
-                else
-                {
-                    writer.WriteNull("truncationDimension");
                 }
             }
             writer.WriteEndObject();
@@ -92,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static VectorSearchCompression FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            using var document = JsonDocument.Parse(response.Content);
             return DeserializeVectorSearchCompression(document.RootElement);
         }
 

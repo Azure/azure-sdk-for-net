@@ -43,7 +43,7 @@ namespace Azure.Search.Documents
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item))
                     {
                         JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
                     }
@@ -100,7 +100,7 @@ namespace Azure.Search.Documents
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
                     }
@@ -125,7 +125,7 @@ namespace Azure.Search.Documents
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(value);
 #else
-            using (JsonDocument document = JsonDocument.Parse(value, ModelSerializationExtensions.JsonDocumentOptions))
+            using (JsonDocument document = JsonDocument.Parse(value))
             {
                 JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
             }

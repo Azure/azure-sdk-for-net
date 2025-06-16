@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(VectorSearchCompressionTarget left, VectorSearchCompressionTarget right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VectorSearchCompressionTarget"/> values are not the same. </summary>
         public static bool operator !=(VectorSearchCompressionTarget left, VectorSearchCompressionTarget right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorSearchCompressionTarget"/>. </summary>
+        /// <summary> Converts a string to a <see cref="VectorSearchCompressionTarget"/>. </summary>
         public static implicit operator VectorSearchCompressionTarget(string value) => new VectorSearchCompressionTarget(value);
 
         /// <inheritdoc />

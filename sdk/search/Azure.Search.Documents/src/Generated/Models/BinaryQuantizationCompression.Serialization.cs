@@ -21,15 +21,8 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(RerankWithOriginalVectors))
             {
-                if (RerankWithOriginalVectors != null)
-                {
-                    writer.WritePropertyName("rerankWithOriginalVectors"u8);
-                    writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
-                }
-                else
-                {
-                    writer.WriteNull("rerankWithOriginalVectors");
-                }
+                writer.WritePropertyName("rerankWithOriginalVectors"u8);
+                writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
             }
             if (Optional.IsDefined(DefaultOversampling))
             {
@@ -41,30 +34,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 else
                 {
                     writer.WriteNull("defaultOversampling");
-                }
-            }
-            if (Optional.IsDefined(RescoringOptions))
-            {
-                if (RescoringOptions != null)
-                {
-                    writer.WritePropertyName("rescoringOptions"u8);
-                    writer.WriteObjectValue(RescoringOptions);
-                }
-                else
-                {
-                    writer.WriteNull("rescoringOptions");
-                }
-            }
-            if (Optional.IsDefined(TruncationDimension))
-            {
-                if (TruncationDimension != null)
-                {
-                    writer.WritePropertyName("truncationDimension"u8);
-                    writer.WriteNumberValue(TruncationDimension.Value);
-                }
-                else
-                {
-                    writer.WriteNull("truncationDimension");
                 }
             }
             writer.WriteEndObject();
@@ -80,8 +49,6 @@ namespace Azure.Search.Documents.Indexes.Models
             VectorSearchCompressionKind kind = default;
             bool? rerankWithOriginalVectors = default;
             double? defaultOversampling = default;
-            RescoringOptions rescoringOptions = default;
-            int? truncationDimension = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -98,7 +65,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        rerankWithOriginalVectors = null;
                         continue;
                     }
                     rerankWithOriginalVectors = property.Value.GetBoolean();
@@ -114,41 +80,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     defaultOversampling = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("rescoringOptions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        rescoringOptions = null;
-                        continue;
-                    }
-                    rescoringOptions = RescoringOptions.DeserializeRescoringOptions(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("truncationDimension"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        truncationDimension = null;
-                        continue;
-                    }
-                    truncationDimension = property.Value.GetInt32();
-                    continue;
-                }
             }
-            return new BinaryQuantizationCompression(
-                name,
-                kind,
-                rerankWithOriginalVectors,
-                defaultOversampling,
-                rescoringOptions,
-                truncationDimension);
+            return new BinaryQuantizationCompression(name, kind, rerankWithOriginalVectors, defaultOversampling);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new BinaryQuantizationCompression FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            using var document = JsonDocument.Parse(response.Content);
             return DeserializeBinaryQuantizationCompression(document.RootElement);
         }
 

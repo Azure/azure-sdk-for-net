@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Tests
                         Fields =
                         {
                             new SearchableField("streetAddress"),
-                            new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true, NormalizerName = LexicalNormalizerName.Lowercase },
+                            new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                             new SearchableField("stateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                             new SearchableField("country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                             new SearchableField("postalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true },
@@ -87,7 +87,6 @@ namespace Azure.Search.Documents.Tests
                 },
                 SemanticSearch = new()
                 {
-                    DefaultConfigurationName = "my-semantic-config",
                     Configurations =
                     {
                        new SemanticConfiguration("my-semantic-config", new()
