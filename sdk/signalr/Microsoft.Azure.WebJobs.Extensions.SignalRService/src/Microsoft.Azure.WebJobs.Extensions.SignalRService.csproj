@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -12,9 +12,6 @@
   <ItemGroup>
     <!--The version overrides here only apply to hotfix branch. Won't be committed to main branch.-->
     <PackageReference Include="MessagePack" />
-    <!--To resolve the version conflict of Microsoft.Bcl.AsyncInterfaces under .net 6 and above frameworks,
-    version override is added. Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/49840 -->
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="8.0.0" />
     <!--Use dependency version of SignalR extensions v1.14.0. -->
     <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.7.3" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" />
