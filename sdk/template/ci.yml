@@ -1,5 +1,11 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
+parameters:
+  - name: SoftGA
+    displayName: 'Release package to DevOps feed instead of Nuget.org'
+    type: boolean
+    default: false
+
 trigger:
   branches:
     include:
@@ -36,6 +42,8 @@ pr:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    ${{ if eq(parameters.SoftGA, 'true') }}:
+      PublicFeed: 'internal/azure-sdk-for-net-pr'
     ServiceDirectory: template
     ArtifactName: packages
     Artifacts:
