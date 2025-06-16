@@ -5,7 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager
 {

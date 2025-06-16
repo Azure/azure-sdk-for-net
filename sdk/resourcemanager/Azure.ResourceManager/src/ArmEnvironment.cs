@@ -5,6 +5,7 @@ using System;
 using System.Text.Json;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.Common.Custom.Models;
 
 namespace Azure.ResourceManager
 {
@@ -77,6 +78,6 @@ namespace Azure.ResourceManager
         }
 
         /// <inheritdoc />
-        public override string ToString() => JsonSerializer.Serialize(this, ArmEnvironmentJsonContext.Default.ArmEnvironment);
+        public override string ToString() => JsonSerializer.Serialize(this, AzureResourceManagerJsonContext.Default.ArmEnvironment);
     }
 }
