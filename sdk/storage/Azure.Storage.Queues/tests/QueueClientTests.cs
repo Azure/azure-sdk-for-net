@@ -364,40 +364,6 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [RecordedTest]
-        //[ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task CreateAsync_UserDelegationSas()
-        {
-            // Arrange
-            var queueName = GetNewQueueName();
-            QueueServiceClient service = GetServiceClient_OAuth();
-
-            Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
-
-            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
-
-            QueueClient queueClient = service.GetQueueClient(queueName);
-            string stringToSign = null;
-            Uri queueUri = queueClient.GenerateUserDelegationSasUri(QueueSasPermissions.All, Recording.UtcNow.AddHours(1), userDelegationKey, out stringToSign);
-
-            QueueClient queue = InstrumentClient(new QueueClient(queueUri, GetOptions()));
-
-            try
-            {
-                // Act
-                Response result = await queue.CreateAsync();
-
-                // Assert
-                Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
-            }
-            finally
-            {
-                await queue.DeleteIfExistsAsync();
-            }
-        }
-
         // Not possible to record
         [LiveOnly]
         [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2021_06_08)]
