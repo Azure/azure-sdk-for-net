@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Administration
         public Guid RoleDefinitionName { get; }
 
         /// <summary>
-        /// Gets the display name of this role definition. Defaults to the <see cref="RoleDefinitionName"/>.
+        /// Gets the display name of this role definition.
         /// </summary>
         public string RoleName { get; set; }
 
@@ -75,7 +75,7 @@ namespace Azure.Security.KeyVault.Administration
             RoleDefinitionProperties properties = new()
             {
                 RoleType = roleType,
-                RoleName = string.IsNullOrEmpty(RoleName) ? RoleDefinitionName.ToString() : RoleName,
+                RoleName = RoleName,
                 Description = Description,
             };
 
