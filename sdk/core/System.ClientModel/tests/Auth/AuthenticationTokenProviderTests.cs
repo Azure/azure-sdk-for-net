@@ -195,8 +195,15 @@ public class AuthenticationTokenProviderTests
             options.Transport = new MockPipelineTransport("foo",
             m =>
             {
-                // Assert that the request has no authentication headers
-                Assert.IsFalse(m.Request.Headers.TryGetValue("Authorization", out _), "Request should not have an Authorization header.");
+                m.TryGetProperty(typeof(GetTokenOptions), out var flowsObj);
+                if (
+                    flowsObj == null ||
+                    (flowsObj is Dictionary<string, object>[] flowsArr && flowsArr.Length == 0)
+                )
+                {
+                    // Only assert no Authorization header if operation does not override the service level flows.
+                    Assert.IsFalse(m.Request.Headers.TryGetValue("Authorization", out _), "Request should not have an Authorization header.");
+                }
                 return new MockPipelineResponse(200);
             });
             ClientPipeline pipeline = ClientPipeline.Create(options,
