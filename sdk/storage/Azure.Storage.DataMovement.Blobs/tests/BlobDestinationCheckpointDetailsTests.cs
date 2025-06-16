@@ -233,7 +233,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
         }
 
-        [Ignore("Renable after implementing backwards compatibility for older versions")]
         [Test]
         public void Deserialize_File_Version_3()
         {
@@ -260,7 +259,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         private void VerifySampleValues_Version3(BlobDestinationCheckpointDetails data)
         {
-            Assert.AreEqual(3, data.Version);
+            Assert.AreEqual(4, data.Version);
             Assert.IsTrue(data.IsBlobTypeSet);
             Assert.AreEqual(DefaultBlobType, data.BlobType);
             Assert.AreEqual(true, data.IsContentTypeSet);
@@ -305,9 +304,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [Test]
-        public void Deserialize_IncorrectSchemaVersion()
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(5)]
+        public void Deserialize_IncorrectSchemaVersion(int incorrectSchemaVersion)
         {
-            int incorrectSchemaVersion = 1;
             BlobDestinationCheckpointDetails data = CreatePreserveValues();
             data.Version = incorrectSchemaVersion;
 
@@ -317,6 +318,37 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TestHelper.AssertExpectedException(
                 () => BlobDestinationCheckpointDetails.Deserialize(dataStream),
                 new ArgumentException($"The checkpoint file schema version {incorrectSchemaVersion} is not supported by this version of the SDK."));
+        }
+
+        [Test]
+        public void RoundTrip_Version_4()
+        {
+            BlobDestinationCheckpointDetails original = CreateSetSampleValues();
+            using MemoryStream serialized = new();
+            original.Serialize(serialized);
+            serialized.Position = 0;
+            BlobDestinationCheckpointDetails deserialized = BlobDestinationCheckpointDetails.Deserialize(serialized);
+
+            Assert.AreEqual(DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion, deserialized.Version);
+            Assert.AreEqual(original.Version, deserialized.Version);
+            Assert.AreEqual(original.IsBlobTypeSet, deserialized.IsBlobTypeSet);
+            Assert.AreEqual(original.BlobType, deserialized.BlobType);
+            Assert.AreEqual(original.IsContentTypeSet, deserialized.IsContentTypeSet);
+            Assert.AreEqual(original.ContentTypeBytes, deserialized.ContentTypeBytes);
+            Assert.AreEqual(original.IsContentEncodingSet, deserialized.IsContentEncodingSet);
+            Assert.AreEqual(original.ContentEncodingBytes, deserialized.ContentEncodingBytes);
+            Assert.AreEqual(original.IsContentLanguageSet, deserialized.IsContentLanguageSet);
+            Assert.AreEqual(original.ContentLanguageBytes, deserialized.ContentLanguageBytes);
+            Assert.AreEqual(original.IsContentDispositionSet, deserialized.IsContentDispositionSet);
+            Assert.AreEqual(original.ContentDispositionBytes, deserialized.ContentDispositionBytes);
+            Assert.AreEqual(original.IsCacheControlSet, deserialized.IsCacheControlSet);
+            Assert.AreEqual(original.CacheControlBytes, deserialized.CacheControlBytes);
+            Assert.AreEqual(original.IsAccessTierSet, deserialized.IsAccessTierSet);
+            Assert.AreEqual(original.AccessTierValue, deserialized.AccessTierValue);
+            Assert.AreEqual(original.IsMetadataSet, deserialized.IsMetadataSet);
+            Assert.AreEqual(original.Metadata, deserialized.Metadata);
+            Assert.AreEqual(original.PreserveTags, deserialized.PreserveTags);
+            Assert.AreEqual(original.Tags, deserialized.Tags);
         }
     }
 }

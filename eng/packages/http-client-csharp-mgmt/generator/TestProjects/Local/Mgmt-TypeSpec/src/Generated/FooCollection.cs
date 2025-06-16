@@ -73,14 +73,13 @@ namespace MgmtTypeSpec
                 }
                 ;
                 HttpMessage message = _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, data, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FooData> response = Response.FromValue((FooData)result, result);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
                     _fooClientDiagnostics,
                     Pipeline,
                     message.Request,
-                    response.GetRawResponse(),
+                    response,
                     OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -116,14 +115,13 @@ namespace MgmtTypeSpec
                 }
                 ;
                 HttpMessage message = _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, data, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FooData> response = Response.FromValue((FooData)result, result);
+                Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
                     _fooClientDiagnostics,
                     Pipeline,
                     message.Request,
-                    response.GetRawResponse(),
+                    response,
                     OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
