@@ -35,11 +35,41 @@ public class AuthenticationTokenProviderTests
         client.Get();
     }
 
+    [Test]
+    public void SupportsNoAuthAtOperationLevel()
+    {
+        // usage for TokenProvider2 abstract type
+        AuthenticationTokenProvider provider = new ClientCredentialTokenProvider("myClientId", "myClientSecret");
+        var client = new FooClient(new Uri("http://localhost"), provider);
+        var result = client.GetNoAuth();
+
+        Assert.IsNotNull(result);
+        Assert.AreEqual(200, result.Status);
+    }
+
+    [Test]
+    public void SupportsAuthAtOperationLevel()
+    {
+        // usage for TokenProvider2 abstract type
+        AuthenticationTokenProvider provider = new ClientCredentialTokenProvider("myClientId", "myClientSecret");
+        var client = new NoAuthClient(new Uri("http://localhost"), provider);
+        var result = client.GetWithAuth();
+
+                Assert.IsNotNull(result);
+        Assert.AreEqual(200, result.Status);
+    }
+
+
     public class FooClient
     {
         // Generated from the TypeSpec spec.
 
         private static readonly string readScope = "read";
+
+        /// <summary>
+        /// This is an example of how you can define the service level flows.
+        /// The service level flows are used when the operation does not have its own flows defined.
+        /// </summary>
         private readonly Dictionary<string, object>[] serviceFlows = [
             new Dictionary<string, object> {
                 { GetTokenOptions.ScopesPropertyName, new string[] { "baselineScope" } },
@@ -48,6 +78,11 @@ public class AuthenticationTokenProviderTests
             }
         ];
 
+
+        /// <summary>
+        /// This is an example of how you can override the flows for a specific operation.
+        /// The operation can have its own flows, or it can use the service level flows.
+        /// </summary>
         private readonly Dictionary<string, object>[] getOperationsFlows = [
             new Dictionary<string, object> {
                 { GetTokenOptions.ScopesPropertyName, new string[] { "baselineScope", readScope } },
@@ -55,6 +90,14 @@ public class AuthenticationTokenProviderTests
                 { GetTokenOptions.RefreshUrlPropertyName, "https://myauthserver.com/refresh"}
             }
         ];
+
+
+        /// <summary>
+        /// This is an example of how you can define a no-authentication flow.
+        /// This flow can be used for operations that do not require authentication.
+        /// It will override the service level flows and any operation specific flows.
+        /// </summary>
+        private readonly Dictionary<string, object>[] noAuthFlows = [];
 
         private readonly IReadOnlyDictionary<string, object> _emptyProperties = new Dictionary<string, object>();
 
@@ -86,6 +129,10 @@ public class AuthenticationTokenProviderTests
             _pipeline = pipeline;
         }
 
+        /// <summary>
+        /// This operation uses its own authentication flows.
+        /// It will override the service level flows and any operation specific flows.
+        /// </summary>
         public ClientResult Get()
         {
             var message = _pipeline.CreateMessage();
@@ -98,13 +145,45 @@ public class AuthenticationTokenProviderTests
             _pipeline.Send(message);
             return ClientResult.FromResponse(message.Response!);
         }
+
+        /// <summary>
+        /// This operation does not require authentication.
+        /// It will override the service level flows by passing an emtpy array of flows.
+        /// </summary>
+        public ClientResult GetNoAuth()
+        {
+            var message = _pipeline.CreateMessage();
+            message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
+            message.SetProperty(typeof(GetTokenOptions), noAuthFlows); //This is an example of how you can override the flows for a specific operation.
+            PipelineRequest request = message.Request;
+            request.Method = "GET";
+            request.Uri = new Uri("https://localhost/noAuth");
+            _pipeline.Send(message);
+            return ClientResult.FromResponse(message.Response!);
+        }
     }
 
     public class NoAuthClient
     {
-        private readonly IReadOnlyDictionary<string, object> _emptyProperties = new Dictionary<string, object>();
+        /// <summary>
+        /// This is an example of how no-authentication flows are defined at the service level,
+        /// by passing an empty array of flows.
+        /// </summary>
+        private readonly IReadOnlyDictionary<string, object> emptyServiceFlows = new Dictionary<string, object>();
 
         private ClientPipeline _pipeline;
+
+        /// <summary>
+        /// This is an example of how you can override the flows for a specific operation.
+        /// The operation can have its own flows, or it can use the service level flows.
+        /// </summary>
+        private readonly Dictionary<string, object>[] getOperationsFlows = [
+            new Dictionary<string, object> {
+                { GetTokenOptions.ScopesPropertyName, new string[] { "baselineScope", readScope } },
+                { GetTokenOptions.TokenUrlPropertyName , "https://myauthserver.com/token"},
+                { GetTokenOptions.RefreshUrlPropertyName, "https://myauthserver.com/refresh"}
+            }
+        ];
 
         public NoAuthClient(Uri uri, ApiKeyCredential credential)
         {
@@ -129,11 +208,14 @@ public class AuthenticationTokenProviderTests
             });
             ClientPipeline pipeline = ClientPipeline.Create(options,
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
-            perTryPolicies: [new BearerTokenPolicy(credential, [_emptyProperties])],
+            perTryPolicies: [new BearerTokenPolicy(credential, [emptyServiceFlows])],
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
             _pipeline = pipeline;
         }
 
+        /// <summary>
+        /// This operation does not require authentication and uses the service level flows defined with an empty array.
+        /// </summary>
         public ClientResult Get()
         {
             var message = _pipeline.CreateMessage();
@@ -142,6 +224,22 @@ public class AuthenticationTokenProviderTests
             PipelineRequest request = message.Request;
             request.Method = "GET";
             request.Uri = new Uri("https://localhost/noAuth");
+            _pipeline.Send(message);
+            return ClientResult.FromResponse(message.Response!);
+        }
+
+        /// <summary>
+        /// This operation requires authentication, even though the client does not have authentication flows defined at the service level.
+        /// It will use the authentication flows defined at the operation level.
+        /// </summary>
+        public ClientResult GetWithAuth()
+        {
+            var message = _pipeline.CreateMessage();
+            message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
+            message.SetProperty(typeof(GetTokenOptions), getOperationsFlows);
+            PipelineRequest request = message.Request;
+            request.Method = "GET";
+            request.Uri = new Uri("https://localhost/foo");
             _pipeline.Send(message);
             return ClientResult.FromResponse(message.Response!);
         }
