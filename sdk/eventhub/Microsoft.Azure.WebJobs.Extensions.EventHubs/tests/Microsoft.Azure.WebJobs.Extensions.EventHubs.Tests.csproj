@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.EventHubs" />
-    <PackageReference Include="Microsoft.Azure.WebJobs.Logging.ApplicationInsights"/>
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
