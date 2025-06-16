@@ -5,6 +5,10 @@ parameters:
     displayName: 'Release package to DevOps feed instead of Nuget.org'
     type: boolean
     default: false
+  - name: AutoApproveRelease
+    displayName: 'Automatically approve the release stage'
+    type: boolean
+    default: false
 
 trigger:
   branches:
@@ -44,6 +48,8 @@ extends:
   parameters:
     ${{ if eq(parameters.ReleaseToDevOpsOnly, 'true') }}:
       PublicFeed: 'public/storage-staging'
+    ${{ if eq(parameters.AutoApproveRelease, 'true') }}:
+      PublicPublishEnvironment: none
     ServiceDirectory: template
     ArtifactName: packages
     Artifacts:
