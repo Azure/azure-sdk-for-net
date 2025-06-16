@@ -185,7 +185,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
 
             modifiedDictionary["SequenceNumber"] = eventData.SequenceNumber;
-            modifiedDictionary["Offset"] = offset.ToString(CultureInfo.InvariantCulture);
+            modifiedDictionary["Offset"] = offset;
             modifiedDictionary["OffsetString"] = eventData.OffsetString;
             modifiedDictionary["PartitionKey"] = eventData.PartitionKey;
             modifiedDictionary["EnqueuedTimeUtc"] = eventData.EnqueuedTime.DateTime;
