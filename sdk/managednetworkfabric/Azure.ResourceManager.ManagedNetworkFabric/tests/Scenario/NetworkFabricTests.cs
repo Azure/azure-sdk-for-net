@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     PeerAsn = 1235,
                     BfdConfiguration = new BfdConfiguration()
                     {
-                        IntervalInMilliSeconds = 350,
-                        Multiplier = 3,
+                        IntervalInMilliSeconds = 300,
+                        Multiplier = 10,
                     },
                 }
             };
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     PeerAsn = 61234,
                     BfdConfiguration = new BfdConfiguration()
                     {
-                        IntervalInMilliSeconds = 350,
-                        Multiplier = 3,
+                        IntervalInMilliSeconds = 300,
+                        Multiplier = 5,
                     },
                 }
             };
 
             var properties = new NetworkFabricProperties(
-                "Compute",
+                "fab3",
                 new ResourceIdentifier(TestEnvironment.Provisioned_NFC_ID),
                 7,
                 "10.18.0.0/19",
-                61234,
+                29249,
                 new TerminalServerConfiguration()
                 {
                     PrimaryIPv4Prefix = "10.0.0.12/30",

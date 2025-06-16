@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
 
-            var properties = new NetworkDevicePatchParametersProperties
+            var patchProperties = new NetworkDevicePatchParametersProperties
             {
                 Annotation = "null",
                 HostName = "networkDeviceName",
                 SerialNumber = "Arista;DCS-7280PR3-24;12.05;JPE21330382",
             };
             NetworkDevicePatch patch = new NetworkDevicePatch(
-                null, // tags
-                properties, // properties
-                null // serializedAdditionalRawData
+                new Dictionary<string, string> { ["key8107"] = "1234" }, // tags
+                patchProperties,
+                null
             );
             ArmOperation<NetworkDeviceResource> lro = await device.UpdateAsync(WaitUntil.Completed, patch);
             NetworkDeviceResource result = lro.Value;
-            Assert.AreEqual(result.Data.Properties.SerialNumber, properties.SerialNumber);
+            Assert.AreEqual(result.Data.Properties.SerialNumber, patchProperties.SerialNumber);
         }
     }
 }
