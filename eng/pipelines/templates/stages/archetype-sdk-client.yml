@@ -60,6 +60,9 @@ parameters:
   - name: PublicFeed
     type: string
     default: 'Nuget.org'
+  - name: PublicPublishEnvironment
+    type: string
+    default: publish-package
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -115,4 +118,5 @@ extends:
               TestPipeline: true
             ArtifactName: packages
             PublicFeed: ${{ parameters.PublicFeed }}
+            PublicPublishEnvironment: ${{ parameters.PublicPublishEnvironment }}
 
