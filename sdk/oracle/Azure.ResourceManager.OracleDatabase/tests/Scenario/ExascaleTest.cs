@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
     {
         private ResourceIdentifier _vnetId;
         private ResourceIdentifier _subnetId;
-        private string _displayName;
         private int _enabledEcpuCount;
         private ResourceIdentifier _exascaleDBStorageVaultId;
         private string _hostname;
@@ -29,8 +28,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
         private string _exadbVmClusterName;
         private static ExadbVmClusterResource _exadbVmClusterResource;
 
-        private const string DefaultSSHKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDAIdCVcZiGBSybKTvFBfrfVhYWRImneQB9ovsU/GYqPLyDpXkpdGusYc5OL6zHq27uKtJ+//0wCoENJmvBjiRMUWMKZ4NcUkxVWj+ipJTFDO1t3KRkpDCLQEBEihOaNHHN9j2ZggUxOQBgCIwjjH+B+6Z1KpvpmvDhbMhmmZJ6R4yJI+fE80SFCV0G5sZuq38W+eK6FQRNINCmayWLNYw8sk1cBzqxMTo7OeVRxjyfQYRS1o+sC1CkxT7BYw30qY/xzR45yxkRZ5FkugPR5MQ1NApRPGNOuZD1MRwcG1AZ5JfiX9ckz5xaKjfm0hhfwh/qT7mH6fXiX7nAmkvLxu6Xnzy3aign4e99QSWPkpjJ0X1gluLzR7/gwYMjA6sfflRNe/FP937kJTIa1F5BonWe9eS580IXoTUNaiAanOEf5fBdji4JEDk7nXKV7kTECkCX9ZDWwB8q/ayIXwmNMCgxCpdx2F6UWOGvF5UWJkyD3BxTgMOiPwxMMEvCGIIdaGU= generated-by-azure";
-
         public ExaScaleTest() : base(true, RecordedTestMode.Playback)
         {
         }
@@ -42,14 +39,13 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
             {
                 await CreateCommonClient();
             }
-
+            _exadbVmClusterName = "OfakeSdkNet2";
             _vnetId = new ResourceIdentifier(string.Format(VnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName));
             _subnetId = new ResourceIdentifier(string.Format(SubnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName, DefaultSubnetName));
-            _displayName = "TestExadbVmCluster";
-            _enabledEcpuCount = 8;
-            _exascaleDBStorageVaultId = new ResourceIdentifier($"/subscriptions/{DefaultSubscription.Data.Id}/resourceGroups/{DefaultResourceGroupName}/providers/Microsoft.OracleDatabase/exadbStorageVaults/test-vault");
-            _hostname = "test-exadb-hostname";
-            _nodeCount = 3;
+            _enabledEcpuCount = 16;
+            _exascaleDBStorageVaultId = new ResourceIdentifier($"{DefaultSubscription.Data.Id}/resourceGroups/{DefaultResourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/OfakeStorageNet2641");
+            _hostname = "testSdkHost";
+            _nodeCount = 2;
             _shape = "EXADBXS";
             _sshPublicKeys = new List<string> { DefaultSSHKey };
             _totalEcpuCount = 16;
@@ -62,157 +58,8 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
             CleanupResourceGroups();
         }
 
-        public void Constructor_WithRequiredParameters_SetsPropertiesCorrectly()
-        {
-            // Arrange & Act
-            var properties = new ExadbVmClusterProperties(
-                _vnetId,
-                _subnetId,
-                _displayName,
-                _enabledEcpuCount,
-                _exascaleDBStorageVaultId,
-                _hostname,
-                _nodeCount,
-                _shape,
-                _sshPublicKeys,
-                _totalEcpuCount,
-                _vmFileSystemStorage);
-
-            // Assert
-            Assert.AreEqual(_vnetId, properties.VnetId);
-            Assert.AreEqual(_subnetId, properties.SubnetId);
-            Assert.AreEqual(_displayName, properties.DisplayName);
-            Assert.AreEqual(_enabledEcpuCount, properties.EnabledEcpuCount);
-            Assert.AreEqual(_exascaleDBStorageVaultId, properties.ExascaleDBStorageVaultId);
-            Assert.AreEqual(_hostname, properties.Hostname);
-            Assert.AreEqual(_nodeCount, properties.NodeCount);
-            Assert.AreEqual(_shape, properties.Shape);
-            CollectionAssert.AreEqual(_sshPublicKeys, properties.SshPublicKeys);
-            Assert.AreEqual(_totalEcpuCount, properties.TotalEcpuCount);
-            Assert.AreEqual(_vmFileSystemStorage.TotalSizeInGbs, properties.VmFileSystemStorageTotalSizeInGbs);
-            Assert.IsNotNull(properties.NsgCidrs);
-            Assert.IsEmpty(properties.NsgCidrs);
-            Assert.IsNotNull(properties.ScanIPIds);
-            Assert.IsEmpty(properties.ScanIPIds);
-            Assert.IsNotNull(properties.VipIds);
-            Assert.IsEmpty(properties.VipIds);
-        }
-
-        public void Constructor_SetOptionalProperties_SetsPropertiesCorrectly()
-        {
-            // Arrange
-            string domain = "example.com";
-            OracleLicenseModel licenseModel = OracleLicenseModel.LicenseIncluded;
-            string systemVersion = "19.0.0.0";
-            string timeZone = "UTC";
-            int scanListenerPortTcp = 1521;
-            int scanListenerPortTcpSsl = 2484;
-
-            // Act
-            var properties = new ExadbVmClusterProperties(
-                _vnetId,
-                _subnetId,
-                _displayName,
-                _enabledEcpuCount,
-                _exascaleDBStorageVaultId,
-                _hostname,
-                _nodeCount,
-                _shape,
-                _sshPublicKeys,
-                _totalEcpuCount,
-                _vmFileSystemStorage)
-            {
-                Domain = domain,
-                LicenseModel = licenseModel,
-                SystemVersion = systemVersion,
-                TimeZone = timeZone,
-                ScanListenerPortTcp = scanListenerPortTcp,
-                ScanListenerPortTcpSsl = scanListenerPortTcpSsl,
-                ClusterName = "exadb-cluster"
-            };
-
-            // Assert
-            Assert.AreEqual(domain, properties.Domain);
-            Assert.AreEqual(licenseModel, properties.LicenseModel);
-            Assert.AreEqual(systemVersion, properties.SystemVersion);
-            Assert.AreEqual(timeZone, properties.TimeZone);
-            Assert.AreEqual(scanListenerPortTcp, properties.ScanListenerPortTcp);
-            Assert.AreEqual(scanListenerPortTcpSsl, properties.ScanListenerPortTcpSsl);
-            Assert.AreEqual("exadb-cluster", properties.ClusterName);
-        }
-
-        public void VmFileSystemStorageTotalSizeInGbs_SetAndGet_WorksCorrectly()
-        {
-            // Arrange
-            var properties = new ExadbVmClusterProperties(
-                _vnetId,
-                _subnetId,
-                _displayName,
-                _enabledEcpuCount,
-                _exascaleDBStorageVaultId,
-                _hostname,
-                _nodeCount,
-                _shape,
-                _sshPublicKeys,
-                _totalEcpuCount,
-                _vmFileSystemStorage);
-
-            // Act
-            int newSize = 2048;
-            properties.VmFileSystemStorageTotalSizeInGbs = newSize;
-
-            // Assert
-            Assert.AreEqual(newSize, properties.VmFileSystemStorageTotalSizeInGbs);
-        }
-
-        public void VmFileSystemStorageTotalSizeInGbs_SetToNull_SetsPropertyToNull()
-        {
-            // Arrange
-            var properties = new ExadbVmClusterProperties(
-                _vnetId,
-                _subnetId,
-                _displayName,
-                _enabledEcpuCount,
-                _exascaleDBStorageVaultId,
-                _hostname,
-                _nodeCount,
-                _shape,
-                _sshPublicKeys,
-                _totalEcpuCount,
-                _vmFileSystemStorage);
-
-            // Act
-            properties.VmFileSystemStorageTotalSizeInGbs = null;
-
-            // Assert
-            Assert.IsNull(properties.VmFileSystemStorageTotalSizeInGbs);
-        }
-
-        public void NsgCidrs_AddItem_AddsToCollection()
-        {
-            // Arrange
-            var properties = new ExadbVmClusterProperties(
-                _vnetId,
-                _subnetId,
-                _displayName,
-                _enabledEcpuCount,
-                _exascaleDBStorageVaultId,
-                _hostname,
-                _nodeCount,
-                _shape,
-                _sshPublicKeys,
-                _totalEcpuCount,
-                _vmFileSystemStorage);
-
-            // Act
-            var nsgCidr = new CloudVmClusterNsgCidr("10.0.0.0/16");
-            properties.NsgCidrs.Add(nsgCidr);
-
-            // Assert
-            Assert.AreEqual(1, properties.NsgCidrs.Count);
-            Assert.AreEqual(nsgCidr, properties.NsgCidrs[0]);
-        }
-
+        [TestCase]
+        [RecordedTest]
         public async Task TestExadbVmClusterOperations()
         {
             // Create the ExadbVmCluster resource
@@ -225,7 +72,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
         private async Task<ExadbVmClusterResource> CreateExadbVmClusterScenario()
         {
             _exadbVmClusterCollection = await GetExadbVmClusterCollectionAsync(DefaultResourceGroupName);
-            _exadbVmClusterName = Recording.GenerateAssetName("OFake_NetSdkTestExadbVmCluster");
 
             // Create
             var createExadbVmClusterOperation = await _exadbVmClusterCollection.CreateOrUpdateAsync(WaitUntil.Completed,
@@ -253,6 +99,9 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
 
         private ExadbVmClusterData GetDefaultExadbVmClusterData(string clusterName)
         {
+            string gridImageOcid = Environment.GetEnvironmentVariable("GRID_IMAGE_OCID");
+            // "ocid1.dbpatch.oc1.iad.anuwcljtt5t4sqqaoajnkveobp3ryw7zlfrrcf6tb2ndvygp54z2gbds2hxa";
+
             var exadbVmClusterProperties = new ExadbVmClusterProperties(
                 _vnetId,
                 _subnetId,
@@ -266,21 +115,19 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
                 _totalEcpuCount,
                 _vmFileSystemStorage)
             {
-                ClusterName = "ExadbClust",
+                DisplayName = clusterName,
                 LicenseModel = OracleLicenseModel.LicenseIncluded,
-                TimeZone = "UTC",
-                Domain = "example.com",
-                SystemVersion = "19.2.12.0.0.200317",
-                ScanListenerPortTcp = 1521,
-                ScanListenerPortTcpSsl = 2484
+                Domain = "ocidelegated.ocinetsdk.oraclevcn.com",
+                GridImageOcid = new ResourceIdentifier(gridImageOcid)
             };
 
-            exadbVmClusterProperties.NsgCidrs.Add(new CloudVmClusterNsgCidr("10.0.0.0/16"));
-
-            return new ExadbVmClusterData(_location)
+            var data = new ExadbVmClusterData(_location)
             {
-                Properties = exadbVmClusterProperties
+                Properties = exadbVmClusterProperties,
             };
+            data.Zones.Add(DefaultZone);
+
+            return data;
         }
     }
 }
