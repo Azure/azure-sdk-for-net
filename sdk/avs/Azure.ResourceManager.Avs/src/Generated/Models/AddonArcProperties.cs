@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The properties of an Arc addon. </summary>
-    public partial class AddonArcProperties : AddonProperties
+    public partial class AddonArcProperties : AvsPrivateCloudAddonProperties
     {
         /// <summary> Initializes a new instance of <see cref="AddonArcProperties"/>. </summary>
         public AddonArcProperties()

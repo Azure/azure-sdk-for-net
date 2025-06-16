@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             string displayName = default;
-            PortMirroringDirectionEnum? direction = default;
+            PortMirroringProfileDirection? direction = default;
             string source = default;
             string destination = default;
-            PortMirroringStatusEnum? status = default;
-            WorkloadNetworkPortMirroringProvisioningState? provisioningState = default;
+            PortMirroringProfileStatus? status = default;
+            WorkloadNetworkPortMirroringProfileProvisioningState? provisioningState = default;
             long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    direction = new PortMirroringDirectionEnum(property.Value.GetString());
+                    direction = new PortMirroringProfileDirection(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("source"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    status = new PortMirroringStatusEnum(property.Value.GetString());
+                    status = new PortMirroringProfileStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    provisioningState = new WorkloadNetworkPortMirroringProvisioningState(property.Value.GetString());
+                    provisioningState = new WorkloadNetworkPortMirroringProfileProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("revision"u8))

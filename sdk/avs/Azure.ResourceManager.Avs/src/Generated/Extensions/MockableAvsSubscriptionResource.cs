@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual async Task<Response<Trial>> CheckTrialAvailabilityLocationAsync(string location, AvsSku sku = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckTrialAvailabilityLocationAsync(string location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual Response<Trial> CheckTrialAvailabilityLocation(string location, AvsSku sku = null, CancellationToken cancellationToken = default)
+        public virtual Response<AvsSubscriptionTrialAvailabilityResult> CheckTrialAvailabilityLocation(string location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual async Task<Response<Quota>> CheckQuotaAvailabilityLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckQuotaAvailabilityLocationAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual Response<Quota> CheckQuotaAvailabilityLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Response<AvsSubscriptionQuotaAvailabilityResult> CheckQuotaAvailabilityLocation(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 

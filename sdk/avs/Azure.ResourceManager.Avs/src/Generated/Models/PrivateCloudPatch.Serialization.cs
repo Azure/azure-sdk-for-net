@@ -144,13 +144,13 @@ namespace Azure.ResourceManager.Avs.Models
             IDictionary<string, string> tags = default;
             AvsSku sku = default;
             ManagedServiceIdentity identity = default;
-            ManagementCluster managementCluster = default;
-            InternetEnum? internet = default;
-            IList<IdentitySource> identitySources = default;
-            AvailabilityProperties availability = default;
-            Encryption encryption = default;
+            AvsManagementCluster managementCluster = default;
+            InternetConnectivityState? internet = default;
+            IList<SingleSignOnIdentitySource> identitySources = default;
+            PrivateCloudAvailabilityProperties availability = default;
+            CustomerManagedEncryption encryption = default;
             IList<string> extendedNetworkBlocks = default;
-            DnsZoneType? dnsZoneType = default;
+            AvsDnsZoneType? dnsZoneType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            managementCluster = ManagementCluster.DeserializeManagementCluster(property0.Value, options);
+                            managementCluster = AvsManagementCluster.DeserializeAvsManagementCluster(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("internet"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            internet = new InternetEnum(property0.Value.GetString());
+                            internet = new InternetConnectivityState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("identitySources"u8))
@@ -220,10 +220,10 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            List<IdentitySource> array = new List<IdentitySource>();
+                            List<SingleSignOnIdentitySource> array = new List<SingleSignOnIdentitySource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IdentitySource.DeserializeIdentitySource(item, options));
+                                array.Add(SingleSignOnIdentitySource.DeserializeSingleSignOnIdentitySource(item, options));
                             }
                             identitySources = array;
                             continue;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            availability = AvailabilityProperties.DeserializeAvailabilityProperties(property0.Value, options);
+                            availability = PrivateCloudAvailabilityProperties.DeserializePrivateCloudAvailabilityProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            encryption = Encryption.DeserializeEncryption(property0.Value, options);
+                            encryption = CustomerManagedEncryption.DeserializeCustomerManagedEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("extendedNetworkBlocks"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            dnsZoneType = new DnsZoneType(property0.Value.GetString());
+                            dnsZoneType = new AvsDnsZoneType(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Avs.Models
                 identity,
                 managementCluster,
                 internet,
-                identitySources ?? new ChangeTrackingList<IdentitySource>(),
+                identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(),
                 availability,
                 encryption,
                 extendedNetworkBlocks ?? new ChangeTrackingList<string>(),

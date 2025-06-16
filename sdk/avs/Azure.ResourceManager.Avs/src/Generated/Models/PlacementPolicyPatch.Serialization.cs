@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Avs.Models
             PlacementPolicyState? state = default;
             IList<string> vmMembers = default;
             IList<string> hostMembers = default;
-            AffinityStrength? affinityStrength = default;
+            VmHostPlacementPolicyAffinityStrength? affinityStrength = default;
             AzureHybridBenefitType? azureHybridBenefitType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Avs.Models
                             {
                                 continue;
                             }
-                            affinityStrength = new AffinityStrength(property0.Value.GetString());
+                            affinityStrength = new VmHostPlacementPolicyAffinityStrength(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("azureHybridBenefitType"u8))

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkPortMirroringProperties(string displayName, PortMirroringDirectionEnum? direction, string source, string destination, PortMirroringStatusEnum? status, WorkloadNetworkPortMirroringProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadNetworkPortMirroringProperties(string displayName, PortMirroringProfileDirection? direction, string source, string destination, PortMirroringProfileStatus? status, WorkloadNetworkPortMirroringProfileProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Direction = direction;
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Display name of the port mirroring profile. </summary>
         public string DisplayName { get; set; }
         /// <summary> Direction of port mirroring profile. </summary>
-        public PortMirroringDirectionEnum? Direction { get; set; }
+        public PortMirroringProfileDirection? Direction { get; set; }
         /// <summary> Source VM Group. </summary>
         public string Source { get; set; }
         /// <summary> Destination VM Group. </summary>
         public string Destination { get; set; }
         /// <summary> Port Mirroring Status. </summary>
-        public PortMirroringStatusEnum? Status { get; }
+        public PortMirroringProfileStatus? Status { get; }
         /// <summary> The provisioning state. </summary>
-        public WorkloadNetworkPortMirroringProvisioningState? ProvisioningState { get; }
+        public WorkloadNetworkPortMirroringProfileProvisioningState? ProvisioningState { get; }
         /// <summary> NSX revision number. </summary>
         public long? Revision { get; set; }
     }

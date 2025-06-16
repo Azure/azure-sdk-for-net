@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.Avs.Models
         /// A,B,C,D are between 0 and 255, and X is between 0 and 22
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementCluster"/> or <paramref name="networkBlock"/> is null. </exception>
-        public PrivateCloudProperties(ManagementCluster managementCluster, string networkBlock)
+        public PrivateCloudProperties(AvsManagementCluster managementCluster, string networkBlock)
         {
             Argument.AssertNotNull(managementCluster, nameof(managementCluster));
             Argument.AssertNotNull(networkBlock, nameof(networkBlock));
 
             ManagementCluster = managementCluster;
-            IdentitySources = new ChangeTrackingList<IdentitySource>();
+            IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
             ExtendedNetworkBlocks = new ChangeTrackingList<string>();
             NetworkBlock = networkBlock;
             ExternalCloudLinks = new ChangeTrackingList<string>();
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// </param>
         /// <param name="managementNetwork"> Network used to access vCenter Server and NSX-T Manager. </param>
         /// <param name="provisioningNetwork"> Used for virtual machine cold migration, cloning, and snapshot migration. </param>
-        /// <param name="vmotionNetwork"> Used for live migration of virtual machines. </param>
-        /// <param name="vcenterPassword"> Optionally, set the vCenter admin password when the private cloud is created. </param>
+        /// <param name="vMotionNetwork"> Used for live migration of virtual machines. </param>
+        /// <param name="vCenterPassword"> Optionally, set the vCenter admin password when the private cloud is created. </param>
         /// <param name="nsxtPassword"> Optionally, set the NSX-T Manager password when the private cloud is created. </param>
-        /// <param name="vcenterCertificateThumbprint"> Thumbprint of the vCenter Server SSL certificate. </param>
+        /// <param name="vCenterCertificateThumbprint"> Thumbprint of the vCenter Server SSL certificate. </param>
         /// <param name="nsxtCertificateThumbprint"> Thumbprint of the NSX-T Manager SSL certificate. </param>
         /// <param name="externalCloudLinks"> Array of cloud link IDs from other clouds that connect to this one. </param>
         /// <param name="secondaryCircuit">
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
         /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateCloudProperties(ManagementCluster managementCluster, InternetEnum? internet, IList<IdentitySource> identitySources, AvailabilityProperties availability, Encryption encryption, IList<string> extendedNetworkBlocks, PrivateCloudProvisioningState? provisioningState, Circuit circuit, Endpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vmotionNetwork, string vcenterPassword, string nsxtPassword, string vcenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<string> externalCloudLinks, Circuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, DnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateCloudProperties(AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, PrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<string> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedStatus? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, AvsDnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ManagementCluster = managementCluster;
             Internet = internet;
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Avs.Models
             NetworkBlock = networkBlock;
             ManagementNetwork = managementNetwork;
             ProvisioningNetwork = provisioningNetwork;
-            VmotionNetwork = vmotionNetwork;
-            VcenterPassword = vcenterPassword;
+            VMotionNetwork = vMotionNetwork;
+            VCenterPassword = vCenterPassword;
             NsxtPassword = nsxtPassword;
-            VcenterCertificateThumbprint = vcenterCertificateThumbprint;
+            VCenterCertificateThumbprint = vCenterCertificateThumbprint;
             NsxtCertificateThumbprint = nsxtCertificateThumbprint;
             ExternalCloudLinks = externalCloudLinks;
             SecondaryCircuit = secondaryCircuit;
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> The default cluster used for management. </summary>
-        public ManagementCluster ManagementCluster { get; set; }
+        public AvsManagementCluster ManagementCluster { get; set; }
         /// <summary> Connectivity to internet is enabled or disabled. </summary>
-        public InternetEnum? Internet { get; set; }
+        public InternetConnectivityState? Internet { get; set; }
         /// <summary> vCenter Single Sign On Identity Sources. </summary>
-        public IList<IdentitySource> IdentitySources { get; }
+        public IList<SingleSignOnIdentitySource> IdentitySources { get; }
         /// <summary> Properties describing how the cloud is distributed across availability zones. </summary>
-        public AvailabilityProperties Availability { get; set; }
+        public PrivateCloudAvailabilityProperties Availability { get; set; }
         /// <summary> Customer managed key encryption, can be enabled or disabled. </summary>
-        public Encryption Encryption { get; set; }
+        public CustomerManagedEncryption Encryption { get; set; }
         /// <summary>
         /// Array of additional networks noncontiguous with networkBlock. Networks must be
         /// unique and non-overlapping across VNet in your subscription, on-premise, and
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The provisioning state. </summary>
         public PrivateCloudProvisioningState? ProvisioningState { get; }
         /// <summary> An ExpressRoute Circuit. </summary>
-        public Circuit Circuit { get; set; }
+        public ExpressRouteCircuit Circuit { get; set; }
         /// <summary> The endpoints. </summary>
-        public Endpoints Endpoints { get; }
+        public AvsPrivateCloudEndpoints Endpoints { get; }
         /// <summary>
         /// The block of addresses should be unique across VNet in your subscription as
         /// well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where
@@ -171,13 +171,13 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Used for virtual machine cold migration, cloning, and snapshot migration. </summary>
         public string ProvisioningNetwork { get; }
         /// <summary> Used for live migration of virtual machines. </summary>
-        public string VmotionNetwork { get; }
+        public string VMotionNetwork { get; }
         /// <summary> Optionally, set the vCenter admin password when the private cloud is created. </summary>
-        public string VcenterPassword { get; set; }
+        public string VCenterPassword { get; set; }
         /// <summary> Optionally, set the NSX-T Manager password when the private cloud is created. </summary>
         public string NsxtPassword { get; set; }
         /// <summary> Thumbprint of the vCenter Server SSL certificate. </summary>
-        public string VcenterCertificateThumbprint { get; }
+        public string VCenterCertificateThumbprint { get; }
         /// <summary> Thumbprint of the NSX-T Manager SSL certificate. </summary>
         public string NsxtCertificateThumbprint { get; }
         /// <summary> Array of cloud link IDs from other clouds that connect to this one. </summary>
@@ -186,15 +186,15 @@ namespace Azure.ResourceManager.Avs.Models
         /// A secondary expressRoute circuit from a separate AZ. Only present in a
         /// stretched private cloud
         /// </summary>
-        public Circuit SecondaryCircuit { get; set; }
+        public ExpressRouteCircuit SecondaryCircuit { get; set; }
         /// <summary>
         /// Flag to indicate whether the private cloud has the quota for provisioned NSX
         /// Public IP count raised from 64 to 1024
         /// </summary>
-        public NsxPublicIPQuotaRaisedEnum? NsxPublicIPQuotaRaised { get; }
+        public NsxPublicIPQuotaRaisedStatus? NsxPublicIPQuotaRaised { get; }
         /// <summary> Azure resource ID of the virtual network. </summary>
         public ResourceIdentifier VirtualNetworkId { get; set; }
         /// <summary> The type of DNS zone to use. </summary>
-        public DnsZoneType? DnsZoneType { get; set; }
+        public AvsDnsZoneType? DnsZoneType { get; set; }
     }
 }

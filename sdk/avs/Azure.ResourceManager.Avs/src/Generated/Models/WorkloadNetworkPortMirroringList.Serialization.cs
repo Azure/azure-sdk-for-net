@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            IReadOnlyList<WorkloadNetworkPortMirroringData> value = default;
+            IReadOnlyList<WorkloadNetworkPortMirroringProfileData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<WorkloadNetworkPortMirroringData> array = new List<WorkloadNetworkPortMirroringData>();
+                    List<WorkloadNetworkPortMirroringProfileData> array = new List<WorkloadNetworkPortMirroringProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkPortMirroringData.DeserializeWorkloadNetworkPortMirroringData(item, options));
+                        array.Add(WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(item, options));
                     }
                     value = array;
                     continue;

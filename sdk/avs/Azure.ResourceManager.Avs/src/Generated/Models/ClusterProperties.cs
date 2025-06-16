@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="hosts"> The hosts. </param>
         /// <param name="vsanDatastoreName"> Name of the vsan datastore associated with the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(int? clusterSize, ClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts, string vsanDatastoreName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterProperties(int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts, string vsanDatastoreName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClusterSize = clusterSize;
             ProvisioningState = provisioningState;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The cluster size. </summary>
         public int? ClusterSize { get; set; }
         /// <summary> The state of the cluster provisioning. </summary>
-        public ClusterProvisioningState? ProvisioningState { get; }
+        public AvsPrivateCloudClusterProvisioningState? ProvisioningState { get; }
         /// <summary> The identity. </summary>
         public int? ClusterId { get; }
         /// <summary> The hosts. </summary>

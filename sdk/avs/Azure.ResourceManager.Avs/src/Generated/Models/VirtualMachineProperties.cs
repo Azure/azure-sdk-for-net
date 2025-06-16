@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="folderPath"> Path to virtual machine's folder starting from datacenter virtual machine folder. </param>
         /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineProperties(VirtualMachineProvisioningState? provisioningState, string displayName, string moRefId, string folderPath, VirtualMachineRestrictMovementState? restrictMovement, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineProperties(AvsVirtualMachineProvisioningState? provisioningState, string displayName, string moRefId, string folderPath, VirtualMachineRestrictMovementState? restrictMovement, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public VirtualMachineProvisioningState? ProvisioningState { get; }
+        public AvsVirtualMachineProvisioningState? ProvisioningState { get; }
         /// <summary> Display name of the VM. </summary>
         public string DisplayName { get; }
         /// <summary> vCenter managed object reference ID of the virtual machine. </summary>

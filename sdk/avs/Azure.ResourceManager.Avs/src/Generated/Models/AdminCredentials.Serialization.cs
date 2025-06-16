@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("nsxtPassword"u8);
                 writer.WriteStringValue(NsxtPassword);
             }
-            if (options.Format != "W" && Optional.IsDefined(VcenterUsername))
+            if (options.Format != "W" && Optional.IsDefined(VCenterUsername))
             {
                 writer.WritePropertyName("vcenterUsername"u8);
-                writer.WriteStringValue(VcenterUsername);
+                writer.WriteStringValue(VCenterUsername);
             }
-            if (options.Format != "W" && Optional.IsDefined(VcenterPassword))
+            if (options.Format != "W" && Optional.IsDefined(VCenterPassword))
             {
                 writer.WritePropertyName("vcenterPassword"u8);
-                writer.WriteStringValue(VcenterPassword);
+                writer.WriteStringValue(VCenterPassword);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

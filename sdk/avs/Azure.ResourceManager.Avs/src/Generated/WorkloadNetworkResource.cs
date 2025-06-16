@@ -363,11 +363,11 @@ namespace Azure.ResourceManager.Avs
             return GetWorkloadNetworkGateways().Get(gatewayId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkloadNetworkPortMirroringResources in the WorkloadNetwork. </summary>
-        /// <returns> An object representing collection of WorkloadNetworkPortMirroringResources and their operations over a WorkloadNetworkPortMirroringResource. </returns>
-        public virtual WorkloadNetworkPortMirroringCollection GetWorkloadNetworkPortMirrorings()
+        /// <summary> Gets a collection of WorkloadNetworkPortMirroringProfileResources in the WorkloadNetwork. </summary>
+        /// <returns> An object representing collection of WorkloadNetworkPortMirroringProfileResources and their operations over a WorkloadNetworkPortMirroringProfileResource. </returns>
+        public virtual WorkloadNetworkPortMirroringProfileCollection GetWorkloadNetworkPortMirroringProfiles()
         {
-            return GetCachedClient(client => new WorkloadNetworkPortMirroringCollection(client, Id));
+            return GetCachedClient(client => new WorkloadNetworkPortMirroringProfileCollection(client, Id));
         }
 
         /// <summary>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkPortMirroringResource"/></description>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -396,9 +396,9 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkloadNetworkPortMirroringResource>> GetWorkloadNetworkPortMirroringAsync(string portMirroringId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadNetworkPortMirroringProfileResource>> GetWorkloadNetworkPortMirroringProfileAsync(string portMirroringId, CancellationToken cancellationToken = default)
         {
-            return await GetWorkloadNetworkPortMirrorings().GetAsync(portMirroringId, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadNetworkPortMirroringProfiles().GetAsync(portMirroringId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="WorkloadNetworkPortMirroringResource"/></description>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -427,9 +427,9 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkloadNetworkPortMirroringResource> GetWorkloadNetworkPortMirroring(string portMirroringId, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadNetworkPortMirroringProfileResource> GetWorkloadNetworkPortMirroringProfile(string portMirroringId, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadNetworkPortMirrorings().Get(portMirroringId, cancellationToken);
+            return GetWorkloadNetworkPortMirroringProfiles().Get(portMirroringId, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkloadNetworkPublicIPResources in the WorkloadNetwork. </summary>

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Avs.Models
             string autoDetectedKeyVersion = default;
             string keyVaultUrl = default;
             EncryptionKeyStatus? keyState = default;
-            EncryptionVersionType? versionType = default;
+            AvsEncryptionVersionType? versionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    versionType = new EncryptionVersionType(property.Value.GetString());
+                    versionType = new AvsEncryptionVersionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

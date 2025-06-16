@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Avs.Samples
                 Properties = new GlobalReachConnectionProperties
                 {
                     AuthorizationKey = "01010101-0101-0101-0101-010101010101",
-                    PeerExpressRouteCircuit = "/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.Network/expressRouteCircuits/mypeer",
+                    PeerExpressRouteCircuit = new ResourceIdentifier("/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.Network/expressRouteCircuits/mypeer"),
                 },
             };
             ArmOperation<GlobalReachConnectionResource> lro = await globalReachConnection.UpdateAsync(WaitUntil.Completed, data);

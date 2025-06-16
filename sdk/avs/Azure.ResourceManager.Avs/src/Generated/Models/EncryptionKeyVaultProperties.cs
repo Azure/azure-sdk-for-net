@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="keyState"> The state of key provided. </param>
         /// <param name="versionType"> Property of the key if user provided or auto detected. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionKeyVaultProperties(string keyName, string keyVersion, string autoDetectedKeyVersion, string keyVaultUri, EncryptionKeyStatus? keyState, EncryptionVersionType? versionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EncryptionKeyVaultProperties(string keyName, string keyVersion, string autoDetectedKeyVersion, string keyVaultUri, EncryptionKeyStatus? keyState, AvsEncryptionVersionType? versionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The state of key provided. </summary>
         public EncryptionKeyStatus? KeyState { get; }
         /// <summary> Property of the key if user provided or auto detected. </summary>
-        public EncryptionVersionType? VersionType { get; }
+        public AvsEncryptionVersionType? VersionType { get; }
     }
 }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="pureStorageVolume"> A Pure Storage volume. </param>
         /// <param name="status"> The operational status of the datastore. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatastoreProperties(DatastoreProvisioningState? provisioningState, WritableSubResource netAppVolume, DiskPoolVolume diskPoolVolume, ElasticSanVolume elasticSanVolume, PureStorageVolume pureStorageVolume, DatastoreStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatastoreProperties(AvsPrivateCloudDatastoreProvisioningState? provisioningState, WritableSubResource netAppVolume, DiskPoolVolume diskPoolVolume, ElasticSanVolume elasticSanVolume, PureStorageVolume pureStorageVolume, DatastoreStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             NetAppVolume = netAppVolume;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> The state of the datastore provisioning. </summary>
-        public DatastoreProvisioningState? ProvisioningState { get; }
+        public AvsPrivateCloudDatastoreProvisioningState? ProvisioningState { get; }
         /// <summary> An Azure NetApp Files volume. </summary>
         internal WritableSubResource NetAppVolume { get; set; }
         /// <summary> Gets or sets Id. </summary>

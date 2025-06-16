@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Avs.Samples
                     DisplayName = "dnsZone1",
                     Domain = { },
                     DnsServerIPs = { "1.1.1.1" },
-                    SourceIP = "8.8.8.8",
+                    SourceIP = IPAddress.Parse("8.8.8.8"),
                     Revision = 1L,
                 },
             };

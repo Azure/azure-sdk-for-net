@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// global reach connection
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GlobalReachConnectionProperties(GlobalReachConnectionProvisioningState? provisioningState, string addressPrefix, string authorizationKey, GlobalReachConnectionStatus? circuitConnectionStatus, string peerExpressRouteCircuit, string expressRouteId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GlobalReachConnectionProperties(GlobalReachConnectionProvisioningState? provisioningState, string addressPrefix, string authorizationKey, GlobalReachConnectionStatus? circuitConnectionStatus, ResourceIdentifier peerExpressRouteCircuit, ResourceIdentifier expressRouteId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             AddressPrefix = addressPrefix;
@@ -99,11 +100,11 @@ namespace Azure.ResourceManager.Avs.Models
         /// Identifier of the ExpressRoute Circuit to peer with in the global reach
         /// connection
         /// </summary>
-        public string PeerExpressRouteCircuit { get; set; }
+        public ResourceIdentifier PeerExpressRouteCircuit { get; set; }
         /// <summary>
         /// The ID of the Private Cloud's ExpressRoute Circuit that is participating in the
         /// global reach connection
         /// </summary>
-        public string ExpressRouteId { get; set; }
+        public ResourceIdentifier ExpressRouteId { get; set; }
     }
 }

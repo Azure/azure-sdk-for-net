@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            CloudLinkProvisioningState? provisioningState = default;
+            AvsCloudLinkProvisioningState? provisioningState = default;
             CloudLinkStatus? status = default;
-            string linkedCloud = default;
+            ResourceIdentifier linkedCloud = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    provisioningState = new CloudLinkProvisioningState(property.Value.GetString());
+                    provisioningState = new AvsCloudLinkProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -113,7 +113,11 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("linkedCloud"u8))
                 {
-                    linkedCloud = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkedCloud = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

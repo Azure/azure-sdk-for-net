@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="expressRouteAuthorizationKey"> The key of the ExpressRoute Circuit Authorization. </param>
         /// <param name="expressRouteId"> The ID of the ExpressRoute Circuit. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteAuthorizationProperties(ExpressRouteAuthorizationProvisioningState? provisioningState, string expressRouteAuthorizationId, string expressRouteAuthorizationKey, string expressRouteId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExpressRouteAuthorizationProperties(ExpressRouteAuthorizationProvisioningState? provisioningState, ResourceIdentifier expressRouteAuthorizationId, string expressRouteAuthorizationKey, ResourceIdentifier expressRouteId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ExpressRouteAuthorizationId = expressRouteAuthorizationId;
@@ -68,10 +69,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The state of the ExpressRoute Circuit Authorization provisioning. </summary>
         public ExpressRouteAuthorizationProvisioningState? ProvisioningState { get; }
         /// <summary> The ID of the ExpressRoute Circuit Authorization. </summary>
-        public string ExpressRouteAuthorizationId { get; }
+        public ResourceIdentifier ExpressRouteAuthorizationId { get; }
         /// <summary> The key of the ExpressRoute Circuit Authorization. </summary>
         public string ExpressRouteAuthorizationKey { get; }
         /// <summary> The ID of the ExpressRoute Circuit. </summary>
-        public string ExpressRouteId { get; set; }
+        public ResourceIdentifier ExpressRouteId { get; set; }
     }
 }

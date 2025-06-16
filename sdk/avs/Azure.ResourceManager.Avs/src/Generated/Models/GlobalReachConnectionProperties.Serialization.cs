@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Avs.Models
             string addressPrefix = default;
             string authorizationKey = default;
             GlobalReachConnectionStatus? circuitConnectionStatus = default;
-            string peerExpressRouteCircuit = default;
-            string expressRouteId = default;
+            ResourceIdentifier peerExpressRouteCircuit = default;
+            ResourceIdentifier expressRouteId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,12 +141,20 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("peerExpressRouteCircuit"u8))
                 {
-                    peerExpressRouteCircuit = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    peerExpressRouteCircuit = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("expressRouteId"u8))
                 {
-                    expressRouteId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expressRouteId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

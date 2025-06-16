@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="affinityStrength"> vm-host placement policy affinity strength (should/must). </param>
         /// <param name="azureHybridBenefitType"> placement policy azure hybrid benefit opt-in type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlacementPolicyPatch(PlacementPolicyState? state, IList<string> vmMembers, IList<string> hostMembers, AffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlacementPolicyPatch(PlacementPolicyState? state, IList<string> vmMembers, IList<string> hostMembers, VmHostPlacementPolicyAffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             VmMembers = vmMembers;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Host members list. </summary>
         public IList<string> HostMembers { get; }
         /// <summary> vm-host placement policy affinity strength (should/must). </summary>
-        public AffinityStrength? AffinityStrength { get; set; }
+        public VmHostPlacementPolicyAffinityStrength? AffinityStrength { get; set; }
         /// <summary> placement policy azure hybrid benefit opt-in type. </summary>
         public AzureHybridBenefitType? AzureHybridBenefitType { get; set; }
     }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(SourceIP))
             {
                 writer.WritePropertyName("sourceIp"u8);
-                writer.WriteStringValue(SourceIP);
+                writer.WriteStringValue(SourceIP.ToString());
             }
             if (Optional.IsDefined(DnsServices))
             {
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.Avs.Models
             string displayName = default;
             IList<string> domain = default;
             IList<string> dnsServerIPs = default;
-            string sourceIP = default;
+            IPAddress sourceIP = default;
             long? dnsServices = default;
             WorkloadNetworkDnsZoneProvisioningState? provisioningState = default;
             long? revision = default;
@@ -162,7 +163,11 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("sourceIp"u8))
                 {
-                    sourceIP = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceIP = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dnsServices"u8))

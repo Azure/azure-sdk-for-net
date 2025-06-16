@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="hostMembers"> Host members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmMembers"/> or <paramref name="hostMembers"/> is null. </exception>
-        public VmHostPlacementPolicyProperties(IEnumerable<string> vmMembers, IEnumerable<string> hostMembers, AffinityType affinityType)
+        public VmHostPlacementPolicyProperties(IEnumerable<string> vmMembers, IEnumerable<string> hostMembers, AvsPlacementPolicyAffinityType affinityType)
         {
             Argument.AssertNotNull(vmMembers, nameof(vmMembers));
             Argument.AssertNotNull(hostMembers, nameof(hostMembers));
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="affinityType"> placement policy affinity type. </param>
         /// <param name="affinityStrength"> vm-host placement policy affinity strength (should/must). </param>
         /// <param name="azureHybridBenefitType"> placement policy azure hybrid benefit opt-in type. </param>
-        internal VmHostPlacementPolicyProperties(PlacementPolicyType type, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> vmMembers, IList<string> hostMembers, AffinityType affinityType, AffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType) : base(type, state, displayName, provisioningState, serializedAdditionalRawData)
+        internal VmHostPlacementPolicyProperties(PlacementPolicyType type, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> vmMembers, IList<string> hostMembers, AvsPlacementPolicyAffinityType affinityType, VmHostPlacementPolicyAffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType) : base(type, state, displayName, provisioningState, serializedAdditionalRawData)
         {
             VmMembers = vmMembers;
             HostMembers = hostMembers;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Host members list. </summary>
         public IList<string> HostMembers { get; }
         /// <summary> placement policy affinity type. </summary>
-        public AffinityType AffinityType { get; set; }
+        public AvsPlacementPolicyAffinityType AffinityType { get; set; }
         /// <summary> vm-host placement policy affinity strength (should/must). </summary>
-        public AffinityStrength? AffinityStrength { get; set; }
+        public VmHostPlacementPolicyAffinityStrength? AffinityStrength { get; set; }
         /// <summary> placement policy azure hybrid benefit opt-in type. </summary>
         public AzureHybridBenefitType? AzureHybridBenefitType { get; set; }
     }

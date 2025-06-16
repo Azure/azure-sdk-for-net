@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -46,10 +47,10 @@ namespace Azure.ResourceManager.Avs.Samples
                 Properties = new WorkloadNetworkDnsServiceProperties
                 {
                     DisplayName = "dnsService1",
-                    DnsServiceIP = "5.5.5.5",
+                    DnsServiceIP = IPAddress.Parse("5.5.5.5"),
                     DefaultDnsZone = "defaultDnsZone1",
                     FqdnZones = { "fqdnZone1" },
-                    LogLevel = DnsServiceLogLevelEnum.INFO,
+                    LogLevel = DnsServiceLogLevel.INFO,
                     Revision = 1L,
                 },
             };

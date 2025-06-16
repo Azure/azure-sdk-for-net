@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="status"> The state of the cloud link. </param>
         /// <param name="linkedCloud"> Identifier of the other private cloud participating in the link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudLinkProperties(CloudLinkProvisioningState? provisioningState, CloudLinkStatus? status, string linkedCloud, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudLinkProperties(AvsCloudLinkProvisioningState? provisioningState, CloudLinkStatus? status, ResourceIdentifier linkedCloud, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -64,10 +65,10 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public CloudLinkProvisioningState? ProvisioningState { get; }
+        public AvsCloudLinkProvisioningState? ProvisioningState { get; }
         /// <summary> The state of the cloud link. </summary>
         public CloudLinkStatus? Status { get; }
         /// <summary> Identifier of the other private cloud participating in the link. </summary>
-        public string LinkedCloud { get; set; }
+        public ResourceIdentifier LinkedCloud { get; set; }
     }
 }

@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Avs
             return new WorkloadNetworkResource(Client, Id.AppendChildResource("workloadNetworks", "default"));
         }
 
-        /// <summary> Gets a collection of ClusterResources in the PrivateCloud. </summary>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public virtual ClusterCollection GetClusters()
+        /// <summary> Gets a collection of AvsPrivateCloudClusterResources in the PrivateCloud. </summary>
+        /// <returns> An object representing collection of AvsPrivateCloudClusterResources and their operations over a AvsPrivateCloudClusterResource. </returns>
+        public virtual AvsPrivateCloudClusterCollection GetAvsPrivateCloudClusters()
         {
-            return GetCachedClient(client => new ClusterCollection(client, Id));
+            return GetCachedClient(client => new AvsPrivateCloudClusterCollection(client, Id));
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ClusterResource"/></description>
+        /// <description><see cref="AvsPrivateCloudClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ClusterResource>> GetClusterAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsPrivateCloudClusterResource>> GetAvsPrivateCloudClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            return await GetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetAvsPrivateCloudClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ClusterResource"/></description>
+        /// <description><see cref="AvsPrivateCloudClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ClusterResource> GetCluster(string clusterName, CancellationToken cancellationToken = default)
+        public virtual Response<AvsPrivateCloudClusterResource> GetAvsPrivateCloudCluster(string clusterName, CancellationToken cancellationToken = default)
         {
-            return GetClusters().Get(clusterName, cancellationToken);
+            return GetAvsPrivateCloudClusters().Get(clusterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of HcxEnterpriseSiteResources in the PrivateCloud. </summary>
@@ -442,11 +442,11 @@ namespace Azure.ResourceManager.Avs
             return GetCloudLinks().Get(cloudLinkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AddonResources in the PrivateCloud. </summary>
-        /// <returns> An object representing collection of AddonResources and their operations over a AddonResource. </returns>
-        public virtual AddonCollection GetAddons()
+        /// <summary> Gets a collection of AvsPrivateCloudAddonResources in the PrivateCloud. </summary>
+        /// <returns> An object representing collection of AvsPrivateCloudAddonResources and their operations over a AvsPrivateCloudAddonResource. </returns>
+        public virtual AvsPrivateCloudAddonCollection GetAvsPrivateCloudAddons()
         {
-            return GetCachedClient(client => new AddonCollection(client, Id));
+            return GetCachedClient(client => new AvsPrivateCloudAddonCollection(client, Id));
         }
 
         /// <summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AddonResource"/></description>
+        /// <description><see cref="AvsPrivateCloudAddonResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -475,9 +475,9 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AddonResource>> GetAddonAsync(string addonName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsPrivateCloudAddonResource>> GetAvsPrivateCloudAddonAsync(string addonName, CancellationToken cancellationToken = default)
         {
-            return await GetAddons().GetAsync(addonName, cancellationToken).ConfigureAwait(false);
+            return await GetAvsPrivateCloudAddons().GetAsync(addonName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AddonResource"/></description>
+        /// <description><see cref="AvsPrivateCloudAddonResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,9 +506,9 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AddonResource> GetAddon(string addonName, CancellationToken cancellationToken = default)
+        public virtual Response<AvsPrivateCloudAddonResource> GetAvsPrivateCloudAddon(string addonName, CancellationToken cancellationToken = default)
         {
-            return GetAddons().Get(addonName, cancellationToken);
+            return GetAvsPrivateCloudAddons().Get(addonName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ScriptPackageResources in the PrivateCloud. </summary>

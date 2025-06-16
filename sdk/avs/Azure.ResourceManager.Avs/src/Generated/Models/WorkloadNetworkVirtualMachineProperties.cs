@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="displayName"> Display name of the VM. </param>
         /// <param name="vmType"> Virtual machine type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkVirtualMachineProperties(WorkloadNetworkProvisioningState? provisioningState, string displayName, VmTypeEnum? vmType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadNetworkVirtualMachineProperties(WorkloadNetworkProvisioningState? provisioningState, string displayName, WorkloadNetworkVmType? vmType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Display name of the VM. </summary>
         public string DisplayName { get; }
         /// <summary> Virtual machine type. </summary>
-        public VmTypeEnum? VmType { get; }
+        public WorkloadNetworkVmType? VmType { get; }
     }
 }

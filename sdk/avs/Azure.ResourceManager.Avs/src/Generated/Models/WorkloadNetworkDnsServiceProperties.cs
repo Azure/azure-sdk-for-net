@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkDnsServiceProperties(string displayName, string dnsServiceIP, string defaultDnsZone, IList<string> fqdnZones, DnsServiceLogLevelEnum? logLevel, DnsServiceStatusEnum? status, WorkloadNetworkDnsServiceProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadNetworkDnsServiceProperties(string displayName, IPAddress dnsServiceIP, string defaultDnsZone, IList<string> fqdnZones, DnsServiceLogLevel? logLevel, DnsServiceStatus? status, WorkloadNetworkDnsServiceProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             DnsServiceIP = dnsServiceIP;
@@ -77,15 +78,15 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Display name of the DNS Service. </summary>
         public string DisplayName { get; set; }
         /// <summary> DNS service IP of the DNS Service. </summary>
-        public string DnsServiceIP { get; set; }
+        public IPAddress DnsServiceIP { get; set; }
         /// <summary> Default DNS zone of the DNS Service. </summary>
         public string DefaultDnsZone { get; set; }
         /// <summary> FQDN zones of the DNS Service. </summary>
         public IList<string> FqdnZones { get; }
         /// <summary> DNS Service log level. </summary>
-        public DnsServiceLogLevelEnum? LogLevel { get; set; }
+        public DnsServiceLogLevel? LogLevel { get; set; }
         /// <summary> DNS Service status. </summary>
-        public DnsServiceStatusEnum? Status { get; }
+        public DnsServiceStatus? Status { get; }
         /// <summary> The provisioning state. </summary>
         public WorkloadNetworkDnsServiceProvisioningState? ProvisioningState { get; }
         /// <summary> NSX revision number. </summary>

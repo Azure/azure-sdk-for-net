@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(DnsServiceIP))
             {
                 writer.WritePropertyName("dnsServiceIp"u8);
-                writer.WriteStringValue(DnsServiceIP);
+                writer.WriteStringValue(DnsServiceIP.ToString());
             }
             if (Optional.IsDefined(DefaultDnsZone))
             {
@@ -117,11 +118,11 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             string displayName = default;
-            string dnsServiceIP = default;
+            IPAddress dnsServiceIP = default;
             string defaultDnsZone = default;
             IList<string> fqdnZones = default;
-            DnsServiceLogLevelEnum? logLevel = default;
-            DnsServiceStatusEnum? status = default;
+            DnsServiceLogLevel? logLevel = default;
+            DnsServiceStatus? status = default;
             WorkloadNetworkDnsServiceProvisioningState? provisioningState = default;
             long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -135,7 +136,11 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("dnsServiceIp"u8))
                 {
-                    dnsServiceIP = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dnsServiceIP = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultDnsZone"u8))
@@ -163,7 +168,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    logLevel = new DnsServiceLogLevelEnum(property.Value.GetString());
+                    logLevel = new DnsServiceLogLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -172,7 +177,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    status = new DnsServiceStatusEnum(property.Value.GetString());
+                    status = new DnsServiceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

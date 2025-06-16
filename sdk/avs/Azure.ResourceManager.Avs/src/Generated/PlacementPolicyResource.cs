@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing a PlacementPolicy along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PlacementPolicyResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetPlacementPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ClusterResource"/> using the GetPlacementPolicy method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudClusterResource"/> using the GetPlacementPolicy method.
     /// </summary>
     public partial class PlacementPolicyResource : ArmResource
     {

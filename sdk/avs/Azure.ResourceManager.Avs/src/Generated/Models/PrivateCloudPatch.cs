@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs.Models
         public PrivateCloudPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            IdentitySources = new ChangeTrackingList<IdentitySource>();
+            IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
             ExtendedNetworkBlocks = new ChangeTrackingList<string>();
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// </param>
         /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateCloudPatch(IDictionary<string, string> tags, AvsSku sku, ManagedServiceIdentity identity, ManagementCluster managementCluster, InternetEnum? internet, IList<IdentitySource> identitySources, AvailabilityProperties availability, Encryption encryption, IList<string> extendedNetworkBlocks, DnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateCloudPatch(IDictionary<string, string> tags, AvsSku sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsDnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Sku = sku;
@@ -93,15 +93,15 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The default cluster used for management. </summary>
-        public ManagementCluster ManagementCluster { get; set; }
+        public AvsManagementCluster ManagementCluster { get; set; }
         /// <summary> Connectivity to internet is enabled or disabled. </summary>
-        public InternetEnum? Internet { get; set; }
+        public InternetConnectivityState? Internet { get; set; }
         /// <summary> vCenter Single Sign On Identity Sources. </summary>
-        public IList<IdentitySource> IdentitySources { get; }
+        public IList<SingleSignOnIdentitySource> IdentitySources { get; }
         /// <summary> Properties describing how the cloud is distributed across availability zones. </summary>
-        public AvailabilityProperties Availability { get; set; }
+        public PrivateCloudAvailabilityProperties Availability { get; set; }
         /// <summary> Customer managed key encryption, can be enabled or disabled. </summary>
-        public Encryption Encryption { get; set; }
+        public CustomerManagedEncryption Encryption { get; set; }
         /// <summary>
         /// Array of additional networks noncontiguous with networkBlock. Networks must be
         /// unique and non-overlapping across VNet in your subscription, on-premise, and
@@ -110,6 +110,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// </summary>
         public IList<string> ExtendedNetworkBlocks { get; }
         /// <summary> The type of DNS zone to use. </summary>
-        public DnsZoneType? DnsZoneType { get; set; }
+        public AvsDnsZoneType? DnsZoneType { get; set; }
     }
 }

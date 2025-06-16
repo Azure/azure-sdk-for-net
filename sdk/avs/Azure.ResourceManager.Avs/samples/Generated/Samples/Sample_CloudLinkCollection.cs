@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Avs.Samples
             {
                 Properties = new CloudLinkProperties
                 {
-                    LinkedCloud = "/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.AVS/privateClouds/cloud2",
+                    LinkedCloud = new ResourceIdentifier("/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.AVS/privateClouds/cloud2"),
                 },
             };
             ArmOperation<CloudLinkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudLinkName, data);

@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Avs.Models
             string connectedGateway = default;
             WorkloadNetworkSegmentSubnet subnet = default;
             IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif = default;
-            SegmentStatusEnum? status = default;
+            WorkloadNetworkSegmentStatus? status = default;
             WorkloadNetworkSegmentProvisioningState? provisioningState = default;
             long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    status = new SegmentStatusEnum(property.Value.GetString());
+                    status = new WorkloadNetworkSegmentStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="ClusterZoneList"/>. </summary>
         internal ClusterZoneList()
         {
-            Zones = new ChangeTrackingList<ClusterZone>();
+            Zones = new ChangeTrackingList<AvsClusterZone>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterZoneList"/>. </summary>
         /// <param name="zones"> Zone and associated hosts info. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterZoneList(IReadOnlyList<ClusterZone> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterZoneList(IReadOnlyList<AvsClusterZone> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Zones = zones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Zone and associated hosts info. </summary>
-        public IReadOnlyList<ClusterZone> Zones { get; }
+        public IReadOnlyList<AvsClusterZone> Zones { get; }
     }
 }

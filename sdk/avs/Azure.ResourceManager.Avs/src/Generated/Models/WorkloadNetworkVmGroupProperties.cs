@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkVmGroupProperties(string displayName, IList<string> members, VmGroupStatusEnum? status, WorkloadNetworkVmGroupProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadNetworkVmGroupProperties(string displayName, IList<string> members, WorkloadNetworkVmGroupStatus? status, WorkloadNetworkVmGroupProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Members = members;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Virtual machine members of this group. </summary>
         public IList<string> Members { get; }
         /// <summary> VM Group status. </summary>
-        public VmGroupStatusEnum? Status { get; }
+        public WorkloadNetworkVmGroupStatus? Status { get; }
         /// <summary> The provisioning state. </summary>
         public WorkloadNetworkVmGroupProvisioningState? ProvisioningState { get; }
         /// <summary> NSX revision number. </summary>

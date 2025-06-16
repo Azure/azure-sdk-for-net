@@ -179,9 +179,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            string scriptCmdletId = default;
-            IList<ScriptExecutionParameter> parameters = default;
-            IList<ScriptExecutionParameter> hiddenParameters = default;
+            ResourceIdentifier scriptCmdletId = default;
+            IList<ScriptExecutionParameterDetails> parameters = default;
+            IList<ScriptExecutionParameterDetails> hiddenParameters = default;
             string failureReason = default;
             string timeout = default;
             string retention = default;
@@ -200,7 +200,11 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 if (property.NameEquals("scriptCmdletId"u8))
                 {
-                    scriptCmdletId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scriptCmdletId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -209,10 +213,10 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    List<ScriptExecutionParameter> array = new List<ScriptExecutionParameter>();
+                    List<ScriptExecutionParameterDetails> array = new List<ScriptExecutionParameterDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptExecutionParameter.DeserializeScriptExecutionParameter(item, options));
+                        array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item, options));
                     }
                     parameters = array;
                     continue;
@@ -223,10 +227,10 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    List<ScriptExecutionParameter> array = new List<ScriptExecutionParameter>();
+                    List<ScriptExecutionParameterDetails> array = new List<ScriptExecutionParameterDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptExecutionParameter.DeserializeScriptExecutionParameter(item, options));
+                        array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item, options));
                     }
                     hiddenParameters = array;
                     continue;
@@ -360,8 +364,8 @@ namespace Azure.ResourceManager.Avs.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ScriptExecutionProperties(
                 scriptCmdletId,
-                parameters ?? new ChangeTrackingList<ScriptExecutionParameter>(),
-                hiddenParameters ?? new ChangeTrackingList<ScriptExecutionParameter>(),
+                parameters ?? new ChangeTrackingList<ScriptExecutionParameterDetails>(),
+                hiddenParameters ?? new ChangeTrackingList<ScriptExecutionParameterDetails>(),
                 failureReason,
                 timeout,
                 retention,

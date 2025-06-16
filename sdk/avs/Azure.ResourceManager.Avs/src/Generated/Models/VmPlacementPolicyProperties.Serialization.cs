@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             IList<string> vmMembers = default;
-            AffinityType affinityType = default;
+            AvsPlacementPolicyAffinityType affinityType = default;
             PlacementPolicyType type = default;
             PlacementPolicyState? state = default;
             string displayName = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("affinityType"u8))
                 {
-                    affinityType = new AffinityType(property.Value.GetString());
+                    affinityType = new AvsPlacementPolicyAffinityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

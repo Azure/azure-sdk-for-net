@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkDnsZoneProperties(string displayName, IList<string> domain, IList<string> dnsServerIPs, string sourceIP, long? dnsServices, WorkloadNetworkDnsZoneProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadNetworkDnsZoneProperties(string displayName, IList<string> domain, IList<string> dnsServerIPs, IPAddress sourceIP, long? dnsServices, WorkloadNetworkDnsZoneProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Domain = domain;
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> DNS Server IP array of the DNS Zone. </summary>
         public IList<string> DnsServerIPs { get; }
         /// <summary> Source IP of the DNS Zone. </summary>
-        public string SourceIP { get; set; }
+        public IPAddress SourceIP { get; set; }
         /// <summary> Number of DNS Services using the DNS zone. </summary>
         public long? DnsServices { get; set; }
         /// <summary> The provisioning state. </summary>

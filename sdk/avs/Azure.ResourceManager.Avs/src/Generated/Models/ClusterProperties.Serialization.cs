@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             int? clusterSize = default;
-            ClusterProvisioningState? provisioningState = default;
+            AvsPrivateCloudClusterProvisioningState? provisioningState = default;
             int? clusterId = default;
             IList<string> hosts = default;
             string vsanDatastoreName = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    provisioningState = new ClusterProvisioningState(property.Value.GetString());
+                    provisioningState = new AvsPrivateCloudClusterProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("clusterId"u8))

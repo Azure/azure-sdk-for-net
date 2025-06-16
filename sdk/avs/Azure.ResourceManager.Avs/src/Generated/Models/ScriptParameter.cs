@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// </param>
         /// <param name="optional"> Is this parameter required or optional. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptParameter(ScriptParameterType? type, string name, string description, VisibilityParameterEnum? visibility, OptionalParamEnum? optional, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScriptParameter(ScriptParameterType? type, string name, string description, ParameterVisibilityStatus? visibility, ParameterOptionalityStatus? optional, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Name = name;
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// Should this parameter be visible to arm and passed in the parameters argument
         /// when executing
         /// </summary>
-        public VisibilityParameterEnum? Visibility { get; }
+        public ParameterVisibilityStatus? Visibility { get; }
         /// <summary> Is this parameter required or optional. </summary>
-        public OptionalParamEnum? Optional { get; }
+        public ParameterOptionalityStatus? Optional { get; }
     }
 }

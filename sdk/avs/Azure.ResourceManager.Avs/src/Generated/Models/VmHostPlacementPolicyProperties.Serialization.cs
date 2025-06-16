@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Avs.Models
             }
             IList<string> vmMembers = default;
             IList<string> hostMembers = default;
-            AffinityType affinityType = default;
-            AffinityStrength? affinityStrength = default;
+            AvsPlacementPolicyAffinityType affinityType = default;
+            VmHostPlacementPolicyAffinityStrength? affinityStrength = default;
             AzureHybridBenefitType? azureHybridBenefitType = default;
             PlacementPolicyType type = default;
             PlacementPolicyState? state = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("affinityType"u8))
                 {
-                    affinityType = new AffinityType(property.Value.GetString());
+                    affinityType = new AvsPlacementPolicyAffinityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("affinityStrength"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    affinityStrength = new AffinityStrength(property.Value.GetString());
+                    affinityStrength = new VmHostPlacementPolicyAffinityStrength(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("azureHybridBenefitType"u8))

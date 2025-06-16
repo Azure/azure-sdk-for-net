@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string location = "eastus";
-            Trial result = await subscriptionResource.CheckTrialAvailabilityLocationAsync(location);
+            AvsSubscriptionTrialAvailabilityResult result = await subscriptionResource.CheckTrialAvailabilityLocationAsync(location);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Avs.Samples
             // invoke the operation
             string location = "eastus";
             AvsSku sku = new AvsSku("avs52t");
-            Trial result = await subscriptionResource.CheckTrialAvailabilityLocationAsync(location, sku: sku);
+            AvsSubscriptionTrialAvailabilityResult result = await subscriptionResource.CheckTrialAvailabilityLocationAsync(location, sku: sku);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string location = "eastus";
-            Quota result = await subscriptionResource.CheckQuotaAvailabilityLocationAsync(location);
+            AvsSubscriptionQuotaAvailabilityResult result = await subscriptionResource.CheckQuotaAvailabilityLocationAsync(location);
 
             Console.WriteLine($"Succeeded: {result}");
         }

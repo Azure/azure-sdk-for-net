@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A class representing a collection of <see cref="PlacementPolicyResource"/> and their operations.
-    /// Each <see cref="PlacementPolicyResource"/> in the collection will belong to the same instance of <see cref="ClusterResource"/>.
-    /// To get a <see cref="PlacementPolicyCollection"/> instance call the GetPlacementPolicies method from an instance of <see cref="ClusterResource"/>.
+    /// Each <see cref="PlacementPolicyResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudClusterResource"/>.
+    /// To get a <see cref="PlacementPolicyCollection"/> instance call the GetPlacementPolicies method from an instance of <see cref="AvsPrivateCloudClusterResource"/>.
     /// </summary>
     public partial class PlacementPolicyCollection : ArmCollection, IEnumerable<PlacementPolicyResource>, IAsyncEnumerable<PlacementPolicyResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Avs
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ClusterResource.ResourceType), nameof(id));
+            if (id.ResourceType != AvsPrivateCloudClusterResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudClusterResource.ResourceType), nameof(id));
         }
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="vmMembers"> Virtual machine members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmMembers"/> is null. </exception>
-        public VmPlacementPolicyProperties(IEnumerable<string> vmMembers, AffinityType affinityType)
+        public VmPlacementPolicyProperties(IEnumerable<string> vmMembers, AvsPlacementPolicyAffinityType affinityType)
         {
             Argument.AssertNotNull(vmMembers, nameof(vmMembers));
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmMembers"> Virtual machine members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
-        internal VmPlacementPolicyProperties(PlacementPolicyType type, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> vmMembers, AffinityType affinityType) : base(type, state, displayName, provisioningState, serializedAdditionalRawData)
+        internal VmPlacementPolicyProperties(PlacementPolicyType type, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> vmMembers, AvsPlacementPolicyAffinityType affinityType) : base(type, state, displayName, provisioningState, serializedAdditionalRawData)
         {
             VmMembers = vmMembers;
             AffinityType = affinityType;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Virtual machine members list. </summary>
         public IList<string> VmMembers { get; }
         /// <summary> placement policy affinity type. </summary>
-        public AffinityType AffinityType { get; set; }
+        public AvsPlacementPolicyAffinityType AffinityType { get; set; }
     }
 }

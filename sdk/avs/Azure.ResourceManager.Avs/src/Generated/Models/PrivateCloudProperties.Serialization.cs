@@ -98,25 +98,25 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("provisioningNetwork"u8);
                 writer.WriteStringValue(ProvisioningNetwork);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmotionNetwork))
+            if (options.Format != "W" && Optional.IsDefined(VMotionNetwork))
             {
                 writer.WritePropertyName("vmotionNetwork"u8);
-                writer.WriteStringValue(VmotionNetwork);
+                writer.WriteStringValue(VMotionNetwork);
             }
-            if (Optional.IsDefined(VcenterPassword))
+            if (Optional.IsDefined(VCenterPassword))
             {
                 writer.WritePropertyName("vcenterPassword"u8);
-                writer.WriteStringValue(VcenterPassword);
+                writer.WriteStringValue(VCenterPassword);
             }
             if (Optional.IsDefined(NsxtPassword))
             {
                 writer.WritePropertyName("nsxtPassword"u8);
                 writer.WriteStringValue(NsxtPassword);
             }
-            if (options.Format != "W" && Optional.IsDefined(VcenterCertificateThumbprint))
+            if (options.Format != "W" && Optional.IsDefined(VCenterCertificateThumbprint))
             {
                 writer.WritePropertyName("vcenterCertificateThumbprint"u8);
-                writer.WriteStringValue(VcenterCertificateThumbprint);
+                writer.WriteStringValue(VCenterCertificateThumbprint);
             }
             if (options.Format != "W" && Optional.IsDefined(NsxtCertificateThumbprint))
             {
@@ -190,15 +190,15 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            ManagementCluster managementCluster = default;
-            InternetEnum? internet = default;
-            IList<IdentitySource> identitySources = default;
-            AvailabilityProperties availability = default;
-            Encryption encryption = default;
+            AvsManagementCluster managementCluster = default;
+            InternetConnectivityState? internet = default;
+            IList<SingleSignOnIdentitySource> identitySources = default;
+            PrivateCloudAvailabilityProperties availability = default;
+            CustomerManagedEncryption encryption = default;
             IList<string> extendedNetworkBlocks = default;
             PrivateCloudProvisioningState? provisioningState = default;
-            Circuit circuit = default;
-            Endpoints endpoints = default;
+            ExpressRouteCircuit circuit = default;
+            AvsPrivateCloudEndpoints endpoints = default;
             string networkBlock = default;
             string managementNetwork = default;
             string provisioningNetwork = default;
@@ -208,17 +208,17 @@ namespace Azure.ResourceManager.Avs.Models
             string vcenterCertificateThumbprint = default;
             string nsxtCertificateThumbprint = default;
             IReadOnlyList<string> externalCloudLinks = default;
-            Circuit secondaryCircuit = default;
-            NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default;
+            ExpressRouteCircuit secondaryCircuit = default;
+            NsxPublicIPQuotaRaisedStatus? nsxPublicIPQuotaRaised = default;
             ResourceIdentifier virtualNetworkId = default;
-            DnsZoneType? dnsZoneType = default;
+            AvsDnsZoneType? dnsZoneType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managementCluster"u8))
                 {
-                    managementCluster = ManagementCluster.DeserializeManagementCluster(property.Value, options);
+                    managementCluster = AvsManagementCluster.DeserializeAvsManagementCluster(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("internet"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    internet = new InternetEnum(property.Value.GetString());
+                    internet = new InternetConnectivityState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identitySources"u8))
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    List<IdentitySource> array = new List<IdentitySource>();
+                    List<SingleSignOnIdentitySource> array = new List<SingleSignOnIdentitySource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IdentitySource.DeserializeIdentitySource(item, options));
+                        array.Add(SingleSignOnIdentitySource.DeserializeSingleSignOnIdentitySource(item, options));
                     }
                     identitySources = array;
                     continue;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    availability = AvailabilityProperties.DeserializeAvailabilityProperties(property.Value, options);
+                    availability = PrivateCloudAvailabilityProperties.DeserializePrivateCloudAvailabilityProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryption"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    encryption = Encryption.DeserializeEncryption(property.Value, options);
+                    encryption = CustomerManagedEncryption.DeserializeCustomerManagedEncryption(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedNetworkBlocks"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    circuit = Circuit.DeserializeCircuit(property.Value, options);
+                    circuit = ExpressRouteCircuit.DeserializeExpressRouteCircuit(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endpoints"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    endpoints = Endpoints.DeserializeEndpoints(property.Value, options);
+                    endpoints = AvsPrivateCloudEndpoints.DeserializeAvsPrivateCloudEndpoints(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkBlock"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    secondaryCircuit = Circuit.DeserializeCircuit(property.Value, options);
+                    secondaryCircuit = ExpressRouteCircuit.DeserializeExpressRouteCircuit(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nsxPublicIpQuotaRaised"u8))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    nsxPublicIPQuotaRaised = new NsxPublicIPQuotaRaisedEnum(property.Value.GetString());
+                    nsxPublicIPQuotaRaised = new NsxPublicIPQuotaRaisedStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkId"u8))
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    dnsZoneType = new DnsZoneType(property.Value.GetString());
+                    dnsZoneType = new AvsDnsZoneType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Avs.Models
             return new PrivateCloudProperties(
                 managementCluster,
                 internet,
-                identitySources ?? new ChangeTrackingList<IdentitySource>(),
+                identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(),
                 availability,
                 encryption,
                 extendedNetworkBlocks ?? new ChangeTrackingList<string>(),
