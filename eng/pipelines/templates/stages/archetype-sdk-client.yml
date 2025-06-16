@@ -57,6 +57,9 @@ parameters:
   - name: ExcludePaths
     type: object
     default: []
+  - name: PublicFeed
+    type: string
+    default: 'Nuget.org'
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -111,5 +114,5 @@ extends:
             ${{ if eq(parameters.ServiceDirectory, 'template') }}:
               TestPipeline: true
             ArtifactName: packages
-            PublicFeed: 'Nuget.org'
+            PublicFeed: ${{ parameters.PublicFeed }}
 
