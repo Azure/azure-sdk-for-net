@@ -17,6 +17,18 @@ namespace Azure.Provisioning.AppService;
 public partial class FunctionAppAlwaysReadyConfig : ProvisionableConstruct
 {
     /// <summary>
+    /// Sets the number of &apos;Always Ready&apos; instances for a given
+    /// function group or a specific function. For additional information see
+    /// https://aka.ms/flexconsumption/alwaysready.
+    /// </summary>
+    public BicepValue<float> InstanceCount 
+    {
+        get { Initialize(); return _instanceCount!; }
+        set { Initialize(); _instanceCount!.Assign(value); }
+    }
+    private BicepValue<float>? _instanceCount;
+
+    /// <summary>
     /// Either a function group or a function name is required. For additional
     /// information see https://aka.ms/flexconsumption/alwaysready.
     /// </summary>
@@ -32,12 +44,12 @@ public partial class FunctionAppAlwaysReadyConfig : ProvisionableConstruct
     /// function group or a specific function. For additional information see
     /// https://aka.ms/flexconsumption/alwaysready.
     /// </summary>
-    public BicepValue<float> InstanceCount 
+    public BicepValue<int> AlwaysReadyInstanceCount 
     {
-        get { Initialize(); return _instanceCount!; }
-        set { Initialize(); _instanceCount!.Assign(value); }
+        get { Initialize(); return _alwaysReadyInstanceCount!; }
+        set { Initialize(); _alwaysReadyInstanceCount!.Assign(value); }
     }
-    private BicepValue<float>? _instanceCount;
+    private BicepValue<int>? _alwaysReadyInstanceCount;
 
     /// <summary>
     /// Creates a new FunctionAppAlwaysReadyConfig.
@@ -52,7 +64,8 @@ public partial class FunctionAppAlwaysReadyConfig : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"]);
         _instanceCount = DefineProperty<float>("InstanceCount", ["instanceCount"]);
+        _name = DefineProperty<string>("Name", ["name"]);
+        _alwaysReadyInstanceCount = DefineProperty<int>("AlwaysReadyInstanceCount", ["instanceCount"]);
     }
 }

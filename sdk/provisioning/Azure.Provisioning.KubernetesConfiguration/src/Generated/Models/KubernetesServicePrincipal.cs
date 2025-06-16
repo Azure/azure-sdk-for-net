@@ -91,11 +91,11 @@ public partial class KubernetesServicePrincipal : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _clientId = DefineProperty<Guid>("ClientId", ["clientId"]);
-        _tenantId = DefineProperty<Guid>("TenantId", ["tenantId"]);
-        _clientSecret = DefineProperty<string>("ClientSecret", ["clientSecret"]);
-        _clientCertificate = DefineProperty<string>("ClientCertificate", ["clientCertificate"]);
-        _clientCertificatePassword = DefineProperty<string>("ClientCertificatePassword", ["clientCertificatePassword"]);
-        _clientCertificateSendChain = DefineProperty<bool>("ClientCertificateSendChain", ["clientCertificateSendChain"]);
+        _clientId = DefineProperty<Guid>("ClientId", ["ClientId"]);
+        _tenantId = DefineProperty<Guid>("TenantId", ["TenantId"]);
+        _clientSecret = DefineProperty<string>("ClientSecret", ["ClientSecret"]);
+        _clientCertificate = DefineProperty<string>("ClientCertificate", ["ClientCertificate"]);
+        _clientCertificatePassword = DefineProperty<string>("ClientCertificatePassword", ["ClientCertificatePassword"]);
+        _clientCertificateSendChain = DefineProperty<bool>("ClientCertificateSendChain", ["ClientCertificateSendChain"]);
     }
 }

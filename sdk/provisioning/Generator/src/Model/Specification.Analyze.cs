@@ -107,7 +107,7 @@ public abstract partial class Specification
                         // Filter out preview releases
                         resource.ResourceVersions =
                             [.. data.ApiVersions.OrderDescending().Where((v, i) =>
-                                !v.EndsWith("preview")
+                                !v.EndsWith("preview", StringComparison.OrdinalIgnoreCase)
 #if EXPERIMENTAL_PROVISIONING
                                 // Only keep the very latest preview if it's the most
                                 // recent release - otherwise people should use a GAed version

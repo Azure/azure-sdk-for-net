@@ -135,26 +135,34 @@
     <PackageReference Update="Azure.Storage.Queues" Version="12.21.0" />
     <PackageReference Update="Azure.Storage.Files.Shares" Version="12.21.0" />
     <PackageReference Update="Azure.Storage.DataMovement" Version="12.0.0" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.13.0" />
-    <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.2" />
-    <PackageReference Update="Azure.ResourceManager.ApplicationInsights" Version="1.0.0" />
-    <PackageReference Update="Azure.ResourceManager.Authorization" Version="1.1.3" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.13.1" />
+    <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.4.0" />
+    <PackageReference Update="Azure.ResourceManager.AppContainers" Version="1.4.0" />
+    <PackageReference Update="Azure.ResourceManager.ApplicationInsights" Version="1.0.1" />
+    <PackageReference Update="Azure.ResourceManager.AppService" Version="1.3.0" />
+    <PackageReference Update="Azure.ResourceManager.Authorization" Version="1.1.4" />
     <PackageReference Update="Azure.ResourceManager.Batch" Version="1.4.0" />
-    <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.3.3" />
-    <PackageReference Update="Azure.ResourceManager.CosmosDB" Version="1.4.0-beta.9" />
+    <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.4.0" />
+    <PackageReference Update="Azure.ResourceManager.Communication" Version="1.2.1" />
+    <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.3.0" />
+    <PackageReference Update="Azure.ResourceManager.ContainerService" Version="1.2.3" />
+    <PackageReference Update="Azure.ResourceManager.CosmosDB" Version="1.4.0-beta.12" />
+    <PackageReference Update="Azure.ResourceManager.EventGrid" Version="1.1.0" />
     <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.2.0" />
-    <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.2.3" />
-    <PackageReference Update="Azure.ResourceManager.ManagedServiceIdentities" Version="1.2.3" />
-    <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.2.2" />
+    <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.3.2" />
+    <PackageReference Update="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.5" />
+    <PackageReference Update="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.0" />
+    <PackageReference Update="Azure.ResourceManager.ManagedServiceIdentities" Version="1.3.0" />
+    <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.3.0" />
     <PackageReference Update="Azure.ResourceManager.PostgreSql" Version="1.2.0" />
-    <PackageReference Update="Azure.ResourceManager.Redis" Version="1.4.0" />
-    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.7.3" />
-    <PackageReference Update="Azure.ResourceManager.Search" Version="1.3.0-beta.3" />
-    <PackageReference Update="Azure.ResourceManager.ServiceBus" Version="1.1.0-beta.7" />
-    <PackageReference Update="Azure.ResourceManager.WebPubSub" Version="1.2.0-beta.1" />
-    <PackageReference Update="Azure.ResourceManager.SignalR" Version="1.1.2" />
-    <PackageReference Update="Azure.ResourceManager.Sql" Version="1.3.0-beta.8" />
-    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.2.3" />
+    <PackageReference Update="Azure.ResourceManager.Redis" Version="1.5.0" />
+    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.9.1" />
+    <PackageReference Update="Azure.ResourceManager.Search" Version="1.3.0-beta.5" />
+    <PackageReference Update="Azure.ResourceManager.ServiceBus" Version="1.1.0" />
+    <PackageReference Update="Azure.ResourceManager.WebPubSub" Version="1.2.0" />
+    <PackageReference Update="Azure.ResourceManager.SignalR" Version="1.1.3" />
+    <PackageReference Update="Azure.ResourceManager.Sql" Version="1.3.0" />
+    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.4.2" />
 
     <!-- CDK -->
     <PackageReference Update="Azure.Provisioning" Version="1.0.0" />
@@ -308,7 +316,7 @@
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.12.1" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.20.1" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.13.0" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.13.1" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.9.0" />
     <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.3.0" />
     <PackageReference Update="Azure.ResourceManager.ContainerService" Version="1.2.3" />
