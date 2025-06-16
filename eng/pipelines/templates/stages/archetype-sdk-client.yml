@@ -62,7 +62,7 @@ parameters:
     default: 'Nuget.org'
   - name: PublicPublishEnvironment
     type: string
-    default: publish-package
+    default: package-publish
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
