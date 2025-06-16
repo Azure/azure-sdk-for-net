@@ -111,4 +111,5 @@ extends:
             ${{ if eq(parameters.ServiceDirectory, 'template') }}:
               TestPipeline: true
             ArtifactName: packages
+            PublicFeed: 'Nuget.org'
 
