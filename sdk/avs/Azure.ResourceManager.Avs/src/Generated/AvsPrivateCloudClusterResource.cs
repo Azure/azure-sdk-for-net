@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing an AvsPrivateCloudCluster along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPrivateCloudClusterResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetAvsPrivateCloudClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource"/> using the GetAvsPrivateCloudCluster method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsPrivateCloudCluster method.
     /// </summary>
     public partial class AvsPrivateCloudClusterResource : ArmResource
     {
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_ListZones</description>
+        /// <description>Clusters_GetClusterZones</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -643,13 +643,13 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ClusterZoneList>> GetZonesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsClusterZoneListResult>> GetClusterZonesAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetZones");
+            using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetClusterZones");
             scope.Start();
             try
             {
-                var response = await _avsPrivateCloudClusterClustersRestClient.ListZonesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _avsPrivateCloudClusterClustersRestClient.GetClusterZonesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_ListZones</description>
+        /// <description>Clusters_GetClusterZones</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -681,13 +681,13 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ClusterZoneList> GetZones(CancellationToken cancellationToken = default)
+        public virtual Response<AvsClusterZoneListResult> GetClusterZones(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetZones");
+            using var scope = _avsPrivateCloudClusterClustersClientDiagnostics.CreateScope("AvsPrivateCloudClusterResource.GetClusterZones");
             scope.Start();
             try
             {
-                var response = _avsPrivateCloudClusterClustersRestClient.ListZones(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _avsPrivateCloudClusterClustersRestClient.GetClusterZones(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

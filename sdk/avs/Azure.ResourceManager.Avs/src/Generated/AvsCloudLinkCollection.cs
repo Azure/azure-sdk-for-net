@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CloudLinkResource"/> and their operations.
-    /// Each <see cref="CloudLinkResource"/> in the collection will belong to the same instance of <see cref="PrivateCloudResource"/>.
-    /// To get a <see cref="CloudLinkCollection"/> instance call the GetCloudLinks method from an instance of <see cref="PrivateCloudResource"/>.
+    /// A class representing a collection of <see cref="AvsCloudLinkResource"/> and their operations.
+    /// Each <see cref="AvsCloudLinkResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get an <see cref="AvsCloudLinkCollection"/> instance call the GetAvsCloudLinks method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
-    public partial class CloudLinkCollection : ArmCollection, IEnumerable<CloudLinkResource>, IAsyncEnumerable<CloudLinkResource>
+    public partial class AvsCloudLinkCollection : ArmCollection, IEnumerable<AvsCloudLinkResource>, IAsyncEnumerable<AvsCloudLinkResource>
     {
-        private readonly ClientDiagnostics _cloudLinkClientDiagnostics;
-        private readonly CloudLinksRestOperations _cloudLinkRestClient;
+        private readonly ClientDiagnostics _avsCloudLinkCloudLinksClientDiagnostics;
+        private readonly CloudLinksRestOperations _avsCloudLinkCloudLinksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CloudLinkCollection"/> class for mocking. </summary>
-        protected CloudLinkCollection()
+        /// <summary> Initializes a new instance of the <see cref="AvsCloudLinkCollection"/> class for mocking. </summary>
+        protected AvsCloudLinkCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CloudLinkCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvsCloudLinkCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal CloudLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AvsCloudLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cloudLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", CloudLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CloudLinkResource.ResourceType, out string cloudLinkApiVersion);
-            _cloudLinkRestClient = new CloudLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudLinkApiVersion);
+            _avsCloudLinkCloudLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", AvsCloudLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AvsCloudLinkResource.ResourceType, out string avsCloudLinkCloudLinksApiVersion);
+            _avsCloudLinkCloudLinksRestClient = new CloudLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, avsCloudLinkCloudLinksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Avs
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != PrivateCloudResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateCloudResource.ResourceType), nameof(id));
+            if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudLinkName, CloudLinkData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AvsCloudLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudLinkName, AvsCloudLinkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkCollection.CreateOrUpdate");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cloudLinkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<CloudLinkResource>(new CloudLinkOperationSource(Client), _cloudLinkClientDiagnostics, Pipeline, _cloudLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _avsCloudLinkCloudLinksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation<AvsCloudLinkResource>(new AvsCloudLinkOperationSource(Client), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, _avsCloudLinkCloudLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CloudLinkResource> CreateOrUpdate(WaitUntil waitUntil, string cloudLinkName, CloudLinkData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AvsCloudLinkResource> CreateOrUpdate(WaitUntil waitUntil, string cloudLinkName, AvsCloudLinkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkCollection.CreateOrUpdate");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cloudLinkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data, cancellationToken);
-                var operation = new AvsArmOperation<CloudLinkResource>(new CloudLinkOperationSource(Client), _cloudLinkClientDiagnostics, Pipeline, _cloudLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _avsCloudLinkCloudLinksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data, cancellationToken);
+                var operation = new AvsArmOperation<AvsCloudLinkResource>(new AvsCloudLinkOperationSource(Client), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, _avsCloudLinkCloudLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
-        public virtual async Task<Response<CloudLinkResource>> GetAsync(string cloudLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsCloudLinkResource>> GetAsync(string cloudLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
 
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkCollection.Get");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cloudLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken).ConfigureAwait(false);
+                var response = await _avsCloudLinkCloudLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsCloudLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
-        public virtual Response<CloudLinkResource> Get(string cloudLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<AvsCloudLinkResource> Get(string cloudLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
 
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkCollection.Get");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = _cloudLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken);
+                var response = _avsCloudLinkCloudLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsCloudLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,17 +256,17 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CloudLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AvsCloudLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvsCloudLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudLinkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudLinkResource(Client, CloudLinkData.DeserializeCloudLinkData(e)), _cloudLinkClientDiagnostics, Pipeline, "CloudLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _avsCloudLinkCloudLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsCloudLinkCloudLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsCloudLinkResource(Client, AvsCloudLinkData.DeserializeAvsCloudLinkData(e)), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, "AvsCloudLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CloudLinkResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvsCloudLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvsCloudLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudLinkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudLinkResource(Client, CloudLinkData.DeserializeCloudLinkData(e)), _cloudLinkClientDiagnostics, Pipeline, "CloudLinkCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _avsCloudLinkCloudLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsCloudLinkCloudLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsCloudLinkResource(Client, AvsCloudLinkData.DeserializeAvsCloudLinkData(e)), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, "AvsCloudLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
 
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkCollection.Exists");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cloudLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _avsCloudLinkCloudLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
 
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkCollection.Exists");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cloudLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken: cancellationToken);
+                var response = _avsCloudLinkCloudLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,18 +410,18 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
-        public virtual async Task<NullableResponse<CloudLinkResource>> GetIfExistsAsync(string cloudLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AvsCloudLinkResource>> GetIfExistsAsync(string cloudLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
 
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkCollection.GetIfExists");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cloudLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _avsCloudLinkCloudLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<CloudLinkResource>(response.GetRawResponse());
-                return Response.FromValue(new CloudLinkResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AvsCloudLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new AvsCloudLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,18 +455,18 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
-        public virtual NullableResponse<CloudLinkResource> GetIfExists(string cloudLinkName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AvsCloudLinkResource> GetIfExists(string cloudLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudLinkName, nameof(cloudLinkName));
 
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkCollection.GetIfExists");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cloudLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken: cancellationToken);
+                var response = _avsCloudLinkCloudLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cloudLinkName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<CloudLinkResource>(response.GetRawResponse());
-                return Response.FromValue(new CloudLinkResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AvsCloudLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new AvsCloudLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        IEnumerator<CloudLinkResource> IEnumerable<CloudLinkResource>.GetEnumerator()
+        IEnumerator<AvsCloudLinkResource> IEnumerable<AvsCloudLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Avs
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<CloudLinkResource> IAsyncEnumerable<CloudLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AvsCloudLinkResource> IAsyncEnumerable<AvsCloudLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -18,14 +18,14 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A Class representing a PrivateCloud along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateCloudResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPrivateCloudResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPrivateCloud method.
+    /// A Class representing an AvsPrivateCloud along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPrivateCloudResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAvsPrivateCloudResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAvsPrivateCloud method.
     /// </summary>
-    public partial class PrivateCloudResource : ArmResource
+    public partial class AvsPrivateCloudResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PrivateCloudResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="AvsPrivateCloudResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="privateCloudName"> The privateCloudName. </param>
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.Avs
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _privateCloudClientDiagnostics;
-        private readonly PrivateCloudsRestOperations _privateCloudRestClient;
-        private readonly PrivateCloudData _data;
+        private readonly ClientDiagnostics _avsPrivateCloudPrivateCloudsClientDiagnostics;
+        private readonly PrivateCloudsRestOperations _avsPrivateCloudPrivateCloudsRestClient;
+        private readonly AvsPrivateCloudData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds";
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateCloudResource"/> class for mocking. </summary>
-        protected PrivateCloudResource()
+        /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudResource"/> class for mocking. </summary>
+        protected AvsPrivateCloudResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateCloudResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateCloudResource(ArmClient client, PrivateCloudData data) : this(client, data.Id)
+        internal AvsPrivateCloudResource(ArmClient client, AvsPrivateCloudData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateCloudResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateCloudResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AvsPrivateCloudResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateCloudClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string privateCloudApiVersion);
-            _privateCloudRestClient = new PrivateCloudsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateCloudApiVersion);
+            _avsPrivateCloudPrivateCloudsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string avsPrivateCloudPrivateCloudsApiVersion);
+            _avsPrivateCloudPrivateCloudsRestClient = new PrivateCloudsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, avsPrivateCloudPrivateCloudsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PrivateCloudData Data
+        public virtual AvsPrivateCloudData Data
         {
             get
             {
@@ -90,14 +90,14 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a WorkloadNetworkResource along with the instance operations that can be performed on it in the PrivateCloud. </summary>
+        /// <summary> Gets an object representing a WorkloadNetworkResource along with the instance operations that can be performed on it in the AvsPrivateCloud. </summary>
         /// <returns> Returns a <see cref="WorkloadNetworkResource"/> object. </returns>
         public virtual WorkloadNetworkResource GetWorkloadNetwork()
         {
             return new WorkloadNetworkResource(Client, Id.AppendChildResource("workloadNetworks", "default"));
         }
 
-        /// <summary> Gets a collection of AvsPrivateCloudClusterResources in the PrivateCloud. </summary>
+        /// <summary> Gets a collection of AvsPrivateCloudClusterResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of AvsPrivateCloudClusterResources and their operations over a AvsPrivateCloudClusterResource. </returns>
         public virtual AvsPrivateCloudClusterCollection GetAvsPrivateCloudClusters()
         {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Avs
             return GetAvsPrivateCloudClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HcxEnterpriseSiteResources in the PrivateCloud. </summary>
+        /// <summary> Gets a collection of HcxEnterpriseSiteResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of HcxEnterpriseSiteResources and their operations over a HcxEnterpriseSiteResource. </returns>
         public virtual HcxEnterpriseSiteCollection GetHcxEnterpriseSites()
         {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Avs
             return GetHcxEnterpriseSites().Get(hcxEnterpriseSiteName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExpressRouteAuthorizationResources in the PrivateCloud. </summary>
+        /// <summary> Gets a collection of ExpressRouteAuthorizationResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of ExpressRouteAuthorizationResources and their operations over a ExpressRouteAuthorizationResource. </returns>
         public virtual ExpressRouteAuthorizationCollection GetExpressRouteAuthorizations()
         {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Avs
             return GetExpressRouteAuthorizations().Get(authorizationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GlobalReachConnectionResources in the PrivateCloud. </summary>
+        /// <summary> Gets a collection of GlobalReachConnectionResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of GlobalReachConnectionResources and their operations over a GlobalReachConnectionResource. </returns>
         public virtual GlobalReachConnectionCollection GetGlobalReachConnections()
         {
@@ -373,11 +373,11 @@ namespace Azure.ResourceManager.Avs
             return GetGlobalReachConnections().Get(globalReachConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CloudLinkResources in the PrivateCloud. </summary>
-        /// <returns> An object representing collection of CloudLinkResources and their operations over a CloudLinkResource. </returns>
-        public virtual CloudLinkCollection GetCloudLinks()
+        /// <summary> Gets a collection of AvsCloudLinkResources in the AvsPrivateCloud. </summary>
+        /// <returns> An object representing collection of AvsCloudLinkResources and their operations over a AvsCloudLinkResource. </returns>
+        public virtual AvsCloudLinkCollection GetAvsCloudLinks()
         {
-            return GetCachedClient(client => new CloudLinkCollection(client, Id));
+            return GetCachedClient(client => new AvsCloudLinkCollection(client, Id));
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,9 +406,9 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CloudLinkResource>> GetCloudLinkAsync(string cloudLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsCloudLinkResource>> GetAvsCloudLinkAsync(string cloudLinkName, CancellationToken cancellationToken = default)
         {
-            return await GetCloudLinks().GetAsync(cloudLinkName, cancellationToken).ConfigureAwait(false);
+            return await GetAvsCloudLinks().GetAsync(cloudLinkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -437,12 +437,12 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CloudLinkResource> GetCloudLink(string cloudLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<AvsCloudLinkResource> GetAvsCloudLink(string cloudLinkName, CancellationToken cancellationToken = default)
         {
-            return GetCloudLinks().Get(cloudLinkName, cancellationToken);
+            return GetAvsCloudLinks().Get(cloudLinkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AvsPrivateCloudAddonResources in the PrivateCloud. </summary>
+        /// <summary> Gets a collection of AvsPrivateCloudAddonResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of AvsPrivateCloudAddonResources and their operations over a AvsPrivateCloudAddonResource. </returns>
         public virtual AvsPrivateCloudAddonCollection GetAvsPrivateCloudAddons()
         {
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Avs
             return GetAvsPrivateCloudAddons().Get(addonName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ScriptPackageResources in the PrivateCloud. </summary>
+        /// <summary> Gets a collection of ScriptPackageResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of ScriptPackageResources and their operations over a ScriptPackageResource. </returns>
         public virtual ScriptPackageCollection GetScriptPackages()
         {
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Avs
             return GetScriptPackages().Get(scriptPackageName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ScriptExecutionResources in the PrivateCloud. </summary>
+        /// <summary> Gets a collection of ScriptExecutionResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of ScriptExecutionResources and their operations over a ScriptExecutionResource. </returns>
         public virtual ScriptExecutionCollection GetScriptExecutions()
         {
@@ -649,14 +649,14 @@ namespace Azure.ResourceManager.Avs
             return GetScriptExecutions().Get(scriptExecutionName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a IscsiPathResource along with the instance operations that can be performed on it in the PrivateCloud. </summary>
+        /// <summary> Gets an object representing a IscsiPathResource along with the instance operations that can be performed on it in the AvsPrivateCloud. </summary>
         /// <returns> Returns a <see cref="IscsiPathResource"/> object. </returns>
         public virtual IscsiPathResource GetIscsiPath()
         {
             return new IscsiPathResource(Client, Id.AppendChildResource("iscsiPaths", "default"));
         }
 
-        /// <summary> Gets a collection of ProvisionedNetworkResources in the PrivateCloud. </summary>
+        /// <summary> Gets a collection of ProvisionedNetworkResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of ProvisionedNetworkResources and their operations over a ProvisionedNetworkResource. </returns>
         public virtual ProvisionedNetworkCollection GetProvisionedNetworks()
         {
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.Avs
             return GetProvisionedNetworks().Get(provisionedNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PureStoragePolicyResources in the PrivateCloud. </summary>
+        /// <summary> Gets a collection of PureStoragePolicyResources in the AvsPrivateCloud. </summary>
         /// <returns> An object representing collection of PureStoragePolicyResources and their operations over a PureStoragePolicyResource. </returns>
         public virtual PureStoragePolicyCollection GetPureStoragePolicies()
         {
@@ -811,21 +811,21 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateCloudResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsPrivateCloudResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.Get");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.Get");
             scope.Start();
             try
             {
-                var response = await _privateCloudRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _avsPrivateCloudPrivateCloudsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateCloudResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -851,21 +851,21 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateCloudResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AvsPrivateCloudResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.Get");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.Get");
             scope.Start();
             try
             {
-                var response = _privateCloudRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _avsPrivateCloudPrivateCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateCloudResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -899,12 +899,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.Delete");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.Delete");
             scope.Start();
             try
             {
-                var response = await _privateCloudRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_privateCloudClientDiagnostics, Pipeline, _privateCloudRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _avsPrivateCloudPrivateCloudsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -941,12 +941,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.Delete");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.Delete");
             scope.Start();
             try
             {
-                var response = _privateCloudRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AvsArmOperation(_privateCloudClientDiagnostics, Pipeline, _privateCloudRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _avsPrivateCloudPrivateCloudsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -983,16 +983,16 @@ namespace Azure.ResourceManager.Avs
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateCloudResource>> UpdateAsync(WaitUntil waitUntil, PrivateCloudPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AvsPrivateCloudResource>> UpdateAsync(WaitUntil waitUntil, AvsPrivateCloudPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.Update");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.Update");
             scope.Start();
             try
             {
-                var response = await _privateCloudRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<PrivateCloudResource>(new PrivateCloudOperationSource(Client), _privateCloudClientDiagnostics, Pipeline, _privateCloudRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _avsPrivateCloudPrivateCloudsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation<AvsPrivateCloudResource>(new AvsPrivateCloudOperationSource(Client), _avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1021,7 +1021,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1029,16 +1029,16 @@ namespace Azure.ResourceManager.Avs
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<PrivateCloudResource> Update(WaitUntil waitUntil, PrivateCloudPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AvsPrivateCloudResource> Update(WaitUntil waitUntil, AvsPrivateCloudPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.Update");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.Update");
             scope.Start();
             try
             {
-                var response = _privateCloudRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new AvsArmOperation<PrivateCloudResource>(new PrivateCloudOperationSource(Client), _privateCloudClientDiagnostics, Pipeline, _privateCloudRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _avsPrivateCloudPrivateCloudsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new AvsArmOperation<AvsPrivateCloudResource>(new AvsPrivateCloudOperationSource(Client), _avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1067,7 +1067,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1075,12 +1075,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RotateVcenterPasswordAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.RotateVcenterPassword");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateVcenterPassword");
             scope.Start();
             try
             {
-                var response = await _privateCloudRestClient.RotateVcenterPasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_privateCloudClientDiagnostics, Pipeline, _privateCloudRestClient.CreateRotateVcenterPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _avsPrivateCloudPrivateCloudsRestClient.RotateVcenterPasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateRotateVcenterPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1117,12 +1117,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation RotateVcenterPassword(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.RotateVcenterPassword");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateVcenterPassword");
             scope.Start();
             try
             {
-                var response = _privateCloudRestClient.RotateVcenterPassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AvsArmOperation(_privateCloudClientDiagnostics, Pipeline, _privateCloudRestClient.CreateRotateVcenterPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _avsPrivateCloudPrivateCloudsRestClient.RotateVcenterPassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateRotateVcenterPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1151,7 +1151,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1159,12 +1159,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RotateNsxtPasswordAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.RotateNsxtPassword");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateNsxtPassword");
             scope.Start();
             try
             {
-                var response = await _privateCloudRestClient.RotateNsxtPasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_privateCloudClientDiagnostics, Pipeline, _privateCloudRestClient.CreateRotateNsxtPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _avsPrivateCloudPrivateCloudsRestClient.RotateNsxtPasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateRotateNsxtPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1201,12 +1201,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation RotateNsxtPassword(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.RotateNsxtPassword");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateNsxtPassword");
             scope.Start();
             try
             {
-                var response = _privateCloudRestClient.RotateNsxtPassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AvsArmOperation(_privateCloudClientDiagnostics, Pipeline, _privateCloudRestClient.CreateRotateNsxtPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _avsPrivateCloudPrivateCloudsRestClient.RotateNsxtPassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateRotateNsxtPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1235,18 +1235,18 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AdminCredentials>> GetAdminCredentialsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.GetAdminCredentials");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetAdminCredentials");
             scope.Start();
             try
             {
-                var response = await _privateCloudRestClient.ListAdminCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _avsPrivateCloudPrivateCloudsRestClient.ListAdminCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1273,18 +1273,18 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AdminCredentials> GetAdminCredentials(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.GetAdminCredentials");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetAdminCredentials");
             scope.Start();
             try
             {
-                var response = _privateCloudRestClient.ListAdminCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _avsPrivateCloudPrivateCloudsRestClient.ListAdminCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1311,7 +1311,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1319,12 +1319,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<PrivateCloudResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsPrivateCloudResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.AddTag");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.AddTag");
             scope.Start();
             try
             {
@@ -1333,13 +1333,13 @@ namespace Azure.ResourceManager.Avs
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _privateCloudRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PrivateCloudResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _avsPrivateCloudPrivateCloudsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AvsPrivateCloudResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new PrivateCloudPatch();
+                    var patch = new AvsPrivateCloudPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1381,12 +1381,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<PrivateCloudResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<AvsPrivateCloudResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.AddTag");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.AddTag");
             scope.Start();
             try
             {
@@ -1395,13 +1395,13 @@ namespace Azure.ResourceManager.Avs
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _privateCloudRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new PrivateCloudResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _avsPrivateCloudPrivateCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AvsPrivateCloudResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new PrivateCloudPatch();
+                    var patch = new AvsPrivateCloudPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1435,18 +1435,18 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<PrivateCloudResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsPrivateCloudResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.SetTags");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.SetTags");
             scope.Start();
             try
             {
@@ -1456,13 +1456,13 @@ namespace Azure.ResourceManager.Avs
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _privateCloudRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PrivateCloudResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _avsPrivateCloudPrivateCloudsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AvsPrivateCloudResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new PrivateCloudPatch();
+                    var patch = new AvsPrivateCloudPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1492,18 +1492,18 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<PrivateCloudResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<AvsPrivateCloudResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.SetTags");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.SetTags");
             scope.Start();
             try
             {
@@ -1513,13 +1513,13 @@ namespace Azure.ResourceManager.Avs
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _privateCloudRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new PrivateCloudResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _avsPrivateCloudPrivateCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AvsPrivateCloudResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new PrivateCloudPatch();
+                    var patch = new AvsPrivateCloudPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1549,18 +1549,18 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<PrivateCloudResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsPrivateCloudResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.RemoveTag");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RemoveTag");
             scope.Start();
             try
             {
@@ -1569,13 +1569,13 @@ namespace Azure.ResourceManager.Avs
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _privateCloudRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PrivateCloudResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _avsPrivateCloudPrivateCloudsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AvsPrivateCloudResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new PrivateCloudPatch();
+                    var patch = new AvsPrivateCloudPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1609,18 +1609,18 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PrivateCloudResource"/></description>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<PrivateCloudResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<AvsPrivateCloudResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _privateCloudClientDiagnostics.CreateScope("PrivateCloudResource.RemoveTag");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RemoveTag");
             scope.Start();
             try
             {
@@ -1629,13 +1629,13 @@ namespace Azure.ResourceManager.Avs
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _privateCloudRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new PrivateCloudResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _avsPrivateCloudPrivateCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AvsPrivateCloudResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new PrivateCloudPatch();
+                    var patch = new AvsPrivateCloudPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

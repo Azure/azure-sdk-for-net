@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Avs.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckTrialAvailabilityLocation_LocationsCheckTrialAvailability()
+        public async Task CheckAvsTrialAvailability_LocationsCheckTrialAvailability()
         {
             // Generated from example definition: 2024-09-01/Locations_CheckTrialAvailability.json
-            // this example is just showing the usage of "Locations_CheckTrialAvailability" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Locations_CheckAvsTrialAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string location = "eastus";
-            AvsSubscriptionTrialAvailabilityResult result = await subscriptionResource.CheckTrialAvailabilityLocationAsync(location);
+            AvsSubscriptionTrialAvailabilityResult result = await subscriptionResource.CheckAvsTrialAvailabilityAsync(location);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckTrialAvailabilityLocation_LocationsCheckTrialAvailabilityWithSku()
+        public async Task CheckAvsTrialAvailability_LocationsCheckTrialAvailabilityWithSku()
         {
             // Generated from example definition: 2024-09-01/Locations_CheckTrialAvailabilityWithSku.json
-            // this example is just showing the usage of "Locations_CheckTrialAvailability" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Locations_CheckAvsTrialAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.Avs.Samples
             // invoke the operation
             string location = "eastus";
             AvsSku sku = new AvsSku("avs52t");
-            AvsSubscriptionTrialAvailabilityResult result = await subscriptionResource.CheckTrialAvailabilityLocationAsync(location, sku: sku);
+            AvsSubscriptionTrialAvailabilityResult result = await subscriptionResource.CheckAvsTrialAvailabilityAsync(location, sku: sku);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckQuotaAvailabilityLocation_LocationsCheckQuotaAvailability()
+        public async Task CheckAvsQuotaAvailability_LocationsCheckQuotaAvailability()
         {
             // Generated from example definition: 2024-09-01/Locations_CheckQuotaAvailability.json
-            // this example is just showing the usage of "Locations_CheckQuotaAvailability" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Locations_CheckAvsQuotaAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -88,14 +88,14 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string location = "eastus";
-            AvsSubscriptionQuotaAvailabilityResult result = await subscriptionResource.CheckQuotaAvailabilityLocationAsync(location);
+            AvsSubscriptionQuotaAvailabilityResult result = await subscriptionResource.CheckAvsQuotaAvailabilityAsync(location);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetPrivateClouds_PrivateCloudsListInSubscription()
+        public async Task GetAvsPrivateClouds_PrivateCloudsListInSubscription()
         {
             // Generated from example definition: 2024-09-01/PrivateClouds_ListInSubscription.json
             // this example is just showing the usage of "PrivateCloud_ListInSubscription" operation, for the dependent resources, they will have to be created separately.
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Avs.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PrivateCloudResource item in subscriptionResource.GetPrivateCloudsAsync())
+            await foreach (AvsPrivateCloudResource item in subscriptionResource.GetAvsPrivateCloudsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PrivateCloudData resourceData = item.Data;
+                AvsPrivateCloudData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Avs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetPrivateClouds_PrivateCloudsListInSubscriptionStretched()
+        public async Task GetAvsPrivateClouds_PrivateCloudsListInSubscriptionStretched()
         {
             // Generated from example definition: 2024-09-01/PrivateClouds_ListInSubscription_Stretched.json
             // this example is just showing the usage of "PrivateCloud_ListInSubscription" operation, for the dependent resources, they will have to be created separately.
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.Avs.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PrivateCloudResource item in subscriptionResource.GetPrivateCloudsAsync())
+            await foreach (AvsPrivateCloudResource item in subscriptionResource.GetAvsPrivateCloudsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PrivateCloudData resourceData = item.Data;
+                AvsPrivateCloudData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.Avs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetSkus_SkusList()
+        public async Task GetAvsSkus_SkusList()
         {
             // Generated from example definition: 2024-09-01/Skus_List.json
-            // this example is just showing the usage of "Skus_List" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Skus_GetAvsSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Avs.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ResourceSku item in subscriptionResource.GetSkusAsync())
+            await foreach (AvsResourceSku item in subscriptionResource.GetAvsSkusAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

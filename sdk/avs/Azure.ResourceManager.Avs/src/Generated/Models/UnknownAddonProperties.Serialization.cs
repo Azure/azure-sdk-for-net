@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class UnknownAvsPrivateCloudAddonProperties : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudAddonProperties>
+    internal partial class UnknownAddonProperties : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudAddonProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudAddonProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Avs.Models
             return DeserializeAvsPrivateCloudAddonProperties(document.RootElement, options);
         }
 
-        internal static UnknownAvsPrivateCloudAddonProperties DeserializeUnknownAvsPrivateCloudAddonProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownAddonProperties DeserializeUnknownAddonProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownAvsPrivateCloudAddonProperties(addonType, provisioningState, serializedAdditionalRawData);
+            return new UnknownAddonProperties(addonType, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudAddonProperties>.Write(ModelReaderWriterOptions options)

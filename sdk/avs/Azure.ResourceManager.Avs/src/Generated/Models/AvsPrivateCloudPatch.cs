@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> An update to a private cloud resource. </summary>
-    public partial class PrivateCloudPatch
+    public partial class AvsPrivateCloudPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.Avs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateCloudPatch"/>. </summary>
-        public PrivateCloudPatch()
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudPatch"/>. </summary>
+        public AvsPrivateCloudPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
             ExtendedNetworkBlocks = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateCloudPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// </param>
         /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateCloudPatch(IDictionary<string, string> tags, AvsSku sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsDnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvsPrivateCloudPatch(IDictionary<string, string> tags, AvsSku sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsDnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Sku = sku;

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    [PersistableModelProxy(typeof(UnknownAvsPrivateCloudAddonProperties))]
+    [PersistableModelProxy(typeof(UnknownAddonProperties))]
     public partial class AvsPrivateCloudAddonProperties : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudAddonProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudAddonProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs.Models
                     case "VR": return AddonVrProperties.DeserializeAddonVrProperties(element, options);
                 }
             }
-            return UnknownAvsPrivateCloudAddonProperties.DeserializeUnknownAvsPrivateCloudAddonProperties(element, options);
+            return UnknownAddonProperties.DeserializeUnknownAddonProperties(element, options);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudAddonProperties>.Write(ModelReaderWriterOptions options)

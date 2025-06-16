@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Avs.Models
             PrivateCloudAvailabilityProperties availability = default;
             CustomerManagedEncryption encryption = default;
             IList<string> extendedNetworkBlocks = default;
-            PrivateCloudProvisioningState? provisioningState = default;
+            AvsPrivateCloudProvisioningState? provisioningState = default;
             ExpressRouteCircuit circuit = default;
             AvsPrivateCloudEndpoints endpoints = default;
             string networkBlock = default;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    provisioningState = new PrivateCloudProvisioningState(property.Value.GetString());
+                    provisioningState = new AvsPrivateCloudProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("circuit"u8))

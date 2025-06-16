@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing an IscsiPath along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IscsiPathResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetIscsiPathResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource"/> using the GetIscsiPath method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetIscsiPath method.
     /// </summary>
     public partial class IscsiPathResource : ArmResource
     {

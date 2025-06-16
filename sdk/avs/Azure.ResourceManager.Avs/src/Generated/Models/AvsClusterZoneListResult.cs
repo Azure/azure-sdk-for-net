@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> List of all zones and associated hosts for a cluster. </summary>
-    public partial class ClusterZoneList
+    public partial class AvsClusterZoneListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Avs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterZoneList"/>. </summary>
-        internal ClusterZoneList()
+        /// <summary> Initializes a new instance of <see cref="AvsClusterZoneListResult"/>. </summary>
+        internal AvsClusterZoneListResult()
         {
             Zones = new ChangeTrackingList<AvsClusterZone>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterZoneList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsClusterZoneListResult"/>. </summary>
         /// <param name="zones"> Zone and associated hosts info. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterZoneList(IReadOnlyList<AvsClusterZone> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvsClusterZoneListResult(IReadOnlyList<AvsClusterZone> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Zones = zones;
             _serializedAdditionalRawData = serializedAdditionalRawData;

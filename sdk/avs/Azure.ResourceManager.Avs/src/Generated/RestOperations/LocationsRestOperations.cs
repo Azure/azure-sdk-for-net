@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCheckTrialAvailabilityRequestUri(string subscriptionId, string location, AvsSku sku)
+        internal RequestUriBuilder CreateCheckAvsTrialAvailabilityRequestUri(string subscriptionId, string location, AvsSku sku)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateCheckTrialAvailabilityRequest(string subscriptionId, string location, AvsSku sku)
+        internal HttpMessage CreateCheckAvsTrialAvailabilityRequest(string subscriptionId, string location, AvsSku sku)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckTrialAvailabilityAsync(string subscriptionId, string location, AvsSku sku = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(string subscriptionId, string location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using var message = CreateCheckTrialAvailabilityRequest(subscriptionId, location, sku);
+            using var message = CreateCheckAvsTrialAvailabilityRequest(subscriptionId, location, sku);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvsSubscriptionTrialAvailabilityResult> CheckTrialAvailability(string subscriptionId, string location, AvsSku sku = null, CancellationToken cancellationToken = default)
+        public Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(string subscriptionId, string location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using var message = CreateCheckTrialAvailabilityRequest(subscriptionId, location, sku);
+            using var message = CreateCheckAvsTrialAvailabilityRequest(subscriptionId, location, sku);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateCheckQuotaAvailabilityRequestUri(string subscriptionId, string location)
+        internal RequestUriBuilder CreateCheckAvsQuotaAvailabilityRequestUri(string subscriptionId, string location)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateCheckQuotaAvailabilityRequest(string subscriptionId, string location)
+        internal HttpMessage CreateCheckAvsQuotaAvailabilityRequest(string subscriptionId, string location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -169,12 +169,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckQuotaAvailabilityAsync(string subscriptionId, string location, CancellationToken cancellationToken = default)
+        public async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using var message = CreateCheckQuotaAvailabilityRequest(subscriptionId, location);
+            using var message = CreateCheckAvsQuotaAvailabilityRequest(subscriptionId, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -196,12 +196,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AvsSubscriptionQuotaAvailabilityResult> CheckQuotaAvailability(string subscriptionId, string location, CancellationToken cancellationToken = default)
+        public Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(string subscriptionId, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using var message = CreateCheckQuotaAvailabilityRequest(subscriptionId, location);
+            using var message = CreateCheckAvsQuotaAvailabilityRequest(subscriptionId, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

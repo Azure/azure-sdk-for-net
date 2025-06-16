@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> A SKU for a resource. </summary>
-    public partial class ResourceSku
+    public partial class AvsResourceSku
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Avs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsResourceSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="locations"> The set of locations that the SKU is available. </param>
         /// <param name="locationInfo"> A list of locations and availability zones in those locations where the SKU is available. </param>
         /// <param name="restrictions"> The restrictions of the SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="locations"/>, <paramref name="locationInfo"/> or <paramref name="restrictions"/> is null. </exception>
-        internal ResourceSku(ResourceSkuResourceType resourceType, string name, IEnumerable<AzureLocation> locations, IEnumerable<ResourceSkuLocationInfo> locationInfo, IEnumerable<ResourceSkuRestrictions> restrictions)
+        internal AvsResourceSku(ResourceSkuResourceType resourceType, string name, IEnumerable<AzureLocation> locations, IEnumerable<ResourceSkuLocationInfo> locationInfo, IEnumerable<ResourceSkuRestrictions> restrictions)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(locations, nameof(locations));
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Avs.Models
             Restrictions = restrictions.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsResourceSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="tier"> The tier of virtual machines in a scale set. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="capabilities"> Name value pairs to describe the capability. </param>
         /// <param name="restrictions"> The restrictions of the SKU. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSku(ResourceSkuResourceType resourceType, string name, string tier, string size, string family, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ResourceSkuLocationInfo> locationInfo, IReadOnlyList<ResourceSkuCapabilities> capabilities, IReadOnlyList<ResourceSkuRestrictions> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvsResourceSku(ResourceSkuResourceType resourceType, string name, string tier, string size, string family, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ResourceSkuLocationInfo> locationInfo, IReadOnlyList<ResourceSkuCapabilities> capabilities, IReadOnlyList<ResourceSkuRestrictions> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Name = name;
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Avs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceSku"/> for deserialization. </summary>
-        internal ResourceSku()
+        /// <summary> Initializes a new instance of <see cref="AvsResourceSku"/> for deserialization. </summary>
+        internal AvsResourceSku()
         {
         }
 

@@ -155,15 +155,15 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateCloudResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateCloudResource.CreateResourceIdentifier" /> to create a <see cref="PrivateCloudResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AvsPrivateCloudResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsPrivateCloudResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateCloudResource"/> object. </returns>
-        public virtual PrivateCloudResource GetPrivateCloudResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsPrivateCloudResource"/> object. </returns>
+        public virtual AvsPrivateCloudResource GetAvsPrivateCloudResource(ResourceIdentifier id)
         {
-            PrivateCloudResource.ValidateResourceId(id);
-            return new PrivateCloudResource(Client, id);
+            AvsPrivateCloudResource.ValidateResourceId(id);
+            return new AvsPrivateCloudResource(Client, id);
         }
 
         /// <summary>
@@ -227,15 +227,15 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CloudLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CloudLinkResource.CreateResourceIdentifier" /> to create a <see cref="CloudLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AvsCloudLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsCloudLinkResource.CreateResourceIdentifier" /> to create an <see cref="AvsCloudLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CloudLinkResource"/> object. </returns>
-        public virtual CloudLinkResource GetCloudLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsCloudLinkResource"/> object. </returns>
+        public virtual AvsCloudLinkResource GetAvsCloudLinkResource(ResourceIdentifier id)
         {
-            CloudLinkResource.ValidateResourceId(id);
-            return new CloudLinkResource(Client, id);
+            AvsCloudLinkResource.ValidateResourceId(id);
+            return new AvsCloudLinkResource(Client, id);
         }
 
         /// <summary>

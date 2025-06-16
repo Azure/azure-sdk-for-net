@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class EncryptionKeyVaultProperties : IUtf8JsonSerializable, IJsonModel<EncryptionKeyVaultProperties>
+    public partial class AvsEncryptionKeyVaultProperties : IUtf8JsonSerializable, IJsonModel<AvsEncryptionKeyVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionKeyVaultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsEncryptionKeyVaultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EncryptionKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AvsEncryptionKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsEncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionKeyVaultProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(KeyName))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
-                writer.WriteStringValue(KeyVaultUri);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(KeyState))
             {
@@ -81,19 +81,19 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
-        EncryptionKeyVaultProperties IJsonModel<EncryptionKeyVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AvsEncryptionKeyVaultProperties IJsonModel<AvsEncryptionKeyVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsEncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionKeyVaultProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEncryptionKeyVaultProperties(document.RootElement, options);
+            return DeserializeAvsEncryptionKeyVaultProperties(document.RootElement, options);
         }
 
-        internal static EncryptionKeyVaultProperties DeserializeEncryptionKeyVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AvsEncryptionKeyVaultProperties DeserializeAvsEncryptionKeyVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.Avs.Models
             string keyName = default;
             string keyVersion = default;
             string autoDetectedKeyVersion = default;
-            string keyVaultUrl = default;
-            EncryptionKeyStatus? keyState = default;
+            Uri keyVaultUrl = default;
+            AvsEncryptionKeyStatus? keyState = default;
             AvsEncryptionVersionType? versionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,11 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("keyVaultUrl"u8))
                 {
-                    keyVaultUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyState"u8))
@@ -137,7 +141,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    keyState = new EncryptionKeyStatus(property.Value.GetString());
+                    keyState = new AvsEncryptionKeyStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("versionType"u8))
@@ -155,7 +159,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EncryptionKeyVaultProperties(
+            return new AvsEncryptionKeyVaultProperties(
                 keyName,
                 keyVersion,
                 autoDetectedKeyVersion,
@@ -165,35 +169,35 @@ namespace Azure.ResourceManager.Avs.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EncryptionKeyVaultProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AvsEncryptionKeyVaultProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsEncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionKeyVaultProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EncryptionKeyVaultProperties IPersistableModel<EncryptionKeyVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AvsEncryptionKeyVaultProperties IPersistableModel<AvsEncryptionKeyVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsEncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEncryptionKeyVaultProperties(document.RootElement, options);
+                        return DeserializeAvsEncryptionKeyVaultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionKeyVaultProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EncryptionKeyVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AvsEncryptionKeyVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

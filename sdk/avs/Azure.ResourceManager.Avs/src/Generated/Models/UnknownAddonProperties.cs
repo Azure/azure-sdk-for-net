@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Unknown version of AvsPrivateCloudAddonProperties. </summary>
-    internal partial class UnknownAvsPrivateCloudAddonProperties : AvsPrivateCloudAddonProperties
+    internal partial class UnknownAddonProperties : AvsPrivateCloudAddonProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAvsPrivateCloudAddonProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAddonProperties"/>. </summary>
         /// <param name="addonType"> Addon type. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAvsPrivateCloudAddonProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(addonType, provisioningState, serializedAdditionalRawData)
+        internal UnknownAddonProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(addonType, provisioningState, serializedAdditionalRawData)
         {
             AddonType = addonType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownAvsPrivateCloudAddonProperties"/> for deserialization. </summary>
-        internal UnknownAvsPrivateCloudAddonProperties()
+        /// <summary> Initializes a new instance of <see cref="UnknownAddonProperties"/> for deserialization. </summary>
+        internal UnknownAddonProperties()
         {
         }
     }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing a GlobalReachConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GlobalReachConnectionResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetGlobalReachConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource"/> using the GetGlobalReachConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetGlobalReachConnection method.
     /// </summary>
     public partial class GlobalReachConnectionResource : ArmResource
     {

@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class AvsPrivateCloudClusterData : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudClusterData>
+    public partial class AvsCloudLinkData : IUtf8JsonSerializable, IJsonModel<AvsCloudLinkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsCloudLinkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AvsPrivateCloudClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AvsCloudLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,63 +30,46 @@ namespace Azure.ResourceManager.Avs
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsCloudLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudClusterData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsCloudLinkData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterSize))
-            {
-                writer.WritePropertyName("clusterSize"u8);
-                writer.WriteNumberValue(ClusterSize.Value);
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("clusterId"u8);
-                writer.WriteNumberValue(ClusterId.Value);
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Hosts))
+            if (Optional.IsDefined(LinkedCloud))
             {
-                writer.WritePropertyName("hosts"u8);
-                writer.WriteStartArray();
-                foreach (var item in Hosts)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(VsanDatastoreName))
-            {
-                writer.WritePropertyName("vsanDatastoreName"u8);
-                writer.WriteStringValue(VsanDatastoreName);
+                writer.WritePropertyName("linkedCloud"u8);
+                writer.WriteStringValue(LinkedCloud);
             }
             writer.WriteEndObject();
         }
 
-        AvsPrivateCloudClusterData IJsonModel<AvsPrivateCloudClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AvsCloudLinkData IJsonModel<AvsCloudLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsCloudLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudClusterData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsCloudLinkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAvsPrivateCloudClusterData(document.RootElement, options);
+            return DeserializeAvsCloudLinkData(document.RootElement, options);
         }
 
-        internal static AvsPrivateCloudClusterData DeserializeAvsPrivateCloudClusterData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AvsCloudLinkData DeserializeAvsCloudLinkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -94,25 +77,17 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
-            AvsSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            int? clusterSize = default;
-            AvsPrivateCloudClusterProvisioningState? provisioningState = default;
-            int? clusterId = default;
-            IList<string> hosts = default;
-            string vsanDatastoreName = default;
+            AvsCloudLinkProvisioningState? provisioningState = default;
+            AvsCloudLinkStatus? status = default;
+            ResourceIdentifier linkedCloud = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
-                {
-                    sku = AvsSku.DeserializeAvsSku(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -146,50 +121,31 @@ namespace Azure.ResourceManager.Avs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("clusterSize"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterSize = property0.Value.GetInt32();
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            provisioningState = new AvsPrivateCloudClusterProvisioningState(property0.Value.GetString());
+                            provisioningState = new AvsCloudLinkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("clusterId"u8))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            clusterId = property0.Value.GetInt32();
+                            status = new AvsCloudLinkStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hosts"u8))
+                        if (property0.NameEquals("linkedCloud"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            hosts = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("vsanDatastoreName"u8))
-                        {
-                            vsanDatastoreName = property0.Value.GetString();
+                            linkedCloud = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -201,49 +157,46 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AvsPrivateCloudClusterData(
+            return new AvsCloudLinkData(
                 id,
                 name,
                 type,
                 systemData,
-                clusterSize,
                 provisioningState,
-                clusterId,
-                hosts ?? new ChangeTrackingList<string>(),
-                vsanDatastoreName,
-                sku,
+                status,
+                linkedCloud,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AvsPrivateCloudClusterData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AvsCloudLinkData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsCloudLinkData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudClusterData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsCloudLinkData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AvsPrivateCloudClusterData IPersistableModel<AvsPrivateCloudClusterData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AvsCloudLinkData IPersistableModel<AvsCloudLinkData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsCloudLinkData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAvsPrivateCloudClusterData(document.RootElement, options);
+                        return DeserializeAvsCloudLinkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudClusterData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsCloudLinkData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AvsPrivateCloudClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AvsCloudLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

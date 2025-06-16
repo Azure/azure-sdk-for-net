@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class PrivateCloudData : IUtf8JsonSerializable, IJsonModel<PrivateCloudData>
+    public partial class AvsPrivateCloudData : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateCloudData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PrivateCloudData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AvsPrivateCloudData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Avs
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateCloudData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        PrivateCloudData IJsonModel<PrivateCloudData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AvsPrivateCloudData IJsonModel<AvsPrivateCloudData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateCloudData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateCloudData(document.RootElement, options);
+            return DeserializeAvsPrivateCloudData(document.RootElement, options);
         }
 
-        internal static PrivateCloudData DeserializePrivateCloudData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AvsPrivateCloudData DeserializeAvsPrivateCloudData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PrivateCloudData(
+            return new AvsPrivateCloudData(
                 id,
                 name,
                 type,
@@ -195,35 +195,35 @@ namespace Azure.ResourceManager.Avs
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PrivateCloudData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AvsPrivateCloudData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateCloudData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PrivateCloudData IPersistableModel<PrivateCloudData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AvsPrivateCloudData IPersistableModel<AvsPrivateCloudData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePrivateCloudData(document.RootElement, options);
+                        return DeserializeAvsPrivateCloudData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateCloudData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PrivateCloudData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AvsPrivateCloudData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

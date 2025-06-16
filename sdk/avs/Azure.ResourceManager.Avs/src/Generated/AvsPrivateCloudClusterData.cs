@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
+            Hosts = new ChangeTrackingList<string>();
             Sku = sku;
         }
 
@@ -66,12 +67,20 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="clusterSize"> The cluster size. </param>
+        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
+        /// <param name="clusterId"> The identity. </param>
+        /// <param name="hosts"> The hosts. </param>
+        /// <param name="vsanDatastoreName"> Name of the vsan datastore associated with the cluster. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ClusterProperties properties, AvsSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts, string vsanDatastoreName, AvsSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            ClusterSize = clusterSize;
+            ProvisioningState = provisioningState;
+            ClusterId = clusterId;
+            Hosts = hosts;
+            VsanDatastoreName = vsanDatastoreName;
             Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -81,8 +90,16 @@ namespace Azure.ResourceManager.Avs
         {
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public ClusterProperties Properties { get; set; }
+        /// <summary> The cluster size. </summary>
+        public int? ClusterSize { get; set; }
+        /// <summary> The state of the cluster provisioning. </summary>
+        public AvsPrivateCloudClusterProvisioningState? ProvisioningState { get; }
+        /// <summary> The identity. </summary>
+        public int? ClusterId { get; }
+        /// <summary> The hosts. </summary>
+        public IList<string> Hosts { get; }
+        /// <summary> Name of the vsan datastore associated with the cluster. </summary>
+        public string VsanDatastoreName { get; set; }
         /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
         public AvsSku Sku { get; set; }
     }

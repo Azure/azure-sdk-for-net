@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A Class representing a CloudLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CloudLinkResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetCloudLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource"/> using the GetCloudLink method.
+    /// A Class representing an AvsCloudLink along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsCloudLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAvsCloudLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetAvsCloudLink method.
     /// </summary>
-    public partial class CloudLinkResource : ArmResource
+    public partial class AvsCloudLinkResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CloudLinkResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="AvsCloudLinkResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="privateCloudName"> The privateCloudName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.Avs
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _cloudLinkClientDiagnostics;
-        private readonly CloudLinksRestOperations _cloudLinkRestClient;
-        private readonly CloudLinkData _data;
+        private readonly ClientDiagnostics _avsCloudLinkCloudLinksClientDiagnostics;
+        private readonly CloudLinksRestOperations _avsCloudLinkCloudLinksRestClient;
+        private readonly AvsCloudLinkData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/cloudLinks";
 
-        /// <summary> Initializes a new instance of the <see cref="CloudLinkResource"/> class for mocking. </summary>
-        protected CloudLinkResource()
+        /// <summary> Initializes a new instance of the <see cref="AvsCloudLinkResource"/> class for mocking. </summary>
+        protected AvsCloudLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CloudLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvsCloudLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CloudLinkResource(ArmClient client, CloudLinkData data) : this(client, data.Id)
+        internal AvsCloudLinkResource(ArmClient client, AvsCloudLinkData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CloudLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvsCloudLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CloudLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AvsCloudLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cloudLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string cloudLinkApiVersion);
-            _cloudLinkRestClient = new CloudLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudLinkApiVersion);
+            _avsCloudLinkCloudLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string avsCloudLinkCloudLinksApiVersion);
+            _avsCloudLinkCloudLinksRestClient = new CloudLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, avsCloudLinkCloudLinksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual CloudLinkData Data
+        public virtual AvsCloudLinkData Data
         {
             get
             {
@@ -105,21 +105,21 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CloudLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsCloudLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkResource.Get");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _cloudLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _avsCloudLinkCloudLinksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsCloudLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CloudLinkResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AvsCloudLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkResource.Get");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _cloudLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _avsCloudLinkCloudLinksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudLinkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvsCloudLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkResource.Delete");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkResource.Delete");
             scope.Start();
             try
             {
-                var response = await _cloudLinkRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_cloudLinkClientDiagnostics, Pipeline, _cloudLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _avsCloudLinkCloudLinksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation(_avsCloudLinkCloudLinksClientDiagnostics, Pipeline, _avsCloudLinkCloudLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkResource.Delete");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkResource.Delete");
             scope.Start();
             try
             {
-                var response = _cloudLinkRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AvsArmOperation(_cloudLinkClientDiagnostics, Pipeline, _cloudLinkRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _avsCloudLinkCloudLinksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AvsArmOperation(_avsCloudLinkCloudLinksClientDiagnostics, Pipeline, _avsCloudLinkCloudLinksRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,16 +277,16 @@ namespace Azure.ResourceManager.Avs
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudLinkResource>> UpdateAsync(WaitUntil waitUntil, CloudLinkData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AvsCloudLinkResource>> UpdateAsync(WaitUntil waitUntil, AvsCloudLinkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkResource.Update");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkResource.Update");
             scope.Start();
             try
             {
-                var response = await _cloudLinkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<CloudLinkResource>(new CloudLinkOperationSource(Client), _cloudLinkClientDiagnostics, Pipeline, _cloudLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _avsCloudLinkCloudLinksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation<AvsCloudLinkResource>(new AvsCloudLinkOperationSource(Client), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, _avsCloudLinkCloudLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CloudLinkResource"/></description>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,16 +323,16 @@ namespace Azure.ResourceManager.Avs
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CloudLinkResource> Update(WaitUntil waitUntil, CloudLinkData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AvsCloudLinkResource> Update(WaitUntil waitUntil, AvsCloudLinkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cloudLinkClientDiagnostics.CreateScope("CloudLinkResource.Update");
+            using var scope = _avsCloudLinkCloudLinksClientDiagnostics.CreateScope("AvsCloudLinkResource.Update");
             scope.Start();
             try
             {
-                var response = _cloudLinkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AvsArmOperation<CloudLinkResource>(new CloudLinkOperationSource(Client), _cloudLinkClientDiagnostics, Pipeline, _cloudLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _avsCloudLinkCloudLinksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new AvsArmOperation<AvsCloudLinkResource>(new AvsCloudLinkOperationSource(Client), _avsCloudLinkCloudLinksClientDiagnostics, Pipeline, _avsCloudLinkCloudLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

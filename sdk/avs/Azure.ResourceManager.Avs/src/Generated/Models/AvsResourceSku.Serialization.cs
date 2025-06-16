@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class ResourceSku : IUtf8JsonSerializable, IJsonModel<ResourceSku>
+    public partial class AvsResourceSku : IUtf8JsonSerializable, IJsonModel<AvsResourceSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsResourceSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ResourceSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AvsResourceSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsResourceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSku)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsResourceSku)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("resourceType"u8);
@@ -101,19 +101,19 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
-        ResourceSku IJsonModel<ResourceSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AvsResourceSku IJsonModel<AvsResourceSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsResourceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSku)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsResourceSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceSku(document.RootElement, options);
+            return DeserializeAvsResourceSku(document.RootElement, options);
         }
 
-        internal static ResourceSku DeserializeResourceSku(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AvsResourceSku DeserializeAvsResourceSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceSku(
+            return new AvsResourceSku(
                 resourceType,
                 name,
                 tier,
@@ -222,35 +222,35 @@ namespace Azure.ResourceManager.Avs.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ResourceSku>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AvsResourceSku>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsResourceSku>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSku)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsResourceSku)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ResourceSku IPersistableModel<ResourceSku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AvsResourceSku IPersistableModel<AvsResourceSku>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsResourceSku>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeResourceSku(document.RootElement, options);
+                        return DeserializeAvsResourceSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSku)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsResourceSku)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ResourceSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AvsResourceSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

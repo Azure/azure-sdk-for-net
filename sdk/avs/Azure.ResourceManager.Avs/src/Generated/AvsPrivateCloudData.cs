@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing the PrivateCloud data model.
+    /// A class representing the AvsPrivateCloud data model.
     /// A private cloud resource
     /// </summary>
-    public partial class PrivateCloudData : TrackedResourceData
+    public partial class AvsPrivateCloudData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateCloudData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public PrivateCloudData(AzureLocation location, AvsSku sku) : base(location)
+        public AvsPrivateCloudData(AzureLocation location, AvsSku sku) : base(location)
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Avs
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateCloudData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="identity"> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PrivateCloudProperties properties, AvsSku sku, ManagedServiceIdentity identity, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PrivateCloudProperties properties, AvsSku sku, ManagedServiceIdentity identity, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Sku = sku;
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Avs
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateCloudData"/> for deserialization. </summary>
-        internal PrivateCloudData()
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudData"/> for deserialization. </summary>
+        internal AvsPrivateCloudData()
         {
         }
 

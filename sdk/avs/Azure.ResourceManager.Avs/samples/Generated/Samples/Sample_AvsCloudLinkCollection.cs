@@ -9,19 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
-    public partial class Sample_AvsPrivateCloudClusterCollection
+    public partial class Sample_AvsCloudLinkCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_ClustersCreateOrUpdate()
+        public async Task CreateOrUpdate_CloudLinksCreateOrUpdate()
         {
-            // Generated from example definition: 2024-09-01/Clusters_CreateOrUpdate.json
-            // this example is just showing the usage of "Cluster_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/CloudLinks_CreateOrUpdate.json
+            // this example is just showing the usage of "CloudLink_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -36,28 +35,28 @@ namespace Azure.ResourceManager.Avs.Samples
             ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
             AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
-            // get the collection of this AvsPrivateCloudClusterResource
-            AvsPrivateCloudClusterCollection collection = avsPrivateCloud.GetAvsPrivateCloudClusters();
+            // get the collection of this AvsCloudLinkResource
+            AvsCloudLinkCollection collection = avsPrivateCloud.GetAvsCloudLinks();
 
             // invoke the operation
-            string clusterName = "cluster1";
-            AvsPrivateCloudClusterData data = new AvsPrivateCloudClusterData(new AvsSku("AV20"));
-            ArmOperation<AvsPrivateCloudClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
-            AvsPrivateCloudClusterResource result = lro.Value;
+            string cloudLinkName = "cloudLink1";
+            AvsCloudLinkData data = new AvsCloudLinkData();
+            ArmOperation<AvsCloudLinkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudLinkName, data);
+            AvsCloudLinkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AvsPrivateCloudClusterData resourceData = result.Data;
+            AvsCloudLinkData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_ClustersGet()
+        public async Task Get_CloudLinksGet()
         {
-            // Generated from example definition: 2024-09-01/Clusters_Get.json
-            // this example is just showing the usage of "Cluster_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/CloudLinks_Get.json
+            // this example is just showing the usage of "CloudLink_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -72,26 +71,26 @@ namespace Azure.ResourceManager.Avs.Samples
             ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
             AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
-            // get the collection of this AvsPrivateCloudClusterResource
-            AvsPrivateCloudClusterCollection collection = avsPrivateCloud.GetAvsPrivateCloudClusters();
+            // get the collection of this AvsCloudLinkResource
+            AvsCloudLinkCollection collection = avsPrivateCloud.GetAvsCloudLinks();
 
             // invoke the operation
-            string clusterName = "cluster1";
-            AvsPrivateCloudClusterResource result = await collection.GetAsync(clusterName);
+            string cloudLinkName = "cloudLink1";
+            AvsCloudLinkResource result = await collection.GetAsync(cloudLinkName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AvsPrivateCloudClusterData resourceData = result.Data;
+            AvsCloudLinkData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ClustersList()
+        public async Task GetAll_CloudLinksList()
         {
-            // Generated from example definition: 2024-09-01/Clusters_List.json
-            // this example is just showing the usage of "Cluster_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/CloudLinks_List.json
+            // this example is just showing the usage of "CloudLink_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -106,15 +105,15 @@ namespace Azure.ResourceManager.Avs.Samples
             ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
             AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
-            // get the collection of this AvsPrivateCloudClusterResource
-            AvsPrivateCloudClusterCollection collection = avsPrivateCloud.GetAvsPrivateCloudClusters();
+            // get the collection of this AvsCloudLinkResource
+            AvsCloudLinkCollection collection = avsPrivateCloud.GetAvsCloudLinks();
 
             // invoke the operation and iterate over the result
-            await foreach (AvsPrivateCloudClusterResource item in collection.GetAllAsync())
+            await foreach (AvsCloudLinkResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AvsPrivateCloudClusterData resourceData = item.Data;
+                AvsCloudLinkData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -124,10 +123,10 @@ namespace Azure.ResourceManager.Avs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_ClustersGet()
+        public async Task Exists_CloudLinksGet()
         {
-            // Generated from example definition: 2024-09-01/Clusters_Get.json
-            // this example is just showing the usage of "Cluster_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/CloudLinks_Get.json
+            // this example is just showing the usage of "CloudLink_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -142,22 +141,22 @@ namespace Azure.ResourceManager.Avs.Samples
             ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
             AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
-            // get the collection of this AvsPrivateCloudClusterResource
-            AvsPrivateCloudClusterCollection collection = avsPrivateCloud.GetAvsPrivateCloudClusters();
+            // get the collection of this AvsCloudLinkResource
+            AvsCloudLinkCollection collection = avsPrivateCloud.GetAvsCloudLinks();
 
             // invoke the operation
-            string clusterName = "cluster1";
-            bool result = await collection.ExistsAsync(clusterName);
+            string cloudLinkName = "cloudLink1";
+            bool result = await collection.ExistsAsync(cloudLinkName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_ClustersGet()
+        public async Task GetIfExists_CloudLinksGet()
         {
-            // Generated from example definition: 2024-09-01/Clusters_Get.json
-            // this example is just showing the usage of "Cluster_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/CloudLinks_Get.json
+            // this example is just showing the usage of "CloudLink_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -172,13 +171,13 @@ namespace Azure.ResourceManager.Avs.Samples
             ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
             AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
-            // get the collection of this AvsPrivateCloudClusterResource
-            AvsPrivateCloudClusterCollection collection = avsPrivateCloud.GetAvsPrivateCloudClusters();
+            // get the collection of this AvsCloudLinkResource
+            AvsCloudLinkCollection collection = avsPrivateCloud.GetAvsCloudLinks();
 
             // invoke the operation
-            string clusterName = "cluster1";
-            NullableResponse<AvsPrivateCloudClusterResource> response = await collection.GetIfExistsAsync(clusterName);
-            AvsPrivateCloudClusterResource result = response.HasValue ? response.Value : null;
+            string cloudLinkName = "cloudLink1";
+            NullableResponse<AvsCloudLinkResource> response = await collection.GetIfExistsAsync(cloudLinkName);
+            AvsCloudLinkResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.Avs.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AvsPrivateCloudClusterData resourceData = result.Data;
+                AvsCloudLinkData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

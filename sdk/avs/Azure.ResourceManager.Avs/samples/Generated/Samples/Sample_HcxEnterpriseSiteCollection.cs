@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateCloudResource created on azure
-            // for more information of creating PrivateCloudResource, please refer to the document of PrivateCloudResource
+            // this example assumes you already have this AvsPrivateCloudResource created on azure
+            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier privateCloudResourceId = PrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            PrivateCloudResource privateCloud = client.GetPrivateCloudResource(privateCloudResourceId);
+            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
             // get the collection of this HcxEnterpriseSiteResource
-            HcxEnterpriseSiteCollection collection = privateCloud.GetHcxEnterpriseSites();
+            HcxEnterpriseSiteCollection collection = avsPrivateCloud.GetHcxEnterpriseSites();
 
             // invoke the operation
             string hcxEnterpriseSiteName = "site1";
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateCloudResource created on azure
-            // for more information of creating PrivateCloudResource, please refer to the document of PrivateCloudResource
+            // this example assumes you already have this AvsPrivateCloudResource created on azure
+            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier privateCloudResourceId = PrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            PrivateCloudResource privateCloud = client.GetPrivateCloudResource(privateCloudResourceId);
+            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
             // get the collection of this HcxEnterpriseSiteResource
-            HcxEnterpriseSiteCollection collection = privateCloud.GetHcxEnterpriseSites();
+            HcxEnterpriseSiteCollection collection = avsPrivateCloud.GetHcxEnterpriseSites();
 
             // invoke the operation
             string hcxEnterpriseSiteName = "site1";
@@ -97,16 +97,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateCloudResource created on azure
-            // for more information of creating PrivateCloudResource, please refer to the document of PrivateCloudResource
+            // this example assumes you already have this AvsPrivateCloudResource created on azure
+            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier privateCloudResourceId = PrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            PrivateCloudResource privateCloud = client.GetPrivateCloudResource(privateCloudResourceId);
+            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
             // get the collection of this HcxEnterpriseSiteResource
-            HcxEnterpriseSiteCollection collection = privateCloud.GetHcxEnterpriseSites();
+            HcxEnterpriseSiteCollection collection = avsPrivateCloud.GetHcxEnterpriseSites();
 
             // invoke the operation and iterate over the result
             await foreach (HcxEnterpriseSiteResource item in collection.GetAllAsync())
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateCloudResource created on azure
-            // for more information of creating PrivateCloudResource, please refer to the document of PrivateCloudResource
+            // this example assumes you already have this AvsPrivateCloudResource created on azure
+            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier privateCloudResourceId = PrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            PrivateCloudResource privateCloud = client.GetPrivateCloudResource(privateCloudResourceId);
+            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
             // get the collection of this HcxEnterpriseSiteResource
-            HcxEnterpriseSiteCollection collection = privateCloud.GetHcxEnterpriseSites();
+            HcxEnterpriseSiteCollection collection = avsPrivateCloud.GetHcxEnterpriseSites();
 
             // invoke the operation
             string hcxEnterpriseSiteName = "site1";
@@ -163,16 +163,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PrivateCloudResource created on azure
-            // for more information of creating PrivateCloudResource, please refer to the document of PrivateCloudResource
+            // this example assumes you already have this AvsPrivateCloudResource created on azure
+            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier privateCloudResourceId = PrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            PrivateCloudResource privateCloud = client.GetPrivateCloudResource(privateCloudResourceId);
+            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
             // get the collection of this HcxEnterpriseSiteResource
-            HcxEnterpriseSiteCollection collection = privateCloud.GetHcxEnterpriseSites();
+            HcxEnterpriseSiteCollection collection = avsPrivateCloud.GetHcxEnterpriseSites();
 
             // invoke the operation
             string hcxEnterpriseSiteName = "site1";

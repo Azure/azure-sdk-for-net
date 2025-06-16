@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        internal RequestUriBuilder CreateListZonesRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName)
+        internal RequestUriBuilder CreateGetClusterZonesRequestUri(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Avs
             return uri;
         }
 
-        internal HttpMessage CreateListZonesRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName)
+        internal HttpMessage CreateGetClusterZonesRequest(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -576,22 +576,22 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ClusterZoneList>> ListZonesAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<AvsClusterZoneListResult>> GetClusterZonesAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var message = CreateListZonesRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName);
+            using var message = CreateGetClusterZonesRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ClusterZoneList value = default;
+                        AvsClusterZoneListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ClusterZoneList.DeserializeClusterZoneList(document.RootElement);
+                        value = AvsClusterZoneListResult.DeserializeAvsClusterZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -607,22 +607,22 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ClusterZoneList> ListZones(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<AvsClusterZoneListResult> GetClusterZones(string subscriptionId, string resourceGroupName, string privateCloudName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var message = CreateListZonesRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName);
+            using var message = CreateGetClusterZonesRequest(subscriptionId, resourceGroupName, privateCloudName, clusterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ClusterZoneList value = default;
+                        AvsClusterZoneListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ClusterZoneList.DeserializeClusterZoneList(document.RootElement);
+                        value = AvsClusterZoneListResult.DeserializeAvsClusterZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

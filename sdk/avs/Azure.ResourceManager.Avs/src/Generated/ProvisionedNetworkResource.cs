@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing a ProvisionedNetwork along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProvisionedNetworkResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetProvisionedNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource"/> using the GetProvisionedNetwork method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetProvisionedNetwork method.
     /// </summary>
     public partial class ProvisionedNetworkResource : ArmResource
     {

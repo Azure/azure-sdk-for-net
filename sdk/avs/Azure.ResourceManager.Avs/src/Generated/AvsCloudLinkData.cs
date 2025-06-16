@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing the CloudLink data model.
+    /// A class representing the AvsCloudLink data model.
     /// A cloud link resource
     /// </summary>
-    public partial class CloudLinkData : ResourceData
+    public partial class AvsCloudLinkData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +51,33 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CloudLinkData"/>. </summary>
-        public CloudLinkData()
+        /// <summary> Initializes a new instance of <see cref="AvsCloudLinkData"/>. </summary>
+        public AvsCloudLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudLinkData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsCloudLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="status"> The state of the cloud link. </param>
+        /// <param name="linkedCloud"> Identifier of the other private cloud participating in the link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudLinkProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AvsCloudLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsCloudLinkProvisioningState? provisioningState, AvsCloudLinkStatus? status, ResourceIdentifier linkedCloud, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            ProvisioningState = provisioningState;
+            Status = status;
+            LinkedCloud = linkedCloud;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public CloudLinkProperties Properties { get; set; }
+        /// <summary> The provisioning state of the resource. </summary>
+        public AvsCloudLinkProvisioningState? ProvisioningState { get; }
+        /// <summary> The state of the cloud link. </summary>
+        public AvsCloudLinkStatus? Status { get; }
+        /// <summary> Identifier of the other private cloud participating in the link. </summary>
+        public ResourceIdentifier LinkedCloud { get; set; }
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A class representing a collection of <see cref="ExpressRouteAuthorizationResource"/> and their operations.
-    /// Each <see cref="ExpressRouteAuthorizationResource"/> in the collection will belong to the same instance of <see cref="PrivateCloudResource"/>.
-    /// To get an <see cref="ExpressRouteAuthorizationCollection"/> instance call the GetExpressRouteAuthorizations method from an instance of <see cref="PrivateCloudResource"/>.
+    /// Each <see cref="ExpressRouteAuthorizationResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get an <see cref="ExpressRouteAuthorizationCollection"/> instance call the GetExpressRouteAuthorizations method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class ExpressRouteAuthorizationCollection : ArmCollection, IEnumerable<ExpressRouteAuthorizationResource>, IAsyncEnumerable<ExpressRouteAuthorizationResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Avs
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != PrivateCloudResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateCloudResource.ResourceType), nameof(id));
+            if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
         }
 
         /// <summary>
