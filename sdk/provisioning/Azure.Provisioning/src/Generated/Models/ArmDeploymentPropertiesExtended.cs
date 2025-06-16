@@ -189,6 +189,24 @@ public partial class ArmDeploymentPropertiesExtended : ProvisionableConstruct
     private BicepValue<ResponseError>? _error;
 
     /// <summary>
+    /// Contains diagnostic information collected during validation process.
+    /// </summary>
+    public BicepList<DeploymentDiagnosticsDefinition> Diagnostics 
+    {
+        get { Initialize(); return _diagnostics!; }
+    }
+    private BicepList<DeploymentDiagnosticsDefinition>? _diagnostics;
+
+    /// <summary>
+    /// The validation level of the deployment.
+    /// </summary>
+    public BicepValue<ValidationLevel> ValidationLevel 
+    {
+        get { Initialize(); return _validationLevel!; }
+    }
+    private BicepValue<ValidationLevel>? _validationLevel;
+
+    /// <summary>
     /// Creates a new ArmDeploymentPropertiesExtended.
     /// </summary>
     public ArmDeploymentPropertiesExtended()
@@ -218,5 +236,7 @@ public partial class ArmDeploymentPropertiesExtended : ProvisionableConstruct
         _outputResources = DefineListProperty<SubResource>("OutputResources", ["outputResources"], isOutput: true);
         _validatedResources = DefineListProperty<SubResource>("ValidatedResources", ["validatedResources"], isOutput: true);
         _error = DefineProperty<ResponseError>("Error", ["error"], isOutput: true);
+        _diagnostics = DefineListProperty<DeploymentDiagnosticsDefinition>("Diagnostics", ["diagnostics"], isOutput: true);
+        _validationLevel = DefineProperty<ValidationLevel>("ValidationLevel", ["validationLevel"], isOutput: true);
     }
 }
