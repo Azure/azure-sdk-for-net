@@ -6,10 +6,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore"/>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing"/>
-    <PackageReference Include="Microsoft.Azure.WebJobs.Logging.ApplicationInsights"/>
     <PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
-    <PackageReference Include="Microsoft.Extensions.Logging" />
   </ItemGroup>
 
   <ItemGroup>
