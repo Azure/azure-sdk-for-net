@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(expected, text);
         }
 
-        public static void AssertConverterSerialization(string expected, object model, JsonSerializerOptions options = default)
+        public static void AssertConverterSerialization<T>(string expected, T model, JsonSerializerOptions options)
         {
             using var memoryStream = new MemoryStream();
 

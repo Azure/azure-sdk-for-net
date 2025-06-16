@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -27,7 +26,8 @@ namespace Azure.ResourceManager.Tests
         public void TestDeserializerInvalidDefaultJson()
         {
             JsonElement invalid = default(JsonElement);
-            Assert.Throws<InvalidOperationException>(delegate { ManagedServiceIdentity.DeserializeManagedServiceIdentity(invalid); });
+            Assert.Throws<InvalidOperationException>(delegate
+            { ManagedServiceIdentity.DeserializeManagedServiceIdentity(invalid); });
         }
 
         [TestCase]
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Tests
                 "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity\":" +
                 user + "}}";
 
-            JsonAsserts.AssertConverterSerialization(expected, identity);
+            JsonAsserts.AssertConverterSerialization(expected, identity, ModelSerializationExtensions.Options);
         }
 
         [TestCase]
@@ -200,8 +200,7 @@ namespace Azure.ResourceManager.Tests
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity\":" +
                 user + "}}";
-            var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-            JsonAsserts.AssertConverterSerialization(expected, identity, serializeOptions);
+            JsonAsserts.AssertConverterSerialization(expected, identity, ModelSerializationExtensions.OptionsUseManagedServiceIdentityV3);
         }
 
         [TestCase]
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.Tests
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedValid.json");
             var identityJsonV4 = identityJsonProperty.Value.ToString();
             Assert.IsTrue(identityJsonV4.Contains("SystemAssigned, UserAssigned"));
-            ManagedServiceIdentity back = JsonSerializer.Deserialize<ManagedServiceIdentity>(identityJsonV4);
+            ManagedServiceIdentity back = JsonSerializer.Deserialize<ManagedServiceIdentity>(identityJsonV4, ModelSerializationExtensions.Options);
             var userIdentities = back.UserAssignedIdentities;
             Assert.IsTrue("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
             Assert.IsTrue("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
@@ -226,8 +225,7 @@ namespace Azure.ResourceManager.Tests
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity\":" +
                 user + "}}";
-            var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-            JsonAsserts.AssertConverterSerialization(expectedV3, back, serializeOptions);
+            JsonAsserts.AssertConverterSerialization(expectedV3, back, ModelSerializationExtensions.OptionsUseManagedServiceIdentityV3);
         }
 
         [TestCase]
@@ -237,8 +235,7 @@ namespace Azure.ResourceManager.Tests
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedValidV3.json");
             var identityJsonV3 = identityJsonProperty.Value.ToString();
             Assert.IsTrue(identityJsonV3.Contains("SystemAssigned,UserAssigned"));
-            var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-            ManagedServiceIdentity back = JsonSerializer.Deserialize<ManagedServiceIdentity>(identityJsonV3, serializeOptions);
+            ManagedServiceIdentity back = JsonSerializer.Deserialize<ManagedServiceIdentity>(identityJsonV3, ModelSerializationExtensions.OptionsUseManagedServiceIdentityV3);
             var userIdentities = back.UserAssignedIdentities;
             Assert.IsTrue("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
             Assert.IsTrue("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
@@ -253,7 +250,7 @@ namespace Azure.ResourceManager.Tests
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity\":" +
                 user + "}}";
-            JsonAsserts.AssertConverterSerialization(expectedV4, back);
+            JsonAsserts.AssertConverterSerialization(expectedV4, back, ModelSerializationExtensions.Options);
         }
 
         [TestCase]
@@ -269,7 +266,7 @@ namespace Azure.ResourceManager.Tests
                 "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity\":" +
                 user + "}}";
 
-            JsonAsserts.AssertConverterSerialization(expected, identity);
+            JsonAsserts.AssertConverterSerialization(expected, identity, ModelSerializationExtensions.Options);
         }
 
         [TestCase]
@@ -290,7 +287,7 @@ namespace Azure.ResourceManager.Tests
                 "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity2\":" +
                 emptyUser + "}}";
 
-            JsonAsserts.AssertConverterSerialization(expected, identity);
+            JsonAsserts.AssertConverterSerialization(expected, identity, ModelSerializationExtensions.Options);
         }
 
         [TestCase]
@@ -300,7 +297,7 @@ namespace Azure.ResourceManager.Tests
             //string system = "\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\",\"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"";
             string expected = "{\"type\":\"SystemAssigned\"}";
 
-            JsonAsserts.AssertConverterSerialization(expected, identity);
+            JsonAsserts.AssertConverterSerialization(expected, identity, ModelSerializationExtensions.Options);
         }
 
         [TestCase]
@@ -316,7 +313,7 @@ namespace Azure.ResourceManager.Tests
                 "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity\":" +
                 user + "}}";
 
-            JsonAsserts.AssertConverterSerialization(expected, identity);
+            JsonAsserts.AssertConverterSerialization(expected, identity, ModelSerializationExtensions.Options);
         }
     }
 }
