@@ -5,7 +5,6 @@ using System;
 using System.Text.Json;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.ResourceManager.Common.Custom.Models;
 
 namespace Azure.ResourceManager
 {

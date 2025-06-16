@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Common.Custom.Models
+namespace Azure.ResourceManager
 {
     [JsonSourceGenerationOptions(WriteIndented = false)]
     [JsonSerializable(typeof(ManagedServiceIdentity))]

@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Common.Custom.Models;
 
 namespace Azure.ResourceManager
 {

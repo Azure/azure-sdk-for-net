@@ -15,7 +15,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using System.Xml;
 using Azure.Core;
-using Azure.ResourceManager.Common.Custom.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager
