@@ -139,7 +139,7 @@ public class AuthenticationTokenProviderTests
 
         /// <summary>
         /// This operation does not require authentication.
-        /// It will override the service level flows by passing an emtpy array of flows.
+        /// It will override the service level flows by passing an empty array of flows.
         /// </summary>
         public ClientResult GetNoAuth()
         {
