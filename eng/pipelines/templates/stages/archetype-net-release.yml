@@ -4,6 +4,7 @@ parameters:
   ArtifactName: 'not-specified'
   DevFeed: 'public/azure-sdk-for-net'
   PublicFeed: Nuget.org
+  PublicPublishEnvironment: package-publish
 
 stages:
   - stage: Signing
@@ -100,8 +101,7 @@ stages:
               - deployment: PublishPackage
                 displayName: Publish package to ${{ parameters.PublicFeed }} and Dev Feed
                 condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
-                #environment: package-publish
-                environment: none
+                environment: ${{ parameters.PublicPublishEnvironment }}
                 dependsOn: TagRepository
 
                 pool:
