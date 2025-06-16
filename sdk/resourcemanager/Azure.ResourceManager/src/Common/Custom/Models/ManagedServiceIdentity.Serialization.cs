@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentityType>($"{{{property}}}", jOptions);
+                    type = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentityType>($"{{{property}}}", jOptions ?? ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Models
                     Dictionary<ResourceIdentifier, UserAssignedIdentity> dictionary = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(new ResourceIdentifier(property0.Name), ModelSerializationExtensions.JsonDeserialize<UserAssignedIdentity>(property0.Value.GetRawText(), jOptions));
+                        dictionary.Add(new ResourceIdentifier(property0.Name), ModelSerializationExtensions.JsonDeserialize<UserAssignedIdentity>(property0.Value.GetRawText(), jOptions ?? ModelSerializationExtensions.Options));
                     }
                     userAssignedIdentities = dictionary;
                     continue;

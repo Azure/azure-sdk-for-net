@@ -158,8 +158,7 @@ namespace Azure.ResourceManager.Tests
         {
             var identityJsonProperty = DeserializerHelper("SystemAndUserAssignedValidV3.json");
             var identityJson = identityJsonProperty.Value.ToString();
-            var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-            ManagedServiceIdentity back = JsonSerializer.Deserialize<ManagedServiceIdentity>(identityJson, serializeOptions);
+            ManagedServiceIdentity back = JsonSerializer.Deserialize<ManagedServiceIdentity>(identityJson, ModelSerializationExtensions.OptionsUseManagedServiceIdentityV3);
             Assert.IsTrue("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
             Assert.IsTrue("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
             var user = back.UserAssignedIdentities;
