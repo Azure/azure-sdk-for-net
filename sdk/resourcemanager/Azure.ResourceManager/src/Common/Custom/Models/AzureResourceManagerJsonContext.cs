@@ -9,10 +9,9 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager
 {
     [JsonSourceGenerationOptions(WriteIndented = false)]
+    [JsonSerializable(typeof(ArmEnvironment))]
     [JsonSerializable(typeof(ManagedServiceIdentity))]
     [JsonSerializable(typeof(ManagedServiceIdentityType))]
-    [JsonSerializable(typeof(UserAssignedIdentity))]
-    [JsonSerializable(typeof(ArmEnvironment))]
     [JsonSerializable(typeof(Dictionary<string, Dictionary<string, JsonElement>>))]
     internal partial class AzureResourceManagerJsonContext : JsonSerializerContext
     {

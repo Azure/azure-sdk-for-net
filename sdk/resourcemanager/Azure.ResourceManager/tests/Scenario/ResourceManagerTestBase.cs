@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.Tests
 
         protected static GenericResourceData ConstructGenericAvailabilitySet()
         {
+            var json = $$"""
+            {"platformUpdateDomainCount": 5,"platformFaultDomainCount": 2}
+            """;
             var data = new GenericResourceData(AzureLocation.WestUS2)
             {
                 Tags = { },
@@ -50,11 +53,7 @@ namespace Azure.ResourceManager.Tests
                 {
                     Name = "Aligned"
                 },
-                Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                    {
-                        {"platformUpdateDomainCount", 5},
-                        {"platformFaultDomainCount", 2}
-                    })
+                Properties = new BinaryData(json)
             };
             return data;
         }

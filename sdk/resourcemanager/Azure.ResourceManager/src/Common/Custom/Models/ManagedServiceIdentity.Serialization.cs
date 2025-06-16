@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    ModelSerializationExtensions.JsonSerialize(writer, item.Value, jOptions);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -215,7 +222,7 @@ namespace Azure.ResourceManager.Models
                     Dictionary<ResourceIdentifier, UserAssignedIdentity> dictionary = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(new ResourceIdentifier(property0.Name), ModelSerializationExtensions.JsonDeserialize<UserAssignedIdentity>(property0.Value.GetRawText(), jOptions ?? ModelSerializationExtensions.Options));
+                        dictionary.Add(new ResourceIdentifier(property0.Name), ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerContext.Default));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
