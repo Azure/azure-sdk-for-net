@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
 
         private async Task<CloudExadataInfrastructureResource> CreateExadataInfrastructureScenario() {
             _exaInfraCollection = await GetCloudExadataInfrastructureCollectionAsync(DefaultResourceGroupName);
-            _exadataInfraName = Recording.GenerateAssetName("OFake_NetSdkTestExaInfra");
+            _exadataInfraName = Recording.GenerateAssetName("OFake_NetSdkTestExaInfraLa");
 
             // Create
             var createExaInfraOperation = await _exaInfraCollection.CreateOrUpdateAsync(WaitUntil.Completed,
