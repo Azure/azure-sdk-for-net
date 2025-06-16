@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Models
         public static bool operator ==(VectorQueryKind left, VectorQueryKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VectorQueryKind"/> values are not the same. </summary>
         public static bool operator !=(VectorQueryKind left, VectorQueryKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VectorQueryKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorQueryKind"/>. </summary>
         public static implicit operator VectorQueryKind(string value) => new VectorQueryKind(value);
 
         /// <inheritdoc />

@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(SearchIndexerDataSourceType left, SearchIndexerDataSourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are not the same. </summary>
         public static bool operator !=(SearchIndexerDataSourceType left, SearchIndexerDataSourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchIndexerDataSourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchIndexerDataSourceType"/>. </summary>
         public static implicit operator SearchIndexerDataSourceType(string value) => new SearchIndexerDataSourceType(value);
 
         /// <inheritdoc />

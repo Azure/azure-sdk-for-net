@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Search.Documents client library</AssemblyTitle>
-    <Version>11.6.0</Version>
+    <Version>11.6.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>11.5.1</ApiCompatVersion>
+    <ApiCompatVersion>11.6.0</ApiCompatVersion>
     <Description>
       This is the Azure Cognitive Search client library for developing .NET
       applications with rich search experiences.  It enables you to query your
