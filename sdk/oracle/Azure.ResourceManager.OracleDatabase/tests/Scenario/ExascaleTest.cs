@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
 
         private ExadbVmClusterData GetDefaultExadbVmClusterData(string clusterName)
         {
-            string gridImageOcid = Environment.GetEnvironmentVariable("GRID_IMAGE_OCID");
+            string gridImageOcid = "ocid1.dbpatch.oc1.iad.anuwcljtt5t4sqqaoajnkveobp3ryw7zlfrrcf6tb2ndvygp54z2gbds2hxa";
             // "ocid1.dbpatch.oc1.iad.anuwcljtt5t4sqqaoajnkveobp3ryw7zlfrrcf6tb2ndvygp54z2gbds2hxa";
 
             var exadbVmClusterProperties = new ExadbVmClusterProperties(
