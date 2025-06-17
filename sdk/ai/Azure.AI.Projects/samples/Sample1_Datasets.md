@@ -40,7 +40,8 @@ dataset = datasets.UploadFolder(
     name: datasetName,
     version: datasetVersion2,
     folderPath: folderPath,
-    connectionName: connectionName
+    connectionName: connectionName,
+    filePattern: new Regex(".*\\.txt")
 );
 Console.WriteLine(dataset);
 
@@ -97,7 +98,8 @@ dataset = await datasets.UploadFolderAsync(
     name: datasetName,
     version: datasetVersion2,
     folderPath: folderPath,
-    connectionName: connectionName
+    connectionName: connectionName,
+    filePattern: new Regex(".*\\.txt")
 );
 Console.WriteLine(dataset);
 
