@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
                 DisplayName = clusterName,
                 LicenseModel = OracleLicenseModel.LicenseIncluded,
                 Domain = "ocidelegated.ocinetsdk.oraclevcn.com",
-                GridImageOcid = new ResourceIdentifier(gridImageOcid)
+                GridImageOcid = gridImageOcid
             };
 
             var data = new ExadbVmClusterData(_location)

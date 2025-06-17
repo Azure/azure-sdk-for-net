@@ -1763,7 +1763,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     {
         public AutonomousDatabaseUpdateProperties() { }
         public string AdminPassword { get { throw null; } set { } }
-        public Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsType AutonomousDatabaseScheduledOperations { get { throw null; } set { } }
         public Azure.ResourceManager.OracleDatabase.Models.AutonomousMaintenanceScheduleType? AutonomousMaintenanceScheduleType { get { throw null; } set { } }
         public int? BackupRetentionPeriodInDays { get { throw null; } set { } }
         public float? ComputeCount { get { throw null; } set { } }
@@ -1784,8 +1783,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public string PeerDBId { get { throw null; } set { } }
         public Azure.ResourceManager.OracleDatabase.Models.AutonomousDatabasePermissionLevelType? PermissionLevel { get { throw null; } set { } }
         public Azure.ResourceManager.OracleDatabase.Models.DataGuardRoleType? Role { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsTypeUpdate ScheduledOperations { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> WhitelistedIPs { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3246,6 +3243,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator !=(Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekName left, Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekName right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class OracleDatabaseDayOfWeekUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekUpdate>
+    {
+        public OracleDatabaseDayOfWeekUpdate(Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekName name) { }
+        public Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekName Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OracleDatabaseEditionType : System.IEquatable<Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseEditionType>
     {
@@ -3790,10 +3798,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ScheduledOperationsTypeUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsTypeUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OracleDatabase.Models.ScheduledOperationsTypeUpdate>
     {
         public ScheduledOperationsTypeUpdate() { }
+        public ScheduledOperationsTypeUpdate(Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekUpdate dayOfWeek) { }
         public System.DateTimeOffset? AutoStartOn { get { throw null; } set { } }
         public System.DateTimeOffset? AutoStopOn { get { throw null; } set { } }
         public Azure.ResourceManager.OracleDatabase.Models.OracleDatabaseDayOfWeekName? DayOfWeekName { get { throw null; } set { } }

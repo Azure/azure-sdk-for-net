@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("licenseModel"u8);
                 writer.WriteStringValue(LicenseModel.Value.ToString());
             }
-            if (Optional.IsDefined(AutonomousDatabaseScheduledOperations))
+            if (Optional.IsDefined(ScheduledOperations))
             {
                 writer.WritePropertyName("scheduledOperations"u8);
-                writer.WriteObjectValue<ScheduledOperationsType>(AutonomousDatabaseScheduledOperations, options);
+                writer.WriteObjectValue(ScheduledOperations, options);
             }
             if (Optional.IsDefined(DatabaseEdition))
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             bool? isLocalDataGuardEnabled = default;
             bool? isMtlsConnectionRequired = default;
             OracleLicenseModel? licenseModel = default;
-            ScheduledOperationsType scheduledOperations = default;
+            ScheduledOperationsTypeUpdate scheduledOperations = default;
             OracleDatabaseEditionType? databaseEdition = default;
             LongTermBackUpScheduleDetails longTermBackupSchedule = default;
             int? localAdgAutoFailoverMaxDataLossLimit = default;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    scheduledOperations = ScheduledOperationsType.DeserializeScheduledOperationsType(property.Value, options);
+                    scheduledOperations = ScheduledOperationsTypeUpdate.DeserializeScheduledOperationsTypeUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("databaseEdition"u8))
