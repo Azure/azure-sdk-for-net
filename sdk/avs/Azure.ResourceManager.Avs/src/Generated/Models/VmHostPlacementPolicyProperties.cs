@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="hostMembers"> Host members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmMembers"/> or <paramref name="hostMembers"/> is null. </exception>
-        public VmHostPlacementPolicyProperties(IEnumerable<string> vmMembers, IEnumerable<string> hostMembers, AvsPlacementPolicyAffinityType affinityType)
+        public VmHostPlacementPolicyProperties(IEnumerable<ResourceIdentifier> vmMembers, IEnumerable<string> hostMembers, AvsPlacementPolicyAffinityType affinityType)
         {
             Argument.AssertNotNull(vmMembers, nameof(vmMembers));
             Argument.AssertNotNull(hostMembers, nameof(hostMembers));
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="affinityType"> placement policy affinity type. </param>
         /// <param name="affinityStrength"> vm-host placement policy affinity strength (should/must). </param>
         /// <param name="azureHybridBenefitType"> placement policy azure hybrid benefit opt-in type. </param>
-        internal VmHostPlacementPolicyProperties(PlacementPolicyType type, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> vmMembers, IList<string> hostMembers, AvsPlacementPolicyAffinityType affinityType, VmHostPlacementPolicyAffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType) : base(type, state, displayName, provisioningState, serializedAdditionalRawData)
+        internal VmHostPlacementPolicyProperties(PlacementPolicyType type, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ResourceIdentifier> vmMembers, IList<string> hostMembers, AvsPlacementPolicyAffinityType affinityType, VmHostPlacementPolicyAffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType) : base(type, state, displayName, provisioningState, serializedAdditionalRawData)
         {
             VmMembers = vmMembers;
             HostMembers = hostMembers;
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Virtual machine members list. </summary>
-        public IList<string> VmMembers { get; }
+        public IList<ResourceIdentifier> VmMembers { get; }
         /// <summary> Host members list. </summary>
         public IList<string> HostMembers { get; }
         /// <summary> placement policy affinity type. </summary>

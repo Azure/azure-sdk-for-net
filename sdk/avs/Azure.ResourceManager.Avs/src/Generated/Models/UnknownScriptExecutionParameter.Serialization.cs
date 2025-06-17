@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class UnknownScriptExecutionParameterDetails : IUtf8JsonSerializable, IJsonModel<ScriptExecutionParameterDetails>
+    internal partial class UnknownScriptExecutionParameter : IUtf8JsonSerializable, IJsonModel<ScriptExecutionParameterDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptExecutionParameterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Avs.Models
             return DeserializeScriptExecutionParameterDetails(document.RootElement, options);
         }
 
-        internal static UnknownScriptExecutionParameterDetails DeserializeUnknownScriptExecutionParameterDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownScriptExecutionParameter DeserializeUnknownScriptExecutionParameter(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownScriptExecutionParameterDetails(type, name, serializedAdditionalRawData);
+            return new UnknownScriptExecutionParameter(type, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptExecutionParameterDetails>.Write(ModelReaderWriterOptions options)

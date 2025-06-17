@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    [PersistableModelProxy(typeof(UnknownScriptExecutionParameterDetails))]
+    [PersistableModelProxy(typeof(UnknownScriptExecutionParameter))]
     public partial class ScriptExecutionParameterDetails : IUtf8JsonSerializable, IJsonModel<ScriptExecutionParameterDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptExecutionParameterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Avs.Models
                     case "Value": return ScriptStringExecutionParameterDetails.DeserializeScriptStringExecutionParameterDetails(element, options);
                 }
             }
-            return UnknownScriptExecutionParameterDetails.DeserializeUnknownScriptExecutionParameterDetails(element, options);
+            return UnknownScriptExecutionParameter.DeserializeUnknownScriptExecutionParameter(element, options);
         }
 
         BinaryData IPersistableModel<ScriptExecutionParameterDetails>.Write(ModelReaderWriterOptions options)

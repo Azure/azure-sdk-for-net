@@ -1010,9 +1010,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="vmMembers"> Virtual machine members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
         /// <returns> A new <see cref="Models.VmPlacementPolicyProperties"/> instance for mocking. </returns>
-        public static VmPlacementPolicyProperties VmPlacementPolicyProperties(PlacementPolicyState? state = null, string displayName = null, PlacementPolicyProvisioningState? provisioningState = null, IEnumerable<string> vmMembers = null, AvsPlacementPolicyAffinityType affinityType = default)
+        public static VmPlacementPolicyProperties VmPlacementPolicyProperties(PlacementPolicyState? state = null, string displayName = null, PlacementPolicyProvisioningState? provisioningState = null, IEnumerable<ResourceIdentifier> vmMembers = null, AvsPlacementPolicyAffinityType affinityType = default)
         {
-            vmMembers ??= new List<string>();
+            vmMembers ??= new List<ResourceIdentifier>();
 
             return new VmPlacementPolicyProperties(
                 PlacementPolicyType.VmVm,
@@ -1034,9 +1034,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="affinityStrength"> vm-host placement policy affinity strength (should/must). </param>
         /// <param name="azureHybridBenefitType"> placement policy azure hybrid benefit opt-in type. </param>
         /// <returns> A new <see cref="Models.VmHostPlacementPolicyProperties"/> instance for mocking. </returns>
-        public static VmHostPlacementPolicyProperties VmHostPlacementPolicyProperties(PlacementPolicyState? state = null, string displayName = null, PlacementPolicyProvisioningState? provisioningState = null, IEnumerable<string> vmMembers = null, IEnumerable<string> hostMembers = null, AvsPlacementPolicyAffinityType affinityType = default, VmHostPlacementPolicyAffinityStrength? affinityStrength = null, AzureHybridBenefitType? azureHybridBenefitType = null)
+        public static VmHostPlacementPolicyProperties VmHostPlacementPolicyProperties(PlacementPolicyState? state = null, string displayName = null, PlacementPolicyProvisioningState? provisioningState = null, IEnumerable<ResourceIdentifier> vmMembers = null, IEnumerable<string> hostMembers = null, AvsPlacementPolicyAffinityType affinityType = default, VmHostPlacementPolicyAffinityStrength? affinityStrength = null, AzureHybridBenefitType? azureHybridBenefitType = null)
         {
-            vmMembers ??= new List<string>();
+            vmMembers ??= new List<ResourceIdentifier>();
             hostMembers ??= new List<string>();
 
             return new VmHostPlacementPolicyProperties(
@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ScriptParameter"/>. </summary>
-        /// <param name="type">
+        /// <param name="parameterType">
         /// The type of parameter the script is expecting. psCredential is a
         /// PSCredentialObject
         /// </param>
@@ -1139,10 +1139,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// </param>
         /// <param name="optional"> Is this parameter required or optional. </param>
         /// <returns> A new <see cref="Models.ScriptParameter"/> instance for mocking. </returns>
-        public static ScriptParameter ScriptParameter(ScriptParameterType? type = null, string name = null, string description = null, ParameterVisibilityStatus? visibility = null, ParameterOptionalityStatus? optional = null)
+        public static ScriptParameter ScriptParameter(ScriptParameterType? parameterType = null, string name = null, string description = null, ParameterVisibilityStatus? visibility = null, ParameterOptionalityStatus? optional = null)
         {
             return new ScriptParameter(
-                type,
+                parameterType,
                 name,
                 description,
                 visibility,

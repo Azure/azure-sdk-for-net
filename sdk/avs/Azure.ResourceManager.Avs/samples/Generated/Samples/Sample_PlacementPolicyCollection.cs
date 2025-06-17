@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Samples
             string placementPolicyName = "policy1";
             PlacementPolicyData data = new PlacementPolicyData
             {
-                Properties = new VmHostPlacementPolicyProperties(new string[] { "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-128", "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-256" }, new string[] { "fakehost22.nyc1.kubernetes.center", "fakehost23.nyc1.kubernetes.center", "fakehost24.nyc1.kubernetes.center" }, AvsPlacementPolicyAffinityType.AntiAffinity)
+                Properties = new VmHostPlacementPolicyProperties(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-128"), new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-256") }, new string[] { "fakehost22.nyc1.kubernetes.center", "fakehost23.nyc1.kubernetes.center", "fakehost24.nyc1.kubernetes.center" }, AvsPlacementPolicyAffinityType.AntiAffinity)
                 {
                     AffinityStrength = VmHostPlacementPolicyAffinityStrength.Must,
                     AzureHybridBenefitType = AzureHybridBenefitType.SqlHost,

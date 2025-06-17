@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScriptParameter"/>. </summary>
-        /// <param name="type">
+        /// <param name="parameterType">
         /// The type of parameter the script is expecting. psCredential is a
         /// PSCredentialObject
         /// </param>
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// </param>
         /// <param name="optional"> Is this parameter required or optional. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptParameter(ScriptParameterType? type, string name, string description, ParameterVisibilityStatus? visibility, ParameterOptionalityStatus? optional, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScriptParameter(ScriptParameterType? parameterType, string name, string description, ParameterVisibilityStatus? visibility, ParameterOptionalityStatus? optional, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            ParameterType = parameterType;
             Name = name;
             Description = description;
             Visibility = visibility;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// The type of parameter the script is expecting. psCredential is a
         /// PSCredentialObject
         /// </summary>
-        public ScriptParameterType? Type { get; }
+        public ScriptParameterType? ParameterType { get; }
         /// <summary> The parameter name that the script will expect a parameter value for. </summary>
         public string Name { get; }
         /// <summary> User friendly description of the parameter. </summary>
