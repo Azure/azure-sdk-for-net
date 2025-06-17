@@ -34,7 +34,7 @@ namespace Azure.Storage.Files.Shares.Models
         public FilePosixProperties PosixProperties { get; set; }
 
         /// <summary>
-        /// Optional, only applicable to SMB files.
+        /// Optional, only applicable to SMB directories.
         /// How attributes and permissions should be set on the file.
         /// New: automatically adds the ARCHIVE file attribute flag to the file and uses
         /// Windows create file permissions semantics (ex: inherit from parent).
