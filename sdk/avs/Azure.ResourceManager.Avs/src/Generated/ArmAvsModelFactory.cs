@@ -333,31 +333,21 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Avs.WorkloadNetworkVmGroupData"/> instance for mocking. </returns>
-        public static WorkloadNetworkVmGroupData WorkloadNetworkVmGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkVmGroupProperties properties = null)
-        {
-            return new WorkloadNetworkVmGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkVmGroupProperties"/>. </summary>
         /// <param name="displayName"> Display name of the VM group. </param>
         /// <param name="members"> Virtual machine members of this group. </param>
         /// <param name="status"> VM Group status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkVmGroupProperties"/> instance for mocking. </returns>
-        public static WorkloadNetworkVmGroupProperties WorkloadNetworkVmGroupProperties(string displayName = null, IEnumerable<string> members = null, WorkloadNetworkVmGroupStatus? status = null, WorkloadNetworkVmGroupProvisioningState? provisioningState = null, long? revision = null)
+        /// <returns> A new <see cref="Avs.WorkloadNetworkVmGroupData"/> instance for mocking. </returns>
+        public static WorkloadNetworkVmGroupData WorkloadNetworkVmGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> members = null, WorkloadNetworkVmGroupStatus? status = null, WorkloadNetworkVmGroupProvisioningState? provisioningState = null, long? revision = null)
         {
             members ??= new List<string>();
 
-            return new WorkloadNetworkVmGroupProperties(
+            return new WorkloadNetworkVmGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
                 displayName,
                 members?.ToList(),
                 status,
