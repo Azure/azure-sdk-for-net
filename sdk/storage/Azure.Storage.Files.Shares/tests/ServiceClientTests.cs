@@ -222,7 +222,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
         [NonParallelizable]
         [Category("NonVirtualized")]
         public async Task GetSetServicePropertiesAsync_EncryptionInTransit_SMB()
@@ -267,7 +267,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
         [NonParallelizable]
         [Category("NonVirtualized")]
         public async Task GetSetServicePropertiesAsync_EncryptionInTransit_NFS()

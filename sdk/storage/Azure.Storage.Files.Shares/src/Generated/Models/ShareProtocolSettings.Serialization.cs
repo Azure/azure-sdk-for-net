@@ -23,7 +23,7 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (Common.Optional.IsDefined(Nfs))
             {
-                writer.WriteObjectValue(Nfs, "SMB");
+                writer.WriteObjectValue(Nfs, "NFS");
             }
             writer.WriteEndElement();
         }
@@ -36,9 +36,9 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 smb = ShareSmbSettings.DeserializeShareSmbSettings(smbElement);
             }
-            if (element.Element("SMB") is XElement smbElement0)
+            if (element.Element("NFS") is XElement nfsElement)
             {
-                nfs = ShareNfsSettings.DeserializeShareNfsSettings(smbElement0);
+                nfs = ShareNfsSettings.DeserializeShareNfsSettings(nfsElement);
             }
             return new ShareProtocolSettings(smb, nfs);
         }

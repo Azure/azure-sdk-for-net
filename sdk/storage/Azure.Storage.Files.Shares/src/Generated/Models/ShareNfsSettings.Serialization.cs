@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.Shares.Models
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
-            writer.WriteStartElement(nameHint ?? "SMB");
+            writer.WriteStartElement(nameHint ?? "NFS");
             if (Common.Optional.IsDefined(EncryptionInTransit))
             {
                 writer.WriteStartElement("EncryptionInTransit");
