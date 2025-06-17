@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Avs.Samples
             {
                 Properties = new WorkloadNetworkPortMirroringProperties
                 {
-                    Direction = PortMirroringProfileDirection.BIDIRECTIONAL,
+                    Direction = PortMirroringProfileDirection.Bidirectional,
                     Source = "vmGroup1",
                     Destination = "vmGroup2",
                     Revision = 1L,

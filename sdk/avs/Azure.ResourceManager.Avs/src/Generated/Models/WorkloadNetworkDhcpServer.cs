@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpServer"/>. </summary>
         public WorkloadNetworkDhcpServer()
         {
-            DhcpType = DhcpTypeEnum.SERVER;
+            DhcpType = DhcpTypeEnum.Server;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpServer"/>. </summary>

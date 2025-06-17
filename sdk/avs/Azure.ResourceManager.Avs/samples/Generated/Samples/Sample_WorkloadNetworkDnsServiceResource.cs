@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Avs.Samples
                     DnsServiceIP = IPAddress.Parse("5.5.5.5"),
                     DefaultDnsZone = "defaultDnsZone1",
                     FqdnZones = { "fqdnZone1" },
-                    LogLevel = DnsServiceLogLevel.INFO,
+                    LogLevel = DnsServiceLogLevel.Info,
                     Revision = 1L,
                 },
             };

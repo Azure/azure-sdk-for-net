@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Avs.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SUCCESSValue = "SUCCESS";
-        private const string FAILUREValue = "FAILURE";
+        private const string SuccessValue = "SUCCESS";
+        private const string FailureValue = "FAILURE";
 
         /// <summary> is success. </summary>
-        public static DnsServiceStatus SUCCESS { get; } = new DnsServiceStatus(SUCCESSValue);
+        public static DnsServiceStatus Success { get; } = new DnsServiceStatus(SuccessValue);
         /// <summary> is failure. </summary>
-        public static DnsServiceStatus FAILURE { get; } = new DnsServiceStatus(FAILUREValue);
+        public static DnsServiceStatus Failure { get; } = new DnsServiceStatus(FailureValue);
         /// <summary> Determines if two <see cref="DnsServiceStatus"/> values are the same. </summary>
         public static bool operator ==(DnsServiceStatus left, DnsServiceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsServiceStatus"/> values are not the same. </summary>

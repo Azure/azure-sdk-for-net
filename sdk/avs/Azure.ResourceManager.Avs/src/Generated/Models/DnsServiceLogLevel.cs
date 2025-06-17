@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Avs.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DEBUGValue = "DEBUG";
-        private const string INFOValue = "INFO";
-        private const string WARNINGValue = "WARNING";
-        private const string ERRORValue = "ERROR";
-        private const string FATALValue = "FATAL";
+        private const string DebugValue = "DEBUG";
+        private const string InfoValue = "INFO";
+        private const string WarningValue = "WARNING";
+        private const string ErrorValue = "ERROR";
+        private const string FatalValue = "FATAL";
 
         /// <summary> is debug. </summary>
-        public static DnsServiceLogLevel DEBUG { get; } = new DnsServiceLogLevel(DEBUGValue);
+        public static DnsServiceLogLevel Debug { get; } = new DnsServiceLogLevel(DebugValue);
         /// <summary> is info. </summary>
-        public static DnsServiceLogLevel INFO { get; } = new DnsServiceLogLevel(INFOValue);
+        public static DnsServiceLogLevel Info { get; } = new DnsServiceLogLevel(InfoValue);
         /// <summary> is warning. </summary>
-        public static DnsServiceLogLevel WARNING { get; } = new DnsServiceLogLevel(WARNINGValue);
+        public static DnsServiceLogLevel Warning { get; } = new DnsServiceLogLevel(WarningValue);
         /// <summary> is error. </summary>
-        public static DnsServiceLogLevel ERROR { get; } = new DnsServiceLogLevel(ERRORValue);
+        public static DnsServiceLogLevel Error { get; } = new DnsServiceLogLevel(ErrorValue);
         /// <summary> is fatal. </summary>
-        public static DnsServiceLogLevel FATAL { get; } = new DnsServiceLogLevel(FATALValue);
+        public static DnsServiceLogLevel Fatal { get; } = new DnsServiceLogLevel(FatalValue);
         /// <summary> Determines if two <see cref="DnsServiceLogLevel"/> values are the same. </summary>
         public static bool operator ==(DnsServiceLogLevel left, DnsServiceLogLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DnsServiceLogLevel"/> values are not the same. </summary>

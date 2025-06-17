@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="PlacementPolicyPatch"/>. </summary>
         public PlacementPolicyPatch()
         {
-            VmMembers = new ChangeTrackingList<string>();
+            VmMembers = new ChangeTrackingList<ResourceIdentifier>();
             HostMembers = new ChangeTrackingList<string>();
         }
 
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="affinityStrength"> vm-host placement policy affinity strength (should/must). </param>
         /// <param name="azureHybridBenefitType"> placement policy azure hybrid benefit opt-in type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlacementPolicyPatch(PlacementPolicyState? state, IList<string> vmMembers, IList<string> hostMembers, VmHostPlacementPolicyAffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlacementPolicyPatch(PlacementPolicyState? state, IList<ResourceIdentifier> vmMembers, IList<string> hostMembers, VmHostPlacementPolicyAffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             VmMembers = vmMembers;
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Whether the placement policy is enabled or disabled. </summary>
         public PlacementPolicyState? State { get; set; }
         /// <summary> Virtual machine members list. </summary>
-        public IList<string> VmMembers { get; }
+        public IList<ResourceIdentifier> VmMembers { get; }
         /// <summary> Host members list. </summary>
         public IList<string> HostMembers { get; }
         /// <summary> vm-host placement policy affinity strength (should/must). </summary>

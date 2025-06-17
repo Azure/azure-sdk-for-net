@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Avs.Models
             segments ??= new List<string>();
 
             return new WorkloadNetworkDhcpServer(
-                DhcpTypeEnum.SERVER,
+                DhcpTypeEnum.Server,
                 displayName,
                 segments?.ToList(),
                 provisioningState,
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Avs.Models
             serverAddresses ??= new List<string>();
 
             return new WorkloadNetworkDhcpRelay(
-                DhcpTypeEnum.RELAY,
+                DhcpTypeEnum.Relay,
                 displayName,
                 segments?.ToList(),
                 provisioningState,
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
         /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
         /// <returns> A new <see cref="Models.PrivateCloudProperties"/> instance for mocking. </returns>
-        public static PrivateCloudProperties PrivateCloudProperties(AvsManagementCluster managementCluster = null, InternetConnectivityState? internet = null, IEnumerable<SingleSignOnIdentitySource> identitySources = null, PrivateCloudAvailabilityProperties availability = null, CustomerManagedEncryption encryption = null, IEnumerable<string> extendedNetworkBlocks = null, AvsPrivateCloudProvisioningState? provisioningState = null, ExpressRouteCircuit circuit = null, AvsPrivateCloudEndpoints endpoints = null, string networkBlock = null, string managementNetwork = null, string provisioningNetwork = null, string vMotionNetwork = null, string vCenterPassword = null, string nsxtPassword = null, string vCenterCertificateThumbprint = null, string nsxtCertificateThumbprint = null, IEnumerable<string> externalCloudLinks = null, ExpressRouteCircuit secondaryCircuit = null, NsxPublicIPQuotaRaisedStatus? nsxPublicIPQuotaRaised = null, ResourceIdentifier virtualNetworkId = null, AvsDnsZoneType? dnsZoneType = null)
+        public static PrivateCloudProperties PrivateCloudProperties(AvsManagementCluster managementCluster = null, InternetConnectivityState? internet = null, IEnumerable<SingleSignOnIdentitySource> identitySources = null, PrivateCloudAvailabilityProperties availability = null, CustomerManagedEncryption encryption = null, IEnumerable<string> extendedNetworkBlocks = null, AvsPrivateCloudProvisioningState? provisioningState = null, ExpressRouteCircuit circuit = null, AvsPrivateCloudEndpoints endpoints = null, string networkBlock = null, string managementNetwork = null, string provisioningNetwork = null, string vMotionNetwork = null, string vCenterPassword = null, string nsxtPassword = null, string vCenterCertificateThumbprint = null, string nsxtCertificateThumbprint = null, IEnumerable<string> externalCloudLinks = null, ExpressRouteCircuit secondaryCircuit = null, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = null, ResourceIdentifier virtualNetworkId = null, AvsDnsZoneType? dnsZoneType = null)
         {
             identitySources ??= new List<SingleSignOnIdentitySource>();
             extendedNetworkBlocks ??= new List<string>();

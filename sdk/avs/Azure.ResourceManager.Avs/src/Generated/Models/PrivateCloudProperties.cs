@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
         /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateCloudProperties(AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<string> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedStatus? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, AvsDnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateCloudProperties(AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IReadOnlyList<string> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, AvsDnsZoneType? dnsZoneType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ManagementCluster = managementCluster;
             Internet = internet;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// Flag to indicate whether the private cloud has the quota for provisioned NSX
         /// Public IP count raised from 64 to 1024
         /// </summary>
-        public NsxPublicIPQuotaRaisedStatus? NsxPublicIPQuotaRaised { get; }
+        public NsxPublicIPQuotaRaisedEnum? NsxPublicIPQuotaRaised { get; }
         /// <summary> Azure resource ID of the virtual network. </summary>
         public ResourceIdentifier VirtualNetworkId { get; set; }
         /// <summary> The type of DNS zone to use. </summary>

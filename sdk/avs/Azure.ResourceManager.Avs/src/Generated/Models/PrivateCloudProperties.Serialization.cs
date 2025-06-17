@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Avs.Models
             string nsxtCertificateThumbprint = default;
             IReadOnlyList<string> externalCloudLinks = default;
             ExpressRouteCircuit secondaryCircuit = default;
-            NsxPublicIPQuotaRaisedStatus? nsxPublicIPQuotaRaised = default;
+            NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default;
             ResourceIdentifier virtualNetworkId = default;
             AvsDnsZoneType? dnsZoneType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    nsxPublicIPQuotaRaised = new NsxPublicIPQuotaRaisedStatus(property.Value.GetString());
+                    nsxPublicIPQuotaRaised = new NsxPublicIPQuotaRaisedEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualNetworkId"u8))

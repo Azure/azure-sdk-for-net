@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Avs.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string INGRESSValue = "INGRESS";
-        private const string EGRESSValue = "EGRESS";
-        private const string BIDIRECTIONALValue = "BIDIRECTIONAL";
+        private const string IngressValue = "INGRESS";
+        private const string EgressValue = "EGRESS";
+        private const string BidirectionalValue = "BIDIRECTIONAL";
 
         /// <summary> is ingress. </summary>
-        public static PortMirroringProfileDirection INGRESS { get; } = new PortMirroringProfileDirection(INGRESSValue);
+        public static PortMirroringProfileDirection Ingress { get; } = new PortMirroringProfileDirection(IngressValue);
         /// <summary> is egress. </summary>
-        public static PortMirroringProfileDirection EGRESS { get; } = new PortMirroringProfileDirection(EGRESSValue);
+        public static PortMirroringProfileDirection Egress { get; } = new PortMirroringProfileDirection(EgressValue);
         /// <summary> is bidirectional. </summary>
-        public static PortMirroringProfileDirection BIDIRECTIONAL { get; } = new PortMirroringProfileDirection(BIDIRECTIONALValue);
+        public static PortMirroringProfileDirection Bidirectional { get; } = new PortMirroringProfileDirection(BidirectionalValue);
         /// <summary> Determines if two <see cref="PortMirroringProfileDirection"/> values are the same. </summary>
         public static bool operator ==(PortMirroringProfileDirection left, PortMirroringProfileDirection right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PortMirroringProfileDirection"/> values are not the same. </summary>
