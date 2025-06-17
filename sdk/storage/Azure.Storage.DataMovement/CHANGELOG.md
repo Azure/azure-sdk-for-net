@@ -1,15 +1,9 @@
 # Release History
 
-## 12.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 12.2.0-beta.1 (2025-06-17)
 
 ### Bugs Fixed
 - Fixed issue where transfers added concurrently to the local checkpointer would throw collision exceptions intermittently.
-
-### Other Changes
 
 ## 12.1.0 (2025-02-27)
 
