@@ -6,9 +6,6 @@
 - Suport data retention policy.
 - Suport thread level and member level metadata.
 
-### Other Changes
-- Retry on 409 and 413 responses.
-
 ## 1.3.1 (2024-09-19)
 
 ### Bugs Fixed
