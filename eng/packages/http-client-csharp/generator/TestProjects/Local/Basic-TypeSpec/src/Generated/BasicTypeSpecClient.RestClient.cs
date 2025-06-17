@@ -284,24 +284,28 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateListWithNextLinkRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateListWithNextLinkRequest(RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage != null)
-            {
-                uri.Reset(nextPage);
-                request.Uri = uri;
-            }
-            else
-            {
-                uri.Reset(_endpoint);
-                uri.AppendPath("/link", false);
-                request.Uri = uri;
-                request.Headers.SetValue("Accept", "application/json");
-            }
+            uri.Reset(_endpoint);
+            uri.AppendPath("/link", false);
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextListWithNextLinkRequest(Uri nextPage, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 

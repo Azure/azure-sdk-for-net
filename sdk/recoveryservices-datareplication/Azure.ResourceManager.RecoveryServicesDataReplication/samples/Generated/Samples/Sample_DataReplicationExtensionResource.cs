@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // invoke the operation
             DataReplicationExtensionData data = new DataReplicationExtensionData
             {
-                Properties = new DataReplicationExtensionProperties(null),
+                Properties = new DataReplicationExtensionProperties(default),
             };
             ArmOperation<DataReplicationExtensionResource> lro = await dataReplicationExtension.UpdateAsync(WaitUntil.Completed, data);
             DataReplicationExtensionResource result = lro.Value;

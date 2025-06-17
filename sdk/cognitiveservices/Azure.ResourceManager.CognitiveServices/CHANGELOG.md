@@ -1,5 +1,22 @@
 # Release History
 
+## 1.6.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.5.0 (2025-06-15)
+
+### Other Changes
+
+- Modified naming of Project, Connection, and CapabilityHost methods to use plural form
+- Modified parameter names in Project, Connection, and CapabilityHost methods to use name of object being managed instead of "body"
+
 ## 1.5.0-beta.1 (2025-05-30)
 
 ### Features Added

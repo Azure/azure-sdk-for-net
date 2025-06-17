@@ -92,7 +92,6 @@ public partial class DomainTopicEventSubscription : ProvisionableResource
     /// Azure.ResourceManager.EventGrid.Models.HybridConnectionEventSubscriptionDestination,
     /// Azure.ResourceManager.EventGrid.Models.MonitorAlertEventSubscriptionDestination,
     /// Azure.ResourceManager.EventGrid.Models.NamespaceTopicEventSubscriptionDestination,
-    /// Azure.ResourceManager.EventGrid.Models.PartnerEventSubscriptionDestination,
     /// Azure.ResourceManager.EventGrid.Models.ServiceBusQueueEventSubscriptionDestination,
     /// Azure.ResourceManager.EventGrid.Models.ServiceBusTopicEventSubscriptionDestination,
     /// Azure.ResourceManager.EventGrid.Models.StorageQueueEventSubscriptionDestination
@@ -214,7 +213,7 @@ public partial class DomainTopicEventSubscription : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the DomainTopicEventSubscription.</param>
     public DomainTopicEventSubscription(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/domains/topics/eventSubscriptions", resourceVersion ?? "2022-06-15")
+        : base(bicepIdentifier, "Microsoft.EventGrid/domains/topics/eventSubscriptions", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -245,6 +244,11 @@ public partial class DomainTopicEventSubscription : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
+
         /// <summary>
         /// 2022-06-15.
         /// </summary>

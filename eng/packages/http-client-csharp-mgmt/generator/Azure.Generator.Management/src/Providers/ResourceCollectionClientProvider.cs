@@ -151,7 +151,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false})
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_create!.Operation, isAsync);
-                result.Add(BuildOperationMethod(_create, convenienceMethod, isAsync));
+                result.Add(new ResourceOperationMethodProvider(this, _create, convenienceMethod, isAsync));
             }
 
             return result;
@@ -174,7 +174,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false})
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
-                result.Add(BuildOperationMethod(_get, convenienceMethod, isAsync));
+                result.Add(new ResourceOperationMethodProvider(this, _get, convenienceMethod, isAsync));
             }
 
             return result;
