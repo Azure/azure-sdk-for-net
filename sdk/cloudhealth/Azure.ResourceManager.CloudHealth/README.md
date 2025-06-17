@@ -1,6 +1,6 @@
-# Microsoft Azure CloudHealth management client library for .NET
+# Microsoft Azure Cloud Health management client library for .NET
 
-**[Describe the service briefly first.]**
+Azure Monitor health models enable customers to monitor the health of their applications with ease and confidence. These models use the Azure-wide workload concept of Service Groups to infer the scope of workloads and provide out-of-the-box health criteria based on platform metrics for Azure resources. 
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure CloudHealth management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Cloud Health management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.CloudHealth --prerelease

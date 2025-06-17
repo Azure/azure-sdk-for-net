@@ -4,12 +4,7 @@
 
 ### Features Added
 
--   Initial SDK release for 'Microsoft.CloudHealth' resource provider/namespace
-
-
-### Package Name
-
-The package name has been changed from `Microsoft.Azure.Management.CloudHealth` to `Azure.ResourceManager.CloudHealth`.
+-   Initial SDK release for 'Microsoft.CloudHealth' resource provider/namespace.
 
 ### Features Added
 
