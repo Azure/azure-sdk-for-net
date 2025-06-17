@@ -96,7 +96,7 @@ namespace System.ClientModel.Primitives
     public partial class AuthenticationToken
     {
         public AuthenticationToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
-        public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.DateTimeOffset? RefreshOn { get { throw null; } }
         public string TokenType { get { throw null; } }
         public string TokenValue { get { throw null; } }
