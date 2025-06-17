@@ -667,6 +667,7 @@ namespace Azure.ResourceManager.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Models.KeyVaultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Models.KeyVaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(Azure.ResourceManager.Models.ManagedServiceIdentity.ManagedServiceIdentityConverter))]
     public partial class ManagedServiceIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Models.ManagedServiceIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Models.ManagedServiceIdentity>
     {
         public ManagedServiceIdentity(Azure.ResourceManager.Models.ManagedServiceIdentityType managedServiceIdentityType) { }
@@ -679,6 +680,12 @@ namespace Azure.ResourceManager.Models
         Azure.ResourceManager.Models.ManagedServiceIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Models.ManagedServiceIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Models.ManagedServiceIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Models.ManagedServiceIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public partial class ManagedServiceIdentityConverter : System.Text.Json.Serialization.JsonConverter<Azure.ResourceManager.Models.ManagedServiceIdentity>
+        {
+            public ManagedServiceIdentityConverter() { }
+            public override Azure.ResourceManager.Models.ManagedServiceIdentity Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+            public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.ResourceManager.Models.ManagedServiceIdentity model, System.Text.Json.JsonSerializerOptions options) { }
+        }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Models.ManagedServiceIdentityType>

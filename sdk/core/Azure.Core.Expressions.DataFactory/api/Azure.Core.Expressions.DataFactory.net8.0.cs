@@ -6,6 +6,14 @@ namespace Azure.Core.Expressions.DataFactory
         public static Azure.Core.Expressions.DataFactory.DataFactoryContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    public partial class DataFactoryElementJsonConverter : System.Text.Json.Serialization.JsonConverter<object?>
+    {
+        public DataFactoryElementJsonConverter() { }
+        public override bool CanConvert(System.Type typeToConvert) { throw null; }
+        public override object? Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, object? value, System.Text.Json.JsonSerializerOptions options) { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataFactoryElementKind : System.IEquatable<Azure.Core.Expressions.DataFactory.DataFactoryElementKind>
     {
@@ -23,6 +31,7 @@ namespace Azure.Core.Expressions.DataFactory
         public static bool operator !=(Azure.Core.Expressions.DataFactory.DataFactoryElementKind left, Azure.Core.Expressions.DataFactory.DataFactoryElementKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(Azure.Core.Expressions.DataFactory.DataFactoryElementJsonConverter))]
     public sealed partial class DataFactoryElement<T> : System.ClientModel.Primitives.IJsonModel<Azure.Core.Expressions.DataFactory.DataFactoryElement<T>>, System.ClientModel.Primitives.IPersistableModel<Azure.Core.Expressions.DataFactory.DataFactoryElement<T>>
     {
         internal DataFactoryElement() { }
