@@ -88,7 +88,7 @@ public class AuthenticationTokenProviderTests
         /// This flow can be used for operations that do not require authentication.
         /// It will override the service level flows and any operation specific flows.
         /// </summary>
-        private readonly IReadOnlyDictionary<string, object> emptyFlows = new Dictionary<string, object>();
+        private readonly IReadOnlyDictionary<string, object>[] emptyFlows = [];
 
         private ClientPipeline _pipeline;
 
@@ -143,7 +143,7 @@ public class AuthenticationTokenProviderTests
         {
             var message = _pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
-            message.SetProperty(typeof(GetTokenOptions), new[] { emptyFlows });
+            message.SetProperty(typeof(GetTokenOptions), emptyFlows);
 
             PipelineRequest request = message.Request;
             request.Method = "GET";
@@ -161,7 +161,7 @@ public class AuthenticationTokenProviderTests
         /// This is an example of how no-authentication flows are defined at the service level,
         /// by passing an empty array of flows.
         /// </summary>
-        private readonly IReadOnlyDictionary<string, object> emptyServiceFlows = new Dictionary<string, object>();
+        private readonly IReadOnlyDictionary<string, object>[] emptyServiceFlows = [];
 
         private ClientPipeline _pipeline;
 
@@ -197,17 +197,24 @@ public class AuthenticationTokenProviderTests
                 m.TryGetProperty(typeof(GetTokenOptions), out var flowsObj);
                 if (
                     flowsObj == null ||
-                    (flowsObj is Dictionary<string, object>[] flowsArr && flowsArr.Length == 0)
+                    (flowsObj is IReadOnlyDictionary<string, object>[] flowsArr && flowsArr.Length == 0)
                 )
                 {
                     // Only assert no Authorization header if operation does not override the service level flows.
                     Assert.IsFalse(m.Request.Headers.TryGetValue("Authorization", out _), "Request should not have an Authorization header.");
                 }
+                else
+                {
+                    // If operation overrides service level flows, Authorization header should be present and populated.
+                    Assert.IsTrue(m.Request.Headers.TryGetValue("Authorization", out var authHeader), "Request should have an Authorization header.");
+                    Assert.IsNotNull(authHeader);
+                    Assert.IsNotEmpty(authHeader);
+                }
                 return new MockPipelineResponse(200);
             });
             ClientPipeline pipeline = ClientPipeline.Create(options,
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
-            perTryPolicies: [new BearerTokenPolicy(credential, [emptyServiceFlows])],
+            perTryPolicies: [new BearerTokenPolicy(credential, emptyServiceFlows)],
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
             _pipeline = pipeline;
         }
