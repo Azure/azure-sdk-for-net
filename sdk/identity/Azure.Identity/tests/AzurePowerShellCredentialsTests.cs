@@ -331,5 +331,33 @@ namespace Azure.Identity.Tests
                 Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext), ScopeUtilities.InvalidScopeMessage);
             }
         }
+
+        [Test]
+        public async Task AuthenticateWithAzurePowerShellCredential_Az14_SecureToken()
+        {
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShellSecureString(TimeSpan.FromSeconds(30));
+            var testProcess = new TestProcess { Output = processOutput };
+            AzurePowerShellCredential credential = InstrumentClient(
+                new AzurePowerShellCredential(
+                    new AzurePowerShellCredentialOptions(),
+                    CredentialPipeline.GetInstance(null),
+                    new TestProcessService(testProcess, true)));
+
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(expectedToken, actualToken.Token);
+            Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
+
+            // Verify PowerShell script checks for and handles Az.Accounts module version 5.0.0+
+            var iStart = testProcess.StartInfo.Arguments.IndexOf("EncodedCommand");
+            iStart = testProcess.StartInfo.Arguments.IndexOf('\"', iStart) + 1;
+            var iEnd = testProcess.StartInfo.Arguments.IndexOf('\"', iStart);
+            var commandString = testProcess.StartInfo.Arguments.Substring(iStart, iEnd - iStart);
+            var b = Convert.FromBase64String(commandString);
+            commandString = Encoding.Unicode.GetString(b);
+
+            Assert.That(commandString, Does.Contain("$isAz14NewFormat = $m.Version -ge [version]'5.0.0'"));
+            Assert.That(commandString, Does.Contain("ConvertFrom-SecureString -SecureString $token.Token"));
+        }
     }
 }
