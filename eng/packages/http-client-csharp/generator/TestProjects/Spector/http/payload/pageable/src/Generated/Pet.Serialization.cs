@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure;
 
 namespace Payload.Pageable
 {
@@ -32,5 +33,7 @@ namespace Payload.Pageable
         protected virtual Pet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Pet>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        public static explicit operator Pet(Response result) => throw null;
     }
 }
