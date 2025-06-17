@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Fix dserialization method for `AppServiceApiDefinitionInfo` class to allow empty url string.
+- Fix deserialization method for `AppServiceApiDefinitionInfo` class to allow empty url string.
 
 ### Other Changes
 
