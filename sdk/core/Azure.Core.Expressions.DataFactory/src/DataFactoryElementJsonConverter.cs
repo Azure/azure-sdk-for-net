@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -11,10 +12,21 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Core.Expressions.DataFactory
 {
-    internal class DataFactoryElementJsonConverter : JsonConverter<object?>
+    /// <summary>
+    /// Json converter for <see cref="DataFactoryElement{T}"/> types.
+    /// </summary>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public class DataFactoryElementJsonConverter : JsonConverter<object?>
+#pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         private static readonly ModelReaderWriterOptions s_options = new ModelReaderWriterOptions("W");
 
+        /// <summary>
+        /// If the type can be converted by this converter.
+        /// </summary>
+        /// <param name="typeToConvert"></param>
+        /// <returns></returns>
         public override bool CanConvert(Type typeToConvert)
         {
             return typeToConvert == typeof(DataFactoryElement<string?>) ||
@@ -36,7 +48,17 @@ namespace Azure.Core.Expressions.DataFactory
                    TryGetGenericDataFactoryList(typeToConvert, out _);
         }
 
+        /// <summary>
+        /// Deserializes the given JSON to an object.
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="typeToConvert"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
         public override object? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             switch (typeToConvert)
             {
@@ -88,7 +110,16 @@ namespace Azure.Core.Expressions.DataFactory
             }
         }
 
+        /// <summary>
+        /// Seralizes the given value to Utf8JsonWriter.
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="value"></param>
+        /// <param name="options"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
         public override void Write(Utf8JsonWriter writer, object? value, JsonSerializerOptions options)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             switch (value)
             {

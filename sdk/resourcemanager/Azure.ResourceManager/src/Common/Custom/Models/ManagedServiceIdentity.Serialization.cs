@@ -246,13 +246,36 @@ namespace Azure.ResourceManager.Models
 
         string IPersistableModel<ManagedServiceIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal partial class ManagedServiceIdentityConverter : JsonConverter<ManagedServiceIdentity>
+        /// <summary>
+        /// Json converter for <see cref="ManagedServiceIdentity"/> model.
+        /// </summary>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public partial class ManagedServiceIdentityConverter : JsonConverter<ManagedServiceIdentity>
+#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
+            /// <summary>
+            /// Serializes a <see cref="ManagedServiceIdentity"/> model to <see cref="Utf8JsonWriter" />.
+            /// </summary>
+            /// <param name="writer"></param>
+            /// <param name="model"></param>
+            /// <param name="options"></param>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
             public override void Write(Utf8JsonWriter writer, ManagedServiceIdentity model, JsonSerializerOptions options)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
             {
                 model.Write(writer, new ModelReaderWriterOptions("W"), options);
             }
+
+            /// <summary>
+            /// Deserializes a <see cref="ManagedServiceIdentity"/> model from <see cref="Utf8JsonReader" />.
+            /// </summary>
+            /// <param name="reader"></param>
+            /// <param name="typeToConvert"></param>
+            /// <param name="options"></param>
+            /// <returns></returns>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
             public override ManagedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
             {
                 using var document = JsonDocument.ParseValue(ref reader);
                 return DeserializeManagedServiceIdentity(document.RootElement, null, options);
