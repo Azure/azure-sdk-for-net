@@ -1,0 +1,11 @@
+trigger:
+- main
+
+pr:
+- main
+
+jobs:
+- template: eng/pipelines/templates/jobs/benchmarks.yml
+  parameters:
+    RunBenchmarks: true
+    OperatingSystems: 'Linux,Windows'
