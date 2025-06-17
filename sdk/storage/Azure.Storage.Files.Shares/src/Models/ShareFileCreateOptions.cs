@@ -45,6 +45,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// New: automatically adds the ARCHIVE file attribute flag to the file and uses
         /// Windows create file permissions semantics (ex: inherit from parent).
         /// Restore: does not modify file attribute flag and uses Windows update file permissions semantics.
+        /// If Restore is specified, the file permission must also be provided or PropertySemantics will default to New.
         /// </summary>
         public FilePropertySemantics? PropertySemantics { get; set; }
 
