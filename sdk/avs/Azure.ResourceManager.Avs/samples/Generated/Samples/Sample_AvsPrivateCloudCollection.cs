@@ -44,10 +44,6 @@ namespace Azure.ResourceManager.Avs.Samples
             string privateCloudName = "cloud1";
             AvsPrivateCloudData data = new AvsPrivateCloudData(new AzureLocation("eastus2"), new AvsSku("AV36"))
             {
-                Properties = new PrivateCloudProperties(new AvsManagementCluster
-                {
-                    ClusterSize = 4,
-                }, "192.168.48.0/22"),
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Tags = { },
             };
@@ -87,14 +83,6 @@ namespace Azure.ResourceManager.Avs.Samples
             string privateCloudName = "cloud1";
             AvsPrivateCloudData data = new AvsPrivateCloudData(new AzureLocation("eastus2"), new AvsSku("AV64"))
             {
-                Properties = new PrivateCloudProperties(new AvsManagementCluster
-                {
-                    ClusterSize = 4,
-                }, "192.168.48.0/22")
-                {
-                    VirtualNetworkId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.Network/virtualNetworks/vnet"),
-                    DnsZoneType = AvsDnsZoneType.Private,
-                },
                 Tags = { },
             };
             ArmOperation<AvsPrivateCloudResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateCloudName, data);
@@ -133,18 +121,6 @@ namespace Azure.ResourceManager.Avs.Samples
             string privateCloudName = "cloud1";
             AvsPrivateCloudData data = new AvsPrivateCloudData(new AzureLocation("eastus2"), new AvsSku("AV36"))
             {
-                Properties = new PrivateCloudProperties(new AvsManagementCluster
-                {
-                    ClusterSize = 4,
-                }, "192.168.48.0/22")
-                {
-                    Availability = new PrivateCloudAvailabilityProperties
-                    {
-                        Strategy = AvailabilityStrategy.DualZone,
-                        Zone = 1,
-                        SecondaryZone = 2,
-                    },
-                },
                 Tags = { },
             };
             ArmOperation<AvsPrivateCloudResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateCloudName, data);
@@ -183,10 +159,6 @@ namespace Azure.ResourceManager.Avs.Samples
             string privateCloudName = "cloud1";
             AvsPrivateCloudData data = new AvsPrivateCloudData(new AzureLocation("eastus2"), new AvsSku("AV36"))
             {
-                Properties = new PrivateCloudProperties(new AvsManagementCluster
-                {
-                    ClusterSize = 4,
-                }, "192.168.48.0/22"),
                 Zones = { "1", "2" },
                 Tags = { },
             };

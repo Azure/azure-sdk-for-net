@@ -24,63 +24,6 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AvsManagementCluster>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AvsManagementCluster)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(ClusterSize))
-            {
-                writer.WritePropertyName("clusterSize"u8);
-                writer.WriteNumberValue(ClusterSize.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
-            {
-                writer.WritePropertyName("clusterId"u8);
-                writer.WriteNumberValue(ClusterId.Value);
-            }
-            if (Optional.IsCollectionDefined(Hosts))
-            {
-                writer.WritePropertyName("hosts"u8);
-                writer.WriteStartArray();
-                foreach (var item in Hosts)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(VsanDatastoreName))
-            {
-                writer.WritePropertyName("vsanDatastoreName"u8);
-                writer.WriteStringValue(VsanDatastoreName);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
         AvsManagementCluster IJsonModel<AvsManagementCluster>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvsManagementCluster>)this).GetFormatFromOptions(options) : options.Format;

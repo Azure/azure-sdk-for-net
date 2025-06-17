@@ -53,7 +53,11 @@ namespace Azure.ResourceManager.Avs
     {
         public static Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Avs.Models.AvsSku sku = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Avs.Models.AvsSku sku = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Avs.AvsCloudLinkResource GetAvsCloudLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudResource> GetAvsPrivateCloud(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string privateCloudName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -162,6 +166,8 @@ namespace Azure.ResourceManager.Avs
         public System.Collections.Generic.IList<string> Hosts { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.AvsSku Sku { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string SkuName { get { throw null; } set { } }
         public string VsanDatastoreName { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Avs.AvsPrivateCloudClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsPrivateCloudClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -266,9 +272,32 @@ namespace Azure.ResourceManager.Avs
     public partial class AvsPrivateCloudData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsPrivateCloudData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsPrivateCloudData>
     {
         public AvsPrivateCloudData(Azure.Core.AzureLocation location, Azure.ResourceManager.Avs.Models.AvsSku sku) { }
+        public Azure.ResourceManager.Avs.Models.PrivateCloudAvailabilityProperties Availability { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.ExpressRouteCircuit Circuit { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.AvsDnsZoneType? DnsZoneType { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.CustomerManagedEncryption Encryption { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.AvsPrivateCloudEndpoints Endpoints { get { throw null; } }
+        public System.Collections.Generic.IList<string> ExtendedNetworkBlocks { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> ExternalCloudLinks { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.PrivateCloudProperties Properties { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Avs.Models.SingleSignOnIdentitySource> IdentitySources { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.InternetConnectivityState? Internet { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.AvsManagementCluster ManagementCluster { get { throw null; } set { } }
+        public string ManagementNetwork { get { throw null; } }
+        public string NetworkBlock { get { throw null; } set { } }
+        public Azure.ResourceManager.Avs.Models.NsxPublicIPQuotaRaisedEnum? NsxPublicIPQuotaRaised { get { throw null; } }
+        public string NsxtCertificateThumbprint { get { throw null; } }
+        public string NsxtPassword { get { throw null; } set { } }
+        public string ProvisioningNetwork { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsPrivateCloudProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.ExpressRouteCircuit SecondaryCircuit { get { throw null; } set { } }
         public Azure.ResourceManager.Avs.Models.AvsSku Sku { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string SkuName { get { throw null; } set { } }
+        public string VCenterCertificateThumbprint { get { throw null; } }
+        public string VCenterPassword { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
+        public string VMotionNetwork { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Avs.AvsPrivateCloudData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsPrivateCloudData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -371,6 +400,69 @@ namespace Azure.ResourceManager.Avs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.ScriptPackageResource>> GetScriptPackageAsync(string scriptPackageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Avs.ScriptPackageCollection GetScriptPackages() { throw null; }
         public virtual Azure.ResourceManager.Avs.WorkloadNetworkResource GetWorkloadNetwork() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
+        public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkResource> GetWorkloadNetwork(Azure.ResourceManager.Avs.Models.WorkloadNetworkName workloadNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkResource>> GetWorkloadNetworkAsync(Azure.ResourceManager.Avs.Models.WorkloadNetworkName workloadNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkDhcpResource> GetWorkloadNetworkDhcp(string dhcpId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkDhcpResource>> GetWorkloadNetworkDhcpAsync(string dhcpId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.ResourceManager.Avs.WorkloadNetworkDhcpCollection GetWorkloadNetworkDhcps() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkDnsServiceResource> GetWorkloadNetworkDnsService(string dnsServiceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkDnsServiceResource>> GetWorkloadNetworkDnsServiceAsync(string dnsServiceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.ResourceManager.Avs.WorkloadNetworkDnsServiceCollection GetWorkloadNetworkDnsServices() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkDnsZoneResource> GetWorkloadNetworkDnsZone(string dnsZoneId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkDnsZoneResource>> GetWorkloadNetworkDnsZoneAsync(string dnsZoneId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.ResourceManager.Avs.WorkloadNetworkDnsZoneCollection GetWorkloadNetworkDnsZones() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkGatewayResource> GetWorkloadNetworkGateway(string gatewayId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkGatewayResource>> GetWorkloadNetworkGatewayAsync(string gatewayId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.ResourceManager.Avs.WorkloadNetworkGatewayCollection GetWorkloadNetworkGateways() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkPortMirroringProfileResource> GetWorkloadNetworkPortMirroringProfile(string portMirroringId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkPortMirroringProfileResource>> GetWorkloadNetworkPortMirroringProfileAsync(string portMirroringId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.ResourceManager.Avs.WorkloadNetworkPortMirroringProfileCollection GetWorkloadNetworkPortMirroringProfiles() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkPublicIPResource> GetWorkloadNetworkPublicIP(string publicIPId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkPublicIPResource>> GetWorkloadNetworkPublicIPAsync(string publicIPId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.ResourceManager.Avs.WorkloadNetworkPublicIPCollection GetWorkloadNetworkPublicIPs() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
+        public virtual Azure.ResourceManager.Avs.WorkloadNetworkCollection GetWorkloadNetworks() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkSegmentResource> GetWorkloadNetworkSegment(string segmentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkSegmentResource>> GetWorkloadNetworkSegmentAsync(string segmentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.ResourceManager.Avs.WorkloadNetworkSegmentCollection GetWorkloadNetworkSegments() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkVirtualMachineResource> GetWorkloadNetworkVirtualMachine(string virtualMachineId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkVirtualMachineResource>> GetWorkloadNetworkVirtualMachineAsync(string virtualMachineId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.ResourceManager.Avs.WorkloadNetworkVirtualMachineCollection GetWorkloadNetworkVirtualMachines() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkVmGroupResource> GetWorkloadNetworkVmGroup(string vmGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkVmGroupResource>> GetWorkloadNetworkVmGroupAsync(string vmGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.ResourceManager.Avs.WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation RotateNsxtPassword(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -876,6 +968,23 @@ namespace Azure.ResourceManager.Avs
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.ScriptPackageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.ScriptPackageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", false)]
+    public partial class WorkloadNetworkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.WorkloadNetworkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.WorkloadNetworkResource>, System.Collections.IEnumerable
+    {
+        protected WorkloadNetworkCollection() { }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.Avs.Models.WorkloadNetworkName workloadNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.Avs.Models.WorkloadNetworkName workloadNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkResource> Get(Azure.ResourceManager.Avs.Models.WorkloadNetworkName workloadNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Avs.WorkloadNetworkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Avs.WorkloadNetworkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkResource>> GetAsync(Azure.ResourceManager.Avs.Models.WorkloadNetworkName workloadNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Avs.WorkloadNetworkResource> GetIfExists(Azure.ResourceManager.Avs.Models.WorkloadNetworkName workloadNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Avs.WorkloadNetworkResource>> GetIfExistsAsync(Azure.ResourceManager.Avs.Models.WorkloadNetworkName workloadNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Avs.WorkloadNetworkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Avs.WorkloadNetworkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Avs.WorkloadNetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.WorkloadNetworkResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
     public partial class WorkloadNetworkData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.WorkloadNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.WorkloadNetworkData>
     {
         internal WorkloadNetworkData() { }
@@ -1170,6 +1279,8 @@ namespace Azure.ResourceManager.Avs
         public virtual Azure.ResourceManager.Avs.WorkloadNetworkData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, Azure.ResourceManager.Avs.Models.WorkloadNetworkName workloadNetworkName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Avs.WorkloadNetworkDhcpResource> GetWorkloadNetworkDhcp(string dhcpId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1386,7 +1497,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         protected MockableAvsSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(string location, Azure.ResourceManager.Avs.Models.AvsSku sku = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(string location, Azure.ResourceManager.Avs.Models.AvsSku sku = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Avs.AvsPrivateCloudResource> GetAvsPrivateClouds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Avs.AvsPrivateCloudResource> GetAvsPrivateCloudsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1500,8 +1615,16 @@ namespace Azure.ResourceManager.Avs.Models
         public static Azure.ResourceManager.Avs.AvsPrivateCloudAddonData AvsPrivateCloudAddonData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.AvsPrivateCloudAddonProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudAddonProperties AvsPrivateCloudAddonProperties(string addonType = null, Azure.ResourceManager.Avs.Models.AddonProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AddonProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Avs.AvsPrivateCloudClusterData AvsPrivateCloudClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? clusterSize = default(int?), Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState?), int? clusterId = default(int?), System.Collections.Generic.IEnumerable<string> hosts = null, string vsanDatastoreName = null, Azure.ResourceManager.Avs.Models.AvsSku sku = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Avs.AvsPrivateCloudClusterData AvsPrivateCloudClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string sku, int? clusterSize, Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, System.Collections.Generic.IEnumerable<string> hosts) { throw null; }
         public static Azure.ResourceManager.Avs.AvsPrivateCloudClusterVirtualMachineData AvsPrivateCloudClusterVirtualMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.VirtualMachineProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Avs.AvsPrivateCloudData AvsPrivateCloudData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Avs.Models.PrivateCloudProperties properties = null, Azure.ResourceManager.Avs.Models.AvsSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
+        public static Azure.ResourceManager.Avs.AvsPrivateCloudData AvsPrivateCloudData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Avs.Models.AvsManagementCluster managementCluster = null, Azure.ResourceManager.Avs.Models.InternetConnectivityState? internet = default(Azure.ResourceManager.Avs.Models.InternetConnectivityState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.SingleSignOnIdentitySource> identitySources = null, Azure.ResourceManager.Avs.Models.PrivateCloudAvailabilityProperties availability = null, Azure.ResourceManager.Avs.Models.CustomerManagedEncryption encryption = null, System.Collections.Generic.IEnumerable<string> extendedNetworkBlocks = null, Azure.ResourceManager.Avs.Models.AvsPrivateCloudProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsPrivateCloudProvisioningState?), Azure.ResourceManager.Avs.Models.ExpressRouteCircuit circuit = null, Azure.ResourceManager.Avs.Models.AvsPrivateCloudEndpoints endpoints = null, string networkBlock = null, string managementNetwork = null, string provisioningNetwork = null, string vMotionNetwork = null, string vCenterPassword = null, string nsxtPassword = null, string vCenterCertificateThumbprint = null, string nsxtCertificateThumbprint = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> externalCloudLinks = null, Azure.ResourceManager.Avs.Models.ExpressRouteCircuit secondaryCircuit = null, Azure.ResourceManager.Avs.Models.NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default(Azure.ResourceManager.Avs.Models.NsxPublicIPQuotaRaisedEnum?), Azure.Core.ResourceIdentifier virtualNetworkId = null, Azure.ResourceManager.Avs.Models.AvsDnsZoneType? dnsZoneType = default(Azure.ResourceManager.Avs.Models.AvsDnsZoneType?), Azure.ResourceManager.Avs.Models.AvsSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Avs.AvsPrivateCloudData AvsPrivateCloudData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Avs.Models.AvsSku sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Avs.Models.AvsManagementCluster managementCluster, Azure.ResourceManager.Avs.Models.InternetConnectivityState? internet, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.SingleSignOnIdentitySource> identitySources, Azure.ResourceManager.Avs.Models.PrivateCloudAvailabilityProperties availability, Azure.ResourceManager.Avs.Models.CustomerManagedEncryption encryption, System.Collections.Generic.IEnumerable<string> extendedNetworkBlocks, Azure.ResourceManager.Avs.Models.AvsPrivateCloudProvisioningState? provisioningState, Azure.ResourceManager.Avs.Models.ExpressRouteCircuit circuit, Azure.ResourceManager.Avs.Models.AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> externalCloudLinks, Azure.ResourceManager.Avs.Models.ExpressRouteCircuit secondaryCircuit, Azure.ResourceManager.Avs.Models.NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, Azure.Core.ResourceIdentifier virtualNetworkId, Azure.ResourceManager.Avs.Models.AvsDnsZoneType? dnsZoneType) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Avs.AvsPrivateCloudData AvsPrivateCloudData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, string sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Avs.Models.AvsManagementCluster managementCluster, Azure.ResourceManager.Avs.Models.InternetConnectivityState? internet, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.SingleSignOnIdentitySource> identitySources, Azure.ResourceManager.Avs.Models.PrivateCloudAvailabilityProperties availability, Azure.ResourceManager.Avs.Models.CustomerManagedEncryption encryption, System.Collections.Generic.IEnumerable<string> extendedNetworkBlocks, Azure.ResourceManager.Avs.Models.AvsPrivateCloudProvisioningState? provisioningState, Azure.ResourceManager.Avs.Models.ExpressRouteCircuit circuit, Azure.ResourceManager.Avs.Models.AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> externalCloudLinks, Azure.ResourceManager.Avs.Models.ExpressRouteCircuit secondaryCircuit, Azure.ResourceManager.Avs.Models.NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Avs.AvsPrivateCloudData AvsPrivateCloudData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string skuName = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Avs.Models.AvsManagementCluster managementCluster = null, Azure.ResourceManager.Avs.Models.InternetConnectivityState? internet = default(Azure.ResourceManager.Avs.Models.InternetConnectivityState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.SingleSignOnIdentitySource> identitySources = null, Azure.ResourceManager.Avs.Models.PrivateCloudAvailabilityProperties availability = null, Azure.ResourceManager.Avs.Models.CustomerManagedEncryption encryption = null, Azure.ResourceManager.Avs.Models.AvsPrivateCloudProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsPrivateCloudProvisioningState?), Azure.ResourceManager.Avs.Models.ExpressRouteCircuit circuit = null, Azure.ResourceManager.Avs.Models.AvsPrivateCloudEndpoints endpoints = null, string networkBlock = null, string managementNetwork = null, string provisioningNetwork = null, string vMotionNetwork = null, string vCenterPassword = null, string nsxtPassword = null, string vCenterCertificateThumbprint = null, string nsxtCertificateThumbprint = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> externalCloudLinks = null, Azure.ResourceManager.Avs.Models.ExpressRouteCircuit secondaryCircuit = null, Azure.ResourceManager.Avs.Models.NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default(Azure.ResourceManager.Avs.Models.NsxPublicIPQuotaRaisedEnum?)) { throw null; }
         public static Azure.ResourceManager.Avs.AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.DatastoreProperties properties = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Avs.Models.AvsPrivateCloudEndpoints AvsPrivateCloudEndpoints(string nsxtManager, string vcsa, string hcxCloudManager) { throw null; }
@@ -1509,6 +1632,7 @@ namespace Azure.ResourceManager.Avs.Models
         public static Azure.ResourceManager.Avs.Models.AvsResourceSku AvsResourceSku(Azure.ResourceManager.Avs.Models.ResourceSkuResourceType resourceType = default(Azure.ResourceManager.Avs.Models.ResourceSkuResourceType), string name = null, string tier = null, string size = null, string family = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.ResourceSkuLocationInfo> locationInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.ResourceSkuCapabilities> capabilities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.ResourceSkuRestrictions> restrictions = null) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaAvailabilityResult AvsSubscriptionQuotaAvailabilityResult(System.Collections.Generic.IReadOnlyDictionary<string, int> hostsRemaining = null, Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled? quotaEnabled = default(Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaEnabled?)) { throw null; }
         public static Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult AvsSubscriptionTrialAvailabilityResult(Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus? status = default(Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialStatus?), int? availableHosts = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.CommonClusterProperties CommonClusterProperties(int? clusterSize = default(int?), Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState?), int? clusterId = default(int?), System.Collections.Generic.IEnumerable<string> hosts = null) { throw null; }
         public static Azure.ResourceManager.Avs.Models.DatastoreProperties DatastoreProperties(Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsPrivateCloudDatastoreProvisioningState?), Azure.Core.ResourceIdentifier netAppVolumeId = null, Azure.ResourceManager.Avs.Models.DiskPoolVolume diskPoolVolume = null, Azure.Core.ResourceIdentifier elasticSanVolumeTargetId = null, Azure.ResourceManager.Avs.Models.PureStorageVolume pureStorageVolume = null, Azure.ResourceManager.Avs.Models.DatastoreStatus? status = default(Azure.ResourceManager.Avs.Models.DatastoreStatus?)) { throw null; }
         public static Azure.ResourceManager.Avs.Models.DiskPoolVolume DiskPoolVolume(Azure.Core.ResourceIdentifier targetId = null, string lunName = null, Azure.ResourceManager.Avs.Models.LunMountMode? mountOption = default(Azure.ResourceManager.Avs.Models.LunMountMode?), string path = null) { throw null; }
         public static Azure.ResourceManager.Avs.ExpressRouteAuthorizationData ExpressRouteAuthorizationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.ExpressRouteAuthorizationProperties properties = null) { throw null; }
@@ -1525,7 +1649,6 @@ namespace Azure.ResourceManager.Avs.Models
         public static Azure.ResourceManager.Avs.Models.IscsiPathProperties IscsiPathProperties(Azure.ResourceManager.Avs.Models.IscsiPathProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.IscsiPathProvisioningState?), string networkBlock = null) { throw null; }
         public static Azure.ResourceManager.Avs.PlacementPolicyData PlacementPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.PlacementPolicyProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Avs.Models.PlacementPolicyProperties PlacementPolicyProperties(string type = null, Azure.ResourceManager.Avs.Models.PlacementPolicyState? state = default(Azure.ResourceManager.Avs.Models.PlacementPolicyState?), string displayName = null, Azure.ResourceManager.Avs.Models.PlacementPolicyProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.PlacementPolicyProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Avs.Models.PrivateCloudProperties PrivateCloudProperties(Azure.ResourceManager.Avs.Models.AvsManagementCluster managementCluster = null, Azure.ResourceManager.Avs.Models.InternetConnectivityState? internet = default(Azure.ResourceManager.Avs.Models.InternetConnectivityState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Avs.Models.SingleSignOnIdentitySource> identitySources = null, Azure.ResourceManager.Avs.Models.PrivateCloudAvailabilityProperties availability = null, Azure.ResourceManager.Avs.Models.CustomerManagedEncryption encryption = null, System.Collections.Generic.IEnumerable<string> extendedNetworkBlocks = null, Azure.ResourceManager.Avs.Models.AvsPrivateCloudProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.AvsPrivateCloudProvisioningState?), Azure.ResourceManager.Avs.Models.ExpressRouteCircuit circuit = null, Azure.ResourceManager.Avs.Models.AvsPrivateCloudEndpoints endpoints = null, string networkBlock = null, string managementNetwork = null, string provisioningNetwork = null, string vMotionNetwork = null, string vCenterPassword = null, string nsxtPassword = null, string vCenterCertificateThumbprint = null, string nsxtCertificateThumbprint = null, System.Collections.Generic.IEnumerable<string> externalCloudLinks = null, Azure.ResourceManager.Avs.Models.ExpressRouteCircuit secondaryCircuit = null, Azure.ResourceManager.Avs.Models.NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default(Azure.ResourceManager.Avs.Models.NsxPublicIPQuotaRaisedEnum?), Azure.Core.ResourceIdentifier virtualNetworkId = null, Azure.ResourceManager.Avs.Models.AvsDnsZoneType? dnsZoneType = default(Azure.ResourceManager.Avs.Models.AvsDnsZoneType?)) { throw null; }
         public static Azure.ResourceManager.Avs.ProvisionedNetworkData ProvisionedNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.ProvisionedNetworkProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Avs.Models.ProvisionedNetworkProperties ProvisionedNetworkProperties(Azure.ResourceManager.Avs.Models.ProvisionedNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Avs.Models.ProvisionedNetworkProvisioningState?), string addressPrefix = null, Azure.ResourceManager.Avs.Models.ProvisionedNetworkType? networkType = default(Azure.ResourceManager.Avs.Models.ProvisionedNetworkType?)) { throw null; }
         public static Azure.ResourceManager.Avs.PureStoragePolicyData PureStoragePolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Avs.Models.PureStoragePolicyProperties properties = null) { throw null; }
@@ -1740,15 +1863,11 @@ namespace Azure.ResourceManager.Avs.Models
         public static bool operator !=(Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType left, Azure.ResourceManager.Avs.Models.AvsEncryptionVersionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AvsManagementCluster : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsManagementCluster>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsManagementCluster>
+    public partial class AvsManagementCluster : Azure.ResourceManager.Avs.Models.CommonClusterProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsManagementCluster>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsManagementCluster>
     {
         public AvsManagementCluster() { }
-        public int? ClusterId { get { throw null; } }
-        public int? ClusterSize { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Hosts { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState? ProvisioningState { get { throw null; } }
         public string VsanDatastoreName { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Avs.Models.AvsManagementCluster System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsManagementCluster>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsManagementCluster>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Avs.Models.AvsManagementCluster System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsManagementCluster>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2052,6 +2171,21 @@ namespace Azure.ResourceManager.Avs.Models
         public static implicit operator Azure.ResourceManager.Avs.Models.AzureHybridBenefitType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Avs.Models.AzureHybridBenefitType left, Azure.ResourceManager.Avs.Models.AzureHybridBenefitType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class CommonClusterProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.CommonClusterProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.CommonClusterProperties>
+    {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public CommonClusterProperties() { }
+        public int? ClusterId { get { throw null; } }
+        public int? ClusterSize { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Hosts { get { throw null; } }
+        public Azure.ResourceManager.Avs.Models.AvsPrivateCloudClusterProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.CommonClusterProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.CommonClusterProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.CommonClusterProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Avs.Models.CommonClusterProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.CommonClusterProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.CommonClusterProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.CommonClusterProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CustomerManagedEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.CustomerManagedEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.CustomerManagedEncryption>
     {
@@ -2617,38 +2751,6 @@ namespace Azure.ResourceManager.Avs.Models
         Azure.ResourceManager.Avs.Models.PrivateCloudAvailabilityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.PrivateCloudAvailabilityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.PrivateCloudAvailabilityProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.PrivateCloudAvailabilityProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PrivateCloudProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.PrivateCloudProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.PrivateCloudProperties>
-    {
-        public PrivateCloudProperties(Azure.ResourceManager.Avs.Models.AvsManagementCluster managementCluster, string networkBlock) { }
-        public Azure.ResourceManager.Avs.Models.PrivateCloudAvailabilityProperties Availability { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.ExpressRouteCircuit Circuit { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.AvsDnsZoneType? DnsZoneType { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.CustomerManagedEncryption Encryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.AvsPrivateCloudEndpoints Endpoints { get { throw null; } }
-        public System.Collections.Generic.IList<string> ExtendedNetworkBlocks { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> ExternalCloudLinks { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Avs.Models.SingleSignOnIdentitySource> IdentitySources { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.InternetConnectivityState? Internet { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.AvsManagementCluster ManagementCluster { get { throw null; } set { } }
-        public string ManagementNetwork { get { throw null; } }
-        public string NetworkBlock { get { throw null; } set { } }
-        public Azure.ResourceManager.Avs.Models.NsxPublicIPQuotaRaisedEnum? NsxPublicIPQuotaRaised { get { throw null; } }
-        public string NsxtCertificateThumbprint { get { throw null; } }
-        public string NsxtPassword { get { throw null; } set { } }
-        public string ProvisioningNetwork { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.AvsPrivateCloudProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Avs.Models.ExpressRouteCircuit SecondaryCircuit { get { throw null; } set { } }
-        public string VCenterCertificateThumbprint { get { throw null; } }
-        public string VCenterPassword { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
-        public string VMotionNetwork { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.PrivateCloudProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.PrivateCloudProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.PrivateCloudProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Avs.Models.PrivateCloudProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.PrivateCloudProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.PrivateCloudProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.PrivateCloudProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ProvisionedNetworkProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.ProvisionedNetworkProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.ProvisionedNetworkProperties>
     {
@@ -3391,6 +3493,24 @@ namespace Azure.ResourceManager.Avs.Models
         Azure.ResourceManager.Avs.Models.WorkloadNetworkGatewayProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.WorkloadNetworkGatewayProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.WorkloadNetworkGatewayProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.WorkloadNetworkGatewayProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkloadNetworkName : System.IEquatable<Azure.ResourceManager.Avs.Models.WorkloadNetworkName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkloadNetworkName(string value) { throw null; }
+        public static Azure.ResourceManager.Avs.Models.WorkloadNetworkName Default { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Avs.Models.WorkloadNetworkName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Avs.Models.WorkloadNetworkName left, Azure.ResourceManager.Avs.Models.WorkloadNetworkName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Avs.Models.WorkloadNetworkName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Avs.Models.WorkloadNetworkName left, Azure.ResourceManager.Avs.Models.WorkloadNetworkName right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WorkloadNetworkPortMirroringProfileProvisioningState : System.IEquatable<Azure.ResourceManager.Avs.Models.WorkloadNetworkPortMirroringProfileProvisioningState>

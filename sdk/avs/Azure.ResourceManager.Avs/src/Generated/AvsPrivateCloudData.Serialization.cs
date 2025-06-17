@@ -37,11 +37,6 @@ namespace Azure.ResourceManager.Avs
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(Identity))
@@ -59,6 +54,139 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ManagementCluster))
+            {
+                writer.WritePropertyName("managementCluster"u8);
+                writer.WriteObjectValue(ManagementCluster, options);
+            }
+            if (Optional.IsDefined(Internet))
+            {
+                writer.WritePropertyName("internet"u8);
+                writer.WriteStringValue(Internet.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(IdentitySources))
+            {
+                writer.WritePropertyName("identitySources"u8);
+                writer.WriteStartArray();
+                foreach (var item in IdentitySources)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Availability))
+            {
+                writer.WritePropertyName("availability"u8);
+                writer.WriteObjectValue(Availability, options);
+            }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
+            if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
+            {
+                writer.WritePropertyName("extendedNetworkBlocks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExtendedNetworkBlocks)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(Circuit))
+            {
+                writer.WritePropertyName("circuit"u8);
+                writer.WriteObjectValue(Circuit, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Endpoints))
+            {
+                writer.WritePropertyName("endpoints"u8);
+                writer.WriteObjectValue(Endpoints, options);
+            }
+            if (Optional.IsDefined(NetworkBlock))
+            {
+                writer.WritePropertyName("networkBlock"u8);
+                writer.WriteStringValue(NetworkBlock);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ManagementNetwork))
+            {
+                writer.WritePropertyName("managementNetwork"u8);
+                writer.WriteStringValue(ManagementNetwork);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningNetwork))
+            {
+                writer.WritePropertyName("provisioningNetwork"u8);
+                writer.WriteStringValue(ProvisioningNetwork);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VMotionNetwork))
+            {
+                writer.WritePropertyName("vmotionNetwork"u8);
+                writer.WriteStringValue(VMotionNetwork);
+            }
+            if (Optional.IsDefined(VCenterPassword))
+            {
+                writer.WritePropertyName("vcenterPassword"u8);
+                writer.WriteStringValue(VCenterPassword);
+            }
+            if (Optional.IsDefined(NsxtPassword))
+            {
+                writer.WritePropertyName("nsxtPassword"u8);
+                writer.WriteStringValue(NsxtPassword);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VCenterCertificateThumbprint))
+            {
+                writer.WritePropertyName("vcenterCertificateThumbprint"u8);
+                writer.WriteStringValue(VCenterCertificateThumbprint);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NsxtCertificateThumbprint))
+            {
+                writer.WritePropertyName("nsxtCertificateThumbprint"u8);
+                writer.WriteStringValue(NsxtCertificateThumbprint);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExternalCloudLinks))
+            {
+                writer.WritePropertyName("externalCloudLinks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExternalCloudLinks)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SecondaryCircuit))
+            {
+                writer.WritePropertyName("secondaryCircuit"u8);
+                writer.WriteObjectValue(SecondaryCircuit, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NsxPublicIPQuotaRaised))
+            {
+                writer.WritePropertyName("nsxPublicIpQuotaRaised"u8);
+                writer.WriteStringValue(NsxPublicIPQuotaRaised.Value.ToString());
+            }
+            if (Optional.IsDefined(VirtualNetworkId))
+            {
+                writer.WritePropertyName("virtualNetworkId"u8);
+                writer.WriteStringValue(VirtualNetworkId);
+            }
+            if (Optional.IsDefined(DnsZoneType))
+            {
+                writer.WritePropertyName("dnsZoneType"u8);
+                writer.WriteStringValue(DnsZoneType.Value.ToString());
+            }
+            writer.WriteEndObject();
         }
 
         AvsPrivateCloudData IJsonModel<AvsPrivateCloudData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -81,7 +209,6 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
-            PrivateCloudProperties properties = default;
             AvsSku sku = default;
             ManagedServiceIdentity identity = default;
             IList<string> zones = default;
@@ -91,19 +218,32 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            AvsManagementCluster managementCluster = default;
+            InternetConnectivityState? internet = default;
+            IList<SingleSignOnIdentitySource> identitySources = default;
+            PrivateCloudAvailabilityProperties availability = default;
+            CustomerManagedEncryption encryption = default;
+            IList<string> extendedNetworkBlocks = default;
+            AvsPrivateCloudProvisioningState? provisioningState = default;
+            ExpressRouteCircuit circuit = default;
+            AvsPrivateCloudEndpoints endpoints = default;
+            string networkBlock = default;
+            string managementNetwork = default;
+            string provisioningNetwork = default;
+            string vmotionNetwork = default;
+            string vcenterPassword = default;
+            string nsxtPassword = default;
+            string vcenterCertificateThumbprint = default;
+            string nsxtCertificateThumbprint = default;
+            IReadOnlyList<ResourceIdentifier> externalCloudLinks = default;
+            ExpressRouteCircuit secondaryCircuit = default;
+            NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default;
+            ResourceIdentifier virtualNetworkId = default;
+            AvsDnsZoneType? dnsZoneType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = PrivateCloudProperties.DeserializePrivateCloudProperties(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("sku"u8))
                 {
                     sku = AvsSku.DeserializeAvsSku(property.Value, options);
@@ -175,6 +315,206 @@ namespace Azure.ResourceManager.Avs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("managementCluster"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            managementCluster = AvsManagementCluster.DeserializeAvsManagementCluster(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("internet"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            internet = new InternetConnectivityState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("identitySources"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SingleSignOnIdentitySource> array = new List<SingleSignOnIdentitySource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(SingleSignOnIdentitySource.DeserializeSingleSignOnIdentitySource(item, options));
+                            }
+                            identitySources = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("availability"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            availability = PrivateCloudAvailabilityProperties.DeserializePrivateCloudAvailabilityProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryption = CustomerManagedEncryption.DeserializeCustomerManagedEncryption(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("extendedNetworkBlocks"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            extendedNetworkBlocks = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new AvsPrivateCloudProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("circuit"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            circuit = ExpressRouteCircuit.DeserializeExpressRouteCircuit(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("endpoints"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            endpoints = AvsPrivateCloudEndpoints.DeserializeAvsPrivateCloudEndpoints(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("networkBlock"u8))
+                        {
+                            networkBlock = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("managementNetwork"u8))
+                        {
+                            managementNetwork = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningNetwork"u8))
+                        {
+                            provisioningNetwork = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("vmotionNetwork"u8))
+                        {
+                            vmotionNetwork = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("vcenterPassword"u8))
+                        {
+                            vcenterPassword = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("nsxtPassword"u8))
+                        {
+                            nsxtPassword = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("vcenterCertificateThumbprint"u8))
+                        {
+                            vcenterCertificateThumbprint = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("nsxtCertificateThumbprint"u8))
+                        {
+                            nsxtCertificateThumbprint = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("externalCloudLinks"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
+                            }
+                            externalCloudLinks = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("secondaryCircuit"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            secondaryCircuit = ExpressRouteCircuit.DeserializeExpressRouteCircuit(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("nsxPublicIpQuotaRaised"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nsxPublicIPQuotaRaised = new NsxPublicIPQuotaRaisedEnum(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualNetworkId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            virtualNetworkId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("dnsZoneType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dnsZoneType = new AvsDnsZoneType(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -188,7 +528,28 @@ namespace Azure.ResourceManager.Avs
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties,
+                managementCluster,
+                internet,
+                identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(),
+                availability,
+                encryption,
+                extendedNetworkBlocks ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                circuit,
+                endpoints,
+                networkBlock,
+                managementNetwork,
+                provisioningNetwork,
+                vmotionNetwork,
+                vcenterPassword,
+                nsxtPassword,
+                vcenterCertificateThumbprint,
+                nsxtCertificateThumbprint,
+                externalCloudLinks ?? new ChangeTrackingList<ResourceIdentifier>(),
+                secondaryCircuit,
+                nsxPublicIPQuotaRaised,
+                virtualNetworkId,
+                dnsZoneType,
                 sku,
                 identity,
                 zones ?? new ChangeTrackingList<string>(),
