@@ -83,4 +83,10 @@
     </AssemblyAttribute>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Samples\Resources\batman.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
