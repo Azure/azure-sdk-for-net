@@ -5,3 +5,6 @@ options:
   "@typespec/http-client-csharp":
     emitter-output-dir: "{cwd}"
     package-name: "System.ClientModel.TestFramework"
+    license:
+      name: "MIT License"
+      company: "Microsoft Corporation"
