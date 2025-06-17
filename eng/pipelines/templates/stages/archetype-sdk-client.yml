@@ -57,9 +57,6 @@ parameters:
   - name: ExcludePaths
     type: object
     default: []
-  - name: CorePerfTestInputs
-    type: boolean
-    default: false
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -85,7 +82,6 @@ extends:
               AOTTestInputs: ${{ parameters.AOTTestInputs }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
               TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-              CorePerfTestInputs: ${{ parameters.CorePerfTestInputs }}
               MatrixConfigs:
                 - ${{ each config in parameters.MatrixConfigs }}:
                     - ${{ config }}

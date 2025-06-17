@@ -37,6 +37,5 @@ extends:
       ServiceDirectory: ${{ parameters.Service }}
     CheckAOTCompat: true
     BuildSnippets: true
-    CorePerfTestInputs: true
     ExcludePaths:
       - eng/packages/http-client-csharp/
