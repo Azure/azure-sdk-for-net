@@ -317,21 +317,9 @@ namespace Azure.Generator.Providers
             }
 
             TryExpression BuildTryExpression()
-                => new TryExpression(_clientField.Property("Pipeline").Invoke(_isAsync ? "SendAsync" : "Send", [messageVariable, This.Property("CancellationToken")], _isAsync).Terminate(), BuildGetResponse(messageVariable));
+                => new TryExpression(Return(_clientField.Property("Pipeline").Invoke(_isAsync ? "ProcessMessageAsync" : "ProcessMessage", [messageVariable, _contextField!.AsValueExpression], _isAsync)));
 
             return new MethodProvider(signature, body, this);
-        }
-
-        private MethodBodyStatement[] BuildGetResponse(ValueExpression messageVariable)
-        {
-            return new MethodBodyStatement[]
-            {
-                new IfStatement(messageVariable.Property("Response").Property("IsError").As<bool>().And(_contextField!.Property("ErrorOptions").NotEqual(Static<ErrorOptions>().Property(nameof(ErrorOptions.NoThrow)))))
-                {
-                    Throw(New.Instance<RequestFailedException>(messageVariable.Property("Response")))
-                },
-                Return(messageVariable.Property("Response"))
-            };
         }
 
         private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri)

@@ -63,12 +63,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, CancellationToken);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {
