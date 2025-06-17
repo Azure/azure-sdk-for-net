@@ -1975,7 +1975,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
-            if (enableDirectoryLease == null || enableDirectoryLease == true)
+            if (enableDirectoryLease == true || enableDirectoryLease == null)
             {
                 Assert.IsTrue(response.Value.EnableDirectoryLease);
             }
@@ -1989,7 +1989,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareItem shareItem = shares.SingleOrDefault(r => r.Name == test.Share.Name);
 
             // Assert
-            if (enableDirectoryLease == null || enableDirectoryLease == true)
+            if (enableDirectoryLease == true || enableDirectoryLease == null)
             {
                 Assert.IsTrue(shareItem.Properties.EnableDirectoryLease);
             }

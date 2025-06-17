@@ -886,7 +886,7 @@ namespace Azure.Storage.Files.Shares
                 MaxBurstCreditsForIops = sharePropertiesInternal.MaxBurstCreditsForIops,
                 NextAllowedProvisionedIopsDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedIopsDowngradeTime,
                 NextAllowedProvisionedBandwidthDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedBandwidthDowngradeTime,
-                EnableDirectoryLease = sharePropertiesInternal.EnableSMBDirectoryLease,
+                EnableDirectoryLease = sharePropertiesInternal.EnableSmbDirectoryLease,
             };
         }
 

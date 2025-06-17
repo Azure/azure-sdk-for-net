@@ -41,7 +41,7 @@ namespace Azure.Storage.Files.Shares.Models
             long? maxBurstCreditsForIops = default;
             DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime = default;
             DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime = default;
-            bool? enableSMBDirectoryLease = default;
+            bool? enableSmbDirectoryLease = default;
             if (element.Element("Last-Modified") is XElement lastModifiedElement)
             {
                 lastModified = lastModifiedElement.GetDateTimeOffsetValue("R");
@@ -146,9 +146,9 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 nextAllowedProvisionedBandwidthDowngradeTime = nextAllowedProvisionedBandwidthDowngradeTimeElement.GetDateTimeOffsetValue("R");
             }
-            if (element.Element("EnableSMBDirectoryLease") is XElement enableSMBDirectoryLeaseElement)
+            if (element.Element("EnableSmbDirectoryLease") is XElement enableSmbDirectoryLeaseElement)
             {
-                enableSMBDirectoryLease = (bool?)enableSMBDirectoryLeaseElement;
+                enableSmbDirectoryLease = (bool?)enableSmbDirectoryLeaseElement;
             }
             return new SharePropertiesInternal(
                 lastModified,
@@ -177,7 +177,7 @@ namespace Azure.Storage.Files.Shares.Models
                 maxBurstCreditsForIops,
                 nextAllowedProvisionedIopsDowngradeTime,
                 nextAllowedProvisionedBandwidthDowngradeTime,
-                enableSMBDirectoryLease);
+                enableSmbDirectoryLease);
         }
     }
 }
