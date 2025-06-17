@@ -104,11 +104,10 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             statements.Add(ResourceMethodSnippets.CreateHttpMessage(resourceClientProvider, "CreateGetRequest", arguments, out var messageVariable));
 
-            var responseType = new CSharpType(typeof(Response<>), resourceClientProvider.ResourceData.Type);
             statements.AddRange(ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                 messageVariable,
                 contextVariable,
-                responseType,
+                resourceClientProvider.ResourceData.Type,
                 isAsync,
                 out responseVariable));
 
