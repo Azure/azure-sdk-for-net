@@ -108,6 +108,7 @@ jobs:
             SDKType: ${{ parameters.SDKType }}
             CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
             AOTTestInputs: ${{ parameters.AOTTestInputs }}
+            CorePerfTestInputs: ${{ parameters.CorePerfTestInputs }}
 
     - job: "Analyze"
       timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
@@ -200,12 +201,6 @@ jobs:
           TestSetupSteps: ${{ parameters.TestSetupSteps }}
           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
 
-  - job: CorePerf
-    displayName: Run Core Perf Benchmarks
-    steps:
-      - template: /eng/pipelines/templates/steps/core-perf.yml
-        parameters:
-          CorePerfTestInputs: true
           
   - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml

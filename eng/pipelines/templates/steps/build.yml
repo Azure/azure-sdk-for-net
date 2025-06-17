@@ -20,6 +20,9 @@ parameters:
   - name: BuildSnippets
     type: boolean
     default: true
+  - name: CorePerfTestInputs
+    type: boolean
+    default: false
 
 steps:
   - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
@@ -165,7 +168,11 @@ steps:
     condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
     inputs:
       ignoreDirectories: '.nuget'
-
+  - ${{ if eq(parameters.CorePerfTestInputs, true) }}:
+    - template: /eng/pipelines/templates/steps/core-perf.yml
+      parameters:
+        CorePerfTestInputs: ${{ parameters.CorePerfTestInputs }}
+   
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
     - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
       parameters:
