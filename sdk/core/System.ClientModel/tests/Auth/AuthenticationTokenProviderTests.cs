@@ -88,7 +88,6 @@ public class AuthenticationTokenProviderTests
         /// This flow can be used for operations that do not require authentication.
         /// It will override the service level flows and any operation specific flows.
         /// </summary>
-        private readonly IReadOnlyDictionary<string, object> noAuthFlows = new Dictionary<string, object>();
         private readonly IReadOnlyDictionary<string, object> emptyFlows = new Dictionary<string, object>();
 
         private ClientPipeline _pipeline;
