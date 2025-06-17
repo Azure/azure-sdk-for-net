@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -1891,6 +1892,69 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static StatementActionPatchProperties StatementActionPatchProperties(long? localPreference = null, RoutePolicyActionType actionType = default, ActionIPCommunityPatchProperties ipCommunityProperties = null, ActionIPExtendedCommunityPatchProperties ipExtendedCommunityProperties = null)
         {
             return new StatementActionPatchProperties(localPreference, actionType, ipCommunityProperties, ipExtendedCommunityProperties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration" />. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
+        /// <param name="allowAS"> Allows for routes to be received and processed even if the router detects its own ASN in the AS-Path. 0 is disable, Possible values are 1-10, default is 2. </param>
+        /// <param name="allowASOverride"> Enable Or Disable state. </param>
+        /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
+        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
+        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BgpConfiguration BgpConfiguration(string annotation, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IEnumerable<string> ipv4ListenRangePrefixes, IEnumerable<string> ipv6ListenRangePrefixes, IEnumerable<NeighborAddress> ipv4NeighborAddress, IEnumerable<NeighborAddress> ipv6NeighborAddress)
+        {
+            return BgpConfiguration(annotation: annotation, bfdConfiguration: bfdConfiguration, defaultRouteOriginate: defaultRouteOriginate, allowAS: allowAS, allowASOverride: allowASOverride, fabricAsn: fabricAsn, peerAsn: peerAsn, ipv4ListenRangePrefixes: ipv4ListenRangePrefixes, ipv6ListenRangePrefixes: ipv6ListenRangePrefixes, ipv4NeighborAddress: ipv4NeighborAddress, ipv6NeighborAddress: ipv6NeighborAddress, bmpConfiguration: default, v4OverV6BgpSession: default, v6OverV4BgpSession: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress" />. </summary>
+        /// <param name="address"> IP Address. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NeighborAddress NeighborAddress(string address, NetworkFabricConfigurationState? configurationState)
+        {
+            return NeighborAddress(address: address, bfdAdministrativeState: default, bgpAdministrativeState: default, configurationState: configurationState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties" />. </summary>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="mtu"> MTU to use for option A peering. </param>
+        /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
+        /// <param name="fabricAsn"> Fabric ASN number. Example 65001. </param>
+        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExternalNetworkOptionAProperties ExternalNetworkOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId)
+        {
+            return ExternalNetworkOptionAProperties(primaryIPv4Prefix: primaryIPv4Prefix, primaryIPv6Prefix: primaryIPv6Prefix, secondaryIPv4Prefix: secondaryIPv4Prefix, secondaryIPv6Prefix: secondaryIPv6Prefix, mtu: mtu, vlanId: vlanId, fabricAsn: fabricAsn, peerAsn: peerAsn, bfdConfiguration: bfdConfiguration, ingressAclId: ingressAclId, bmpConfigurationState: default, egressAclId: egressAclId, v4OverV6BgpSession: default, v6OverV4BgpSession: default, nativeIPv4PrefixLimits: default, nativeIPv6PrefixLimits: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration" />. </summary>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
+        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OptionBLayer3Configuration OptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, long? peerAsn, int? vlanId, long? fabricAsn)
+        {
+            return OptionBLayer3Configuration(primaryIPv4Prefix: primaryIPv4Prefix, primaryIPv6Prefix: primaryIPv6Prefix, secondaryIPv4Prefix: secondaryIPv4Prefix, secondaryIPv6Prefix: secondaryIPv6Prefix, peerAsn: peerAsn, vlanId: vlanId, fabricAsn: fabricAsn, peLoopbackIPAddress: default, bmpConfigurationState: default, prefixLimits: default);
         }
     }
 }
