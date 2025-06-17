@@ -2806,7 +2806,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
         public async Task ListBlobsFlatSegmentAsync_StartFrom()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
