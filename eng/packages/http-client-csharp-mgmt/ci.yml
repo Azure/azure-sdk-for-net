@@ -43,6 +43,10 @@ variables:
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
+    Pool:
+      name: azsdk-pool
+      image: windows-2022 # Nuget publish requires .NET framework on windows to handle the auth
+      os: windows
     InitializationSteps:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
     EmitterPackageJsonOutputPath: eng/http-client-csharp-mgmt-emitter-package.json
