@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Log Analytics Query Signal Definition properties. </summary>
-    public partial class LogAnalyticsQuerySignalDefinitionProperties : SignalDefinitionProperties
+    public partial class LogAnalyticsQuerySignalDefinitionProperties : HealthModelSignalDefinitionProperties
     {
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsQuerySignalDefinitionProperties"/>. </summary>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
         /// <param name="queryText"> Query text in KQL syntax. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationRules"/> or <paramref name="queryText"/> is null. </exception>
-        public LogAnalyticsQuerySignalDefinitionProperties(EvaluationRule evaluationRules, string queryText) : base(evaluationRules)
+        public LogAnalyticsQuerySignalDefinitionProperties(EntitySignalEvaluationRule evaluationRules, string queryText) : base(evaluationRules)
         {
             Argument.AssertNotNull(evaluationRules, nameof(evaluationRules));
             Argument.AssertNotNull(queryText, nameof(queryText));
 
             QueryText = queryText;
-            SignalKind = SignalKind.LogAnalyticsQuery;
+            SignalKind = EntitySignalKind.LogAnalyticsQuery;
         }
 
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsQuerySignalDefinitionProperties"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="queryText"> Query text in KQL syntax. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. If not specified, the KQL query must define a time range. </param>
         /// <param name="valueColumnName"> Name of the column in the result set to evaluate against the thresholds. Defaults to the first column in the result set if not specified. The column must be numeric. </param>
-        internal LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, SignalKind signalKind, RefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string queryText, string timeGrain, string valueColumnName) : base(provisioningState, displayName, signalKind, refreshInterval, labels, dataUnit, evaluationRules, deletedOn, serializedAdditionalRawData)
+        internal LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string queryText, string timeGrain, string valueColumnName) : base(provisioningState, displayName, signalKind, refreshInterval, labels, dataUnit, evaluationRules, deletedOn, serializedAdditionalRawData)
         {
             QueryText = queryText;
             TimeGrain = timeGrain;

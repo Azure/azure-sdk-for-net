@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.CloudHealth
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SignalDefinitionResources in the HealthModel. </summary>
-        /// <returns> An object representing collection of SignalDefinitionResources and their operations over a SignalDefinitionResource. </returns>
-        public virtual SignalDefinitionCollection GetSignalDefinitions()
+        /// <summary> Gets a collection of HealthModelSignalDefinitionResources in the HealthModel. </summary>
+        /// <returns> An object representing collection of HealthModelSignalDefinitionResources and their operations over a HealthModelSignalDefinitionResource. </returns>
+        public virtual HealthModelSignalDefinitionCollection GetHealthModelSignalDefinitions()
         {
-            return GetCachedClient(client => new SignalDefinitionCollection(client, Id));
+            return GetCachedClient(client => new HealthModelSignalDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SignalDefinitionResource"/></description>
+        /// <description><see cref="HealthModelSignalDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.CloudHealth
         /// <exception cref="ArgumentNullException"> <paramref name="signalDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SignalDefinitionResource>> GetSignalDefinitionAsync(string signalDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthModelSignalDefinitionResource>> GetHealthModelSignalDefinitionAsync(string signalDefinitionName, CancellationToken cancellationToken = default)
         {
-            return await GetSignalDefinitions().GetAsync(signalDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetHealthModelSignalDefinitions().GetAsync(signalDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SignalDefinitionResource"/></description>
+        /// <description><see cref="HealthModelSignalDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,47 +154,16 @@ namespace Azure.ResourceManager.CloudHealth
         /// <exception cref="ArgumentNullException"> <paramref name="signalDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SignalDefinitionResource> GetSignalDefinition(string signalDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<HealthModelSignalDefinitionResource> GetHealthModelSignalDefinition(string signalDefinitionName, CancellationToken cancellationToken = default)
         {
-            return GetSignalDefinitions().Get(signalDefinitionName, cancellationToken);
+            return GetHealthModelSignalDefinitions().Get(signalDefinitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AuthenticationSettingResources in the HealthModel. </summary>
-        /// <returns> An object representing collection of AuthenticationSettingResources and their operations over a AuthenticationSettingResource. </returns>
-        public virtual AuthenticationSettingCollection GetAuthenticationSettings()
+        /// <summary> Gets a collection of HealthModelAuthenticationSettingResources in the HealthModel. </summary>
+        /// <returns> An object representing collection of HealthModelAuthenticationSettingResources and their operations over a HealthModelAuthenticationSettingResource. </returns>
+        public virtual HealthModelAuthenticationSettingCollection GetHealthModelAuthenticationSettings()
         {
-            return GetCachedClient(client => new AuthenticationSettingCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a AuthenticationSetting
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AuthenticationSetting_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthenticationSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="authenticationSettingName"> Name of the authentication setting. Must be unique within a health model. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authenticationSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AuthenticationSettingResource>> GetAuthenticationSettingAsync(string authenticationSettingName, CancellationToken cancellationToken = default)
-        {
-            return await GetAuthenticationSettings().GetAsync(authenticationSettingName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new HealthModelAuthenticationSettingCollection(client, Id));
         }
 
         /// <summary>
@@ -214,7 +183,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AuthenticationSettingResource"/></description>
+        /// <description><see cref="HealthModelAuthenticationSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,16 +192,47 @@ namespace Azure.ResourceManager.CloudHealth
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationSettingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AuthenticationSettingResource> GetAuthenticationSetting(string authenticationSettingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthModelAuthenticationSettingResource>> GetHealthModelAuthenticationSettingAsync(string authenticationSettingName, CancellationToken cancellationToken = default)
         {
-            return GetAuthenticationSettings().Get(authenticationSettingName, cancellationToken);
+            return await GetHealthModelAuthenticationSettings().GetAsync(authenticationSettingName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of EntityResources in the HealthModel. </summary>
-        /// <returns> An object representing collection of EntityResources and their operations over a EntityResource. </returns>
-        public virtual EntityCollection GetEntities()
+        /// <summary>
+        /// Get a AuthenticationSetting
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/authenticationsettings/{authenticationSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AuthenticationSetting_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelAuthenticationSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authenticationSettingName"> Name of the authentication setting. Must be unique within a health model. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authenticationSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authenticationSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HealthModelAuthenticationSettingResource> GetHealthModelAuthenticationSetting(string authenticationSettingName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new EntityCollection(client, Id));
+            return GetHealthModelAuthenticationSettings().Get(authenticationSettingName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HealthModelEntityResources in the HealthModel. </summary>
+        /// <returns> An object representing collection of HealthModelEntityResources and their operations over a HealthModelEntityResource. </returns>
+        public virtual HealthModelEntityCollection GetHealthModelEntities()
+        {
+            return GetCachedClient(client => new HealthModelEntityCollection(client, Id));
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityResource"/></description>
+        /// <description><see cref="HealthModelEntityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,9 +261,9 @@ namespace Azure.ResourceManager.CloudHealth
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EntityResource>> GetEntityAsync(string entityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthModelEntityResource>> GetHealthModelEntityAsync(string entityName, CancellationToken cancellationToken = default)
         {
-            return await GetEntities().GetAsync(entityName, cancellationToken).ConfigureAwait(false);
+            return await GetHealthModelEntities().GetAsync(entityName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EntityResource"/></description>
+        /// <description><see cref="HealthModelEntityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,47 +292,16 @@ namespace Azure.ResourceManager.CloudHealth
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EntityResource> GetEntity(string entityName, CancellationToken cancellationToken = default)
+        public virtual Response<HealthModelEntityResource> GetHealthModelEntity(string entityName, CancellationToken cancellationToken = default)
         {
-            return GetEntities().Get(entityName, cancellationToken);
+            return GetHealthModelEntities().Get(entityName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RelationshipResources in the HealthModel. </summary>
-        /// <returns> An object representing collection of RelationshipResources and their operations over a RelationshipResource. </returns>
-        public virtual RelationshipCollection GetRelationships()
+        /// <summary> Gets a collection of HealthModelRelationshipResources in the HealthModel. </summary>
+        /// <returns> An object representing collection of HealthModelRelationshipResources and their operations over a HealthModelRelationshipResource. </returns>
+        public virtual HealthModelRelationshipCollection GetHealthModelRelationships()
         {
-            return GetCachedClient(client => new RelationshipCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Relationship
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Relationship_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RelationshipResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="relationshipName"> Name of the relationship. Must be unique within a health model. For example, a concatenation of parentEntityName and childEntityName can be used as the name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RelationshipResource>> GetRelationshipAsync(string relationshipName, CancellationToken cancellationToken = default)
-        {
-            return await GetRelationships().GetAsync(relationshipName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new HealthModelRelationshipCollection(client, Id));
         }
 
         /// <summary>
@@ -352,7 +321,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RelationshipResource"/></description>
+        /// <description><see cref="HealthModelRelationshipResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,16 +330,47 @@ namespace Azure.ResourceManager.CloudHealth
         /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RelationshipResource> GetRelationship(string relationshipName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthModelRelationshipResource>> GetHealthModelRelationshipAsync(string relationshipName, CancellationToken cancellationToken = default)
         {
-            return GetRelationships().Get(relationshipName, cancellationToken);
+            return await GetHealthModelRelationships().GetAsync(relationshipName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of DiscoveryRuleResources in the HealthModel. </summary>
-        /// <returns> An object representing collection of DiscoveryRuleResources and their operations over a DiscoveryRuleResource. </returns>
-        public virtual DiscoveryRuleCollection GetDiscoveryRules()
+        /// <summary>
+        /// Get a Relationship
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/relationships/{relationshipName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Relationship_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelRelationshipResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="relationshipName"> Name of the relationship. Must be unique within a health model. For example, a concatenation of parentEntityName and childEntityName can be used as the name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="relationshipName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationshipName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HealthModelRelationshipResource> GetHealthModelRelationship(string relationshipName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new DiscoveryRuleCollection(client, Id));
+            return GetHealthModelRelationships().Get(relationshipName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HealthModelDiscoveryRuleResources in the HealthModel. </summary>
+        /// <returns> An object representing collection of HealthModelDiscoveryRuleResources and their operations over a HealthModelDiscoveryRuleResource. </returns>
+        public virtual HealthModelDiscoveryRuleCollection GetHealthModelDiscoveryRules()
+        {
+            return GetCachedClient(client => new HealthModelDiscoveryRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DiscoveryRuleResource"/></description>
+        /// <description><see cref="HealthModelDiscoveryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -399,9 +399,9 @@ namespace Azure.ResourceManager.CloudHealth
         /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveryRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiscoveryRuleResource>> GetDiscoveryRuleAsync(string discoveryRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthModelDiscoveryRuleResource>> GetHealthModelDiscoveryRuleAsync(string discoveryRuleName, CancellationToken cancellationToken = default)
         {
-            return await GetDiscoveryRules().GetAsync(discoveryRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetHealthModelDiscoveryRules().GetAsync(discoveryRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DiscoveryRuleResource"/></description>
+        /// <description><see cref="HealthModelDiscoveryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -430,9 +430,9 @@ namespace Azure.ResourceManager.CloudHealth
         /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveryRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiscoveryRuleResource> GetDiscoveryRule(string discoveryRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<HealthModelDiscoveryRuleResource> GetHealthModelDiscoveryRule(string discoveryRuleName, CancellationToken cancellationToken = default)
         {
-            return GetDiscoveryRules().Get(discoveryRuleName, cancellationToken);
+            return GetHealthModelDiscoveryRules().Get(discoveryRuleName, cancellationToken);
         }
 
         /// <summary>

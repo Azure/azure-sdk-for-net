@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 return null;
             }
-            AlertConfiguration unhealthy = default;
-            AlertConfiguration degraded = default;
+            EntityAlertConfiguration unhealthy = default;
+            EntityAlertConfiguration degraded = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    unhealthy = AlertConfiguration.DeserializeAlertConfiguration(property.Value, options);
+                    unhealthy = EntityAlertConfiguration.DeserializeEntityAlertConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("degraded"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    degraded = AlertConfiguration.DeserializeAlertConfiguration(property.Value, options);
+                    degraded = EntityAlertConfiguration.DeserializeEntityAlertConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Authentication setting properties for Azure Managed Identity. </summary>
-    public partial class ManagedIdentityAuthenticationSettingProperties : AuthenticationSettingProperties
+    public partial class ManagedIdentityAuthenticationSettingProperties : HealthModelAuthenticationSettingProperties
     {
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityAuthenticationSettingProperties"/>. </summary>
         /// <param name="managedIdentityName"> Name of the managed identity to use. Either 'SystemAssigned' or the resourceId of a user-assigned identity. </param>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             Argument.AssertNotNull(managedIdentityName, nameof(managedIdentityName));
 
             ManagedIdentityName = managedIdentityName;
-            AuthenticationKind = AuthenticationKind.ManagedIdentity;
+            AuthenticationKind = HealthModelAuthenticationKind.ManagedIdentity;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityAuthenticationSettingProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="authenticationKind"> Kind of the authentication setting. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="managedIdentityName"> Name of the managed identity to use. Either 'SystemAssigned' or the resourceId of a user-assigned identity. </param>
-        internal ManagedIdentityAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState, string displayName, AuthenticationKind authenticationKind, IDictionary<string, BinaryData> serializedAdditionalRawData, string managedIdentityName) : base(provisioningState, displayName, authenticationKind, serializedAdditionalRawData)
+        internal ManagedIdentityAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState, string displayName, HealthModelAuthenticationKind authenticationKind, IDictionary<string, BinaryData> serializedAdditionalRawData, string managedIdentityName) : base(provisioningState, displayName, authenticationKind, serializedAdditionalRawData)
         {
             ManagedIdentityName = managedIdentityName;
             AuthenticationKind = authenticationKind;

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             string managedIdentityName = default;
             HealthModelProvisioningState? provisioningState = default;
             string displayName = default;
-            AuthenticationKind authenticationKind = default;
+            HealthModelAuthenticationKind authenticationKind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
                 if (property.NameEquals("authenticationKind"u8))
                 {
-                    authenticationKind = new AuthenticationKind(property.Value.GetString());
+                    authenticationKind = new HealthModelAuthenticationKind(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

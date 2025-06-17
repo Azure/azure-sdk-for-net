@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 return null;
             }
-            IReadOnlyList<EntityData> value = default;
+            IReadOnlyList<HealthModelEntityData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<EntityData> array = new List<EntityData>();
+                    List<HealthModelEntityData> array = new List<HealthModelEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityData.DeserializeEntityData(item, options));
+                        array.Add(HealthModelEntityData.DeserializeHealthModelEntityData(item, options));
                     }
                     value = array;
                     continue;

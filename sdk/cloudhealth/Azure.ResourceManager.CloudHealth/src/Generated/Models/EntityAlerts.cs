@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="unhealthy"> Alert to be triggered on state change to unhealthy. </param>
         /// <param name="degraded"> Alert to be triggered on state change to degraded. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EntityAlerts(AlertConfiguration unhealthy, AlertConfiguration degraded, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EntityAlerts(EntityAlertConfiguration unhealthy, EntityAlertConfiguration degraded, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Unhealthy = unhealthy;
             Degraded = degraded;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <summary> Alert to be triggered on state change to unhealthy. </summary>
-        public AlertConfiguration Unhealthy { get; set; }
+        public EntityAlertConfiguration Unhealthy { get; set; }
         /// <summary> Alert to be triggered on state change to degraded. </summary>
-        public AlertConfiguration Degraded { get; set; }
+        public EntityAlertConfiguration Degraded { get; set; }
     }
 }

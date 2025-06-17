@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 return null;
             }
-            IList<SignalAssignment> signalAssignments = default;
+            IList<EntitySignalAssignment> signalAssignments = default;
             string authenticationSetting = default;
             ResourceIdentifier logAnalyticsWorkspaceResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    List<SignalAssignment> array = new List<SignalAssignment>();
+                    List<EntitySignalAssignment> array = new List<EntitySignalAssignment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalAssignment.DeserializeSignalAssignment(item, options));
+                        array.Add(EntitySignalAssignment.DeserializeEntitySignalAssignment(item, options));
                     }
                     signalAssignments = array;
                     continue;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LogAnalyticsSignalGroup(signalAssignments ?? new ChangeTrackingList<SignalAssignment>(), authenticationSetting, logAnalyticsWorkspaceResourceId, serializedAdditionalRawData);
+            return new LogAnalyticsSignalGroup(signalAssignments ?? new ChangeTrackingList<EntitySignalAssignment>(), authenticationSetting, logAnalyticsWorkspaceResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalyticsSignalGroup>.Write(ModelReaderWriterOptions options)

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Azure Resource Metric Signal Definition properties. </summary>
-    public partial class ResourceMetricSignalDefinitionProperties : SignalDefinitionProperties
+    public partial class ResourceMetricSignalDefinitionProperties : HealthModelSignalDefinitionProperties
     {
         /// <summary> Initializes a new instance of <see cref="ResourceMetricSignalDefinitionProperties"/>. </summary>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
         /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationRules"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="timeGrain"/> is null. </exception>
-        public ResourceMetricSignalDefinitionProperties(EvaluationRule evaluationRules, string metricNamespace, string metricName, string timeGrain, MetricAggregationType aggregationType) : base(evaluationRules)
+        public ResourceMetricSignalDefinitionProperties(EntitySignalEvaluationRule evaluationRules, string metricNamespace, string metricName, string timeGrain, MetricAggregationType aggregationType) : base(evaluationRules)
         {
             Argument.AssertNotNull(evaluationRules, nameof(evaluationRules));
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             MetricName = metricName;
             TimeGrain = timeGrain;
             AggregationType = aggregationType;
-            SignalKind = SignalKind.AzureResourceMetric;
+            SignalKind = EntitySignalKind.AzureResourceMetric;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceMetricSignalDefinitionProperties"/>. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
         /// <param name="dimension"> Optional: Dimension to split by. </param>
         /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </param>
-        internal ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, SignalKind signalKind, RefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string metricNamespace, string metricName, string timeGrain, MetricAggregationType aggregationType, string dimension, string dimensionFilter) : base(provisioningState, displayName, signalKind, refreshInterval, labels, dataUnit, evaluationRules, deletedOn, serializedAdditionalRawData)
+        internal ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string metricNamespace, string metricName, string timeGrain, MetricAggregationType aggregationType, string dimension, string dimensionFilter) : base(provisioningState, displayName, signalKind, refreshInterval, labels, dataUnit, evaluationRules, deletedOn, serializedAdditionalRawData)
         {
             MetricNamespace = metricNamespace;
             MetricName = metricName;

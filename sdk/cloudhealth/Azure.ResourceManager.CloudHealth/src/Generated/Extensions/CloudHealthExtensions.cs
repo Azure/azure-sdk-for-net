@@ -52,98 +52,98 @@ namespace Azure.ResourceManager.CloudHealth
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SignalDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SignalDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SignalDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthModelSignalDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthModelSignalDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelSignalDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetSignalDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelSignalDefinitionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SignalDefinitionResource"/> object. </returns>
-        public static SignalDefinitionResource GetSignalDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthModelSignalDefinitionResource"/> object. </returns>
+        public static HealthModelSignalDefinitionResource GetHealthModelSignalDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCloudHealthArmClient(client).GetSignalDefinitionResource(id);
+            return GetMockableCloudHealthArmClient(client).GetHealthModelSignalDefinitionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AuthenticationSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthenticationSettingResource.CreateResourceIdentifier" /> to create an <see cref="AuthenticationSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthModelAuthenticationSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthModelAuthenticationSettingResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelAuthenticationSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetAuthenticationSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelAuthenticationSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AuthenticationSettingResource"/> object. </returns>
-        public static AuthenticationSettingResource GetAuthenticationSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthModelAuthenticationSettingResource"/> object. </returns>
+        public static HealthModelAuthenticationSettingResource GetHealthModelAuthenticationSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCloudHealthArmClient(client).GetAuthenticationSettingResource(id);
+            return GetMockableCloudHealthArmClient(client).GetHealthModelAuthenticationSettingResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EntityResource.CreateResourceIdentifier" /> to create an <see cref="EntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthModelEntityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthModelEntityResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelEntityResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EntityResource"/> object. </returns>
-        public static EntityResource GetEntityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthModelEntityResource"/> object. </returns>
+        public static HealthModelEntityResource GetHealthModelEntityResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCloudHealthArmClient(client).GetEntityResource(id);
+            return GetMockableCloudHealthArmClient(client).GetHealthModelEntityResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RelationshipResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RelationshipResource.CreateResourceIdentifier" /> to create a <see cref="RelationshipResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthModelRelationshipResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthModelRelationshipResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelRelationshipResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetRelationshipResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelRelationshipResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RelationshipResource"/> object. </returns>
-        public static RelationshipResource GetRelationshipResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthModelRelationshipResource"/> object. </returns>
+        public static HealthModelRelationshipResource GetHealthModelRelationshipResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCloudHealthArmClient(client).GetRelationshipResource(id);
+            return GetMockableCloudHealthArmClient(client).GetHealthModelRelationshipResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiscoveryRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiscoveryRuleResource.CreateResourceIdentifier" /> to create a <see cref="DiscoveryRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HealthModelDiscoveryRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthModelDiscoveryRuleResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelDiscoveryRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetDiscoveryRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCloudHealthArmClient.GetHealthModelDiscoveryRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiscoveryRuleResource"/> object. </returns>
-        public static DiscoveryRuleResource GetDiscoveryRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthModelDiscoveryRuleResource"/> object. </returns>
+        public static HealthModelDiscoveryRuleResource GetHealthModelDiscoveryRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCloudHealthArmClient(client).GetDiscoveryRuleResource(id);
+            return GetMockableCloudHealthArmClient(client).GetHealthModelDiscoveryRuleResource(id);
         }
 
         /// <summary>

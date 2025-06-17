@@ -52,20 +52,20 @@ namespace Azure.ResourceManager.CloudHealth.Models
             return new HealthModelProperties(dataplaneEndpoint, provisioningState, discovery, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.SignalDefinitionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelSignalDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// The resource-specific properties for this resource.
-        /// Please note <see cref="Models.SignalDefinitionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.HealthModelSignalDefinitionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.ResourceMetricSignalDefinitionProperties"/>, <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/> and <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/>.
         /// </param>
-        /// <returns> A new <see cref="CloudHealth.SignalDefinitionData"/> instance for mocking. </returns>
-        public static SignalDefinitionData SignalDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SignalDefinitionProperties properties = null)
+        /// <returns> A new <see cref="CloudHealth.HealthModelSignalDefinitionData"/> instance for mocking. </returns>
+        public static HealthModelSignalDefinitionData HealthModelSignalDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelSignalDefinitionProperties properties = null)
         {
-            return new SignalDefinitionData(
+            return new HealthModelSignalDefinitionData(
                 id,
                 name,
                 resourceType,
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SignalDefinitionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HealthModelSignalDefinitionProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="signalKind"> Kind of the signal definition. </param>
@@ -83,15 +83,15 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
         /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
-        /// <returns> A new <see cref="Models.SignalDefinitionProperties"/> instance for mocking. </returns>
-        public static SignalDefinitionProperties SignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string signalKind = null, RefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null)
+        /// <returns> A new <see cref="Models.HealthModelSignalDefinitionProperties"/> instance for mocking. </returns>
+        public static HealthModelSignalDefinitionProperties HealthModelSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string signalKind = null, EntitySignalRefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EntitySignalEvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null)
         {
             labels ??= new Dictionary<string, string>();
 
-            return new UnknownSignalDefinitionProperties(
+            return new UnknownHealthModelSignalDefinitionProperties(
                 provisioningState,
                 displayName,
-                signalKind == null ? default : new SignalKind(signalKind),
+                signalKind == null ? default : new EntitySignalKind(signalKind),
                 refreshInterval,
                 labels,
                 dataUnit,
@@ -115,14 +115,14 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="dimension"> Optional: Dimension to split by. </param>
         /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </param>
         /// <returns> A new <see cref="Models.ResourceMetricSignalDefinitionProperties"/> instance for mocking. </returns>
-        public static ResourceMetricSignalDefinitionProperties ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, RefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null, string metricNamespace = null, string metricName = null, string timeGrain = null, MetricAggregationType aggregationType = default, string dimension = null, string dimensionFilter = null)
+        public static ResourceMetricSignalDefinitionProperties ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, EntitySignalRefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EntitySignalEvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null, string metricNamespace = null, string metricName = null, string timeGrain = null, MetricAggregationType aggregationType = default, string dimension = null, string dimensionFilter = null)
         {
             labels ??= new Dictionary<string, string>();
 
             return new ResourceMetricSignalDefinitionProperties(
                 provisioningState,
                 displayName,
-                SignalKind.AzureResourceMetric,
+                EntitySignalKind.AzureResourceMetric,
                 refreshInterval,
                 labels,
                 dataUnit,
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. If not specified, the KQL query must define a time range. </param>
         /// <param name="valueColumnName"> Name of the column in the result set to evaluate against the thresholds. Defaults to the first column in the result set if not specified. The column must be numeric. </param>
         /// <returns> A new <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/> instance for mocking. </returns>
-        public static LogAnalyticsQuerySignalDefinitionProperties LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, RefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null, string queryText = null, string timeGrain = null, string valueColumnName = null)
+        public static LogAnalyticsQuerySignalDefinitionProperties LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, EntitySignalRefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EntitySignalEvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null, string queryText = null, string timeGrain = null, string valueColumnName = null)
         {
             labels ??= new Dictionary<string, string>();
 
             return new LogAnalyticsQuerySignalDefinitionProperties(
                 provisioningState,
                 displayName,
-                SignalKind.LogAnalyticsQuery,
+                EntitySignalKind.LogAnalyticsQuery,
                 refreshInterval,
                 labels,
                 dataUnit,
@@ -179,14 +179,14 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="queryText"> Query text in PromQL syntax. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
         /// <returns> A new <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/> instance for mocking. </returns>
-        public static PrometheusMetricsSignalDefinitionProperties PrometheusMetricsSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, RefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null, string queryText = null, string timeGrain = null)
+        public static PrometheusMetricsSignalDefinitionProperties PrometheusMetricsSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, EntitySignalRefreshInterval? refreshInterval = null, IDictionary<string, string> labels = null, string dataUnit = null, EntitySignalEvaluationRule evaluationRules = null, DateTimeOffset? deletedOn = null, string queryText = null, string timeGrain = null)
         {
             labels ??= new Dictionary<string, string>();
 
             return new PrometheusMetricsSignalDefinitionProperties(
                 provisioningState,
                 displayName,
-                SignalKind.PrometheusMetricsQuery,
+                EntitySignalKind.PrometheusMetricsQuery,
                 refreshInterval,
                 labels,
                 dataUnit,
@@ -197,20 +197,20 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 timeGrain);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.AuthenticationSettingData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelAuthenticationSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// The resource-specific properties for this resource.
-        /// Please note <see cref="Models.AuthenticationSettingProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.HealthModelAuthenticationSettingProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.ManagedIdentityAuthenticationSettingProperties"/>.
         /// </param>
-        /// <returns> A new <see cref="CloudHealth.AuthenticationSettingData"/> instance for mocking. </returns>
-        public static AuthenticationSettingData AuthenticationSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AuthenticationSettingProperties properties = null)
+        /// <returns> A new <see cref="CloudHealth.HealthModelAuthenticationSettingData"/> instance for mocking. </returns>
+        public static HealthModelAuthenticationSettingData HealthModelAuthenticationSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelAuthenticationSettingProperties properties = null)
         {
-            return new AuthenticationSettingData(
+            return new HealthModelAuthenticationSettingData(
                 id,
                 name,
                 resourceType,
@@ -219,14 +219,14 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AuthenticationSettingProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HealthModelAuthenticationSettingProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="authenticationKind"> Kind of the authentication setting. </param>
-        /// <returns> A new <see cref="Models.AuthenticationSettingProperties"/> instance for mocking. </returns>
-        public static AuthenticationSettingProperties AuthenticationSettingProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string authenticationKind = null)
+        /// <returns> A new <see cref="Models.HealthModelAuthenticationSettingProperties"/> instance for mocking. </returns>
+        public static HealthModelAuthenticationSettingProperties HealthModelAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string authenticationKind = null)
         {
-            return new UnknownAuthenticationSettingProperties(provisioningState, displayName, authenticationKind == null ? default : new AuthenticationKind(authenticationKind), serializedAdditionalRawData: null);
+            return new UnknownHealthModelAuthenticationSettingProperties(provisioningState, displayName, authenticationKind == null ? default : new HealthModelAuthenticationKind(authenticationKind), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedIdentityAuthenticationSettingProperties"/>. </summary>
@@ -236,19 +236,19 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <returns> A new <see cref="Models.ManagedIdentityAuthenticationSettingProperties"/> instance for mocking. </returns>
         public static ManagedIdentityAuthenticationSettingProperties ManagedIdentityAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string managedIdentityName = null)
         {
-            return new ManagedIdentityAuthenticationSettingProperties(provisioningState, displayName, AuthenticationKind.ManagedIdentity, serializedAdditionalRawData: null, managedIdentityName);
+            return new ManagedIdentityAuthenticationSettingProperties(provisioningState, displayName, HealthModelAuthenticationKind.ManagedIdentity, serializedAdditionalRawData: null, managedIdentityName);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.EntityData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelEntityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="CloudHealth.EntityData"/> instance for mocking. </returns>
-        public static EntityData EntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EntityProperties properties = null)
+        /// <returns> A new <see cref="CloudHealth.HealthModelEntityData"/> instance for mocking. </returns>
+        public static HealthModelEntityData HealthModelEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelEntityProperties properties = null)
         {
-            return new EntityData(
+            return new HealthModelEntityData(
                 id,
                 name,
                 resourceType,
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EntityProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HealthModelEntityProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="kind"> Entity kind. </param>
@@ -271,12 +271,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="deletedOn"> Date when the entity was (soft-)deleted. </param>
         /// <param name="healthState"> Health state of this entity. </param>
         /// <param name="alerts"> Alert configuration for this entity. </param>
-        /// <returns> A new <see cref="Models.EntityProperties"/> instance for mocking. </returns>
-        public static EntityProperties EntityProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string kind = null, EntityCoordinates canvasPosition = null, IconDefinition icon = null, float? healthObjective = null, EntityImpact? impact = null, IDictionary<string, string> labels = null, SignalGroup signals = null, string discoveredBy = null, DateTimeOffset? deletedOn = null, HealthState? healthState = null, EntityAlerts alerts = null)
+        /// <returns> A new <see cref="Models.HealthModelEntityProperties"/> instance for mocking. </returns>
+        public static HealthModelEntityProperties HealthModelEntityProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string kind = null, EntityCoordinates canvasPosition = null, EntityIcon icon = null, float? healthObjective = null, EntityImpact? impact = null, IDictionary<string, string> labels = null, EntitySignalGroup signals = null, string discoveredBy = null, DateTimeOffset? deletedOn = null, EntityHealthState? healthState = null, EntityAlerts alerts = null)
         {
             labels ??= new Dictionary<string, string>();
 
-            return new EntityProperties(
+            return new HealthModelEntityProperties(
                 provisioningState,
                 displayName,
                 kind,
@@ -293,16 +293,16 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.RelationshipData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelRelationshipData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="CloudHealth.RelationshipData"/> instance for mocking. </returns>
-        public static RelationshipData RelationshipData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RelationshipProperties properties = null)
+        /// <returns> A new <see cref="CloudHealth.HealthModelRelationshipData"/> instance for mocking. </returns>
+        public static HealthModelRelationshipData HealthModelRelationshipData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelRelationshipProperties properties = null)
         {
-            return new RelationshipData(
+            return new HealthModelRelationshipData(
                 id,
                 name,
                 resourceType,
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RelationshipProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HealthModelRelationshipProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="parentEntityName"> Resource name of the parent entity. </param>
@@ -319,12 +319,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="labels"> Optional set of labels (key-value pairs). </param>
         /// <param name="discoveredBy"> Discovered by which discovery rule. If set, the relationship cannot be deleted manually. </param>
         /// <param name="deletedOn"> Date when the relationship was (soft-)deleted. </param>
-        /// <returns> A new <see cref="Models.RelationshipProperties"/> instance for mocking. </returns>
-        public static RelationshipProperties RelationshipProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string parentEntityName = null, string childEntityName = null, IDictionary<string, string> labels = null, string discoveredBy = null, DateTimeOffset? deletedOn = null)
+        /// <returns> A new <see cref="Models.HealthModelRelationshipProperties"/> instance for mocking. </returns>
+        public static HealthModelRelationshipProperties HealthModelRelationshipProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string parentEntityName = null, string childEntityName = null, IDictionary<string, string> labels = null, string discoveredBy = null, DateTimeOffset? deletedOn = null)
         {
             labels ??= new Dictionary<string, string>();
 
-            return new RelationshipProperties(
+            return new HealthModelRelationshipProperties(
                 provisioningState,
                 displayName,
                 parentEntityName,
@@ -335,16 +335,16 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHealth.DiscoveryRuleData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHealth.HealthModelDiscoveryRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="CloudHealth.DiscoveryRuleData"/> instance for mocking. </returns>
-        public static DiscoveryRuleData DiscoveryRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DiscoveryRuleProperties properties = null)
+        /// <returns> A new <see cref="CloudHealth.HealthModelDiscoveryRuleData"/> instance for mocking. </returns>
+        public static HealthModelDiscoveryRuleData HealthModelDiscoveryRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthModelDiscoveryRuleProperties properties = null)
         {
-            return new DiscoveryRuleData(
+            return new HealthModelDiscoveryRuleData(
                 id,
                 name,
                 resourceType,
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DiscoveryRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HealthModelDiscoveryRuleProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="resourceGraphQuery"> Azure Resource Graph query text in KQL syntax. The query must return at least a column named 'id' which contains the resource ID of the discovered resources. </param>
@@ -364,10 +364,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="errorMessage"> Error message if the last discovery operation failed. </param>
         /// <param name="numberOfDiscoveredEntities"> Number of discovered entities in the last discovery operation. </param>
         /// <param name="entityName"> Name of the entity which represents the discovery rule. Note: It might take a few minutes after creating the discovery rule until the entity is created. </param>
-        /// <returns> A new <see cref="Models.DiscoveryRuleProperties"/> instance for mocking. </returns>
-        public static DiscoveryRuleProperties DiscoveryRuleProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string resourceGraphQuery = null, string authenticationSetting = null, DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default, DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default, DateTimeOffset? deletedOn = null, string errorMessage = null, int? numberOfDiscoveredEntities = null, string entityName = null)
+        /// <returns> A new <see cref="Models.HealthModelDiscoveryRuleProperties"/> instance for mocking. </returns>
+        public static HealthModelDiscoveryRuleProperties HealthModelDiscoveryRuleProperties(HealthModelProvisioningState? provisioningState = null, string displayName = null, string resourceGraphQuery = null, string authenticationSetting = null, DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default, DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default, DateTimeOffset? deletedOn = null, string errorMessage = null, int? numberOfDiscoveredEntities = null, string entityName = null)
         {
-            return new DiscoveryRuleProperties(
+            return new HealthModelDiscoveryRuleProperties(
                 provisioningState,
                 displayName,
                 resourceGraphQuery,

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             Argument.AssertNotNull(authenticationSetting, nameof(authenticationSetting));
             Argument.AssertNotNull(azureMonitorWorkspaceResourceId, nameof(azureMonitorWorkspaceResourceId));
 
-            SignalAssignments = new ChangeTrackingList<SignalAssignment>();
+            SignalAssignments = new ChangeTrackingList<EntitySignalAssignment>();
             AuthenticationSetting = authenticationSetting;
             AzureMonitorWorkspaceResourceId = azureMonitorWorkspaceResourceId;
         }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="authenticationSetting"> Reference to the name of the authentication setting which is used for querying the data source. </param>
         /// <param name="azureMonitorWorkspaceResourceId"> Azure Monitor workspace resource ID. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMonitorWorkspaceSignalGroup(IList<SignalAssignment> signalAssignments, string authenticationSetting, ResourceIdentifier azureMonitorWorkspaceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureMonitorWorkspaceSignalGroup(IList<EntitySignalAssignment> signalAssignments, string authenticationSetting, ResourceIdentifier azureMonitorWorkspaceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SignalAssignments = signalAssignments;
             AuthenticationSetting = authenticationSetting;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <summary> Signal definitions which are assigned to this signal group. All assignments are combined with an OR operator. </summary>
-        public IList<SignalAssignment> SignalAssignments { get; }
+        public IList<EntitySignalAssignment> SignalAssignments { get; }
         /// <summary> Reference to the name of the authentication setting which is used for querying the data source. </summary>
         public string AuthenticationSetting { get; set; }
         /// <summary> Azure Monitor workspace resource ID. </summary>

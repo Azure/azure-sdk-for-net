@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 return null;
             }
-            IReadOnlyList<DiscoveryRuleData> value = default;
+            IReadOnlyList<HealthModelDiscoveryRuleData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DiscoveryRuleData> array = new List<DiscoveryRuleData>();
+                    List<HealthModelDiscoveryRuleData> array = new List<HealthModelDiscoveryRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiscoveryRuleData.DeserializeDiscoveryRuleData(item, options));
+                        array.Add(HealthModelDiscoveryRuleData.DeserializeHealthModelDiscoveryRuleData(item, options));
                     }
                     value = array;
                     continue;

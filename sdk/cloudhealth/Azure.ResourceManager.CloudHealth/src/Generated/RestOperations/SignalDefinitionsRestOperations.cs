@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="healthModelName"/> or <paramref name="signalDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="healthModelName"/> or <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SignalDefinitionData>> GetAsync(string subscriptionId, string resourceGroupName, string healthModelName, string signalDefinitionName, CancellationToken cancellationToken = default)
+        public async Task<Response<HealthModelSignalDefinitionData>> GetAsync(string subscriptionId, string resourceGroupName, string healthModelName, string signalDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 case 200:
                     {
-                        SignalDefinitionData value = default;
+                        HealthModelSignalDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SignalDefinitionData.DeserializeSignalDefinitionData(document.RootElement);
+                        value = HealthModelSignalDefinitionData.DeserializeHealthModelSignalDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SignalDefinitionData)null, message.Response);
+                    return Response.FromValue((HealthModelSignalDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="healthModelName"/> or <paramref name="signalDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="healthModelName"/> or <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SignalDefinitionData> Get(string subscriptionId, string resourceGroupName, string healthModelName, string signalDefinitionName, CancellationToken cancellationToken = default)
+        public Response<HealthModelSignalDefinitionData> Get(string subscriptionId, string resourceGroupName, string healthModelName, string signalDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,19 +128,19 @@ namespace Azure.ResourceManager.CloudHealth
             {
                 case 200:
                     {
-                        SignalDefinitionData value = default;
+                        HealthModelSignalDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SignalDefinitionData.DeserializeSignalDefinitionData(document.RootElement);
+                        value = HealthModelSignalDefinitionData.DeserializeHealthModelSignalDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SignalDefinitionData)null, message.Response);
+                    return Response.FromValue((HealthModelSignalDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string healthModelName, string signalDefinitionName, SignalDefinitionData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string healthModelName, string signalDefinitionName, HealthModelSignalDefinitionData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CloudHealth
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string healthModelName, string signalDefinitionName, SignalDefinitionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string healthModelName, string signalDefinitionName, HealthModelSignalDefinitionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="healthModelName"/>, <paramref name="signalDefinitionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="healthModelName"/> or <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SignalDefinitionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string healthModelName, string signalDefinitionName, SignalDefinitionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<HealthModelSignalDefinitionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string healthModelName, string signalDefinitionName, HealthModelSignalDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -206,9 +206,9 @@ namespace Azure.ResourceManager.CloudHealth
                 case 200:
                 case 201:
                     {
-                        SignalDefinitionData value = default;
+                        HealthModelSignalDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SignalDefinitionData.DeserializeSignalDefinitionData(document.RootElement);
+                        value = HealthModelSignalDefinitionData.DeserializeHealthModelSignalDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="healthModelName"/>, <paramref name="signalDefinitionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="healthModelName"/> or <paramref name="signalDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SignalDefinitionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string healthModelName, string signalDefinitionName, SignalDefinitionData data, CancellationToken cancellationToken = default)
+        public Response<HealthModelSignalDefinitionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string healthModelName, string signalDefinitionName, HealthModelSignalDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -240,9 +240,9 @@ namespace Azure.ResourceManager.CloudHealth
                 case 200:
                 case 201:
                     {
-                        SignalDefinitionData value = default;
+                        HealthModelSignalDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SignalDefinitionData.DeserializeSignalDefinitionData(document.RootElement);
+                        value = HealthModelSignalDefinitionData.DeserializeHealthModelSignalDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
             string timeGrain = default;
             HealthModelProvisioningState? provisioningState = default;
             string displayName = default;
-            SignalKind signalKind = default;
-            RefreshInterval? refreshInterval = default;
+            EntitySignalKind signalKind = default;
+            EntitySignalRefreshInterval? refreshInterval = default;
             IDictionary<string, string> labels = default;
             string dataUnit = default;
-            EvaluationRule evaluationRules = default;
+            EntitySignalEvaluationRule evaluationRules = default;
             DateTimeOffset? deletionDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
                 if (property.NameEquals("signalKind"u8))
                 {
-                    signalKind = new SignalKind(property.Value.GetString());
+                    signalKind = new EntitySignalKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("refreshInterval"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    refreshInterval = new RefreshInterval(property.Value.GetString());
+                    refreshInterval = new EntitySignalRefreshInterval(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("labels"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
                 if (property.NameEquals("evaluationRules"u8))
                 {
-                    evaluationRules = EvaluationRule.DeserializeEvaluationRule(property.Value, options);
+                    evaluationRules = EntitySignalEvaluationRule.DeserializeEntitySignalEvaluationRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deletionDate"u8))

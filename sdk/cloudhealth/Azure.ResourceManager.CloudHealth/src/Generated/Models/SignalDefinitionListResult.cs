@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Initializes a new instance of <see cref="SignalDefinitionListResult"/>. </summary>
         /// <param name="value"> The SignalDefinition items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SignalDefinitionListResult(IEnumerable<SignalDefinitionData> value)
+        internal SignalDefinitionListResult(IEnumerable<HealthModelSignalDefinitionData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="value"> The SignalDefinition items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalDefinitionListResult(IReadOnlyList<SignalDefinitionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SignalDefinitionListResult(IReadOnlyList<HealthModelSignalDefinitionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <summary> The SignalDefinition items on this page. </summary>
-        public IReadOnlyList<SignalDefinitionData> Value { get; }
+        public IReadOnlyList<HealthModelSignalDefinitionData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

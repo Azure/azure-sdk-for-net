@@ -47,63 +47,63 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SignalDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SignalDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SignalDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HealthModelSignalDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthModelSignalDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelSignalDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SignalDefinitionResource"/> object. </returns>
-        public virtual SignalDefinitionResource GetSignalDefinitionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthModelSignalDefinitionResource"/> object. </returns>
+        public virtual HealthModelSignalDefinitionResource GetHealthModelSignalDefinitionResource(ResourceIdentifier id)
         {
-            SignalDefinitionResource.ValidateResourceId(id);
-            return new SignalDefinitionResource(Client, id);
+            HealthModelSignalDefinitionResource.ValidateResourceId(id);
+            return new HealthModelSignalDefinitionResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AuthenticationSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthenticationSettingResource.CreateResourceIdentifier" /> to create an <see cref="AuthenticationSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HealthModelAuthenticationSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthModelAuthenticationSettingResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelAuthenticationSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthenticationSettingResource"/> object. </returns>
-        public virtual AuthenticationSettingResource GetAuthenticationSettingResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthModelAuthenticationSettingResource"/> object. </returns>
+        public virtual HealthModelAuthenticationSettingResource GetHealthModelAuthenticationSettingResource(ResourceIdentifier id)
         {
-            AuthenticationSettingResource.ValidateResourceId(id);
-            return new AuthenticationSettingResource(Client, id);
+            HealthModelAuthenticationSettingResource.ValidateResourceId(id);
+            return new HealthModelAuthenticationSettingResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EntityResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EntityResource.CreateResourceIdentifier" /> to create an <see cref="EntityResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HealthModelEntityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthModelEntityResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelEntityResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EntityResource"/> object. </returns>
-        public virtual EntityResource GetEntityResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthModelEntityResource"/> object. </returns>
+        public virtual HealthModelEntityResource GetHealthModelEntityResource(ResourceIdentifier id)
         {
-            EntityResource.ValidateResourceId(id);
-            return new EntityResource(Client, id);
+            HealthModelEntityResource.ValidateResourceId(id);
+            return new HealthModelEntityResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RelationshipResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RelationshipResource.CreateResourceIdentifier" /> to create a <see cref="RelationshipResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HealthModelRelationshipResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthModelRelationshipResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelRelationshipResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RelationshipResource"/> object. </returns>
-        public virtual RelationshipResource GetRelationshipResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthModelRelationshipResource"/> object. </returns>
+        public virtual HealthModelRelationshipResource GetHealthModelRelationshipResource(ResourceIdentifier id)
         {
-            RelationshipResource.ValidateResourceId(id);
-            return new RelationshipResource(Client, id);
+            HealthModelRelationshipResource.ValidateResourceId(id);
+            return new HealthModelRelationshipResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiscoveryRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiscoveryRuleResource.CreateResourceIdentifier" /> to create a <see cref="DiscoveryRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HealthModelDiscoveryRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HealthModelDiscoveryRuleResource.CreateResourceIdentifier" /> to create a <see cref="HealthModelDiscoveryRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiscoveryRuleResource"/> object. </returns>
-        public virtual DiscoveryRuleResource GetDiscoveryRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HealthModelDiscoveryRuleResource"/> object. </returns>
+        public virtual HealthModelDiscoveryRuleResource GetHealthModelDiscoveryRuleResource(ResourceIdentifier id)
         {
-            DiscoveryRuleResource.ValidateResourceId(id);
-            return new DiscoveryRuleResource(Client, id);
+            HealthModelDiscoveryRuleResource.ValidateResourceId(id);
+            return new HealthModelDiscoveryRuleResource(Client, id);
         }
     }
 }
