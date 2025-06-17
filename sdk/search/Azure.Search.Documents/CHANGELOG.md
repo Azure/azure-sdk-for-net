@@ -3,7 +3,7 @@
 ## 11.6.1 (2025-06-17)
 
 ### Bugs Fixed
-- Added support for HTTP status code `206` Partial Content in the `Search` method to handle partial results returned by the service.
+- Added support for HTTP status code 206 (Partial Content) in the `Search` method to handle partial results returned by the service.
 
 ## 11.6.0 (2024-07-17)
 
