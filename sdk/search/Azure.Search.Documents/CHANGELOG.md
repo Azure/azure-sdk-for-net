@@ -1,14 +1,9 @@
 # Release History
 
-## 11.7.0-beta.5 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 11.7.0-beta.5 (2025-06-17)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed a failure in the search response when the service returned a 206(Partial Content) status code.
 
 ## 11.7.0-beta.4 (2025-05-14)
 
