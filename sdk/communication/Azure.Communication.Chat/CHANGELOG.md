@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0 (2025-06-13)
+## 1.4.0 (2025-06-17)
 
 ### Features Added
 - Suport data retention policy.
