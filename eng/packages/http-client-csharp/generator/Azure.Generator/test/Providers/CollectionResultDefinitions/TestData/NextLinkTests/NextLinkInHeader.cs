@@ -17,17 +17,14 @@ namespace Samples
     internal partial class CatClientGetCatsCollectionResult : global::Azure.Pageable<global::System.BinaryData>
     {
         private readonly global::Samples.CatClient _client;
-        private readonly global::System.Uri _nextPage;
         private readonly global::Azure.RequestContext _context;
 
         /// <summary> Initializes a new instance of CatClientGetCatsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CatClient client used to send requests. </param>
-        /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, global::System.Uri nextPage, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
+        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
             _client = client;
-            _nextPage = nextPage;
             _context = context;
         }
 
@@ -37,7 +34,7 @@ namespace Samples
         /// <returns> The pages of CatClientGetCatsCollectionResult as an enumerable collection. </returns>
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : _nextPage;
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             do
             {
                 global::Azure.Response response = this.GetNextResponse(pageSizeHint, nextPage);
@@ -62,7 +59,7 @@ namespace Samples
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private global::Azure.Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
-            global::Azure.Core.HttpMessage message = _client.CreateGetCatsRequest(nextLink, _context);
+            global::Azure.Core.HttpMessage message = (nextLink != null) ? _client.CreateNextGetCatsRequest(nextLink, _context) : _client.CreateGetCatsRequest(_context);
             using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CatClient.GetCats");
             scope.Start();
             try

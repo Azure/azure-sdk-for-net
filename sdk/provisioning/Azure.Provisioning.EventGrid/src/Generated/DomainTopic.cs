@@ -76,7 +76,7 @@ public partial class DomainTopic : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the DomainTopic.</param>
     public DomainTopic(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/domains/topics", resourceVersion ?? "2022-06-15")
+        : base(bicepIdentifier, "Microsoft.EventGrid/domains/topics", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -97,6 +97,11 @@ public partial class DomainTopic : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
+
         /// <summary>
         /// 2022-06-15.
         /// </summary>
