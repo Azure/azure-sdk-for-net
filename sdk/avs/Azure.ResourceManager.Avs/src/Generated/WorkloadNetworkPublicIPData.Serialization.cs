@@ -37,11 +37,29 @@ namespace Azure.ResourceManager.Avs
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
             }
+            if (Optional.IsDefined(NumberOfPublicIPs))
+            {
+                writer.WritePropertyName("numberOfPublicIPs"u8);
+                writer.WriteNumberValue(NumberOfPublicIPs.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PublicIPBlock))
+            {
+                writer.WritePropertyName("publicIPBlock"u8);
+                writer.WriteStringValue(PublicIPBlock);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            writer.WriteEndObject();
         }
 
         WorkloadNetworkPublicIPData IJsonModel<WorkloadNetworkPublicIPData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -64,24 +82,18 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
-            WorkloadNetworkPublicIPProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            string displayName = default;
+            long? numberOfPublicIPs = default;
+            string publicIPBlock = default;
+            WorkloadNetworkPublicIPProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = WorkloadNetworkPublicIPProperties.DeserializeWorkloadNetworkPublicIPProperties(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -106,6 +118,46 @@ namespace Azure.ResourceManager.Avs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("numberOfPublicIPs"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            numberOfPublicIPs = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("publicIPBlock"u8))
+                        {
+                            publicIPBlock = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new WorkloadNetworkPublicIPProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -117,7 +169,10 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
-                properties,
+                displayName,
+                numberOfPublicIPs,
+                publicIPBlock,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

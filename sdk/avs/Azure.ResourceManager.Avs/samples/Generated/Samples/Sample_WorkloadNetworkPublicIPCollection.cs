@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -41,14 +40,7 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string publicIPId = "publicIP1";
-            WorkloadNetworkPublicIPData data = new WorkloadNetworkPublicIPData
-            {
-                Properties = new WorkloadNetworkPublicIPProperties
-                {
-                    DisplayName = "publicIP1",
-                    NumberOfPublicIPs = 32L,
-                },
-            };
+            WorkloadNetworkPublicIPData data = new WorkloadNetworkPublicIPData();
             ArmOperation<WorkloadNetworkPublicIPResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPId, data);
             WorkloadNetworkPublicIPResource result = lro.Value;
 

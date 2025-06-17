@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -37,11 +38,54 @@ namespace Azure.ResourceManager.Avs
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
             }
+            if (Optional.IsDefined(DnsServiceIP))
+            {
+                writer.WritePropertyName("dnsServiceIp"u8);
+                writer.WriteStringValue(DnsServiceIP.ToString());
+            }
+            if (Optional.IsDefined(DefaultDnsZone))
+            {
+                writer.WritePropertyName("defaultDnsZone"u8);
+                writer.WriteStringValue(DefaultDnsZone);
+            }
+            if (Optional.IsCollectionDefined(FqdnZones))
+            {
+                writer.WritePropertyName("fqdnZones"u8);
+                writer.WriteStartArray();
+                foreach (var item in FqdnZones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(LogLevel))
+            {
+                writer.WritePropertyName("logLevel"u8);
+                writer.WriteStringValue(LogLevel.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(Revision))
+            {
+                writer.WritePropertyName("revision"u8);
+                writer.WriteNumberValue(Revision.Value);
+            }
+            writer.WriteEndObject();
         }
 
         WorkloadNetworkDnsServiceData IJsonModel<WorkloadNetworkDnsServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -64,24 +108,22 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
-            WorkloadNetworkDnsServiceProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            string displayName = default;
+            IPAddress dnsServiceIP = default;
+            string defaultDnsZone = default;
+            IList<string> fqdnZones = default;
+            DnsServiceLogLevel? logLevel = default;
+            DnsServiceStatus? status = default;
+            WorkloadNetworkDnsServiceProvisioningState? provisioningState = default;
+            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = WorkloadNetworkDnsServiceProperties.DeserializeWorkloadNetworkDnsServiceProperties(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -106,6 +148,87 @@ namespace Azure.ResourceManager.Avs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("dnsServiceIp"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dnsServiceIP = IPAddress.Parse(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("defaultDnsZone"u8))
+                        {
+                            defaultDnsZone = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("fqdnZones"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            fqdnZones = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("logLevel"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            logLevel = new DnsServiceLogLevel(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = new DnsServiceStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new WorkloadNetworkDnsServiceProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("revision"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            revision = property0.Value.GetInt64();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -117,7 +240,14 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
-                properties,
+                displayName,
+                dnsServiceIP,
+                defaultDnsZone,
+                fqdnZones ?? new ChangeTrackingList<string>(),
+                logLevel,
+                status,
+                provisioningState,
+                revision,
                 serializedAdditionalRawData);
         }
 

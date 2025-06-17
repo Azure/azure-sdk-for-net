@@ -323,39 +323,39 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HostResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HostResource.CreateResourceIdentifier" /> to create a <see cref="HostResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AvsHostResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsHostResource.CreateResourceIdentifier" /> to create an <see cref="AvsHostResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HostResource"/> object. </returns>
-        public virtual HostResource GetHostResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsHostResource"/> object. </returns>
+        public virtual AvsHostResource GetAvsHostResource(ResourceIdentifier id)
         {
-            HostResource.ValidateResourceId(id);
-            return new HostResource(Client, id);
+            AvsHostResource.ValidateResourceId(id);
+            return new AvsHostResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProvisionedNetworkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProvisionedNetworkResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AvsProvisionedNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsProvisionedNetworkResource.CreateResourceIdentifier" /> to create an <see cref="AvsProvisionedNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProvisionedNetworkResource"/> object. </returns>
-        public virtual ProvisionedNetworkResource GetProvisionedNetworkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsProvisionedNetworkResource"/> object. </returns>
+        public virtual AvsProvisionedNetworkResource GetAvsProvisionedNetworkResource(ResourceIdentifier id)
         {
-            ProvisionedNetworkResource.ValidateResourceId(id);
-            return new ProvisionedNetworkResource(Client, id);
+            AvsProvisionedNetworkResource.ValidateResourceId(id);
+            return new AvsProvisionedNetworkResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PureStoragePolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PureStoragePolicyResource.CreateResourceIdentifier" /> to create a <see cref="PureStoragePolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AvsPureStoragePolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsPureStoragePolicyResource.CreateResourceIdentifier" /> to create an <see cref="AvsPureStoragePolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PureStoragePolicyResource"/> object. </returns>
-        public virtual PureStoragePolicyResource GetPureStoragePolicyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsPureStoragePolicyResource"/> object. </returns>
+        public virtual AvsPureStoragePolicyResource GetAvsPureStoragePolicyResource(ResourceIdentifier id)
         {
-            PureStoragePolicyResource.ValidateResourceId(id);
-            return new PureStoragePolicyResource(Client, id);
+            AvsPureStoragePolicyResource.ValidateResourceId(id);
+            return new AvsPureStoragePolicyResource(Client, id);
         }
     }
 }

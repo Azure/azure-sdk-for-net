@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="provisionedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="provisionedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProvisionedNetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string provisionedNetworkName, CancellationToken cancellationToken = default)
+        public async Task<Response<AvsProvisionedNetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string provisionedNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ProvisionedNetworkData value = default;
+                        AvsProvisionedNetworkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ProvisionedNetworkData.DeserializeProvisionedNetworkData(document.RootElement);
+                        value = AvsProvisionedNetworkData.DeserializeAvsProvisionedNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProvisionedNetworkData)null, message.Response);
+                    return Response.FromValue((AvsProvisionedNetworkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="provisionedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="provisionedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProvisionedNetworkData> Get(string subscriptionId, string resourceGroupName, string privateCloudName, string provisionedNetworkName, CancellationToken cancellationToken = default)
+        public Response<AvsProvisionedNetworkData> Get(string subscriptionId, string resourceGroupName, string privateCloudName, string provisionedNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -222,13 +222,13 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ProvisionedNetworkData value = default;
+                        AvsProvisionedNetworkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ProvisionedNetworkData.DeserializeProvisionedNetworkData(document.RootElement);
+                        value = AvsProvisionedNetworkData.DeserializeAvsProvisionedNetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProvisionedNetworkData)null, message.Response);
+                    return Response.FromValue((AvsProvisionedNetworkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

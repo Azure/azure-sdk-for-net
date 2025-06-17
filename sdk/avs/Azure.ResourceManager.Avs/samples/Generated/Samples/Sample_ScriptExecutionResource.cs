@@ -97,25 +97,7 @@ namespace Azure.ResourceManager.Avs.Samples
             ScriptExecutionResource scriptExecution = client.GetScriptExecutionResource(scriptExecutionResourceId);
 
             // invoke the operation
-            ScriptExecutionData data = new ScriptExecutionData
-            {
-                Properties = new ScriptExecutionProperties("P0Y0M0DT0H60M60S")
-                {
-                    ScriptCmdletId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/scriptPackages/AVS.PowerCommands@1.0.0/scriptCmdlets/New-SsoExternalIdentitySource"),
-                    Parameters = {new ScriptStringExecutionParameterDetails("DomainName")
-{
-Value = "placeholderDomain.local",
-}, new ScriptStringExecutionParameterDetails("BaseUserDN")
-{
-Value = "DC=placeholder, DC=placeholder",
-}},
-                    HiddenParameters = {new ScriptSecureStringExecutionParameterDetails("Password")
-{
-SecureValue = "PlaceholderPassword",
-}},
-                    Retention = "P0Y0M60DT0H60M60S",
-                },
-            };
+            ScriptExecutionData data = new ScriptExecutionData();
             ArmOperation<ScriptExecutionResource> lro = await scriptExecution.UpdateAsync(WaitUntil.Completed, data);
             ScriptExecutionResource result = lro.Value;
 

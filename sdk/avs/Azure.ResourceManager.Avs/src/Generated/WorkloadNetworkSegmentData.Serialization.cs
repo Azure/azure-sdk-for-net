@@ -37,11 +37,49 @@ namespace Azure.ResourceManager.Avs
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
             }
+            if (Optional.IsDefined(ConnectedGateway))
+            {
+                writer.WritePropertyName("connectedGateway"u8);
+                writer.WriteStringValue(ConnectedGateway);
+            }
+            if (Optional.IsDefined(Subnet))
+            {
+                writer.WritePropertyName("subnet"u8);
+                writer.WriteObjectValue(Subnet, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PortVif))
+            {
+                writer.WritePropertyName("portVif"u8);
+                writer.WriteStartArray();
+                foreach (var item in PortVif)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(Revision))
+            {
+                writer.WritePropertyName("revision"u8);
+                writer.WriteNumberValue(Revision.Value);
+            }
+            writer.WriteEndObject();
         }
 
         WorkloadNetworkSegmentData IJsonModel<WorkloadNetworkSegmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -64,24 +102,21 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
-            WorkloadNetworkSegmentProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            string displayName = default;
+            string connectedGateway = default;
+            WorkloadNetworkSegmentSubnet subnet = default;
+            IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif = default;
+            WorkloadNetworkSegmentStatus? status = default;
+            WorkloadNetworkSegmentProvisioningState? provisioningState = default;
+            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = WorkloadNetworkSegmentProperties.DeserializeWorkloadNetworkSegmentProperties(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -106,6 +141,78 @@ namespace Azure.ResourceManager.Avs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("connectedGateway"u8))
+                        {
+                            connectedGateway = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("subnet"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            subnet = WorkloadNetworkSegmentSubnet.DeserializeWorkloadNetworkSegmentSubnet(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("portVif"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WorkloadNetworkSegmentPortVif> array = new List<WorkloadNetworkSegmentPortVif>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(WorkloadNetworkSegmentPortVif.DeserializeWorkloadNetworkSegmentPortVif(item, options));
+                            }
+                            portVif = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = new WorkloadNetworkSegmentStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new WorkloadNetworkSegmentProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("revision"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            revision = property0.Value.GetInt64();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -117,7 +224,13 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
-                properties,
+                displayName,
+                connectedGateway,
+                subnet,
+                portVif ?? new ChangeTrackingList<WorkloadNetworkSegmentPortVif>(),
+                status,
+                provisioningState,
+                revision,
                 serializedAdditionalRawData);
         }
 

@@ -6,11 +6,9 @@
 #nullable disable
 
 using System;
-using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -97,18 +95,7 @@ namespace Azure.ResourceManager.Avs.Samples
             WorkloadNetworkDnsServiceResource workloadNetworkDnsService = client.GetWorkloadNetworkDnsServiceResource(workloadNetworkDnsServiceResourceId);
 
             // invoke the operation
-            WorkloadNetworkDnsServiceData data = new WorkloadNetworkDnsServiceData
-            {
-                Properties = new WorkloadNetworkDnsServiceProperties
-                {
-                    DisplayName = "dnsService1",
-                    DnsServiceIP = IPAddress.Parse("5.5.5.5"),
-                    DefaultDnsZone = "defaultDnsZone1",
-                    FqdnZones = { "fqdnZone1" },
-                    LogLevel = DnsServiceLogLevel.Info,
-                    Revision = 1L,
-                },
-            };
+            WorkloadNetworkDnsServiceData data = new WorkloadNetworkDnsServiceData();
             ArmOperation<WorkloadNetworkDnsServiceResource> lro = await workloadNetworkDnsService.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkDnsServiceResource result = lro.Value;
 

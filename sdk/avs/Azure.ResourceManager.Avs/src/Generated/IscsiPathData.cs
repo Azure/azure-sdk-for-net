@@ -61,15 +61,19 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> The state of the iSCSI path provisioning. </param>
+        /// <param name="networkBlock"> CIDR Block for iSCSI path. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IscsiPathData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IscsiPathProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal IscsiPathData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IscsiPathProvisioningState? provisioningState, string networkBlock, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            ProvisioningState = provisioningState;
+            NetworkBlock = networkBlock;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public IscsiPathProperties Properties { get; set; }
+        /// <summary> The state of the iSCSI path provisioning. </summary>
+        public IscsiPathProvisioningState? ProvisioningState { get; }
+        /// <summary> CIDR Block for iSCSI path. </summary>
+        public string NetworkBlock { get; set; }
     }
 }

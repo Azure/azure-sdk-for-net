@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -96,19 +95,7 @@ namespace Azure.ResourceManager.Avs.Samples
             WorkloadNetworkSegmentResource workloadNetworkSegment = client.GetWorkloadNetworkSegmentResource(workloadNetworkSegmentResourceId);
 
             // invoke the operation
-            WorkloadNetworkSegmentData data = new WorkloadNetworkSegmentData
-            {
-                Properties = new WorkloadNetworkSegmentProperties
-                {
-                    ConnectedGateway = "/infra/tier-1s/gateway",
-                    Subnet = new WorkloadNetworkSegmentSubnet
-                    {
-                        DhcpRanges = { "40.20.0.0-40.20.0.1" },
-                        GatewayAddress = "40.20.20.20/16",
-                    },
-                    Revision = 1L,
-                },
-            };
+            WorkloadNetworkSegmentData data = new WorkloadNetworkSegmentData();
             ArmOperation<WorkloadNetworkSegmentResource> lro = await workloadNetworkSegment.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkSegmentResource result = lro.Value;
 

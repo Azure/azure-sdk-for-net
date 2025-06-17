@@ -61,15 +61,23 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="activationKey"> The activation key. </param>
+        /// <param name="status"> The status of the HCX Enterprise Site. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HcxEnterpriseSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HcxEnterpriseSiteProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HcxEnterpriseSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HcxEnterpriseSiteProvisioningState? provisioningState, string activationKey, HcxEnterpriseSiteStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            ProvisioningState = provisioningState;
+            ActivationKey = activationKey;
+            Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public HcxEnterpriseSiteProperties Properties { get; set; }
+        /// <summary> The provisioning state of the resource. </summary>
+        public HcxEnterpriseSiteProvisioningState? ProvisioningState { get; }
+        /// <summary> The activation key. </summary>
+        public string ActivationKey { get; }
+        /// <summary> The status of the HCX Enterprise Site. </summary>
+        public HcxEnterpriseSiteStatus? Status { get; }
     }
 }

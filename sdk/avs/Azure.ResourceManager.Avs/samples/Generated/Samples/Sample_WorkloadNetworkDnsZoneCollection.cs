@@ -6,11 +6,9 @@
 #nullable disable
 
 using System;
-using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -42,17 +40,7 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string dnsZoneId = "dnsZone1";
-            WorkloadNetworkDnsZoneData data = new WorkloadNetworkDnsZoneData
-            {
-                Properties = new WorkloadNetworkDnsZoneProperties
-                {
-                    DisplayName = "dnsZone1",
-                    Domain = { },
-                    DnsServerIPs = { "1.1.1.1" },
-                    SourceIP = IPAddress.Parse("8.8.8.8"),
-                    Revision = 1L,
-                },
-            };
+            WorkloadNetworkDnsZoneData data = new WorkloadNetworkDnsZoneData();
             ArmOperation<WorkloadNetworkDnsZoneResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dnsZoneId, data);
             WorkloadNetworkDnsZoneResource result = lro.Value;
 

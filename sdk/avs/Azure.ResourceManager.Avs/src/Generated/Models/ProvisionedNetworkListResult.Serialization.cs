@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            IReadOnlyList<ProvisionedNetworkData> value = default;
+            IReadOnlyList<AvsProvisionedNetworkData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ProvisionedNetworkData> array = new List<ProvisionedNetworkData>();
+                    List<AvsProvisionedNetworkData> array = new List<AvsProvisionedNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProvisionedNetworkData.DeserializeProvisionedNetworkData(item, options));
+                        array.Add(AvsProvisionedNetworkData.DeserializeAvsProvisionedNetworkData(item, options));
                     }
                     value = array;
                     continue;

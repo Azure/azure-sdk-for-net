@@ -296,11 +296,11 @@ namespace Azure.ResourceManager.Avs
             return GetPlacementPolicies().Get(placementPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HostResources in the AvsPrivateCloudCluster. </summary>
-        /// <returns> An object representing collection of HostResources and their operations over a HostResource. </returns>
-        public virtual HostCollection GetHosts()
+        /// <summary> Gets a collection of AvsHostResources in the AvsPrivateCloudCluster. </summary>
+        /// <returns> An object representing collection of AvsHostResources and their operations over a AvsHostResource. </returns>
+        public virtual AvsHostCollection GetAvsHosts()
         {
-            return GetCachedClient(client => new HostCollection(client, Id));
+            return GetCachedClient(client => new AvsHostCollection(client, Id));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HostResource"/></description>
+        /// <description><see cref="AvsHostResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,9 +329,9 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="hostId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hostId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HostResource>> GetHostAsync(string hostId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsHostResource>> GetAvsHostAsync(string hostId, CancellationToken cancellationToken = default)
         {
-            return await GetHosts().GetAsync(hostId, cancellationToken).ConfigureAwait(false);
+            return await GetAvsHosts().GetAsync(hostId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HostResource"/></description>
+        /// <description><see cref="AvsHostResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,9 +360,9 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="hostId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hostId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HostResource> GetHost(string hostId, CancellationToken cancellationToken = default)
+        public virtual Response<AvsHostResource> GetAvsHost(string hostId, CancellationToken cancellationToken = default)
         {
-            return GetHosts().Get(hostId, cancellationToken);
+            return GetAvsHosts().Get(hostId, cancellationToken);
         }
 
         /// <summary>

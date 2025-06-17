@@ -656,11 +656,11 @@ namespace Azure.ResourceManager.Avs
             return new IscsiPathResource(Client, Id.AppendChildResource("iscsiPaths", "default"));
         }
 
-        /// <summary> Gets a collection of ProvisionedNetworkResources in the AvsPrivateCloud. </summary>
-        /// <returns> An object representing collection of ProvisionedNetworkResources and their operations over a ProvisionedNetworkResource. </returns>
-        public virtual ProvisionedNetworkCollection GetProvisionedNetworks()
+        /// <summary> Gets a collection of AvsProvisionedNetworkResources in the AvsPrivateCloud. </summary>
+        /// <returns> An object representing collection of AvsProvisionedNetworkResources and their operations over a AvsProvisionedNetworkResource. </returns>
+        public virtual AvsProvisionedNetworkCollection GetAvsProvisionedNetworks()
         {
-            return GetCachedClient(client => new ProvisionedNetworkCollection(client, Id));
+            return GetCachedClient(client => new AvsProvisionedNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProvisionedNetworkResource"/></description>
+        /// <description><see cref="AvsProvisionedNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -689,9 +689,9 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="provisionedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provisionedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProvisionedNetworkResource>> GetProvisionedNetworkAsync(string provisionedNetworkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsProvisionedNetworkResource>> GetAvsProvisionedNetworkAsync(string provisionedNetworkName, CancellationToken cancellationToken = default)
         {
-            return await GetProvisionedNetworks().GetAsync(provisionedNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetAvsProvisionedNetworks().GetAsync(provisionedNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ProvisionedNetworkResource"/></description>
+        /// <description><see cref="AvsProvisionedNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -720,47 +720,16 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="provisionedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provisionedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProvisionedNetworkResource> GetProvisionedNetwork(string provisionedNetworkName, CancellationToken cancellationToken = default)
+        public virtual Response<AvsProvisionedNetworkResource> GetAvsProvisionedNetwork(string provisionedNetworkName, CancellationToken cancellationToken = default)
         {
-            return GetProvisionedNetworks().Get(provisionedNetworkName, cancellationToken);
+            return GetAvsProvisionedNetworks().Get(provisionedNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PureStoragePolicyResources in the AvsPrivateCloud. </summary>
-        /// <returns> An object representing collection of PureStoragePolicyResources and their operations over a PureStoragePolicyResource. </returns>
-        public virtual PureStoragePolicyCollection GetPureStoragePolicies()
+        /// <summary> Gets a collection of AvsPureStoragePolicyResources in the AvsPrivateCloud. </summary>
+        /// <returns> An object representing collection of AvsPureStoragePolicyResources and their operations over a AvsPureStoragePolicyResource. </returns>
+        public virtual AvsPureStoragePolicyCollection GetAvsPureStoragePolicies()
         {
-            return GetCachedClient(client => new PureStoragePolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a PureStoragePolicy
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PureStoragePolicy_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PureStoragePolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="storagePolicyName"> Name of the storage policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storagePolicyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storagePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PureStoragePolicyResource>> GetPureStoragePolicyAsync(string storagePolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetPureStoragePolicies().GetAsync(storagePolicyName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new AvsPureStoragePolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -780,7 +749,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="PureStoragePolicyResource"/></description>
+        /// <description><see cref="AvsPureStoragePolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -789,9 +758,40 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="storagePolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="storagePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PureStoragePolicyResource> GetPureStoragePolicy(string storagePolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsPureStoragePolicyResource>> GetAvsPureStoragePolicyAsync(string storagePolicyName, CancellationToken cancellationToken = default)
         {
-            return GetPureStoragePolicies().Get(storagePolicyName, cancellationToken);
+            return await GetAvsPureStoragePolicies().GetAsync(storagePolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a PureStoragePolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PureStoragePolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPureStoragePolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storagePolicyName"> Name of the storage policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AvsPureStoragePolicyResource> GetAvsPureStoragePolicy(string storagePolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetAvsPureStoragePolicies().Get(storagePolicyName, cancellationToken);
         }
 
         /// <summary>
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_RotateVcenterPassword</description>
+        /// <description>PrivateClouds_RotateVCenterPassword</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1073,14 +1073,14 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RotateVcenterPasswordAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RotateVCenterPasswordAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateVcenterPassword");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateVCenterPassword");
             scope.Start();
             try
             {
-                var response = await _avsPrivateCloudPrivateCloudsRestClient.RotateVcenterPasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateRotateVcenterPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _avsPrivateCloudPrivateCloudsRestClient.RotateVCenterPasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateRotateVCenterPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_RotateVcenterPassword</description>
+        /// <description>PrivateClouds_RotateVCenterPassword</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1115,14 +1115,14 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation RotateVcenterPassword(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RotateVCenterPassword(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateVcenterPassword");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateVCenterPassword");
             scope.Start();
             try
             {
-                var response = _avsPrivateCloudPrivateCloudsRestClient.RotateVcenterPassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateRotateVcenterPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _avsPrivateCloudPrivateCloudsRestClient.RotateVCenterPassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateRotateVCenterPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            IReadOnlyList<HostData> value = default;
+            IReadOnlyList<AvsHostData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<HostData> array = new List<HostData>();
+                    List<AvsHostData> array = new List<AvsHostData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HostData.DeserializeHostData(item, options));
+                        array.Add(AvsHostData.DeserializeAvsHostData(item, options));
                     }
                     value = array;
                     continue;

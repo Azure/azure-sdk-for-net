@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -93,10 +92,7 @@ namespace Azure.ResourceManager.Avs.Samples
             IscsiPathResource iscsiPath = client.GetIscsiPathResource(iscsiPathResourceId);
 
             // invoke the operation
-            IscsiPathData data = new IscsiPathData
-            {
-                Properties = new IscsiPathProperties("192.168.0.0/24"),
-            };
+            IscsiPathData data = new IscsiPathData();
             ArmOperation<IscsiPathResource> lro = await iscsiPath.CreateOrUpdateAsync(WaitUntil.Completed, data);
             IscsiPathResource result = lro.Value;
 

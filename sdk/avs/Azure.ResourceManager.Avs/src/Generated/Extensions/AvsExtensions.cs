@@ -490,60 +490,60 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HostResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HostResource.CreateResourceIdentifier" /> to create a <see cref="HostResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsHostResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsHostResource.CreateResourceIdentifier" /> to create an <see cref="AvsHostResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAvsArmClient.GetHostResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAvsArmClient.GetAvsHostResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HostResource"/> object. </returns>
-        public static HostResource GetHostResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsHostResource"/> object. </returns>
+        public static AvsHostResource GetAvsHostResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAvsArmClient(client).GetHostResource(id);
+            return GetMockableAvsArmClient(client).GetAvsHostResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProvisionedNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProvisionedNetworkResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsProvisionedNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsProvisionedNetworkResource.CreateResourceIdentifier" /> to create an <see cref="AvsProvisionedNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAvsArmClient.GetProvisionedNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAvsArmClient.GetAvsProvisionedNetworkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProvisionedNetworkResource"/> object. </returns>
-        public static ProvisionedNetworkResource GetProvisionedNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsProvisionedNetworkResource"/> object. </returns>
+        public static AvsProvisionedNetworkResource GetAvsProvisionedNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAvsArmClient(client).GetProvisionedNetworkResource(id);
+            return GetMockableAvsArmClient(client).GetAvsProvisionedNetworkResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PureStoragePolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PureStoragePolicyResource.CreateResourceIdentifier" /> to create a <see cref="PureStoragePolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsPureStoragePolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsPureStoragePolicyResource.CreateResourceIdentifier" /> to create an <see cref="AvsPureStoragePolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAvsArmClient.GetPureStoragePolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAvsArmClient.GetAvsPureStoragePolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PureStoragePolicyResource"/> object. </returns>
-        public static PureStoragePolicyResource GetPureStoragePolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AvsPureStoragePolicyResource"/> object. </returns>
+        public static AvsPureStoragePolicyResource GetAvsPureStoragePolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAvsArmClient(client).GetPureStoragePolicyResource(id);
+            return GetMockableAvsArmClient(client).GetAvsPureStoragePolicyResource(id);
         }
 
         /// <summary>

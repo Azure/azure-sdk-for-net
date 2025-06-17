@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="workloadNetworkProvisioningState"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="Avs.WorkloadNetworkData"/> instance for mocking. </returns>
-        public static WorkloadNetworkData WorkloadNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkProvisioningState? workloadNetworkProvisioningState = null)
+        public static WorkloadNetworkData WorkloadNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkProvisioningState? provisioningState = null)
         {
             return new WorkloadNetworkData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                workloadNetworkProvisioningState != null ? new WorkloadNetworkProperties(workloadNetworkProvisioningState, serializedAdditionalRawData: null) : null,
+                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -128,20 +128,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Avs.WorkloadNetworkDnsServiceData"/> instance for mocking. </returns>
-        public static WorkloadNetworkDnsServiceData WorkloadNetworkDnsServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkDnsServiceProperties properties = null)
-        {
-            return new WorkloadNetworkDnsServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkDnsServiceProperties"/>. </summary>
         /// <param name="displayName"> Display name of the DNS Service. </param>
         /// <param name="dnsServiceIP"> DNS service IP of the DNS Service. </param>
         /// <param name="defaultDnsZone"> Default DNS zone of the DNS Service. </param>
@@ -150,12 +136,16 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="status"> DNS Service status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkDnsServiceProperties"/> instance for mocking. </returns>
-        public static WorkloadNetworkDnsServiceProperties WorkloadNetworkDnsServiceProperties(string displayName = null, IPAddress dnsServiceIP = null, string defaultDnsZone = null, IEnumerable<string> fqdnZones = null, DnsServiceLogLevel? logLevel = null, DnsServiceStatus? status = null, WorkloadNetworkDnsServiceProvisioningState? provisioningState = null, long? revision = null)
+        /// <returns> A new <see cref="Avs.WorkloadNetworkDnsServiceData"/> instance for mocking. </returns>
+        public static WorkloadNetworkDnsServiceData WorkloadNetworkDnsServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IPAddress dnsServiceIP = null, string defaultDnsZone = null, IEnumerable<string> fqdnZones = null, DnsServiceLogLevel? logLevel = null, DnsServiceStatus? status = null, WorkloadNetworkDnsServiceProvisioningState? provisioningState = null, long? revision = null)
         {
             fqdnZones ??= new List<string>();
 
-            return new WorkloadNetworkDnsServiceProperties(
+            return new WorkloadNetworkDnsServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
                 displayName,
                 dnsServiceIP,
                 defaultDnsZone,
@@ -172,20 +162,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Avs.WorkloadNetworkDnsZoneData"/> instance for mocking. </returns>
-        public static WorkloadNetworkDnsZoneData WorkloadNetworkDnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkDnsZoneProperties properties = null)
-        {
-            return new WorkloadNetworkDnsZoneData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkDnsZoneProperties"/>. </summary>
         /// <param name="displayName"> Display name of the DNS Zone. </param>
         /// <param name="domain"> Domain names of the DNS Zone. </param>
         /// <param name="dnsServerIPs"> DNS Server IP array of the DNS Zone. </param>
@@ -193,13 +169,17 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="dnsServices"> Number of DNS Services using the DNS zone. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkDnsZoneProperties"/> instance for mocking. </returns>
-        public static WorkloadNetworkDnsZoneProperties WorkloadNetworkDnsZoneProperties(string displayName = null, IEnumerable<string> domain = null, IEnumerable<string> dnsServerIPs = null, IPAddress sourceIP = null, long? dnsServices = null, WorkloadNetworkDnsZoneProvisioningState? provisioningState = null, long? revision = null)
+        /// <returns> A new <see cref="Avs.WorkloadNetworkDnsZoneData"/> instance for mocking. </returns>
+        public static WorkloadNetworkDnsZoneData WorkloadNetworkDnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> domain = null, IEnumerable<string> dnsServerIPs = null, IPAddress sourceIP = null, long? dnsServices = null, WorkloadNetworkDnsZoneProvisioningState? provisioningState = null, long? revision = null)
         {
             domain ??= new List<string>();
             dnsServerIPs ??= new List<string>();
 
-            return new WorkloadNetworkDnsZoneProperties(
+            return new WorkloadNetworkDnsZoneData(
+                id,
+                name,
+                resourceType,
+                systemData,
                 displayName,
                 domain?.ToList(),
                 dnsServerIPs?.ToList(),
@@ -215,27 +195,21 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="displayName"> Display name of the DHCP entity. </param>
+        /// <param name="path"> NSX Gateway Path. </param>
         /// <returns> A new <see cref="Avs.WorkloadNetworkGatewayData"/> instance for mocking. </returns>
-        public static WorkloadNetworkGatewayData WorkloadNetworkGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkGatewayProperties properties = null)
+        public static WorkloadNetworkGatewayData WorkloadNetworkGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkProvisioningState? provisioningState = null, string displayName = null, string path = null)
         {
             return new WorkloadNetworkGatewayData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                provisioningState,
+                displayName,
+                path,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkGatewayProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="displayName"> Display name of the DHCP entity. </param>
-        /// <param name="path"> NSX Gateway Path. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkGatewayProperties"/> instance for mocking. </returns>
-        public static WorkloadNetworkGatewayProperties WorkloadNetworkGatewayProperties(WorkloadNetworkProvisioningState? provisioningState = null, string displayName = null, string path = null)
-        {
-            return new WorkloadNetworkGatewayProperties(provisioningState, displayName, path, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkPortMirroringProfileData"/>. </summary>
@@ -243,20 +217,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Avs.WorkloadNetworkPortMirroringProfileData"/> instance for mocking. </returns>
-        public static WorkloadNetworkPortMirroringProfileData WorkloadNetworkPortMirroringProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkPortMirroringProperties properties = null)
-        {
-            return new WorkloadNetworkPortMirroringProfileData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkPortMirroringProperties"/>. </summary>
         /// <param name="displayName"> Display name of the port mirroring profile. </param>
         /// <param name="direction"> Direction of port mirroring profile. </param>
         /// <param name="source"> Source VM Group. </param>
@@ -264,10 +224,14 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="status"> Port Mirroring Status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkPortMirroringProperties"/> instance for mocking. </returns>
-        public static WorkloadNetworkPortMirroringProperties WorkloadNetworkPortMirroringProperties(string displayName = null, PortMirroringProfileDirection? direction = null, string source = null, string destination = null, PortMirroringProfileStatus? status = null, WorkloadNetworkPortMirroringProfileProvisioningState? provisioningState = null, long? revision = null)
+        /// <returns> A new <see cref="Avs.WorkloadNetworkPortMirroringProfileData"/> instance for mocking. </returns>
+        public static WorkloadNetworkPortMirroringProfileData WorkloadNetworkPortMirroringProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, PortMirroringProfileDirection? direction = null, string source = null, string destination = null, PortMirroringProfileStatus? status = null, WorkloadNetworkPortMirroringProfileProvisioningState? provisioningState = null, long? revision = null)
         {
-            return new WorkloadNetworkPortMirroringProperties(
+            return new WorkloadNetworkPortMirroringProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
                 displayName,
                 direction,
                 source,
@@ -283,28 +247,23 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="displayName"> Display name of the Public IP Block. </param>
+        /// <param name="numberOfPublicIPs"> Number of Public IPs requested. </param>
+        /// <param name="publicIPBlock"> CIDR Block of the Public IP Block. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="Avs.WorkloadNetworkPublicIPData"/> instance for mocking. </returns>
-        public static WorkloadNetworkPublicIPData WorkloadNetworkPublicIPData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkPublicIPProperties properties = null)
+        public static WorkloadNetworkPublicIPData WorkloadNetworkPublicIPData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, long? numberOfPublicIPs = null, string publicIPBlock = null, WorkloadNetworkPublicIPProvisioningState? provisioningState = null)
         {
             return new WorkloadNetworkPublicIPData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                displayName,
+                numberOfPublicIPs,
+                publicIPBlock,
+                provisioningState,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkPublicIPProperties"/>. </summary>
-        /// <param name="displayName"> Display name of the Public IP Block. </param>
-        /// <param name="numberOfPublicIPs"> Number of Public IPs requested. </param>
-        /// <param name="publicIPBlock"> CIDR Block of the Public IP Block. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkPublicIPProperties"/> instance for mocking. </returns>
-        public static WorkloadNetworkPublicIPProperties WorkloadNetworkPublicIPProperties(string displayName = null, long? numberOfPublicIPs = null, string publicIPBlock = null, WorkloadNetworkPublicIPProvisioningState? provisioningState = null)
-        {
-            return new WorkloadNetworkPublicIPProperties(displayName, numberOfPublicIPs, publicIPBlock, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkSegmentData"/>. </summary>
@@ -312,20 +271,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Avs.WorkloadNetworkSegmentData"/> instance for mocking. </returns>
-        public static WorkloadNetworkSegmentData WorkloadNetworkSegmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkSegmentProperties properties = null)
-        {
-            return new WorkloadNetworkSegmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkSegmentProperties"/>. </summary>
         /// <param name="displayName"> Display name of the segment. </param>
         /// <param name="connectedGateway"> Gateway which to connect segment to. </param>
         /// <param name="subnet"> Subnet which to connect segment to. </param>
@@ -333,12 +278,16 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="status"> Segment status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkSegmentProperties"/> instance for mocking. </returns>
-        public static WorkloadNetworkSegmentProperties WorkloadNetworkSegmentProperties(string displayName = null, string connectedGateway = null, WorkloadNetworkSegmentSubnet subnet = null, IEnumerable<WorkloadNetworkSegmentPortVif> portVif = null, WorkloadNetworkSegmentStatus? status = null, WorkloadNetworkSegmentProvisioningState? provisioningState = null, long? revision = null)
+        /// <returns> A new <see cref="Avs.WorkloadNetworkSegmentData"/> instance for mocking. </returns>
+        public static WorkloadNetworkSegmentData WorkloadNetworkSegmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string connectedGateway = null, WorkloadNetworkSegmentSubnet subnet = null, IEnumerable<WorkloadNetworkSegmentPortVif> portVif = null, WorkloadNetworkSegmentStatus? status = null, WorkloadNetworkSegmentProvisioningState? provisioningState = null, long? revision = null)
         {
             portVif ??= new List<WorkloadNetworkSegmentPortVif>();
 
-            return new WorkloadNetworkSegmentProperties(
+            return new WorkloadNetworkSegmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
                 displayName,
                 connectedGateway,
                 subnet,
@@ -362,27 +311,21 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="displayName"> Display name of the VM. </param>
+        /// <param name="vmType"> Virtual machine type. </param>
         /// <returns> A new <see cref="Avs.WorkloadNetworkVirtualMachineData"/> instance for mocking. </returns>
-        public static WorkloadNetworkVirtualMachineData WorkloadNetworkVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkVirtualMachineProperties properties = null)
+        public static WorkloadNetworkVirtualMachineData WorkloadNetworkVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkProvisioningState? provisioningState = null, string displayName = null, WorkloadNetworkVmType? vmType = null)
         {
             return new WorkloadNetworkVirtualMachineData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                provisioningState,
+                displayName,
+                vmType,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkVirtualMachineProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="displayName"> Display name of the VM. </param>
-        /// <param name="vmType"> Virtual machine type. </param>
-        /// <returns> A new <see cref="Models.WorkloadNetworkVirtualMachineProperties"/> instance for mocking. </returns>
-        public static WorkloadNetworkVirtualMachineProperties WorkloadNetworkVirtualMachineProperties(WorkloadNetworkProvisioningState? provisioningState = null, string displayName = null, WorkloadNetworkVmType? vmType = null)
-        {
-            return new WorkloadNetworkVirtualMachineProperties(provisioningState, displayName, vmType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkVmGroupData"/>. </summary>
@@ -672,30 +615,20 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
-        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatastoreProperties properties = null)
-        {
-            return new AvsPrivateCloudDatastoreData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DatastoreProperties"/>. </summary>
         /// <param name="provisioningState"> The state of the datastore provisioning. </param>
         /// <param name="netAppVolumeId"> An Azure NetApp Files volume. </param>
         /// <param name="diskPoolVolume"> An iSCSI volume. </param>
         /// <param name="elasticSanVolumeTargetId"> An Elastic SAN volume. </param>
         /// <param name="pureStorageVolume"> A Pure Storage volume. </param>
         /// <param name="status"> The operational status of the datastore. </param>
-        /// <returns> A new <see cref="Models.DatastoreProperties"/> instance for mocking. </returns>
-        public static DatastoreProperties DatastoreProperties(AvsPrivateCloudDatastoreProvisioningState? provisioningState = null, ResourceIdentifier netAppVolumeId = null, DiskPoolVolume diskPoolVolume = null, ResourceIdentifier elasticSanVolumeTargetId = null, PureStorageVolume pureStorageVolume = null, DatastoreStatus? status = null)
+        /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
+        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsPrivateCloudDatastoreProvisioningState? provisioningState = null, ResourceIdentifier netAppVolumeId = null, DiskPoolVolume diskPoolVolume = null, ResourceIdentifier elasticSanVolumeTargetId = null, PureStorageVolume pureStorageVolume = null, DatastoreStatus? status = null)
         {
-            return new DatastoreProperties(
+            return new AvsPrivateCloudDatastoreData(
+                id,
+                name,
+                resourceType,
+                systemData,
                 provisioningState,
                 netAppVolumeId != null ? ResourceManagerModelFactory.WritableSubResource(netAppVolumeId) : null,
                 diskPoolVolume,
@@ -724,27 +657,21 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="activationKey"> The activation key. </param>
+        /// <param name="status"> The status of the HCX Enterprise Site. </param>
         /// <returns> A new <see cref="Avs.HcxEnterpriseSiteData"/> instance for mocking. </returns>
-        public static HcxEnterpriseSiteData HcxEnterpriseSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HcxEnterpriseSiteProperties properties = null)
+        public static HcxEnterpriseSiteData HcxEnterpriseSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HcxEnterpriseSiteProvisioningState? provisioningState = null, string activationKey = null, HcxEnterpriseSiteStatus? status = null)
         {
             return new HcxEnterpriseSiteData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                provisioningState,
+                activationKey,
+                status,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HcxEnterpriseSiteProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="activationKey"> The activation key. </param>
-        /// <param name="status"> The status of the HCX Enterprise Site. </param>
-        /// <returns> A new <see cref="Models.HcxEnterpriseSiteProperties"/> instance for mocking. </returns>
-        public static HcxEnterpriseSiteProperties HcxEnterpriseSiteProperties(HcxEnterpriseSiteProvisioningState? provisioningState = null, string activationKey = null, HcxEnterpriseSiteStatus? status = null)
-        {
-            return new HcxEnterpriseSiteProperties(provisioningState, activationKey, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.ExpressRouteAuthorizationData"/>. </summary>
@@ -752,28 +679,23 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> The state of the ExpressRoute Circuit Authorization provisioning. </param>
+        /// <param name="expressRouteAuthorizationId"> The ID of the ExpressRoute Circuit Authorization. </param>
+        /// <param name="expressRouteAuthorizationKey"> The key of the ExpressRoute Circuit Authorization. </param>
+        /// <param name="expressRouteId"> The ID of the ExpressRoute Circuit. </param>
         /// <returns> A new <see cref="Avs.ExpressRouteAuthorizationData"/> instance for mocking. </returns>
-        public static ExpressRouteAuthorizationData ExpressRouteAuthorizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExpressRouteAuthorizationProperties properties = null)
+        public static ExpressRouteAuthorizationData ExpressRouteAuthorizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExpressRouteAuthorizationProvisioningState? provisioningState = null, ResourceIdentifier expressRouteAuthorizationId = null, string expressRouteAuthorizationKey = null, ResourceIdentifier expressRouteId = null)
         {
             return new ExpressRouteAuthorizationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                provisioningState,
+                expressRouteAuthorizationId,
+                expressRouteAuthorizationKey,
+                expressRouteId,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExpressRouteAuthorizationProperties"/>. </summary>
-        /// <param name="provisioningState"> The state of the ExpressRoute Circuit Authorization provisioning. </param>
-        /// <param name="expressRouteAuthorizationId"> The ID of the ExpressRoute Circuit Authorization. </param>
-        /// <param name="expressRouteAuthorizationKey"> The key of the ExpressRoute Circuit Authorization. </param>
-        /// <param name="expressRouteId"> The ID of the ExpressRoute Circuit. </param>
-        /// <returns> A new <see cref="Models.ExpressRouteAuthorizationProperties"/> instance for mocking. </returns>
-        public static ExpressRouteAuthorizationProperties ExpressRouteAuthorizationProperties(ExpressRouteAuthorizationProvisioningState? provisioningState = null, ResourceIdentifier expressRouteAuthorizationId = null, string expressRouteAuthorizationKey = null, ResourceIdentifier expressRouteId = null)
-        {
-            return new ExpressRouteAuthorizationProperties(provisioningState, expressRouteAuthorizationId, expressRouteAuthorizationKey, expressRouteId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.GlobalReachConnectionData"/>. </summary>
@@ -781,20 +703,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Avs.GlobalReachConnectionData"/> instance for mocking. </returns>
-        public static GlobalReachConnectionData GlobalReachConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GlobalReachConnectionProperties properties = null)
-        {
-            return new GlobalReachConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GlobalReachConnectionProperties"/>. </summary>
         /// <param name="provisioningState"> The state of the  ExpressRoute Circuit Authorization provisioning. </param>
         /// <param name="addressPrefix">
         /// The network used for global reach carved out from the original network block
@@ -813,10 +721,14 @@ namespace Azure.ResourceManager.Avs.Models
         /// The ID of the Private Cloud's ExpressRoute Circuit that is participating in the
         /// global reach connection
         /// </param>
-        /// <returns> A new <see cref="Models.GlobalReachConnectionProperties"/> instance for mocking. </returns>
-        public static GlobalReachConnectionProperties GlobalReachConnectionProperties(GlobalReachConnectionProvisioningState? provisioningState = null, string addressPrefix = null, string authorizationKey = null, GlobalReachConnectionStatus? circuitConnectionStatus = null, ResourceIdentifier peerExpressRouteCircuit = null, ResourceIdentifier expressRouteId = null)
+        /// <returns> A new <see cref="Avs.GlobalReachConnectionData"/> instance for mocking. </returns>
+        public static GlobalReachConnectionData GlobalReachConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GlobalReachConnectionProvisioningState? provisioningState = null, string addressPrefix = null, string authorizationKey = null, GlobalReachConnectionStatus? circuitConnectionStatus = null, ResourceIdentifier peerExpressRouteCircuit = null, ResourceIdentifier expressRouteId = null)
         {
-            return new GlobalReachConnectionProperties(
+            return new GlobalReachConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
                 provisioningState,
                 addressPrefix,
                 authorizationKey,
@@ -928,29 +840,19 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="displayName"> Display name of the VM. </param>
+        /// <param name="moRefId"> vCenter managed object reference ID of the virtual machine. </param>
+        /// <param name="folderPath"> Path to virtual machine's folder starting from datacenter virtual machine folder. </param>
+        /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </param>
         /// <returns> A new <see cref="Avs.AvsPrivateCloudClusterVirtualMachineData"/> instance for mocking. </returns>
-        public static AvsPrivateCloudClusterVirtualMachineData AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VirtualMachineProperties properties = null)
+        public static AvsPrivateCloudClusterVirtualMachineData AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsVirtualMachineProvisioningState? provisioningState = null, string displayName = null, string moRefId = null, string folderPath = null, VirtualMachineRestrictMovementState? restrictMovement = null)
         {
             return new AvsPrivateCloudClusterVirtualMachineData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="displayName"> Display name of the VM. </param>
-        /// <param name="moRefId"> vCenter managed object reference ID of the virtual machine. </param>
-        /// <param name="folderPath"> Path to virtual machine's folder starting from datacenter virtual machine folder. </param>
-        /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </param>
-        /// <returns> A new <see cref="Models.VirtualMachineProperties"/> instance for mocking. </returns>
-        public static VirtualMachineProperties VirtualMachineProperties(AvsVirtualMachineProvisioningState? provisioningState = null, string displayName = null, string moRefId = null, string folderPath = null, VirtualMachineRestrictMovementState? restrictMovement = null)
-        {
-            return new VirtualMachineProperties(
                 provisioningState,
                 displayName,
                 moRefId,
@@ -1046,29 +948,19 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="description"> User friendly description of the package. </param>
+        /// <param name="version"> Module version. </param>
+        /// <param name="company"> Company that created and supports the package. </param>
+        /// <param name="uri"> Link to support by the package vendor. </param>
         /// <returns> A new <see cref="Avs.ScriptPackageData"/> instance for mocking. </returns>
-        public static ScriptPackageData ScriptPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScriptPackageProperties properties = null)
+        public static ScriptPackageData ScriptPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScriptPackageProvisioningState? provisioningState = null, string description = null, string version = null, string company = null, string uri = null)
         {
             return new ScriptPackageData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ScriptPackageProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="description"> User friendly description of the package. </param>
-        /// <param name="version"> Module version. </param>
-        /// <param name="company"> Company that created and supports the package. </param>
-        /// <param name="uri"> Link to support by the package vendor. </param>
-        /// <returns> A new <see cref="Models.ScriptPackageProperties"/> instance for mocking. </returns>
-        public static ScriptPackageProperties ScriptPackageProperties(ScriptPackageProvisioningState? provisioningState = null, string description = null, string version = null, string company = null, string uri = null)
-        {
-            return new ScriptPackageProperties(
                 provisioningState,
                 description,
                 version,
@@ -1082,31 +974,21 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Avs.ScriptCmdletData"/> instance for mocking. </returns>
-        public static ScriptCmdletData ScriptCmdletData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScriptCmdletProperties properties = null)
-        {
-            return new ScriptCmdletData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ScriptCmdletProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="description"> Description of the scripts functionality. </param>
         /// <param name="timeout"> Recommended time limit for execution. </param>
         /// <param name="audience"> Specifies whether a script cmdlet is intended to be invoked only through automation or visible to customers. </param>
         /// <param name="parameters"> Parameters the script will accept. </param>
-        /// <returns> A new <see cref="Models.ScriptCmdletProperties"/> instance for mocking. </returns>
-        public static ScriptCmdletProperties ScriptCmdletProperties(ScriptCmdletProvisioningState? provisioningState = null, string description = null, string timeout = null, ScriptCmdletAudience? audience = null, IEnumerable<ScriptParameter> parameters = null)
+        /// <returns> A new <see cref="Avs.ScriptCmdletData"/> instance for mocking. </returns>
+        public static ScriptCmdletData ScriptCmdletData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScriptCmdletProvisioningState? provisioningState = null, string description = null, string timeout = null, ScriptCmdletAudience? audience = null, IEnumerable<ScriptParameter> parameters = null)
         {
             parameters ??= new List<ScriptParameter>();
 
-            return new ScriptCmdletProperties(
+            return new ScriptCmdletData(
+                id,
+                name,
+                resourceType,
+                systemData,
                 provisioningState,
                 description,
                 timeout,
@@ -1144,20 +1026,6 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Avs.ScriptExecutionData"/> instance for mocking. </returns>
-        public static ScriptExecutionData ScriptExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScriptExecutionProperties properties = null)
-        {
-            return new ScriptExecutionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ScriptExecutionProperties"/>. </summary>
         /// <param name="scriptCmdletId"> A reference to the script cmdlet resource if user is running a AVS script. </param>
         /// <param name="parameters">
         /// Parameters the script will accept
@@ -1185,8 +1053,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="information"> Standard information out stream from the powershell execution. </param>
         /// <param name="warnings"> Standard warning out stream from the powershell execution. </param>
         /// <param name="errors"> Standard error output stream from the powershell execution. </param>
-        /// <returns> A new <see cref="Models.ScriptExecutionProperties"/> instance for mocking. </returns>
-        public static ScriptExecutionProperties ScriptExecutionProperties(ResourceIdentifier scriptCmdletId = null, IEnumerable<ScriptExecutionParameterDetails> parameters = null, IEnumerable<ScriptExecutionParameterDetails> hiddenParameters = null, string failureReason = null, string timeout = null, string retention = null, DateTimeOffset? submittedOn = null, DateTimeOffset? startedOn = null, DateTimeOffset? finishedOn = null, ScriptExecutionProvisioningState? provisioningState = null, IEnumerable<string> output = null, IDictionary<string, ScriptExecutionPropertiesNamedOutput> namedOutputs = null, IEnumerable<string> information = null, IEnumerable<string> warnings = null, IEnumerable<string> errors = null)
+        /// <returns> A new <see cref="Avs.ScriptExecutionData"/> instance for mocking. </returns>
+        public static ScriptExecutionData ScriptExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier scriptCmdletId = null, IEnumerable<ScriptExecutionParameterDetails> parameters = null, IEnumerable<ScriptExecutionParameterDetails> hiddenParameters = null, string failureReason = null, string timeout = null, string retention = null, DateTimeOffset? submittedOn = null, DateTimeOffset? startedOn = null, DateTimeOffset? finishedOn = null, ScriptExecutionProvisioningState? provisioningState = null, IEnumerable<string> output = null, IDictionary<string, ScriptExecutionPropertiesNamedOutput> namedOutputs = null, IEnumerable<string> information = null, IEnumerable<string> warnings = null, IEnumerable<string> errors = null)
         {
             parameters ??= new List<ScriptExecutionParameterDetails>();
             hiddenParameters ??= new List<ScriptExecutionParameterDetails>();
@@ -1196,7 +1064,11 @@ namespace Azure.ResourceManager.Avs.Models
             warnings ??= new List<string>();
             errors ??= new List<string>();
 
-            return new ScriptExecutionProperties(
+            return new ScriptExecutionData(
+                id,
+                name,
+                resourceType,
+                systemData,
                 scriptCmdletId,
                 parameters?.ToList(),
                 hiddenParameters?.ToList(),
@@ -1220,29 +1092,22 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="provisioningState"> The state of the iSCSI path provisioning. </param>
+        /// <param name="networkBlock"> CIDR Block for iSCSI path. </param>
         /// <returns> A new <see cref="Avs.IscsiPathData"/> instance for mocking. </returns>
-        public static IscsiPathData IscsiPathData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IscsiPathProperties properties = null)
+        public static IscsiPathData IscsiPathData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IscsiPathProvisioningState? provisioningState = null, string networkBlock = null)
         {
             return new IscsiPathData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                provisioningState,
+                networkBlock,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.IscsiPathProperties"/>. </summary>
-        /// <param name="provisioningState"> The state of the iSCSI path provisioning. </param>
-        /// <param name="networkBlock"> CIDR Block for iSCSI path. </param>
-        /// <returns> A new <see cref="Models.IscsiPathProperties"/> instance for mocking. </returns>
-        public static IscsiPathProperties IscsiPathProperties(IscsiPathProvisioningState? provisioningState = null, string networkBlock = null)
-        {
-            return new IscsiPathProperties(provisioningState, networkBlock, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Avs.HostData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Avs.AvsHostData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1254,12 +1119,12 @@ namespace Azure.ResourceManager.Avs.Models
         /// </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <returns> A new <see cref="Avs.HostData"/> instance for mocking. </returns>
-        public static HostData HostData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HostProperties properties = null, IEnumerable<string> zones = null, AvsSku sku = null)
+        /// <returns> A new <see cref="Avs.AvsHostData"/> instance for mocking. </returns>
+        public static AvsHostData AvsHostData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HostProperties properties = null, IEnumerable<string> zones = null, AvsSku sku = null)
         {
             zones ??= new List<string>();
 
-            return new HostData(
+            return new AvsHostData(
                 id,
                 name,
                 resourceType,
@@ -1334,16 +1199,16 @@ namespace Azure.ResourceManager.Avs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Avs.ProvisionedNetworkData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Avs.AvsProvisionedNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Avs.ProvisionedNetworkData"/> instance for mocking. </returns>
-        public static ProvisionedNetworkData ProvisionedNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisionedNetworkProperties properties = null)
+        /// <returns> A new <see cref="Avs.AvsProvisionedNetworkData"/> instance for mocking. </returns>
+        public static AvsProvisionedNetworkData AvsProvisionedNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisionedNetworkProperties properties = null)
         {
-            return new ProvisionedNetworkData(
+            return new AvsProvisionedNetworkData(
                 id,
                 name,
                 resourceType,
@@ -1452,16 +1317,16 @@ namespace Azure.ResourceManager.Avs.Models
             return new ResourceSkuRestrictionInfo(locations?.ToList(), zones?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Avs.PureStoragePolicyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Avs.AvsPureStoragePolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Avs.PureStoragePolicyData"/> instance for mocking. </returns>
-        public static PureStoragePolicyData PureStoragePolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PureStoragePolicyProperties properties = null)
+        /// <returns> A new <see cref="Avs.AvsPureStoragePolicyData"/> instance for mocking. </returns>
+        public static AvsPureStoragePolicyData AvsPureStoragePolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PureStoragePolicyProperties properties = null)
         {
-            return new PureStoragePolicyData(
+            return new AvsPureStoragePolicyData(
                 id,
                 name,
                 resourceType,
@@ -1533,6 +1398,23 @@ namespace Azure.ResourceManager.Avs.Models
             return AvsPrivateCloudData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, managementCluster: managementCluster, internet: internet, identitySources: identitySources, availability: availability, encryption: encryption, extendedNetworkBlocks: extendedNetworkBlocks, provisioningState: provisioningState, circuit: circuit, endpoints: endpoints, networkBlock: networkBlock, managementNetwork: managementNetwork, provisioningNetwork: provisioningNetwork, vMotionNetwork: vMotionNetwork, vCenterPassword: vCenterPassword, nsxtPassword: nsxtPassword, vCenterCertificateThumbprint: vCenterCertificateThumbprint, nsxtCertificateThumbprint: nsxtCertificateThumbprint, externalCloudLinks: externalCloudLinks, secondaryCircuit: secondaryCircuit, nsxPublicIPQuotaRaised: nsxPublicIPQuotaRaised, virtualNetworkId: virtualNetworkId, dnsZoneType: dnsZoneType, sku: sku, identity: identity, zones: default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Avs.AvsPrivateCloudDatastoreData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The state of the datastore provisioning. </param>
+        /// <param name="netAppVolumeId"> An Azure NetApp Files volume. </param>
+        /// <param name="diskPoolVolume"> An iSCSI volume. </param>
+        /// <param name="elasticSanVolumeTargetId"> An Elastic SAN volume. </param>
+        /// <param name="status"> The operational status of the datastore. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Avs.AvsPrivateCloudDatastoreData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, ResourceIdentifier netAppVolumeId, DiskPoolVolume diskPoolVolume, ResourceIdentifier elasticSanVolumeTargetId, DatastoreStatus? status)
+        {
+            return AvsPrivateCloudDatastoreData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, netAppVolumeId: netAppVolumeId, diskPoolVolume: diskPoolVolume, elasticSanVolumeTargetId: elasticSanVolumeTargetId, pureStorageVolume: default, status: status);
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Avs.Models.AddonHcxProperties" />. </summary>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="offer"> The HCX offer, example VMware MaaS Cloud Provider (Enterprise). </param>
@@ -1566,6 +1448,36 @@ namespace Azure.ResourceManager.Avs.Models
             return AvsManagementCluster(clusterSize: clusterSize, provisioningState: provisioningState, clusterId: clusterId, hosts: hosts, vsanDatastoreName: default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Avs.AvsPrivateCloudDatastoreData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The state of the datastore provisioning. </param>
+        /// <param name="netAppVolumeId"> An Azure NetApp Files volume. </param>
+        /// <param name="diskPoolVolume"> An iSCSI volume. </param>
+        /// <param name="status"> The operational status of the datastore. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Avs.AvsPrivateCloudDatastoreData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, ResourceIdentifier netAppVolumeId, DiskPoolVolume diskPoolVolume, DatastoreStatus? status)
+        {
+            return AvsPrivateCloudDatastoreData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, netAppVolumeId: netAppVolumeId, diskPoolVolume: diskPoolVolume, elasticSanVolumeTargetId: default, pureStorageVolume: default, status: status);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Avs.HcxEnterpriseSiteData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="activationKey"> The activation key. </param>
+        /// <param name="status"> The status of the HCX Enterprise Site. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Avs.HcxEnterpriseSiteData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HcxEnterpriseSiteData HcxEnterpriseSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string activationKey, HcxEnterpriseSiteStatus? status)
+        {
+            return HcxEnterpriseSiteData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, activationKey: activationKey, status: status);
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Avs.WorkloadNetworkData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1575,7 +1487,35 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkloadNetworkData WorkloadNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData)
         {
-            return WorkloadNetworkData(id: id, name: name, resourceType: resourceType, systemData: systemData, workloadNetworkProvisioningState: default);
+            return WorkloadNetworkData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Avs.WorkloadNetworkGatewayData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> Display name of the DHCP entity. </param>
+        /// <param name="path"> NSX Gateway Path. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Avs.WorkloadNetworkGatewayData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WorkloadNetworkGatewayData WorkloadNetworkGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string path)
+        {
+            return WorkloadNetworkGatewayData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, displayName: displayName, path: path);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Avs.WorkloadNetworkVirtualMachineData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> Display name of the VM. </param>
+        /// <param name="vmType"> Virtual machine type. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Avs.WorkloadNetworkVirtualMachineData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WorkloadNetworkVirtualMachineData WorkloadNetworkVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, WorkloadNetworkVmType? vmType)
+        {
+            return WorkloadNetworkVirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, displayName: displayName, vmType: vmType);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Avs.AvsCloudLinkData" />. </summary>
@@ -1590,6 +1530,22 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsCloudLinkData AvsCloudLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsCloudLinkStatus? status, ResourceIdentifier linkedCloud)
         {
             return AvsCloudLinkData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, status: status, linkedCloud: linkedCloud);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Avs.AvsPrivateCloudClusterVirtualMachineData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="displayName"> Display name of the VM. </param>
+        /// <param name="moRefId"> Virtual machine managed object reference id. </param>
+        /// <param name="folderPath"> Path to virtual machine's folder starting from datacenter virtual machine folder. </param>
+        /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Avs.AvsPrivateCloudClusterVirtualMachineData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsPrivateCloudClusterVirtualMachineData AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string moRefId, string folderPath, VirtualMachineRestrictMovementState? restrictMovement)
+        {
+            return AvsPrivateCloudClusterVirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, displayName: displayName, moRefId: moRefId, folderPath: folderPath, restrictMovement: restrictMovement);
         }
     }
 }

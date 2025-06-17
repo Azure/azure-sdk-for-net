@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.Avs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task RotateVcenterPassword_PrivateCloudsRotateVcenterPassword()
+        public async Task RotateVCenterPassword_PrivateCloudsRotateVcenterPassword()
         {
             // Generated from example definition: 2024-09-01/PrivateClouds_RotateVcenterPassword.json
-            // this example is just showing the usage of "PrivateClouds_RotateVcenterPassword" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PrivateClouds_RotateVCenterPassword" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
             // invoke the operation
-            await avsPrivateCloud.RotateVcenterPasswordAsync(WaitUntil.Completed);
+            await avsPrivateCloud.RotateVCenterPasswordAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }

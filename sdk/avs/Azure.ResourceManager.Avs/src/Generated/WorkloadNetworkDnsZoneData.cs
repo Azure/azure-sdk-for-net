@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
@@ -54,6 +55,8 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZoneData"/>. </summary>
         public WorkloadNetworkDnsZoneData()
         {
+            Domain = new ChangeTrackingList<string>();
+            DnsServerIPs = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZoneData"/>. </summary>
@@ -61,15 +64,39 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="displayName"> Display name of the DNS Zone. </param>
+        /// <param name="domain"> Domain names of the DNS Zone. </param>
+        /// <param name="dnsServerIPs"> DNS Server IP array of the DNS Zone. </param>
+        /// <param name="sourceIP"> Source IP of the DNS Zone. </param>
+        /// <param name="dnsServices"> Number of DNS Services using the DNS zone. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="revision"> NSX revision number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadNetworkDnsZoneProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> domain, IList<string> dnsServerIPs, IPAddress sourceIP, long? dnsServices, WorkloadNetworkDnsZoneProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            DisplayName = displayName;
+            Domain = domain;
+            DnsServerIPs = dnsServerIPs;
+            SourceIP = sourceIP;
+            DnsServices = dnsServices;
+            ProvisioningState = provisioningState;
+            Revision = revision;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public WorkloadNetworkDnsZoneProperties Properties { get; set; }
+        /// <summary> Display name of the DNS Zone. </summary>
+        public string DisplayName { get; set; }
+        /// <summary> Domain names of the DNS Zone. </summary>
+        public IList<string> Domain { get; }
+        /// <summary> DNS Server IP array of the DNS Zone. </summary>
+        public IList<string> DnsServerIPs { get; }
+        /// <summary> Source IP of the DNS Zone. </summary>
+        public IPAddress SourceIP { get; set; }
+        /// <summary> Number of DNS Services using the DNS zone. </summary>
+        public long? DnsServices { get; set; }
+        /// <summary> The provisioning state. </summary>
+        public WorkloadNetworkDnsZoneProvisioningState? ProvisioningState { get; }
+        /// <summary> NSX revision number. </summary>
+        public long? Revision { get; set; }
     }
 }

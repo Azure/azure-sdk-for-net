@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            IReadOnlyList<PureStoragePolicyData> value = default;
+            IReadOnlyList<AvsPureStoragePolicyData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<PureStoragePolicyData> array = new List<PureStoragePolicyData>();
+                    List<AvsPureStoragePolicyData> array = new List<AvsPureStoragePolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PureStoragePolicyData.DeserializePureStoragePolicyData(item, options));
+                        array.Add(AvsPureStoragePolicyData.DeserializeAvsPureStoragePolicyData(item, options));
                     }
                     value = array;
                     continue;
