@@ -165,7 +165,7 @@
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.4.2" />
 
     <!-- CDK -->
-    <PackageReference Update="Azure.Provisioning" Version="1.0.0" />
+    <PackageReference Update="Azure.Provisioning" Version="1.1.0" />
     <PackageReference Update="Azure.Provisioning.CognitiveServices" Version="1.0.0" />
     <PackageReference Update="Azure.Provisioning.EventGrid" Version="1.0.0" />
     <PackageReference Update="Azure.Provisioning.KeyVault" Version="1.0.0" />
