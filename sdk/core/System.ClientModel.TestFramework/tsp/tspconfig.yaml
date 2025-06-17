@@ -1,0 +1,7 @@
+# compile with tsp compile ./src/tsp
+emit:
+  - "@typespec/http-client-csharp"
+options:
+  "@typespec/http-client-csharp":
+    emitter-output-dir: "{cwd}"
+    package-name: "System.ClientModel.TestFramework"

@@ -2,6 +2,7 @@
   "name": "azure-sdk-for-net",
   "version": "1.0.0",
   "dependencies": {
+    "@typespec/openapi3": "^1.1.0",
     "autorest": "^3.7.1"
   }
 }
