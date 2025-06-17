@@ -365,8 +365,8 @@ namespace Azure.AI.Projects
         public virtual System.Threading.Tasks.Task<Azure.Response> PendingUploadAsync(string name, string version, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public Azure.AI.Projects.DatasetVersion UploadFile(string name, string version, string filePath, string? connectionName = null) { throw null; }
         public System.Threading.Tasks.Task<Azure.AI.Projects.DatasetVersion> UploadFileAsync(string name, string version, string filePath, string? connectionName = null) { throw null; }
-        public Azure.AI.Projects.DatasetVersion UploadFolder(string name, string version, string folderPath, string? connectionName = null) { throw null; }
-        public System.Threading.Tasks.Task<Azure.AI.Projects.DatasetVersion> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null) { throw null; }
+        public Azure.AI.Projects.DatasetVersion UploadFolder(string name, string version, string folderPath, string? connectionName = null, System.Text.RegularExpressions.Regex? filePattern = null) { throw null; }
+        public System.Threading.Tasks.Task<Azure.AI.Projects.DatasetVersion> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null, System.Text.RegularExpressions.Regex? filePattern = null) { throw null; }
     }
     public abstract partial class DatasetVersion : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DatasetVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetVersion>
     {

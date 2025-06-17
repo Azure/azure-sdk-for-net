@@ -7,6 +7,7 @@ using System;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using System.Text.RegularExpressions;
 
 namespace Azure.AI.Projects.Tests
 {
@@ -61,7 +62,8 @@ namespace Azure.AI.Projects.Tests
                 name: datasetName,
                 version: datasetVersion2,
                 folderPath: folderPath,
-                connectionName: connectionName
+                connectionName: connectionName,
+                filePattern: new Regex(".*\\.txt")
             );
             Console.WriteLine(dataset);
 
@@ -141,7 +143,8 @@ namespace Azure.AI.Projects.Tests
                 name: datasetName,
                 version: datasetVersion2,
                 folderPath: folderPath,
-                connectionName: connectionName
+                connectionName: connectionName,
+                filePattern: new Regex(".*\\.txt")
             );
             Console.WriteLine(dataset);
 
