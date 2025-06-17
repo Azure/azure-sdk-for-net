@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs
         public WorkloadNetworkDnsZoneData()
         {
             Domain = new ChangeTrackingList<string>();
-            DnsServerIPs = new ChangeTrackingList<string>();
+            DnsServerIPs = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZoneData"/>. </summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> domain, IList<string> dnsServerIPs, IPAddress sourceIP, long? dnsServices, WorkloadNetworkDnsZoneProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> domain, IList<IPAddress> dnsServerIPs, IPAddress sourceIP, long? dnsServices, WorkloadNetworkDnsZoneProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Domain = domain;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Domain names of the DNS Zone. </summary>
         public IList<string> Domain { get; }
         /// <summary> DNS Server IP array of the DNS Zone. </summary>
-        public IList<string> DnsServerIPs { get; }
+        public IList<IPAddress> DnsServerIPs { get; }
         /// <summary> Source IP of the DNS Zone. </summary>
         public IPAddress SourceIP { get; set; }
         /// <summary> Number of DNS Services using the DNS zone. </summary>

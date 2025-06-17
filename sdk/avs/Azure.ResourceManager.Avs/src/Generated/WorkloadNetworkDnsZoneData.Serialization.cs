@@ -61,7 +61,12 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in DnsServerIPs)
                 {
-                    writer.WriteStringValue(item);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +119,7 @@ namespace Azure.ResourceManager.Avs
             SystemData systemData = default;
             string displayName = default;
             IList<string> domain = default;
-            IList<string> dnsServerIPs = default;
+            IList<IPAddress> dnsServerIPs = default;
             IPAddress sourceIP = default;
             long? dnsServices = default;
             WorkloadNetworkDnsZoneProvisioningState? provisioningState = default;
@@ -181,10 +186,17 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPAddress.Parse(item.GetString()));
+                                }
                             }
                             dnsServerIPs = array;
                             continue;
@@ -241,7 +253,7 @@ namespace Azure.ResourceManager.Avs
                 systemData,
                 displayName,
                 domain ?? new ChangeTrackingList<string>(),
-                dnsServerIPs ?? new ChangeTrackingList<string>(),
+                dnsServerIPs ?? new ChangeTrackingList<IPAddress>(),
                 sourceIP,
                 dnsServices,
                 provisioningState,

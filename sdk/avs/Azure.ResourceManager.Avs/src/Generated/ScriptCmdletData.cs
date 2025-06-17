@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="audience"> Specifies whether a script cmdlet is intended to be invoked only through automation or visible to customers. </param>
         /// <param name="parameters"> Parameters the script will accept. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptCmdletData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScriptCmdletProvisioningState? provisioningState, string description, string timeout, ScriptCmdletAudience? audience, IReadOnlyList<ScriptParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ScriptCmdletData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScriptCmdletProvisioningState? provisioningState, string description, TimeSpan? timeout, ScriptCmdletAudience? audience, IReadOnlyList<ScriptParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Description = description;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Description of the scripts functionality. </summary>
         public string Description { get; }
         /// <summary> Recommended time limit for execution. </summary>
-        public string Timeout { get; }
+        public TimeSpan? Timeout { get; }
         /// <summary> Specifies whether a script cmdlet is intended to be invoked only through automation or visible to customers. </summary>
         public ScriptCmdletAudience? Audience { get; }
         /// <summary> Parameters the script will accept. </summary>

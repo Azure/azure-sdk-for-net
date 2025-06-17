@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
         /// <returns> A new <see cref="Avs.WorkloadNetworkDnsZoneData"/> instance for mocking. </returns>
-        public static WorkloadNetworkDnsZoneData WorkloadNetworkDnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> domain = null, IEnumerable<string> dnsServerIPs = null, IPAddress sourceIP = null, long? dnsServices = null, WorkloadNetworkDnsZoneProvisioningState? provisioningState = null, long? revision = null)
+        public static WorkloadNetworkDnsZoneData WorkloadNetworkDnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<string> domain = null, IEnumerable<IPAddress> dnsServerIPs = null, IPAddress sourceIP = null, long? dnsServices = null, WorkloadNetworkDnsZoneProvisioningState? provisioningState = null, long? revision = null)
         {
             domain ??= new List<string>();
-            dnsServerIPs ??= new List<string>();
+            dnsServerIPs ??= new List<IPAddress>();
 
             return new WorkloadNetworkDnsZoneData(
                 id,
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="company"> Company that created and supports the package. </param>
         /// <param name="uri"> Link to support by the package vendor. </param>
         /// <returns> A new <see cref="Avs.ScriptPackageData"/> instance for mocking. </returns>
-        public static ScriptPackageData ScriptPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScriptPackageProvisioningState? provisioningState = null, string description = null, string version = null, string company = null, string uri = null)
+        public static ScriptPackageData ScriptPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScriptPackageProvisioningState? provisioningState = null, string description = null, string version = null, string company = null, Uri uri = null)
         {
             return new ScriptPackageData(
                 id,
@@ -980,7 +980,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="audience"> Specifies whether a script cmdlet is intended to be invoked only through automation or visible to customers. </param>
         /// <param name="parameters"> Parameters the script will accept. </param>
         /// <returns> A new <see cref="Avs.ScriptCmdletData"/> instance for mocking. </returns>
-        public static ScriptCmdletData ScriptCmdletData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScriptCmdletProvisioningState? provisioningState = null, string description = null, string timeout = null, ScriptCmdletAudience? audience = null, IEnumerable<ScriptParameter> parameters = null)
+        public static ScriptCmdletData ScriptCmdletData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScriptCmdletProvisioningState? provisioningState = null, string description = null, TimeSpan? timeout = null, ScriptCmdletAudience? audience = null, IEnumerable<ScriptParameter> parameters = null)
         {
             parameters ??= new List<ScriptParameter>();
 
@@ -1054,12 +1054,11 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="warnings"> Standard warning out stream from the powershell execution. </param>
         /// <param name="errors"> Standard error output stream from the powershell execution. </param>
         /// <returns> A new <see cref="Avs.ScriptExecutionData"/> instance for mocking. </returns>
-        public static ScriptExecutionData ScriptExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier scriptCmdletId = null, IEnumerable<ScriptExecutionParameterDetails> parameters = null, IEnumerable<ScriptExecutionParameterDetails> hiddenParameters = null, string failureReason = null, string timeout = null, string retention = null, DateTimeOffset? submittedOn = null, DateTimeOffset? startedOn = null, DateTimeOffset? finishedOn = null, ScriptExecutionProvisioningState? provisioningState = null, IEnumerable<string> output = null, IDictionary<string, ScriptExecutionPropertiesNamedOutput> namedOutputs = null, IEnumerable<string> information = null, IEnumerable<string> warnings = null, IEnumerable<string> errors = null)
+        public static ScriptExecutionData ScriptExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier scriptCmdletId = null, IEnumerable<ScriptExecutionParameterDetails> parameters = null, IEnumerable<ScriptExecutionParameterDetails> hiddenParameters = null, string failureReason = null, string timeout = null, string retention = null, DateTimeOffset? submittedOn = null, DateTimeOffset? startedOn = null, DateTimeOffset? finishedOn = null, ScriptExecutionProvisioningState? provisioningState = null, IEnumerable<string> output = null, BinaryData namedOutputs = null, IEnumerable<string> information = null, IEnumerable<string> warnings = null, IEnumerable<string> errors = null)
         {
             parameters ??= new List<ScriptExecutionParameterDetails>();
             hiddenParameters ??= new List<ScriptExecutionParameterDetails>();
             output ??= new List<string>();
-            namedOutputs ??= new Dictionary<string, ScriptExecutionPropertiesNamedOutput>();
             information ??= new List<string>();
             warnings ??= new List<string>();
             errors ??= new List<string>();
@@ -1546,6 +1545,37 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsPrivateCloudClusterVirtualMachineData AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string moRefId, string folderPath, VirtualMachineRestrictMovementState? restrictMovement)
         {
             return AvsPrivateCloudClusterVirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, displayName: displayName, moRefId: moRefId, folderPath: folderPath, restrictMovement: restrictMovement);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Avs.ScriptPackageData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> User friendly description of the package. </param>
+        /// <param name="version"> Module version. </param>
+        /// <param name="company"> Company that created and supports the package. </param>
+        /// <param name="uri"> Link to support by the package vendor. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Avs.ScriptPackageData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScriptPackageData ScriptPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string version, string company, Uri uri)
+        {
+            return ScriptPackageData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, description: description, version: version, company: company, uri: uri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Avs.ScriptCmdletData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> Description of the scripts functionality. </param>
+        /// <param name="timeout"> Recommended time limit for execution. </param>
+        /// <param name="parameters"> Parameters the script will accept. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Avs.ScriptCmdletData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScriptCmdletData ScriptCmdletData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, TimeSpan? timeout, IEnumerable<ScriptParameter> parameters)
+        {
+            return ScriptCmdletData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, description: description, timeout: timeout, audience: default, parameters: parameters);
         }
     }
 }
