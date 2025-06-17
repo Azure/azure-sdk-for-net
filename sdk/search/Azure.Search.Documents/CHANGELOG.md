@@ -18,7 +18,7 @@
 ## 11.7.0-beta.5 (2025-06-17)
 
 ### Bugs Fixed
-- Fixed a failure in the search response when the service returned a 206 (Partial Content) status code.
+- Fixed a failure in the search response when the service returned a 206(Partial Content) status code.
 
 ## 11.7.0-beta.4 (2025-05-14)
 
