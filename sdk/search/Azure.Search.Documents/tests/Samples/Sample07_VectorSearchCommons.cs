@@ -20,8 +20,8 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
             EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");
 
-            Embedding embedding = embeddingClient.GenerateEmbedding(input);
-            return embedding.Vector;
+            OpenAIEmbedding embedding = embeddingClient.GenerateEmbedding(input);
+            return embedding.ToFloats();
         }
         #endregion
 

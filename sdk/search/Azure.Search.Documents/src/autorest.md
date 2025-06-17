@@ -81,6 +81,22 @@ directive:
     $.additionalProperties = true;
 ```
 
+### Fix for 206 response
+
+```yaml
+directive:
+  - from: "searchindex.json"
+    where: $.paths
+    transform: >
+      let response206 = {
+        "description": "Response containing partial documents that match the search criteria.",
+        "schema": {
+          "$ref": "#/definitions/SearchDocumentsResult"
+        }
+      };
+      $["/docs/search.post.search"].post.responses["206"] = response206;
+```
+
 ### Archboard feedback for 2024-07-01
 
 ```yaml

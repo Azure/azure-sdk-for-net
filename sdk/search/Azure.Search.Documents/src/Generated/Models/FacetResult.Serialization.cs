@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static FacetResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFacetResult(document.RootElement);
         }
     }

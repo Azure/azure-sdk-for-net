@@ -96,7 +96,7 @@ namespace Azure.Search.Documents
                 case 201:
                     {
                         SearchIndexerDataSourceConnection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.Search.Documents
                 case 201:
                     {
                         SearchIndexerDataSourceConnection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -248,7 +248,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         SearchIndexerDataSourceConnection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -275,7 +275,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         SearchIndexerDataSourceConnection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -314,7 +314,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         ListDataSourcesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ListDataSourcesResult.DeserializeListDataSourcesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -335,7 +335,7 @@ namespace Azure.Search.Documents
                 case 200:
                     {
                         ListDataSourcesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ListDataSourcesResult.DeserializeListDataSourcesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -380,7 +380,7 @@ namespace Azure.Search.Documents
                 case 201:
                     {
                         SearchIndexerDataSourceConnection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +407,7 @@ namespace Azure.Search.Documents
                 case 201:
                     {
                         SearchIndexerDataSourceConnection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SearchIndexerDataSourceConnection.DeserializeSearchIndexerDataSourceConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

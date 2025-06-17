@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(VectorSearchVectorizerKind left, VectorSearchVectorizerKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VectorSearchVectorizerKind"/> values are not the same. </summary>
         public static bool operator !=(VectorSearchVectorizerKind left, VectorSearchVectorizerKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VectorSearchVectorizerKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorSearchVectorizerKind"/>. </summary>
         public static implicit operator VectorSearchVectorizerKind(string value) => new VectorSearchVectorizerKind(value);
 
         /// <inheritdoc />
