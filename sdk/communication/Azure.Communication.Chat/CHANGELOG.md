@@ -3,8 +3,8 @@
 ## 1.4.0 (2025-06-17)
 
 ### Features Added
-- Suport data retention policy.
-- Suport thread level and member level metadata.
+- Support data retention policy.
+- Support thread level and member level metadata.
 
 ## 1.3.1 (2024-09-19)
 
