@@ -234,34 +234,37 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
             ShareServiceProperties properties = propertiesResponse.Value;
 
-            if (properties.Protocol.Smb.EncryptionInTransit == true)
+            if (properties.Protocol.Smb.EncryptionInTransit?.Required == true)
             {
                 // Act
-                properties.Protocol.Smb.EncryptionInTransit = false;
+                properties.Protocol.Smb.EncryptionInTransit.Required = false;
                 await service.SetPropertiesAsync(properties);
                 propertiesResponse = await service.GetPropertiesAsync();
                 properties = propertiesResponse.Value;
 
                 // Assert
-                Assert.IsFalse(properties.Protocol.Smb.EncryptionInTransit);
+                Assert.IsFalse(properties.Protocol.Smb.EncryptionInTransit.Required);
 
                 // Cleanup
-                properties.Protocol.Smb.EncryptionInTransit = true;
+                properties.Protocol.Smb.EncryptionInTransit.Required = true;
                 await service.SetPropertiesAsync(properties);
             }
             else
             {
                 // Act
-                properties.Protocol.Smb.EncryptionInTransit = true;
+                properties.Protocol.Smb.EncryptionInTransit = new ShareSmbSettingsEncryptionInTransit
+                {
+                    Required = true
+                };
                 await service.SetPropertiesAsync(properties);
                 propertiesResponse = await service.GetPropertiesAsync();
                 properties = propertiesResponse.Value;
 
                 // Assert
-                Assert.IsTrue(properties.Protocol.Smb.EncryptionInTransit);
+                Assert.IsTrue(properties.Protocol.Smb.EncryptionInTransit.Required);
 
                 // Cleanup
-                properties.Protocol.Smb.EncryptionInTransit = false;
+                properties.Protocol.Smb.EncryptionInTransit.Required = false;
                 await service.SetPropertiesAsync(properties);
             }
         }
@@ -279,34 +282,37 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
             ShareServiceProperties properties = propertiesResponse.Value;
 
-            if (properties.Protocol.Nfs.EncryptionInTransit == true)
+            if (properties.Protocol.Nfs.EncryptionInTransit?.Required == true)
             {
                 // Act
-                properties.Protocol.Nfs.EncryptionInTransit = false;
+                properties.Protocol.Nfs.EncryptionInTransit.Required = false;
                 await service.SetPropertiesAsync(properties);
                 propertiesResponse = await service.GetPropertiesAsync();
                 properties = propertiesResponse.Value;
 
                 // Assert
-                Assert.IsFalse(properties.Protocol.Smb.EncryptionInTransit);
+                Assert.IsFalse(properties.Protocol.Smb.EncryptionInTransit.Required);
 
                 // Cleanup
-                properties.Protocol.Smb.EncryptionInTransit = true;
+                properties.Protocol.Smb.EncryptionInTransit.Required = true;
                 await service.SetPropertiesAsync(properties);
             }
             else
             {
                 // Act
-                properties.Protocol.Nfs.EncryptionInTransit = true;
+                properties.Protocol.Nfs.EncryptionInTransit = new ShareNfsSettingsEncryptionInTransit
+                {
+                    Required = true
+                };
                 await service.SetPropertiesAsync(properties);
                 propertiesResponse = await service.GetPropertiesAsync();
                 properties = propertiesResponse.Value;
 
                 // Assert
-                Assert.IsTrue(properties.Protocol.Nfs.EncryptionInTransit);
+                Assert.IsTrue(properties.Protocol.Nfs.EncryptionInTransit.Required);
 
                 // Cleanup
-                properties.Protocol.Nfs.EncryptionInTransit = false;
+                properties.Protocol.Nfs.EncryptionInTransit.Required = false;
                 await service.SetPropertiesAsync(properties);
             }
         }

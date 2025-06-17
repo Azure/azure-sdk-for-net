@@ -23,9 +23,7 @@ namespace Azure.Storage.Files.Shares.Models
             }
             if (Common.Optional.IsDefined(EncryptionInTransit))
             {
-                writer.WriteStartElement("EncryptionInTransit");
-                writer.WriteValue(EncryptionInTransit.Value);
-                writer.WriteEndElement();
+                writer.WriteObjectValue(EncryptionInTransit, "EncryptionInTransit");
             }
             writer.WriteEndElement();
         }
@@ -33,14 +31,14 @@ namespace Azure.Storage.Files.Shares.Models
         internal static ShareSmbSettings DeserializeShareSmbSettings(XElement element)
         {
             SmbMultichannel multichannel = default;
-            bool? encryptionInTransit = default;
+            ShareSmbSettingsEncryptionInTransit encryptionInTransit = default;
             if (element.Element("Multichannel") is XElement multichannelElement)
             {
                 multichannel = SmbMultichannel.DeserializeSmbMultichannel(multichannelElement);
             }
             if (element.Element("EncryptionInTransit") is XElement encryptionInTransitElement)
             {
-                encryptionInTransit = (bool?)encryptionInTransitElement;
+                encryptionInTransit = ShareSmbSettingsEncryptionInTransit.DeserializeShareSmbSettingsEncryptionInTransit(encryptionInTransitElement);
             }
             return new ShareSmbSettings(multichannel, encryptionInTransit);
         }

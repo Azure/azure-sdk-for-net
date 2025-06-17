@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Initializes a new instance of <see cref="ShareSmbSettings"/>. </summary>
         /// <param name="multichannel"> Settings for SMB Multichannel. </param>
         /// <param name="encryptionInTransit"> Enable or disable encryption in transit. </param>
-        internal ShareSmbSettings(SmbMultichannel multichannel, bool? encryptionInTransit)
+        internal ShareSmbSettings(SmbMultichannel multichannel, ShareSmbSettingsEncryptionInTransit encryptionInTransit)
         {
             Multichannel = multichannel;
             EncryptionInTransit = encryptionInTransit;
@@ -22,6 +22,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary> Settings for SMB Multichannel. </summary>
         public SmbMultichannel Multichannel { get; set; }
         /// <summary> Enable or disable encryption in transit. </summary>
-        public bool? EncryptionInTransit { get; set; }
+        public ShareSmbSettingsEncryptionInTransit EncryptionInTransit { get; set; }
     }
 }

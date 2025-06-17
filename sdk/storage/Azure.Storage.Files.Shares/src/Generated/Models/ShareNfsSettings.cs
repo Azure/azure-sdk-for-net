@@ -17,12 +17,12 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Initializes a new instance of <see cref="ShareNfsSettings"/>. </summary>
         /// <param name="encryptionInTransit"> Enable or disable encryption in transit. </param>
-        internal ShareNfsSettings(bool? encryptionInTransit)
+        internal ShareNfsSettings(ShareNfsSettingsEncryptionInTransit encryptionInTransit)
         {
             EncryptionInTransit = encryptionInTransit;
         }
 
         /// <summary> Enable or disable encryption in transit. </summary>
-        public bool? EncryptionInTransit { get; set; }
+        public ShareNfsSettingsEncryptionInTransit EncryptionInTransit { get; set; }
     }
 }

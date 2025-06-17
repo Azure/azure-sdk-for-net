@@ -19,19 +19,17 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteStartElement(nameHint ?? "NFS");
             if (Common.Optional.IsDefined(EncryptionInTransit))
             {
-                writer.WriteStartElement("EncryptionInTransit");
-                writer.WriteValue(EncryptionInTransit.Value);
-                writer.WriteEndElement();
+                writer.WriteObjectValue(EncryptionInTransit, "EncryptionInTransit");
             }
             writer.WriteEndElement();
         }
 
         internal static ShareNfsSettings DeserializeShareNfsSettings(XElement element)
         {
-            bool? encryptionInTransit = default;
+            ShareNfsSettingsEncryptionInTransit encryptionInTransit = default;
             if (element.Element("EncryptionInTransit") is XElement encryptionInTransitElement)
             {
-                encryptionInTransit = (bool?)encryptionInTransitElement;
+                encryptionInTransit = ShareNfsSettingsEncryptionInTransit.DeserializeShareNfsSettingsEncryptionInTransit(encryptionInTransitElement);
             }
             return new ShareNfsSettings(encryptionInTransit);
         }
