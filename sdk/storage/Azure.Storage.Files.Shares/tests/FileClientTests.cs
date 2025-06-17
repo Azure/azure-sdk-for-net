@@ -845,7 +845,14 @@ namespace Azure.Storage.Files.Shares.Tests
                 response = await fileClient.CreateAsync(Constants.KB, options);
 
                 // Assert
-                // TODO
+                if (filePropertySemantics == FilePropertySemantics.New || filePropertySemantics == null)
+                {
+                    Assert.AreEqual(NtfsFileAttributes.Archive, response.Value.SmbProperties.FileAttributes.Value);
+                }
+                else
+                {
+                    Assert.AreEqual(NtfsFileAttributes.None, response.Value.SmbProperties.FileAttributes.Value);
+                }
             }
         }
 
