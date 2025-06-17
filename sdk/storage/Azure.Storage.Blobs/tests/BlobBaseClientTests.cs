@@ -6904,6 +6904,28 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetTags_AccessConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            {
+                // Arrange
+                await using DisposingContainer test = await GetTestContainerAsync();
+                BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    blob.GetTagsAsync(
+                        conditions: accessConditions),
+                    e => { });
+            }
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetTagsAsync_Error()
         {
@@ -7046,7 +7068,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task SetTags_AccessConditions()
+        public async Task GetSetTags_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in AccessConditions_Data)
@@ -7064,12 +7086,15 @@ namespace Azure.Storage.Blobs.Test
                 Dictionary<string, string> tags = BuildTags();
 
                 // Act
-                Response response = await blob.SetTagsAsync(
+                 await blob.SetTagsAsync(
                     tags: tags,
                     conditions: accessConditions);
 
+                Response<GetBlobTagResult> response = await blob.GetTagsAsync(
+                    conditions: accessConditions);
+
                 // Assert
-                Assert.IsNotNull(response.Headers.RequestId);
+                AssertDictionaryEquality(tags, response.Value.Tags);
             }
         }
 

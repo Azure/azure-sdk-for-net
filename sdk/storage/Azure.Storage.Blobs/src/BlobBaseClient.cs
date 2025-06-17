@@ -6060,15 +6060,6 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(GetTags)}");
 
-                conditions.ValidateConditionsNotPresent(
-                    invalidConditions:
-                        BlobRequestConditionProperty.IfModifiedSince
-                        | BlobRequestConditionProperty.IfUnmodifiedSince
-                        | BlobRequestConditionProperty.IfMatch
-                        | BlobRequestConditionProperty.IfNoneMatch,
-                    operationName: nameof(BlobBaseClient.GetTags),
-                    parameterName: nameof(conditions));
-
                 try
                 {
                     scope.Start();
