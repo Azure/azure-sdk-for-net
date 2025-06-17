@@ -71,7 +71,11 @@ namespace Azure.ResourceManager.HealthBot
         Azure.ResourceManager.HealthBot.HealthBotData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.HealthBotData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.HealthBotData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.HealthBotData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource> Update(Azure.ResourceManager.HealthBot.Models.HealthBotPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HealthBot.HealthBotResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HealthBot.Models.HealthBotPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource>> UpdateAsync(Azure.ResourceManager.HealthBot.Models.HealthBotPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HealthBot.HealthBotResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HealthBot.Models.HealthBotPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }

@@ -9,7 +9,7 @@ csharp: true
 library-name: HealthBot
 namespace: Azure.ResourceManager.HealthBot
 require: https://github.com/Azure/azure-rest-api-specs/blob/69eadf978055e646bc6b0ef1fa92fdac394eaab2/specification/healthbot/resource-manager/readme.md
-tag: package-2025-05-25
+#tag: package-2025-05-25
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
