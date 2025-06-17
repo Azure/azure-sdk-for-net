@@ -88,9 +88,8 @@ public class AuthenticationTokenProviderTests
         /// This flow can be used for operations that do not require authentication.
         /// It will override the service level flows and any operation specific flows.
         /// </summary>
-        private readonly Dictionary<string, object>[] noAuthFlows = [];
-
-        private readonly IReadOnlyDictionary<string, object> _emptyProperties = new Dictionary<string, object>();
+        private readonly IReadOnlyDictionary<string, object> noAuthFlows = new Dictionary<string, object>();
+        private readonly IReadOnlyDictionary<string, object> emptyFlows = new Dictionary<string, object>();
 
         private ClientPipeline _pipeline;
 
@@ -145,7 +144,8 @@ public class AuthenticationTokenProviderTests
         {
             var message = _pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
-            message.SetProperty(typeof(GetTokenOptions), noAuthFlows); //This is an example of how you can override the flows for a specific operation.
+            message.SetProperty(typeof(GetTokenOptions), new[] { emptyFlows });
+
             PipelineRequest request = message.Request;
             request.Method = "GET";
             request.Uri = new Uri("https://localhost/noAuth");
