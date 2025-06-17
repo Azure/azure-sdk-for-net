@@ -18,9 +18,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal const string A128KWValue = "A128KW";
         internal const string A192KWValue = "A192KW";
         internal const string A256KWValue = "A256KW";
-        internal const string CkmAesKeyWrap128Value = "CKM_AES_KEY_WRAP";
-        internal const string CkmAesKeyWrap192Value = "CKM_AES_KEY_WRAP";
-        internal const string CkmAesKeyWrap256Value = "CKM_AES_KEY_WRAP";
+        internal const string CkmAesKeyWrapValue = "CKM_AES_KEY_WRAP";
         internal const string CkmAesKeyWrapPadValue = "CKM_AES_KEY_WRAP_PAD";
 
         private readonly string _value;
@@ -67,7 +65,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Gets a 256-bit CKM AES Key Wrap <see cref="KeyWrapAlgorithm"/>.
         /// </summary>
-        public static KeyWrapAlgorithm CkmAesKeyWrap { get; } = new KeyWrapAlgorithm(CkmAesKeyWrapValue);
+        internal static KeyWrapAlgorithm CkmAesKeyWrap { get; } = new KeyWrapAlgorithm(CkmAesKeyWrapValue);
 
         /// <summary>
         /// Gets a 256-bit CKM AES Key Wrap with padding <see cref="KeyWrapAlgorithm"/>.
@@ -125,12 +123,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             A128KWValue => AesKw.Aes128Kw,
             A192KWValue => AesKw.Aes192Kw,
             A256KWValue => AesKw.Aes256Kw,
-            CkmAesKeyWrapValue => AesKw.CkmAesKeyWrap128,
-            CkmAesKeyWrapValue => AesKw.CkmAesKeyWrap192,
-            CkmAesKeyWrapValue => AesKw.CkmAesKeyWrap256,
-            CkmAesKeyWrapPadValue => AesKw.CkmAesKeyWrapPad128,
-            CkmAesKeyWrapPadValue => AesKw.CkmAesKeyWrapPad192,
-            CkmAesKeyWrapPadValue => AesKw.CkmAesKeyWrapPad256,
+            CkmAesKeyWrapValue => AesKw.CkmAesKeyWrap,
+            CkmAesKeyWrapPadValue => AesKw.CkmAesKeyWrapPad,
             _ => null,
         };
     }
