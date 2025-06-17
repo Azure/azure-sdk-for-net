@@ -90,7 +90,7 @@ namespace Azure.Compute.Batch
         /// <summary>
         /// Get the sucess state of the deletion operation
         /// </summary>
-        public override BatchNode Value => OperationHelpers.GetValue(ref _value);
+        public override BatchNode Value => _value;
 
         /// <summary>
         /// Gets a value indicating whether the operation completed and
@@ -133,6 +133,36 @@ namespace Azure.Compute.Batch
             await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call GetNode till the state its state is not Deallocating or the node is not found.
+        /// If not found the HasValue method will return false and the value will be null.
+        /// </remarks>
+        public override Response<BatchNode> WaitForCompletion(CancellationToken cancellationToken = default)
+        {
+            OperationPoller poller = new OperationPoller();
+            return poller.WaitForCompletion(this, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call GetNode till the state its state is not Deallocating or the node is not found.
+        /// If not found the HasValue method will return false and the value will be null.
+        /// </remarks>
+        public override async ValueTask<Response<BatchNode>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+        {
+            OperationPoller poller = new OperationPoller();
+            return await poller.WaitForCompletionAsync(this, null, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Check for the latest status of the copy operation.
         /// </summary>
         /// <param name="cancellationToken">
@@ -151,9 +181,27 @@ namespace Azure.Compute.Batch
             }
 
             // Get the latest status
-            Response<BatchNode> response = async
+            Response<BatchNode> response = null;
+            try
+            {
+                response = async
                     ? await _client.GetNodeAsync(_poolId, _nodeId, cancellationToken: cancellationToken).ConfigureAwait(false)
                     : _client.GetNode(_poolId, _nodeId, cancellationToken: cancellationToken);
+            }
+            catch (Azure.RequestFailedException e)
+            {
+                if (e.Status == 404)
+                {
+                    _hasValue = false;
+                    _value = null;
+                    _hasCompleted = true;
+                    _rawResponse = e.GetRawResponse();
+                }
+                else
+                {
+                    throw; // throw if not 404
+                }
+            }
 
             if (response != null)
             {

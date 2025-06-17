@@ -227,7 +227,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                It.IsAny<DateTimeOffset?>(),
                It.IsAny<CancellationToken>())
            )
-           .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
+           .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSeconds, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                if (CreateTaskCollectionAsyncCall++ == 0)
                {
