@@ -70,12 +70,8 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <param name="location"> A location in a subscription. </param>
         /// <param name="sku"> Optionally, check for a specific SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(string location, AvsSku sku = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckAvsTrialAvailability");
             scope.Start();
             try
@@ -110,12 +106,8 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <param name="location"> A location in a subscription. </param>
         /// <param name="sku"> Optionally, check for a specific SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(string location, AvsSku sku = null, CancellationToken cancellationToken = default)
+        public virtual Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckAvsTrialAvailability");
             scope.Start();
             try
@@ -149,12 +141,8 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </summary>
         /// <param name="location"> A location in a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckAvsQuotaAvailability");
             scope.Start();
             try
@@ -188,12 +176,8 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </summary>
         /// <param name="location"> A location in a subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(string location, CancellationToken cancellationToken = default)
+        public virtual Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckAvsQuotaAvailability");
             scope.Start();
             try
