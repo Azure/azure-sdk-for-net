@@ -48,6 +48,10 @@ parameters:
   - name: ExcludePaths
     type: object
     default: []
+  - name: CorePerfTestInputs
+    type: boolean
+    default: false
+
 jobs:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
@@ -195,6 +199,13 @@ jobs:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           TestSetupSteps: ${{ parameters.TestSetupSteps }}
           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+
+  - job: CorePerf
+    displayName: Run Core Perf Benchmarks
+    steps:
+      - template: /eng/pipelines/templates/steps/core-perf.yml
+        parameters:
+          CorePerfTestInputs: true
           
   - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
