@@ -256,6 +256,10 @@ namespace Azure.Storage.Files.Shares.Tests
                 {
                     Required = true
                 };
+                properties.Protocol.Smb.Multichannel = new SmbMultichannel
+                {
+                    Enabled = true
+                };
                 await service.SetPropertiesAsync(properties);
                 propertiesResponse = await service.GetPropertiesAsync();
                 properties = propertiesResponse.Value;
@@ -282,7 +286,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
             ShareServiceProperties properties = propertiesResponse.Value;
 
-            if (properties.Protocol.Nfs.EncryptionInTransit?.Required == true)
+            if (properties.Protocol.Nfs?.EncryptionInTransit?.Required == true)
             {
                 // Act
                 properties.Protocol.Nfs.EncryptionInTransit.Required = false;
@@ -300,6 +304,10 @@ namespace Azure.Storage.Files.Shares.Tests
             else
             {
                 // Act
+                if (properties.Protocol.Nfs == null)
+                {
+                    properties.Protocol.Nfs = new ShareNfsSettings();
+                }
                 properties.Protocol.Nfs.EncryptionInTransit = new ShareNfsSettingsEncryptionInTransit
                 {
                     Required = true
