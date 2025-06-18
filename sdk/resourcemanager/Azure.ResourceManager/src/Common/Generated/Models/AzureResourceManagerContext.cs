@@ -26,19 +26,5 @@ namespace Azure.ResourceManager
     /// </summary>
     public partial class AzureResourceManagerContext : ModelReaderWriterContext
     {
-        partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
-        {
-            factories.Add(typeof(ManagedServiceIdentity), () => new ManagedServiceIdentityTypeBuilder());
-        }
-
-        private class ManagedServiceIdentityTypeBuilder : ModelReaderWriterTypeBuilder
-        {
-            protected override Type BuilderType => typeof(ManagedServiceIdentity);
-
-            protected override object CreateInstance()
-            {
-                return new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            }
-        }
     }
 }
