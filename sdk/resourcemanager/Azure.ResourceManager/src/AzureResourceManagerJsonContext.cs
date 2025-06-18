@@ -10,6 +10,8 @@ namespace Azure.ResourceManager
     [JsonSourceGenerationOptions(WriteIndented = false)]
     [JsonSerializable(typeof(ArmEnvironment))]
     [JsonSerializable(typeof(Dictionary<string, Dictionary<string, JsonElement>>))]
+    [JsonSerializable(typeof(Dictionary<string, object>))]
+    [JsonSerializable(typeof(List<string>))]
     internal partial class AzureResourceManagerJsonContext : JsonSerializerContext
     {
     }

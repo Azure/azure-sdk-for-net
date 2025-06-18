@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Tests
             };
             var virtualNetwork = new GenericResourceData(AzureLocation.WestUS2)
             {
-                Properties = BinaryData.FromObjectAsJson(properties),
+                Properties = BinaryData.FromObjectAsJson(properties, AzureResourceManagerJsonContext.Default.DictionaryStringObject),
             };
             return virtualNetwork;
         }
@@ -189,7 +189,8 @@ namespace Azure.ResourceManager.Tests
                             { "effect", "deny" }
                         }
                     }
-                })
+                },
+                AzureResourceManagerJsonContext.Default.DictionaryStringObject)
         };
 
         protected async Task<SubscriptionPolicyDefinitionResource> CreatePolicyDefinitionAtSubscription(SubscriptionResource subscription, string policyDefinitionName)
