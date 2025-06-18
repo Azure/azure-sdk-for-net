@@ -94,7 +94,7 @@
     <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
     <!-- Avoid implicitly added preview feeds -->
     <AddDotnetfeedProjectSource>false</AddDotnetfeedProjectSource>
-    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <!-- <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles> -->
   </PropertyGroup>
 
   <PropertyGroup>

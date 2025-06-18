@@ -12,7 +12,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.Json;
-using System.Text.Json.Serialization.Metadata;
 using System.Xml;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,8 +23,8 @@ namespace Azure.ResourceManager
         internal static readonly JsonDocumentOptions JsonDocumentOptions = new JsonDocumentOptions { MaxDepth = 256 };
         internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
         internal static readonly BinaryData SentinelValue = BinaryData.FromBytes("\"__EMPTY__\""u8.ToArray());
-        internal static readonly JsonSerializerOptions Options = new JsonSerializerOptions { TypeInfoResolver = AzureResourceManagerJsonContext.Default };
-        internal static readonly JsonSerializerOptions OptionsUseManagedServiceIdentityV3 = new JsonSerializerOptions { TypeInfoResolver = AzureResourceManagerJsonContext.Default, Converters = { new Models.ManagedServiceIdentityTypeV3Converter() } };
+        internal static readonly JsonSerializerOptions Options = new JsonSerializerOptions { Converters = { new JsonModelConverter(WireOptions, AzureResourceManagerContext.Default) } };
+        internal static readonly JsonSerializerOptions OptionsUseManagedServiceIdentityV3 = new JsonSerializerOptions { Converters = { new JsonModelConverter(WireOptions, AzureResourceManagerContext.Default), new Models.ManagedServiceIdentityTypeV3Converter() } };
 
         public static object GetObject(this JsonElement element)
         {
@@ -270,14 +269,18 @@ namespace Azure.ResourceManager
             return sentinelSpan.SequenceEqual(valueSpan);
         }
 
+        [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "By passing in the JsonSerializerOptions with a reference to AzureResourceManagerCosmosDBContext.Default we are certain there is no AOT compat issue.")]
+        [UnconditionalSuppressMessage("Trimming", "IL3050", Justification = "By passing in the JsonSerializerOptions with a reference to AzureResourceManagerCosmosDBContext.Default we are certain there is no AOT compat issue.")]
         public static T JsonDeserialize<T>(string json, JsonSerializerOptions options)
         {
-            return JsonSerializer.Deserialize<T>(json, (JsonTypeInfo<T>)options.TypeInfoResolver.GetTypeInfo(typeof(T), options));
+            return JsonSerializer.Deserialize<T>(json, options);
         }
 
+        [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "By passing in the JsonSerializerOptions with a reference to AzureResourceManagerCosmosDBContext.Default we are certain there is no AOT compat issue.")]
+        [UnconditionalSuppressMessage("Trimming", "IL3050", Justification = "By passing in the JsonSerializerOptions with a reference to AzureResourceManagerCosmosDBContext.Default we are certain there is no AOT compat issue.")]
         public static void JsonSerialize<T>(Utf8JsonWriter writer, T data, JsonSerializerOptions options)
         {
-            JsonSerializer.Serialize(writer, data, options.TypeInfoResolver.GetTypeInfo(typeof(T), options));
+            JsonSerializer.Serialize(writer, data, options);
         }
 
         internal static class TypeFormatters

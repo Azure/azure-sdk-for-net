@@ -111,10 +111,10 @@
     <PackageReference Update="Azure.AI.Projects" Version="1.0.0-beta.2" />
     <PackageReference Update="Azure.Communication.Identity" Version="1.3.1" />
     <PackageReference Update="Azure.Communication.Common" Version="1.4.0" />
-    <PackageReference Update="Azure.Core" Version="1.46.2" />
+    <PackageReference Update="Azure.Core" Version="1.47.0-alpha.20250613.1" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.1" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.36" />
-    <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
+    <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.1.0-alpha.20250613.1" />
     <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.12.1" />
@@ -280,7 +280,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20250610.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-alpha.20250618.2" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20250422.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <!-- Note: Upgrading the .NET SDK version needs to be synchronized with the autorest.csharp repository -->
@@ -303,7 +303,7 @@
   <ItemGroup Condition="('$(IsTestProject)' == 'true') OR ('$(IsTestSupportProject)' == 'true') OR ('$(IsPerfProject)' == 'true') OR ('$(IsStressProject)' == 'true') OR ('$(IsSamplesProject)' == 'true')">
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="Azure.Core" Version="1.46.2" />
+    <PackageReference Update="Azure.Core" Version="1.47.0-alpha.20250613.1" />
     <PackageReference Update="Azure.Identity" Version="1.14.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.12.0" />
