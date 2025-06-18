@@ -46,10 +46,7 @@ namespace Azure.Generator.Visitors
             {
                 UpdateModelsNamespace(type);
             }
-            else
-            {
-                type.Type.Update(@namespace: AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace);
-            }
+
             return type;
         }
 

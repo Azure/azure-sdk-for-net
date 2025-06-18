@@ -67,9 +67,9 @@ namespace Azure.Storage.DataMovement
     public partial class StorageResourceContainerProperties
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public StorageResourceContainerProperties() { }
+        public StorageResourceContainerProperties(System.Collections.Generic.IDictionary<string, object> properties = null) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public System.Collections.Generic.IDictionary<string, object> RawProperties { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, object> RawProperties { get { throw null; } }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class StorageResourceCopyFromUriOptions

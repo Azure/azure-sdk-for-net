@@ -54,6 +54,7 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Ensures the transfer is valid. Intended to be called on destination resource with the source resource passed-in.
+        /// An exception can be thrown if the transfer is not valid.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal virtual Task ValidateTransferAsync(string transferId, StorageResource sourceResource, CancellationToken cancellationToken = default)

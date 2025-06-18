@@ -10,6 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Client.Structure.Service._Baz;
+using Client.Structure.Service._Qux;
 
 namespace Client.Structure.Service
 {
