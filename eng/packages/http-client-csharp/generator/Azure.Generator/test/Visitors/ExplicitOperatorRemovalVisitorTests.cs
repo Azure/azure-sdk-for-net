@@ -93,19 +93,6 @@ namespace Azure.Generator.Tests.Visitors
 
         private class TestExplicitOperatorRemovalVisitor : ExplicitOperatorRemovalVisitor
         {
-            public MethodProvider? InvokeVisitMethod(MethodProvider method)
-            {
-                return base.VisitMethod(method);
-            }
-
-            public ScmMethodProviderCollection? InvokeVisitServiceMethod(
-                InputServiceMethod serviceMethod,
-                ClientProvider client,
-                ScmMethodProviderCollection? methodCollection)
-            {
-                return base.Visit(serviceMethod, client, methodCollection);
-            }
-
             public void InvokeVisitLibrary(OutputLibrary library)
             {
                 base.VisitLibrary(library);
