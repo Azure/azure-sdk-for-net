@@ -59,12 +59,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
