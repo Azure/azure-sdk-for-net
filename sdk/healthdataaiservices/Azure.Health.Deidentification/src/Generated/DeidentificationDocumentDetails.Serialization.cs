@@ -194,5 +194,13 @@ namespace Azure.Health.Deidentification
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeidentificationDocumentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="DeidentificationDocumentDetails"/> from. </param>
+        public static explicit operator DeidentificationDocumentDetails(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeDeidentificationDocumentDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

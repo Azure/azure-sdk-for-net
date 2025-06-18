@@ -59,12 +59,7 @@ namespace Samples
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, this.CancellationToken);
-                if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
-                {
-                    throw new global::Azure.RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (global::System.Exception e)
             {
