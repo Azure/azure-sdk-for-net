@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> Model factory that enables mocking of the Template client library. </summary>
     public static partial class TemplateModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="SecretBundle"/>. </summary>
