@@ -223,11 +223,15 @@ namespace Azure.Communication.PhoneNumbers
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteReservationAsync(System.Guid reservationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.PhoneNumbers.PhoneNumberAreaCode> GetAvailableAreaCodesGeographic(string twoLetterIsoCountryName, Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.PhoneNumbers.PhoneNumberAreaCode> GetAvailableAreaCodesGeographicAsync(string twoLetterIsoCountryName, Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, string administrativeDivision = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Communication.PhoneNumbers.PhoneNumberAreaCode> GetAvailableAreaCodesMobile(string twoLetterIsoCountryName, Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Communication.PhoneNumbers.PhoneNumberAreaCode> GetAvailableAreaCodesMobileAsync(string twoLetterIsoCountryName, Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.PhoneNumbers.PhoneNumberAreaCode> GetAvailableAreaCodesTollFree(string twoLetterIsoCountryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.PhoneNumbers.PhoneNumberAreaCode> GetAvailableAreaCodesTollFreeAsync(string twoLetterIsoCountryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.PhoneNumbers.PhoneNumberCountry> GetAvailableCountries(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.PhoneNumbers.PhoneNumberCountry> GetAvailableCountriesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Communication.PhoneNumbers.PhoneNumberLocality> GetAvailableLocalities(string twoLetterIsoCountryName, Azure.Communication.PhoneNumbers.PhoneNumberType phoneNumberType, string administrativeDivision = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.PhoneNumbers.PhoneNumberLocality> GetAvailableLocalities(string twoLetterIsoCountryName, string administrativeDivision = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Communication.PhoneNumbers.PhoneNumberLocality> GetAvailableLocalitiesAsync(string twoLetterIsoCountryName, Azure.Communication.PhoneNumbers.PhoneNumberType phoneNumberType, string administrativeDivision = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.PhoneNumbers.PhoneNumberLocality> GetAvailableLocalitiesAsync(string twoLetterIsoCountryName, string administrativeDivision = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Communication.PhoneNumbers.PhoneNumberOffering> GetAvailableOfferings(string twoLetterIsoCountryName, Azure.Communication.PhoneNumbers.PhoneNumberType? phoneNumberType = default(Azure.Communication.PhoneNumbers.PhoneNumberType?), Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType? phoneNumberAssignmentType = default(Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Communication.PhoneNumbers.PhoneNumberOffering> GetAvailableOfferingsAsync(string twoLetterIsoCountryName, Azure.Communication.PhoneNumbers.PhoneNumberType? phoneNumberType = default(Azure.Communication.PhoneNumbers.PhoneNumberType?), Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType? phoneNumberAssignmentType = default(Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -258,7 +262,7 @@ namespace Azure.Communication.PhoneNumbers
     }
     public partial class PhoneNumbersClientOptions : Azure.Core.ClientOptions
     {
-        public PhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V2025_04_01) { }
+        public PhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V2025_06_01) { }
         public string? AcceptedLanguage { get { throw null; } set { } }
         public enum ServiceVersion
         {
@@ -268,6 +272,7 @@ namespace Azure.Communication.PhoneNumbers
             V2022_12_01 = 3,
             V2025_02_11 = 4,
             V2025_04_01 = 5,
+            V2025_06_01 = 6,
         }
     }
     public partial class PhoneNumberSearchOptions
@@ -361,6 +366,7 @@ namespace Azure.Communication.PhoneNumbers
         private readonly int _dummyPrimitive;
         public PhoneNumberType(string value) { throw null; }
         public static Azure.Communication.PhoneNumbers.PhoneNumberType Geographic { get { throw null; } }
+        public static Azure.Communication.PhoneNumbers.PhoneNumberType Mobile { get { throw null; } }
         public static Azure.Communication.PhoneNumbers.PhoneNumberType TollFree { get { throw null; } }
         public bool Equals(Azure.Communication.PhoneNumbers.PhoneNumberType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
