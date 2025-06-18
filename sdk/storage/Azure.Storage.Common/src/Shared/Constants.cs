@@ -26,7 +26,7 @@ namespace Azure.Storage
         /// signatures.
         /// </summary>
         // TODO fix this
-        public const string DefaultSasVersion = "2025-07-05";
+        public const string DefaultSasVersion = "2026-02-06";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
