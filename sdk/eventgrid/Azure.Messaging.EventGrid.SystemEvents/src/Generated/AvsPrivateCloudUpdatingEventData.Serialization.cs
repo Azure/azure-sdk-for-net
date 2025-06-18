@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AvsPrivateCloudUpdatingEventDataConverter))]
     public partial class AvsPrivateCloudUpdatingEventData : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudUpdatingEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudUpdatingEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -121,6 +123,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AvsPrivateCloudUpdatingEventDataConverter : JsonConverter<AvsPrivateCloudUpdatingEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AvsPrivateCloudUpdatingEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AvsPrivateCloudUpdatingEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAvsPrivateCloudUpdatingEventData(document.RootElement);
+            }
         }
     }
 }
