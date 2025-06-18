@@ -278,9 +278,17 @@ foreach (BatchPool item in batchClient.GetPools())
 ```
 
 #### Delete Pool
-`DeletePool` can be used to delete a pool. Optionally you can use the returned `DeletePoolOperation` object to wait for the operation to complete.
+`DeletePool` can be used to delete a pool. 
 
 ```C# Snippet:Batch_Migration_DeletePool
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+batchClient.DeletePool("poolID");
+```
+Optionally you can use the returned `DeletePoolOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_DeletePool_Operation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
@@ -491,9 +499,17 @@ foreach (BatchJob item in batchClient.GetJobs())
 
 #### DeleteJob
 
- `DeleteJob` can be used to delete a job. Optionally you can use the returned `DeleteJobOperation` object to wait for the operation to complete.
+ `DeleteJob` can be used to delete a job.
 
 ```C# Snippet:Batch_Migration_DeleteJob
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+batchClient.DeleteJob("jobID");
+```
+Optionally you can use the returned `DeleteJobOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_DeleteJob_Operation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
@@ -532,9 +548,18 @@ batchClient.UpdateJob("jobID", batchUpdateOptions);
 
 #### Disable Job
 
-`DisableJob` with a parameter of type `BatchJobDisableOptions` can be used to disable a job. Optionally you can use the returned `DisableJobOperation` object to wait for the operation to complete.
+`DisableJob` with a parameter of type `BatchJobDisableOptions` can be used to disable a job. 
 
 ```C# Snippet:Batch_Migration_DisableJob
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+BatchJobDisableOptions options = new BatchJobDisableOptions(DisableBatchJobOption.Requeue);
+batchClient.DisableJob("jobID", options);
+```
+Optionally you can use the returned `DisableJobOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_DisableJob_Operation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
@@ -544,12 +569,19 @@ DisableJobOperation operation = batchClient.DisableJob("jobID", options);
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
 ```
-
 #### Enable Job
 
-`EnableJob` can be used to enable a disabled job. Optionally you can use the returned `EnableJobOperation` object to wait for the operation to complete.
+`EnableJob` can be used to enable a disabled job.
 
 ```C# Snippet:Batch_Migration_EnableJob
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+batchClient.EnableJob("jobID");
+```
+Optionally you can use the returned `EnableJobOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_EnableJob_Operation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
@@ -586,9 +618,17 @@ BatchTaskCountsResult batchTaskCountsResult = batchClient.GetJobTaskCounts("jobI
 
 #### Terminate Job
 
-`TerminateJob` can be used to terminate a job. Optionally you can use the returned `TerminateJobOperation` object to wait for the operation to complete.
+`TerminateJob` can be used to terminate a job.
 
 ```C# Snippet:Batch_Migration_TerminateJob
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+batchClient.TerminateJob("jobID");
+```
+Optionally you can use the returned `TerminateJobOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_TerminateJob_Operation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
@@ -597,7 +637,6 @@ TerminateJobOperation operation = batchClient.TerminateJob("jobID");
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
 ```
-
 ### Job Schedule Operations
 
 #### CreateJobSchedule
@@ -653,9 +692,17 @@ foreach (BatchJobSchedule item in batchClient.GetJobSchedules())
 
 #### DeleteJobSchedule
 
-`DeleteJobSchedule` can be used to delete a Job Schedule. Optionally you can use the returned `DeleteJobScheduleOperation` object to wait for the operation to complete.
+`DeleteJobSchedule` can be used to delete a Job Schedule.
 
 ```C# Snippet:Batch_Migration_DeleteJobSchedule
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+batchClient.DeleteJobSchedule("jobScheduleId");
+```
+Optionally you can use the returned `DeleteJobScheduleOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_DeleteJobSchedule_Operation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
@@ -721,9 +768,17 @@ batchClient.EnableJobSchedule("jobScheduleId");
 
 #### Terminate Job Schedule
 
-`TerminateJobSchedule` cand be used to termainate a job schedule. Optionally you can use the returned `TerminateJobScheduleOperation` object to wait for the operation to complete.
+`TerminateJobSchedule` cand be used to termainate a job schedule.
 
 ```C# Snippet:Batch_Migration_TerminateJobSchedule
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+batchClient.TerminateJobSchedule("jobScheduleId");
+```
+Optionally you can use the returned `TerminateJobScheduleOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_TerminateJobSchedule_Operation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
@@ -732,7 +787,6 @@ TerminateJobScheduleOperation operation = batchClient.TerminateJobSchedule("jobS
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
 ```
-
 ### Task Operations
 
 ### Create a task
@@ -924,9 +978,17 @@ foreach (BatchNode item in batchClient.GetNodes("poolID"))
 
 #### Reboot Node
 
-`RebootNode` can be used to reboot a node. Optionally you can use the returned `RebootNodeOperation` object to wait for the operation to complete.
+`RebootNode` can be used to reboot a node.
 
 ```C# Snippet:Batch_Migration_RebootNode
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+batchClient.RebootNode("poolId", "computeNodeId");
+```
+Optionally you can use the returned `RebootNodeOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_RebootNode_Operation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
@@ -935,10 +997,9 @@ RebootNodeOperation operation = batchClient.RebootNode("poolId", "computeNodeId"
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
 ```
-
 #### Reimage Node
 
-`ReimageNode` can be used to reimage a node. Optionally you can use the returned `ReimageNodeOperation` object to wait for the operation to complete.
+`ReimageNode` can be used to reimage a node.
 
 ```C# Snippet:Batch_Migration_ReimageNode
 BatchClient batchClient = new BatchClient(
@@ -949,12 +1010,30 @@ ReimageNodeOperation operation = batchClient.ReimageNode("poolId", "computeNodeI
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
 ```
+Optionally you can use the returned `ReimageNodeOperation` object to wait for the operation to complete.
 
+```C# Snippet:Batch_Migration_ReimageNode_Operation
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+ReimageNodeOperation operation = batchClient.ReimageNode("poolId", "computeNodeId");
+
+// Optional, wait for operation to complete
+operation.WaitForCompletion();
+```
 #### Start Node
 
 `StartNode` can be used to start a node that has been Deallocate.
 
 ```C# Snippet:Batch_Migration_StartNode
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+batchClient.StartNode("poolId", "computeNodeId");
+```
+Optionally you can use the returned `StartNodeOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_StartNode_Operation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
@@ -966,9 +1045,17 @@ operation.WaitForCompletion();
 
 #### Deallocate Node
 
-`DeallocateNode` can be used to Deallocate a node. Optionally you can use the returned `DeallocateNodeOperation` object to wait for the operation to complete.
+`DeallocateNode` can be used to Deallocate a node.
 
 ```C# Snippet:Batch_Migration_DeallocateNode
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+batchClient.DeallocateNode("poolId", "computeNodeId");
+```
+ Optionally you can use the returned `DeallocateNodeOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_DeallocateNode_Operation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
@@ -977,7 +1064,6 @@ DeallocateNodeOperation operation = batchClient.DeallocateNode("poolId", "comput
 // Optional, wait for operation to complete
 operation.WaitForCompletion();
 ```
-
 #### CreateComputeNodeUser
 
 `CreateNodeUserAsync` with a `BatchNodeUserCreateOptions` param can be used to create a node user.
@@ -1116,15 +1202,23 @@ new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCreden
 
 foreach (BatchCertificate item in batchClient.GetCertificates())
 {
-        // do something
+    // do something
 }
 ```
 
 #### DeleteCertificate
 
-Call `DeleteCertificate` to delete a Certificate. Optionally you can use the returned `DeleteCertificateOperation` object to wait for the operation to complete.
+Call `DeleteCertificate` to delete a Certificate.
 
 ```C# Snippet:Batch_Migration_DeleteCertificate
+BatchClient batchClient = new BatchClient(
+new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
+
+batchClient.DeleteCertificate("ThumbprintAlgorithm", "Thumbprint");
+```
+Optionally you can use the returned `DeleteCertificateOperation` object to wait for the operation to complete.
+
+```C# Snippet:Batch_Migration_DeleteCertificate_Operation
 BatchClient batchClient = new BatchClient(
 new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
@@ -1182,8 +1276,8 @@ try
 }
 catch (Azure.RequestFailedException e)
 {
-    if ( (e.ErrorCode == BatchErrorCode.PoolNotFound) &&
-        ( e.Status == 404))
+    if ((e.ErrorCode == BatchErrorCode.PoolNotFound) &&
+        (e.Status == 404))
     {
         // write out the summary message
         Console.WriteLine(e.Message);
