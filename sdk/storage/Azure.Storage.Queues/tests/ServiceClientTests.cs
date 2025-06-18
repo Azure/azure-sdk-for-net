@@ -301,7 +301,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetUserDelegatioKey()
         {
             // Arrange
@@ -315,7 +315,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetUserDelegationKey_Error()
         {
             // Arrange
@@ -328,7 +328,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetUserDelegationKey_ArgumentException()
         {
             // Arrange
