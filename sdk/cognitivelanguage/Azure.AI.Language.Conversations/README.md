@@ -59,7 +59,7 @@ using Azure.AI.Language.Conversations.Models;
 Once you've determined your **endpoint** and **API key** you can instantiate a `ConversationAnalysisClient`:
 
 ```C# Snippet:ConversationAnalysisClient_Create
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
@@ -84,7 +84,7 @@ using Azure.Identity;
 Then you can create an instance of `DefaultAzureCredential` and pass it to a new instance of your client:
 
 ```C# Snippet:ConversationAnalysisClient_CreateWithDefaultAzureCredential
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("{endpoint}");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
@@ -109,9 +109,9 @@ You have the flexibility to explicitly select a supported service API version wh
 For example,
 
 ```C# Snippet:CreateConversationAnalysisClientForSpecificApiVersion
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2024_05_01);
+ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2025_05_15_preview);
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential, options);
 ```
 
