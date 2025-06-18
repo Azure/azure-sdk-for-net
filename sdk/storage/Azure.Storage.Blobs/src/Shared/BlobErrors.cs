@@ -20,6 +20,9 @@ namespace Azure.Storage.Blobs
             string blobContainerClient) =>
             new InvalidOperationException($"{leaseClient} requires either a {blobBaseClient} or {blobContainerClient}");
 
+        public static ArgumentException InvalidDateTimeUtc(string dateTime) =>
+            new ArgumentException($"{dateTime} must be UTC");
+
         internal static void VerifyHttpsCustomerProvidedKey(Uri uri, CustomerProvidedKey? customerProvidedKey)
         {
             if (customerProvidedKey.HasValue && !string.Equals(uri.Scheme, Constants.Https, StringComparison.OrdinalIgnoreCase))

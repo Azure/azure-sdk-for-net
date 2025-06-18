@@ -106,6 +106,5 @@
     <Compile Include="$(AzureStorageSharedSources)\StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="Shared" />
-    <Compile Include="..\..\Azure.Storage.Common\src\Shared\SasQueryParametersExtensions.cs" Link="Shared\Sas\KeySasQueryParametersExtensions.cs" />
   </ItemGroup>
 </Project>

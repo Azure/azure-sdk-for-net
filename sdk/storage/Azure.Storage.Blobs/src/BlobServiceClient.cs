@@ -1611,12 +1611,12 @@ namespace Azure.Storage.Blobs
 
                     if (startsOn.HasValue && startsOn.Value.Offset != TimeSpan.Zero)
                     {
-                        throw Errors.InvalidDateTimeUtc(nameof(startsOn));
+                        throw BlobErrors.InvalidDateTimeUtc(nameof(startsOn));
                     }
 
                     if (expiresOn.Offset != TimeSpan.Zero)
                     {
-                        throw Errors.InvalidDateTimeUtc(nameof(expiresOn));
+                        throw BlobErrors.InvalidDateTimeUtc(nameof(expiresOn));
                     }
 
                     KeyInfo keyInfo = new KeyInfo(expiresOn.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture))

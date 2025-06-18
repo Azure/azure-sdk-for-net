@@ -4,12 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Net.Mime;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Queues;
-using Azure.Storage.Queues.Models;
-using static Azure.Storage.Constants.Sas;
 
 namespace Azure.Storage.Sas
 {
@@ -91,17 +88,6 @@ namespace Azure.Storage.Sas
         /// The optional name of the blob being made accessible.
         /// </summary>
         public string QueueName { get; set; }
-
-        /// <summary>
-        /// Optional. Beginning in version 2020-02-10, this value will be used for
-        /// the AAD Object ID of a user authorized by the owner of the
-        /// User Delegation Key to perform the action granted by the SAS.
-        /// The Azure Storage service will ensure that the owner of the
-        /// user delegation key has the required permissions before granting access.
-        /// No additional permission check for the user specified in this value will be performed.
-        /// This is only used with generating User Delegation SAS.
-        /// </summary>
-        public string PreauthorizedAgentObjectId { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueueSasBuilder"/>
@@ -285,111 +271,6 @@ namespace Azure.Storage.Sas
                 permissions: Permissions,
                 signature: signature);
             return p;
-        }
-
-        /// <summary>
-        /// Use an account's <see cref="UserDelegationKey"/> to sign this
-        /// shared access signature values to produce the proper SAS query
-        /// parameters for authenticating requests.
-        /// </summary>
-        /// <param name="userDelegationKey">
-        /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync"/>.
-        /// </param>
-        /// <param name="accountName">The name of the storage account.</param>
-        /// <returns>
-        /// The <see cref="QueueSasQueryParameters"/> used for authenticating requests.
-        /// </returns>
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
-        public QueueSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName)
-            => ToSasQueryParameters(userDelegationKey, accountName, out _);
-
-        /// <summary>
-        /// Use an account's <see cref="UserDelegationKey"/> to sign this
-        /// shared access signature values to produce the proper SAS query
-        /// parameters for authenticating requests.
-        /// </summary>
-        /// <param name="userDelegationKey">
-        /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync"/>.
-        /// </param>
-        /// <param name="accountName">The name of the storage account.</param>
-        /// <returns>
-        /// <param name="stringToSign">
-        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the <see cref="SasQueryParameters"/>.
-        /// </param>
-        /// The <see cref="SasQueryParameters"/> used for authenticating requests.
-        /// </returns>
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
-        public QueueSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName, out string stringToSign)
-        {
-            userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));
-
-            EnsureState();
-
-            stringToSign = ToStringToSign(userDelegationKey, accountName);
-
-            string signature = SasExtensions.ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
-
-            QueueSasQueryParameters p = new QueueSasQueryParameters(
-                version: Version,
-                services: default,
-                resourceTypes: default,
-                protocol: Protocol,
-                startsOn: StartsOn,
-                expiresOn: ExpiresOn,
-                ipRange: IPRange,
-                identifier: null,
-                resource: Resource.Queue,
-                permissions: Permissions,
-                keyOid: userDelegationKey.SignedObjectId,
-                keyTid: userDelegationKey.SignedTenantId,
-                keyStart: userDelegationKey.SignedStartsOn,
-                keyExpiry: userDelegationKey.SignedExpiresOn,
-                keyService: userDelegationKey.SignedService,
-                keyVersion: userDelegationKey.SignedVersion,
-                signature: signature,
-                cacheControl: null, // CacheControl,
-                contentDisposition: null, // ContentDisposition,
-                contentEncoding: null, // ContentEncoding,
-                contentLanguage: null, // ContentLanguage,
-                contentType: null, // ContentType,
-                authorizedAadObjectId: PreauthorizedAgentObjectId,
-                correlationId: null, //CorrelationId,
-                encryptionScope: null /*EncryptionScope*/);
-            return p;
-        }
-
-        private string ToStringToSign(UserDelegationKey userDelegationKey, string accountName)
-        {
-            string startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
-            string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
-            string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
-
-            // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            return string.Join("\n",
-                    Permissions,
-                    startTime,
-                    expiryTime,
-                    GetCanonicalName(accountName, QueueName ?? string.Empty),
-                    userDelegationKey.SignedObjectId,
-                    userDelegationKey.SignedTenantId,
-                    signedStart,
-                    signedExpiry,
-                    userDelegationKey.SignedService,
-                    userDelegationKey.SignedVersion,
-                    PreauthorizedAgentObjectId,
-                    null, // AgentObjectId - enabled only in HNS accounts
-                    null, // CorrelationId
-                    null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
-                    //null, // SignedDelegatedUserObjectId, will be added in future release.
-                    //IPRange.ToString(),
-                    //SasExtensions.ToProtocolString(Protocol),
-                    //null, // Unknown
-                    //null, // Unknown
-                    //null, // Unknown
-                    Version);
         }
 
         /// <summary>
