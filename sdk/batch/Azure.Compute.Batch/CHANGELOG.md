@@ -104,7 +104,6 @@ Renamed parameter in the following models:
 Changed the type of the following properties
 
 - `BatchCertificate.Data` from string to BinaryData
-- `BatchCertificate.Url` from string to BinaryData
 - `BatchNodeIdentityReference.ResourceId ` from string to ResourceIdentifier
 - `BatchUserAssignedIdentity.ResourceId ` from string to ResourceIdentifier
 - `BatchVmImageReference.VirtualMachineImageId ` from string to ResourceIdentifier
