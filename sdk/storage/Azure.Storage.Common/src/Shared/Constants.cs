@@ -539,6 +539,8 @@ namespace Azure.Storage
         /// </summary>
         internal static class Sas
         {
+            public const string ObjectId = "oid";
+
             internal static class Permissions
             {
                 public const char Read = 'r';
@@ -616,6 +618,8 @@ namespace Azure.Storage
                 public const string DirectoryDepthUpper = "SDD";
                 public const string EncryptionScope = "ses";
                 public const string EncryptionScopeUpper = "SES";
+                public const string DelegatedUserObjectId = "sduoid";
+                public const string DelegatedUserObjectIdUpper = "SDUOID";
             }
 
             internal static class Resource
