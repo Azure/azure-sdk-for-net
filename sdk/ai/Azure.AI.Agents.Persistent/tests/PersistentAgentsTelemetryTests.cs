@@ -555,7 +555,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                     {
                         var argumentsJson = JsonDocument.Parse(functionToolCall.Arguments);
                         var locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-                        toolOutputs.Add(new ToolOutput(toolCall.Id, "{\"weather\": \"70°F\"}"));
+                        toolOutputs.Add(new ToolOutput(toolCall.Id, "{\"weather\": \"Sunny\"}"));
                     }
                 }
                 run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs);
@@ -646,7 +646,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         {
             ("gen_ai.tool.message", new Dictionary<string, object>
             {
-                { "gen_ai.event.content", "{\"content\":\"{\\\"weather\\\": \\\"70°F\\\"}\",\"id\":\"*\"}" }
+                { "gen_ai.event.content", "{\"content\":\"{\\\"weather\\\": \\\"Sunny\\\"}\",\"id\":\"*\"}" }
             })
         };
         Assert.IsTrue(_traceVerifier.CheckSpanEvents(submitToolOutputsSpan, expectedSubmitToolOutputsEvents));
@@ -815,7 +815,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
                     {
                         var argumentsJson = JsonDocument.Parse(functionToolCall.Arguments);
                         var locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-                        toolOutputs.Add(new ToolOutput(toolCall.Id, "{\"weather\": \"70°F\"}"));
+                        toolOutputs.Add(new ToolOutput(toolCall.Id, "{\"weather\": \"Sunny\"}"));
                     }
                 }
                 run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs);
