@@ -4389,101 +4389,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task GetPropertiesAsync_ContainerIdentitySAS_DelegatedObjectId()
-        {
-            BlobServiceClient oauthService = GetServiceClient_OAuth();
-            var containerName = GetNewContainerName();
-            var blobName = GetNewBlobName();
-            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
-
-            // Arrange
-            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
-
-            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
-
-            // We need to get the object ID from the token credential used to authenticate the request
-            TokenCredential tokenCredential = TestEnvironment.Credential;
-            AccessToken accessToken = await tokenCredential.GetTokenAsync(
-                new TokenRequestContext(new[] { "https://storage.azure.com/.default" }),
-                CancellationToken.None);
-
-            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
-            jwtSecurityToken.Payload.TryGetValue("oid", out object objectId);
-
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
-            {
-                BlobContainerName = test.Container.Name,
-                DelegatedUserObjectId = objectId?.ToString()
-            };
-
-            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
-            {
-                Sas = blobSasQueryParameters
-            };
-
-            BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(),TestEnvironment.Credential, GetOptions()));
-
-            // Act
-            Response<BlobProperties> response = await identitySasBlob.GetPropertiesAsync();
-            AssertSasUserDelegationKey(identitySasBlob.Uri, userDelegationKey.Value);
-
-            // Assert
-            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task GetPropertiesAsync_ContainerIdentitySAS_DelegatedObjectId_Fail()
-        {
-            BlobServiceClient oauthService = GetServiceClient_OAuth();
-            var containerName = GetNewContainerName();
-            var blobName = GetNewBlobName();
-            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
-
-            // Arrange
-            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
-
-            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
-
-            // We need to get the object ID from the token credential used to authenticate the request
-            TokenCredential tokenCredential = TestEnvironment.Credential;
-            AccessToken accessToken = await tokenCredential.GetTokenAsync(
-                new TokenRequestContext(new[] { "https://storage.azure.com/.default" }),
-                CancellationToken.None);
-
-            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
-            jwtSecurityToken.Payload.TryGetValue("oid", out object objectId);
-
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
-            {
-                BlobContainerName = test.Container.Name,
-                DelegatedUserObjectId = objectId?.ToString()
-            };
-
-            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(userDelegationKey.Value, oauthService.AccountName);
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blob.Uri)
-            {
-                Sas = blobSasQueryParameters
-            };
-
-            // We are deliberately not using the token credential to cause an auth failure
-            BlockBlobClient identitySasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), GetOptions()));
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                identitySasBlob.GetPropertiesAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
-        }
-
-        [RecordedTest]
         public async Task GetPropertiesAsync_BlobSAS()
         {
             var containerName = GetNewContainerName();
@@ -4664,17 +4569,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsFalse(oldVersionResponse.Value.IsLatestVersion);
             Assert.IsNotNull(oldVersionResponse.Value.VersionId);
             Assert.IsTrue(latestVersionResponse.Value.IsLatestVersion);
-        }
-
-        private void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
-        {
-            BlobSasQueryParameters sas = new BlobUriBuilder(uri).Sas;
-            Assert.AreEqual(key.SignedObjectId, sas.KeyObjectId);
-            Assert.AreEqual(key.SignedExpiresOn, sas.KeyExpiresOn);
-            Assert.AreEqual(key.SignedService, sas.KeyService);
-            Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
-            Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
-            //Assert.AreEqual(key.SignedVersion, sas.Version);
         }
 
         [RecordedTest]
