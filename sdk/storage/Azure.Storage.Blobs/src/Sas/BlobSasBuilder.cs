@@ -463,7 +463,7 @@ namespace Azure.Storage.Sas
 
             stringToSign = ToStringToSign(userDelegationKey, accountName);
 
-            string signature = ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
+            string signature = SasExtensions.ComputeHMACSHA256(userDelegationKey.Value, stringToSign);
 
             BlobSasQueryParameters p = new BlobSasQueryParameters(
                 version: Version,
@@ -545,22 +545,6 @@ namespace Azure.Storage.Sas
             => !String.IsNullOrEmpty(blobName)
                ? $"/blob/{account}/{containerName}/{blobName.Replace("\\", "/")}"
                : $"/blob/{account}/{containerName}";
-
-        /// <summary>
-        /// ComputeHMACSHA256 generates a base-64 hash signature string for an
-        /// HTTP request or for a SAS.
-        /// </summary>
-        /// <param name="userDelegationKeyValue">
-        /// A <see cref="UserDelegationKey.Value"/> used to sign with a key
-        /// representing AD credentials.
-        /// </param>
-        /// <param name="message">The message to sign.</param>
-        /// <returns>The signed message.</returns>
-        private static string ComputeHMACSHA256(string userDelegationKeyValue, string message) =>
-            Convert.ToBase64String(
-                new HMACSHA256(
-                    Convert.FromBase64String(userDelegationKeyValue))
-                .ComputeHash(Encoding.UTF8.GetBytes(message)));
 
         /// <summary>
         /// Ensure the <see cref="BlobSasBuilder"/>'s properties are in a

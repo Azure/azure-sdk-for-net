@@ -1287,6 +1287,35 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
+        //[ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task SendMessageAsync_UserDelegationSAS()
+        {
+            // Arrange
+            string queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_OAuth();
+            await using DisposingQueue test = await GetTestQueueAsync(service);
+
+            Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
+
+            string stringToSign = null;
+            Uri queueUri = test.Queue.GenerateUserDelegationSasUri(QueueSasPermissions.All, Recording.UtcNow.AddHours(1), userDelegationKey, out stringToSign);
+
+            QueueClient queueClient = InstrumentClient(new QueueClient(queueUri, GetOptions()));
+
+            // Act
+            Response<SendReceipt> response = await queueClient.SendMessageAsync(
+                messageText: GetNewString(),
+                visibilityTimeout: new TimeSpan(0, 0, 1),
+                timeToLive: new TimeSpan(1, 0, 0));
+            // Assert
+            Assert.NotNull(response.Value);
+        }
+
+        [RecordedTest]
         public async Task SendMessageAsync_SasWithIdentifier()
         {
             // Arrange
