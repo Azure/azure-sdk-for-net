@@ -93,15 +93,11 @@ namespace Azure.Storage.Sas
         public string QueueName { get; set; }
 
         /// <summary>
-        /// Optional. Beginning in version 2020-02-10, this value will be used for
-        /// the AAD Object ID of a user authorized by the owner of the
-        /// User Delegation Key to perform the action granted by the SAS.
-        /// The Azure Storage service will ensure that the owner of the
-        /// user delegation key has the required permissions before granting access.
-        /// No additional permission check for the user specified in this value will be performed.
-        /// This is only used with generating User Delegation SAS.
+        /// Optional. Beginning in version 2025-07-05, this value  specifies the Entra ID of the user would is authorized to
+        /// use the resulting SAS URL.  The resulting SAS URL must be used in conjunction with an Entra ID token that has been
+        /// issued to the user specified in this value.
         /// </summary>
-        public string PreauthorizedAgentObjectId { get; set; }
+        public string DelegatedUserObjectId { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueueSasBuilder"/>
@@ -348,15 +344,8 @@ namespace Azure.Storage.Sas
                 keyExpiry: userDelegationKey.SignedExpiresOn,
                 keyService: userDelegationKey.SignedService,
                 keyVersion: userDelegationKey.SignedVersion,
-                signature: signature,
-                cacheControl: null, // CacheControl,
-                contentDisposition: null, // ContentDisposition,
-                contentEncoding: null, // ContentEncoding,
-                contentLanguage: null, // ContentLanguage,
-                contentType: null, // ContentType,
-                authorizedAadObjectId: PreauthorizedAgentObjectId,
-                correlationId: null, //CorrelationId,
-                encryptionScope: null /*EncryptionScope*/);
+                delegatedUserObjectId: DelegatedUserObjectId,
+                signature: signature);
             return p;
         }
 
@@ -379,16 +368,10 @@ namespace Azure.Storage.Sas
                     signedExpiry,
                     userDelegationKey.SignedService,
                     userDelegationKey.SignedVersion,
-                    PreauthorizedAgentObjectId,
-                    null, // AgentObjectId - enabled only in HNS accounts
-                    null, // CorrelationId
                     null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
-                    //null, // SignedDelegatedUserObjectId, will be added in future release.
-                    //IPRange.ToString(),
-                    //SasExtensions.ToProtocolString(Protocol),
-                    //null, // Unknown
-                    //null, // Unknown
-                    //null, // Unknown
+                    DelegatedUserObjectId,
+                    IPRange.ToString(),
+                    SasExtensions.ToProtocolString(Protocol),
                     Version);
         }
 

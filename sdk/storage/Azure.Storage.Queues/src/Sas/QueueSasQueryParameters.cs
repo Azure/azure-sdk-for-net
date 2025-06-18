@@ -82,15 +82,7 @@ namespace Azure.Storage.Sas
             DateTimeOffset keyExpiry = default,
             string keyService = default,
             string keyVersion = default,
-            string cacheControl = default,
-            string contentDisposition = default,
-            string contentEncoding = default,
-            string contentLanguage = default,
-            string contentType = default,
-            string authorizedAadObjectId = default,
-            string unauthorizedAadObjectId = default,
-            string correlationId = default,
-            string encryptionScope = default)
+            string delegatedUserObjectId = default)
             : base(
                 version,
                 services,
@@ -103,16 +95,17 @@ namespace Azure.Storage.Sas
                 resource,
                 permissions,
                 signature,
-                cacheControl,
-                contentDisposition,
-                contentEncoding,
-                contentLanguage,
-                contentType,
-                authorizedAadObjectId,
-                unauthorizedAadObjectId,
-                correlationId,
+                cacheControl: null,
+                contentDisposition: null,
+                contentEncoding: null,
+                contentLanguage: null,
+                contentType: null,
+                authorizedAadObjectId: null,
+                unauthorizedAadObjectId: null,
+                correlationId: null,
                 directoryDepth: null,
-                encryptionScope)
+                encryptionScope: null,
+                delegatedUserObjectId)
         {
             KeyProperties = new UserDelegationKeyProperties
             {
