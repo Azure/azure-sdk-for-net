@@ -183,6 +183,13 @@ namespace Azure.Storage.Sas
         public string EncryptionScope { get; set; }
 
         /// <summary>
+        /// Optional. Beginning in version 2025-07-05, this value  specifies the Entra ID of the user would is authorized to
+        /// use the resulting SAS URL.  The resulting SAS URL must be used in conjunction with an Entra ID token that has been
+        /// issued to the user specified in this value.
+        /// </summary>
+        public string DelegatedUserObjectId { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
         /// class.
         /// </summary>
@@ -483,7 +490,8 @@ namespace Azure.Storage.Sas
                 contentType: ContentType,
                 authorizedAadObjectId: PreauthorizedAgentObjectId,
                 correlationId: CorrelationId,
-                encryptionScope: EncryptionScope);
+                encryptionScope: EncryptionScope,
+                delegatedUserObjectId: DelegatedUserObjectId);
             return p;
         }
 
@@ -510,7 +518,7 @@ namespace Azure.Storage.Sas
                     null, // AgentObjectId - enabled only in HNS accounts
                     CorrelationId,
                     null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
-                    null, // SignedDelegatedUserObjectId, will be added in future release.
+                    DelegatedUserObjectId,
                     IPRange.ToString(),
                     SasExtensions.ToProtocolString(Protocol),
                     Version,
