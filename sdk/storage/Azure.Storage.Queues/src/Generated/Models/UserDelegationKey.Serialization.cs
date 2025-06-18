@@ -22,7 +22,6 @@ namespace Azure.Storage.Queues.Models
             string signedService = default;
             string signedVersion = default;
             string value = default;
-            string signedDelegatedUserTenantId = default;
             if (element.Element("SignedOid") is XElement signedOidElement)
             {
                 signedObjectId = (string)signedOidElement;
@@ -51,10 +50,6 @@ namespace Azure.Storage.Queues.Models
             {
                 value = (string)valueElement;
             }
-            if (element.Element("SignedDelegatedUserTid") is XElement signedDelegatedUserTidElement)
-            {
-                signedDelegatedUserTenantId = (string)signedDelegatedUserTidElement;
-            }
             return new UserDelegationKey(
                 signedObjectId,
                 signedTenantId,
@@ -62,8 +57,7 @@ namespace Azure.Storage.Queues.Models
                 signedExpiresOn,
                 signedService,
                 signedVersion,
-                value,
-                signedDelegatedUserTenantId);
+                value);
         }
     }
 }

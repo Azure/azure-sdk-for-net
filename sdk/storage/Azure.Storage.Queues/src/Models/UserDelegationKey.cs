@@ -51,12 +51,6 @@ namespace Azure.Storage.Queues.Models
         public string Value { get; internal set; }
 
         /// <summary>
-        /// The user delegation tenant ID.
-        /// </summary>
-        [CodeGenMember("SignedDelegatedUserTid")]
-        public string SignedDelegatedUserTenantId { get; }
-
-        /// <summary>
         /// Constructor.
         /// </summary>
         internal UserDelegationKey() { }
