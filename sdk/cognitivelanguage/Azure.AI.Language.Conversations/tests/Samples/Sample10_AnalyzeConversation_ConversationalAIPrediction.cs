@@ -21,8 +21,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeAIConversation
-            string projectName = TestEnvironment.ProjectName;
-            string deploymentName = TestEnvironment.DeploymentName;
+            string projectName = "EmailApp";
+            string deploymentName = "production";
+#if !SNIPPET
+            projectName = TestEnvironment.ProjectName;
+            deploymentName = TestEnvironment.DeploymentName;
+#endif
 
             AnalyzeConversationInput data = new ConversationalAITask(
                 new ConversationalAIAnalysisInput(
@@ -35,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                             {
                                 new ConversationalAIItem(id: "1", participantId: "user", text: "Hi"),
                                 new ConversationalAIItem(id: "2", participantId: "bot", text: "Hello, how can I help you?"),
-                                new ConversationalAIItem(id: "3", participantId: "user", text: "I would like to book a flight.")
+                                new ConversationalAIItem(id: "3", participantId: "user", text: "Send an email to Carol about tomorrow's demo")
                             }
                         )
                     }),
@@ -146,7 +150,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                             {
                                 new ConversationalAIItem(id: "1", participantId: "user", text: "Hi"),
                                 new ConversationalAIItem(id: "2", participantId: "bot", text: "Hello, how can I help you?"),
-                                new ConversationalAIItem(id: "3", participantId: "user", text: "I would like to book a flight.")
+                                new ConversationalAIItem(id: "3", participantId: "user", text: "Send an email to Carol about tomorrow's demo")
                             }
                         )
                     }),

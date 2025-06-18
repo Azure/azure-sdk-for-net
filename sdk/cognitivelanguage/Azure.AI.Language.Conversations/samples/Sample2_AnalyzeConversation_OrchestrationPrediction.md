@@ -27,8 +27,12 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
-string projectName = "DomainOrchestrator";
+string projectName = "TestWorkflow";
 string deploymentName = "production";
+ Console.WriteLine("=== Request Info ===");
+ Console.WriteLine($"Project Name: {projectName}");
+ Console.WriteLine($"Deployment Name: {deploymentName}");
+
 AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
     new ConversationAnalysisInput(
         new TextConversationItem(
@@ -39,6 +43,15 @@ AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
     {
         StringIndexType = StringIndexType.Utf16CodeUnit,
     });
+var serializedRequest = JsonSerializer.Serialize(data, new JsonSerializerOptions
+{
+    WriteIndented = true,
+    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+    Converters = { new JsonStringEnumConverter() }
+});
+
+Console.WriteLine("Request payload:");
+Console.WriteLine(serializedRequest);
 
 Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ConversationActionResult conversationResult = response.Value as ConversationActionResult;

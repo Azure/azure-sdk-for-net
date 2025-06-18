@@ -18,7 +18,7 @@ To analyze an utterance, you need to first create a `ConversationAnalysisClient`
 ```C# Snippet:CreateConversationAnalysisClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2025_05_15_preview);
+ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview);
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential, options);
 ```
 

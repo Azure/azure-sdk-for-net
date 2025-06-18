@@ -111,7 +111,7 @@ For example,
 ```C# Snippet:CreateConversationAnalysisClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2025_05_15_preview);
+ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview);
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential, options);
 ```
 
@@ -154,7 +154,7 @@ The following examples show common scenarios using the `client` [created above](
 To analyze a conversation, you can call the `AnalyzeConversation()` method:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
-string projectName = "Menu";
+string projectName = "EmailApp";
 string deploymentName = "production";
 
 AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
@@ -212,8 +212,8 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
 To analyze an AI Conversation, you can call the `AnalyzeConversation()` method:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeAIConversation
-string projectName = TestEnvironment.ProjectName;
-string deploymentName = TestEnvironment.DeploymentName;
+string projectName = "EmailApp";
+string deploymentName = "production";
 
 AnalyzeConversationInput data = new ConversationalAITask(
     new ConversationalAIAnalysisInput(
@@ -226,7 +226,7 @@ AnalyzeConversationInput data = new ConversationalAITask(
                 {
                     new ConversationalAIItem(id: "1", participantId: "user", text: "Hi"),
                     new ConversationalAIItem(id: "2", participantId: "bot", text: "Hello, how can I help you?"),
-                    new ConversationalAIItem(id: "3", participantId: "user", text: "I would like to book a flight.")
+                    new ConversationalAIItem(id: "3", participantId: "user", text: "Send an email to Carol about tomorrow's demo")
                 }
             )
         }),
@@ -318,7 +318,7 @@ foreach (var conversation in conversationalAIResult?.Conversations ?? Enumerable
 Additional options can be passed to `AnalyzeConversation` like enabling more verbose output:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
-string projectName = "Menu";
+string projectName = "EmailApp";
 string deploymentName = "production";
 
 AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
@@ -342,7 +342,7 @@ Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(
 The `language` property can be set to specify the language of the conversation:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-string projectName = "Menu";
+string projectName = "EmailApp";
 string deploymentName = "production";
 
 AnalyzeConversationInput data =
@@ -371,8 +371,12 @@ To analyze a conversation using an orchestration project, you can call the `Anal
 
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
-string projectName = "DomainOrchestrator";
+string projectName = "TestWorkflow";
 string deploymentName = "production";
+ Console.WriteLine("=== Request Info ===");
+ Console.WriteLine($"Project Name: {projectName}");
+ Console.WriteLine($"Deployment Name: {deploymentName}");
+
 AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
     new ConversationAnalysisInput(
         new TextConversationItem(
@@ -383,6 +387,15 @@ AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
     {
         StringIndexType = StringIndexType.Utf16CodeUnit,
     });
+var serializedRequest = JsonSerializer.Serialize(data, new JsonSerializerOptions
+{
+    WriteIndented = true,
+    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+    Converters = { new JsonStringEnumConverter() }
+});
+
+Console.WriteLine("Request payload:");
+Console.WriteLine(serializedRequest);
 
 Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ConversationActionResult conversationResult = response.Value as ConversationActionResult;

@@ -27,7 +27,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
-string projectName = "Menu";
+string projectName = "EmailApp";
 string deploymentName = "production";
 
 AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(

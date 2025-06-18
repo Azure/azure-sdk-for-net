@@ -16,7 +16,7 @@ To analyze an utterance, you need to first create a `ConversationAnalysisClient`
 ```C# Snippet:CreateConversationAnalysisClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2025_05_15_preview);
+ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview);
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential, options);
 ```
 
@@ -25,8 +25,8 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeAIConversation
-string projectName = TestEnvironment.ProjectName;
-string deploymentName = TestEnvironment.DeploymentName;
+string projectName = "EmailApp";
+string deploymentName = "production";
 
 AnalyzeConversationInput data = new ConversationalAITask(
     new ConversationalAIAnalysisInput(
@@ -39,7 +39,7 @@ AnalyzeConversationInput data = new ConversationalAITask(
                 {
                     new ConversationalAIItem(id: "1", participantId: "user", text: "Hi"),
                     new ConversationalAIItem(id: "2", participantId: "bot", text: "Hello, how can I help you?"),
-                    new ConversationalAIItem(id: "3", participantId: "user", text: "I would like to book a flight.")
+                    new ConversationalAIItem(id: "3", participantId: "user", text: "Send an email to Carol about tomorrow's demo")
                 }
             )
         }),
