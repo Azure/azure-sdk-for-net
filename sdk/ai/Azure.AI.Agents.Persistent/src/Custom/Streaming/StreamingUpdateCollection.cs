@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.ServerSentEvents;
 using System.Threading;
+using Azure.AI.Agents.Persistent.Telemetry;
 
 #nullable enable
 
@@ -20,15 +21,18 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
 {
     private readonly Func<Response> _sendRequest;
     private readonly CancellationToken _cancellationToken;
+    private readonly OpenTelemetryScope? _scope;
 
     public StreamingUpdateCollection(
         Func<Response> sendRequest,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        OpenTelemetryScope? scope = null)
     {
         Argument.AssertNotNull(sendRequest, nameof(sendRequest));
 
         _sendRequest = sendRequest;
         _cancellationToken = cancellationToken;
+        _scope = scope;
     }
 
     public override ContinuationToken? GetContinuationToken(ClientResult page)
@@ -46,10 +50,13 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
     }
     protected override IEnumerable<StreamingUpdate> GetValuesFromPage(ClientResult page)
     {
-        using IEnumerator<StreamingUpdate> enumerator = new StreamingUpdateEnumerator(page, _cancellationToken);
+        using IEnumerator<StreamingUpdate> enumerator = new StreamingUpdateEnumerator(page, _cancellationToken, _scope);
         while (enumerator.MoveNext())
         {
-            yield return enumerator.Current;
+            var update = enumerator.Current;
+            // Send to telemetry (if needed)
+            _scope?.RecordStreamingUpdate(update);
+            yield return update;
         }
     }
 
@@ -71,14 +78,18 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
         private IEnumerator<StreamingUpdate>? _updates;
 
         private StreamingUpdate? _current;
+        private OpenTelemetryScope? _scope;
         private bool _started;
+        private bool _hasYieldedUpdate; // Track if any updates have been yielded
 
-        public StreamingUpdateEnumerator(ClientResult page, CancellationToken cancellationToken)
+        public StreamingUpdateEnumerator(ClientResult page, CancellationToken cancellationToken, OpenTelemetryScope? scope = null)
         {
             Argument.AssertNotNull(page, nameof(page));
 
+            _scope = scope;
             _response = page.GetRawResponse();
             _cancellationToken = cancellationToken;
+            _hasYieldedUpdate = false;
         }
 
         StreamingUpdate IEnumerator<StreamingUpdate>.Current
@@ -93,36 +104,70 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
                 throw new ObjectDisposedException(nameof(StreamingUpdateEnumerator));
             }
 
-            _cancellationToken.ThrowIfCancellationRequested();
-            _events ??= CreateEventEnumerator();
-            _started = true;
-
-            if (_updates is not null && _updates.MoveNext())
+            if (_cancellationToken.IsCancellationRequested)
             {
-                _current = _updates.Current;
-                return true;
+                _scope?.RecordCancellation();
+                _scope?.Dispose();
+                _scope = null;
             }
 
-            if (_events.MoveNext())
+            _cancellationToken.ThrowIfCancellationRequested();
+
+            try
             {
-                if (_events.Current.Data.AsSpan().SequenceEqual(TerminalData))
-                {
-                    _current = default;
-                    return false;
-                }
+                _events ??= CreateEventEnumerator();
+                _started = true;
 
-                var updates = StreamingUpdate.FromEvent(_events.Current);
-                _updates = updates.GetEnumerator();
-
-                if (_updates.MoveNext())
+                if (_updates is not null && _updates.MoveNext())
                 {
                     _current = _updates.Current;
+                    _hasYieldedUpdate = true;
                     return true;
                 }
-            }
 
-            _current = default;
-            return false;
+                if (_events.MoveNext())
+                {
+                    if (_events.Current.Data.AsSpan().SequenceEqual(TerminalData))
+                    {
+                        _current = default;
+                        // No more events, check if we ever yielded anything
+                        if (_scope != null && _started && !_hasYieldedUpdate)
+                        {
+                            _scope.RecordError(new InvalidOperationException("No events were received from the stream."));
+                            _scope.Dispose();
+                            _scope = null;
+                        }
+                        return false;
+                    }
+
+                    var updates = StreamingUpdate.FromEvent(_events.Current);
+                    _updates = updates.GetEnumerator();
+
+                    if (_updates.MoveNext())
+                    {
+                        _current = _updates.Current;
+                        _hasYieldedUpdate = true;
+                        return true;
+                    }
+                }
+
+                _current = default;
+                // No events were received at all
+                if (_scope != null && _started && !_hasYieldedUpdate)
+                {
+                    _scope.RecordError(new InvalidOperationException("No events were received from the stream."));
+                    _scope.Dispose();
+                    _scope = null;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _scope?.RecordError(ex);
+                _scope?.Dispose();
+                _scope = null;
+                throw;
+            }
         }
 
         private IEnumerator<SseItem<byte[]>> CreateEventEnumerator()
@@ -151,6 +196,7 @@ internal class StreamingUpdateCollection : CollectionResult<StreamingUpdate>
         {
             if (disposing && _events is not null)
             {
+                _scope?.Dispose();
                 _events.Dispose();
                 _events = null;
 
