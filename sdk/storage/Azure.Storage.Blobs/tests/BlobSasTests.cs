@@ -285,6 +285,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
         public async Task ContainerIdentitySAS_DelegatedObjectId()
         {
@@ -303,11 +304,11 @@ namespace Azure.Storage.Blobs.Test
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;
             AccessToken accessToken = await tokenCredential.GetTokenAsync(
-                new TokenRequestContext(new[] { "https://storage.azure.com/.default" }),
+                new TokenRequestContext(Scopes),
                 CancellationToken.None);
 
             JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
-            jwtSecurityToken.Payload.TryGetValue("oid", out object objectId);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
             {
@@ -333,6 +334,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
         public async Task ContainerIdentitySAS_DelegatedObjectId_Fail()
         {
@@ -351,11 +353,11 @@ namespace Azure.Storage.Blobs.Test
             // We need to get the object ID from the token credential used to authenticate the request
             TokenCredential tokenCredential = TestEnvironment.Credential;
             AccessToken accessToken = await tokenCredential.GetTokenAsync(
-                new TokenRequestContext(new[] { "https://storage.azure.com/.default" }),
+                new TokenRequestContext(Scopes),
                 CancellationToken.None);
 
             JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
-            jwtSecurityToken.Payload.TryGetValue("oid", out object objectId);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, Recording.UtcNow.AddHours(1))
             {

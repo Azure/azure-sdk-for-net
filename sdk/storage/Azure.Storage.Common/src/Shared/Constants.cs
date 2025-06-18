@@ -539,6 +539,8 @@ namespace Azure.Storage
         /// </summary>
         internal static class Sas
         {
+            public const string ObjectId = "oid";
+
             internal static class Permissions
             {
                 public const char Read = 'r';
