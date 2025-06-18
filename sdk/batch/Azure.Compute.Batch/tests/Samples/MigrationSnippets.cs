@@ -74,7 +74,6 @@ namespace Azure.Compute.Batch.Tests.Samples
             #endregion
         }
 
-
         public void BatchPatchPool()
         {
             #region Snippet:Batch_Migration_PatchPool
