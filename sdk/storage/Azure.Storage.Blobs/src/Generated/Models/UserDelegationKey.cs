@@ -38,26 +38,5 @@ namespace Azure.Storage.Blobs.Models
             SignedVersion = signedVersion;
             Value = value;
         }
-
-        /// <summary> Initializes a new instance of <see cref="UserDelegationKey"/>. </summary>
-        /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
-        /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
-        /// <param name="signedStartsOn"> The date-time the key is active. </param>
-        /// <param name="signedExpiresOn"> The date-time the key expires. </param>
-        /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
-        /// <param name="signedVersion"> The service version that created the key. </param>
-        /// <param name="value"> The key as a base64 string. </param>
-        /// <param name="signedDelegatedUserTenantId"> String, return if DelegatedUserTid is specified. The delegated user tenant id in Entra ID. </param>
-        internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value, string signedDelegatedUserTenantId)
-        {
-            SignedObjectId = signedObjectId;
-            SignedTenantId = signedTenantId;
-            SignedStartsOn = signedStartsOn;
-            SignedExpiresOn = signedExpiresOn;
-            SignedService = signedService;
-            SignedVersion = signedVersion;
-            Value = value;
-            SignedDelegatedUserTenantId = signedDelegatedUserTenantId;
-        }
     }
 }
