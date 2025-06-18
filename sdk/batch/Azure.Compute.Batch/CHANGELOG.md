@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (2025-06-01)
+## 1.0.0-beta.3 (2025-06-19)
  
  Added in Long Running operation support for the following methods:
  - `BatchClient.DeallocateNode`

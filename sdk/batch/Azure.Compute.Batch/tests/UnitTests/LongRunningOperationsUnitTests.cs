@@ -281,7 +281,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJob batchJob = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJob = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow, BatchJobState.Deleting, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobAsync(
@@ -320,6 +320,56 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
         [Test]
         /// <summary>
+        /// Verify that normal delete job flow succeeds
+        /// </summary>
+        public async Task DeleteJobOperation_NewState()
+        {
+            // Arrange
+            var mockResponse = new MockResponse(200).AddHeader("Retry-After", "0");
+            string JobId = "job";
+            int CallsToGet = 0;
+            DateTimeOffset creationTime = DateTimeOffset.UtcNow;
+
+            BatchJob batchJob = new BatchJob(JobId, null, null, null, null, null, creationTime, BatchJobState.Deleting, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJobNew = new BatchJob(JobId, null, null, null, null, null, creationTime, BatchJobState.Completed, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+
+            Mock<BatchClient> clientMock = new Mock<BatchClient>();
+            clientMock.Setup(c => c.GetJobAsync(
+                It.IsAny<string>(),
+                It.IsAny<TimeSpan?>(),
+                It.IsAny<DateTimeOffset?>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<RequestConditions>(),
+                It.IsAny<CancellationToken>())
+            )
+             .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
+             {
+                 if (CallsToGet++ <= 2)
+                 {
+                     // return a certificate that is deleting
+                     return Response.FromValue(batchJob, mockResponse);
+                 }
+                 else
+                 {
+                     return Response.FromValue(batchJobNew, mockResponse);
+                 }
+             }
+             );
+
+            BatchClient batchClient = clientMock.Object;
+
+            // Act
+            DeleteJobOperation deleteJobOperation = new DeleteJobOperation(batchClient, JobId);
+            await deleteJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
+
+            // Assert
+            Assert.IsTrue(deleteJobOperation.HasCompleted);
+            Assert.IsTrue(deleteJobOperation.HasValue);
+        }
+
+        [Test]
+        /// <summary>
         /// Verify that delete job flow succeeds if job is replaced
         /// </summary>
         public async Task DeleteJobOperation_NewInstance()
@@ -329,8 +379,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJob batchJob = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
-            BatchJob batchJobNew = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow.AddHours(1), null, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJob = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow, BatchJobState.Deleting, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
+            BatchJob batchJobNew = new BatchJob(JobId, null, null, null, null, null, DateTimeOffset.UtcNow.AddHours(1), BatchJobState.Active, null, null, null, null, null, null, null, null, null, null, null, new BatchPoolInfo(), null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobAsync(
@@ -379,7 +429,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJobSchedule batchJobSchedule = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobSchedule = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow, BatchJobScheduleState.Deleting, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobScheduleAsync(
@@ -573,8 +623,57 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string JobId = "job";
             int CallsToGet = 0;
 
-            BatchJobSchedule batchJobSchedule = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null);
-            BatchJobSchedule batchJobScheduleNew = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow.AddHours(1), null, null, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobSchedule = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow, BatchJobScheduleState.Deleting, null, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobScheduleNew = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow.AddHours(1), BatchJobScheduleState.Active, null, null, null, null, null, null, null, null, null);
+
+            Mock<BatchClient> clientMock = new Mock<BatchClient>();
+            clientMock.Setup(c => c.GetJobScheduleAsync(
+                It.IsAny<string>(),
+                It.IsAny<TimeSpan?>(),
+                It.IsAny<DateTimeOffset?>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<RequestConditions>(),
+                It.IsAny<CancellationToken>())
+            )
+             .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
+             {
+                 if (CallsToGet++ <= 2)
+                 {
+                     return Response.FromValue(batchJobSchedule, mockResponse);
+                 }
+                 else
+                 {
+                     return Response.FromValue(batchJobScheduleNew, mockResponse);
+                 }
+             }
+             );
+
+            BatchClient batchClient = clientMock.Object;
+
+            // Act
+            DeleteJobScheduleOperation deleteJobScheduleOperation = new DeleteJobScheduleOperation(batchClient, JobId);
+            await deleteJobScheduleOperation.WaitForCompletionAsync().ConfigureAwait(false);
+
+            // Assert
+            Assert.IsTrue(deleteJobScheduleOperation.HasCompleted);
+            Assert.IsTrue(deleteJobScheduleOperation.HasValue);
+        }
+
+        [Test]
+        /// <summary>
+        /// Verify that normal delete job schedule flow succeeds
+        /// </summary>
+        public async Task DeleteJobScheduleOperation_NewState()
+        {
+            // Arrange
+            var mockResponse = new MockResponse(200).AddHeader("Retry-After", "0");
+            string JobId = "job";
+            int CallsToGet = 0;
+            DateTimeOffset creationTime = DateTimeOffset.UtcNow;
+
+            BatchJobSchedule batchJobSchedule = new BatchJobSchedule(JobId, null, null, null, null, creationTime, BatchJobScheduleState.Deleting, null, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobScheduleNew = new BatchJobSchedule(JobId, null, null, null, null, creationTime, BatchJobScheduleState.Active, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobScheduleAsync(
@@ -621,7 +720,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null,null, null, null, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null,null, null,null,null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(PoolID, null,null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Deleting, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null,null, null,null,null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(
@@ -668,8 +767,57 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             string PoolID = "pool";
             int CallsToGet = 0;
 
-            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-            BatchPool batchPoolNew = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow.AddMinutes(1), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow, BatchPoolState.Deleting, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPoolNew = new BatchPool(PoolID, null, null, null, null, DateTimeOffset.UtcNow.AddMinutes(1), BatchPoolState.Active, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+            Mock<BatchClient> clientMock = new Mock<BatchClient>();
+            clientMock.Setup(c => c.GetPoolAsync(
+                It.IsAny<string>(),
+                It.IsAny<TimeSpan?>(),
+                It.IsAny<DateTimeOffset?>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<IEnumerable<string>>(),
+                It.IsAny<RequestConditions>(),
+                It.IsAny<CancellationToken>())
+            )
+             .ReturnsAsync((string jobId, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, CancellationToken cancellationToken) =>
+             {
+                 if (CallsToGet++ <= 2)
+                 {
+                     return Response.FromValue(batchPool, mockResponse);
+                 }
+                 else
+                 {
+                     return Response.FromValue(batchPoolNew, mockResponse);
+                 }
+             }
+             );
+
+            BatchClient batchClient = clientMock.Object;
+
+            // Act
+            DeletePoolOperation deletePoolOperation = new DeletePoolOperation(batchClient, PoolID);
+            await deletePoolOperation.WaitForCompletionAsync().ConfigureAwait(false);
+
+            // Assert
+            Assert.IsTrue(deletePoolOperation.HasCompleted);
+            Assert.IsTrue(deletePoolOperation.HasValue);
+        }
+
+        [Test]
+        /// <summary>
+        /// Verify that normal delete pool flow succeeds if a new instances is found
+        /// </summary>
+        public async Task DeletePoolOperation_NewState()
+        {
+            // Arrange
+            var mockResponse = new MockResponse(200).AddHeader("Retry-After", "0");
+            string PoolID = "pool";
+            int CallsToGet = 0;
+            DateTimeOffset creationTime = DateTimeOffset.UtcNow;
+
+            BatchPool batchPool = new BatchPool(PoolID, null, null, null, null, creationTime, BatchPoolState.Deleting, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            BatchPool batchPoolNew = new BatchPool(PoolID, null, null, null, null, creationTime, BatchPoolState.Active, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetPoolAsync(

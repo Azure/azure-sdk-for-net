@@ -180,7 +180,12 @@ namespace Azure.Compute.Batch
                     _creationTime = (DateTimeOffset)deleteResponse.Value.CreationTime;
                     firstGet = false;
                 } // need to handle the case where we get back the response from a new object.
-                else if (deleteResponse.Value.CreationTime > _creationTime)
+                else if (deleteResponse.Value.CreationTime != _creationTime)
+                {
+                    _value = true;
+                    _hasCompleted = true;
+                }
+                else if (deleteResponse.Value.State != BatchJobScheduleState.Deleting)
                 {
                     _value = true;
                     _hasCompleted = true;
