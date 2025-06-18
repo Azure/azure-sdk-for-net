@@ -7,7 +7,7 @@ This sample demonstrates how to recognize Personally Identifiable Information (P
 To create a new `TextAnalysisClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("endpoint");
 AzureKeyCredential credential = new("your apikey");
 TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
 var client = new TextAnalysisClient(endpoint, credential, options);

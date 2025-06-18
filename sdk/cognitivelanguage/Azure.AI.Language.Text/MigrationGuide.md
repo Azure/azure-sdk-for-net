@@ -58,7 +58,7 @@ TextAnalyticsClient client = new(endpoint, credential);
 Now in `Azure.AI.Language.Text`, you create a `TextAnalysisClient` along with `AzureKeyCredential` from the package `Azure.Core`:
 
 ```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("endpoint");
 AzureKeyCredential credential = new("your apikey");
 TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
 var client = new TextAnalysisClient(endpoint, credential, options);
