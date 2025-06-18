@@ -85,7 +85,7 @@ namespace Azure.Compute.Batch
         /// <summary>
         /// Get the BatchPool after the pool resize has stopped
         /// </summary>
-        public override BatchPool Value => OperationHelpers.GetValue(ref _value);
+        public override BatchPool Value => _value;
 
         /// <summary>
         /// Gets a value indicating whether the operation completed and
@@ -158,6 +158,7 @@ namespace Azure.Compute.Batch
                 if (e.Status == 404)
                 {
                     _hasValue = false;
+                    _value = null;
                     _hasCompleted = true;
                     _rawResponse = e.GetRawResponse();
                 }
@@ -171,7 +172,7 @@ namespace Azure.Compute.Batch
             {
                 _rawResponse = batchPool.GetRawResponse();
 
-                // need to wait for the pool to stop resizing
+                // need to wait for the pool to be in a steady state
                 if (batchPool.Value.AllocationState == AllocationState.Steady)
                 {
                     _hasValue = true;
