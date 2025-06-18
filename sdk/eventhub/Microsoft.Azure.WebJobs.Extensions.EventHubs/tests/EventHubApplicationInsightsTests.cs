@@ -388,9 +388,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             var (jobHost, host) = base.BuildHost<T>(builder =>
             {
-                builder.ConfigureLogging(b => b.AddApplicationInsightsWebJobs(o => o.InstrumentationKey = "mock ikey"));
+                builder.ConfigureServices(services =>
+                {
+                    services.AddApplicationInsightsTelemetryWorkerService();
+                    services.Configure<TelemetryConfiguration>(config =>
+                    {
+                        config.ConnectionString = "InstrumentationKey=mock-ikey;IngestionEndpoint=https://mock.applicationinsights.azure.com/";
+                        config.TelemetryChannel = _channel;
+                    });
+                });
+                builder.ConfigureLogging(b => b.AddApplicationInsights());
                 ConfigureTestEventHub(builder);
-            }, h => h.Services.GetService<TelemetryConfiguration>().TelemetryChannel = _channel);
+            }, h => { /* TelemetryChannel is configured through services above */ });
 
             return (jobHost, host);
         }
