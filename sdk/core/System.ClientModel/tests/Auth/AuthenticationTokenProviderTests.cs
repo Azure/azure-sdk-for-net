@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -25,10 +26,44 @@ public class AuthenticationTokenProviderTests
         client.Get();
     }
 
+    [Test]
+    public void SupportsNoServiceLevelAuth()
+    {
+        // usage for TokenProvider2 abstract type
+        AuthenticationTokenProvider provider = new ClientCredentialTokenProvider("myClientId", "myClientSecret");
+        var client = new NoAuthClient(new Uri("http://localhost"), provider);
+        client.Get();
+    }
+
+    [Test]
+    public void SupportsNoAuthAtOperationLevel()
+    {
+        // usage for TokenProvider2 abstract type
+        AuthenticationTokenProvider provider = new ClientCredentialTokenProvider("myClientId", "myClientSecret");
+        var client = new FooClient(new Uri("http://localhost"), provider);
+        var result = client.GetNoAuth();
+    }
+
+    [Test]
+    public void SupportsAuthAtOperationLevel()
+    {
+        // usage for TokenProvider2 abstract type
+        AuthenticationTokenProvider provider = new ClientCredentialTokenProvider("myClientId", "myClientSecret");
+        var client = new NoAuthClient(new Uri("http://localhost"), provider);
+        var result = client.GetWithAuth();
+    }
+
     public class FooClient
     {
         // Generated from the TypeSpec spec.
-        private readonly Dictionary<string, object>[] flows = [
+
+        private static readonly string readScope = "read";
+
+        /// <summary>
+        /// This is an example of how you can define the service level flows.
+        /// The service level flows are used when the operation does not have its own flows defined.
+        /// </summary>
+        private readonly Dictionary<string, object>[] serviceFlows = [
             new Dictionary<string, object> {
                 { GetTokenOptions.ScopesPropertyName, new string[] { "baselineScope" } },
                 { GetTokenOptions.TokenUrlPropertyName , "https://myauthserver.com/token"},
@@ -36,10 +71,26 @@ public class AuthenticationTokenProviderTests
             }
         ];
 
-        private readonly IReadOnlyDictionary<string, object> _emptyProperties = new Dictionary<string, object>();
+        /// <summary>
+        /// This is an example of how you can override the flows for a specific operation.
+        /// The operation can have its own flows, or it can use the service level flows.
+        /// </summary>
+        private readonly Dictionary<string, object>[] getOperationsFlows = [
+            new Dictionary<string, object> {
+                { GetTokenOptions.ScopesPropertyName, new string[] { "baselineScope", readScope } },
+                { GetTokenOptions.TokenUrlPropertyName , "https://myauthserver.com/token"},
+                { GetTokenOptions.RefreshUrlPropertyName, "https://myauthserver.com/refresh"}
+            }
+        ];
+
+        /// <summary>
+        /// This is an example of how you can define a no-authentication flow.
+        /// This flow can be used for operations that do not require authentication.
+        /// It will override the service level flows and any operation specific flows.
+        /// </summary>
+        private readonly IReadOnlyDictionary<string, object>[] emptyFlows = [];
 
         private ClientPipeline _pipeline;
-        private static readonly string[] readScope = ["read"];
 
         public FooClient(Uri uri, ApiKeyCredential credential)
         {
@@ -62,17 +113,136 @@ public class AuthenticationTokenProviderTests
             });
             ClientPipeline pipeline = ClientPipeline.Create(options,
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
-            perTryPolicies: [new BearerTokenPolicy(credential, flows)],
+            perTryPolicies: [new BearerTokenPolicy(credential, serviceFlows)],
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
             _pipeline = pipeline;
         }
 
+        /// <summary>
+        /// This operation uses its own authentication flows.
+        /// It will override the service level flows and any operation specific flows.
+        /// </summary>
         public ClientResult Get()
         {
             var message = _pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
-            message.SetProperty(typeof(GetTokenOptions), new GetTokenOptions(readScope, _emptyProperties));
+            message.SetProperty(typeof(GetTokenOptions), getOperationsFlows);
 
+            PipelineRequest request = message.Request;
+            request.Method = "GET";
+            request.Uri = new Uri("https://localhost/foo");
+            _pipeline.Send(message);
+            return ClientResult.FromResponse(message.Response!);
+        }
+
+        /// <summary>
+        /// This operation does not require authentication.
+        /// It will override the service level flows by passing an empty array of flows.
+        /// </summary>
+        public ClientResult GetNoAuth()
+        {
+            var message = _pipeline.CreateMessage();
+            message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
+            message.SetProperty(typeof(GetTokenOptions), emptyFlows);
+
+            PipelineRequest request = message.Request;
+            request.Method = "GET";
+            request.Uri = new Uri("https://localhost/noAuth");
+            _pipeline.Send(message);
+            return ClientResult.FromResponse(message.Response!);
+        }
+    }
+
+    public class NoAuthClient
+    {
+        private static readonly string readScope = "read";
+
+        /// <summary>
+        /// This is an example of how no-authentication flows are defined at the service level,
+        /// by passing an empty array of flows.
+        /// </summary>
+        private readonly IReadOnlyDictionary<string, object>[] emptyServiceFlows = [];
+
+        private ClientPipeline _pipeline;
+
+        /// <summary>
+        /// This is an example of how you can override the flows for a specific operation.
+        /// The operation can have its own flows, or it can use the service level flows.
+        /// </summary>
+        private readonly Dictionary<string, object>[] getOperationsFlows = [
+            new Dictionary<string, object> {
+                { GetTokenOptions.ScopesPropertyName, new string[] { "baselineScope", readScope } },
+                { GetTokenOptions.TokenUrlPropertyName , "https://myauthserver.com/token"},
+                { GetTokenOptions.RefreshUrlPropertyName, "https://myauthserver.com/refresh"}
+            }
+        ];
+
+        public NoAuthClient(Uri uri, ApiKeyCredential credential)
+        {
+            var options = new ClientPipelineOptions();
+            options.Transport = new MockPipelineTransport("foo", m => new MockPipelineResponse(200));
+            ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: [ApiKeyAuthenticationPolicy.CreateBasicAuthorizationPolicy(credential)],
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+            _pipeline = pipeline;
+        }
+
+        public NoAuthClient(Uri uri, AuthenticationTokenProvider credential)
+        {
+            var options = new ClientPipelineOptions();
+            options.Transport = new MockPipelineTransport("foo",
+            m =>
+            {
+                m.TryGetProperty(typeof(GetTokenOptions), out var flowsObj);
+                if (
+                    flowsObj == null ||
+                    (flowsObj is IReadOnlyDictionary<string, object>[] flowsArr && flowsArr.Length == 0)
+                )
+                {
+                    // Only assert no Authorization header if operation does not override the service level flows.
+                    Assert.IsFalse(m.Request.Headers.TryGetValue("Authorization", out _), "Request should not have an Authorization header.");
+                }
+                else
+                {
+                    // If operation overrides service level flows, Authorization header should be present and populated.
+                    Assert.IsTrue(m.Request.Headers.TryGetValue("Authorization", out var authHeader), "Request should have an Authorization header.");
+                    Assert.IsNotNull(authHeader);
+                    Assert.IsNotEmpty(authHeader);
+                }
+                return new MockPipelineResponse(200);
+            });
+            ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: [new BearerTokenPolicy(credential, emptyServiceFlows)],
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+            _pipeline = pipeline;
+        }
+
+        /// <summary>
+        /// This operation does not require authentication and uses the service level flows defined with an empty array.
+        /// </summary>
+        public ClientResult Get()
+        {
+            var message = _pipeline.CreateMessage();
+            message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
+
+            PipelineRequest request = message.Request;
+            request.Method = "GET";
+            request.Uri = new Uri("https://localhost/noAuth");
+            _pipeline.Send(message);
+            return ClientResult.FromResponse(message.Response!);
+        }
+
+        /// <summary>
+        /// This operation requires authentication, even though the client does not have authentication flows defined at the service level.
+        /// It will use the authentication flows defined at the operation level.
+        /// </summary>
+        public ClientResult GetWithAuth()
+        {
+            var message = _pipeline.CreateMessage();
+            message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
+            message.SetProperty(typeof(GetTokenOptions), getOperationsFlows);
             PipelineRequest request = message.Request;
             request.Method = "GET";
             request.Uri = new Uri("https://localhost/foo");
@@ -148,8 +318,9 @@ public class AuthenticationTokenProviderTests
                 properties.TryGetValue(GetTokenOptions.TokenUrlPropertyName, out var tokenUri) && tokenUri is string tokenUriValue &&
                 properties.TryGetValue(GetTokenOptions.RefreshUrlPropertyName, out var refreshUri) && refreshUri is string refreshUriValue)
             {
-                return new GetTokenOptions(scopeArray, new Dictionary<string, object>
+                return new GetTokenOptions(new Dictionary<string, object>
                 {
+                    { GetTokenOptions.ScopesPropertyName, new ReadOnlyMemory<string>(scopeArray) },
                     { GetTokenOptions.TokenUrlPropertyName, tokenUriValue },
                     { GetTokenOptions.RefreshUrlPropertyName, refreshUriValue }
                 });
@@ -169,12 +340,13 @@ public class AuthenticationTokenProviderTests
             var authBytes = System.Text.Encoding.ASCII.GetBytes($"{_clientId}:{_clientSecret}");
             var authHeader = Convert.ToBase64String(authBytes);
             request.Headers.Authorization = new AuthenticationHeaderValue("Basic", authHeader);
+            var scopes = ExtractScopes(properties.Properties);
 
             // Create form content
             var formContent = new FormUrlEncodedContent(
             [
                 new KeyValuePair<string, string>("grant_type", "client_credentials"),
-                new KeyValuePair<string, string>("scope", string.Join(" ", properties.Scopes.Span.ToArray()))
+                new KeyValuePair<string, string>("scope", string.Join(" ", scopes.ToArray()))
             ]);
 
             request.Content = formContent;
@@ -200,6 +372,24 @@ public class AuthenticationTokenProviderTests
             DateTimeOffset refreshOn = now.AddSeconds(expiresIn * 0.85);
 
             return new AuthenticationToken(accessToken!, tokenType!, expiresOn, refreshOn);
+        }
+
+        private static ReadOnlyMemory<string> ExtractScopes(IReadOnlyDictionary<string, object> properties)
+        {
+            if (!properties.TryGetValue(GetTokenOptions.ScopesPropertyName, out var scopesValue) || scopesValue is null)
+            {
+                return ReadOnlyMemory<string>.Empty;
+            }
+
+            return scopesValue switch
+            {
+                ReadOnlyMemory<string> memory => memory,
+                Memory<string> memory => memory,
+                string[] array => new ReadOnlyMemory<string>(array),
+                ICollection<string> collection => new ReadOnlyMemory<string>([.. collection]),
+                IEnumerable<string> enumerable => new ReadOnlyMemory<string>([.. enumerable]),
+                _ => ReadOnlyMemory<string>.Empty
+            };
         }
     }
 
