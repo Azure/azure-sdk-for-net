@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Models
                     }
                     else
                     {
-                        type = new ManagedServiceIdentityType(property.Value.GetString());
+                        type = new ManagedServiceIdentityType(propertyValue);
                     }
                     continue;
                 }
@@ -299,15 +299,19 @@ namespace Azure.ResourceManager.Models
 
         internal partial class ManagedServiceIdentityConverter : JsonConverter<ManagedServiceIdentity>
         {
+            private static readonly ModelReaderWriterOptions V3Options = new ModelReaderWriterOptions("W|v3");
+
+            private bool UseManagedServiceIdentityV3(JsonSerializerOptions options)
+                => options is not null && options.Converters.Any(x => x.ToString().EndsWith("ManagedServiceIdentityTypeV3Converter"));
+
             public override void Write(Utf8JsonWriter writer, ManagedServiceIdentity model, JsonSerializerOptions options)
             {
-                bool useManagedServiceIdentityV3 = options is not null && options.Converters.Any(x => x.ToString().EndsWith("ManagedServiceIdentityTypeV3Converter"));
-                model.Write(writer, useManagedServiceIdentityV3 ? new ModelReaderWriterOptions("W|v3") : new ModelReaderWriterOptions("W"), options);
+                model.Write(writer, UseManagedServiceIdentityV3(options) ? V3Options : new ModelReaderWriterOptions("W"), options);
             }
             public override ManagedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeManagedServiceIdentity(document.RootElement, null, options);
+                return DeserializeManagedServiceIdentity(document.RootElement, UseManagedServiceIdentityV3(options) ? V3Options : null, options);
             }
         }
     }
