@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Tests
                 "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity\":" +
                 user + "}}";
 
-            JsonAsserts.AssertConverterSerialization(expected, identity);
+            JsonAsserts.AssertConverterSerialization(expected, identity, new ModelReaderWriterOptions("W|v3"));
         }
 
         private ManagedServiceIdentity Deserialize(string json, ModelReaderWriterOptions? options = null)

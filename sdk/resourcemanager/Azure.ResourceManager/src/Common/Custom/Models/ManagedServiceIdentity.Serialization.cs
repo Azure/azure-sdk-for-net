@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            if (useManagedServiceIdentityV3)
+            if (useManagedServiceIdentityV3 && ManagedServiceIdentityType == ManagedServiceIdentityType.SystemAssignedUserAssigned)
             {
                 writer.WriteStringValue(SystemAssignedUserAssignedV3Value);
             }
@@ -242,7 +242,15 @@ namespace Azure.ResourceManager.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = useManagedServiceIdentityV3 ? ManagedServiceIdentityType.SystemAssignedUserAssigned : new ManagedServiceIdentityType(property.Value.GetString());
+                    var propertyValue = property.Value.GetString();
+                    if (useManagedServiceIdentityV3 && propertyValue == SystemAssignedUserAssignedV3Value)
+                    {
+                        type = ManagedServiceIdentityType.SystemAssignedUserAssigned;
+                    }
+                    else
+                    {
+                        type = new ManagedServiceIdentityType(property.Value.GetString());
+                    }
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))
