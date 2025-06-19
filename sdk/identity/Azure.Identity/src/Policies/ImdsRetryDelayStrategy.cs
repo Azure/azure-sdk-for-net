@@ -23,10 +23,10 @@ namespace Azure.Identity
             _defaultDelay = defaultDelay ?? TimeSpan.FromSeconds(0.8);
 
             // For 410 responses, we need at least 70 seconds total retry duration
-            // With 3 retries using exponential backoff: delays of d, 2d, 4d sum to 7d
-            // Accounting for jitter (which can reduce delays by 20%), we need 7d * 0.8 >= 70
-            // So we need d >= 70/5.6 = 12.5 seconds. Using 13 seconds to be safe.
-            _delay410 = TimeSpan.FromSeconds(13);
+            // With 5 retries using exponential backoff: delays of d, 2d, 4d, 8d, 16d sum to 31d
+            // Accounting for jitter (which can reduce delays by 20%), we need 31d * 0.8 >= 70
+            // So we need d >= 70/24.8 = 2.82 seconds. Using 3 seconds to be safe.
+            _delay410 = TimeSpan.FromSeconds(3);
         }
 
         protected override TimeSpan GetNextDelayCore(Response? response, int retryNumber)
@@ -34,7 +34,7 @@ namespace Azure.Identity
             // If this is a 410 response, use the extended delay to ensure 70+ seconds total
             if (response?.Status == 410)
             {
-                // Use exponential backoff: 13s, 26s, 52s = 91s total (min 72.8s with jitter)
+                // Use exponential backoff: 3s, 6s, 12s, 24s, 48s = 93s total (min 74.4s with jitter)
                 return TimeSpan.FromMilliseconds((1 << (retryNumber - 1)) * _delay410.TotalMilliseconds);
             }
 

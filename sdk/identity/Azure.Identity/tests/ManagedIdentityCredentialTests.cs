@@ -1032,8 +1032,8 @@ namespace Azure.Identity.Tests
             TimeSpan totalDelay410 = TimeSpan.Zero;
             TimeSpan totalDelay404 = TimeSpan.Zero;
 
-            // Act - simulate the 3 retries with both status codes
-            for (int retry = 1; retry <= 3; retry++)
+            // Act - simulate the 5 retries with both status codes
+            for (int retry = 1; retry <= 5; retry++)
             {
                 var delay410 = delayStrategy.GetNextDelay(mockResponse410, retry);
                 var delay404 = delayStrategy.GetNextDelay(mockResponse404, retry);
@@ -1041,11 +1041,11 @@ namespace Azure.Identity.Tests
                 totalDelay404 = totalDelay404.Add(delay404);
             }
 
-            // Assert - 410 should have at least 70 seconds total, 404 should be much less
+            // Assert - 410 should have at least 70 seconds total, 404 should be standard exponential backoff with 5 retries
             Assert.That(totalDelay410.TotalSeconds, Is.GreaterThanOrEqualTo(70),
                 "410 responses should have at least 70 seconds total retry duration");
-            Assert.That(totalDelay404.TotalSeconds, Is.LessThan(10),
-                "404 responses should use standard exponential backoff (~5.6 seconds)");
+            Assert.That(totalDelay404.TotalSeconds, Is.LessThan(30),
+                "404 responses should use standard exponential backoff with 5 retries (~24.8 seconds)");
         }
 
         [Test]
