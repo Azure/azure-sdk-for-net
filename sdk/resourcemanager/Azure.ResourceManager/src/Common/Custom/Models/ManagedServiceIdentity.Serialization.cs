@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Models
 
             format = options.Format;
 
+            // TODO: Remove this check once we have a stable version of the SDK that uses v3 by default.
             if (jOptions is not null && jOptions.Converters.Any(converter => converter is ManagedServiceIdentityTypeV3Converter))
             {
                 return true;
