@@ -12,6 +12,9 @@ Conversation PII detection another feature offered by Azure AI Language, which i
 
 [Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Samples][conversationanalysis_samples] | [Product documentation][conversationanalysis_docs] | [Analysis REST API documentation][conversationanalysis_restdocs]
 
+> [!NOTE]
+> Conversational Authoring is not supported in version 2.0.0-beta.1. If you use Conversational Authoring, please continue to use version 1.1.0. You can find the [samples][conversationalauthoring_samples] here.
+
 ## Getting started
 
 ### Install the package
@@ -948,4 +951,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [conversationanalysis_docs_features]: https://learn.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
 [conversationanalysis_refdocs]: https://learn.microsoft.com/dotnet/api/azure.ai.language.conversations
 [conversationanalysis_restdocs]: https://learn.microsoft.com/rest/api/language/
-[conversationalauthoring_samples]: https://github.com/Azure/azure-sdk-for-net/tree/Azure.AI.Language.Conversations_1.1.0/sdk/cognitivelanguage/Azure.AI.Language.Conversations#create-a-conversationauthoringclient
+[conversationalauthoring_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/README.md
