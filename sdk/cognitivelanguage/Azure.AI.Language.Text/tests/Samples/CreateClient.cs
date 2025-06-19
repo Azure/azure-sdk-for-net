@@ -26,7 +26,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             endpoint = TestEnvironment.Endpoint;
             credential = new(TestEnvironment.ApiKey);
 #endif
-            TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
+            TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview);
             var client = new TextAnalysisClient(endpoint, credential, options);
             #endregion
         }
