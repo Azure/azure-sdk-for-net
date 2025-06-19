@@ -16,6 +16,15 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="SchemaRegistryClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
+        /// <param name="fullyQualifiedNamespace"></param>
+        public static IAzureClientBuilder<SchemaRegistryClient, SchemaRegistryClientOptions> AddSchemaRegistryClient<TBuilder>(this TBuilder builder, string fullyQualifiedNamespace)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<SchemaRegistryClient, SchemaRegistryClientOptions>((options, credential) => new SchemaRegistryClient(fullyQualifiedNamespace, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="SchemaRegistryClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
