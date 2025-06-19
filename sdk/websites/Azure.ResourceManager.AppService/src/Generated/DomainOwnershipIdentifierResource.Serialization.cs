@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class DomainOwnershipIdentifierResource : IJsonModel<DomainOwnershipIdentifierData>
     {
+        private static DomainOwnershipIdentifierData s_dataDeserializationInstance;
+        private static DomainOwnershipIdentifierData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DomainOwnershipIdentifierData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DomainOwnershipIdentifierData>)Data).Write(writer, options);
 
-        DomainOwnershipIdentifierData IJsonModel<DomainOwnershipIdentifierData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DomainOwnershipIdentifierData>)Data).Create(ref reader, options);
+        DomainOwnershipIdentifierData IJsonModel<DomainOwnershipIdentifierData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DomainOwnershipIdentifierData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DomainOwnershipIdentifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DomainOwnershipIdentifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DomainOwnershipIdentifierData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        DomainOwnershipIdentifierData IPersistableModel<DomainOwnershipIdentifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DomainOwnershipIdentifierData>(data, options);
+        DomainOwnershipIdentifierData IPersistableModel<DomainOwnershipIdentifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DomainOwnershipIdentifierData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<DomainOwnershipIdentifierData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DomainOwnershipIdentifierData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DomainOwnershipIdentifierData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DomainOwnershipIdentifierData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

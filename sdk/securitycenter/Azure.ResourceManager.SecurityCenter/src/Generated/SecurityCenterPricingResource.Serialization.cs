@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityCenterPricingResource : IJsonModel<SecurityCenterPricingData>
     {
+        private static SecurityCenterPricingData s_dataDeserializationInstance;
+        private static SecurityCenterPricingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SecurityCenterPricingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCenterPricingData>)Data).Write(writer, options);
 
-        SecurityCenterPricingData IJsonModel<SecurityCenterPricingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCenterPricingData>)Data).Create(ref reader, options);
+        SecurityCenterPricingData IJsonModel<SecurityCenterPricingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCenterPricingData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityCenterPricingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityCenterPricingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityCenterPricingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        SecurityCenterPricingData IPersistableModel<SecurityCenterPricingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCenterPricingData>(data, options);
+        SecurityCenterPricingData IPersistableModel<SecurityCenterPricingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCenterPricingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecurityCenterPricingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityCenterPricingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityCenterPricingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityCenterPricingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

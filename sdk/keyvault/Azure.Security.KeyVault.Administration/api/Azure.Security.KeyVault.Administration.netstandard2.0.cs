@@ -1,5 +1,11 @@
 namespace Azure.Security.KeyVault.Administration
 {
+    public partial class AzureSecurityKeyVaultAdministrationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureSecurityKeyVaultAdministrationContext() { }
+        public static Azure.Security.KeyVault.Administration.AzureSecurityKeyVaultAdministrationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CreateOrUpdateRoleDefinitionOptions
     {
         public CreateOrUpdateRoleDefinitionOptions(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope) { }
@@ -43,7 +49,7 @@ namespace Azure.Security.KeyVault.Administration
     }
     public partial class KeyVaultAdministrationClientOptions : Azure.Core.ClientOptions
     {
-        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V7_6_Preview_2) { }
+        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V7_6) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -52,7 +58,7 @@ namespace Azure.Security.KeyVault.Administration
             V7_3 = 2,
             V7_4 = 3,
             V7_5 = 4,
-            V7_6_Preview_2 = 5,
+            V7_6 = 5,
         }
     }
     public static partial class KeyVaultAdministrationModelFactory

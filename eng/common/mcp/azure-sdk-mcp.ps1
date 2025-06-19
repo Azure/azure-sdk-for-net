@@ -1,11 +1,12 @@
 #!/bin/env pwsh
 
 param(
-    [string]$FileName = 'azsdk',
+    [string]$FileName = 'Azure.Sdk.Tools.Cli',
     [string]$Package = 'azsdk',
     [string]$Version, # Default to latest
-    [string]$InstallDirectory = (Join-Path $HOME ".azure-sdk-mcp" "azsdk"),
+    [string]$InstallDirectory = '',
     [string]$Repository = 'Azure/azure-sdk-tools',
+    [string]$RunDirectory = (Resolve-Path (Join-Path $PSScriptRoot .. .. ..)),
     [switch]$Run,
     [switch]$UpdateVsCodeConfig,
     [switch]$Clean
@@ -13,6 +14,11 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+if (-not $InstallDirectory)
+{
+    $homeDir = if ($env:HOME) { $env:HOME } else { $env:USERPROFILE }
+    $InstallDirectory = (Join-Path $homeDir ".azure-sdk-mcp" "azsdk")
+}
 . (Join-Path $PSScriptRoot '..' 'scripts' 'Helpers' 'AzSdkTool-Helpers.ps1')
 
 if ($Clean) {
@@ -56,5 +62,5 @@ $exe = Install-Standalone-Tool `
     -Repository $Repository
 
 if ($Run) {
-    Start-Process -FilePath $exe -NoNewWindow -Wait
+    Start-Process -WorkingDirectory $RunDirectory -FilePath $exe -ArgumentList 'start' -NoNewWindow -Wait
 }

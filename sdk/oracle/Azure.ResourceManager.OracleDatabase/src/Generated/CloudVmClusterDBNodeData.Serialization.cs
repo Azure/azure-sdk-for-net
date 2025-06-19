@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.OracleDatabase
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WriteObjectValue<CloudVmClusterDBNodeProperties>(Properties, options);
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.OracleDatabase
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CloudVmClusterDBNodeData)} does not support writing '{options.Format}' format.");
             }

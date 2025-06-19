@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -45,10 +46,7 @@ namespace Azure.Generator.Visitors
             {
                 UpdateModelsNamespace(type);
             }
-            else
-            {
-                type.Type.Update(@namespace: AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace);
-            }
+
             return type;
         }
 
@@ -56,9 +54,22 @@ namespace Azure.Generator.Visitors
         {
             if (AzureClientGenerator.Instance.Configuration.UseModelNamespace())
             {
-                type.Type.Update(
+                type.Update(
                     @namespace: AzureClientGenerator.Instance.TypeFactory.GetCleanNameSpace(
                         $"{AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace}.Models"));
+            }
+            else
+            {
+                // TODO - remove this once all libraries have been migrated to the new generator. Leaving this
+                // here to make diffs easier to review while migrating. Calculate the fileName as it won't always match the Name
+                // property, e.g. for serialization providers.
+                // https://github.com/Azure/azure-sdk-for-net/issues/50286
+                if (type.RelativeFilePath.Contains("Models"))
+                {
+                    var fileName = Path.GetRelativePath(Path.Combine("src", "Generated", "Models"),
+                        type.RelativeFilePath);
+                    type.Update(relativeFilePath: Path.Combine("src", "Generated", fileName));
+                }
             }
         }
     }

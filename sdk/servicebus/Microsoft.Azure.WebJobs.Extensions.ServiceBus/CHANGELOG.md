@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.7.0, which contains several bug fixes and adds support for AOT. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
 ## 5.16.6 (2025-04-08)
 
 ### Other Changes

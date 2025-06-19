@@ -13,13 +13,13 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using TypeSpec.Http.Streams;
 
-namespace Streaming.Jsonl
+namespace Streaming.Jsonl._Basic
 {
     public partial class Basic
     {
         protected Basic() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Send(RequestContent content, RequestContext context = null) => throw null;
 

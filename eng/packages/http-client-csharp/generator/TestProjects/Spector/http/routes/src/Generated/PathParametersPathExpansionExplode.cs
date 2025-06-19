@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Routes
+namespace Routes._PathParameters.PathExpansion.Explode
 {
     public partial class PathParametersPathExpansionExplode
     {
         protected PathParametersPathExpansionExplode() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Primitive(string @param, RequestContext context) => throw null;
 

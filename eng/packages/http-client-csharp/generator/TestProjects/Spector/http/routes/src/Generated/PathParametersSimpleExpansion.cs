@@ -6,14 +6,16 @@
 #nullable disable
 
 using Azure.Core.Pipeline;
+using Routes._PathParameters.SimpleExpansion.Explode;
+using Routes._PathParameters.SimpleExpansion.Standard;
 
-namespace Routes
+namespace Routes._PathParameters.SimpleExpansion
 {
     public partial class PathParametersSimpleExpansion
     {
         protected PathParametersSimpleExpansion() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual PathParametersSimpleExpansionStandard GetPathParametersSimpleExpansionStandardClient() => throw null;
 

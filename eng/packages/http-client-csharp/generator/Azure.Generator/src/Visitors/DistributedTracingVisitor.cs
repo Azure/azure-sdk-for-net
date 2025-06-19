@@ -62,7 +62,6 @@ namespace Azure.Generator.Visitors
                    constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
                    endpoint != null;
             bool isPrimaryConstructor = hasNoInitializer && options != null;
-
             if (isPrimaryConstructor)
             {
                 var assignClientDiagnostics = clientDiagnosticsProperty.Assign(
@@ -75,6 +74,13 @@ namespace Azure.Generator.Visitors
             }
             else if (isSubClientConstructor)
             {
+                XmlDocProvider? updatedXmlDocs = constructor.XmlDocs;
+                if (updatedXmlDocs != null)
+                {
+                    List<XmlDocParamStatement> updatedParametersXmlDoc = [new XmlDocParamStatement(clientDiagnosticsProperty.AsParameter), .. updatedXmlDocs.Parameters];
+                    updatedXmlDocs?.Update(parameters: updatedParametersXmlDoc);
+                }
+
                 var updatedSignature = new ConstructorSignature(
                    constructor.Signature.Type,
                    constructor.Signature.Description,
@@ -87,7 +93,7 @@ namespace Azure.Generator.Visitors
                     ? [assignClientDiagnostics, constructor.BodyStatements]
                     : [assignClientDiagnostics];
 
-                constructor.Update(signature: updatedSignature, bodyStatements: updatedBody);
+                constructor.Update(signature: updatedSignature, bodyStatements: updatedBody, xmlDocs: updatedXmlDocs);
             }
 
             return constructor;
@@ -125,7 +131,7 @@ namespace Azure.Generator.Visitors
             List<MethodBodyStatement> updatedFactoryMethodStatements = [];
 
             var statementsToVisit = method.BodyStatements ?? new ExpressionStatement(method.BodyExpression!);
-            foreach (var statement in statementsToVisit.Flatten())
+            foreach (var statement in statementsToVisit)
             {
                 if (TryUpdateSubClientFactoryMethodReturnStatement(
                     statement,
@@ -150,15 +156,14 @@ namespace Azure.Generator.Visitors
                 return;
             }
 
-            string scopeName = $"{method.EnclosingType.Name}.{method.Signature.Name}";
+            string scopeName = method.GetScopeName();
             const string asyncSuffix = "Async";
             if (scopeName.EndsWith(asyncSuffix))
             {
                 scopeName = scopeName[..^asyncSuffix.Length];
             }
 
-            PropertyProvider clientDiagnosticsProperty = method.EnclosingType.CanonicalView.Properties
-                .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+            PropertyProvider clientDiagnosticsProperty = method.GetClient().GetClientDiagnosticProperty();
 
             // declare scope
             var scopeDeclaration = UsingDeclare(
@@ -169,16 +174,15 @@ namespace Azure.Generator.Visitors
             // start scope
             var scopeStart = scope.Invoke(nameof(DiagnosticScope.Start)).Terminate();
             // wrap existing statements in try / catch
-            var tryStatement = new TryStatement
-            {
+            var tryStatement = new TryExpression
+            (
                 method.BodyStatements ?? new ExpressionStatement(method.BodyExpression!)
-            };
+            );
 
-            var catchBlock = new CatchStatement(Declare("e", typeof(Exception), out var exception))
-                {
-                    scope.Invoke(nameof(DiagnosticScope.Failed), [exception]).Terminate(),
-                    Throw()
-                };
+            var catchBlock = new CatchExpression(
+                Declare("e", typeof(Exception), out var exception),
+                scope.Invoke(nameof(DiagnosticScope.Failed), [exception]).Terminate(),
+                Throw());
             var tryCatchRequestBlock = new TryCatchFinallyStatement(tryStatement, catchBlock);
             List<MethodBodyStatement> updatedBodyStatements = [scopeDeclaration, scopeStart, tryCatchRequestBlock];
 

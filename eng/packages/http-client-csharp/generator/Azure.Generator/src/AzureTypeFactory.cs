@@ -16,6 +16,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator
 {
@@ -65,7 +66,36 @@ namespace Azure.Generator
                     return result;
                 }
             }
+            else if (inputType is InputModelType inputModelType)
+            {
+                if (KnownAzureTypes.TryGetKnownType(inputModelType.CrossLanguageDefinitionId, out var knownType))
+                {
+                    return knownType;
+                }
+            }
+            else if (inputType is InputArrayType inputArrayType)
+            {
+                // Handle special collection types
+                if (KnownAzureTypes.TryGetKnownType(inputArrayType.CrossLanguageDefinitionId, out var knownType))
+                {
+                    var elementType = CreateCSharpType(inputArrayType.ValueType);
+                    return new CSharpType(knownType, elementType!);
+                }
+            }
+
             return base.CreateCSharpTypeCore(inputType);
+        }
+
+        /// <inheritdoc/>
+        protected override ParameterProvider? CreateParameterCore(InputParameter parameter)
+        {
+            // Skip the x-ms-client-request-id parameter as it is handled as part of the Azure.Core pipeline.
+            if (parameter.NameInRequest == "x-ms-client-request-id")
+            {
+                return null;
+            }
+
+            return base.CreateParameterCore(parameter);
         }
 
         private CSharpType? CreateKnownPrimitiveType(InputPrimitiveType inputType)
@@ -73,7 +103,7 @@ namespace Azure.Generator
             InputPrimitiveType? primitiveType = inputType;
             while (primitiveType != null)
             {
-                if (KnownAzureTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var knownType))
+                if (KnownAzureTypes.TryGetKnownType(primitiveType.CrossLanguageDefinitionId, out var knownType))
                 {
                     return knownType;
                 }

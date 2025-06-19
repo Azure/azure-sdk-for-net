@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Usage
+namespace _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation
 {
     public partial class ModelInOperation
     {
         protected ModelInOperation() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response InputToInputOutput(RequestContent content, RequestContext context = null) => throw null;
 

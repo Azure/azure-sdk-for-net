@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support writing '{options.Format}' format.");
             }

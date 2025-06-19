@@ -20,7 +20,7 @@ namespace Payload.JsonMergePatch
 
         public JsonMergePatchClient(Uri endpoint, JsonMergePatchClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response CreateResource(RequestContent content, RequestContext context = null) => throw null;
 
@@ -34,8 +34,8 @@ namespace Payload.JsonMergePatch
 
         public virtual Task<Response> UpdateResourceAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response UpdateOptionalResource(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Response UpdateOptionalResource(RequestContent content = null, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> UpdateOptionalResourceAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<Response> UpdateOptionalResourceAsync(RequestContent content = null, RequestContext context = null) => throw null;
     }
 }

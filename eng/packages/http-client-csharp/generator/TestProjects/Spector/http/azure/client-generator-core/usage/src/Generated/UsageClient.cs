@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core.Pipeline;
+using _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation;
 
 namespace _Specs_.Azure.ClientGenerator.Core.Usage
 {
@@ -16,7 +17,7 @@ namespace _Specs_.Azure.ClientGenerator.Core.Usage
 
         public UsageClient(Uri endpoint, UsageClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual ModelInOperation GetModelInOperationClient() => throw null;
     }

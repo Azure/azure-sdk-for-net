@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Encode.Bytes
+namespace Encode.Bytes._ResponseBody
 {
     public partial class ResponseBody
     {
         protected ResponseBody() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(RequestContext context) => throw null;
 

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsRouterCommunicationError : IUtf8JsonSerializable, IJsonModel<AcsRouterCommunicationError>
+    internal partial class AcsRouterCommunicationError : IUtf8JsonSerializable, IJsonModel<AcsRouterCommunicationError>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterCommunicationError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -51,13 +51,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             writer.WritePropertyName("innererror"u8);
             writer.WriteObjectValue(Innererror, options);
-            writer.WritePropertyName("details"u8);
-            writer.WriteStartArray();
-            foreach (var item in Details)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("details"u8);
+                writer.WriteStartArray();
+                foreach (var item in Details)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -156,7 +159,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsRouterCommunicationError)} does not support writing '{options.Format}' format.");
             }

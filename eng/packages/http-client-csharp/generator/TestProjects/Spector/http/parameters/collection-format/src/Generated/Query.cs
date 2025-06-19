@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Parameters.CollectionFormat
+namespace Parameters.CollectionFormat._Query
 {
     public partial class Query
     {
         protected Query() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Multi(IEnumerable<string> colors, RequestContext context) => throw null;
 

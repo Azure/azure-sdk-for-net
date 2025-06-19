@@ -41,11 +41,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("transactionId"u8);
                 writer.WriteStringValue(TransactionId);
             }
-            if (Optional.IsDefined(ThreadId))
-            {
-                writer.WritePropertyName("threadId"u8);
-                writer.WriteStringValue(ThreadId);
-            }
+            writer.WritePropertyName("threadId"u8);
+            writer.WriteStringValue(ThreadId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -121,7 +118,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsChatEventBaseProperties)} does not support writing '{options.Format}' format.");
             }

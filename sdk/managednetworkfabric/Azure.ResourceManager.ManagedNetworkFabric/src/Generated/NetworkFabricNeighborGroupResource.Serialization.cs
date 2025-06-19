@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricNeighborGroupResource : IJsonModel<NetworkFabricNeighborGroupData>
     {
+        private static NetworkFabricNeighborGroupData s_dataDeserializationInstance;
+        private static NetworkFabricNeighborGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkFabricNeighborGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricNeighborGroupData>)Data).Write(writer, options);
 
-        NetworkFabricNeighborGroupData IJsonModel<NetworkFabricNeighborGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricNeighborGroupData>)Data).Create(ref reader, options);
+        NetworkFabricNeighborGroupData IJsonModel<NetworkFabricNeighborGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricNeighborGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkFabricNeighborGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkFabricNeighborGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricNeighborGroupData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        NetworkFabricNeighborGroupData IPersistableModel<NetworkFabricNeighborGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricNeighborGroupData>(data, options);
+        NetworkFabricNeighborGroupData IPersistableModel<NetworkFabricNeighborGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricNeighborGroupData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkFabricNeighborGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricNeighborGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFabricNeighborGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricNeighborGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

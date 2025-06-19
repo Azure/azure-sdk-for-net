@@ -110,6 +110,12 @@ namespace Azure.Communication.CallAutomation
         public string MediaSubscriptionId { get { throw null; } set { } }
         public int SampleRate { get { throw null; } set { } }
     }
+    public partial class AzureCommunicationCallAutomationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCommunicationCallAutomationContext() { }
+        public static Azure.Communication.CallAutomation.AzureCommunicationCallAutomationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class AzureOpenAIDialog : Azure.Communication.CallAutomation.BaseDialog
     {
         public AzureOpenAIDialog(System.Collections.Generic.IDictionary<string, object> context) : base (default(System.Collections.Generic.IDictionary<string, object>)) { }
@@ -295,6 +301,10 @@ namespace Azure.Communication.CallAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.CallParticipant>>> GetParticipantsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response HangUp(bool forEveryone, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> HangUpAsync(bool forEveryone, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallAutomation.MoveParticipantsResult> MoveParticipants(Azure.Communication.CallAutomation.MoveParticipantsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallAutomation.MoveParticipantsResult> MoveParticipants(string fromCall, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targetParticipants, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.MoveParticipantsResult>> MoveParticipantsAsync(Azure.Communication.CallAutomation.MoveParticipantsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.MoveParticipantsResult>> MoveParticipantsAsync(string fromCall, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targetParticipants, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.MuteParticipantResult> MuteParticipant(Azure.Communication.CallAutomation.MuteParticipantOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.MuteParticipantResult> MuteParticipant(Azure.Communication.CommunicationIdentifier targetParticipant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.MuteParticipantResult>> MuteParticipantAsync(Azure.Communication.CallAutomation.MuteParticipantOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -816,10 +826,12 @@ namespace Azure.Communication.CallAutomation
     {
         internal CustomCallingContext() { }
         public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } }
+        public Azure.Communication.CallAutomation.TeamsPhoneCallDetails TeamsPhoneCallDetails { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> VoipHeaders { get { throw null; } }
         public void AddSipUui(string value) { }
         public void AddSipX(string key, string value, Azure.Communication.CallAutomation.CustomCallingContext.SipHeaderPrefix prefix = Azure.Communication.CallAutomation.CustomCallingContext.SipHeaderPrefix.XMSCustom) { }
         public void AddVoip(string key, string value) { }
+        public void SetTeamsPhoneCallDetails(Azure.Communication.CallAutomation.TeamsPhoneCallDetails teamsPhoneCallDetails) { }
         public enum SipHeaderPrefix
         {
             XMSCustom = 0,
@@ -1297,6 +1309,46 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.MediaStreamingStatus? MediaStreamingStatus { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingStatusDetails? MediaStreamingStatusDetails { get { throw null; } }
     }
+    public partial class MoveParticipantEventResult
+    {
+        internal MoveParticipantEventResult() { }
+        public Azure.Communication.CallAutomation.MoveParticipantFailed FailureResult { get { throw null; } }
+        public string FromCall { get { throw null; } }
+        public bool IsSuccess { get { throw null; } }
+        public Azure.Communication.CallAutomation.MoveParticipantSucceeded SuccessResult { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
+    }
+    public partial class MoveParticipantFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal MoveParticipantFailed() { }
+        public string FromCall { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
+        public static Azure.Communication.CallAutomation.MoveParticipantFailed Deserialize(string content) { throw null; }
+    }
+    public partial class MoveParticipantsOptions
+    {
+        public MoveParticipantsOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targetParticipants, string fromCall) { }
+        public string FromCall { get { throw null; } }
+        public System.Uri OperationCallbackUri { get { throw null; } set { } }
+        public string OperationContext { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> TargetParticipants { get { throw null; } }
+    }
+    public partial class MoveParticipantsResult
+    {
+        internal MoveParticipantsResult() { }
+        public string FromCall { get { throw null; } }
+        public string OperationContext { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.CallParticipant> TargetParticipants { get { throw null; } }
+        public Azure.Communication.CallAutomation.MoveParticipantEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.MoveParticipantEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MoveParticipantSucceeded : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal MoveParticipantSucceeded() { }
+        public string FromCall { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } }
+        public static Azure.Communication.CallAutomation.MoveParticipantSucceeded Deserialize(string content) { throw null; }
+    }
     public partial class MuteParticipantOptions
     {
         public MuteParticipantOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
@@ -1404,10 +1456,9 @@ namespace Azure.Communication.CallAutomation
     public partial class PostProcessingOptions
     {
         public PostProcessingOptions(Azure.Communication.CallAutomation.TranscriptionSettings transcription) { }
-        public PostProcessingOptions(string cognitiveServicesEndpoint, Azure.Communication.CallAutomation.SummarizationSettings summarization = null, Azure.Communication.CallAutomation.TranscriptionSettings transcription = null) { }
         public string CognitiveServicesEndpoint { get { throw null; } set { } }
-        public void setSummarizationSettings(bool enableSummarization) { }
-        public void setTranscriptionSettings(bool enableTranscription) { }
+        public Azure.Communication.CallAutomation.SummarizationSettings Summarization { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.TranscriptionSettings Transcription { get { throw null; } }
     }
     public partial class PowerVirtualAgentsDialog : Azure.Communication.CallAutomation.BaseDialog
     {
@@ -1871,6 +1922,39 @@ namespace Azure.Communication.CallAutomation
         public string ResourceId { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
+    }
+    public partial class TeamsPhoneCallDetails
+    {
+        public TeamsPhoneCallDetails() { }
+        public string CallContext { get { throw null; } set { } }
+        public string CallSentiment { get { throw null; } set { } }
+        public string CallTopic { get { throw null; } set { } }
+        public string Intent { get { throw null; } set { } }
+        public string SessionId { get { throw null; } set { } }
+        public string SuggestedActions { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.TeamsPhoneCallerDetails TeamsPhoneCallerDetails { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.TeamsPhoneSourceDetails TeamsPhoneSourceDetails { get { throw null; } set { } }
+        public string TranscriptUrl { get { throw null; } set { } }
+    }
+    public partial class TeamsPhoneCallerDetails
+    {
+        public TeamsPhoneCallerDetails(Azure.Communication.CommunicationIdentifier caller, string name, string phoneNumber) { }
+        public System.Collections.Generic.IDictionary<string, string> AdditionalCallerInformation { get { throw null; } }
+        public bool? IsAuthenticated { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public string PhoneNumber { get { throw null; } set { } }
+        public string RecordId { get { throw null; } set { } }
+        public string ScreenPopUrl { get { throw null; } set { } }
+        public bool AddAdditionalCallerInformation(string key, string value) { throw null; }
+    }
+    public partial class TeamsPhoneSourceDetails
+    {
+        public TeamsPhoneSourceDetails(Azure.Communication.CommunicationIdentifier source, string language, string status) { }
+        public System.Collections.Generic.IDictionary<string, Azure.Communication.CommunicationIdentifier> IntendedTargets { get { throw null; } }
+        public string Language { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier Source { get { throw null; } set { } }
+        public string Status { get { throw null; } set { } }
+        public bool AddIntendedTargets(string key, Azure.Communication.CommunicationIdentifier target) { throw null; }
     }
     public enum TextFormat
     {
