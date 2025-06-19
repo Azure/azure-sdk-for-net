@@ -69,7 +69,7 @@ namespace Azure.Generator.Providers
                 var methodReturnType = new CSharpType(typeof(IAzureClientBuilder<,>), client.Type,
                     client.ClientOptionsParameter.Type);
 
-                foreach (var constructor in client.Constructors)
+                foreach (var constructor in client.CanonicalView.Constructors)
                 {
                     if (!constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))
                     {

@@ -11,6 +11,7 @@
     <ProjectReference Include="..\..\Azure.Provisioning.Storage\src\Azure.Provisioning.Storage.csproj" />
     <ProjectReference Include="..\src\Azure.Provisioning.csproj" />
     <ProjectReference Include="..\..\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
+    <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
 
   <ItemGroup>
