@@ -64,8 +64,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
             }
-            writer.WritePropertyName("peerASN"u8);
-            writer.WriteNumberValue(PeerAsn);
+            if (PeerAsn != null)
+            {
+                writer.WritePropertyName("peerASN"u8);
+                writer.WriteNumberValue(PeerAsn.Value);
+            }
+            else
+            {
+                writer.WriteNull("peerASN");
+            }
             if (Optional.IsCollectionDefined(IPv4ListenRangePrefixes))
             {
                 writer.WritePropertyName("ipv4ListenRangePrefixes"u8);
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             int? allowAS = default;
             AllowASOverride? allowASOverride = default;
             long? fabricAsn = default;
-            long peerAsn = default;
+            long? peerAsn = default;
             IList<string> ipv4ListenRangePrefixes = default;
             IList<string> ipv6ListenRangePrefixes = default;
             IList<NeighborAddress> ipv4NeighborAddress = default;
@@ -228,6 +235,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (property.NameEquals("peerASN"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        peerAsn = null;
+                        continue;
+                    }
                     peerAsn = property.Value.GetInt64();
                     continue;
                 }
