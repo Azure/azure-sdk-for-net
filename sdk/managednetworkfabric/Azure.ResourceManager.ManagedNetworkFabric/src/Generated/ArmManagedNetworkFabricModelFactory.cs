@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="nativeIPv4PrefixLimits"> Native IPv4 prefix limits configuration. </param>
         /// <param name="nativeIPv6PrefixLimits"> Native IPv6 prefix limits configuration. </param>
         /// <returns> A new <see cref="Models.ExternalNetworkOptionAProperties"/> instance for mocking. </returns>
-        public static ExternalNetworkOptionAProperties ExternalNetworkOptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = null, int vlanId = default, long? fabricAsn = null, long peerAsn = default, BfdConfiguration bfdConfiguration = null, ResourceIdentifier ingressAclId = null, BmpConfigurationState? bmpConfigurationState = null, ResourceIdentifier egressAclId = null, V4OverV6BgpSessionState? v4OverV6BgpSession = null, V6OverV4BgpSessionState? v6OverV4BgpSession = null, IEnumerable<PrefixLimitProperties> nativeIPv4PrefixLimits = null, IEnumerable<PrefixLimitProperties> nativeIPv6PrefixLimits = null)
+        public static ExternalNetworkOptionAProperties ExternalNetworkOptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = null, int? vlanId = null, long? fabricAsn = null, long? peerAsn = null, BfdConfiguration bfdConfiguration = null, ResourceIdentifier ingressAclId = null, BmpConfigurationState? bmpConfigurationState = null, ResourceIdentifier egressAclId = null, V4OverV6BgpSessionState? v4OverV6BgpSession = null, V6OverV4BgpSessionState? v6OverV4BgpSession = null, IEnumerable<PrefixLimitProperties> nativeIPv4PrefixLimits = null, IEnumerable<PrefixLimitProperties> nativeIPv6PrefixLimits = null)
         {
             nativeIPv4PrefixLimits ??= new List<PrefixLimitProperties>();
             nativeIPv6PrefixLimits ??= new List<PrefixLimitProperties>();
@@ -1792,7 +1792,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="bmpConfigurationState"> BGP Monitoring Protocol (BMP) Configuration. </param>
         /// <param name="prefixLimits"> OptionB Layer3 prefix limit configuration. </param>
         /// <returns> A new <see cref="Models.OptionBLayer3Configuration"/> instance for mocking. </returns>
-        public static OptionBLayer3Configuration OptionBLayer3Configuration(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, long peerAsn = default, int vlanId = default, long? fabricAsn = null, IEnumerable<string> peLoopbackIPAddress = null, BmpConfigurationState? bmpConfigurationState = null, IEnumerable<OptionBLayer3PrefixLimitProperties> prefixLimits = null)
+        public static OptionBLayer3Configuration OptionBLayer3Configuration(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, long? peerAsn = null, int? vlanId = null, long? fabricAsn = null, IEnumerable<string> peLoopbackIPAddress = null, BmpConfigurationState? bmpConfigurationState = null, IEnumerable<OptionBLayer3PrefixLimitProperties> prefixLimits = null)
         {
             peLoopbackIPAddress ??= new List<string>();
             prefixLimits ??= new List<OptionBLayer3PrefixLimitProperties>();

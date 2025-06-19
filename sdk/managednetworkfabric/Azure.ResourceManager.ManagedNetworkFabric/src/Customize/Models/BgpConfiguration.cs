@@ -3,21 +3,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class BgpConfiguration
     {
+        /// <summary> Initializes a new instance of <see cref="BgpConfiguration"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public BgpConfiguration()
+        public BgpConfiguration() : this(null)
         {
-            IPv4ListenRangePrefixes = new ChangeTrackingList<string>();
-            IPv6ListenRangePrefixes = new ChangeTrackingList<string>();
-            IPv4NeighborAddress = new ChangeTrackingList<NeighborAddress>();
-            IPv6NeighborAddress = new ChangeTrackingList<NeighborAddress>();
         }
 
         /// <summary> Peer ASN. Example: 65047. </summary>
