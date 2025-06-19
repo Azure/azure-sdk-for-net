@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Microsoft.ClientModel.TestFramework client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Microsoft.ClientModel.TestFramework</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Microsoft.ClientModel.TestFramework</PackageTags>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <NoWarn>AZC0015;AZC0007</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ClientModel" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="Moq" />
+  </ItemGroup>
+</Project>

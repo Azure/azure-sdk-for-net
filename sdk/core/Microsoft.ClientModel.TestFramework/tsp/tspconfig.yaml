@@ -1,0 +1,10 @@
+# compile with tsp compile ./src/tsp
+emit:
+  - "@typespec/http-client-csharp"
+options:
+  "@typespec/http-client-csharp":
+    emitter-output-dir: "{cwd}"
+    package-name: "Microsoft.ClientModel.TestFramework"
+    license:
+      name: "MIT License"
+      company: "Microsoft Corporation"
