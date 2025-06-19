@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> An inbound endpoint on a Compute Node. </summary>
     public partial class InboundEndpoint : IJsonModel<InboundEndpoint>
@@ -43,7 +44,7 @@ namespace Azure.Batch
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
             writer.WritePropertyName("publicIPAddress"u8);
-            writer.WriteStringValue(PublicIpAddress);
+            writer.WriteStringValue(PublicIpAddress.ToString());
             writer.WritePropertyName("publicFQDN"u8);
             writer.WriteStringValue(PublicFQDN);
             writer.WritePropertyName("frontendPort"u8);
@@ -94,7 +95,7 @@ namespace Azure.Batch
             }
             string name = default;
             InboundEndpointProtocol protocol = default;
-            string publicIpAddress = default;
+            IPAddress publicIpAddress = default;
             string publicFQDN = default;
             int frontendPort = default;
             int backendPort = default;
@@ -113,7 +114,7 @@ namespace Azure.Batch
                 }
                 if (prop.NameEquals("publicIPAddress"u8))
                 {
-                    publicIpAddress = prop.Value.GetString();
+                    publicIpAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicFQDN"u8))
@@ -156,7 +157,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InboundEndpoint)} does not support writing '{options.Format}' format.");
             }

@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     internal static partial class ModelSerializationExtensions
     {

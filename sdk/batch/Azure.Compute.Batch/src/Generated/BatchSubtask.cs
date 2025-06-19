@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Information about an Azure Batch subtask. </summary>
     public partial class BatchSubtask

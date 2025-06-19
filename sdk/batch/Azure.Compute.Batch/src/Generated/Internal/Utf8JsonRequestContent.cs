@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     internal partial class Utf8JsonRequestContent : RequestContent
     {

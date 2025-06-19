@@ -11,17 +11,16 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Client;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     internal partial class BatchClientGetSupportedImagesAsyncCollectionResultOfT : AsyncPageable<BatchSupportedImage>
     {
         private readonly BatchClient _client;
-        private readonly int? _timeOutInSeconds;
+        private readonly TimeSpan? _timeOutInSeconds;
         private readonly string _clientRequestId;
         private readonly bool? _returnClientRequestId;
-        private readonly DateTimeOffset? _ocpdate;
+        private readonly DateTimeOffset? _ocpDate;
         private readonly int? _maxresults;
         private readonly string _filter;
         private readonly RequestContext _context;
@@ -34,7 +33,7 @@ namespace Azure.Batch
         /// such as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
         /// </param>
         /// <param name="returnClientRequestId"> Whether the server should return the client-request-id in the response. </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -48,13 +47,13 @@ namespace Azure.Batch
         /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BatchClientGetSupportedImagesAsyncCollectionResultOfT(BatchClient client, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BatchClientGetSupportedImagesAsyncCollectionResultOfT(BatchClient client, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _timeOutInSeconds = timeOutInSeconds;
             _clientRequestId = clientRequestId;
             _returnClientRequestId = returnClientRequestId;
-            _ocpdate = ocpdate;
+            _ocpDate = ocpDate;
             _maxresults = maxresults;
             _filter = filter;
             _context = context;
@@ -86,7 +85,7 @@ namespace Azure.Batch
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextListSupportedImagesRequest(nextLink, _timeOutInSeconds, _clientRequestId, _returnClientRequestId, _ocpdate, _maxresults, _filter, _context) : _client.CreateListSupportedImagesRequest(_timeOutInSeconds, _clientRequestId, _returnClientRequestId, _ocpdate, _maxresults, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListSupportedImagesRequest(nextLink, _timeOutInSeconds, _clientRequestId, _returnClientRequestId, _ocpDate, _maxresults, _filter, _context) : _client.CreateListSupportedImagesRequest(_timeOutInSeconds, _clientRequestId, _returnClientRequestId, _ocpDate, _maxresults, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BatchClient.GetSupportedImages");
             scope.Start();
             try

@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> On every file uploads, Batch service writes two log files to the compute node, 'fileuploadout.txt' and 'fileuploaderr.txt'. These log files are used to learn more about a specific failure. </summary>
     public partial class OutputFile : IJsonModel<OutputFile>
@@ -125,7 +125,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OutputFile)} does not support writing '{options.Format}' format.");
             }

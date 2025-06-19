@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary>
     /// The disk encryption configuration applied on compute nodes in the pool.

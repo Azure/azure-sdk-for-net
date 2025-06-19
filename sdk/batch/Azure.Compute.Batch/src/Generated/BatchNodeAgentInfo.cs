@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary>
     /// The Batch Compute Node agent is a program that runs on each Compute Node in the

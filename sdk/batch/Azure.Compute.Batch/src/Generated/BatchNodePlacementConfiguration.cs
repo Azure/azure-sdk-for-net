@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary>
     /// For regional placement, nodes in the pool will be allocated in the same region.

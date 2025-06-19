@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> An environment variable to be set on a Task process. </summary>
     public partial class EnvironmentSetting

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary>
     /// A Job Release Task to run on Job completion on any Compute Node where the Job has run.

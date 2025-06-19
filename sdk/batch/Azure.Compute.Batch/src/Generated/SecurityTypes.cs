@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. </summary>
     public readonly partial struct SecurityTypes : IEquatable<SecurityTypes>

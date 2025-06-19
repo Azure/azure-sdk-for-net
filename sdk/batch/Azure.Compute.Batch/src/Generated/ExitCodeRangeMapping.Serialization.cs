@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary>
     /// A range of exit codes and how the Batch service should respond to exit codes
@@ -128,7 +128,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ExitCodeRangeMapping)} does not support writing '{options.Format}' format.");
             }

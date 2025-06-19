@@ -8,10 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Batch;
 using Azure.Core;
 
-namespace Client
+namespace Azure.Compute.Batch
 {
     /// <summary></summary>
     public partial class BatchClient
@@ -29,7 +28,7 @@ namespace Client
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateGetApplicationsRequest(int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, RequestContext context)
+        internal HttpMessage CreateGetApplicationsRequest(TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -40,11 +39,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -53,17 +52,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetApplicationsRequest(Uri nextPage, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, RequestContext context)
+        internal HttpMessage CreateNextGetApplicationsRequest(Uri nextPage, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -75,7 +74,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateGetApplicationRequest(string applicationId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateGetApplicationRequest(string applicationId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -87,7 +86,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -96,17 +95,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateListPoolUsageMetricsRequest(int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
+        internal HttpMessage CreateListPoolUsageMetricsRequest(TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -117,19 +116,19 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (starttime != null)
             {
-                uri.AppendQuery("startTime", Azure.Batch.TypeFormatters.ConvertToString(starttime, "O"), true);
+                uri.AppendQuery("startTime", TypeFormatters.ConvertToString(starttime, "O"), true);
             }
             if (endtime != null)
             {
-                uri.AppendQuery("endtime", Azure.Batch.TypeFormatters.ConvertToString(endtime, "O"), true);
+                uri.AppendQuery("endtime", TypeFormatters.ConvertToString(endtime, "O"), true);
             }
             if (filter != null)
             {
@@ -142,17 +141,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListPoolUsageMetricsRequest(Uri nextPage, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
+        internal HttpMessage CreateNextListPoolUsageMetricsRequest(Uri nextPage, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -164,7 +163,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateCreatePoolRequest(RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreatePoolRequest(RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
@@ -175,7 +174,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -184,11 +183,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -196,7 +195,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateListPoolsRequest(int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateListPoolsRequest(TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -207,11 +206,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (filter != null)
             {
@@ -232,17 +231,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListPoolsRequest(Uri nextPage, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextListPoolsRequest(Uri nextPage, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -254,7 +253,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateDeletePoolRequest(string poolId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateDeletePoolInternalRequest(string poolId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -266,7 +265,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -275,19 +274,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -301,7 +300,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreatePoolExistsRequest(string poolId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreatePoolExistsRequest(string poolId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -313,7 +312,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -322,19 +321,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -348,7 +347,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateGetPoolRequest(string poolId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetPoolRequest(string poolId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -360,7 +359,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -377,19 +376,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -403,7 +402,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateUpdatePoolRequest(string poolId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateUpdatePoolRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -415,7 +414,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -424,20 +423,20 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -452,7 +451,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateDisablePoolAutoScaleRequest(string poolId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateDisablePoolAutoScaleRequest(string poolId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -465,7 +464,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -474,17 +473,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateEnablePoolAutoScaleRequest(string poolId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateEnablePoolAutoScaleRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -497,7 +496,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -506,20 +505,20 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -534,7 +533,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateEvaluatePoolAutoScaleRequest(string poolId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateEvaluatePoolAutoScaleRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -547,7 +546,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -556,11 +555,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -568,7 +567,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateResizePoolRequest(string poolId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateResizePoolInternalRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -581,7 +580,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -590,20 +589,20 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -618,7 +617,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateStopPoolResizeRequest(string poolId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateStopPoolResizeInternalRequest(string poolId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -631,7 +630,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -640,19 +639,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -666,7 +665,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateReplacePoolPropertiesRequest(string poolId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateReplacePoolPropertiesRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
@@ -679,7 +678,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -688,11 +687,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -700,7 +699,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateRemoveNodesRequest(string poolId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateRemoveNodesInternalRequest(string poolId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -713,7 +712,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -722,20 +721,20 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -750,7 +749,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateListSupportedImagesRequest(int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateListSupportedImagesRequest(TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -761,11 +760,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (filter != null)
             {
@@ -778,17 +777,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListSupportedImagesRequest(Uri nextPage, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateNextListSupportedImagesRequest(Uri nextPage, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -800,7 +799,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateListPoolNodeCountsRequest(int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateListPoolNodeCountsRequest(TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -811,11 +810,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (filter != null)
             {
@@ -828,17 +827,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListPoolNodeCountsRequest(Uri nextPage, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateNextListPoolNodeCountsRequest(Uri nextPage, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -850,7 +849,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateDeleteJobRequest(string jobId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, bool? force, RequestContext context)
+        internal HttpMessage CreateDeleteJobInternalRequest(string jobId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, bool? force, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -862,11 +861,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (force != null)
             {
-                uri.AppendQuery("force", Azure.Batch.TypeFormatters.ConvertToString(force, null), true);
+                uri.AppendQuery("force", TypeFormatters.ConvertToString(force, null), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -875,19 +874,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -901,7 +900,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateGetJobRequest(string jobId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobRequest(string jobId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -913,7 +912,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -930,19 +929,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -956,7 +955,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateUpdateJobRequest(string jobId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateUpdateJobRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -968,7 +967,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -977,20 +976,20 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -1005,7 +1004,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateReplaceJobRequest(string jobId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateReplaceJobRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1017,7 +1016,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1026,20 +1025,20 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -1054,7 +1053,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateDisableJobRequest(string jobId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateDisableJobInternalRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -1067,7 +1066,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1076,20 +1075,20 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -1104,7 +1103,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateEnableJobRequest(string jobId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateEnableJobInternalRequest(string jobId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -1117,7 +1116,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1126,19 +1125,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -1152,7 +1151,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateTerminateJobRequest(string jobId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, bool? force, RequestContext context)
+        internal HttpMessage CreateTerminateJobInternalRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, bool? force, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -1165,11 +1164,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (force != null)
             {
-                uri.AppendQuery("force", Azure.Batch.TypeFormatters.ConvertToString(force, null), true);
+                uri.AppendQuery("force", TypeFormatters.ConvertToString(force, null), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1178,20 +1177,20 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -1206,7 +1205,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateCreateJobRequest(RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreateJobRequest(RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
@@ -1217,7 +1216,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1226,11 +1225,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -1238,7 +1237,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateListJobsRequest(int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateListJobsRequest(TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1249,11 +1248,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (filter != null)
             {
@@ -1274,17 +1273,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListJobsRequest(Uri nextPage, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextListJobsRequest(Uri nextPage, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1296,7 +1295,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateListJobsFromScheduleRequest(string jobScheduleId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateListJobsFromScheduleRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1309,11 +1308,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (filter != null)
             {
@@ -1334,17 +1333,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListJobsFromScheduleRequest(Uri nextPage, string jobScheduleId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextListJobsFromScheduleRequest(Uri nextPage, string jobScheduleId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1356,7 +1355,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateListJobPreparationAndReleaseTaskStatusRequest(string jobId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateListJobPreparationAndReleaseTaskStatusRequest(string jobId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1369,11 +1368,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (filter != null)
             {
@@ -1390,17 +1389,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListJobPreparationAndReleaseTaskStatusRequest(Uri nextPage, string jobId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextListJobPreparationAndReleaseTaskStatusRequest(Uri nextPage, string jobId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1412,7 +1411,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateGetJobTaskCountsRequest(string jobId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateGetJobTaskCountsRequest(string jobId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1425,7 +1424,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1434,17 +1433,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateCreateCertificateRequest(RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreateCertificateRequest(RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
@@ -1455,7 +1454,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1464,11 +1463,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -1476,7 +1475,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateListCertificatesRequest(int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateListCertificatesRequest(TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1487,11 +1486,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (filter != null)
             {
@@ -1508,17 +1507,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListCertificatesRequest(Uri nextPage, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextListCertificatesRequest(Uri nextPage, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1530,7 +1529,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateCancelCertificateDeletionRequest(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCancelCertificateDeletionRequest(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
@@ -1545,7 +1544,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1554,17 +1553,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateDeleteCertificateRequest(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateDeleteCertificateInternalRequest(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -1579,7 +1578,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1588,17 +1587,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetCertificateRequest(string thumbprintAlgorithm, string thumbprint, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetCertificateRequest(string thumbprintAlgorithm, string thumbprint, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, IEnumerable<string> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1613,7 +1612,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -1626,17 +1625,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateJobScheduleExistsRequest(string jobScheduleId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateJobScheduleExistsRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1648,7 +1647,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1657,19 +1656,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -1683,7 +1682,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateDeleteJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, bool? force, RequestContext context)
+        internal HttpMessage CreateDeleteJobScheduleInternalRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, bool? force, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -1695,11 +1694,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (force != null)
             {
-                uri.AppendQuery("force", Azure.Batch.TypeFormatters.ConvertToString(force, null), true);
+                uri.AppendQuery("force", TypeFormatters.ConvertToString(force, null), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1708,19 +1707,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -1734,7 +1733,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateGetJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetJobScheduleRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1746,7 +1745,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -1763,19 +1762,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -1789,7 +1788,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateUpdateJobScheduleRequest(string jobScheduleId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateUpdateJobScheduleRequest(string jobScheduleId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1801,7 +1800,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1810,20 +1809,20 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -1838,7 +1837,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateReplaceJobScheduleRequest(string jobScheduleId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateReplaceJobScheduleRequest(string jobScheduleId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1850,7 +1849,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1859,20 +1858,20 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -1887,7 +1886,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateDisableJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateDisableJobScheduleRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
@@ -1900,7 +1899,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1909,19 +1908,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -1935,7 +1934,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateEnableJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateEnableJobScheduleRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
@@ -1948,7 +1947,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -1957,19 +1956,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -1983,7 +1982,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateTerminateJobScheduleRequest(string jobScheduleId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, bool? force, RequestContext context)
+        internal HttpMessage CreateTerminateJobScheduleInternalRequest(string jobScheduleId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, bool? force, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -1996,11 +1995,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (force != null)
             {
-                uri.AppendQuery("force", Azure.Batch.TypeFormatters.ConvertToString(force, null), true);
+                uri.AppendQuery("force", TypeFormatters.ConvertToString(force, null), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2009,19 +2008,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -2035,7 +2034,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateCreateJobScheduleRequest(RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreateJobScheduleRequest(RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
@@ -2046,7 +2045,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2055,11 +2054,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -2067,7 +2066,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateListJobSchedulesRequest(int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateListJobSchedulesRequest(TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2078,11 +2077,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (filter != null)
             {
@@ -2103,17 +2102,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListJobSchedulesRequest(Uri nextPage, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextListJobSchedulesRequest(Uri nextPage, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2125,7 +2124,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateCreateTaskRequest(string jobId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreateTaskRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
@@ -2138,7 +2137,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2147,11 +2146,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -2159,7 +2158,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateListTasksRequest(string jobId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateListTasksRequest(string jobId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2172,11 +2171,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (filter != null)
             {
@@ -2197,17 +2196,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListTasksRequest(Uri nextPage, string jobId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateNextListTasksRequest(Uri nextPage, string jobId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2219,7 +2218,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateCreateTaskCollectionRequest(string jobId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreateTaskCollectionRequest(string jobId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2232,7 +2231,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2241,11 +2240,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -2253,7 +2252,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateDeleteTaskRequest(string jobId, string taskId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateDeleteTaskRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2267,7 +2266,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2276,19 +2275,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -2302,7 +2301,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateGetTaskRequest(string jobId, string taskId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
+        internal HttpMessage CreateGetTaskRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, IEnumerable<string> @select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2316,7 +2315,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -2333,19 +2332,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -2359,7 +2358,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateReplaceTaskRequest(string jobId, string taskId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateReplaceTaskRequest(string jobId, string taskId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2373,7 +2372,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2382,20 +2381,20 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -2410,7 +2409,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateListSubTasksRequest(string jobId, string taskId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateListSubTasksRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, IEnumerable<string> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2425,7 +2424,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -2438,17 +2437,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListSubTasksRequest(Uri nextPage, string jobId, string taskId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextListSubTasksRequest(Uri nextPage, string jobId, string taskId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, IEnumerable<string> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2460,7 +2459,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateTerminateTaskRequest(string jobId, string taskId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateTerminateTaskRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
@@ -2475,7 +2474,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2484,19 +2483,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -2510,7 +2509,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateReactivateTaskRequest(string jobId, string taskId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateReactivateTaskRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
@@ -2525,7 +2524,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2534,19 +2533,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ifMatch != null)
             {
@@ -2560,7 +2559,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateDeleteTaskFileRequest(string jobId, string taskId, string filePath, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, bool? recursive, RequestContext context)
+        internal HttpMessage CreateDeleteTaskFileRequest(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, bool? recursive, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2576,11 +2575,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (recursive != null)
             {
-                uri.AppendQuery("recursive", Azure.Batch.TypeFormatters.ConvertToString(recursive, null), true);
+                uri.AppendQuery("recursive", TypeFormatters.ConvertToString(recursive, null), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2589,17 +2588,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetTaskFileRequest(string jobId, string taskId, string filePath, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ocpRange, RequestContext context)
+        internal HttpMessage CreateGetTaskFileRequest(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ocpRange, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2615,7 +2614,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2624,19 +2623,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ocpRange != null)
             {
@@ -2646,7 +2645,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateGetTaskFilePropertiesInternalRequest(string jobId, string taskId, string filePath, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, RequestContext context)
+        internal HttpMessage CreateGetTaskFilePropertiesInternalRequest(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2662,7 +2661,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2671,25 +2670,25 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateListTaskFilesRequest(string jobId, string taskId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateListTaskFilesRequest(string jobId, string taskId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2704,11 +2703,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (filter != null)
             {
@@ -2716,7 +2715,7 @@ namespace Client
             }
             if (recursive != null)
             {
-                uri.AppendQuery("recursive", Azure.Batch.TypeFormatters.ConvertToString(recursive, null), true);
+                uri.AppendQuery("recursive", TypeFormatters.ConvertToString(recursive, null), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2725,17 +2724,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListTaskFilesRequest(Uri nextPage, string jobId, string taskId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateNextListTaskFilesRequest(Uri nextPage, string jobId, string taskId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2747,7 +2746,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateCreateNodeUserRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateCreateNodeUserRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
@@ -2762,7 +2761,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2771,11 +2770,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -2783,7 +2782,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateDeleteNodeUserRequest(string poolId, string nodeId, string userName, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateDeleteNodeUserRequest(string poolId, string nodeId, string userName, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2799,7 +2798,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2808,17 +2807,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateReplaceNodeUserRequest(string poolId, string nodeId, string userName, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateReplaceNodeUserRequest(string poolId, string nodeId, string userName, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2834,7 +2833,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2843,11 +2842,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -2855,7 +2854,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateGetNodeRequest(string poolId, string nodeId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetNodeRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, IEnumerable<string> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -2869,7 +2868,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -2882,17 +2881,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateRebootNodeRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateRebootNodeInternalRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -2907,7 +2906,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2916,11 +2915,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -2928,7 +2927,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateStartNodeRequest(string poolId, string nodeId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateStartNodeInternalRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -2943,7 +2942,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2952,17 +2951,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateReimageNodeRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateReimageNodeInternalRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -2977,7 +2976,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -2986,11 +2985,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -2998,7 +2997,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateDeallocateNodeRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateDeallocateNodeInternalRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
@@ -3013,7 +3012,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -3022,11 +3021,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -3034,7 +3033,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateDisableNodeSchedulingRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateDisableNodeSchedulingRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -3049,7 +3048,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -3058,11 +3057,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -3070,7 +3069,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateEnableNodeSchedulingRequest(string poolId, string nodeId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateEnableNodeSchedulingRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -3085,7 +3084,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -3094,17 +3093,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetNodeRemoteLoginSettingsRequest(string poolId, string nodeId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateGetNodeRemoteLoginSettingsRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -3119,7 +3118,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -3128,17 +3127,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateUploadNodeLogsRequest(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, RequestContext context)
+        internal HttpMessage CreateUploadNodeLogsRequest(string poolId, string nodeId, RequestContent content, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -3153,7 +3152,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -3162,11 +3161,11 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Content-Type", "application/json; odata=minimalmetadata");
             request.Headers.SetValue("Accept", "application/json");
@@ -3174,7 +3173,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateListNodesRequest(string poolId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateListNodesRequest(string poolId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -3187,11 +3186,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (filter != null)
             {
@@ -3208,17 +3207,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListNodesRequest(Uri nextPage, string poolId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextListNodesRequest(Uri nextPage, string poolId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, IEnumerable<string> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -3230,7 +3229,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateGetNodeExtensionRequest(string poolId, string nodeId, string extensionName, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateGetNodeExtensionRequest(string poolId, string nodeId, string extensionName, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, IEnumerable<string> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -3246,7 +3245,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -3259,17 +3258,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateListNodeExtensionsRequest(string poolId, string nodeId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateListNodeExtensionsRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, IEnumerable<string> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -3284,11 +3283,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -3301,17 +3300,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListNodeExtensionsRequest(Uri nextPage, string poolId, string nodeId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextListNodeExtensionsRequest(Uri nextPage, string poolId, string nodeId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, IEnumerable<string> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -3323,7 +3322,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateDeleteNodeFileRequest(string poolId, string nodeId, string filePath, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, bool? recursive, RequestContext context)
+        internal HttpMessage CreateDeleteNodeFileRequest(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, bool? recursive, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -3339,11 +3338,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (recursive != null)
             {
-                uri.AppendQuery("recursive", Azure.Batch.TypeFormatters.ConvertToString(recursive, null), true);
+                uri.AppendQuery("recursive", TypeFormatters.ConvertToString(recursive, null), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -3352,17 +3351,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetNodeFileRequest(string poolId, string nodeId, string filePath, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ocpRange, RequestContext context)
+        internal HttpMessage CreateGetNodeFileRequest(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ocpRange, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -3378,7 +3377,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -3387,19 +3386,19 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             if (ocpRange != null)
             {
@@ -3409,7 +3408,7 @@ namespace Client
             return message;
         }
 
-        internal HttpMessage CreateGetNodeFilePropertiesInternalRequest(string poolId, string nodeId, string filePath, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, RequestContext context)
+        internal HttpMessage CreateGetNodeFilePropertiesInternalRequest(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -3425,7 +3424,7 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -3434,25 +3433,25 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.SetValue("If-Modified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifModifiedSince, "R"));
+                request.Headers.SetValue("If-Modified-Since", TypeFormatters.ConvertToString(ifModifiedSince, "R"));
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.SetValue("If-Unmodified-Since", Azure.Batch.TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
+                request.Headers.SetValue("If-Unmodified-Since", TypeFormatters.ConvertToString(ifUnmodifiedSince, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateListNodeFilesRequest(string poolId, string nodeId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateListNodeFilesRequest(string poolId, string nodeId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -3467,11 +3466,11 @@ namespace Client
             uri.AppendQuery("api-version", _apiVersion, true);
             if (timeOutInSeconds != null)
             {
-                uri.AppendQuery("timeOut", Azure.Batch.TypeFormatters.ConvertToString(timeOutInSeconds, null), true);
+                uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeOutInSeconds, "%s"), true);
             }
             if (maxresults != null)
             {
-                uri.AppendQuery("maxresults", Azure.Batch.TypeFormatters.ConvertToString(maxresults, null), true);
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults, null), true);
             }
             if (filter != null)
             {
@@ -3479,7 +3478,7 @@ namespace Client
             }
             if (recursive != null)
             {
-                uri.AppendQuery("recursive", Azure.Batch.TypeFormatters.ConvertToString(recursive, null), true);
+                uri.AppendQuery("recursive", TypeFormatters.ConvertToString(recursive, null), true);
             }
             request.Uri = uri;
             if (clientRequestId != null)
@@ -3488,17 +3487,17 @@ namespace Client
             }
             if (returnClientRequestId != null)
             {
-                request.Headers.SetValue("return-client-request-id", Azure.Batch.TypeFormatters.ConvertToString(returnClientRequestId, null));
+                request.Headers.SetValue("return-client-request-id", TypeFormatters.ConvertToString(returnClientRequestId, null));
             }
-            if (ocpdate != null)
+            if (ocpDate != null)
             {
-                request.Headers.SetValue("ocp-date", Azure.Batch.TypeFormatters.ConvertToString(ocpdate, "R"));
+                request.Headers.SetValue("ocp-date", TypeFormatters.ConvertToString(ocpDate, "R"));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextListNodeFilesRequest(Uri nextPage, string poolId, string nodeId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
+        internal HttpMessage CreateNextListNodeFilesRequest(Uri nextPage, string poolId, string nodeId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

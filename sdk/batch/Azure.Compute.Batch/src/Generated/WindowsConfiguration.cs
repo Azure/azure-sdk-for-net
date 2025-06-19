@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Windows operating system settings to apply to the virtual machine. </summary>
     public partial class WindowsConfiguration

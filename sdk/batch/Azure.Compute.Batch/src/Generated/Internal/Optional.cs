@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     internal static partial class Optional
     {

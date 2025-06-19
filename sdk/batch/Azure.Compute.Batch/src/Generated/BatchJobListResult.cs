@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The result of listing the Jobs in an Account. </summary>
     internal partial class BatchJobListResult
@@ -26,7 +26,7 @@ namespace Azure.Batch
         /// <param name="value"> The list of Jobs. </param>
         /// <param name="odataNextLink"> The URL to get the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobListResult(IList<BatchJob> value, string odataNextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobListResult(IList<BatchJob> value, Uri odataNextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             OdataNextLink = odataNextLink;
@@ -37,6 +37,6 @@ namespace Azure.Batch
         public IList<BatchJob> Value { get; }
 
         /// <summary> The URL to get the next set of results. </summary>
-        public string OdataNextLink { get; }
+        public Uri OdataNextLink { get; }
     }
 }

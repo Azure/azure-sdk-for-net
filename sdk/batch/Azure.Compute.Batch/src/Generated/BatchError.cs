@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> An error response received from the Azure Batch service. </summary>
     public partial class BatchError
@@ -17,10 +17,8 @@ namespace Azure.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchError"/>. </summary>
-        /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
-        internal BatchError(string code)
+        internal BatchError()
         {
-            Code = code;
             Values = new ChangeTrackingList<BatchErrorDetail>();
         }
 

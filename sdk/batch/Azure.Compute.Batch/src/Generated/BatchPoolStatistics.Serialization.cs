@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Contains utilization and resource usage statistics for the lifetime of a Pool. </summary>
     public partial class BatchPoolStatistics : IJsonModel<BatchPoolStatistics>
@@ -39,20 +39,20 @@ namespace Azure.Batch
                 throw new FormatException($"The model {nameof(BatchPoolStatistics)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("lastUpdateTime"u8);
             writer.WriteStringValue(LastUpdateTime, "O");
-            if (Optional.IsDefined(UsageStats))
+            if (Optional.IsDefined(UsageStatistics))
             {
                 writer.WritePropertyName("usageStats"u8);
-                writer.WriteObjectValue(UsageStats, options);
+                writer.WriteObjectValue(UsageStatistics, options);
             }
-            if (Optional.IsDefined(ResourceStats))
+            if (Optional.IsDefined(ResourceStatistics))
             {
                 writer.WritePropertyName("resourceStats"u8);
-                writer.WriteObjectValue(ResourceStats, options);
+                writer.WriteObjectValue(ResourceStatistics, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -96,17 +96,17 @@ namespace Azure.Batch
             {
                 return null;
             }
-            string url = default;
+            Uri uri = default;
             DateTimeOffset startTime = default;
             DateTimeOffset lastUpdateTime = default;
-            BatchPoolUsageStatistics usageStats = default;
-            BatchPoolResourceStatistics resourceStats = default;
+            BatchPoolUsageStatistics usageStatistics = default;
+            BatchPoolResourceStatistics resourceStatistics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    url = prop.Value.GetString();
+                    uri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))
@@ -125,7 +125,7 @@ namespace Azure.Batch
                     {
                         continue;
                     }
-                    usageStats = BatchPoolUsageStatistics.DeserializeBatchPoolUsageStatistics(prop.Value, options);
+                    usageStatistics = BatchPoolUsageStatistics.DeserializeBatchPoolUsageStatistics(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceStats"u8))
@@ -134,7 +134,7 @@ namespace Azure.Batch
                     {
                         continue;
                     }
-                    resourceStats = BatchPoolResourceStatistics.DeserializeBatchPoolResourceStatistics(prop.Value, options);
+                    resourceStatistics = BatchPoolResourceStatistics.DeserializeBatchPoolResourceStatistics(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,11 +143,11 @@ namespace Azure.Batch
                 }
             }
             return new BatchPoolStatistics(
-                url,
+                uri,
                 startTime,
                 lastUpdateTime,
-                usageStats,
-                resourceStats,
+                usageStatistics,
+                resourceStatistics,
                 additionalBinaryDataProperties);
         }
 
@@ -161,7 +161,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchPoolStatistics)} does not support writing '{options.Format}' format.");
             }

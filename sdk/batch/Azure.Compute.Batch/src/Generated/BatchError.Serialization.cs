@@ -10,16 +10,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> An error response received from the Azure Batch service. </summary>
     public partial class BatchError : IJsonModel<BatchError>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchError"/> for deserialization. </summary>
-        internal BatchError()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -38,8 +33,11 @@ namespace Azure.Batch
             {
                 throw new FormatException($"The model {nameof(BatchError)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("code"u8);
-            writer.WriteStringValue(Code);
+            if (Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
             if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
@@ -149,7 +147,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchError)} does not support writing '{options.Format}' format.");
             }

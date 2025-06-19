@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> A reference to an Package to be deployed to Compute Nodes. </summary>
     public partial class BatchApplicationPackageReference : IJsonModel<BatchApplicationPackageReference>
@@ -120,7 +120,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchApplicationPackageReference)} does not support writing '{options.Format}' format.");
             }

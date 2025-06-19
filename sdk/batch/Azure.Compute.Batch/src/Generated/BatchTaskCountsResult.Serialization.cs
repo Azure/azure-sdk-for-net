@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The Task and TaskSlot counts for a Job. </summary>
     public partial class BatchTaskCountsResult : IJsonModel<BatchTaskCountsResult>
@@ -118,7 +118,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchTaskCountsResult)} does not support writing '{options.Format}' format.");
             }

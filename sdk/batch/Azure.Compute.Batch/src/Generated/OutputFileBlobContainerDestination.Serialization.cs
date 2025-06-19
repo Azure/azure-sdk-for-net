@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Specifies a file upload destination within an Azure blob storage container. </summary>
     public partial class OutputFileBlobContainerDestination : IJsonModel<OutputFileBlobContainerDestination>
@@ -44,7 +44,7 @@ namespace Azure.Batch
                 writer.WriteStringValue(Path);
             }
             writer.WritePropertyName("containerUrl"u8);
-            writer.WriteStringValue(ContainerUrl);
+            writer.WriteStringValue(ContainerUri.AbsoluteUri);
             if (Optional.IsDefined(IdentityReference))
             {
                 writer.WritePropertyName("identityReference"u8);
@@ -54,7 +54,7 @@ namespace Azure.Batch
             {
                 writer.WritePropertyName("uploadHeaders"u8);
                 writer.WriteStartArray();
-                foreach (HttpHeader item in UploadHeaders)
+                foreach (OutputFileUploadHeader item in UploadHeaders)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -103,9 +103,9 @@ namespace Azure.Batch
                 return null;
             }
             string path = default;
-            string containerUrl = default;
+            Uri containerUri = default;
             BatchNodeIdentityReference identityReference = default;
-            IList<HttpHeader> uploadHeaders = default;
+            IList<OutputFileUploadHeader> uploadHeaders = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -116,7 +116,7 @@ namespace Azure.Batch
                 }
                 if (prop.NameEquals("containerUrl"u8))
                 {
-                    containerUrl = prop.Value.GetString();
+                    containerUri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identityReference"u8))
@@ -134,10 +134,10 @@ namespace Azure.Batch
                     {
                         continue;
                     }
-                    List<HttpHeader> array = new List<HttpHeader>();
+                    List<OutputFileUploadHeader> array = new List<OutputFileUploadHeader>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HttpHeader.DeserializeHttpHeader(item, options));
+                        array.Add(OutputFileUploadHeader.DeserializeOutputFileUploadHeader(item, options));
                     }
                     uploadHeaders = array;
                     continue;
@@ -147,7 +147,7 @@ namespace Azure.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OutputFileBlobContainerDestination(path, containerUrl, identityReference, uploadHeaders ?? new ChangeTrackingList<HttpHeader>(), additionalBinaryDataProperties);
+            return new OutputFileBlobContainerDestination(path, containerUri, identityReference, uploadHeaders ?? new ChangeTrackingList<OutputFileUploadHeader>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -160,7 +160,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OutputFileBlobContainerDestination)} does not support writing '{options.Format}' format.");
             }

@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     internal partial class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {

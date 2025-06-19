@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> BatchNodeDeallocateOption enums. </summary>
     public readonly partial struct BatchNodeDeallocateOption : IEquatable<BatchNodeDeallocateOption>

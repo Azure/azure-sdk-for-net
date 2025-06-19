@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Information about a file or directory on a Compute Node. </summary>
     public partial class BatchNodeFile : IJsonModel<BatchNodeFile>
@@ -38,10 +38,10 @@ namespace Azure.Batch
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(IsDirectory))
             {
@@ -96,7 +96,7 @@ namespace Azure.Batch
                 return null;
             }
             string name = default;
-            string url = default;
+            Uri uri = default;
             bool? isDirectory = default;
             FileProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -109,7 +109,11 @@ namespace Azure.Batch
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    url = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("isDirectory"u8))
@@ -135,7 +139,7 @@ namespace Azure.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchNodeFile(name, url, isDirectory, properties, additionalBinaryDataProperties);
+            return new BatchNodeFile(name, uri, isDirectory, properties, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -148,7 +152,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchNodeFile)} does not support writing '{options.Format}' format.");
             }

@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary>
     /// A Certificate that can be installed on Compute Nodes and can be used to
@@ -47,10 +47,10 @@ namespace Azure.Batch
             writer.WriteStringValue(Thumbprint);
             writer.WritePropertyName("thumbprintAlgorithm"u8);
             writer.WriteStringValue(ThumbprintAlgorithm);
-            if (options.Format != "W" && Optional.IsDefined(Url))
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -83,7 +83,7 @@ namespace Azure.Batch
                 writer.WriteObjectValue(DeleteCertificateError, options);
             }
             writer.WritePropertyName("data"u8);
-            writer.WriteStringValue(Data);
+            writer.WriteBase64StringValue(Data.ToArray(), "D");
             if (Optional.IsDefined(CertificateFormat))
             {
                 writer.WritePropertyName("certificateFormat"u8);
@@ -138,14 +138,14 @@ namespace Azure.Batch
             }
             string thumbprint = default;
             string thumbprintAlgorithm = default;
-            string url = default;
+            Uri uri = default;
             BatchCertificateState? state = default;
             DateTimeOffset? stateTransitionTime = default;
             BatchCertificateState? previousState = default;
             DateTimeOffset? previousStateTransitionTime = default;
             string publicData = default;
-            DeleteBatchCertificateError deleteCertificateError = default;
-            string data = default;
+            BatchCertificateDeleteError deleteCertificateError = default;
+            BinaryData data = default;
             BatchCertificateFormat? certificateFormat = default;
             string password = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -163,7 +163,11 @@ namespace Azure.Batch
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    url = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -213,12 +217,12 @@ namespace Azure.Batch
                     {
                         continue;
                     }
-                    deleteCertificateError = DeleteBatchCertificateError.DeserializeDeleteBatchCertificateError(prop.Value, options);
+                    deleteCertificateError = BatchCertificateDeleteError.DeserializeBatchCertificateDeleteError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("data"u8))
                 {
-                    data = prop.Value.GetString();
+                    data = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (prop.NameEquals("certificateFormat"u8))
@@ -243,7 +247,7 @@ namespace Azure.Batch
             return new BatchCertificate(
                 thumbprint,
                 thumbprintAlgorithm,
-                url,
+                uri,
                 state,
                 stateTransitionTime,
                 previousState,
@@ -266,7 +270,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchCertificate)} does not support writing '{options.Format}' format.");
             }

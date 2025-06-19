@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The managed disk parameters. </summary>
     public partial class ManagedDisk : IJsonModel<ManagedDisk>
@@ -86,7 +86,7 @@ namespace Azure.Batch
                 return null;
             }
             StorageAccountType? storageAccountType = default;
-            VMDiskSecurityProfile securityProfile = default;
+            BatchVmDiskSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -105,7 +105,7 @@ namespace Azure.Batch
                     {
                         continue;
                     }
-                    securityProfile = VMDiskSecurityProfile.DeserializeVMDiskSecurityProfile(prop.Value, options);
+                    securityProfile = BatchVmDiskSecurityProfile.DeserializeBatchVmDiskSecurityProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ManagedDisk)} does not support writing '{options.Format}' format.");
             }

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> UpgradeMode enums. </summary>
     public readonly partial struct UpgradeMode : IEquatable<UpgradeMode>

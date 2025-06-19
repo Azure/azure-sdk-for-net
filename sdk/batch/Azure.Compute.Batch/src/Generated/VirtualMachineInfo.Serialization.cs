@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Info about the current state of the virtual machine. </summary>
     public partial class VirtualMachineInfo : IJsonModel<VirtualMachineInfo>
@@ -85,7 +85,7 @@ namespace Azure.Batch
             {
                 return null;
             }
-            ImageReference imageReference = default;
+            BatchVmImageReference imageReference = default;
             string scaleSetVmResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.Batch
                     {
                         continue;
                     }
-                    imageReference = ImageReference.DeserializeImageReference(prop.Value, options);
+                    imageReference = BatchVmImageReference.DeserializeBatchVmImageReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scaleSetVmResourceId"u8))
@@ -122,7 +122,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineInfo)} does not support writing '{options.Format}' format.");
             }

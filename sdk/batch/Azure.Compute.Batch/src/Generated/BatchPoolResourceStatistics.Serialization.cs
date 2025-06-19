@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Statistics related to resource consumption by Compute Nodes in a Pool. </summary>
     public partial class BatchPoolResourceStatistics : IJsonModel<BatchPoolResourceStatistics>
@@ -53,9 +53,9 @@ namespace Azure.Batch
             writer.WritePropertyName("peakDiskGiB"u8);
             writer.WriteNumberValue(PeakDiskGiB);
             writer.WritePropertyName("diskReadIOps"u8);
-            writer.WriteStringValue(DiskReadIOps.ToString());
+            writer.WriteStringValue(DiskReadIops.ToString());
             writer.WritePropertyName("diskWriteIOps"u8);
-            writer.WriteStringValue(DiskWriteIOps.ToString());
+            writer.WriteStringValue(DiskWriteIops.ToString());
             writer.WritePropertyName("diskReadGiB"u8);
             writer.WriteNumberValue(DiskReadGiB);
             writer.WritePropertyName("diskWriteGiB"u8);
@@ -113,8 +113,8 @@ namespace Azure.Batch
             float peakMemoryGiB = default;
             float avgDiskGiB = default;
             float peakDiskGiB = default;
-            long diskReadIOps = default;
-            long diskWriteIOps = default;
+            long diskReadIops = default;
+            long diskWriteIops = default;
             float diskReadGiB = default;
             float diskWriteGiB = default;
             float networkReadGiB = default;
@@ -159,12 +159,12 @@ namespace Azure.Batch
                 }
                 if (prop.NameEquals("diskReadIOps"u8))
                 {
-                    diskReadIOps = long.Parse(prop.Value.GetString());
+                    diskReadIops = long.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskWriteIOps"u8))
                 {
-                    diskWriteIOps = long.Parse(prop.Value.GetString());
+                    diskWriteIops = long.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskReadGiB"u8))
@@ -200,8 +200,8 @@ namespace Azure.Batch
                 peakMemoryGiB,
                 avgDiskGiB,
                 peakDiskGiB,
-                diskReadIOps,
-                diskWriteIOps,
+                diskReadIops,
+                diskWriteIops,
                 diskReadGiB,
                 diskWriteGiB,
                 networkReadGiB,
@@ -219,7 +219,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchPoolResourceStatistics)} does not support writing '{options.Format}' format.");
             }

@@ -9,7 +9,7 @@ using System;
 using System.Threading;
 using Azure;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     internal static partial class RequestContextExtensions
     {

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The identity of the Batch pool, if configured. </summary>
     public partial class BatchPoolIdentity
@@ -21,14 +21,14 @@ namespace Azure.Batch
         internal BatchPoolIdentity(BatchPoolIdentityType @type)
         {
             Type = @type;
-            UserAssignedIdentities = new ChangeTrackingList<UserAssignedIdentity>();
+            UserAssignedIdentities = new ChangeTrackingList<BatchUserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchPoolIdentity"/>. </summary>
         /// <param name="type"> The identity of the Batch pool, if configured. The list of user identities associated with the Batch pool. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <param name="userAssignedIdentities"> The list of user identities associated with the Batch account. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolIdentity(BatchPoolIdentityType @type, IList<UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolIdentity(BatchPoolIdentityType @type, IList<BatchUserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             UserAssignedIdentities = userAssignedIdentities;
@@ -39,6 +39,6 @@ namespace Azure.Batch
         public BatchPoolIdentityType Type { get; }
 
         /// <summary> The list of user identities associated with the Batch account. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>
-        public IList<UserAssignedIdentity> UserAssignedIdentities { get; }
+        public IList<BatchUserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

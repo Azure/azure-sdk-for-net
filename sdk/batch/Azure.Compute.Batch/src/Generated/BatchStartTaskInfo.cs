@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Information about a StartTask running on a Compute Node. </summary>
     public partial class BatchStartTaskInfo

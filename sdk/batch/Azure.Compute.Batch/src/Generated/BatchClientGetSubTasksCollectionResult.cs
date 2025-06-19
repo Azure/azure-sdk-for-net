@@ -10,19 +10,18 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Client;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     internal partial class BatchClientGetSubTasksCollectionResult : Pageable<BinaryData>
     {
         private readonly BatchClient _client;
         private readonly string _jobId;
         private readonly string _taskId;
-        private readonly int? _timeOutInSeconds;
+        private readonly TimeSpan? _timeOutInSeconds;
         private readonly string _clientRequestId;
         private readonly bool? _returnClientRequestId;
-        private readonly DateTimeOffset? _ocpdate;
+        private readonly DateTimeOffset? _ocpDate;
         private readonly IEnumerable<string> _select;
         private readonly RequestContext _context;
 
@@ -36,7 +35,7 @@ namespace Azure.Batch
         /// such as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
         /// </param>
         /// <param name="returnClientRequestId"> Whether the server should return the client-request-id in the response. </param>
-        /// <param name="ocpdate">
+        /// <param name="ocpDate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -45,7 +44,7 @@ namespace Azure.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        public BatchClientGetSubTasksCollectionResult(BatchClient client, string jobId, string taskId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, IEnumerable<string> @select, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BatchClientGetSubTasksCollectionResult(BatchClient client, string jobId, string taskId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, IEnumerable<string> @select, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
@@ -56,7 +55,7 @@ namespace Azure.Batch
             _timeOutInSeconds = timeOutInSeconds;
             _clientRequestId = clientRequestId;
             _returnClientRequestId = returnClientRequestId;
-            _ocpdate = ocpdate;
+            _ocpDate = ocpDate;
             _select = @select;
             _context = context;
         }
@@ -92,7 +91,7 @@ namespace Azure.Batch
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextListSubTasksRequest(nextLink, _jobId, _taskId, _timeOutInSeconds, _clientRequestId, _returnClientRequestId, _ocpdate, _select, _context) : _client.CreateListSubTasksRequest(_jobId, _taskId, _timeOutInSeconds, _clientRequestId, _returnClientRequestId, _ocpdate, _select, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListSubTasksRequest(nextLink, _jobId, _taskId, _timeOutInSeconds, _clientRequestId, _returnClientRequestId, _ocpDate, _select, _context) : _client.CreateListSubTasksRequest(_jobId, _taskId, _timeOutInSeconds, _clientRequestId, _returnClientRequestId, _ocpDate, _select, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BatchClient.GetSubTasks");
             scope.Start();
             try

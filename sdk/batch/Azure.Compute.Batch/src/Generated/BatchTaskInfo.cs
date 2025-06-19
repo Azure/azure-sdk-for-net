@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Information about a Task running on a Compute Node. </summary>
     public partial class BatchTaskInfo
@@ -24,16 +24,16 @@ namespace Azure.Batch
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskInfo"/>. </summary>
-        /// <param name="taskUrl"> The URL of the Task. </param>
+        /// <param name="taskUri"> The URL of the Task. </param>
         /// <param name="jobId"> The ID of the Job to which the Task belongs. </param>
         /// <param name="taskId"> The ID of the Task. </param>
         /// <param name="subtaskId"> The ID of the subtask if the Task is a multi-instance Task. </param>
         /// <param name="taskState"> The current state of the Task. </param>
         /// <param name="executionInfo"> Information about the execution of the Task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskInfo(string taskUrl, string jobId, string taskId, int? subtaskId, BatchTaskState taskState, BatchTaskExecutionInfo executionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskInfo(Uri taskUri, string jobId, string taskId, int? subtaskId, BatchTaskState taskState, BatchTaskExecutionInfo executionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            TaskUrl = taskUrl;
+            TaskUri = taskUri;
             JobId = jobId;
             TaskId = taskId;
             SubtaskId = subtaskId;
@@ -43,7 +43,7 @@ namespace Azure.Batch
         }
 
         /// <summary> The URL of the Task. </summary>
-        public string TaskUrl { get; }
+        public Uri TaskUri { get; }
 
         /// <summary> The ID of the Job to which the Task belongs. </summary>
         public string JobId { get; }

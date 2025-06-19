@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> AutoUserScope enums. </summary>
     public readonly partial struct AutoUserScope : IEquatable<AutoUserScope>

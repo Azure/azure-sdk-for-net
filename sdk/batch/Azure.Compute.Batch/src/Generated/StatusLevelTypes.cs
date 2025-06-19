@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Level code. </summary>
     public readonly partial struct StatusLevelTypes : IEquatable<StatusLevelTypes>

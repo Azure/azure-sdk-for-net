@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Specification for creating a new Pool. </summary>
     public partial class BatchPoolSpecification
@@ -27,7 +27,7 @@ namespace Azure.Batch
             CertificateReferences = new ChangeTrackingList<BatchCertificateReference>();
             ApplicationPackageReferences = new ChangeTrackingList<BatchApplicationPackageReference>();
             UserAccounts = new ChangeTrackingList<UserAccount>();
-            Metadata = new ChangeTrackingList<MetadataItem>();
+            Metadata = new ChangeTrackingList<BatchMetadataItem>();
             MountConfiguration = new ChangeTrackingList<MountConfiguration>();
         }
 
@@ -59,7 +59,7 @@ namespace Azure.Batch
         /// <param name="targetNodeCommunicationMode"> The desired node communication mode for the pool. If omitted, the default value is Default. </param>
         /// <param name="upgradePolicy"> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolSpecification(string displayName, string vmSize, VirtualMachineConfiguration virtualMachineConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, TimeSpan? resizeTimeout, string resourceTags, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, BatchStartTask startTask, IList<BatchCertificateReference> certificateReferences, IList<BatchApplicationPackageReference> applicationPackageReferences, IList<UserAccount> userAccounts, IList<MetadataItem> metadata, IList<MountConfiguration> mountConfiguration, BatchNodeCommunicationMode? targetNodeCommunicationMode, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolSpecification(string displayName, string vmSize, VirtualMachineConfiguration virtualMachineConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, TimeSpan? resizeTimeout, string resourceTags, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, BatchStartTask startTask, IList<BatchCertificateReference> certificateReferences, IList<BatchApplicationPackageReference> applicationPackageReferences, IList<UserAccount> userAccounts, IList<BatchMetadataItem> metadata, IList<MountConfiguration> mountConfiguration, BatchNodeCommunicationMode? targetNodeCommunicationMode, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             VmSize = vmSize;
@@ -145,7 +145,7 @@ namespace Azure.Batch
         public IList<UserAccount> UserAccounts { get; }
 
         /// <summary> A list of name-value pairs associated with the Pool as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
-        public IList<MetadataItem> Metadata { get; }
+        public IList<BatchMetadataItem> Metadata { get; }
 
         /// <summary> A list of file systems to mount on each node in the pool. This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </summary>
         public IList<MountConfiguration> MountConfiguration { get; }

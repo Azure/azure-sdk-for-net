@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The definition of the user identity under which the Task is run. Specify either the userName or autoUser property, but not both. </summary>
     public partial class UserIdentity : IJsonModel<UserIdentity>
@@ -122,7 +122,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(UserIdentity)} does not support writing '{options.Format}' format.");
             }

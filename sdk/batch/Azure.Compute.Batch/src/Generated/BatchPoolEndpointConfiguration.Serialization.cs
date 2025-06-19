@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The endpoint configuration for a Pool. </summary>
     public partial class BatchPoolEndpointConfiguration : IJsonModel<BatchPoolEndpointConfiguration>
@@ -40,7 +40,7 @@ namespace Azure.Batch
             }
             writer.WritePropertyName("inboundNATPools"u8);
             writer.WriteStartArray();
-            foreach (InboundNatPool item in InboundNatPools)
+            foreach (BatchInboundNatPool item in InboundNatPools)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -87,16 +87,16 @@ namespace Azure.Batch
             {
                 return null;
             }
-            IList<InboundNatPool> inboundNatPools = default;
+            IList<BatchInboundNatPool> inboundNatPools = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("inboundNATPools"u8))
                 {
-                    List<InboundNatPool> array = new List<InboundNatPool>();
+                    List<BatchInboundNatPool> array = new List<BatchInboundNatPool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InboundNatPool.DeserializeInboundNatPool(item, options));
+                        array.Add(BatchInboundNatPool.DeserializeBatchInboundNatPool(item, options));
                     }
                     inboundNatPools = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchPoolEndpointConfiguration)} does not support writing '{options.Format}' format.");
             }

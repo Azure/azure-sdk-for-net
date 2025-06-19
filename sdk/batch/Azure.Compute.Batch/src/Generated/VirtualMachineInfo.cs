@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Info about the current state of the virtual machine. </summary>
     public partial class VirtualMachineInfo
@@ -25,7 +25,7 @@ namespace Azure.Batch
         /// <param name="imageReference"> The reference to the Azure Virtual Machine's Marketplace Image. </param>
         /// <param name="scaleSetVmResourceId"> The resource ID of the Compute Node's current Virtual Machine Scale Set VM. Only defined if the Batch Account was created with its poolAllocationMode property set to 'UserSubscription'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInfo(ImageReference imageReference, string scaleSetVmResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineInfo(BatchVmImageReference imageReference, string scaleSetVmResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
             ScaleSetVmResourceId = scaleSetVmResourceId;
@@ -33,7 +33,7 @@ namespace Azure.Batch
         }
 
         /// <summary> The reference to the Azure Virtual Machine's Marketplace Image. </summary>
-        public ImageReference ImageReference { get; }
+        public BatchVmImageReference ImageReference { get; }
 
         /// <summary> The resource ID of the Compute Node's current Virtual Machine Scale Set VM. Only defined if the Batch Account was created with its poolAllocationMode property set to 'UserSubscription'. </summary>
         public string ScaleSetVmResourceId { get; }

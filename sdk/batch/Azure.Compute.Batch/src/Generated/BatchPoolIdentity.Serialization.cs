@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The identity of the Batch pool, if configured. </summary>
     public partial class BatchPoolIdentity : IJsonModel<BatchPoolIdentity>
@@ -44,7 +44,7 @@ namespace Azure.Batch
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartArray();
-                foreach (UserAssignedIdentity item in UserAssignedIdentities)
+                foreach (BatchUserAssignedIdentity item in UserAssignedIdentities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -93,7 +93,7 @@ namespace Azure.Batch
                 return null;
             }
             BatchPoolIdentityType @type = default;
-            IList<UserAssignedIdentity> userAssignedIdentities = default;
+            IList<BatchUserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -108,10 +108,10 @@ namespace Azure.Batch
                     {
                         continue;
                     }
-                    List<UserAssignedIdentity> array = new List<UserAssignedIdentity>();
+                    List<BatchUserAssignedIdentity> array = new List<BatchUserAssignedIdentity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UserAssignedIdentity.DeserializeUserAssignedIdentity(item, options));
+                        array.Add(BatchUserAssignedIdentity.DeserializeBatchUserAssignedIdentity(item, options));
                     }
                     userAssignedIdentities = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchPoolIdentity(@type, userAssignedIdentities ?? new ChangeTrackingList<UserAssignedIdentity>(), additionalBinaryDataProperties);
+            return new BatchPoolIdentity(@type, userAssignedIdentities ?? new ChangeTrackingList<BatchUserAssignedIdentity>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -134,7 +134,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchPoolIdentity)} does not support writing '{options.Format}' format.");
             }

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The configuration parameters used while performing a rolling upgrade. </summary>
     public partial class RollingUpgradePolicy

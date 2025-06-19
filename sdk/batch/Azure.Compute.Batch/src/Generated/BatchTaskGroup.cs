@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> A collection of Azure Batch Tasks to add. </summary>
     public partial class BatchTaskGroup
@@ -18,25 +18,25 @@ namespace Azure.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskGroup"/>. </summary>
-        /// <param name="value"> The collection of Tasks to add. The maximum count of Tasks is 100. The total serialized size of this collection must be less than 1MB. If it is greater than 1MB (for example if each Task has 100's of resource files or environment variables), the request will fail with code 'RequestBodyTooLarge' and should be retried again with fewer Tasks. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BatchTaskGroup(IEnumerable<BatchTaskCreateContent> value)
+        /// <param name="values"> The collection of Tasks to add. The maximum count of Tasks is 100. The total serialized size of this collection must be less than 1MB. If it is greater than 1MB (for example if each Task has 100's of resource files or environment variables), the request will fail with code 'RequestBodyTooLarge' and should be retried again with fewer Tasks. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
+        public BatchTaskGroup(IEnumerable<BatchTaskCreateOptions> values)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(values, nameof(values));
 
-            Value = value.ToList();
+            Values = values.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskGroup"/>. </summary>
-        /// <param name="value"> The collection of Tasks to add. The maximum count of Tasks is 100. The total serialized size of this collection must be less than 1MB. If it is greater than 1MB (for example if each Task has 100's of resource files or environment variables), the request will fail with code 'RequestBodyTooLarge' and should be retried again with fewer Tasks. </param>
+        /// <param name="values"> The collection of Tasks to add. The maximum count of Tasks is 100. The total serialized size of this collection must be less than 1MB. If it is greater than 1MB (for example if each Task has 100's of resource files or environment variables), the request will fail with code 'RequestBodyTooLarge' and should be retried again with fewer Tasks. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskGroup(IList<BatchTaskCreateContent> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskGroup(IList<BatchTaskCreateOptions> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Value = value;
+            Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The collection of Tasks to add. The maximum count of Tasks is 100. The total serialized size of this collection must be less than 1MB. If it is greater than 1MB (for example if each Task has 100's of resource files or environment variables), the request will fail with code 'RequestBodyTooLarge' and should be retried again with fewer Tasks. </summary>
-        public IList<BatchTaskCreateContent> Value { get; }
+        public IList<BatchTaskCreateOptions> Values { get; }
     }
 }

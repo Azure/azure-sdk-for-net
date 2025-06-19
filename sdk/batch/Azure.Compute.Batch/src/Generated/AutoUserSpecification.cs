@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Specifies the options for the auto user that runs an Azure Batch Task. </summary>
     public partial class AutoUserSpecification

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary>
     /// The result of listing the status of the Job Preparation and Job Release Tasks
@@ -50,7 +50,7 @@ namespace Azure.Batch
             if (Optional.IsDefined(OdataNextLink))
             {
                 writer.WritePropertyName("odata.nextLink"u8);
-                writer.WriteStringValue(OdataNextLink);
+                writer.WriteStringValue(OdataNextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.Batch
                 return null;
             }
             IList<BatchJobPreparationAndReleaseTaskStatus> value = default;
-            string odataNextLink = default;
+            Uri odataNextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -115,7 +115,11 @@ namespace Azure.Batch
                 }
                 if (prop.NameEquals("odata.nextLink"u8))
                 {
-                    odataNextLink = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    odataNextLink = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,7 +140,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobPreparationAndReleaseTaskStatusListResult)} does not support writing '{options.Format}' format.");
             }

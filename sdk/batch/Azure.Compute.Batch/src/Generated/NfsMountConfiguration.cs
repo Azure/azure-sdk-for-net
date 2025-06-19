@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Information used to connect to an NFS file system. </summary>
     public partial class NfsMountConfiguration

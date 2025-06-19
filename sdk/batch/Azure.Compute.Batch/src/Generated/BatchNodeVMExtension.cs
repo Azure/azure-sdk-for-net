@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The configuration for virtual machine extension instance view. </summary>
     public partial class BatchNodeVMExtension

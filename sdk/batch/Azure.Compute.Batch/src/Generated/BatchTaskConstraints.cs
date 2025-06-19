@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Execution constraints to apply to a Task. </summary>
     public partial class BatchTaskConstraints

@@ -8,10 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The remote login settings for a Compute Node. </summary>
     public partial class BatchNodeRemoteLoginSettings : IJsonModel<BatchNodeRemoteLoginSettings>
@@ -40,7 +41,7 @@ namespace Azure.Batch
                 throw new FormatException($"The model {nameof(BatchNodeRemoteLoginSettings)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("remoteLoginIPAddress"u8);
-            writer.WriteStringValue(RemoteLoginIpAddress);
+            writer.WriteStringValue(RemoteLoginIpAddress.ToString());
             writer.WritePropertyName("remoteLoginPort"u8);
             writer.WriteNumberValue(RemoteLoginPort);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -85,14 +86,14 @@ namespace Azure.Batch
             {
                 return null;
             }
-            string remoteLoginIpAddress = default;
+            IPAddress remoteLoginIpAddress = default;
             int remoteLoginPort = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("remoteLoginIPAddress"u8))
                 {
-                    remoteLoginIpAddress = prop.Value.GetString();
+                    remoteLoginIpAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("remoteLoginPort"u8))
@@ -118,7 +119,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchNodeRemoteLoginSettings)} does not support writing '{options.Format}' format.");
             }

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> BatchStartTaskState enums. </summary>
     public readonly partial struct BatchStartTaskState : IEquatable<BatchStartTaskState>

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Resource usage statistics for a Task. </summary>
     public partial class BatchTaskStatistics
@@ -17,63 +17,63 @@ namespace Azure.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskStatistics"/>. </summary>
-        /// <param name="url"> The URL of the statistics. </param>
+        /// <param name="uri"> The URL of the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
         /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. </param>
         /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. </param>
         /// <param name="wallClockTime"> The total wall clock time of the Task. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If the Task was retried, this includes the wall clock time of all the Task retries. </param>
-        /// <param name="readIOps"> The total number of disk read operations made by the Task. </param>
-        /// <param name="writeIOps"> The total number of disk write operations made by the Task. </param>
-        /// <param name="readIOGiB"> The total gibibytes read from disk by the Task. </param>
-        /// <param name="writeIOGiB"> The total gibibytes written to disk by the Task. </param>
+        /// <param name="readIops"> The total number of disk read operations made by the Task. </param>
+        /// <param name="writeIops"> The total number of disk write operations made by the Task. </param>
+        /// <param name="readIoGiB"> The total gibibytes read from disk by the Task. </param>
+        /// <param name="writeIoGiB"> The total gibibytes written to disk by the Task. </param>
         /// <param name="waitTime"> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). </param>
-        internal BatchTaskStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIOps, long writeIOps, float readIOGiB, float writeIOGiB, TimeSpan waitTime)
+        internal BatchTaskStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIops, long writeIops, float readIoGiB, float writeIoGiB, TimeSpan waitTime)
         {
-            Url = url;
+            Uri = uri;
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
             UserCpuTime = userCpuTime;
             KernelCpuTime = kernelCpuTime;
             WallClockTime = wallClockTime;
-            ReadIOps = readIOps;
-            WriteIOps = writeIOps;
-            ReadIOGiB = readIOGiB;
-            WriteIOGiB = writeIOGiB;
+            ReadIops = readIops;
+            WriteIops = writeIops;
+            ReadIoGiB = readIoGiB;
+            WriteIoGiB = writeIoGiB;
             WaitTime = waitTime;
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskStatistics"/>. </summary>
-        /// <param name="url"> The URL of the statistics. </param>
+        /// <param name="uri"> The URL of the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
         /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. </param>
         /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by the Task. </param>
         /// <param name="wallClockTime"> The total wall clock time of the Task. The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If the Task was retried, this includes the wall clock time of all the Task retries. </param>
-        /// <param name="readIOps"> The total number of disk read operations made by the Task. </param>
-        /// <param name="writeIOps"> The total number of disk write operations made by the Task. </param>
-        /// <param name="readIOGiB"> The total gibibytes read from disk by the Task. </param>
-        /// <param name="writeIOGiB"> The total gibibytes written to disk by the Task. </param>
+        /// <param name="readIops"> The total number of disk read operations made by the Task. </param>
+        /// <param name="writeIops"> The total number of disk write operations made by the Task. </param>
+        /// <param name="readIoGiB"> The total gibibytes read from disk by the Task. </param>
+        /// <param name="writeIoGiB"> The total gibibytes written to disk by the Task. </param>
         /// <param name="waitTime"> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIOps, long writeIOps, float readIOGiB, float writeIOGiB, TimeSpan waitTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIops, long writeIops, float readIoGiB, float writeIoGiB, TimeSpan waitTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Url = url;
+            Uri = uri;
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
             UserCpuTime = userCpuTime;
             KernelCpuTime = kernelCpuTime;
             WallClockTime = wallClockTime;
-            ReadIOps = readIOps;
-            WriteIOps = writeIOps;
-            ReadIOGiB = readIOGiB;
-            WriteIOGiB = writeIOGiB;
+            ReadIops = readIops;
+            WriteIops = writeIops;
+            ReadIoGiB = readIoGiB;
+            WriteIoGiB = writeIoGiB;
             WaitTime = waitTime;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URL of the statistics. </summary>
-        public string Url { get; }
+        public Uri Uri { get; }
 
         /// <summary> The start time of the time range covered by the statistics. </summary>
         public DateTimeOffset StartTime { get; }
@@ -91,16 +91,16 @@ namespace Azure.Batch
         public TimeSpan WallClockTime { get; }
 
         /// <summary> The total number of disk read operations made by the Task. </summary>
-        public long ReadIOps { get; }
+        public long ReadIops { get; }
 
         /// <summary> The total number of disk write operations made by the Task. </summary>
-        public long WriteIOps { get; }
+        public long WriteIops { get; }
 
         /// <summary> The total gibibytes read from disk by the Task. </summary>
-        public float ReadIOGiB { get; }
+        public float ReadIoGiB { get; }
 
         /// <summary> The total gibibytes written to disk by the Task. </summary>
-        public float WriteIOGiB { get; }
+        public float WriteIoGiB { get; }
 
         /// <summary> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). </summary>
         public TimeSpan WaitTime { get; }

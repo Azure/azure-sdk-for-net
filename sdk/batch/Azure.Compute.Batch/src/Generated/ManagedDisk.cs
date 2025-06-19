@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The managed disk parameters. </summary>
     public partial class ManagedDisk
@@ -25,7 +25,7 @@ namespace Azure.Batch
         /// <param name="storageAccountType"> The storage account type for managed disk. </param>
         /// <param name="securityProfile"> Specifies the security profile settings for the managed disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDisk(StorageAccountType? storageAccountType, VMDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedDisk(StorageAccountType? storageAccountType, BatchVmDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountType = storageAccountType;
             SecurityProfile = securityProfile;
@@ -36,6 +36,6 @@ namespace Azure.Batch
         public StorageAccountType? StorageAccountType { get; set; }
 
         /// <summary> Specifies the security profile settings for the managed disk. </summary>
-        public VMDiskSecurityProfile SecurityProfile { get; set; }
+        public BatchVmDiskSecurityProfile SecurityProfile { get; set; }
     }
 }

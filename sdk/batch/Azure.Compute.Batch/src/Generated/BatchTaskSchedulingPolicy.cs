@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Specifies how Tasks should be distributed across Compute Nodes. </summary>
     public partial class BatchTaskSchedulingPolicy

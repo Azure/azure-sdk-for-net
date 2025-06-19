@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     internal static partial class TypeFormatters
     {

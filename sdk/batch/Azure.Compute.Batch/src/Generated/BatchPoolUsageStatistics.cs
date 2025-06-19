@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Statistics related to Pool usage information. </summary>
     public partial class BatchPoolUsageStatistics

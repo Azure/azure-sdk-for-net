@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Contains information about the execution of a Job in the Azure Batch service. </summary>
     public partial class BatchJobExecutionInfo

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Information about a file or directory on a Compute Node. </summary>
     public partial class BatchNodeFile
@@ -23,14 +23,14 @@ namespace Azure.Batch
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeFile"/>. </summary>
         /// <param name="name"> The file path. </param>
-        /// <param name="url"> The URL of the file. </param>
+        /// <param name="uri"> The URL of the file. </param>
         /// <param name="isDirectory"> Whether the object represents a directory. </param>
         /// <param name="properties"> The file properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeFile(string name, string url, bool? isDirectory, FileProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeFile(string name, Uri uri, bool? isDirectory, FileProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Url = url;
+            Uri = uri;
             IsDirectory = isDirectory;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -40,7 +40,7 @@ namespace Azure.Batch
         public string Name { get; }
 
         /// <summary> The URL of the file. </summary>
-        public string Url { get; }
+        public Uri Uri { get; }
 
         /// <summary> Whether the object represents a directory. </summary>
         public bool? IsDirectory { get; }

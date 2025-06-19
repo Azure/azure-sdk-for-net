@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Usage metrics for a Pool across an aggregation interval. </summary>
     public partial class BatchPoolUsageMetrics

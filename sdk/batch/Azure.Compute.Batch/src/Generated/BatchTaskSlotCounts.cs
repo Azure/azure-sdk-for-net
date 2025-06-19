@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The TaskSlot counts for a Job. </summary>
     public partial class BatchTaskSlotCounts

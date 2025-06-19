@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Describes an upgrade policy - automatic, manual, or rolling. </summary>
     public partial class UpgradePolicy

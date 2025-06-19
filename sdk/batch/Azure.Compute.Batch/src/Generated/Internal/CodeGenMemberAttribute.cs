@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     [AttributeUsage((AttributeTargets.Property | AttributeTargets.Field))]
     internal partial class CodeGenMemberAttribute : CodeGenTypeAttribute

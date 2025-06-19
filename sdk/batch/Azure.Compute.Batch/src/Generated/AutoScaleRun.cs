@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The results and errors from an execution of a Pool autoscale formula. </summary>
     public partial class AutoScaleRun

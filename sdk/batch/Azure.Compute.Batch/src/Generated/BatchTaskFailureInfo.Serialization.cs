@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Information about a Task failure. </summary>
     public partial class BatchTaskFailureInfo : IJsonModel<BatchTaskFailureInfo>
@@ -102,7 +102,7 @@ namespace Azure.Batch
             {
                 return null;
             }
-            ErrorCategory category = default;
+            BatchErrorSourceCategory category = default;
             string code = default;
             string message = default;
             IList<NameValuePair> details = default;
@@ -111,7 +111,7 @@ namespace Azure.Batch
             {
                 if (prop.NameEquals("category"u8))
                 {
-                    category = new ErrorCategory(prop.Value.GetString());
+                    category = new BatchErrorSourceCategory(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("code"u8))
@@ -156,7 +156,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchTaskFailureInfo)} does not support writing '{options.Format}' format.");
             }

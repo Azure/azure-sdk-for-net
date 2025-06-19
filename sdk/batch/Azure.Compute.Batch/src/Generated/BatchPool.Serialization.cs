@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> A Pool in the Azure Batch service. </summary>
     public partial class BatchPool : IJsonModel<BatchPool>
@@ -44,15 +44,15 @@ namespace Azure.Batch
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Url))
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
@@ -224,16 +224,16 @@ namespace Azure.Batch
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
-                foreach (MetadataItem item in Metadata)
+                foreach (BatchMetadataItem item in Metadata)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Stats))
+            if (options.Format != "W" && Optional.IsDefined(PoolStatistics))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(Stats, options);
+                writer.WriteObjectValue(PoolStatistics, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MountConfiguration))
             {
@@ -309,8 +309,8 @@ namespace Azure.Batch
             }
             string id = default;
             string displayName = default;
-            string url = default;
-            string eTag = default;
+            Uri uri = default;
+            ETag? eTag = default;
             DateTimeOffset? lastModified = default;
             DateTimeOffset? creationTime = default;
             BatchPoolState? state = default;
@@ -338,8 +338,8 @@ namespace Azure.Batch
             int? taskSlotsPerNode = default;
             BatchTaskSchedulingPolicy taskSchedulingPolicy = default;
             IReadOnlyList<UserAccount> userAccounts = default;
-            IReadOnlyList<MetadataItem> metadata = default;
-            BatchPoolStatistics stats = default;
+            IReadOnlyList<BatchMetadataItem> metadata = default;
+            BatchPoolStatistics poolStatistics = default;
             IReadOnlyList<MountConfiguration> mountConfiguration = default;
             BatchPoolIdentity identity = default;
             BatchNodeCommunicationMode? targetNodeCommunicationMode = default;
@@ -360,12 +360,20 @@ namespace Azure.Batch
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    url = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("eTag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastModified"u8))
@@ -641,10 +649,10 @@ namespace Azure.Batch
                     {
                         continue;
                     }
-                    List<MetadataItem> array = new List<MetadataItem>();
+                    List<BatchMetadataItem> array = new List<BatchMetadataItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MetadataItem.DeserializeMetadataItem(item, options));
+                        array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
@@ -655,7 +663,7 @@ namespace Azure.Batch
                     {
                         continue;
                     }
-                    stats = BatchPoolStatistics.DeserializeBatchPoolStatistics(prop.Value, options);
+                    poolStatistics = BatchPoolStatistics.DeserializeBatchPoolStatistics(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("mountConfiguration"u8))
@@ -716,7 +724,7 @@ namespace Azure.Batch
             return new BatchPool(
                 id,
                 displayName,
-                url,
+                uri,
                 eTag,
                 lastModified,
                 creationTime,
@@ -745,8 +753,8 @@ namespace Azure.Batch
                 taskSlotsPerNode,
                 taskSchedulingPolicy,
                 userAccounts ?? new ChangeTrackingList<UserAccount>(),
-                metadata ?? new ChangeTrackingList<MetadataItem>(),
-                stats,
+                metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
+                poolStatistics,
                 mountConfiguration ?? new ChangeTrackingList<MountConfiguration>(),
                 identity,
                 targetNodeCommunicationMode,
@@ -765,7 +773,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchPool)} does not support writing '{options.Format}' format.");
             }

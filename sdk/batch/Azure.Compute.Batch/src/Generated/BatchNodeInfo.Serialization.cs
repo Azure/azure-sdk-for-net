@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Information about the Compute Node on which a Task ran. </summary>
     public partial class BatchNodeInfo : IJsonModel<BatchNodeInfo>
@@ -38,10 +38,10 @@ namespace Azure.Batch
                 writer.WritePropertyName("affinityId"u8);
                 writer.WriteStringValue(AffinityId);
             }
-            if (Optional.IsDefined(NodeUrl))
+            if (Optional.IsDefined(NodeUri))
             {
                 writer.WritePropertyName("nodeUrl"u8);
-                writer.WriteStringValue(NodeUrl);
+                writer.WriteStringValue(NodeUri.AbsoluteUri);
             }
             if (Optional.IsDefined(PoolId))
             {
@@ -58,10 +58,10 @@ namespace Azure.Batch
                 writer.WritePropertyName("taskRootDirectory"u8);
                 writer.WriteStringValue(TaskRootDirectory);
             }
-            if (Optional.IsDefined(TaskRootDirectoryUrl))
+            if (Optional.IsDefined(TaskRootDirectoryUri))
             {
                 writer.WritePropertyName("taskRootDirectoryUrl"u8);
-                writer.WriteStringValue(TaskRootDirectoryUrl);
+                writer.WriteStringValue(TaskRootDirectoryUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -106,11 +106,11 @@ namespace Azure.Batch
                 return null;
             }
             string affinityId = default;
-            string nodeUrl = default;
+            Uri nodeUri = default;
             string poolId = default;
             string nodeId = default;
             string taskRootDirectory = default;
-            string taskRootDirectoryUrl = default;
+            Uri taskRootDirectoryUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -121,7 +121,11 @@ namespace Azure.Batch
                 }
                 if (prop.NameEquals("nodeUrl"u8))
                 {
-                    nodeUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nodeUri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("poolId"u8))
@@ -141,7 +145,11 @@ namespace Azure.Batch
                 }
                 if (prop.NameEquals("taskRootDirectoryUrl"u8))
                 {
-                    taskRootDirectoryUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    taskRootDirectoryUri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -151,11 +159,11 @@ namespace Azure.Batch
             }
             return new BatchNodeInfo(
                 affinityId,
-                nodeUrl,
+                nodeUri,
                 poolId,
                 nodeId,
                 taskRootDirectory,
-                taskRootDirectoryUrl,
+                taskRootDirectoryUri,
                 additionalBinaryDataProperties);
         }
 
@@ -169,7 +177,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchNodeInfo)} does not support writing '{options.Format}' format.");
             }

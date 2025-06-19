@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Resource usage statistics for a Job Schedule. </summary>
     public partial class BatchJobScheduleStatistics : IJsonModel<BatchJobScheduleStatistics>
@@ -39,7 +39,7 @@ namespace Azure.Batch
                 throw new FormatException($"The model {nameof(BatchJobScheduleStatistics)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("lastUpdateTime"u8);
@@ -51,19 +51,19 @@ namespace Azure.Batch
             writer.WritePropertyName("wallClockTime"u8);
             writer.WriteStringValue(WallClockTime, "P");
             writer.WritePropertyName("readIOps"u8);
-            writer.WriteStringValue(ReadIOps.ToString());
+            writer.WriteStringValue(ReadIops.ToString());
             writer.WritePropertyName("writeIOps"u8);
-            writer.WriteStringValue(WriteIOps.ToString());
+            writer.WriteStringValue(WriteIops.ToString());
             writer.WritePropertyName("readIOGiB"u8);
-            writer.WriteNumberValue(ReadIOGiB);
+            writer.WriteNumberValue(ReadIoGiB);
             writer.WritePropertyName("writeIOGiB"u8);
-            writer.WriteNumberValue(WriteIOGiB);
+            writer.WriteNumberValue(WriteIoGiB);
             writer.WritePropertyName("numSucceededTasks"u8);
-            writer.WriteStringValue(NumSucceededTasks.ToString());
+            writer.WriteStringValue(SucceededTasksCount.ToString());
             writer.WritePropertyName("numFailedTasks"u8);
-            writer.WriteStringValue(NumFailedTasks.ToString());
+            writer.WriteStringValue(FailedTasksCount.ToString());
             writer.WritePropertyName("numTaskRetries"u8);
-            writer.WriteStringValue(NumTaskRetries.ToString());
+            writer.WriteStringValue(TaskRetriesCount.ToString());
             writer.WritePropertyName("waitTime"u8);
             writer.WriteStringValue(WaitTime, "P");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -108,26 +108,26 @@ namespace Azure.Batch
             {
                 return null;
             }
-            string url = default;
+            Uri uri = default;
             DateTimeOffset startTime = default;
             DateTimeOffset lastUpdateTime = default;
             TimeSpan userCpuTime = default;
             TimeSpan kernelCpuTime = default;
             TimeSpan wallClockTime = default;
-            long readIOps = default;
-            long writeIOps = default;
-            float readIOGiB = default;
-            float writeIOGiB = default;
-            long numSucceededTasks = default;
-            long numFailedTasks = default;
-            long numTaskRetries = default;
+            long readIops = default;
+            long writeIops = default;
+            float readIoGiB = default;
+            float writeIoGiB = default;
+            long succeededTasksCount = default;
+            long failedTasksCount = default;
+            long taskRetriesCount = default;
             TimeSpan waitTime = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    url = prop.Value.GetString();
+                    uri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))
@@ -157,37 +157,37 @@ namespace Azure.Batch
                 }
                 if (prop.NameEquals("readIOps"u8))
                 {
-                    readIOps = long.Parse(prop.Value.GetString());
+                    readIops = long.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("writeIOps"u8))
                 {
-                    writeIOps = long.Parse(prop.Value.GetString());
+                    writeIops = long.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("readIOGiB"u8))
                 {
-                    readIOGiB = prop.Value.GetSingle();
+                    readIoGiB = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("writeIOGiB"u8))
                 {
-                    writeIOGiB = prop.Value.GetSingle();
+                    writeIoGiB = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("numSucceededTasks"u8))
                 {
-                    numSucceededTasks = long.Parse(prop.Value.GetString());
+                    succeededTasksCount = long.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("numFailedTasks"u8))
                 {
-                    numFailedTasks = long.Parse(prop.Value.GetString());
+                    failedTasksCount = long.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("numTaskRetries"u8))
                 {
-                    numTaskRetries = long.Parse(prop.Value.GetString());
+                    taskRetriesCount = long.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("waitTime"u8))
@@ -201,19 +201,19 @@ namespace Azure.Batch
                 }
             }
             return new BatchJobScheduleStatistics(
-                url,
+                uri,
                 startTime,
                 lastUpdateTime,
                 userCpuTime,
                 kernelCpuTime,
                 wallClockTime,
-                readIOps,
-                writeIOps,
-                readIOGiB,
-                writeIOGiB,
-                numSucceededTasks,
-                numFailedTasks,
-                numTaskRetries,
+                readIops,
+                writeIops,
+                readIoGiB,
+                writeIoGiB,
+                succeededTasksCount,
+                failedTasksCount,
+                taskRetriesCount,
                 waitTime,
                 additionalBinaryDataProperties);
         }
@@ -228,7 +228,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobScheduleStatistics)} does not support writing '{options.Format}' format.");
             }

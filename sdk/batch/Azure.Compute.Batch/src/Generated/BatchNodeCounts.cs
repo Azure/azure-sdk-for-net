@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The number of Compute Nodes in each Compute Node state. </summary>
     public partial class BatchNodeCounts

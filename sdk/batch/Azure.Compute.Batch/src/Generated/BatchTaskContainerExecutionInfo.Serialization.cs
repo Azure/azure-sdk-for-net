@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> Contains information about the container which a Task is executing. </summary>
     public partial class BatchTaskContainerExecutionInfo : IJsonModel<BatchTaskContainerExecutionInfo>
@@ -129,7 +129,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchTaskContainerExecutionInfo)} does not support writing '{options.Format}' format.");
             }

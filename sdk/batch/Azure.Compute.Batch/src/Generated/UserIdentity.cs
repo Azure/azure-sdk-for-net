@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The definition of the user identity under which the Task is run. Specify either the userName or autoUser property, but not both. </summary>
     public partial class UserIdentity

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> BatchNodeCommunicationMode enums. </summary>
     public readonly partial struct BatchNodeCommunicationMode : IEquatable<BatchNodeCommunicationMode>

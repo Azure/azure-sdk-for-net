@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> The endpoint configuration for the Compute Node. </summary>
     public partial class BatchNodeEndpointConfiguration

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> ElevationLevel enums. </summary>
     public readonly partial struct ElevationLevel : IEquatable<ElevationLevel>

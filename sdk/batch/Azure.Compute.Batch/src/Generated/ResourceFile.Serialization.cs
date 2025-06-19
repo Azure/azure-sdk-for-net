@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Batch
+namespace Azure.Compute.Batch
 {
     /// <summary> A single file or multiple files to be downloaded to a Compute Node. </summary>
     public partial class ResourceFile : IJsonModel<ResourceFile>
@@ -38,15 +38,15 @@ namespace Azure.Batch
                 writer.WritePropertyName("autoStorageContainerName"u8);
                 writer.WriteStringValue(AutoStorageContainerName);
             }
-            if (Optional.IsDefined(StorageContainerUrl))
+            if (Optional.IsDefined(StorageContainerUri))
             {
                 writer.WritePropertyName("storageContainerUrl"u8);
-                writer.WriteStringValue(StorageContainerUrl);
+                writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(HttpUrl))
+            if (Optional.IsDefined(HttpUri))
             {
                 writer.WritePropertyName("httpUrl"u8);
-                writer.WriteStringValue(HttpUrl);
+                writer.WriteStringValue(HttpUri.AbsoluteUri);
             }
             if (Optional.IsDefined(BlobPrefix))
             {
@@ -111,8 +111,8 @@ namespace Azure.Batch
                 return null;
             }
             string autoStorageContainerName = default;
-            string storageContainerUrl = default;
-            string httpUrl = default;
+            Uri storageContainerUri = default;
+            Uri httpUri = default;
             string blobPrefix = default;
             string filePath = default;
             string fileMode = default;
@@ -127,12 +127,20 @@ namespace Azure.Batch
                 }
                 if (prop.NameEquals("storageContainerUrl"u8))
                 {
-                    storageContainerUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageContainerUri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("httpUrl"u8))
                 {
-                    httpUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    httpUri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("blobPrefix"u8))
@@ -166,8 +174,8 @@ namespace Azure.Batch
             }
             return new ResourceFile(
                 autoStorageContainerName,
-                storageContainerUrl,
-                httpUrl,
+                storageContainerUri,
+                httpUri,
                 blobPrefix,
                 filePath,
                 fileMode,
@@ -185,7 +193,7 @@ namespace Azure.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceFile)} does not support writing '{options.Format}' format.");
             }
