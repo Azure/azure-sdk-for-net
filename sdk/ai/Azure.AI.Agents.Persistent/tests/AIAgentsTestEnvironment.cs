@@ -18,5 +18,6 @@ namespace Azure.AI.Agents.Persistent.Tests
         public string AI_SEARCH_CONNECTION_ID => GetRecordedVariable("AZURE_AI_CONNECTION_ID");
         public string BING_CONECTION_ID => GetRecordedVariable("AZURE_BING_CONECTION_ID");
         public string SHAREPOINT_CONNECTION_ID => GetRecordedVariable("AZURE_SHAREPOINT_CONNECTION_ID");
+        public string FABRIC_CONNECTION_ID => GetRecordedVariable("AZURE_FABRIC_CONNECTION_ID");
     }
 }
