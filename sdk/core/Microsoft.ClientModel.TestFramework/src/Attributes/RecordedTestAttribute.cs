@@ -10,7 +10,7 @@ using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Commands;
 
-namespace System.ClientModel.TestFramework;
+namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
 /// This attribute replaces the [Test] attribute and will dynamically re-record recorded tests on failure when run in Playback mode.

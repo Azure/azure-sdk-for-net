@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Extensions.Logging;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Threading;
-using Microsoft.Extensions.Logging;
 
 namespace Microsoft.ClientModel.TestFramework.Mocks;
 
@@ -17,11 +15,11 @@ namespace Microsoft.ClientModel.TestFramework.Mocks;
 /// </summary>
 public class MockPipelineTransport : PipelineTransport
 {
-    private readonly Func<PipelineMessage, MockPipelineResponse> _responseFactory;
     private readonly bool _addDelay;
     private readonly object _syncObj = new object();
 
-    internal AsyncGate<MockPipelineRequest, MockPipelineResponse> RequestGate { get; }
+    private readonly Func<MockPipelineMessage, MockPipelineResponse>? _responseFactory;
+    private readonly AsyncGate<MockPipelineRequest, MockPipelineResponse>? _requestGate;
 
     /// <summary>
     /// Whether this transport expects a synchronous pipeline.
@@ -31,7 +29,7 @@ public class MockPipelineTransport : PipelineTransport
     /// <summary>
     /// A list of mock pipeline requests that have been sent.
     /// </summary>
-    public List<MockPipelineRequest> Requests { get; } = new List<MockPipelineRequest>();
+    public List<MockPipelineRequest> Requests { get; } = new();
 
     /// <summary>
     /// An action invoked when a request is being sent.
@@ -46,56 +44,42 @@ public class MockPipelineTransport : PipelineTransport
     /// <summary>
     /// Creates a new instance of <see cref="MockPipelineTransport"/>, which always returns a 200 response code.
     /// </summary>
-    public MockPipelineTransport() : this([200])
+    public MockPipelineTransport()
     {
+        _requestGate = new AsyncGate<MockPipelineRequest, MockPipelineResponse>();
     }
 
     /// <summary>
-    /// TODO.
+    /// Initializes a new instance of <see cref="MockPipelineTransport"/>.
     /// </summary>
-    /// <param name="codes"></param>
-    public MockPipelineTransport(params int[] codes)
+    /// <param name="responseFactory">A function that returns a <see cref="MockPipelineResponse"/> based on the incoming <see cref="MockPipelineMessage"/>.</param>
+    /// <param name="addDelay">Whether to add a delay when processing requests.</param>
+    /// <param name="enableLogging">Whether to enable logging for the transport.</param>
+    /// <param name="loggerFactory">The logger factory to use for creating loggers.</param>
+    public MockPipelineTransport(Func<MockPipelineMessage, MockPipelineResponse> responseFactory,
+                                 bool addDelay = false,
+                                 bool enableLogging = false,
+                                 ILoggerFactory? loggerFactory = null)
+        : base(enableLogging, loggerFactory)
     {
-        Id = id;
-        var requestIndex = 0;
-        _responseFactory = _ => { return new MockPipelineResponse(codes[requestIndex++]); };
-    }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="responseFactory"></param>
-    /// <param name="enableLogging"></param>
-    /// <param name="loggerFactory"></param>
-    /// <param name="addDelay"></param>
-    public MockPipelineTransport(string id, Func<PipelineMessage, MockPipelineResponse> responseFactory, bool enableLogging = false, ILoggerFactory? loggerFactory = null, bool addDelay = false) : base(enableLogging, loggerFactory)
-    {
-        Id = id;
         _responseFactory = responseFactory;
         _addDelay = addDelay;
     }
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <returns></returns>
-    protected override PipelineMessage CreateMessageCore()
-    {
-        return new MockPipelineMessage();
-    }
+    /// <inheritdoc/>
+    protected override PipelineMessage CreateMessageCore() => new MockPipelineMessage();
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
+    /// <inheritdoc/>
     protected override void ProcessCore(PipelineMessage message)
     {
-        //Stamp(message, "Transport");
-
         OnSendingRequest?.Invoke((MockPipelineMessage)message);
 
-        ((MockPipelineMessage)message).SetResponse(_responseFactory(message));
+        if (ExpectSyncPipeline == false)
+        {
+            throw new InvalidOperationException("MockPipelineTransport does not support synchronous processing when ExpectSyncPipeline is set to false.");
+        }
+
+        ProcessCoreInternal(message).EnsureCompleted();
 
         if (_addDelay)
         {
@@ -105,18 +89,12 @@ public class MockPipelineTransport : PipelineTransport
         OnReceivedResponse?.Invoke((MockPipelineMessage)message);
     }
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     protected override async ValueTask ProcessCoreAsync(PipelineMessage message)
     {
-        //Stamp(message, "Transport");
-
         OnSendingRequest?.Invoke((MockPipelineMessage)message);
 
-        ((MockPipelineMessage)message).SetResponse(_responseFactory(message));
+        await ProcessCoreInternal(message).ConfigureAwait(false);
 
         if (_addDelay)
         {
@@ -126,21 +104,41 @@ public class MockPipelineTransport : PipelineTransport
         OnReceivedResponse?.Invoke((MockPipelineMessage)message);
     }
 
-    //private void Stamp(PipelineMessage message, string prefix)
-    //{
-    //    List<string> values;
+    private async Task ProcessCoreInternal(PipelineMessage message)
+    {
+        if (message is not MockPipelineMessage mockMessage)
+        {
+            throw new InvalidOperationException("MockPipelineTransport can only process MockPipelineMessage messages.");
+        }
 
-    //    if (message.TryGetProperty(typeof(ObservablePolicy), out object? prop) &&
-    //        prop is List<string> list)
-    //    {
-    //        values = list;
-    //    }
-    //    else
-    //    {
-    //        values = new List<string>();
-    //        message.SetProperty(typeof(ObservablePolicy), values);
-    //    }
+        if (message.Request is not MockPipelineRequest mockRequest)
+        {
+            throw new InvalidOperationException("MockPipelineTransport can only process MockPipelineRequest messages.");
+        }
 
-    //    values.Add($"{prefix}:{Id}");
-    //}
+        // TOOD - mockMessage.SetResponse(null);
+
+        lock (_syncObj)
+        {
+            Requests.Add(mockRequest);
+        }
+
+        if (_requestGate is not null)
+        {
+            mockMessage.SetResponse(await _requestGate.WaitForRelease(mockRequest).ConfigureAwait(false));
+        }
+        else if (_responseFactory is not null)
+        {
+            mockMessage.SetResponse(_responseFactory(mockMessage));
+        }
+        else
+        {
+            Debug.Fail("MockPipelineTransport must have a response factory or request gate set."); // TODO
+        }
+
+        if (mockMessage.Response?.ContentStream != null && ExpectSyncPipeline != null)
+        {
+            mockMessage.Response.ContentStream = new AsyncValidatingStream(!ExpectSyncPipeline.Value, mockMessage.Response.ContentStream);
+        }
+    }
 }

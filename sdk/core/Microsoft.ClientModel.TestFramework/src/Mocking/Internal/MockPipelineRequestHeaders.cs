@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace Microsoft.ClientModel.TestFramework.Mocks;
 
-internal class MockPipelineResponseHeaders : PipelineResponseHeaders
+internal class MockPipelineRequestHeaders : PipelineRequestHeaders
 {
     private readonly Dictionary<string, List<string>> _headers = new(System.StringComparer.OrdinalIgnoreCase);
 
-    public MockPipelineResponseHeaders()
+    public MockPipelineRequestHeaders()
     {
     }
 
@@ -54,5 +54,26 @@ internal class MockPipelineResponseHeaders : PipelineResponseHeaders
             _headers[name] = values = new List<string>();
         }
         values.Add(value);
+    }
+
+    public override void Add(string name, string value)
+    {
+        SetHeader(name, value);
+    }
+
+    public override void Set(string name, string value)
+    {
+        SetHeader(name, value);
+    }
+
+    public override bool Remove(string name)
+    {
+        if (_headers.TryGetValue(name, out List<string>? values))
+        {
+            values.Clear();
+            _headers.Remove(name);
+            return true;
+        }
+        return false;
     }
 }

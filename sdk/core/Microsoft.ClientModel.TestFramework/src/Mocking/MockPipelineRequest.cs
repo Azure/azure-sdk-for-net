@@ -8,86 +8,54 @@ using System.ClientModel.Primitives;
 namespace Microsoft.ClientModel.TestFramework.Mocks;
 
 /// <summary>
-/// TODO.
+/// A mock of <see cref="PipelineRequest"/> to use for testing.
 /// </summary>
 public class MockPipelineRequest : PipelineRequest
 {
     private string _method;
     private Uri? _uri;
     private BinaryContent? _content;
-    private readonly PipelineRequestHeaders _headers;
+    private readonly MockPipelineRequestHeaders _headers = new();
 
     private bool _disposed;
 
     /// <summary>
-    /// TODO.
+    /// Initializes a new instance of <see cref="MockPipelineRequest"/> with default values.
     /// </summary>
     public MockPipelineRequest()
     {
-        _headers = new MockRequestHeaders();
         _method = "GET";
         _uri = new Uri("https://www.example.com");
     }
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
+    /// <inheritdoc />
     protected override BinaryContent? ContentCore
     {
         get => _content;
         set => _content = value;
     }
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
+    /// <inheritdoc />
     protected override PipelineRequestHeaders HeadersCore
         => _headers;
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
+    /// <inheritdoc />
     protected override string MethodCore
     {
         get => _method;
         set => _method = value;
     }
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
+    /// <inheritdoc />
     protected override Uri? UriCore
     {
         get => _uri;
         set => _uri = value;
     }
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
+    /// <inheritdoc />
     public sealed override void Dispose()
     {
-        Dispose(true);
-
-        GC.SuppressFinalize(this);
-    }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="disposing"></param>
-    protected void Dispose(bool disposing)
-    {
-        if (disposing && !_disposed)
-        {
-            var content = _content;
-            if (content != null)
-            {
-                _content = null;
-                content.Dispose();
-            }
-
-            _disposed = true;
-        }
+        _disposed = true;
     }
 }

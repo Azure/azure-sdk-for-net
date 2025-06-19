@@ -1,39 +1,34 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.ClientModel.TestFramework.Mocks;
 
 /// <summary>
-/// TODO.
+/// A mock of <see cref="PipelineMessage"/> to use for testing.
 /// </summary>
 public class MockPipelineMessage : PipelineMessage
 {
     /// <summary>
-    /// TODO.
+    /// Creates a new instance of <see cref="MockPipelineMessage"/>.
     /// </summary>
     public MockPipelineMessage() : this(new MockPipelineRequest())
     {
     }
 
     /// <summary>
-    /// TODO.
+    /// Creates a new instance of <see cref="MockPipelineMessage"/>.
     /// </summary>
-    /// <param name="request"></param>
+    /// <param name="request">The <see cref="PipelineRequest"/> to associate with this message.</param>
     public MockPipelineMessage(PipelineRequest request) : base(request)
     {
     }
 
     /// <summary>
-    /// TODO.
+    /// Sets the response for this pipeline message.
     /// </summary>
-    /// <param name="response"></param>
+    /// <param name="response">The <see cref="PipelineResponse"/> to set for this message.</param>
     public void SetResponse(PipelineResponse response)
-        => this.Response = response;
+        => Response = response;
 }

@@ -6,7 +6,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 
-namespace System.ClientModel.TestFramework;
+namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
 /// Attribute on test assemblies, classes, or methods that run only against playback resources.

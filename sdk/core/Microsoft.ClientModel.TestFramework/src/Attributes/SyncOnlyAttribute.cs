@@ -4,7 +4,7 @@
 using System;
 using NUnit.Framework;
 
-namespace System.ClientModel.TestFramework;
+namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
 /// Marks that a test should only be executed synchronously (in a test

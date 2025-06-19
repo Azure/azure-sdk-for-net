@@ -16,12 +16,12 @@ namespace Microsoft.ClientModel.TestFramework.Mocks;
 /// </summary>
 public class MockPipelineResponse : PipelineResponse
 {
-    private int _status;
-    private string _reasonPhrase;
+    private readonly int _status;
+    private readonly string _reasonPhrase;
     private Stream? _contentStream;
     private BinaryData? _bufferedContent;
     private bool _disposed;
-    private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+    private readonly MockPipelineResponseHeaders _headers = new();
 
     /// <summary>
     /// Creates an instance of <see cref="MockPipelineResponse"/> to use for testing.
@@ -54,12 +54,7 @@ public class MockPipelineResponse : PipelineResponse
     /// <returns>The modified <see cref="MockPipelineResponse"/>.</returns>
     public MockPipelineResponse WithHeader(string name, string value)
     {
-        if (!_headers.TryGetValue(name, out List<string>? values))
-        {
-            _headers[name] = values = new List<string>();
-        }
-
-        values.Add(value);
+        _headers.SetHeader(name, value);
         return this;
     }
 
