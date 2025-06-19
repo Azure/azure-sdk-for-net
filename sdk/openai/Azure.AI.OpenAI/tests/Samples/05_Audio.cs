@@ -20,7 +20,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             AudioClient chatClient = azureClient.GetAudioClient("whisper");
 
             string fileName = "batman.wav";
-            string audioFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "resource", fileName);
+            string audioFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", fileName);
             var transcriptionResult = chatClient.TranscribeAudio(audioFilePath);
             Console.WriteLine(transcriptionResult.Value.Text.ToString());
         }
@@ -39,7 +39,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             };
 
             string fileName = "batman.wav";
-            string audioFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "resource", fileName);
+            string audioFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", fileName);
             var transcriptionResult = await chatClient.TranscribeAudioAsync(audioFilePath, transcriptionOptions);
             Console.WriteLine(transcriptionResult.Value.Text.ToString());
         }

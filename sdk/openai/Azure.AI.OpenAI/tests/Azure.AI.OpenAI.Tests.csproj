@@ -86,6 +86,7 @@
   <ItemGroup>
     <None Update="Samples\Resources\batman.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>Resources/batman.wav</Link>
     </None>
   </ItemGroup>
 
