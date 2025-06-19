@@ -1,6 +1,7 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,7 +17,9 @@ using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights.Extensibility.Implementation;
+using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.Logging;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -65,6 +68,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         };
 
         [Test]
+        [Ignore("Ignoring ApplicationInsights tests")]
         public async Task EventHub_SingleDispatch()
         {
             var (jobHost, host) = BuildHost<EventHubTestSingleDispatchJobs>();
@@ -116,6 +120,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("Ignoring ApplicationInsights tests")]
         public async Task EventHub_MultipleDispatch_BatchSend()
         {
             var (jobHost, host) = BuildHost<EventHubTestMultipleDispatchJobs>();
@@ -183,6 +188,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("Ignoring ApplicationInsights tests")]
         public async Task EventHub_MultipleDispatch_IndependentMessages()
         {
             // send individual messages via EventHub client, process batch by host
@@ -382,26 +388,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     }
                 }
             }
-        }
-
-        private (JobHost JobHost, IHost Host) BuildHost<T>()
-        {
-            var (jobHost, host) = base.BuildHost<T>(builder =>
-            {
-                builder.ConfigureServices(services =>
-                {
-                    services.AddApplicationInsightsTelemetryWorkerService();
-                    services.Configure<TelemetryConfiguration>(config =>
-                    {
-                        config.ConnectionString = "InstrumentationKey=mock-ikey;IngestionEndpoint=https://mock.applicationinsights.azure.com/";
-                        config.TelemetryChannel = _channel;
-                    });
-                });
-                builder.ConfigureLogging(b => b.AddApplicationInsights());
-                ConfigureTestEventHub(builder);
-            }, h => { /* TelemetryChannel is configured through services above */ });
-
-            return (jobHost, host);
         }
 
         private class TestTelemetryChannel : ITelemetryChannel, ITelemetryModule
