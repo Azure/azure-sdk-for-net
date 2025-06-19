@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Models
         internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element, ModelReaderWriterOptions options, JsonSerializerOptions jOptions)
         {
             options ??= new ModelReaderWriterOptions("W");
-            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string format);
+            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(jOptions, options, out string format);
             options = new ModelReaderWriterOptions(format);
 
             if (element.ValueKind == JsonValueKind.Null)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Models
         ManagedServiceIdentity IPersistableModel<ManagedServiceIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             options ??= new ModelReaderWriterOptions("W");
-            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string format);
+            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(null, options, out string format);
             format = format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
