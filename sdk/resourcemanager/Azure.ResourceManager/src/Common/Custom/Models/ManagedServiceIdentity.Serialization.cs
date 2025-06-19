@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Models
     {
         private const string SystemAssignedUserAssignedV3Value = "SystemAssigned,UserAssigned";
 
-        private static bool UseManagedServiceIdentityV3(ModelReaderWriterOptions options, out string format)
+        private static bool UseManagedServiceIdentityV3(JsonSerializerOptions jOptions, ModelReaderWriterOptions options, out string format)
         {
             var originalFormat = options.Format.AsSpan();
             if (originalFormat.Length > 3)
@@ -34,12 +34,18 @@ namespace Azure.ResourceManager.Models
             }
 
             format = options.Format;
+
+            if (jOptions is not null && jOptions.Converters.Any(converter => converter is ManagedServiceIdentityTypeV3Converter))
+            {
+                return true;
+            }
+
             return false;
         }
 
         internal void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options, JsonSerializerOptions jOptions = null)
         {
-            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string format);
+            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(jOptions, options, out string format);
             format = format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
             options = new ModelReaderWriterOptions(format);
             if (format != "J")
