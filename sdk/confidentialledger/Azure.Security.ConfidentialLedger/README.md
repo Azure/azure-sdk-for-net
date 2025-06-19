@@ -294,7 +294,7 @@ ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: collect
 #### Tags
 It is possible to further organize data within a collection as part of the latest preview version dated `2024-12-09-preview` or newer.
 
-Specify the `tags` parameter as part of the create entry operation. Multiple tags can be specified by using commas. There is a limit of five tags per transaction.
+Specify the `tags` parameter as part of the create entry operation. Multiple tags can be specified using commas. There is a limit of five tags per transaction.
 
 ```C# Snippet:WriteWithTags
 string tags = "tag1,tag2";
