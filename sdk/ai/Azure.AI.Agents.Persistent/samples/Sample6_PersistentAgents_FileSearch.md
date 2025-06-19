@@ -213,7 +213,7 @@ foreach (RunStep runStep in client.Runs.GetRunSteps(
         {
             if (toolCall is RunStepFileSearchToolCall fileSearh)
             {
-                Console.WriteLine($"The search tool have found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
+                Console.WriteLine($"The search tool has found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
                 Console.WriteLine(fileSearh.FileSearch.Results[0].Content[0].Text);
                 Console.WriteLine("===============================================================");
             }
@@ -236,7 +236,7 @@ await foreach (RunStep runStep in client.Runs.GetRunStepsAsync(
         {
             if (toolCall is RunStepFileSearchToolCall fileSearh)
             {
-                Console.WriteLine($"The search tool have found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
+                Console.WriteLine($"The search tool has found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
                 Console.WriteLine(fileSearh.FileSearch.Results[0].Content[0].Text);
                 Console.WriteLine("===============================================================");
             }
