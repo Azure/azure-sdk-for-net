@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> BatchNodeDisableSchedulingOption enums. </summary>
     public readonly partial struct BatchNodeDisableSchedulingOption : IEquatable<BatchNodeDisableSchedulingOption>

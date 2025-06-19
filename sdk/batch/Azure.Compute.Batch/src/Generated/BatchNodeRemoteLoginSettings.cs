@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The remote login settings for a Compute Node. </summary>
     public partial class BatchNodeRemoteLoginSettings
@@ -20,7 +19,7 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="BatchNodeRemoteLoginSettings"/>. </summary>
         /// <param name="remoteLoginIpAddress"> The IP address used for remote login to the Compute Node. </param>
         /// <param name="remoteLoginPort"> The port used for remote login to the Compute Node. </param>
-        internal BatchNodeRemoteLoginSettings(IPAddress remoteLoginIpAddress, int remoteLoginPort)
+        internal BatchNodeRemoteLoginSettings(string remoteLoginIpAddress, int remoteLoginPort)
         {
             RemoteLoginIpAddress = remoteLoginIpAddress;
             RemoteLoginPort = remoteLoginPort;
@@ -30,7 +29,7 @@ namespace Azure.Compute.Batch
         /// <param name="remoteLoginIpAddress"> The IP address used for remote login to the Compute Node. </param>
         /// <param name="remoteLoginPort"> The port used for remote login to the Compute Node. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeRemoteLoginSettings(IPAddress remoteLoginIpAddress, int remoteLoginPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeRemoteLoginSettings(string remoteLoginIpAddress, int remoteLoginPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RemoteLoginIpAddress = remoteLoginIpAddress;
             RemoteLoginPort = remoteLoginPort;
@@ -38,7 +37,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The IP address used for remote login to the Compute Node. </summary>
-        public IPAddress RemoteLoginIpAddress { get; }
+        public string RemoteLoginIpAddress { get; }
 
         /// <summary> The port used for remote login to the Compute Node. </summary>
         public int RemoteLoginPort { get; }

@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The number of Compute Nodes in each Compute Node state. </summary>
     public partial class BatchNodeCounts : IJsonModel<BatchNodeCounts>
@@ -255,7 +255,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchNodeCounts)} does not support writing '{options.Format}' format.");
             }

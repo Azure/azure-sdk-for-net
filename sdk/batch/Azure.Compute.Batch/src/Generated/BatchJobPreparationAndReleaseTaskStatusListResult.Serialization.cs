@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary>
     /// The result of listing the status of the Job Preparation and Job Release Tasks
@@ -136,7 +136,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobPreparationAndReleaseTaskStatusListResult)} does not support writing '{options.Format}' format.");
             }

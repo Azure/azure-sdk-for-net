@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The result of listing the Compute Node counts in the Account. </summary>
     internal partial class BatchPoolNodeCountsListResult

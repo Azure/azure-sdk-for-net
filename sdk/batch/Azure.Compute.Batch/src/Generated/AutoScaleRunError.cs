@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> An error that occurred when executing or evaluating a Pool autoscale formula. </summary>
     public partial class AutoScaleRunError

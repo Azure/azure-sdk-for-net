@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary>
     /// Batch will retry Tasks when a recovery operation is triggered on a Node.
@@ -55,15 +55,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Url);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
@@ -175,10 +175,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("multiInstanceSettings"u8);
                 writer.WriteObjectValue(MultiInstanceSettings, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(TaskStatistics))
+            if (options.Format != "W" && Optional.IsDefined(Stats))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(TaskStatistics, options);
+                writer.WriteObjectValue(Stats, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DependsOn))
             {
@@ -244,8 +244,8 @@ namespace Azure.Compute.Batch
             }
             string id = default;
             string displayName = default;
-            Uri uri = default;
-            ETag? eTag = default;
+            string url = default;
+            string eTag = default;
             DateTimeOffset? lastModified = default;
             DateTimeOffset? creationTime = default;
             ExitConditions exitConditions = default;
@@ -258,14 +258,14 @@ namespace Azure.Compute.Batch
             IReadOnlyList<ResourceFile> resourceFiles = default;
             IReadOnlyList<OutputFile> outputFiles = default;
             IReadOnlyList<EnvironmentSetting> environmentSettings = default;
-            BatchAffinityInfo affinityInfo = default;
+            AffinityInfo affinityInfo = default;
             BatchTaskConstraints constraints = default;
             int? requiredSlots = default;
             UserIdentity userIdentity = default;
             BatchTaskExecutionInfo executionInfo = default;
             BatchNodeInfo nodeInfo = default;
             MultiInstanceSettings multiInstanceSettings = default;
-            BatchTaskStatistics taskStatistics = default;
+            BatchTaskStatistics stats = default;
             BatchTaskDependencies dependsOn = default;
             IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences = default;
             AuthenticationTokenSettings authenticationTokenSettings = default;
@@ -284,20 +284,12 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    uri = new Uri(prop.Value.GetString());
+                    url = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("eTag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("lastModified"u8))
@@ -425,7 +417,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    affinityInfo = BatchAffinityInfo.DeserializeBatchAffinityInfo(prop.Value, options);
+                    affinityInfo = AffinityInfo.DeserializeAffinityInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("constraints"u8))
@@ -488,7 +480,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    taskStatistics = BatchTaskStatistics.DeserializeBatchTaskStatistics(prop.Value, options);
+                    stats = BatchTaskStatistics.DeserializeBatchTaskStatistics(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dependsOn"u8))
@@ -531,7 +523,7 @@ namespace Azure.Compute.Batch
             return new BatchTask(
                 id,
                 displayName,
-                uri,
+                url,
                 eTag,
                 lastModified,
                 creationTime,
@@ -552,7 +544,7 @@ namespace Azure.Compute.Batch
                 executionInfo,
                 nodeInfo,
                 multiInstanceSettings,
-                taskStatistics,
+                stats,
                 dependsOn,
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
                 authenticationTokenSettings,
@@ -569,7 +561,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchTask)} does not support writing '{options.Format}' format.");
             }

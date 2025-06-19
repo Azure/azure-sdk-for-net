@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary>
     /// Contains information about the execution of a Job Preparation Task on a Compute
@@ -55,10 +55,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("taskRootDirectory"u8);
                 writer.WriteStringValue(TaskRootDirectory);
             }
-            if (Optional.IsDefined(TaskRootDirectoryUri))
+            if (Optional.IsDefined(TaskRootDirectoryUrl))
             {
                 writer.WritePropertyName("taskRootDirectoryUrl"u8);
-                writer.WriteStringValue(TaskRootDirectoryUri.AbsoluteUri);
+                writer.WriteStringValue(TaskRootDirectoryUrl);
             }
             if (Optional.IsDefined(ExitCode))
             {
@@ -133,7 +133,7 @@ namespace Azure.Compute.Batch
             DateTimeOffset? endTime = default;
             BatchJobPreparationTaskState state = default;
             string taskRootDirectory = default;
-            Uri taskRootDirectoryUri = default;
+            string taskRootDirectoryUrl = default;
             int? exitCode = default;
             BatchTaskContainerExecutionInfo containerInfo = default;
             BatchTaskFailureInfo failureInfo = default;
@@ -169,11 +169,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("taskRootDirectoryUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    taskRootDirectoryUri = new Uri(prop.Value.GetString());
+                    taskRootDirectoryUrl = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("exitCode"u8))
@@ -236,7 +232,7 @@ namespace Azure.Compute.Batch
                 endTime,
                 state,
                 taskRootDirectory,
-                taskRootDirectoryUri,
+                taskRootDirectoryUrl,
                 exitCode,
                 containerInfo,
                 failureInfo,
@@ -256,7 +252,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobPreparationTaskExecutionInfo)} does not support writing '{options.Format}' format.");
             }

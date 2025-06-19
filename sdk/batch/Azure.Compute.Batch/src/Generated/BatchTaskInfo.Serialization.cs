@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Information about a Task running on a Compute Node. </summary>
     public partial class BatchTaskInfo : IJsonModel<BatchTaskInfo>
@@ -38,10 +38,10 @@ namespace Azure.Compute.Batch
             {
                 throw new FormatException($"The model {nameof(BatchTaskInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(TaskUri))
+            if (Optional.IsDefined(TaskUrl))
             {
                 writer.WritePropertyName("taskUrl"u8);
-                writer.WriteStringValue(TaskUri.AbsoluteUri);
+                writer.WriteStringValue(TaskUrl);
             }
             if (Optional.IsDefined(JobId))
             {
@@ -107,7 +107,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            Uri taskUri = default;
+            string taskUrl = default;
             string jobId = default;
             string taskId = default;
             int? subtaskId = default;
@@ -118,11 +118,7 @@ namespace Azure.Compute.Batch
             {
                 if (prop.NameEquals("taskUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    taskUri = new Uri(prop.Value.GetString());
+                    taskUrl = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("jobId"u8))
@@ -164,7 +160,7 @@ namespace Azure.Compute.Batch
                 }
             }
             return new BatchTaskInfo(
-                taskUri,
+                taskUrl,
                 jobId,
                 taskId,
                 subtaskId,
@@ -183,7 +179,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchTaskInfo)} does not support writing '{options.Format}' format.");
             }

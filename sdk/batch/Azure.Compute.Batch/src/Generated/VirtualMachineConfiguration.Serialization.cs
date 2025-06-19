@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary>
     /// The configuration for Compute Nodes in a Pool based on the Azure Virtual
@@ -147,16 +147,16 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            BatchVmImageReference imageReference = default;
+            ImageReference imageReference = default;
             string nodeAgentSkuId = default;
             WindowsConfiguration windowsConfiguration = default;
             IList<DataDisk> dataDisks = default;
             string licenseType = default;
-            BatchContainerConfiguration containerConfiguration = default;
+            ContainerConfiguration containerConfiguration = default;
             DiskEncryptionConfiguration diskEncryptionConfiguration = default;
             BatchNodePlacementConfiguration nodePlacementConfiguration = default;
             IList<VMExtension> extensions = default;
-            BatchOsDisk osDisk = default;
+            OSDisk osDisk = default;
             SecurityProfile securityProfile = default;
             ServiceArtifactReference serviceArtifactReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -164,7 +164,7 @@ namespace Azure.Compute.Batch
             {
                 if (prop.NameEquals("imageReference"u8))
                 {
-                    imageReference = BatchVmImageReference.DeserializeBatchVmImageReference(prop.Value, options);
+                    imageReference = ImageReference.DeserializeImageReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("nodeAgentSKUId"u8))
@@ -206,7 +206,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    containerConfiguration = BatchContainerConfiguration.DeserializeBatchContainerConfiguration(prop.Value, options);
+                    containerConfiguration = ContainerConfiguration.DeserializeContainerConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionConfiguration"u8))
@@ -247,7 +247,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    osDisk = BatchOsDisk.DeserializeBatchOsDisk(prop.Value, options);
+                    osDisk = OSDisk.DeserializeOSDisk(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("securityProfile"u8))
@@ -299,7 +299,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineConfiguration)} does not support writing '{options.Format}' format.");
             }

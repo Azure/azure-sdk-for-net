@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> CachingType enums. </summary>
     public readonly partial struct CachingType : IEquatable<CachingType>

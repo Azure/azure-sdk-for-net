@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The result of listing the supported Virtual Machine Images. </summary>
     internal partial class BatchAccountListSupportedImagesResult

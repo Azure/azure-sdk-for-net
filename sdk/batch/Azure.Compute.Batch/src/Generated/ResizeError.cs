@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> An error that occurred when resizing a Pool. </summary>
     public partial class ResizeError

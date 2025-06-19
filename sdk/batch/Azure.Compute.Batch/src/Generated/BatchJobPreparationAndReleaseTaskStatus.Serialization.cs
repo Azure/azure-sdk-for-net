@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The status of the Job Preparation and Job Release Tasks on a Compute Node. </summary>
     public partial class BatchJobPreparationAndReleaseTaskStatus : IJsonModel<BatchJobPreparationAndReleaseTaskStatus>
@@ -43,10 +43,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (Optional.IsDefined(NodeUri))
+            if (Optional.IsDefined(NodeUrl))
             {
                 writer.WritePropertyName("nodeUrl"u8);
-                writer.WriteStringValue(NodeUri.AbsoluteUri);
+                writer.WriteStringValue(NodeUrl);
             }
             if (Optional.IsDefined(JobPreparationTaskExecutionInfo))
             {
@@ -102,7 +102,7 @@ namespace Azure.Compute.Batch
             }
             string poolId = default;
             string nodeId = default;
-            Uri nodeUri = default;
+            string nodeUrl = default;
             BatchJobPreparationTaskExecutionInfo jobPreparationTaskExecutionInfo = default;
             BatchJobReleaseTaskExecutionInfo jobReleaseTaskExecutionInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -120,11 +120,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("nodeUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nodeUri = new Uri(prop.Value.GetString());
+                    nodeUrl = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("jobPreparationTaskExecutionInfo"u8))
@@ -153,7 +149,7 @@ namespace Azure.Compute.Batch
             return new BatchJobPreparationAndReleaseTaskStatus(
                 poolId,
                 nodeId,
-                nodeUri,
+                nodeUrl,
                 jobPreparationTaskExecutionInfo,
                 jobReleaseTaskExecutionInfo,
                 additionalBinaryDataProperties);
@@ -169,7 +165,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobPreparationAndReleaseTaskStatus)} does not support writing '{options.Format}' format.");
             }

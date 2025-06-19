@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The result of a listing the usage metrics for an Account. </summary>
     internal partial class BatchPoolListUsageMetricsResult

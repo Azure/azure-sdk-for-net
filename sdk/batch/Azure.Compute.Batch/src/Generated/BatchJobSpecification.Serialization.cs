@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Specifies details of the Jobs to be created on a schedule. </summary>
     public partial class BatchJobSpecification : IJsonModel<BatchJobSpecification>
@@ -63,15 +63,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("usesTaskDependencies"u8);
                 writer.WriteBooleanValue(UsesTaskDependencies.Value);
             }
-            if (Optional.IsDefined(AllTasksCompleteMode))
+            if (Optional.IsDefined(OnAllTasksComplete))
             {
                 writer.WritePropertyName("onAllTasksComplete"u8);
-                writer.WriteStringValue(AllTasksCompleteMode.Value.ToString());
+                writer.WriteStringValue(OnAllTasksComplete.Value.ToString());
             }
-            if (Optional.IsDefined(TaskFailureMode))
+            if (Optional.IsDefined(OnTaskFailure))
             {
                 writer.WritePropertyName("onTaskFailure"u8);
-                writer.WriteStringValue(TaskFailureMode.Value.ToString());
+                writer.WriteStringValue(OnTaskFailure.Value.ToString());
             }
             if (Optional.IsDefined(NetworkConfiguration))
             {
@@ -114,7 +114,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
-                foreach (BatchMetadataItem item in Metadata)
+                foreach (MetadataItem item in Metadata)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -167,8 +167,8 @@ namespace Azure.Compute.Batch
             int? maxParallelTasks = default;
             string displayName = default;
             bool? usesTaskDependencies = default;
-            BatchAllTasksCompleteMode? allTasksCompleteMode = default;
-            BatchTaskFailureMode? taskFailureMode = default;
+            OnAllBatchTasksComplete? onAllTasksComplete = default;
+            OnBatchTaskFailure? onTaskFailure = default;
             BatchJobNetworkConfiguration networkConfiguration = default;
             BatchJobConstraints constraints = default;
             BatchJobManagerTask jobManagerTask = default;
@@ -176,7 +176,7 @@ namespace Azure.Compute.Batch
             BatchJobReleaseTask jobReleaseTask = default;
             IList<EnvironmentSetting> commonEnvironmentSettings = default;
             BatchPoolInfo poolInfo = default;
-            IList<BatchMetadataItem> metadata = default;
+            IList<MetadataItem> metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -227,7 +227,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    allTasksCompleteMode = new BatchAllTasksCompleteMode(prop.Value.GetString());
+                    onAllTasksComplete = new OnAllBatchTasksComplete(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("onTaskFailure"u8))
@@ -236,7 +236,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    taskFailureMode = new BatchTaskFailureMode(prop.Value.GetString());
+                    onTaskFailure = new OnBatchTaskFailure(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkConfiguration"u8))
@@ -309,10 +309,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<BatchMetadataItem> array = new List<BatchMetadataItem>();
+                    List<MetadataItem> array = new List<MetadataItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
+                        array.Add(MetadataItem.DeserializeMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
@@ -328,8 +328,8 @@ namespace Azure.Compute.Batch
                 maxParallelTasks,
                 displayName,
                 usesTaskDependencies,
-                allTasksCompleteMode,
-                taskFailureMode,
+                onAllTasksComplete,
+                onTaskFailure,
                 networkConfiguration,
                 constraints,
                 jobManagerTask,
@@ -337,7 +337,7 @@ namespace Azure.Compute.Batch
                 jobReleaseTask,
                 commonEnvironmentSettings ?? new ChangeTrackingList<EnvironmentSetting>(),
                 poolInfo,
-                metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
+                metadata ?? new ChangeTrackingList<MetadataItem>(),
                 additionalBinaryDataProperties);
         }
 
@@ -351,7 +351,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobSpecification)} does not support writing '{options.Format}' format.");
             }

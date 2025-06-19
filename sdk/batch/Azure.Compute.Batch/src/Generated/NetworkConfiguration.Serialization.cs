@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The network configuration for a Pool. </summary>
     public partial class NetworkConfiguration : IJsonModel<NetworkConfiguration>
@@ -38,10 +38,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(DynamicVnetAssignmentScope))
+            if (Optional.IsDefined(DynamicVNetAssignmentScope))
             {
                 writer.WritePropertyName("dynamicVNetAssignmentScope"u8);
-                writer.WriteStringValue(DynamicVnetAssignmentScope.Value.ToString());
+                writer.WriteStringValue(DynamicVNetAssignmentScope.Value.ToString());
             }
             if (Optional.IsDefined(EndpointConfiguration))
             {
@@ -101,9 +101,9 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string subnetId = default;
-            DynamicVNetAssignmentScope? dynamicVnetAssignmentScope = default;
+            DynamicVNetAssignmentScope? dynamicVNetAssignmentScope = default;
             BatchPoolEndpointConfiguration endpointConfiguration = default;
-            BatchPublicIpAddressConfiguration publicIpAddressConfiguration = default;
+            PublicIpAddressConfiguration publicIpAddressConfiguration = default;
             bool? enableAcceleratedNetworking = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    dynamicVnetAssignmentScope = new DynamicVNetAssignmentScope(prop.Value.GetString());
+                    dynamicVNetAssignmentScope = new DynamicVNetAssignmentScope(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("endpointConfiguration"u8))
@@ -137,7 +137,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    publicIpAddressConfiguration = BatchPublicIpAddressConfiguration.DeserializeBatchPublicIpAddressConfiguration(prop.Value, options);
+                    publicIpAddressConfiguration = PublicIpAddressConfiguration.DeserializePublicIpAddressConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("enableAcceleratedNetworking"u8))
@@ -156,7 +156,7 @@ namespace Azure.Compute.Batch
             }
             return new NetworkConfiguration(
                 subnetId,
-                dynamicVnetAssignmentScope,
+                dynamicVNetAssignmentScope,
                 endpointConfiguration,
                 publicIpAddressConfiguration,
                 enableAcceleratedNetworking,
@@ -173,7 +173,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkConfiguration)} does not support writing '{options.Format}' format.");
             }

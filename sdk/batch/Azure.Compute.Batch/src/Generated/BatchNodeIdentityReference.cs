@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary>
     /// The reference to a user assigned identity associated with the Batch pool which
@@ -28,13 +27,13 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="BatchNodeIdentityReference"/>. </summary>
         /// <param name="resourceId"> The ARM resource id of the user assigned identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeIdentityReference(ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeIdentityReference(string resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ARM resource id of the user assigned identity. </summary>
-        public ResourceIdentifier ResourceId { get; set; }
+        public string ResourceId { get; set; }
     }
 }

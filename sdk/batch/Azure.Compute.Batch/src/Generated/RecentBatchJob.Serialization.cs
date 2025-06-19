@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Information about the most recent Job to run under the Job Schedule. </summary>
     public partial class RecentBatchJob : IJsonModel<RecentBatchJob>
@@ -38,10 +38,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Url);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string id = default;
-            Uri uri = default;
+            string url = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -97,11 +97,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    uri = new Uri(prop.Value.GetString());
+                    url = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -109,7 +105,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RecentBatchJob(id, uri, additionalBinaryDataProperties);
+            return new RecentBatchJob(id, url, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -122,7 +118,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RecentBatchJob)} does not support writing '{options.Format}' format.");
             }

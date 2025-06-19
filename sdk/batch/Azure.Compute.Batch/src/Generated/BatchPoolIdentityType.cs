@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> BatchPoolIdentityType enums. </summary>
     public readonly partial struct BatchPoolIdentityType : IEquatable<BatchPoolIdentityType>

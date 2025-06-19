@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Specifies how the Batch service responds to a particular exit condition. </summary>
     public partial class ExitOptions : IJsonModel<ExitOptions>
@@ -85,7 +85,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            BatchJobActionKind? jobAction = default;
+            BatchJobAction? jobAction = default;
             DependencyAction? dependencyAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    jobAction = new BatchJobActionKind(prop.Value.GetString());
+                    jobAction = new BatchJobAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dependencyAction"u8))
@@ -126,7 +126,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ExitOptions)} does not support writing '{options.Format}' format.");
             }

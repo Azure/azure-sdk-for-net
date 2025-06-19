@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Contains information about an application in an Azure Batch Account. </summary>
     public partial class BatchApplication : IJsonModel<BatchApplication>
@@ -148,7 +148,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchApplication)} does not support writing '{options.Format}' format.");
             }

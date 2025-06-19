@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> An item of additional information included in an Azure Batch error response. </summary>
     public partial class BatchErrorDetail

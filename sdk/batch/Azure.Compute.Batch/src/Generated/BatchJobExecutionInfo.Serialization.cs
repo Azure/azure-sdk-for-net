@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Contains information about the execution of a Job in the Azure Batch service. </summary>
     public partial class BatchJobExecutionInfo : IJsonModel<BatchJobExecutionInfo>
@@ -167,7 +167,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobExecutionInfo)} does not support writing '{options.Format}' format.");
             }

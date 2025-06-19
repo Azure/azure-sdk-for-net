@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The result of listing the Job Schedules in an Account. </summary>
     internal partial class BatchJobScheduleListResult : IJsonModel<BatchJobScheduleListResult>
@@ -133,7 +133,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobScheduleListResult)} does not support writing '{options.Format}' format.");
             }

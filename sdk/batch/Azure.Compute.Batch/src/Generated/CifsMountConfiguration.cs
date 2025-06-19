@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Information used to connect to a CIFS file system. </summary>
     public partial class CifsMountConfiguration

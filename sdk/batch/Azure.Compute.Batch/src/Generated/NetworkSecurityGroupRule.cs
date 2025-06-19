@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> A network security group rule to apply to an inbound endpoint. </summary>
     public partial class NetworkSecurityGroupRule

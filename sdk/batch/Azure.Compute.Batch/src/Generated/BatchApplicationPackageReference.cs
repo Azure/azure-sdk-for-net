@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> A reference to an Package to be deployed to Compute Nodes. </summary>
     public partial class BatchApplicationPackageReference

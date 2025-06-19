@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> An Azure Batch Job. </summary>
     public partial class BatchJob : IJsonModel<BatchJob>
@@ -55,15 +55,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("usesTaskDependencies"u8);
                 writer.WriteBooleanValue(UsesTaskDependencies.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Url);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
@@ -142,15 +142,15 @@ namespace Azure.Compute.Batch
             }
             writer.WritePropertyName("poolInfo"u8);
             writer.WriteObjectValue(PoolInfo, options);
-            if (Optional.IsDefined(AllTasksCompleteMode))
+            if (Optional.IsDefined(OnAllTasksComplete))
             {
                 writer.WritePropertyName("onAllTasksComplete"u8);
-                writer.WriteStringValue(AllTasksCompleteMode.Value.ToString());
+                writer.WriteStringValue(OnAllTasksComplete.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TaskFailureMode))
+            if (options.Format != "W" && Optional.IsDefined(OnTaskFailure))
             {
                 writer.WritePropertyName("onTaskFailure"u8);
-                writer.WriteStringValue(TaskFailureMode.Value.ToString());
+                writer.WriteStringValue(OnTaskFailure.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(NetworkConfiguration))
             {
@@ -161,7 +161,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
-                foreach (BatchMetadataItem item in Metadata)
+                foreach (MetadataItem item in Metadata)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -172,10 +172,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("executionInfo"u8);
                 writer.WriteObjectValue(ExecutionInfo, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(JobStatistics))
+            if (options.Format != "W" && Optional.IsDefined(Stats))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(JobStatistics, options);
+                writer.WriteObjectValue(Stats, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -222,8 +222,8 @@ namespace Azure.Compute.Batch
             string id = default;
             string displayName = default;
             bool? usesTaskDependencies = default;
-            Uri uri = default;
-            ETag? eTag = default;
+            string url = default;
+            string eTag = default;
             DateTimeOffset? lastModified = default;
             DateTimeOffset? creationTime = default;
             BatchJobState? state = default;
@@ -239,12 +239,12 @@ namespace Azure.Compute.Batch
             BatchJobReleaseTask jobReleaseTask = default;
             IReadOnlyList<EnvironmentSetting> commonEnvironmentSettings = default;
             BatchPoolInfo poolInfo = default;
-            BatchAllTasksCompleteMode? allTasksCompleteMode = default;
-            BatchTaskFailureMode? taskFailureMode = default;
+            OnAllBatchTasksComplete? onAllTasksComplete = default;
+            OnBatchTaskFailure? onTaskFailure = default;
             BatchJobNetworkConfiguration networkConfiguration = default;
-            IList<BatchMetadataItem> metadata = default;
+            IList<MetadataItem> metadata = default;
             BatchJobExecutionInfo executionInfo = default;
-            BatchJobStatistics jobStatistics = default;
+            BatchJobStatistics stats = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -269,20 +269,12 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    uri = new Uri(prop.Value.GetString());
+                    url = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("eTag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("lastModified"u8))
@@ -427,7 +419,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    allTasksCompleteMode = new BatchAllTasksCompleteMode(prop.Value.GetString());
+                    onAllTasksComplete = new OnAllBatchTasksComplete(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("onTaskFailure"u8))
@@ -436,7 +428,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    taskFailureMode = new BatchTaskFailureMode(prop.Value.GetString());
+                    onTaskFailure = new OnBatchTaskFailure(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkConfiguration"u8))
@@ -454,10 +446,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<BatchMetadataItem> array = new List<BatchMetadataItem>();
+                    List<MetadataItem> array = new List<MetadataItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
+                        array.Add(MetadataItem.DeserializeMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
@@ -477,7 +469,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    jobStatistics = BatchJobStatistics.DeserializeBatchJobStatistics(prop.Value, options);
+                    stats = BatchJobStatistics.DeserializeBatchJobStatistics(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -489,7 +481,7 @@ namespace Azure.Compute.Batch
                 id,
                 displayName,
                 usesTaskDependencies,
-                uri,
+                url,
                 eTag,
                 lastModified,
                 creationTime,
@@ -506,12 +498,12 @@ namespace Azure.Compute.Batch
                 jobReleaseTask,
                 commonEnvironmentSettings ?? new ChangeTrackingList<EnvironmentSetting>(),
                 poolInfo,
-                allTasksCompleteMode,
-                taskFailureMode,
+                onAllTasksComplete,
+                onTaskFailure,
                 networkConfiguration,
-                metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
+                metadata ?? new ChangeTrackingList<MetadataItem>(),
                 executionInfo,
-                jobStatistics,
+                stats,
                 additionalBinaryDataProperties);
         }
 
@@ -525,7 +517,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJob)} does not support writing '{options.Format}' format.");
             }

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary>
     /// The settings for an authentication token that the Task can use to perform Batch
@@ -22,19 +22,19 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="AuthenticationTokenSettings"/>. </summary>
         public AuthenticationTokenSettings()
         {
-            Access = new ChangeTrackingList<BatchAccessScope>();
+            Access = new ChangeTrackingList<AccessScope>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthenticationTokenSettings"/>. </summary>
         /// <param name="access"> The Batch resources to which the token grants access. The authentication token grants access to a limited set of Batch service operations. Currently the only supported value for the access property is 'job', which grants access to all operations related to the Job which contains the Task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthenticationTokenSettings(IList<BatchAccessScope> access, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuthenticationTokenSettings(IList<AccessScope> access, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Access = access;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Batch resources to which the token grants access. The authentication token grants access to a limited set of Batch service operations. Currently the only supported value for the access property is 'job', which grants access to all operations related to the Job which contains the Task. </summary>
-        public IList<BatchAccessScope> Access { get; }
+        public IList<AccessScope> Access { get; }
     }
 }

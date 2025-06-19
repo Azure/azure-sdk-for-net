@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> SecurityEncryptionTypes enums. </summary>
     public readonly partial struct SecurityEncryptionTypes : IEquatable<SecurityEncryptionTypes>

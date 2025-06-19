@@ -9,9 +9,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary>
     /// The reference to a user assigned identity associated with the Batch pool which
@@ -84,17 +83,13 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            ResourceIdentifier resourceId = default;
+            string resourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceId = new ResourceIdentifier(prop.Value.GetString());
+                    resourceId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +110,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchNodeIdentityReference)} does not support writing '{options.Format}' format.");
             }

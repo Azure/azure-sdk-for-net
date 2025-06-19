@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Specifies a file upload destination within an Azure blob storage container. </summary>
     public partial class OutputFileBlobContainerDestination : IJsonModel<OutputFileBlobContainerDestination>
@@ -44,7 +44,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStringValue(Path);
             }
             writer.WritePropertyName("containerUrl"u8);
-            writer.WriteStringValue(ContainerUri.AbsoluteUri);
+            writer.WriteStringValue(ContainerUrl);
             if (Optional.IsDefined(IdentityReference))
             {
                 writer.WritePropertyName("identityReference"u8);
@@ -54,7 +54,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("uploadHeaders"u8);
                 writer.WriteStartArray();
-                foreach (OutputFileUploadHeader item in UploadHeaders)
+                foreach (HttpHeader item in UploadHeaders)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -103,9 +103,9 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string path = default;
-            Uri containerUri = default;
+            string containerUrl = default;
             BatchNodeIdentityReference identityReference = default;
-            IList<OutputFileUploadHeader> uploadHeaders = default;
+            IList<HttpHeader> uploadHeaders = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -116,7 +116,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("containerUrl"u8))
                 {
-                    containerUri = new Uri(prop.Value.GetString());
+                    containerUrl = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("identityReference"u8))
@@ -134,10 +134,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<OutputFileUploadHeader> array = new List<OutputFileUploadHeader>();
+                    List<HttpHeader> array = new List<HttpHeader>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutputFileUploadHeader.DeserializeOutputFileUploadHeader(item, options));
+                        array.Add(HttpHeader.DeserializeHttpHeader(item, options));
                     }
                     uploadHeaders = array;
                     continue;
@@ -147,7 +147,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OutputFileBlobContainerDestination(path, containerUri, identityReference, uploadHeaders ?? new ChangeTrackingList<OutputFileUploadHeader>(), additionalBinaryDataProperties);
+            return new OutputFileBlobContainerDestination(path, containerUrl, identityReference, uploadHeaders ?? new ChangeTrackingList<HttpHeader>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -160,7 +160,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OutputFileBlobContainerDestination)} does not support writing '{options.Format}' format.");
             }

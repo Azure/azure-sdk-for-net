@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Specifies the security profile settings for the virtual machine or virtual machine scale set. </summary>
     public partial class SecurityProfile
@@ -21,7 +21,7 @@ namespace Azure.Compute.Batch
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. </param>
         /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Specifies the security settings like secure boot and vTPM used while creating the virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uefiSettings"/> is null. </exception>
-        public SecurityProfile(bool encryptionAtHost, SecurityTypes securityType, BatchUefiSettings uefiSettings)
+        public SecurityProfile(bool encryptionAtHost, SecurityTypes securityType, UefiSettings uefiSettings)
         {
             Argument.AssertNotNull(uefiSettings, nameof(uefiSettings));
 
@@ -35,7 +35,7 @@ namespace Azure.Compute.Batch
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. </param>
         /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Specifies the security settings like secure boot and vTPM used while creating the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityProfile(bool encryptionAtHost, SecurityTypes securityType, BatchUefiSettings uefiSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityProfile(bool encryptionAtHost, SecurityTypes securityType, UefiSettings uefiSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EncryptionAtHost = encryptionAtHost;
             SecurityType = securityType;
@@ -50,6 +50,6 @@ namespace Azure.Compute.Batch
         public SecurityTypes SecurityType { get; set; }
 
         /// <summary> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Specifies the security settings like secure boot and vTPM used while creating the virtual machine. </summary>
-        public BatchUefiSettings UefiSettings { get; set; }
+        public UefiSettings UefiSettings { get; set; }
     }
 }

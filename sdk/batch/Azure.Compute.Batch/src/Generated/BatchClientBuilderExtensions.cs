@@ -5,15 +5,29 @@
 
 #nullable disable
 
+using System;
 using System.Diagnostics.CodeAnalysis;
-using Azure.Compute.Batch;
+using Azure.Batch;
 using Azure.Core.Extensions;
+using Client;
 
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class BatchClientBuilderExtensions
     {
+        /// <summary> Registers a <see cref="BatchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public static IAzureClientBuilder<BatchClient, BatchClientOptions> AddBatchClient<TBuilder>(this TBuilder builder, Uri endpoint)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            return builder.RegisterClientFactory<BatchClient, BatchClientOptions>((options, credential) => new BatchClient(endpoint, credential, options));
+        }
+
         /// <summary> Registers a <see cref="BatchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>

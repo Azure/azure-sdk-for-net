@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The configuration for virtual machine extension instance view. </summary>
     public partial class BatchNodeVMExtension : IJsonModel<BatchNodeVMExtension>
@@ -138,7 +138,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchNodeVMExtension)} does not support writing '{options.Format}' format.");
             }

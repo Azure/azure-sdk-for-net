@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Information about the Compute Node on which a Task ran. </summary>
     public partial class BatchNodeInfo : IJsonModel<BatchNodeInfo>
@@ -38,10 +38,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("affinityId"u8);
                 writer.WriteStringValue(AffinityId);
             }
-            if (Optional.IsDefined(NodeUri))
+            if (Optional.IsDefined(NodeUrl))
             {
                 writer.WritePropertyName("nodeUrl"u8);
-                writer.WriteStringValue(NodeUri.AbsoluteUri);
+                writer.WriteStringValue(NodeUrl);
             }
             if (Optional.IsDefined(PoolId))
             {
@@ -58,10 +58,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("taskRootDirectory"u8);
                 writer.WriteStringValue(TaskRootDirectory);
             }
-            if (Optional.IsDefined(TaskRootDirectoryUri))
+            if (Optional.IsDefined(TaskRootDirectoryUrl))
             {
                 writer.WritePropertyName("taskRootDirectoryUrl"u8);
-                writer.WriteStringValue(TaskRootDirectoryUri.AbsoluteUri);
+                writer.WriteStringValue(TaskRootDirectoryUrl);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -106,11 +106,11 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string affinityId = default;
-            Uri nodeUri = default;
+            string nodeUrl = default;
             string poolId = default;
             string nodeId = default;
             string taskRootDirectory = default;
-            Uri taskRootDirectoryUri = default;
+            string taskRootDirectoryUrl = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -121,11 +121,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("nodeUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nodeUri = new Uri(prop.Value.GetString());
+                    nodeUrl = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("poolId"u8))
@@ -145,11 +141,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("taskRootDirectoryUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    taskRootDirectoryUri = new Uri(prop.Value.GetString());
+                    taskRootDirectoryUrl = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,11 +151,11 @@ namespace Azure.Compute.Batch
             }
             return new BatchNodeInfo(
                 affinityId,
-                nodeUri,
+                nodeUrl,
                 poolId,
                 nodeId,
                 taskRootDirectory,
-                taskRootDirectoryUri,
+                taskRootDirectoryUrl,
                 additionalBinaryDataProperties);
         }
 
@@ -177,7 +169,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchNodeInfo)} does not support writing '{options.Format}' format.");
             }

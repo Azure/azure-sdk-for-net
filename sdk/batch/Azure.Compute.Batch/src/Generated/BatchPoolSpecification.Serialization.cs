@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Specification for creating a new Pool. </summary>
     public partial class BatchPoolSpecification : IJsonModel<BatchPoolSpecification>
@@ -144,7 +144,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
-                foreach (BatchMetadataItem item in Metadata)
+                foreach (MetadataItem item in Metadata)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -230,7 +230,7 @@ namespace Azure.Compute.Batch
             IList<BatchCertificateReference> certificateReferences = default;
             IList<BatchApplicationPackageReference> applicationPackageReferences = default;
             IList<UserAccount> userAccounts = default;
-            IList<BatchMetadataItem> metadata = default;
+            IList<MetadataItem> metadata = default;
             IList<MountConfiguration> mountConfiguration = default;
             BatchNodeCommunicationMode? targetNodeCommunicationMode = default;
             UpgradePolicy upgradePolicy = default;
@@ -404,10 +404,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<BatchMetadataItem> array = new List<BatchMetadataItem>();
+                    List<MetadataItem> array = new List<MetadataItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
+                        array.Add(MetadataItem.DeserializeMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
@@ -468,7 +468,7 @@ namespace Azure.Compute.Batch
                 certificateReferences ?? new ChangeTrackingList<BatchCertificateReference>(),
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
                 userAccounts ?? new ChangeTrackingList<UserAccount>(),
-                metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
+                metadata ?? new ChangeTrackingList<MetadataItem>(),
                 mountConfiguration ?? new ChangeTrackingList<MountConfiguration>(),
                 targetNodeCommunicationMode,
                 upgradePolicy,
@@ -485,7 +485,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchPoolSpecification)} does not support writing '{options.Format}' format.");
             }

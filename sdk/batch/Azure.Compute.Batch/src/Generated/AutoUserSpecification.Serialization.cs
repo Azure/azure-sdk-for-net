@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Specifies the options for the auto user that runs an Azure Batch Task. </summary>
     public partial class AutoUserSpecification : IJsonModel<AutoUserSpecification>
@@ -126,7 +126,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutoUserSpecification)} does not support writing '{options.Format}' format.");
             }

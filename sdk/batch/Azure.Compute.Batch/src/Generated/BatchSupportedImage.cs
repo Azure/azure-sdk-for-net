@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary>
     /// A reference to the Azure Virtual Machines Marketplace Image and additional
@@ -24,7 +24,7 @@ namespace Azure.Compute.Batch
         /// <param name="imageReference"> The reference to the Azure Virtual Machine's Marketplace Image. </param>
         /// <param name="osType"> The type of operating system (e.g. Windows or Linux) of the Image. </param>
         /// <param name="verificationType"> Whether the Azure Batch service actively verifies that the Image is compatible with the associated Compute Node agent SKU. </param>
-        internal BatchSupportedImage(string nodeAgentSkuId, BatchVmImageReference imageReference, OSType osType, ImageVerificationType verificationType)
+        internal BatchSupportedImage(string nodeAgentSkuId, ImageReference imageReference, OSType osType, ImageVerificationType verificationType)
         {
             NodeAgentSkuId = nodeAgentSkuId;
             ImageReference = imageReference;
@@ -41,7 +41,7 @@ namespace Azure.Compute.Batch
         /// <param name="batchSupportEndOfLife"> The time when the Azure Batch service will stop accepting create Pool requests for the Image. </param>
         /// <param name="verificationType"> Whether the Azure Batch service actively verifies that the Image is compatible with the associated Compute Node agent SKU. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchSupportedImage(string nodeAgentSkuId, BatchVmImageReference imageReference, OSType osType, IList<string> capabilities, DateTimeOffset? batchSupportEndOfLife, ImageVerificationType verificationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchSupportedImage(string nodeAgentSkuId, ImageReference imageReference, OSType osType, IList<string> capabilities, DateTimeOffset? batchSupportEndOfLife, ImageVerificationType verificationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NodeAgentSkuId = nodeAgentSkuId;
             ImageReference = imageReference;
@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch
         public string NodeAgentSkuId { get; }
 
         /// <summary> The reference to the Azure Virtual Machine's Marketplace Image. </summary>
-        public BatchVmImageReference ImageReference { get; }
+        public ImageReference ImageReference { get; }
 
         /// <summary> The type of operating system (e.g. Windows or Linux) of the Image. </summary>
         public OSType OsType { get; }

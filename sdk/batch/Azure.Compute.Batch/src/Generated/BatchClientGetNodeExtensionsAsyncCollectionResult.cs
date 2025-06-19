@@ -11,18 +11,19 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Client;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     internal partial class BatchClientGetNodeExtensionsAsyncCollectionResult : AsyncPageable<BinaryData>
     {
         private readonly BatchClient _client;
         private readonly string _poolId;
         private readonly string _nodeId;
-        private readonly TimeSpan? _timeOutInSeconds;
+        private readonly int? _timeOutInSeconds;
         private readonly string _clientRequestId;
         private readonly bool? _returnClientRequestId;
-        private readonly DateTimeOffset? _ocpDate;
+        private readonly DateTimeOffset? _ocpdate;
         private readonly int? _maxresults;
         private readonly IEnumerable<string> _select;
         private readonly RequestContext _context;
@@ -37,7 +38,7 @@ namespace Azure.Compute.Batch
         /// such as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
         /// </param>
         /// <param name="returnClientRequestId"> Whether the server should return the client-request-id in the response. </param>
-        /// <param name="ocpDate">
+        /// <param name="ocpdate">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -50,7 +51,7 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        public BatchClientGetNodeExtensionsAsyncCollectionResult(BatchClient client, string poolId, string nodeId, TimeSpan? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpDate, int? maxresults, IEnumerable<string> @select, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BatchClientGetNodeExtensionsAsyncCollectionResult(BatchClient client, string poolId, string nodeId, int? timeOutInSeconds, string clientRequestId, bool? returnClientRequestId, DateTimeOffset? ocpdate, int? maxresults, IEnumerable<string> @select, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
@@ -61,7 +62,7 @@ namespace Azure.Compute.Batch
             _timeOutInSeconds = timeOutInSeconds;
             _clientRequestId = clientRequestId;
             _returnClientRequestId = returnClientRequestId;
-            _ocpDate = ocpDate;
+            _ocpdate = ocpdate;
             _maxresults = maxresults;
             _select = @select;
             _context = context;
@@ -98,7 +99,7 @@ namespace Azure.Compute.Batch
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextListNodeExtensionsRequest(nextLink, _poolId, _nodeId, _timeOutInSeconds, _clientRequestId, _returnClientRequestId, _ocpDate, _maxresults, _select, _context) : _client.CreateListNodeExtensionsRequest(_poolId, _nodeId, _timeOutInSeconds, _clientRequestId, _returnClientRequestId, _ocpDate, _maxresults, _select, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextListNodeExtensionsRequest(nextLink, _poolId, _nodeId, _timeOutInSeconds, _clientRequestId, _returnClientRequestId, _ocpdate, _maxresults, _select, _context) : _client.CreateListNodeExtensionsRequest(_poolId, _nodeId, _timeOutInSeconds, _clientRequestId, _returnClientRequestId, _ocpdate, _maxresults, _select, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BatchClient.GetNodeExtensions");
             scope.Start();
             try

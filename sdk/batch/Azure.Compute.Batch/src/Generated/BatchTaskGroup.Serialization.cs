@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> A collection of Azure Batch Tasks to add. </summary>
     public partial class BatchTaskGroup : IJsonModel<BatchTaskGroup>
@@ -41,7 +41,7 @@ namespace Azure.Compute.Batch
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (BatchTaskCreateOptions item in Values)
+            foreach (BatchTaskCreateContent item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -88,18 +88,18 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            IList<BatchTaskCreateOptions> values = default;
+            IList<BatchTaskCreateContent> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<BatchTaskCreateOptions> array = new List<BatchTaskCreateOptions>();
+                    List<BatchTaskCreateContent> array = new List<BatchTaskCreateContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BatchTaskCreateOptions.DeserializeBatchTaskCreateOptions(item, options));
+                        array.Add(BatchTaskCreateContent.DeserializeBatchTaskCreateContent(item, options));
                     }
-                    values = array;
+                    value = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,7 +107,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchTaskGroup(values, additionalBinaryDataProperties);
+            return new BatchTaskGroup(value, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -120,7 +120,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchTaskGroup)} does not support writing '{options.Format}' format.");
             }

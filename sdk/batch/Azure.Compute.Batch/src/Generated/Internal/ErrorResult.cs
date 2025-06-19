@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     internal partial class ErrorResult<T> : Response<T>
     {

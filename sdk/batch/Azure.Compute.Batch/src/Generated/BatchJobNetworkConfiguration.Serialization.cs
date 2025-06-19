@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The network configuration for the Job. </summary>
     public partial class BatchJobNetworkConfiguration : IJsonModel<BatchJobNetworkConfiguration>
@@ -41,7 +41,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
             writer.WritePropertyName("skipWithdrawFromVNet"u8);
-            writer.WriteBooleanValue(SkipWithdrawFromVnet);
+            writer.WriteBooleanValue(SkipWithdrawFromVNet);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -85,7 +85,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string subnetId = default;
-            bool skipWithdrawFromVnet = default;
+            bool skipWithdrawFromVNet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -96,7 +96,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("skipWithdrawFromVNet"u8))
                 {
-                    skipWithdrawFromVnet = prop.Value.GetBoolean();
+                    skipWithdrawFromVNet = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchJobNetworkConfiguration(subnetId, skipWithdrawFromVnet, additionalBinaryDataProperties);
+            return new BatchJobNetworkConfiguration(subnetId, skipWithdrawFromVNet, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -117,7 +117,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobNetworkConfiguration)} does not support writing '{options.Format}' format.");
             }

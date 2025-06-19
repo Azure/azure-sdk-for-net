@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Information used to connect to an Azure Fileshare. </summary>
     public partial class AzureFileShareConfiguration : IJsonModel<AzureFileShareConfiguration>
@@ -40,10 +40,10 @@ namespace Azure.Compute.Batch
             }
             writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
+            writer.WritePropertyName("azureFileUrl"u8);
+            writer.WriteStringValue(AzureFileUrl);
             writer.WritePropertyName("accountKey"u8);
             writer.WriteStringValue(AccountKey);
-            writer.WritePropertyName("azureFileUrl"u8);
-            writer.WriteStringValue(AzureFileUri.AbsoluteUri);
             writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
             if (Optional.IsDefined(MountOptions))
@@ -94,8 +94,8 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string accountName = default;
+            string azureFileUrl = default;
             string accountKey = default;
-            Uri azureFileUri = default;
             string relativeMountPath = default;
             string mountOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -106,14 +106,14 @@ namespace Azure.Compute.Batch
                     accountName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("azureFileUrl"u8))
+                {
+                    azureFileUrl = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("accountKey"u8))
                 {
                     accountKey = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("azureFileUrl"u8))
-                {
-                    azureFileUri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("relativeMountPath"u8))
@@ -133,8 +133,8 @@ namespace Azure.Compute.Batch
             }
             return new AzureFileShareConfiguration(
                 accountName,
+                azureFileUrl,
                 accountKey,
-                azureFileUri,
                 relativeMountPath,
                 mountOptions,
                 additionalBinaryDataProperties);
@@ -150,7 +150,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureFileShareConfiguration)} does not support writing '{options.Format}' format.");
             }

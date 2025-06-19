@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary>
     /// A reference to the Azure Virtual Machines Marketplace Image and additional
@@ -112,7 +112,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string nodeAgentSkuId = default;
-            BatchVmImageReference imageReference = default;
+            ImageReference imageReference = default;
             OSType osType = default;
             IList<string> capabilities = default;
             DateTimeOffset? batchSupportEndOfLife = default;
@@ -127,7 +127,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("imageReference"u8))
                 {
-                    imageReference = BatchVmImageReference.DeserializeBatchVmImageReference(prop.Value, options);
+                    imageReference = ImageReference.DeserializeImageReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("osType"u8))
@@ -195,7 +195,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchSupportedImage)} does not support writing '{options.Format}' format.");
             }

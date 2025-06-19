@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> An error encountered by the Batch service when scheduling a Job. </summary>
     public partial class BatchJobSchedulingError
@@ -18,7 +18,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Initializes a new instance of <see cref="BatchJobSchedulingError"/>. </summary>
         /// <param name="category"> The category of the Job scheduling error. </param>
-        internal BatchJobSchedulingError(BatchErrorSourceCategory category)
+        internal BatchJobSchedulingError(ErrorCategory category)
         {
             Category = category;
             Details = new ChangeTrackingList<NameValuePair>();
@@ -30,7 +30,7 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the Job scheduling error, intended to be suitable for display in a user interface. </param>
         /// <param name="details"> A list of additional error details related to the scheduling error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobSchedulingError(BatchErrorSourceCategory category, string code, string message, IList<NameValuePair> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobSchedulingError(ErrorCategory category, string code, string message, IList<NameValuePair> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Code = code;
@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The category of the Job scheduling error. </summary>
-        public BatchErrorSourceCategory Category { get; }
+        public ErrorCategory Category { get; }
 
         /// <summary> An identifier for the Job scheduling error. Codes are invariant and are intended to be consumed programmatically. </summary>
         public string Code { get; }

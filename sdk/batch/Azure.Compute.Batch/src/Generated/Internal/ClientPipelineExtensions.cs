@@ -11,7 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     internal static partial class ClientPipelineExtensions
     {

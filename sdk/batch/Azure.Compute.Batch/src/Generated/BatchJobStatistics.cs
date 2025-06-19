@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Resource usage statistics for a Job. </summary>
     public partial class BatchJobStatistics
@@ -17,75 +17,75 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchJobStatistics"/>. </summary>
-        /// <param name="uri"> The URL of the statistics. </param>
+        /// <param name="url"> The URL of the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
         /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. </param>
         /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. </param>
         /// <param name="wallClockTime"> The total wall clock time of all Tasks in the Job.  The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If a Task was retried, this includes the wall clock time of all the Task retries. </param>
-        /// <param name="readIops"> The total number of disk read operations made by all Tasks in the Job. </param>
-        /// <param name="writeIops"> The total number of disk write operations made by all Tasks in the Job. </param>
-        /// <param name="readIoGiB"> The total amount of data in GiB read from disk by all Tasks in the Job. </param>
-        /// <param name="writeIoGiB"> The total amount of data in GiB written to disk by all Tasks in the Job. </param>
-        /// <param name="succeededTasksCount"> The total number of Tasks successfully completed in the Job during the given time range. A Task completes successfully if it returns exit code 0. </param>
-        /// <param name="failedTasksCount"> The total number of Tasks in the Job that failed during the given time range. A Task fails if it exhausts its maximum retry count without returning exit code 0. </param>
-        /// <param name="taskRetriesCount"> The total number of retries on all the Tasks in the Job during the given time range. </param>
+        /// <param name="readIOps"> The total number of disk read operations made by all Tasks in the Job. </param>
+        /// <param name="writeIOps"> The total number of disk write operations made by all Tasks in the Job. </param>
+        /// <param name="readIOGiB"> The total amount of data in GiB read from disk by all Tasks in the Job. </param>
+        /// <param name="writeIOGiB"> The total amount of data in GiB written to disk by all Tasks in the Job. </param>
+        /// <param name="numSucceededTasks"> The total number of Tasks successfully completed in the Job during the given time range. A Task completes successfully if it returns exit code 0. </param>
+        /// <param name="numFailedTasks"> The total number of Tasks in the Job that failed during the given time range. A Task fails if it exhausts its maximum retry count without returning exit code 0. </param>
+        /// <param name="numTaskRetries"> The total number of retries on all the Tasks in the Job during the given time range. </param>
         /// <param name="waitTime"> The total wait time of all Tasks in the Job. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.) This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. </param>
-        internal BatchJobStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIops, long writeIops, float readIoGiB, float writeIoGiB, long succeededTasksCount, long failedTasksCount, long taskRetriesCount, TimeSpan waitTime)
+        internal BatchJobStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIOps, long writeIOps, float readIOGiB, float writeIOGiB, long numSucceededTasks, long numFailedTasks, long numTaskRetries, TimeSpan waitTime)
         {
-            Uri = uri;
+            Url = url;
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
             UserCpuTime = userCpuTime;
             KernelCpuTime = kernelCpuTime;
             WallClockTime = wallClockTime;
-            ReadIops = readIops;
-            WriteIops = writeIops;
-            ReadIoGiB = readIoGiB;
-            WriteIoGiB = writeIoGiB;
-            SucceededTasksCount = succeededTasksCount;
-            FailedTasksCount = failedTasksCount;
-            TaskRetriesCount = taskRetriesCount;
+            ReadIOps = readIOps;
+            WriteIOps = writeIOps;
+            ReadIOGiB = readIOGiB;
+            WriteIOGiB = writeIOGiB;
+            NumSucceededTasks = numSucceededTasks;
+            NumFailedTasks = numFailedTasks;
+            NumTaskRetries = numTaskRetries;
             WaitTime = waitTime;
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchJobStatistics"/>. </summary>
-        /// <param name="uri"> The URL of the statistics. </param>
+        /// <param name="url"> The URL of the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
         /// <param name="userCpuTime"> The total user mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. </param>
         /// <param name="kernelCpuTime"> The total kernel mode CPU time (summed across all cores and all Compute Nodes) consumed by all Tasks in the Job. </param>
         /// <param name="wallClockTime"> The total wall clock time of all Tasks in the Job.  The wall clock time is the elapsed time from when the Task started running on a Compute Node to when it finished (or to the last time the statistics were updated, if the Task had not finished by then). If a Task was retried, this includes the wall clock time of all the Task retries. </param>
-        /// <param name="readIops"> The total number of disk read operations made by all Tasks in the Job. </param>
-        /// <param name="writeIops"> The total number of disk write operations made by all Tasks in the Job. </param>
-        /// <param name="readIoGiB"> The total amount of data in GiB read from disk by all Tasks in the Job. </param>
-        /// <param name="writeIoGiB"> The total amount of data in GiB written to disk by all Tasks in the Job. </param>
-        /// <param name="succeededTasksCount"> The total number of Tasks successfully completed in the Job during the given time range. A Task completes successfully if it returns exit code 0. </param>
-        /// <param name="failedTasksCount"> The total number of Tasks in the Job that failed during the given time range. A Task fails if it exhausts its maximum retry count without returning exit code 0. </param>
-        /// <param name="taskRetriesCount"> The total number of retries on all the Tasks in the Job during the given time range. </param>
+        /// <param name="readIOps"> The total number of disk read operations made by all Tasks in the Job. </param>
+        /// <param name="writeIOps"> The total number of disk write operations made by all Tasks in the Job. </param>
+        /// <param name="readIOGiB"> The total amount of data in GiB read from disk by all Tasks in the Job. </param>
+        /// <param name="writeIOGiB"> The total amount of data in GiB written to disk by all Tasks in the Job. </param>
+        /// <param name="numSucceededTasks"> The total number of Tasks successfully completed in the Job during the given time range. A Task completes successfully if it returns exit code 0. </param>
+        /// <param name="numFailedTasks"> The total number of Tasks in the Job that failed during the given time range. A Task fails if it exhausts its maximum retry count without returning exit code 0. </param>
+        /// <param name="numTaskRetries"> The total number of retries on all the Tasks in the Job during the given time range. </param>
         /// <param name="waitTime"> The total wait time of all Tasks in the Job. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.) This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIops, long writeIops, float readIoGiB, float writeIoGiB, long succeededTasksCount, long failedTasksCount, long taskRetriesCount, TimeSpan waitTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan userCpuTime, TimeSpan kernelCpuTime, TimeSpan wallClockTime, long readIOps, long writeIOps, float readIOGiB, float writeIOGiB, long numSucceededTasks, long numFailedTasks, long numTaskRetries, TimeSpan waitTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Uri = uri;
+            Url = url;
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
             UserCpuTime = userCpuTime;
             KernelCpuTime = kernelCpuTime;
             WallClockTime = wallClockTime;
-            ReadIops = readIops;
-            WriteIops = writeIops;
-            ReadIoGiB = readIoGiB;
-            WriteIoGiB = writeIoGiB;
-            SucceededTasksCount = succeededTasksCount;
-            FailedTasksCount = failedTasksCount;
-            TaskRetriesCount = taskRetriesCount;
+            ReadIOps = readIOps;
+            WriteIOps = writeIOps;
+            ReadIOGiB = readIOGiB;
+            WriteIOGiB = writeIOGiB;
+            NumSucceededTasks = numSucceededTasks;
+            NumFailedTasks = numFailedTasks;
+            NumTaskRetries = numTaskRetries;
             WaitTime = waitTime;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The URL of the statistics. </summary>
-        public Uri Uri { get; }
+        public string Url { get; }
 
         /// <summary> The start time of the time range covered by the statistics. </summary>
         public DateTimeOffset StartTime { get; }
@@ -103,25 +103,25 @@ namespace Azure.Compute.Batch
         public TimeSpan WallClockTime { get; }
 
         /// <summary> The total number of disk read operations made by all Tasks in the Job. </summary>
-        public long ReadIops { get; }
+        public long ReadIOps { get; }
 
         /// <summary> The total number of disk write operations made by all Tasks in the Job. </summary>
-        public long WriteIops { get; }
+        public long WriteIOps { get; }
 
         /// <summary> The total amount of data in GiB read from disk by all Tasks in the Job. </summary>
-        public float ReadIoGiB { get; }
+        public float ReadIOGiB { get; }
 
         /// <summary> The total amount of data in GiB written to disk by all Tasks in the Job. </summary>
-        public float WriteIoGiB { get; }
+        public float WriteIOGiB { get; }
 
         /// <summary> The total number of Tasks successfully completed in the Job during the given time range. A Task completes successfully if it returns exit code 0. </summary>
-        public long SucceededTasksCount { get; }
+        public long NumSucceededTasks { get; }
 
         /// <summary> The total number of Tasks in the Job that failed during the given time range. A Task fails if it exhausts its maximum retry count without returning exit code 0. </summary>
-        public long FailedTasksCount { get; }
+        public long NumFailedTasks { get; }
 
         /// <summary> The total number of retries on all the Tasks in the Job during the given time range. </summary>
-        public long TaskRetriesCount { get; }
+        public long NumTaskRetries { get; }
 
         /// <summary> The total wait time of all Tasks in the Job. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.) This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. </summary>
         public TimeSpan WaitTime { get; }

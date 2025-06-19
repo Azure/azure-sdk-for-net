@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Struct), AllowMultiple = true, Inherited = true)]
     internal partial class CodeGenSerializationAttribute : Attribute

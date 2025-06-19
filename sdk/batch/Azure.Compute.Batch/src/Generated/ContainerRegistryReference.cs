@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> A private container registry. </summary>
     public partial class ContainerRegistryReference
@@ -24,14 +24,14 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryReference"/>. </summary>
         /// <param name="username"> The user name to log into the registry server. </param>
         /// <param name="password"> The password to log into the registry server. </param>
-        /// <param name="registryServerUri"> The registry URL. If omitted, the default is "docker.io". </param>
+        /// <param name="registryServer"> The registry URL. If omitted, the default is "docker.io". </param>
         /// <param name="identityReference"> The reference to the user assigned identity to use to access an Azure Container Registry instead of username and password. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryReference(string username, string password, Uri registryServerUri, BatchNodeIdentityReference identityReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryReference(string username, string password, string registryServer, BatchNodeIdentityReference identityReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Username = username;
             Password = password;
-            RegistryServerUri = registryServerUri;
+            RegistryServer = registryServer;
             IdentityReference = identityReference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,7 +43,7 @@ namespace Azure.Compute.Batch
         public string Password { get; set; }
 
         /// <summary> The registry URL. If omitted, the default is "docker.io". </summary>
-        public Uri RegistryServerUri { get; set; }
+        public string RegistryServer { get; set; }
 
         /// <summary> The reference to the user assigned identity to use to access an Azure Container Registry instead of username and password. </summary>
         public BatchNodeIdentityReference IdentityReference { get; set; }

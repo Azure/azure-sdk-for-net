@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary>
     /// A Job Schedule that allows recurring Jobs by specifying when to run Jobs and a
@@ -53,15 +53,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Url);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
@@ -109,16 +109,16 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
-                foreach (BatchMetadataItem item in Metadata)
+                foreach (MetadataItem item in Metadata)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(JobScheduleStatistics))
+            if (options.Format != "W" && Optional.IsDefined(Stats))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(JobScheduleStatistics, options);
+                writer.WriteObjectValue(Stats, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -164,8 +164,8 @@ namespace Azure.Compute.Batch
             }
             string id = default;
             string displayName = default;
-            Uri uri = default;
-            ETag? eTag = default;
+            string url = default;
+            string eTag = default;
             DateTimeOffset? lastModified = default;
             DateTimeOffset? creationTime = default;
             BatchJobScheduleState? state = default;
@@ -175,8 +175,8 @@ namespace Azure.Compute.Batch
             BatchJobScheduleConfiguration schedule = default;
             BatchJobSpecification jobSpecification = default;
             BatchJobScheduleExecutionInfo executionInfo = default;
-            IList<BatchMetadataItem> metadata = default;
-            BatchJobScheduleStatistics jobScheduleStatistics = default;
+            IList<MetadataItem> metadata = default;
+            BatchJobScheduleStatistics stats = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,20 +192,12 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    uri = new Uri(prop.Value.GetString());
+                    url = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("eTag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("lastModified"u8))
@@ -291,10 +283,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<BatchMetadataItem> array = new List<BatchMetadataItem>();
+                    List<MetadataItem> array = new List<MetadataItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
+                        array.Add(MetadataItem.DeserializeMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
@@ -305,7 +297,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    jobScheduleStatistics = BatchJobScheduleStatistics.DeserializeBatchJobScheduleStatistics(prop.Value, options);
+                    stats = BatchJobScheduleStatistics.DeserializeBatchJobScheduleStatistics(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -316,7 +308,7 @@ namespace Azure.Compute.Batch
             return new BatchJobSchedule(
                 id,
                 displayName,
-                uri,
+                url,
                 eTag,
                 lastModified,
                 creationTime,
@@ -327,8 +319,8 @@ namespace Azure.Compute.Batch
                 schedule,
                 jobSpecification,
                 executionInfo,
-                metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
-                jobScheduleStatistics,
+                metadata ?? new ChangeTrackingList<MetadataItem>(),
+                stats,
                 additionalBinaryDataProperties);
         }
 
@@ -342,7 +334,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobSchedule)} does not support writing '{options.Format}' format.");
             }

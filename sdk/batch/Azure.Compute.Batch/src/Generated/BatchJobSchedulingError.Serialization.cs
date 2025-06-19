@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> An error encountered by the Batch service when scheduling a Job. </summary>
     public partial class BatchJobSchedulingError : IJsonModel<BatchJobSchedulingError>
@@ -102,7 +102,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            BatchErrorSourceCategory category = default;
+            ErrorCategory category = default;
             string code = default;
             string message = default;
             IList<NameValuePair> details = default;
@@ -111,7 +111,7 @@ namespace Azure.Compute.Batch
             {
                 if (prop.NameEquals("category"u8))
                 {
-                    category = new BatchErrorSourceCategory(prop.Value.GetString());
+                    category = new ErrorCategory(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("code"u8))
@@ -156,7 +156,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobSchedulingError)} does not support writing '{options.Format}' format.");
             }

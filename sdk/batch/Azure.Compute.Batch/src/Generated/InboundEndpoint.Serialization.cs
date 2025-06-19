@@ -8,10 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> An inbound endpoint on a Compute Node. </summary>
     public partial class InboundEndpoint : IJsonModel<InboundEndpoint>
@@ -44,7 +43,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
             writer.WritePropertyName("publicIPAddress"u8);
-            writer.WriteStringValue(PublicIpAddress.ToString());
+            writer.WriteStringValue(PublicIpAddress);
             writer.WritePropertyName("publicFQDN"u8);
             writer.WriteStringValue(PublicFQDN);
             writer.WritePropertyName("frontendPort"u8);
@@ -95,7 +94,7 @@ namespace Azure.Compute.Batch
             }
             string name = default;
             InboundEndpointProtocol protocol = default;
-            IPAddress publicIpAddress = default;
+            string publicIpAddress = default;
             string publicFQDN = default;
             int frontendPort = default;
             int backendPort = default;
@@ -114,7 +113,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("publicIPAddress"u8))
                 {
-                    publicIpAddress = IPAddress.Parse(prop.Value.GetString());
+                    publicIpAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("publicFQDN"u8))
@@ -157,7 +156,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InboundEndpoint)} does not support writing '{options.Format}' format.");
             }

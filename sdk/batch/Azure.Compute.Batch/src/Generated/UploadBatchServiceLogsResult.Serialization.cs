@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The result of uploading Batch service log files from a specific Compute Node. </summary>
     public partial class UploadBatchServiceLogsResult : IJsonModel<UploadBatchServiceLogsResult>
@@ -118,7 +118,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(UploadBatchServiceLogsResult)} does not support writing '{options.Format}' format.");
             }

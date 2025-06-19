@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> BatchPoolLifetimeOption enums. </summary>
     public readonly partial struct BatchPoolLifetimeOption : IEquatable<BatchPoolLifetimeOption>

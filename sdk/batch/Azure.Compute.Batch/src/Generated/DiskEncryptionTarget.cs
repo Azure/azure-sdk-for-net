@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> DiskEncryptionTarget enums. </summary>
     public readonly partial struct DiskEncryptionTarget : IEquatable<DiskEncryptionTarget>

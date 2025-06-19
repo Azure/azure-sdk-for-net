@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The configuration parameters used for performing automatic OS upgrade. </summary>
     public partial class AutomaticOsUpgradePolicy : IJsonModel<AutomaticOsUpgradePolicy>
@@ -156,7 +156,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutomaticOsUpgradePolicy)} does not support writing '{options.Format}' format.");
             }

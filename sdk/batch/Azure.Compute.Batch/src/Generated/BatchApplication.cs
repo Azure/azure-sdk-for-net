@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Contains information about an application in an Azure Batch Account. </summary>
     public partial class BatchApplication

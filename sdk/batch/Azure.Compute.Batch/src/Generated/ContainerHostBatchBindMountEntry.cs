@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The entry of path and mount mode you want to mount into task container. </summary>
     public partial class ContainerHostBatchBindMountEntry

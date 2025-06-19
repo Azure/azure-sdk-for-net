@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Information about a Task failure. </summary>
     public partial class BatchTaskFailureInfo
@@ -18,7 +18,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskFailureInfo"/>. </summary>
         /// <param name="category"> The category of the Task error. </param>
-        internal BatchTaskFailureInfo(BatchErrorSourceCategory category)
+        internal BatchTaskFailureInfo(ErrorCategory category)
         {
             Category = category;
             Details = new ChangeTrackingList<NameValuePair>();
@@ -30,7 +30,7 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the Task error, intended to be suitable for display in a user interface. </param>
         /// <param name="details"> A list of additional details related to the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskFailureInfo(BatchErrorSourceCategory category, string code, string message, IList<NameValuePair> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskFailureInfo(ErrorCategory category, string code, string message, IList<NameValuePair> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Code = code;
@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The category of the Task error. </summary>
-        public BatchErrorSourceCategory Category { get; }
+        public ErrorCategory Category { get; }
 
         /// <summary> An identifier for the Task error. Codes are invariant and are intended to be consumed programmatically. </summary>
         public string Code { get; }

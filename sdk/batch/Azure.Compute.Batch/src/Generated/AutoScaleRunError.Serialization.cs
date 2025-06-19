@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> An error that occurred when executing or evaluating a Pool autoscale formula. </summary>
     public partial class AutoScaleRunError : IJsonModel<AutoScaleRunError>
@@ -143,7 +143,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutoScaleRunError)} does not support writing '{options.Format}' format.");
             }

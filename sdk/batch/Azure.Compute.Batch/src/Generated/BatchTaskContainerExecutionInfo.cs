@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Contains information about the container which a Task is executing. </summary>
     public partial class BatchTaskContainerExecutionInfo

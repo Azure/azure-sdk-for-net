@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Specifies how a Job should be assigned to a Pool. </summary>
     public partial class BatchPoolInfo

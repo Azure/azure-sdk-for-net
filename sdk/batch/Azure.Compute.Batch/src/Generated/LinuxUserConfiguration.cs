@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> Properties used to create a user Account on a Linux Compute Node. </summary>
     public partial class LinuxUserConfiguration

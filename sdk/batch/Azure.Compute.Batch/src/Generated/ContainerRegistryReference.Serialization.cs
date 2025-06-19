@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> A private container registry. </summary>
     public partial class ContainerRegistryReference : IJsonModel<ContainerRegistryReference>
@@ -43,10 +43,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(RegistryServerUri))
+            if (Optional.IsDefined(RegistryServer))
             {
                 writer.WritePropertyName("registryServer"u8);
-                writer.WriteStringValue(RegistryServerUri.AbsoluteUri);
+                writer.WriteStringValue(RegistryServer);
             }
             if (Optional.IsDefined(IdentityReference))
             {
@@ -97,7 +97,7 @@ namespace Azure.Compute.Batch
             }
             string username = default;
             string password = default;
-            Uri registryServerUri = default;
+            string registryServer = default;
             BatchNodeIdentityReference identityReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -114,11 +114,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("registryServer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    registryServerUri = new Uri(prop.Value.GetString());
+                    registryServer = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("identityReference"u8))
@@ -135,7 +131,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerRegistryReference(username, password, registryServerUri, identityReference, additionalBinaryDataProperties);
+            return new ContainerRegistryReference(username, password, registryServer, identityReference, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -148,7 +144,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryReference)} does not support writing '{options.Format}' format.");
             }

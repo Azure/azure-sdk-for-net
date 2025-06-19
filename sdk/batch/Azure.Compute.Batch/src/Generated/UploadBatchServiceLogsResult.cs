@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The result of uploading Batch service log files from a specific Compute Node. </summary>
     public partial class UploadBatchServiceLogsResult

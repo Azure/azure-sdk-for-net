@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary>
     /// The settings for an authentication token that the Task can use to perform Batch
@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStartArray();
-                foreach (BatchAccessScope item in Access)
+                foreach (AccessScope item in Access)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -88,7 +88,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            IList<BatchAccessScope> access = default;
+            IList<AccessScope> access = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -98,10 +98,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<BatchAccessScope> array = new List<BatchAccessScope>();
+                    List<AccessScope> array = new List<AccessScope>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new BatchAccessScope(item.GetString()));
+                        array.Add(new AccessScope(item.GetString()));
                     }
                     access = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AuthenticationTokenSettings(access ?? new ChangeTrackingList<BatchAccessScope>(), additionalBinaryDataProperties);
+            return new AuthenticationTokenSettings(access ?? new ChangeTrackingList<AccessScope>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -124,7 +124,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AuthenticationTokenSettings)} does not support writing '{options.Format}' format.");
             }

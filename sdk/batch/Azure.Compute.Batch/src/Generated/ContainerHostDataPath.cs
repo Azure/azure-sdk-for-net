@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> The paths which will be mounted to container task's container. </summary>
     public readonly partial struct ContainerHostDataPath : IEquatable<ContainerHostDataPath>

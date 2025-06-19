@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary>
     /// A Certificate that can be installed on Compute Nodes and can be used to
@@ -24,7 +24,7 @@ namespace Azure.Compute.Batch
         /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint. This must be sha1. </param>
         /// <param name="data"> The base64-encoded contents of the Certificate. The maximum size is 10KB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/>, <paramref name="thumbprintAlgorithm"/> or <paramref name="data"/> is null. </exception>
-        public BatchCertificate(string thumbprint, string thumbprintAlgorithm, BinaryData data)
+        public BatchCertificate(string thumbprint, string thumbprintAlgorithm, string data)
         {
             Argument.AssertNotNull(thumbprint, nameof(thumbprint));
             Argument.AssertNotNull(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
@@ -38,7 +38,7 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="BatchCertificate"/>. </summary>
         /// <param name="thumbprint"> The X.509 thumbprint of the Certificate. This is a sequence of up to 40 hex digits (it may include spaces but these are removed). </param>
         /// <param name="thumbprintAlgorithm"> The algorithm used to derive the thumbprint. This must be sha1. </param>
-        /// <param name="uri"> The URL of the Certificate. </param>
+        /// <param name="url"> The URL of the Certificate. </param>
         /// <param name="state"> The state of the Certificate. </param>
         /// <param name="stateTransitionTime"> The time at which the Certificate entered its current state. </param>
         /// <param name="previousState"> The previous state of the Certificate. This property is not set if the Certificate is in its initial active state. </param>
@@ -49,11 +49,11 @@ namespace Azure.Compute.Batch
         /// <param name="certificateFormat"> The format of the Certificate data. </param>
         /// <param name="password"> The password to access the Certificate's private key. This must be omitted if the Certificate format is cer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchCertificate(string thumbprint, string thumbprintAlgorithm, Uri uri, BatchCertificateState? state, DateTimeOffset? stateTransitionTime, BatchCertificateState? previousState, DateTimeOffset? previousStateTransitionTime, string publicData, BatchCertificateDeleteError deleteCertificateError, BinaryData data, BatchCertificateFormat? certificateFormat, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchCertificate(string thumbprint, string thumbprintAlgorithm, string url, BatchCertificateState? state, DateTimeOffset? stateTransitionTime, BatchCertificateState? previousState, DateTimeOffset? previousStateTransitionTime, string publicData, DeleteBatchCertificateError deleteCertificateError, string data, BatchCertificateFormat? certificateFormat, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Thumbprint = thumbprint;
             ThumbprintAlgorithm = thumbprintAlgorithm;
-            Uri = uri;
+            Url = url;
             State = state;
             StateTransitionTime = stateTransitionTime;
             PreviousState = previousState;
@@ -73,7 +73,7 @@ namespace Azure.Compute.Batch
         public string ThumbprintAlgorithm { get; set; }
 
         /// <summary> The URL of the Certificate. </summary>
-        public Uri Uri { get; }
+        public string Url { get; }
 
         /// <summary> The state of the Certificate. </summary>
         public BatchCertificateState? State { get; }
@@ -91,25 +91,10 @@ namespace Azure.Compute.Batch
         public string PublicData { get; }
 
         /// <summary> The error that occurred on the last attempt to delete this Certificate. This property is set only if the Certificate is in the DeleteFailed state. </summary>
-        public BatchCertificateDeleteError DeleteCertificateError { get; }
+        public DeleteBatchCertificateError DeleteCertificateError { get; }
 
-        /// <summary>
-        /// The base64-encoded contents of the Certificate. The maximum size is 10KB.
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Data { get; set; }
+        /// <summary> The base64-encoded contents of the Certificate. The maximum size is 10KB. </summary>
+        public string Data { get; set; }
 
         /// <summary> The format of the Certificate data. </summary>
         public BatchCertificateFormat? CertificateFormat { get; set; }

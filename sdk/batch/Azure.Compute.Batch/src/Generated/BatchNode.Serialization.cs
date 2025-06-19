@@ -8,11 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure;
 
-namespace Azure.Compute.Batch
+namespace Azure.Batch
 {
     /// <summary> A Compute Node in the Batch service. </summary>
     public partial class BatchNode : IJsonModel<BatchNode>
@@ -40,10 +39,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Url);
             }
             if (Optional.IsDefined(State))
             {
@@ -73,7 +72,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress.ToString());
+                writer.WriteStringValue(IpAddress);
             }
             if (Optional.IsDefined(AffinityId))
             {
@@ -208,13 +207,13 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string id = default;
-            Uri uri = default;
+            string url = default;
             BatchNodeState? state = default;
             SchedulingState? schedulingState = default;
             DateTimeOffset? stateTransitionTime = default;
             DateTimeOffset? lastBootTime = default;
             DateTimeOffset? allocationTime = default;
-            IPAddress ipAddress = default;
+            string ipAddress = default;
             string affinityId = default;
             string vmSize = default;
             int? totalTasksRun = default;
@@ -240,11 +239,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    uri = new Uri(prop.Value.GetString());
+                    url = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -294,11 +289,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("ipAddress"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ipAddress = IPAddress.Parse(prop.Value.GetString());
+                    ipAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("affinityId"u8))
@@ -450,7 +441,7 @@ namespace Azure.Compute.Batch
             }
             return new BatchNode(
                 id,
-                uri,
+                url,
                 state,
                 schedulingState,
                 stateTransitionTime,
@@ -485,7 +476,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchNode)} does not support writing '{options.Format}' format.");
             }
