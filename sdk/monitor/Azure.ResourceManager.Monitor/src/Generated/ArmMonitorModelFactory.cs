@@ -1726,5 +1726,29 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             return MonitorWorkspaceResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, defaultIngestionSettings: defaultIngestionSettings, metrics: metrics, accountId: accountId, metricsPropertiesMetrics: default, provisioningState: provisioningState, defaultIngestionSettingsPropertiesDefaultIngestionSettings: default, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess);
         }
+
+        /// <summary>
+        /// Creates a new DiagnosticSettingResource instance for mocking.
+        /// </summary>
+        public static DiagnosticSettingResource DiagnosticSettingResource()
+        {
+            return (DiagnosticSettingResource)Activator.CreateInstance(typeof(DiagnosticSettingResource), nonPublic: true);
+        }
+
+        /// <summary>
+        /// Creates a new DiagnosticSettingsCategoryResource instance for mocking.
+        /// </summary>
+        public static DiagnosticSettingsCategoryResource DiagnosticSettingsCategoryResource()
+        {
+            return (DiagnosticSettingsCategoryResource)Activator.CreateInstance(typeof(DiagnosticSettingsCategoryResource), nonPublic: true);
+        }
+
+        /// <summary>
+        /// Creates a new DataCollectionRuleAssociationResource instance for mocking.
+        /// </summary>
+        public static DataCollectionRuleAssociationResource DataCollectionRuleAssociationResource()
+        {
+            return (DataCollectionRuleAssociationResource)Activator.CreateInstance(typeof(DataCollectionRuleAssociationResource), nonPublic: true);
+        }
     }
 }

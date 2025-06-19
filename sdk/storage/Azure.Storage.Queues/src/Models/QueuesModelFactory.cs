@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -205,6 +206,29 @@ namespace Azure.Storage.Queues.Models
                 Status = status,
                 LastSyncedOn = lastSyncedOn,
             };
+        }
+
+        /// <summary>
+        /// Creates a new QueueServiceProperties instance for mocking.
+        /// </summary>
+        public static QueueServiceProperties QueueServiceProperties(
+            QueueAnalyticsLogging logging = default,
+            QueueMetrics hourMetrics = default,
+            QueueMetrics minuteMetrics = default,
+            IList<QueueCorsRule> cors = default)
+        {
+            cors ??= new List<QueueCorsRule>();
+            return new QueueServiceProperties(logging, hourMetrics, minuteMetrics, cors);
+        }
+
+        /// <summary>
+        /// Creates a new QueueClient instance for mocking.
+        /// </summary>
+        public static QueueClient QueueClient(
+            Uri queueUri,
+            QueueClientOptions options = default)
+        {
+            return new QueueClient(queueUri, options);
         }
     }
 }

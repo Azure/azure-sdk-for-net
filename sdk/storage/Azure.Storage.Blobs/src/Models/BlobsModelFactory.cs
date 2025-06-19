@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Text;
 using Azure.Core;
+using Azure.Storage.Common;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Models
@@ -2425,6 +2426,94 @@ namespace Azure.Storage.Blobs.Models
                 BlobContentLength = blobContentLength,
                 PageRanges = pageRanges,
                 ClearRanges = clearRanges
+            };
+        }
+        #endregion
+
+        #region BlobServiceProperties
+        /// <summary>
+        /// Creates a new BlobServiceProperties instance for mocking.
+        /// </summary>
+        public static BlobServiceProperties BlobServiceProperties(
+            BlobAnalyticsLogging logging = default,
+            BlobMetrics hourMetrics = default,
+            BlobMetrics minuteMetrics = default,
+            IList<BlobCorsRule> cors = default,
+            string defaultServiceVersion = default,
+            BlobRetentionPolicy deleteRetentionPolicy = default,
+            BlobStaticWebsite staticWebsite = default)
+        {
+            cors ??= new List<BlobCorsRule>();
+            return new BlobServiceProperties(logging, hourMetrics, minuteMetrics, cors, defaultServiceVersion, deleteRetentionPolicy, staticWebsite);
+        }
+        #endregion
+
+        #region BlobContainerClient
+        /// <summary>
+        /// Creates a new BlobContainerClient instance for mocking.
+        /// </summary>
+        public static BlobContainerClient BlobContainerClient(
+            Uri blobContainerUri,
+            BlobClientOptions options = default)
+        {
+            return new BlobContainerClient(blobContainerUri, options);
+        }
+        #endregion
+
+        #region BlobImmutabilityPolicy
+        /// <summary>
+        /// Creates a new BlobImmutabilityPolicy instance for mocking.
+        /// </summary>
+        public static BlobImmutabilityPolicy BlobImmutabilityPolicy(
+            DateTimeOffset? expiresOn = default,
+            BlobImmutabilityPolicyMode? policyMode = default)
+        {
+            return new BlobImmutabilityPolicy()
+            {
+                ExpiresOn = expiresOn,
+                PolicyMode = policyMode
+            };
+        }
+        #endregion
+
+        #region BlobLegalHoldResult
+        /// <summary>
+        /// Creates a new BlobLegalHoldResult instance for mocking.
+        /// </summary>
+        public static BlobLegalHoldResult BlobLegalHoldResult(
+            bool hasLegalHold = default)
+        {
+            return new BlobLegalHoldResult()
+            {
+                HasLegalHold = hasLegalHold
+            };
+        }
+        #endregion
+
+        #region ReleasedObjectInfo
+        /// <summary>
+        /// Creates a new ReleasedObjectInfo instance for mocking.
+        /// </summary>
+        public static ReleasedObjectInfo ReleasedObjectInfo(
+            ETag eTag,
+            DateTimeOffset lastModified)
+        {
+            return new ReleasedObjectInfo(eTag, lastModified);
+        }
+        #endregion
+
+        #region PageRangeItem
+        /// <summary>
+        /// Creates a new PageRangeItem instance for mocking.
+        /// </summary>
+        public static PageRangeItem PageRangeItem(
+            HttpRange range = default,
+            bool isClear = default)
+        {
+            return new PageRangeItem()
+            {
+                Range = range,
+                IsClear = isClear
             };
         }
         #endregion
