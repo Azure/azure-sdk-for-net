@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Tests
             using (var writer = new Utf8JsonWriter(memoryStream))
             {
                 var jsonModel = model as IJsonModel<T>;
-                jsonModel?.Write(writer, options ?? ModelReaderWriterOptions.Json);
+                jsonModel?.Write(writer, options ?? new ModelReaderWriterOptions("W"));
             }
 
             var text = Encoding.UTF8.GetString(memoryStream.ToArray());

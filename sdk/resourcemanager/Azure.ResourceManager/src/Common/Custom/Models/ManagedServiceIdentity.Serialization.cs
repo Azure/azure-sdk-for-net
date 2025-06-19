@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Models
 
         internal void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options, JsonSerializerOptions jOptions = null)
         {
-            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string format);
-            format = format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
-            options = new ModelReaderWriterOptions(format);
+            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string optionsFormat);
+            var format = optionsFormat == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : optionsFormat;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedServiceIdentity)} does not support '{format}' format.");
@@ -58,12 +57,12 @@ namespace Azure.ResourceManager.Models
                 writer.WriteStringValue(ManagedServiceIdentityType.ToString());
             }
 
-            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
+            if (optionsFormat != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (optionsFormat != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.Models
                     }
                     else
                     {
-                        ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
+                        ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, new ModelReaderWriterOptions(optionsFormat));
                     }
                 }
                 writer.WriteEndObject();
@@ -96,7 +95,8 @@ namespace Azure.ResourceManager.Models
 
         ManagedServiceIdentity IJsonModel<ManagedServiceIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            UseManagedServiceIdentityV3(options, out string optionsFormat);
+            var format = optionsFormat == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : optionsFormat;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedServiceIdentity)} does not support '{format}' format.");
@@ -108,7 +108,8 @@ namespace Azure.ResourceManager.Models
 
         BinaryData IPersistableModel<ManagedServiceIdentity>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            UseManagedServiceIdentityV3(options, out string optionsFormat);
+            var format = optionsFormat == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : optionsFormat;
 
             switch (format)
             {
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceIdentity)} does not support '{format}' format.");
             }
         }
 
@@ -279,8 +280,8 @@ namespace Azure.ResourceManager.Models
         ManagedServiceIdentity IPersistableModel<ManagedServiceIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             options ??= new ModelReaderWriterOptions("W");
-            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string format);
-            format = format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string optionsFormat);
+            var format = optionsFormat == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : optionsFormat;
 
             switch (format)
             {
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.Models
                         return DeserializeManagedServiceIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceIdentity)} does not support '{format}' format.");
             }
         }
 

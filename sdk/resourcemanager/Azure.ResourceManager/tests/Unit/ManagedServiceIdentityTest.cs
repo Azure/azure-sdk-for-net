@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Tests
         private JsonElement DeserializerHelper(string filename, out string json)
         {
             var originalJson = File.ReadAllText(Path.Combine(TestAssetPath, filename));
-            json = originalJson.Replace("\r\n", "").Replace("\n", "").Replace(" ", "");
+            json = originalJson.Replace("\r\n", "").Replace("\n", "").Replace(" ", "").Replace("'principalId':'22fdaec1-8b9f-49dc-bd72-ddaf8f215577','tenantId':'72f988af-86f1-41af-91ab-2d7cd011db47',".Replace('\'', '\"'), "");
             using JsonDocument document = JsonDocument.Parse(originalJson);
             return document.RootElement.Clone();
         }
@@ -152,8 +152,6 @@ namespace Azure.ResourceManager.Tests
             Assert.IsTrue("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
             var user = back.UserAssignedIdentities;
             Assert.AreEqual("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
-            Assert.AreEqual("9a9eaa6a-b49c-4c63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
-            Assert.AreEqual("77563a98-c9d9-407b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
             Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
         }
 
@@ -167,8 +165,6 @@ namespace Azure.ResourceManager.Tests
             Assert.IsTrue("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
             var user = back.UserAssignedIdentities;
             Assert.AreEqual("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
-            Assert.AreEqual("9a9eaa6a-b49c-4c63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
-            Assert.AreEqual("77563a98-c9d9-407b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
             Assert.IsTrue(identityJson.Contains("SystemAssigned,UserAssigned"));
             Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
         }
@@ -180,14 +176,9 @@ namespace Azure.ResourceManager.Tests
             var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
             dict1[new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity")] = userAssignedIdentity;
             ManagedServiceIdentity identity = new ManagedServiceIdentity(new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"), new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), ManagedServiceIdentityType.SystemAssignedUserAssigned, dict1);
-            string user = "{" +
-                "\"principalId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"," +
-                "\"clientId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"" +
-                "}";
+            string user = "{}";
             string expected = "{" +
                 "\"type\":\"SystemAssigned, UserAssigned\"," +
-                "\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"," +
-                "\"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"," +
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity\":" +
                 user + "}}";
@@ -202,14 +193,9 @@ namespace Azure.ResourceManager.Tests
             var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
             dict1[new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity")] = userAssignedIdentity;
             ManagedServiceIdentity identity = new ManagedServiceIdentity(new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"), new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), ManagedServiceIdentityType.SystemAssignedUserAssigned, dict1);
-            string user = "{" +
-                "\"principalId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"," +
-                "\"clientId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"" +
-                "}";
+            string user = "{}";
             string expected = "{" +
                 "\"type\":\"SystemAssigned,UserAssigned\"," +
-                "\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"," +
-                "\"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"," +
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity\":" +
                 user + "}}";
@@ -228,12 +214,10 @@ namespace Azure.ResourceManager.Tests
             Assert.IsTrue("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
             Assert.IsTrue("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
             Assert.AreEqual("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", userIdentities.Keys.First().ToString());
-            Assert.AreEqual("9a9eaa6a-b49c-4c63-afb5-3b72e3e65422", userIdentities.Values.First().ClientId.ToString());
-            Assert.AreEqual("77563a98-c9d9-407b-a7af-592d21fa2153", userIdentities.Values.First().PrincipalId.ToString());
             Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
             //Serialize to v3
             var expectedV3 = expectedV4.Replace("SystemAssigned, UserAssigned", "SystemAssigned,UserAssigned");
-            JsonAsserts.AssertConverterSerialization(expectedV3, back, new ModelReaderWriterOptions("W|v3"));
+            JsonAsserts.AssertConverterSerialization(expectedV3, back, V3Options);
         }
 
         [TestCase]
@@ -248,8 +232,6 @@ namespace Azure.ResourceManager.Tests
             Assert.IsTrue("22fdaec1-8b9f-49dc-bd72-ddaf8f215577".Equals(back.PrincipalId.ToString()));
             Assert.IsTrue("72f988af-86f1-41af-91ab-2d7cd011db47".Equals(back.TenantId.ToString()));
             Assert.AreEqual("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", userIdentities.Keys.First().ToString());
-            Assert.AreEqual("9a9eaa6a-b49c-4c63-afb5-3b72e3e65422", userIdentities.Values.First().ClientId.ToString());
-            Assert.AreEqual("77563a98-c9d9-407b-a7af-592d21fa2153", userIdentities.Values.First().PrincipalId.ToString());
             Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
             //Serialize to v4
             string expectedV4 = expectedV3.Replace("SystemAssigned,UserAssigned", "SystemAssigned, UserAssigned");
@@ -265,8 +247,6 @@ namespace Azure.ResourceManager.Tests
             string user = "null";
             string expected = "{" +
                 "\"type\":\"SystemAssigned, UserAssigned\"," +
-                "\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"," +
-                "\"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"," +
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity\":" +
                 user + "}}";
@@ -283,23 +263,14 @@ namespace Azure.ResourceManager.Tests
             dict1[new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity1")] = userAssignedIdentity1;
             dict1[new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity2")] = userAssignedIdentity2;
             ManagedServiceIdentity identity = new ManagedServiceIdentity(new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"), new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), ManagedServiceIdentityType.SystemAssignedUserAssigned, dict1);
-            string user1 = "{" +
-                "\"principalId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"," +
-                "\"clientId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"" +
-                "}";
-            string user2 = "{" +
-                "\"principalId\":\"72f988bf-86f1-41af-91ab-2d7cd011cb47\"," +
-                "\"clientId\":\"de29bab1-49e1-4705-819b-4dfddcebaa98\"" +
-                "}";
+            string user = "{}";
             string expected = "{" +
                 "\"type\":\"SystemAssigned, UserAssigned\"," +
-                "\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"," +
-                "\"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"," +
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity1\":" +
-                user1 + "," +
+                user + "," +
                 "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity2\":" +
-                user2 + "}}";
+                user + "}}";
 
             JsonAsserts.AssertConverterSerialization(expected, identity);
         }
@@ -309,10 +280,7 @@ namespace Azure.ResourceManager.Tests
         {
             ManagedServiceIdentity identity = new ManagedServiceIdentity(new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"), new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), ManagedServiceIdentityType.SystemAssigned, new ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity>());
             //string system = "\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\",\"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"";
-            string expected = "{\"type\":\"SystemAssigned\"," +
-                "\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"," +
-                "\"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"" +
-                "}";
+            string expected = "{\"type\":\"SystemAssigned\"}";
 
             JsonAsserts.AssertConverterSerialization(expected, identity);
         }
@@ -324,16 +292,13 @@ namespace Azure.ResourceManager.Tests
             var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
             dict1[new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity")] = userAssignedIdentity;
             ManagedServiceIdentity identity = new ManagedServiceIdentity(null, null, ManagedServiceIdentityType.UserAssigned, dict1);
-            string user = "{" +
-                "\"principalId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"," +
-                "\"clientId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"" +
-                "}";
+            string user = "{}";
             string expected = "{\"type\":\"UserAssigned\"," +
                 "\"userAssignedIdentities\":" +
                 "{" + "\"/subscriptions/db1ab6f0-4769-4aa7-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity\":" +
                 user + "}}";
 
-            JsonAsserts.AssertConverterSerialization(expected, identity, new ModelReaderWriterOptions("W|v3"));
+            JsonAsserts.AssertConverterSerialization(expected, identity, V3Options);
         }
 
         private ManagedServiceIdentity Deserialize(string json, ModelReaderWriterOptions? options = null)
