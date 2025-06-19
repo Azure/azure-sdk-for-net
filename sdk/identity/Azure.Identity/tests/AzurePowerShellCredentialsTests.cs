@@ -349,10 +349,12 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
 
             // Verify PowerShell script checks for and handles Az.Accounts module version 5.0.0+
-            var iStart = testProcess.StartInfo.Arguments.IndexOf("EncodedCommand");
-            iStart = testProcess.StartInfo.Arguments.IndexOf('\"', iStart) + 1;
-            var iEnd = testProcess.StartInfo.Arguments.IndexOf('\"', iStart);
-            var commandString = testProcess.StartInfo.Arguments.Substring(iStart, iEnd - iStart);
+            var match = System.Text.RegularExpressions.Regex.Match(testProcess.StartInfo.Arguments, "EncodedCommand\\s*\"([^\"]+)\"");
+            if (!match.Success)
+            {
+                throw new InvalidOperationException("Failed to extract the encoded command from the arguments.");
+            }
+            var commandString = match.Groups[1].Value;
             var b = Convert.FromBase64String(commandString);
             commandString = Encoding.Unicode.GetString(b);
 
