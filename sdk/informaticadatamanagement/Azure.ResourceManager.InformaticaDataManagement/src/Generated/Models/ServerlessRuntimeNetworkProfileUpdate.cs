@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         }
 
         /// <summary> Network Interface Configuration Profile Update. </summary>
-        public InformaticaNetworkInterfaceConfigurationUpdate NetworkInterfaceConfiguration { get; }
+        public InformaticaNetworkInterfaceConfigurationUpdate NetworkInterfaceConfiguration { get; set; }
     }
 }
