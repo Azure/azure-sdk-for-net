@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(V2Type.Value.ToString());
             }
-            if (Optional.IsDefined(Value))
+            if (Optional.IsDefined(V2Value))
             {
                 writer.WritePropertyName("value"u8);
-                JsonSerializer.Serialize(writer, Value);
+                JsonSerializer.Serialize(writer, V2Value);
             }
             if (Optional.IsCollectionDefined(Operators))
             {

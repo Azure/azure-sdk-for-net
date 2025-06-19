@@ -136,6 +136,7 @@ rename-mapping:
   ExposureControlBatchResponse.exposureControlResponses: ExposureControlResults
   ExposureControlRequest: ExposureControlContent
   ExposureControlResponse: ExposureControlResult
+  ExpressionV2.value: V2Value;
   Factory: DataFactory
   FactoryListResponse: DataFactoryListResult
   FactoryRepoUpdate: FactoryRepoContent
