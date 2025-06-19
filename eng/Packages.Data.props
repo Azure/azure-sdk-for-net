@@ -249,6 +249,9 @@
     <PackageReference Update="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.0" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Update="NUnit" Version="3.14.0" />
+    <PackageReference Update="NUnit3TestAdapter" Version="5.0.0" />
+    <PackageReference Update="Moq" Version="4.20.72" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
