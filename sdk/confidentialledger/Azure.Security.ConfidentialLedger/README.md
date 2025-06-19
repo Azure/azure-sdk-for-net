@@ -288,7 +288,7 @@ Console.WriteLine($"The latest ledger entry from the collection is {latestCollec
 Ledger entries in a collection may be retrieved over a range of transaction ids.
 Note: Both ranges are optional; they can be provided individually or not at all.
 
-```C# Snippet:RangedQuery
+```C#
 ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: collectionTransactionId);
 ```
 #### Tags
@@ -296,7 +296,7 @@ It is possible to further organize data within a collection as part of the lates
 
 Specify the `tags` parameter as part of the create entry operation. Multiple tags can be specified using commas. There is a limit of five tags per transaction.
 
-```C# Snippet:WriteWithTags
+```C#
 string tags = "tag1,tag2";
 
 Response result = await Client.CreateLedgerEntryAsync(content, collectionId, tags);
