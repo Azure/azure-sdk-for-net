@@ -1125,6 +1125,7 @@
         "dnsprivateviewocid",
         "Ords",
         "Ocid",
+        "Ocids",
         "ncharacter",
         "ocpu",
         "Iorm",
@@ -1135,7 +1136,11 @@
         "Tcps",
         "Ezconnect",
         "Ezconnectplus",
-        "Oltp"
+        "Oltp",
+        "exadb",
+        "Exadb",
+        "Exascale",
+        "exascale"
       ]
     },
     {
