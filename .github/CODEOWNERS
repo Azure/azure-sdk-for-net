@@ -1097,6 +1097,12 @@
 # ServiceLabel: %Operator Nexus - Network Cloud %Mgmt
 # ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
 
+# PRLabel: %Oracle
+/sdk/oracle/Azure.ResourceManager.*/                               @v-mkidane
+
+# ServiceLabel: %Oracle %Mgmt
+# ServiceOwners:                                                   @v-mkidane
+
 # PRLabel: %Pinecone
 /sdk/pineconevectordb/Azure.ResourceManager.*/                     @aggarwalsw
 
