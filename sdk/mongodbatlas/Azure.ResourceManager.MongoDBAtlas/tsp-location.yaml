@@ -1,4 +1,4 @@
 directory: specification/liftrmongodb/MongoDB.Atlas.Management
-commit: d8667b99fca67350e542a8a3899f25f1034ea8b5
+commit: 4f483ebaf8ed60b8951ec90dfcb1497ef7224203
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/http-client-csharp-mgmt-emitter-package.json"
