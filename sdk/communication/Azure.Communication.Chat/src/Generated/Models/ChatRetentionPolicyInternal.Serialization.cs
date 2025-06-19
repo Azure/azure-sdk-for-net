@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class NoneRetentionPolicy : IUtf8JsonSerializable
+    public partial class ChatRetentionPolicyInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,34 +20,33 @@ namespace Azure.Communication.Chat
             writer.WriteEndObject();
         }
 
-        internal static NoneRetentionPolicy DeserializeNoneRetentionPolicy(JsonElement element)
+        internal static ChatRetentionPolicyInternal DeserializeChatRetentionPolicyInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            RetentionPolicyKind kind = default;
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
-                if (property.NameEquals("kind"u8))
+                switch (discriminator.GetString())
                 {
-                    kind = new RetentionPolicyKind(property.Value.GetString());
-                    continue;
+                    case "none": return NoneRetentionPolicyInternal.DeserializeNoneRetentionPolicyInternal(element);
+                    case "threadCreationDate": return ThreadCreationDateRetentionPolicyInternal.DeserializeThreadCreationDateRetentionPolicyInternal(element);
                 }
             }
-            return new NoneRetentionPolicy(kind);
+            return UnknownChatRetentionPolicy.DeserializeUnknownChatRetentionPolicy(element);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new NoneRetentionPolicy FromResponse(Response response)
+        internal static ChatRetentionPolicyInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNoneRetentionPolicy(document.RootElement);
+            return DeserializeChatRetentionPolicyInternal(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
+        internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

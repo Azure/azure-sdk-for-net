@@ -154,6 +154,10 @@ namespace Azure.Communication.Chat
     {
         protected ChatRetentionPolicy() { }
     }
+    public abstract partial class ChatRetentionPolicyInternal
+    {
+        protected ChatRetentionPolicyInternal() { }
+    }
     public partial class ChatThreadClient
     {
         protected ChatThreadClient() { }
@@ -234,6 +238,10 @@ namespace Azure.Communication.Chat
     {
         public NoneRetentionPolicy() { }
     }
+    public partial class NoneRetentionPolicyInternal : Azure.Communication.Chat.ChatRetentionPolicyInternal
+    {
+        public NoneRetentionPolicyInternal() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RetentionPolicyKind : System.IEquatable<Azure.Communication.Chat.RetentionPolicyKind>
     {
@@ -268,7 +276,7 @@ namespace Azure.Communication.Chat
     public partial class ThreadCreationDateRetentionPolicy : Azure.Communication.Chat.ChatRetentionPolicy
     {
         public ThreadCreationDateRetentionPolicy(int deleteThreadAfterDays) { }
-        public int DeleteThreadAfterDays { get { throw null; } set { } }
+        public int DeleteThreadAfterDays { get { throw null; } }
     }
     public partial class TypingNotificationOptions
     {

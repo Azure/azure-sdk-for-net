@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class ThreadCreationDateRetentionPolicy : IUtf8JsonSerializable
+    internal partial class ThreadCreationDateRetentionPolicyInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.Communication.Chat
             writer.WriteEndObject();
         }
 
-        internal static ThreadCreationDateRetentionPolicy DeserializeThreadCreationDateRetentionPolicy(JsonElement element)
+        internal static ThreadCreationDateRetentionPolicyInternal DeserializeThreadCreationDateRetentionPolicyInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,15 +43,15 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ThreadCreationDateRetentionPolicy(kind, deleteThreadAfterDays);
+            return new ThreadCreationDateRetentionPolicyInternal(kind, deleteThreadAfterDays);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ThreadCreationDateRetentionPolicy FromResponse(Response response)
+        internal static new ThreadCreationDateRetentionPolicyInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeThreadCreationDateRetentionPolicy(document.RootElement);
+            return DeserializeThreadCreationDateRetentionPolicyInternal(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
