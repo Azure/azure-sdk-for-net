@@ -16,6 +16,9 @@ Text Analytics is part of the Azure Cognitive Service for Language, a cloud-base
 
   [Source code][source_root] | [Package (NuGet)][package]| [API reference documentation][text_refdocs] | [Product documentation][text_docs] | [Samples][source_samples]
 
+> [!NOTE]
+> Text Authoring is not supported in version 2.0.0-beta.1. If you use Text Authoring, please continue to use version 1.1.0. You can find the [samples][textauthoring_samples] here.
+
 ## Getting started
 
 ### Install the package
@@ -275,3 +278,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_portal]: https://portal.azure.com
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
+[textauthoring_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/samples/README.md
