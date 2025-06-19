@@ -1,16 +1,8 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.4.3 (2025-06-24)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.4.3 (2025-06-24)
 
 - Updated per swagger change for StorageAction GA
 
