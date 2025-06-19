@@ -14,7 +14,6 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    /// <summary> The AddBodilessMatcherRequest. </summary>
     internal partial class AddBodilessMatcherRequest : IJsonModel<AddBodilessMatcherRequest>
     {
         /// <param name="writer"> The JSON writer. </param>

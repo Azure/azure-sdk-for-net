@@ -9,9 +9,9 @@ using System.ClientModel.TestFramework;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework
 {
-    internal partial class TestProxyClient
+    internal partial class TestFrameworkClient
     {
     }
 }

@@ -14,7 +14,6 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    /// <summary> The AddHeaderTransformRequest. </summary>
     internal partial class AddHeaderTransformRequest : IJsonModel<AddHeaderTransformRequest>
     {
         /// <summary> Initializes a new instance of <see cref="AddHeaderTransformRequest"/> for deserialization. </summary>

@@ -10,8 +10,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    /// <summary> The HeaderCondition. </summary>
-    public partial class HeaderCondition
+    internal partial class HeaderCondition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -14,7 +14,6 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    /// <summary> The AddBodyKeySanitizerRequest. </summary>
     internal partial class AddBodyKeySanitizerRequest : IJsonModel<AddBodyKeySanitizerRequest>
     {
         /// <summary> Initializes a new instance of <see cref="AddBodyKeySanitizerRequest"/> for deserialization. </summary>

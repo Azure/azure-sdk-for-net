@@ -10,8 +10,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    /// <summary> The UriRegexSanitizer. </summary>
-    public partial class UriRegexSanitizer
+    internal partial class UriRegexSanitizer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

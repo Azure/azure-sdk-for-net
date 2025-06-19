@@ -14,7 +14,6 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    /// <summary> The AddUriSanitizerRequest. </summary>
     internal partial class AddUriSanitizerRequest : IJsonModel<AddUriSanitizerRequest>
     {
         /// <summary> Initializes a new instance of <see cref="AddUriSanitizerRequest"/> for deserialization. </summary>

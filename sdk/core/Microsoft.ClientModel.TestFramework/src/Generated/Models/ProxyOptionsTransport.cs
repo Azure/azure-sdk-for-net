@@ -11,8 +11,7 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    /// <summary> The ProxyOptionsTransport. </summary>
-    public partial class ProxyOptionsTransport
+    internal partial class ProxyOptionsTransport
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

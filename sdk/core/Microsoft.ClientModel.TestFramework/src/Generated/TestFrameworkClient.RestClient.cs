@@ -7,8 +7,7 @@
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    /// <summary></summary>
-    public partial class TestFrameworkClient
+    internal partial class TestFrameworkClient
     {
     }
 }

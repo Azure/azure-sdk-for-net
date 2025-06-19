@@ -14,8 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    /// <summary> The StartRecordResponse. </summary>
-    public partial class StartRecordResponse : IJsonModel<StartRecordResponse>
+    internal partial class StartRecordResponse : IJsonModel<StartRecordResponse>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

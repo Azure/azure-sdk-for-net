@@ -14,8 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    /// <summary> The StopRecordRequest. </summary>
-    public partial class StopRecordRequest : IJsonModel<StopRecordRequest>
+    internal partial class StopRecordRequest : IJsonModel<StopRecordRequest>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

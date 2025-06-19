@@ -12,8 +12,7 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    /// <summary> The HeaderRegexSanitizer. </summary>
-    public partial class HeaderRegexSanitizer : IJsonModel<HeaderRegexSanitizer>
+    internal partial class HeaderRegexSanitizer : IJsonModel<HeaderRegexSanitizer>
     {
         /// <summary> Initializes a new instance of <see cref="HeaderRegexSanitizer"/> for deserialization. </summary>
         internal HeaderRegexSanitizer()

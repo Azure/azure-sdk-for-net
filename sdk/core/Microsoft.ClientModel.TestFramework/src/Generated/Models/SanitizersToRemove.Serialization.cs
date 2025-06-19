@@ -13,8 +13,7 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    /// <summary> The SanitizersToRemove. </summary>
-    public partial class SanitizersToRemove : IJsonModel<SanitizersToRemove>
+    internal partial class SanitizersToRemove : IJsonModel<SanitizersToRemove>
     {
         /// <summary> Initializes a new instance of <see cref="SanitizersToRemove"/> for deserialization. </summary>
         internal SanitizersToRemove()

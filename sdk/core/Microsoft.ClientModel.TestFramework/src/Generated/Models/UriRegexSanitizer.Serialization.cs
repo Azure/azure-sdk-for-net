@@ -12,8 +12,7 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    /// <summary> The UriRegexSanitizer. </summary>
-    public partial class UriRegexSanitizer : IJsonModel<UriRegexSanitizer>
+    internal partial class UriRegexSanitizer : IJsonModel<UriRegexSanitizer>
     {
         /// <summary> Initializes a new instance of <see cref="UriRegexSanitizer"/> for deserialization. </summary>
         internal UriRegexSanitizer()

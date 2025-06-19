@@ -10,8 +10,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    /// <summary> The HeaderRegexSanitizer. </summary>
-    public partial class HeaderRegexSanitizer
+    internal partial class HeaderRegexSanitizer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

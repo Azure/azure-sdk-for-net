@@ -11,7 +11,6 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    /// <summary> The AddBodyKeySanitizerRequest. </summary>
     internal partial class AddBodyKeySanitizerRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

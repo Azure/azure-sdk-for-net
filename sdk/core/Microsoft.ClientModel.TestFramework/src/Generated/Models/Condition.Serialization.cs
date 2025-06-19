@@ -12,8 +12,7 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    /// <summary> The Condition. </summary>
-    public partial class Condition : IJsonModel<Condition>
+    internal partial class Condition : IJsonModel<Condition>
     {
         /// <summary> Initializes a new instance of <see cref="Condition"/> for deserialization. </summary>
         internal Condition()

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    /// <summary> The AddBodilessMatcherRequest. </summary>
     internal partial class AddBodilessMatcherRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

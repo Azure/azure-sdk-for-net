@@ -13,8 +13,7 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    /// <summary> The ProxyOptions. </summary>
-    public partial class ProxyOptions : IJsonModel<ProxyOptions>
+    internal partial class ProxyOptions : IJsonModel<ProxyOptions>
     {
         /// <summary> Initializes a new instance of <see cref="ProxyOptions"/> for deserialization. </summary>
         internal ProxyOptions()

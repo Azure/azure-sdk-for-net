@@ -9,6 +9,7 @@ using Azure.ClientGenerator.Core;
 namespace Microsoft.ClientModel.TestFramework;
 
 @clientName("TestProxyClient")
+@access(Access.internal)
 namespace TestProxy {
   @doc("Start playback for a test.")
   @route("/playback/start")

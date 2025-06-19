@@ -11,7 +11,6 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    /// <summary> The AddHeaderTransformRequest. </summary>
     internal partial class AddHeaderTransformRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

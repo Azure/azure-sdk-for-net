@@ -13,8 +13,7 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    /// <summary> The StartInformation. </summary>
-    public partial class StartInformation : IJsonModel<StartInformation>
+    internal partial class StartInformation : IJsonModel<StartInformation>
     {
         /// <summary> Initializes a new instance of <see cref="StartInformation"/> for deserialization. </summary>
         internal StartInformation()

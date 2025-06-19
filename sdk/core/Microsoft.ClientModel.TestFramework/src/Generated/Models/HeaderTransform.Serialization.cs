@@ -12,8 +12,7 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    /// <summary> The HeaderTransform. </summary>
-    public partial class HeaderTransform : IJsonModel<HeaderTransform>
+    internal partial class HeaderTransform : IJsonModel<HeaderTransform>
     {
         /// <summary> Initializes a new instance of <see cref="HeaderTransform"/> for deserialization. </summary>
         internal HeaderTransform()
