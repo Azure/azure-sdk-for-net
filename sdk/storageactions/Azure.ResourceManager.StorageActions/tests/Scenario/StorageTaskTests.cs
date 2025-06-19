@@ -75,6 +75,16 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
             storageTask = (await storageTask.GetAsync()).Value;
             CompareStorageTaskData(taskData, storageTask.Data);
 
+            StorageTaskUpdateProperties updateProperties = new StorageTaskUpdateProperties()
+            {
+                Enabled = false,
+                Description = "sdk test patch description",
+                Action = new StorageTaskAction(
+                        new StorageTaskIfCondition("[[equals(AccessTier, 'Cool')]]", new StorageTaskOperationInfo[] { _undeleteBlobOp }),
+                        new StorageTaskElseCondition(new StorageTaskOperationInfo[] { _setBlobLegalHoldOp }),
+                        null)
+            };
+
             // Prepare task data to Patch
             StorageTaskPatch taskPatch = new StorageTaskPatch(
                 new ManagedServiceIdentity("SystemAssigned"),
@@ -83,13 +93,7 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
                     ["tag1"] = "value1",
                     ["tag2"] = "value2",
                 },
-                new StorageTaskProperties(
-                    false,
-                    "sdk test patch description",
-                    new StorageTaskAction(
-                        new StorageTaskIfCondition("[[equals(AccessTier, 'Cool')]]", new StorageTaskOperationInfo[] { _undeleteBlobOp }),
-                        new StorageTaskElseCondition(new StorageTaskOperationInfo[] { _setBlobLegalHoldOp }),
-                        null)),
+                updateProperties,
                 null);
 
             //Patch
@@ -346,6 +350,32 @@ namespace Azure.ResourceManager.StorageActions.Tests.Scenario
                 }
             }
         }
+
+        internal void CompareStorageTaskProperties(StorageTaskProperties expected, StorageTaskUpdateProperties actual)
+        {
+            Assert.AreEqual(expected.IsEnabled, actual.Enabled);
+            Assert.AreEqual(expected.Description, actual.Description);
+            Assert.AreEqual(expected.Action.If.Condition, actual.Action.If.Condition);
+            Assert.AreEqual(expected.Action.If.Operations.Count, actual.Action.If.Operations.Count);
+            for (int i = 0; i < expected.Action.If.Operations.Count; i++)
+            {
+                CompareStorageTaskOperation(expected.Action.If.Operations[i], actual.Action.If.Operations[i]);
+            }
+
+            if (expected.Action.Else == null)
+            {
+                Assert.IsNull(actual.Action.Else);
+            }
+            else
+            {
+                Assert.AreEqual(expected.Action.Else.Operations.Count, actual.Action.Else.Operations.Count);
+                for (int i = 0; i < expected.Action.Else.Operations.Count; i++)
+                {
+                    CompareStorageTaskOperation(expected.Action.Else.Operations[i], actual.Action.Else.Operations[i]);
+                }
+            }
+        }
+
         internal void CompareStorageTaskOperation(StorageTaskOperationInfo expected, StorageTaskOperationInfo actual)
         {
             Assert.AreEqual(expected.OnSuccess, actual.OnSuccess);

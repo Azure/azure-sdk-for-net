@@ -104,7 +104,9 @@ namespace Azure.ResourceManager.StorageActions.Samples
 [new ResourceIdentifier("/subscriptions/1f31ba14-ce16-4281-b9b4-3e78da6e1616/resourceGroups/res4228/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUserAssignedIdentity")] = new UserAssignedIdentity()
 },
                 },
-                Properties = new StorageTaskProperties(true, "My Storage task", new StorageTaskAction(new StorageTaskIfCondition("[[equals(AccessTier, 'Cool')]]", new StorageTaskOperationInfo[]
+                Properties = new StorageTaskUpdateProperties
+                {
+                    Action = new StorageTaskAction(new StorageTaskIfCondition("[[equals(AccessTier, 'Cool')]]", new StorageTaskOperationInfo[]
             {
 new StorageTaskOperationInfo(StorageTaskOperationName.SetBlobTier)
 {
@@ -116,13 +118,14 @@ OnSuccess = OnSuccessAction.Continue,
 OnFailure = OnFailureAction.Break,
 }
             }))
-                {
-                    ElseOperations = {new StorageTaskOperationInfo(StorageTaskOperationName.DeleteBlob)
+                    {
+                        ElseOperations = {new StorageTaskOperationInfo(StorageTaskOperationName.DeleteBlob)
 {
 OnSuccess = OnSuccessAction.Continue,
 OnFailure = OnFailureAction.Break,
 }},
-                }),
+                    },
+                },
             };
             ArmOperation<StorageTaskResource> lro = await storageTask.UpdateAsync(WaitUntil.Completed, patch);
             StorageTaskResource result = lro.Value;
