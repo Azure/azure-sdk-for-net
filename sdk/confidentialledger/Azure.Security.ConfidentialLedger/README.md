@@ -302,7 +302,7 @@ string tags = "tag1,tag2";
 Response result = await Client.CreateLedgerEntryAsync(content, collectionId, tags);
 ```
 
-```C# Snippet:RetrieveWithTag
+```C#
 
 // Specify collection ID and tag. Optionally add a range of transaction IDs.
 // Only one tag is permitted in each retrieval operation.
