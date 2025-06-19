@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> Client options for <see cref="KeyVaultAccessControlRestClient"/>. </summary>
-    public partial class KeyVaultAccessControlRestClientOptions : ClientOptions
+    /// <summary> Client options for <see cref="KeyVaultAccessControlClient"/>. </summary>
+    public partial class KeyVaultAccessControlClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V7_6;
 
-        /// <summary> Initializes a new instance of KeyVaultAccessControlRestClientOptions. </summary>
+        /// <summary> Initializes a new instance of KeyVaultAccessControlClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public KeyVaultAccessControlRestClientOptions(ServiceVersion version = LatestVersion)
+        public KeyVaultAccessControlClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
 
-        public enum ServiceVersion
+        internal enum ServiceVersion
         {
             /// <summary> The 7.5 API version. </summary>
             V7_5 = 1,

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -112,7 +113,7 @@ namespace Azure.Security.KeyVault.Administration
             }
             OperationStatus? status = default;
             string statusDetails = default;
-            KeyVaultErrorError error = default;
+            KeyVaultServiceError error = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
             string jobId = default;
@@ -141,7 +142,7 @@ namespace Azure.Security.KeyVault.Administration
                         error = null;
                         continue;
                     }
-                    error = KeyVaultErrorError.DeserializeKeyVaultErrorError(prop.Value, options);
+                    error = KeyVaultServiceError.DeserializeKeyVaultServiceError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))

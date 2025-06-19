@@ -10,22 +10,23 @@ using System.Collections.Generic;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class RoleAssignmentPropertiesWithScope
+    /// <summary> Role assignment properties with scope. </summary>
+    public partial class KeyVaultRoleAssignmentProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RoleAssignmentPropertiesWithScope"/>. </summary>
-        internal RoleAssignmentPropertiesWithScope()
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignmentProperties"/>. </summary>
+        internal KeyVaultRoleAssignmentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoleAssignmentPropertiesWithScope"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignmentProperties"/>. </summary>
         /// <param name="scope"> The role scope. </param>
         /// <param name="roleDefinitionId"> The role definition ID. </param>
         /// <param name="principalId"> The principal ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleAssignmentPropertiesWithScope(RoleScope? scope, string roleDefinitionId, string principalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultRoleAssignmentProperties(KeyVaultRoleScope? scope, string roleDefinitionId, string principalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -34,7 +35,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary> The role scope. </summary>
-        public RoleScope? Scope { get; }
+        public KeyVaultRoleScope? Scope { get; }
 
         /// <summary> The role definition ID. </summary>
         public string RoleDefinitionId { get; }

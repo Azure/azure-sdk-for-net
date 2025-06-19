@@ -10,14 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration
+namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class SelectiveKeyRestoreOperation : IJsonModel<SelectiveKeyRestoreOperation>
+    internal partial class SelectiveKeyRestoreDetailsInternal : IJsonModel<SelectiveKeyRestoreDetailsInternal>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SelectiveKeyRestoreOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SelectiveKeyRestoreDetailsInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +29,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelectiveKeyRestoreOperation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SelectiveKeyRestoreDetailsInternal)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Status))
             {
@@ -82,24 +83,24 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SelectiveKeyRestoreOperation IJsonModel<SelectiveKeyRestoreOperation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SelectiveKeyRestoreDetailsInternal IJsonModel<SelectiveKeyRestoreDetailsInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SelectiveKeyRestoreOperation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SelectiveKeyRestoreDetailsInternal JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelectiveKeyRestoreOperation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SelectiveKeyRestoreDetailsInternal)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSelectiveKeyRestoreOperation(document.RootElement, options);
+            return DeserializeSelectiveKeyRestoreDetailsInternal(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SelectiveKeyRestoreOperation DeserializeSelectiveKeyRestoreOperation(JsonElement element, ModelReaderWriterOptions options)
+        internal static SelectiveKeyRestoreDetailsInternal DeserializeSelectiveKeyRestoreDetailsInternal(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +108,7 @@ namespace Azure.Security.KeyVault.Administration
             }
             OperationStatus? status = default;
             string statusDetails = default;
-            KeyVaultErrorError error = default;
+            KeyVaultServiceError error = default;
             string jobId = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
@@ -135,7 +136,7 @@ namespace Azure.Security.KeyVault.Administration
                         error = null;
                         continue;
                     }
-                    error = KeyVaultErrorError.DeserializeKeyVaultErrorError(prop.Value, options);
+                    error = KeyVaultServiceError.DeserializeKeyVaultServiceError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("jobId"u8))
@@ -167,7 +168,7 @@ namespace Azure.Security.KeyVault.Administration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SelectiveKeyRestoreOperation(
+            return new SelectiveKeyRestoreDetailsInternal(
                 status,
                 statusDetails,
                 error,
@@ -178,51 +179,51 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SelectiveKeyRestoreOperation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SelectiveKeyRestoreDetailsInternal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SelectiveKeyRestoreOperation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelectiveKeyRestoreDetailsInternal)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SelectiveKeyRestoreOperation IPersistableModel<SelectiveKeyRestoreOperation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SelectiveKeyRestoreDetailsInternal IPersistableModel<SelectiveKeyRestoreDetailsInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SelectiveKeyRestoreOperation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SelectiveKeyRestoreDetailsInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SelectiveKeyRestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeSelectiveKeyRestoreOperation(document.RootElement, options);
+                        return DeserializeSelectiveKeyRestoreDetailsInternal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SelectiveKeyRestoreOperation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelectiveKeyRestoreDetailsInternal)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SelectiveKeyRestoreOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SelectiveKeyRestoreDetailsInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SelectiveKeyRestoreOperation"/> from. </param>
-        public static explicit operator SelectiveKeyRestoreOperation(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SelectiveKeyRestoreDetailsInternal"/> from. </param>
+        public static explicit operator SelectiveKeyRestoreDetailsInternal(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeSelectiveKeyRestoreOperation(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSelectiveKeyRestoreDetailsInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

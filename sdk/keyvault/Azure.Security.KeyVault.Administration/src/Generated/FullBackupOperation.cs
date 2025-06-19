@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -29,7 +30,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="jobId"> Identifier for the full backup operation. </param>
         /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the full backup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FullBackupOperation(OperationStatus? status, string statusDetails, KeyVaultErrorError error, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, string azureStorageBlobContainerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FullBackupOperation(OperationStatus? status, string statusDetails, KeyVaultServiceError error, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, string azureStorageBlobContainerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StatusDetails = statusDetails;
@@ -48,7 +49,7 @@ namespace Azure.Security.KeyVault.Administration
         public string StatusDetails { get; }
 
         /// <summary> Error encountered, if any, during the full backup operation. </summary>
-        public KeyVaultErrorError Error { get; }
+        public KeyVaultServiceError Error { get; }
 
         /// <summary> The start time of the backup operation in UTC. </summary>
         public DateTimeOffset? StartTime { get; }

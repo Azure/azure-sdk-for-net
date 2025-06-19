@@ -13,11 +13,12 @@ using Azure;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class SettingsListResult : IJsonModel<SettingsListResult>
+    /// <summary> The settings list result. </summary>
+    public partial class GetSettingsResult : IJsonModel<GetSettingsResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SettingsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GetSettingsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +29,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetSettingsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SettingsListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GetSettingsResult)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Settings))
             {
@@ -62,24 +63,24 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SettingsListResult IJsonModel<SettingsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GetSettingsResult IJsonModel<GetSettingsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SettingsListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GetSettingsResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetSettingsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SettingsListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GetSettingsResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSettingsListResult(document.RootElement, options);
+            return DeserializeGetSettingsResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SettingsListResult DeserializeSettingsListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static GetSettingsResult DeserializeGetSettingsResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,55 +109,55 @@ namespace Azure.Security.KeyVault.Administration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SettingsListResult(settings ?? new ChangeTrackingList<Setting>(), additionalBinaryDataProperties);
+            return new GetSettingsResult(settings ?? new ChangeTrackingList<Setting>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SettingsListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GetSettingsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetSettingsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SettingsListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetSettingsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SettingsListResult IPersistableModel<SettingsListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GetSettingsResult IPersistableModel<GetSettingsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SettingsListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GetSettingsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetSettingsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeSettingsListResult(document.RootElement, options);
+                        return DeserializeGetSettingsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SettingsListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetSettingsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SettingsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GetSettingsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SettingsListResult"/> from. </param>
-        public static explicit operator SettingsListResult(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="GetSettingsResult"/> from. </param>
+        public static explicit operator GetSettingsResult(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeSettingsListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeGetSettingsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

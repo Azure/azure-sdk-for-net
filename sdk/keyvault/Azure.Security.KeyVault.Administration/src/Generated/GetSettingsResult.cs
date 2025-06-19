@@ -10,21 +10,22 @@ using System.Collections.Generic;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class SettingsListResult
+    /// <summary> The settings list result. </summary>
+    public partial class GetSettingsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SettingsListResult"/>. </summary>
-        internal SettingsListResult()
+        /// <summary> Initializes a new instance of <see cref="GetSettingsResult"/>. </summary>
+        internal GetSettingsResult()
         {
             Settings = new ChangeTrackingList<Setting>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SettingsListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetSettingsResult"/>. </summary>
         /// <param name="settings"> A response message containing a list of account settings with their associated value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SettingsListResult(IReadOnlyList<Setting> settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetSettingsResult(IReadOnlyList<Setting> settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Settings = settings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -7,28 +7,29 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration
+namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class SelectiveKeyRestoreOperation
+    internal partial class RestoreDetailsInternal
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreOperation"/>. </summary>
-        internal SelectiveKeyRestoreOperation()
+        /// <summary> Initializes a new instance of <see cref="RestoreDetailsInternal"/>. </summary>
+        internal RestoreDetailsInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreDetailsInternal"/>. </summary>
         /// <param name="status"> Status of the restore operation. </param>
         /// <param name="statusDetails"> The status details of restore operation. </param>
-        /// <param name="error"> Error encountered, if any, during the selective key restore operation. </param>
-        /// <param name="jobId"> Identifier for the selective key restore operation. </param>
+        /// <param name="error"> Error encountered, if any, during the restore operation. </param>
+        /// <param name="jobId"> Identifier for the restore operation. </param>
         /// <param name="startTime"> The start time of the restore operation. </param>
         /// <param name="endTime"> The end time of the restore operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SelectiveKeyRestoreOperation(OperationStatus? status, string statusDetails, KeyVaultErrorError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestoreDetailsInternal(OperationStatus? status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StatusDetails = statusDetails;
@@ -45,10 +46,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> The status details of restore operation. </summary>
         public string StatusDetails { get; }
 
-        /// <summary> Error encountered, if any, during the selective key restore operation. </summary>
-        public KeyVaultErrorError Error { get; }
+        /// <summary> Error encountered, if any, during the restore operation. </summary>
+        public KeyVaultServiceError Error { get; }
 
-        /// <summary> Identifier for the selective key restore operation. </summary>
+        /// <summary> Identifier for the restore operation. </summary>
         public string JobId { get; }
 
         /// <summary> The start time of the restore operation. </summary>

@@ -10,14 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration
+namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class RestoreOperation : IJsonModel<RestoreOperation>
+    internal partial class RestoreDetailsInternal : IJsonModel<RestoreDetailsInternal>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RestoreOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RestoreDetailsInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +29,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreOperation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreDetailsInternal)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Status))
             {
@@ -82,24 +83,24 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestoreOperation IJsonModel<RestoreOperation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RestoreDetailsInternal IJsonModel<RestoreDetailsInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestoreOperation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RestoreDetailsInternal JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreOperation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreDetailsInternal)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRestoreOperation(document.RootElement, options);
+            return DeserializeRestoreDetailsInternal(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RestoreOperation DeserializeRestoreOperation(JsonElement element, ModelReaderWriterOptions options)
+        internal static RestoreDetailsInternal DeserializeRestoreDetailsInternal(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +108,7 @@ namespace Azure.Security.KeyVault.Administration
             }
             OperationStatus? status = default;
             string statusDetails = default;
-            KeyVaultErrorError error = default;
+            KeyVaultServiceError error = default;
             string jobId = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
@@ -135,7 +136,7 @@ namespace Azure.Security.KeyVault.Administration
                         error = null;
                         continue;
                     }
-                    error = KeyVaultErrorError.DeserializeKeyVaultErrorError(prop.Value, options);
+                    error = KeyVaultServiceError.DeserializeKeyVaultServiceError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("jobId"u8))
@@ -167,7 +168,7 @@ namespace Azure.Security.KeyVault.Administration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestoreOperation(
+            return new RestoreDetailsInternal(
                 status,
                 statusDetails,
                 error,
@@ -178,51 +179,51 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RestoreOperation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RestoreDetailsInternal>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RestoreOperation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreDetailsInternal)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RestoreOperation IPersistableModel<RestoreOperation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RestoreDetailsInternal IPersistableModel<RestoreDetailsInternal>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestoreOperation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RestoreDetailsInternal PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestoreOperation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreDetailsInternal>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeRestoreOperation(document.RootElement, options);
+                        return DeserializeRestoreDetailsInternal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestoreOperation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreDetailsInternal)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RestoreOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RestoreDetailsInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="RestoreOperation"/> from. </param>
-        public static explicit operator RestoreOperation(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="RestoreDetailsInternal"/> from. </param>
+        public static explicit operator RestoreDetailsInternal(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeRestoreOperation(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeRestoreDetailsInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

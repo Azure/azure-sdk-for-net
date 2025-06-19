@@ -91,7 +91,7 @@ namespace Azure.Security.KeyVault.Administration
             }
             string name = default;
             string content = default;
-            SettingTypeEnum? settingType = default;
+            KeyVaultSettingType? settingType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         continue;
                     }
-                    settingType = new SettingTypeEnum(prop.Value.GetString());
+                    settingType = new KeyVaultSettingType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

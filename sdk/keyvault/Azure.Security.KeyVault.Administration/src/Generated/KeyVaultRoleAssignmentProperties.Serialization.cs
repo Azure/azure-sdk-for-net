@@ -12,12 +12,12 @@ using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> The KeyVaultErrorError. </summary>
-    internal partial class KeyVaultErrorError : IJsonModel<KeyVaultErrorError>
+    /// <summary> Role assignment properties with scope. </summary>
+    public partial class KeyVaultRoleAssignmentProperties : IJsonModel<KeyVaultRoleAssignmentProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KeyVaultErrorError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KeyVaultRoleAssignmentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,25 +28,25 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultErrorError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultRoleAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultErrorError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultRoleAssignmentProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (Optional.IsDefined(Scope))
             {
-                writer.WritePropertyName("code"u8);
-                writer.WriteStringValue(Code);
+                writer.WritePropertyName("scope"u8);
+                writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (Optional.IsDefined(RoleDefinitionId))
             {
-                writer.WritePropertyName("message"u8);
-                writer.WriteStringValue(Message);
+                writer.WritePropertyName("roleDefinitionId"u8);
+                writer.WriteStringValue(RoleDefinitionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(InnerError))
+            if (Optional.IsDefined(PrincipalId))
             {
-                writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(InnerError, options);
+                writer.WritePropertyName("principalId"u8);
+                writer.WriteStringValue(PrincipalId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -67,53 +67,52 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KeyVaultErrorError IJsonModel<KeyVaultErrorError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KeyVaultRoleAssignmentProperties IJsonModel<KeyVaultRoleAssignmentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KeyVaultErrorError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KeyVaultRoleAssignmentProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultErrorError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultRoleAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultErrorError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultRoleAssignmentProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyVaultErrorError(document.RootElement, options);
+            return DeserializeKeyVaultRoleAssignmentProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KeyVaultErrorError DeserializeKeyVaultErrorError(JsonElement element, ModelReaderWriterOptions options)
+        internal static KeyVaultRoleAssignmentProperties DeserializeKeyVaultRoleAssignmentProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string code = default;
-            string message = default;
-            KeyVaultErrorError innerError = default;
+            KeyVaultRoleScope? scope = default;
+            string roleDefinitionId = default;
+            string principalId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("code"u8))
-                {
-                    code = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("message"u8))
-                {
-                    message = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("innererror"u8))
+                if (prop.NameEquals("scope"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        innerError = null;
                         continue;
                     }
-                    innerError = DeserializeKeyVaultErrorError(prop.Value, options);
+                    scope = new KeyVaultRoleScope(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("roleDefinitionId"u8))
+                {
+                    roleDefinitionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("principalId"u8))
+                {
+                    principalId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,47 +120,47 @@ namespace Azure.Security.KeyVault.Administration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KeyVaultErrorError(code, message, innerError, additionalBinaryDataProperties);
+            return new KeyVaultRoleAssignmentProperties(scope, roleDefinitionId, principalId, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KeyVaultErrorError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KeyVaultRoleAssignmentProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultErrorError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultRoleAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultErrorError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultRoleAssignmentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KeyVaultErrorError IPersistableModel<KeyVaultErrorError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KeyVaultRoleAssignmentProperties IPersistableModel<KeyVaultRoleAssignmentProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KeyVaultErrorError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KeyVaultRoleAssignmentProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultErrorError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultRoleAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeKeyVaultErrorError(document.RootElement, options);
+                        return DeserializeKeyVaultRoleAssignmentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultErrorError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultRoleAssignmentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KeyVaultErrorError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KeyVaultRoleAssignmentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

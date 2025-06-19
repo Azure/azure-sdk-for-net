@@ -10,23 +10,24 @@ using System.Collections.Generic;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class RoleDefinition
+    /// <summary> Role definition. </summary>
+    public partial class KeyVaultRoleDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RoleDefinition"/>. </summary>
-        internal RoleDefinition()
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleDefinition"/>. </summary>
+        internal KeyVaultRoleDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoleDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleDefinition"/>. </summary>
         /// <param name="id"> The role definition ID. </param>
         /// <param name="name"> The role definition name. </param>
         /// <param name="type"> The role definition type. </param>
         /// <param name="properties"> Role definition properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleDefinition(string id, string name, RoleDefinitionType? @type, RoleDefinitionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultRoleDefinition(string id, string name, KeyVaultRoleDefinitionType? @type, RoleDefinitionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -42,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration
         public string Name { get; }
 
         /// <summary> The role definition type. </summary>
-        public RoleDefinitionType? Type { get; }
+        public KeyVaultRoleDefinitionType? Type { get; }
 
         /// <summary> Role definition properties. </summary>
         public RoleDefinitionProperties Properties { get; }

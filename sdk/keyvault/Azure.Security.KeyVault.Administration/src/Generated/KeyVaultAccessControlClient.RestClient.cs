@@ -11,7 +11,8 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class KeyVaultAccessControlRestClient
+    /// <summary></summary>
+    public partial class KeyVaultAccessControlClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier201;
@@ -73,32 +74,35 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        internal HttpMessage CreateListRoleDefinitionsRequest(Uri nextPage, string scope, string filter, RequestContext context)
+        internal HttpMessage CreateListRoleDefinitionsRequest(string scope, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage != null)
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
             {
-                uri.Reset(nextPage);
-                request.Uri = uri;
-                request.Headers.SetValue("Accept", "application/json");
+                uri.AppendQuery("$filter", filter, true);
             }
-            else
-            {
-                uri.Reset(_endpoint);
-                uri.AppendPath("/", false);
-                uri.AppendPath(scope, false);
-                uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions", false);
-                uri.AppendQuery("api-version", _apiVersion, true);
-                if (filter != null)
-                {
-                    uri.AppendQuery("$filter", filter, true);
-                }
-                request.Uri = uri;
-                request.Headers.SetValue("Accept", "application/json");
-            }
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextListRoleDefinitionsRequest(Uri nextPage, string scope, string filter, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -155,32 +159,35 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        internal HttpMessage CreateListRoleAssignmentsRequest(Uri nextPage, string scope, string filter, RequestContext context)
+        internal HttpMessage CreateListRoleAssignmentsRequest(string scope, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage != null)
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
             {
-                uri.Reset(nextPage);
-                request.Uri = uri;
-                request.Headers.SetValue("Accept", "application/json");
+                uri.AppendQuery("$filter", filter, true);
             }
-            else
-            {
-                uri.Reset(_endpoint);
-                uri.AppendPath("/", false);
-                uri.AppendPath(scope, false);
-                uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments", false);
-                uri.AppendQuery("api-version", _apiVersion, true);
-                if (filter != null)
-                {
-                    uri.AppendQuery("$filter", filter, true);
-                }
-                request.Uri = uri;
-                request.Headers.SetValue("Accept", "application/json");
-            }
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextListRoleAssignmentsRequest(Uri nextPage, string scope, string filter, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

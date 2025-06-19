@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
 
-        public enum ServiceVersion
+        internal enum ServiceVersion
         {
             /// <summary> The 7.5 API version. </summary>
             V7_5 = 1,

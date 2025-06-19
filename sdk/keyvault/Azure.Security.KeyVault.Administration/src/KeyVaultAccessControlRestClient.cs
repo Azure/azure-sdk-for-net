@@ -10,7 +10,6 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// The rest client for the KeyVault Access Control service.
     /// </summary>
-    [CodeGenType("KeyVaultAccessControlRestClient")]
     internal partial class KeyVaultAccessControlRestClient
     {
         /// <summary> Initializes a new instance of KeyVaultAccessControlRestClient. </summary>

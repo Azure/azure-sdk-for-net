@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="content"> The value of the pool setting. </param>
         /// <param name="settingType"> The type specifier of the value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Setting(string name, string content, SettingTypeEnum? settingType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Setting(string name, string content, KeyVaultSettingType? settingType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Content = content;
@@ -44,6 +44,6 @@ namespace Azure.Security.KeyVault.Administration
         public string Content { get; }
 
         /// <summary> The type specifier of the value. </summary>
-        public SettingTypeEnum? SettingType { get; }
+        public KeyVaultSettingType? SettingType { get; }
     }
 }

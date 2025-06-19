@@ -13,11 +13,12 @@ using Azure;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class RoleDefinition : IJsonModel<RoleDefinition>
+    /// <summary> Role Assignments. </summary>
+    public partial class KeyVaultRoleAssignment : IJsonModel<KeyVaultRoleAssignment>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RoleDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KeyVaultRoleAssignment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +29,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultRoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultRoleAssignment)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -46,7 +47,7 @@ namespace Azure.Security.KeyVault.Administration
             if (options.Format != "W" && Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(Type);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -72,24 +73,24 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoleDefinition IJsonModel<RoleDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KeyVaultRoleAssignment IJsonModel<KeyVaultRoleAssignment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RoleDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KeyVaultRoleAssignment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultRoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultRoleAssignment)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRoleDefinition(document.RootElement, options);
+            return DeserializeKeyVaultRoleAssignment(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RoleDefinition DeserializeRoleDefinition(JsonElement element, ModelReaderWriterOptions options)
+        internal static KeyVaultRoleAssignment DeserializeKeyVaultRoleAssignment(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -97,8 +98,8 @@ namespace Azure.Security.KeyVault.Administration
             }
             string id = default;
             string name = default;
-            RoleDefinitionType? @type = default;
-            RoleDefinitionProperties properties = default;
+            string @type = default;
+            KeyVaultRoleAssignmentProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -114,11 +115,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    @type = new RoleDefinitionType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -127,7 +124,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         continue;
                     }
-                    properties = RoleDefinitionProperties.DeserializeRoleDefinitionProperties(prop.Value, options);
+                    properties = KeyVaultRoleAssignmentProperties.DeserializeKeyVaultRoleAssignmentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,55 +132,55 @@ namespace Azure.Security.KeyVault.Administration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RoleDefinition(id, name, @type, properties, additionalBinaryDataProperties);
+            return new KeyVaultRoleAssignment(id, name, @type, properties, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RoleDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KeyVaultRoleAssignment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultRoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RoleDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultRoleAssignment)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RoleDefinition IPersistableModel<RoleDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KeyVaultRoleAssignment IPersistableModel<KeyVaultRoleAssignment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RoleDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KeyVaultRoleAssignment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RoleDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultRoleAssignment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeRoleDefinition(document.RootElement, options);
+                        return DeserializeKeyVaultRoleAssignment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultRoleAssignment)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RoleDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KeyVaultRoleAssignment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="RoleDefinition"/> from. </param>
-        public static explicit operator RoleDefinition(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="KeyVaultRoleAssignment"/> from. </param>
+        public static explicit operator KeyVaultRoleAssignment(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeRoleDefinition(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeKeyVaultRoleAssignment(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

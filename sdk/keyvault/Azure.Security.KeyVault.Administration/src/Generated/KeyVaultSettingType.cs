@@ -10,16 +10,17 @@ using System.ComponentModel;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal readonly partial struct SettingTypeEnum : IEquatable<SettingTypeEnum>
+    /// <summary> The type specifier of the value. </summary>
+    public internal readonly partial struct KeyVaultSettingType : IEquatable<KeyVaultSettingType>
     {
         private readonly string _value;
         /// <summary> A boolean setting value. </summary>
         private const string BooleanValue = "boolean";
 
-        /// <summary> Initializes a new instance of <see cref="SettingTypeEnum"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSettingType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SettingTypeEnum(string value)
+        public KeyVaultSettingType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -27,28 +28,28 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary> A boolean setting value. </summary>
-        public static SettingTypeEnum Boolean { get; } = new SettingTypeEnum(BooleanValue);
+        public static KeyVaultSettingType Boolean { get; } = new KeyVaultSettingType(BooleanValue);
 
-        /// <summary> Determines if two <see cref="SettingTypeEnum"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="KeyVaultSettingType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SettingTypeEnum left, SettingTypeEnum right) => left.Equals(right);
+        public static bool operator ==(KeyVaultSettingType left, KeyVaultSettingType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SettingTypeEnum"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="KeyVaultSettingType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SettingTypeEnum left, SettingTypeEnum right) => !left.Equals(right);
+        public static bool operator !=(KeyVaultSettingType left, KeyVaultSettingType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SettingTypeEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KeyVaultSettingType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SettingTypeEnum(string value) => new SettingTypeEnum(value);
+        public static implicit operator KeyVaultSettingType(string value) => new KeyVaultSettingType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SettingTypeEnum other && Equals(other);
+        public override bool Equals(object obj) => obj is KeyVaultSettingType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SettingTypeEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(KeyVaultSettingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

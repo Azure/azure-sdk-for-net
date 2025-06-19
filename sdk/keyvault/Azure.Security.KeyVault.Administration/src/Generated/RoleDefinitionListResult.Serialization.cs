@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (RoleDefinition item in Value)
+                foreach (KeyVaultRoleDefinition item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -90,7 +90,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 return null;
             }
-            IList<RoleDefinition> value = default;
+            IList<KeyVaultRoleDefinition> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -101,10 +101,10 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         continue;
                     }
-                    List<RoleDefinition> array = new List<RoleDefinition>();
+                    List<KeyVaultRoleDefinition> array = new List<KeyVaultRoleDefinition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RoleDefinition.DeserializeRoleDefinition(item, options));
+                        array.Add(KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.Security.KeyVault.Administration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RoleDefinitionListResult(value ?? new ChangeTrackingList<RoleDefinition>(), nextLink, additionalBinaryDataProperties);
+            return new RoleDefinitionListResult(value ?? new ChangeTrackingList<KeyVaultRoleDefinition>(), nextLink, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

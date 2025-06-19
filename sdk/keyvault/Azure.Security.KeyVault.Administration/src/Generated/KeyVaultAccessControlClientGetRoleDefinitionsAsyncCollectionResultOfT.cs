@@ -14,40 +14,37 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class KeyVaultAccessControlRestClientGetRoleDefinitionsAsyncCollectionResult : AsyncPageable<BinaryData>
+    internal partial class KeyVaultAccessControlClientGetRoleDefinitionsAsyncCollectionResultOfT : AsyncPageable<KeyVaultRoleDefinition>
     {
-        private readonly KeyVaultAccessControlRestClient _client;
-        private readonly Uri _nextPage;
+        private readonly KeyVaultAccessControlClient _client;
         private readonly string _scope;
-        private readonly string _filter;
+        private readonly string _$filter;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of KeyVaultAccessControlRestClientGetRoleDefinitionsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The KeyVaultAccessControlRestClient client used to send requests. </param>
-        /// <param name="nextPage"> The url of the next page of responses. </param>
+        /// <summary> Initializes a new instance of KeyVaultAccessControlClientGetRoleDefinitionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The KeyVaultAccessControlClient client used to send requests. </param>
         /// <param name="scope"> The scope of the role definition. </param>
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
-        public KeyVaultAccessControlRestClientGetRoleDefinitionsAsyncCollectionResult(KeyVaultAccessControlRestClient client, Uri nextPage, string scope, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        public KeyVaultAccessControlClientGetRoleDefinitionsAsyncCollectionResultOfT(KeyVaultAccessControlClient client, string scope, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
             _client = client;
-            _nextPage = nextPage;
             _scope = scope;
-            _filter = filter;
+            _$filter = filter;
             _context = context;
         }
 
-        /// <summary> Gets the pages of KeyVaultAccessControlRestClientGetRoleDefinitionsAsyncCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of KeyVaultAccessControlClientGetRoleDefinitionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of KeyVaultAccessControlRestClientGetRoleDefinitionsAsyncCollectionResult as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of KeyVaultAccessControlClientGetRoleDefinitionsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<KeyVaultRoleDefinition>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             do
             {
                 Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -56,13 +53,8 @@ namespace Azure.Security.KeyVault.Administration
                     yield break;
                 }
                 RoleDefinitionListResult responseWithType = (RoleDefinitionListResult)response;
-                List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in responseWithType.Value)
-                {
-                    items.Add(BinaryData.FromObjectAsJson(item));
-                }
                 nextPage = responseWithType.NextLink;
-                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                yield return Page<KeyVaultRoleDefinition>.FromValues((IReadOnlyList<KeyVaultRoleDefinition>)responseWithType.Value, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);
         }
@@ -72,17 +64,12 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateListRoleDefinitionsRequest(nextLink, _scope, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KeyVaultAccessControlRestClient.GetRoleDefinitions");
+            HttpMessage message = nextLink != null ? _client.CreateNextListRoleDefinitionsRequest(nextLink, _scope, _$filter, _context) : _client.CreateListRoleDefinitionsRequest(_scope, _$filter, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KeyVaultAccessControlClient.GetRoleDefinitions");
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

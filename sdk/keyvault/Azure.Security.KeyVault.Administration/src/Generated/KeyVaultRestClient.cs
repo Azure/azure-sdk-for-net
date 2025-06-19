@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -222,20 +223,20 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        internal virtual Operation<RestoreOperation> FullRestoreOperation(WaitUntil waitUntil, RestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
+        internal virtual Operation<RestoreDetailsInternal> FullRestoreOperation(WaitUntil waitUntil, RestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = FullRestoreOperation(waitUntil, restoreBlobDetails, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return ProtocolOperationHelpers.Convert(result, response => (RestoreOperation)response, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation");
+            return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation");
         }
 
         /// <summary> Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        internal virtual async Task<Operation<RestoreOperation>> FullRestoreOperationAsync(WaitUntil waitUntil, RestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
+        internal virtual async Task<Operation<RestoreDetailsInternal>> FullRestoreOperationAsync(WaitUntil waitUntil, RestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = await FullRestoreOperationAsync(waitUntil, restoreBlobDetails, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (RestoreOperation)response, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperationAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperationAsync");
         }
 
         /// <summary> Pre-restore operation for checking whether the customer can perform a full restore operation. </summary>
@@ -284,20 +285,20 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="preRestoreOperationParameters"> Optional pre restore parameters to validate prior to performing a full restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        internal virtual Operation<RestoreOperation> PreFullRestoreOperation(WaitUntil waitUntil, PreRestoreOperationParameters preRestoreOperationParameters, CancellationToken cancellationToken = default)
+        internal virtual Operation<RestoreDetailsInternal> PreFullRestoreOperation(WaitUntil waitUntil, PreRestoreOperationParameters preRestoreOperationParameters, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = PreFullRestoreOperation(waitUntil, preRestoreOperationParameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return ProtocolOperationHelpers.Convert(result, response => (RestoreOperation)response, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation");
+            return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation");
         }
 
         /// <summary> Pre-restore operation for checking whether the customer can perform a full restore operation. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="preRestoreOperationParameters"> Optional pre restore parameters to validate prior to performing a full restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        internal virtual async Task<Operation<RestoreOperation>> PreFullRestoreOperationAsync(WaitUntil waitUntil, PreRestoreOperationParameters preRestoreOperationParameters, CancellationToken cancellationToken = default)
+        internal virtual async Task<Operation<RestoreDetailsInternal>> PreFullRestoreOperationAsync(WaitUntil waitUntil, PreRestoreOperationParameters preRestoreOperationParameters, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = await PreFullRestoreOperationAsync(waitUntil, preRestoreOperationParameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (RestoreOperation)response, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperationAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperationAsync");
         }
 
         /// <summary>
@@ -436,20 +437,20 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<RestoreOperation> RestoreStatus(string jobId, CancellationToken cancellationToken = default)
+        internal virtual Response<RestoreDetailsInternal> RestoreStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Response result = RestoreStatus(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((RestoreOperation)result, result);
+            return Response.FromValue((RestoreDetailsInternal)result, result);
         }
 
         /// <summary> Returns the status of restore operation. </summary>
         /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<RestoreOperation>> RestoreStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<RestoreDetailsInternal>> RestoreStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Response result = await RestoreStatusAsync(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((RestoreOperation)result, result);
+            return Response.FromValue((RestoreDetailsInternal)result, result);
         }
 
         /// <summary>
@@ -512,20 +513,20 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SelectiveKeyRestoreOperation> SelectiveKeyRestoreStatus(string jobId, CancellationToken cancellationToken = default)
+        internal virtual Response<SelectiveKeyRestoreDetailsInternal> SelectiveKeyRestoreStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Response result = SelectiveKeyRestoreStatus(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((SelectiveKeyRestoreOperation)result, result);
+            return Response.FromValue((SelectiveKeyRestoreDetailsInternal)result, result);
         }
 
         /// <summary> Returns the status of the selective key restore operation. </summary>
         /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SelectiveKeyRestoreOperation>> SelectiveKeyRestoreStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SelectiveKeyRestoreDetailsInternal>> SelectiveKeyRestoreStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Response result = await SelectiveKeyRestoreStatusAsync(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((SelectiveKeyRestoreOperation)result, result);
+            return Response.FromValue((SelectiveKeyRestoreDetailsInternal)result, result);
         }
 
         /// <summary> Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
@@ -577,10 +578,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        internal virtual Operation<SelectiveKeyRestoreOperation> SelectiveKeyRestoreOperation(WaitUntil waitUntil, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
+        internal virtual Operation<SelectiveKeyRestoreDetailsInternal> SelectiveKeyRestoreOperation(WaitUntil waitUntil, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = SelectiveKeyRestoreOperation(waitUntil, keyName, restoreBlobDetails, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return ProtocolOperationHelpers.Convert(result, response => (SelectiveKeyRestoreOperation)response, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation");
+            return ProtocolOperationHelpers.Convert(result, response => (SelectiveKeyRestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation");
         }
 
         /// <summary> Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
@@ -588,10 +589,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
         /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        internal virtual async Task<Operation<SelectiveKeyRestoreOperation>> SelectiveKeyRestoreOperationAsync(WaitUntil waitUntil, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
+        internal virtual async Task<Operation<SelectiveKeyRestoreDetailsInternal>> SelectiveKeyRestoreOperationAsync(WaitUntil waitUntil, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = await SelectiveKeyRestoreOperationAsync(waitUntil, keyName, restoreBlobDetails, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (SelectiveKeyRestoreOperation)response, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperationAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (SelectiveKeyRestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperationAsync");
         }
 
         /// <summary>
@@ -785,19 +786,19 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Retrieves a list of all the available account settings that can be configured. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SettingsListResult> GetSettings(CancellationToken cancellationToken = default)
+        internal virtual Response<GetSettingsResult> GetSettings(CancellationToken cancellationToken = default)
         {
             Response result = GetSettings(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((SettingsListResult)result, result);
+            return Response.FromValue((GetSettingsResult)result, result);
         }
 
         /// <summary> Retrieves a list of all the available account settings that can be configured. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SettingsListResult>> GetSettingsAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<GetSettingsResult>> GetSettingsAsync(CancellationToken cancellationToken = default)
         {
             Response result = await GetSettingsAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((SettingsListResult)result, result);
+            return Response.FromValue((GetSettingsResult)result, result);
         }
     }
 }

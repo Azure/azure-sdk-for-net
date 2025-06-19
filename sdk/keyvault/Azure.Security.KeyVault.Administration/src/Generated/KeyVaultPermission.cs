@@ -10,13 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class Permission
+    /// <summary> Role definition permissions. </summary>
+    public partial class KeyVaultPermission
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Permission"/>. </summary>
-        public Permission()
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPermission"/>. </summary>
+        public KeyVaultPermission()
         {
             Actions = new ChangeTrackingList<string>();
             NotActions = new ChangeTrackingList<string>();
@@ -24,13 +25,13 @@ namespace Azure.Security.KeyVault.Administration
             NotDataActions = new ChangeTrackingList<DataAction>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Permission"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPermission"/>. </summary>
         /// <param name="actions"> Action permissions that are granted. </param>
         /// <param name="notActions"> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
         /// <param name="dataActions"> Data action permissions that are granted. </param>
         /// <param name="notDataActions"> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Permission(IList<string> actions, IList<string> notActions, IList<DataAction> dataActions, IList<DataAction> notDataActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultPermission(IList<string> actions, IList<string> notActions, IList<DataAction> dataActions, IList<DataAction> notDataActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Actions = actions;
             NotActions = notActions;
