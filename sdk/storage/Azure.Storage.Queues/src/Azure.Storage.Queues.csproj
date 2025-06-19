@@ -19,6 +19,8 @@
     </Description>
     <!-- https://github.com/Azure/azure-sdk-for-net/issues/19222 -->
     <NoWarn>$(NoWarn);IDT002;IDT003</NoWarn>
+    <!-- Suppress warnings from duplicated names analyzer -->
+    <NoWarn>$(NoWarn);AZC0035</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">

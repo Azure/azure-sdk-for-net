@@ -167,13 +167,7 @@
     </NoWarn>
   </PropertyGroup>
 
-  <!-- Suppress warnings from duplicated names analyzer for client libraries -->
-  <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
-    <NoWarn>
-      $(NoWarn);AZC0034<!-- Type name conflicts -->
-      $(NoWarn);AZC0035<!-- Output model type should have a corresponding method in a model factory class -->
-    </NoWarn>
-  </PropertyGroup>
+
 
   <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)') And '$(ImportDefaultReferences)'=='true'" />
 
