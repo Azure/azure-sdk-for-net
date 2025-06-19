@@ -37,37 +37,8 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class BatchJobManagerTask
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchJobManagerTask"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Job Manager Task within the Job. The ID can contain any combination of alphanumeric characters including hyphens and underscores and cannot contain more than 64 characters. </param>
@@ -111,8 +82,8 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="authenticationTokenSettings"> The settings for an authentication token that the Task can use to perform Batch service operations. If this property is set, the Batch service provides the Task with an authentication token which can be used to authenticate Batch service operations without requiring an Account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the Task can carry out using the token depend on the settings. For example, a Task can request Job permissions in order to add other Tasks to the Job, or check the status of the Job or of other Tasks under the Job. </param>
         /// <param name="allowLowPriorityNode"> Whether the Job Manager Task may run on a Spot/Low-priority Compute Node. The default value is true. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobManagerTask(string id, string displayName, string commandLine, BatchTaskContainerSettings containerSettings, IList<ResourceFile> resourceFiles, IList<OutputFile> outputFiles, IList<EnvironmentSetting> environmentSettings, BatchTaskConstraints constraints, int? requiredSlots, bool? killJobOnCompletion, UserIdentity userIdentity, bool? runExclusive, IList<BatchApplicationPackageReference> applicationPackageReferences, AuthenticationTokenSettings authenticationTokenSettings, bool? allowLowPriorityNode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchJobManagerTask(string id, string displayName, string commandLine, BatchTaskContainerSettings containerSettings, IList<ResourceFile> resourceFiles, IList<OutputFile> outputFiles, IList<EnvironmentSetting> environmentSettings, BatchTaskConstraints constraints, int? requiredSlots, bool? killJobOnCompletion, UserIdentity userIdentity, bool? runExclusive, IList<BatchApplicationPackageReference> applicationPackageReferences, AuthenticationTokenSettings authenticationTokenSettings, bool? allowLowPriorityNode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -129,38 +100,45 @@ namespace Azure.Compute.Batch
             ApplicationPackageReferences = applicationPackageReferences;
             AuthenticationTokenSettings = authenticationTokenSettings;
             AllowLowPriorityNode = allowLowPriorityNode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchJobManagerTask"/> for deserialization. </summary>
-        internal BatchJobManagerTask()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A string that uniquely identifies the Job Manager Task within the Job. The ID can contain any combination of alphanumeric characters including hyphens and underscores and cannot contain more than 64 characters. </summary>
         public string Id { get; set; }
+
         /// <summary> The display name of the Job Manager Task. It need not be unique and can contain any Unicode characters up to a maximum length of 1024. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> The command line of the Job Manager Task. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the Task working directory), or use the Batch provided environment variable (https://learn.microsoft.com/azure/batch/batch-compute-node-environment-variables). </summary>
         public string CommandLine { get; set; }
+
         /// <summary> The settings for the container under which the Job Manager Task runs. If the Pool that will run this Task has containerConfiguration set, this must be set as well. If the Pool that will run this Task doesn't have containerConfiguration set, this must not be set. When this is specified, all directories recursively below the AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the node) are mapped into the container, all Task environment variables are mapped into the container, and the Task command line is executed in the container. Files produced in the container outside of AZ_BATCH_NODE_ROOT_DIR might not be reflected to the host disk, meaning that Batch file APIs will not be able to access those files. </summary>
         public BatchTaskContainerSettings ContainerSettings { get; set; }
+
         /// <summary> A list of files that the Batch service will download to the Compute Node before running the command line. Files listed under this element are located in the Task's working directory. There is a maximum size for the list of resource files.  When the max size is exceeded, the request will fail and the response error code will be RequestEntityTooLarge. If this occurs, the collection of ResourceFiles must be reduced in size. This can be achieved using .zip files, Application Packages, or Docker Containers. </summary>
         public IList<ResourceFile> ResourceFiles { get; }
+
         /// <summary> A list of files that the Batch service will upload from the Compute Node after running the command line. For multi-instance Tasks, the files will only be uploaded from the Compute Node on which the primary Task is executed. </summary>
         public IList<OutputFile> OutputFiles { get; }
+
         /// <summary> A list of environment variable settings for the Job Manager Task. </summary>
         public IList<EnvironmentSetting> EnvironmentSettings { get; }
+
         /// <summary> Constraints that apply to the Job Manager Task. </summary>
         public BatchTaskConstraints Constraints { get; set; }
+
         /// <summary> The number of scheduling slots that the Task requires to run. The default is 1. A Task can only be scheduled to run on a compute node if the node has enough free scheduling slots available. For multi-instance Tasks, this property is not supported and must not be specified. </summary>
         public int? RequiredSlots { get; set; }
+
         /// <summary> Whether completion of the Job Manager Task signifies completion of the entire Job. If true, when the Job Manager Task completes, the Batch service marks the Job as complete. If any Tasks are still running at this time (other than Job Release), those Tasks are terminated. If false, the completion of the Job Manager Task does not affect the Job status. In this case, you should either use the onAllTasksComplete attribute to terminate the Job, or have a client or user terminate the Job explicitly. An example of this is if the Job Manager creates a set of Tasks but then takes no further role in their execution. The default value is true. If you are using the onAllTasksComplete and onTaskFailure attributes to control Job lifetime, and using the Job Manager Task only to create the Tasks for the Job (not to monitor progress), then it is important to set killJobOnCompletion to false. </summary>
         public bool? KillJobOnCompletion { get; set; }
+
         /// <summary> The user identity under which the Job Manager Task runs. If omitted, the Task runs as a non-administrative user unique to the Task. </summary>
         public UserIdentity UserIdentity { get; set; }
+
         /// <summary> Whether the Job Manager Task requires exclusive use of the Compute Node where it runs. If true, no other Tasks will run on the same Node for as long as the Job Manager is running. If false, other Tasks can run simultaneously with the Job Manager on a Compute Node. The Job Manager Task counts normally against the Compute Node's concurrent Task limit, so this is only relevant if the Compute Node allows multiple concurrent Tasks. The default value is true. </summary>
         public bool? RunExclusive { get; set; }
+
         /// <summary>
         /// A list of Application Packages that the Batch service will deploy to the
         /// Compute Node before running the command line.Application Packages are
@@ -172,8 +150,10 @@ namespace Azure.Compute.Batch
         /// or because download failed, the Task fails.
         /// </summary>
         public IList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
+
         /// <summary> The settings for an authentication token that the Task can use to perform Batch service operations. If this property is set, the Batch service provides the Task with an authentication token which can be used to authenticate Batch service operations without requiring an Account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the Task can carry out using the token depend on the settings. For example, a Task can request Job permissions in order to add other Tasks to the Job, or check the status of the Job or of other Tasks under the Job. </summary>
         public AuthenticationTokenSettings AuthenticationTokenSettings { get; set; }
+
         /// <summary> Whether the Job Manager Task may run on a Spot/Low-priority Compute Node. The default value is true. </summary>
         public bool? AllowLowPriorityNode { get; set; }
     }

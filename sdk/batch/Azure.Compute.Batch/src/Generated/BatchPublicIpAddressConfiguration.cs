@@ -7,65 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Net;
 
 namespace Azure.Compute.Batch
 {
     /// <summary> The public IP Address configuration of the networking configuration of a Pool. </summary>
     public partial class BatchPublicIpAddressConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchPublicIpAddressConfiguration"/>. </summary>
         public BatchPublicIpAddressConfiguration()
         {
-            IpAddressIds = new ChangeTrackingList<ResourceIdentifier>();
+            IpAddressIds = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchPublicIpAddressConfiguration"/>. </summary>
         /// <param name="ipAddressProvisioningType"> The provisioning type for Public IP Addresses for the Pool. The default value is BatchManaged. </param>
         /// <param name="ipAddressIds"> The list of public IPs which the Batch service will use when provisioning Compute Nodes. The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/Low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPublicIpAddressConfiguration(IpAddressProvisioningType? ipAddressProvisioningType, IList<ResourceIdentifier> ipAddressIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchPublicIpAddressConfiguration(IpAddressProvisioningType? ipAddressProvisioningType, IList<IPAddress> ipAddressIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IpAddressProvisioningType = ipAddressProvisioningType;
             IpAddressIds = ipAddressIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning type for Public IP Addresses for the Pool. The default value is BatchManaged. </summary>
         public IpAddressProvisioningType? IpAddressProvisioningType { get; set; }
+
         /// <summary> The list of public IPs which the Batch service will use when provisioning Compute Nodes. The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/Low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </summary>
-        public IList<ResourceIdentifier> IpAddressIds { get; }
+        public IList<IPAddress> IpAddressIds { get; }
     }
 }

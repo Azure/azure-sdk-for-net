@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> Settings for the operating system disk of the compute node (VM). </summary>
     public partial class BatchOsDisk
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchOsDisk"/>. </summary>
         public BatchOsDisk()
@@ -56,25 +27,29 @@ namespace Azure.Compute.Batch
         /// <param name="diskSizeGB"> The initial disk size in GB when creating new OS disk. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchOsDisk(BatchDiffDiskSettings ephemeralOSDiskSettings, CachingType? caching, int? diskSizeGB, ManagedDisk managedDisk, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchOsDisk(BatchDiffDiskSettings ephemeralOSDiskSettings, CachingType? caching, int? diskSizeGB, ManagedDisk managedDisk, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EphemeralOSDiskSettings = ephemeralOSDiskSettings;
             Caching = caching;
             DiskSizeGB = diskSizeGB;
             ManagedDisk = managedDisk;
             WriteAcceleratorEnabled = writeAcceleratorEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the ephemeral Disk Settings for the operating system disk used by the compute node (VM). </summary>
         public BatchDiffDiskSettings EphemeralOSDiskSettings { get; set; }
+
         /// <summary> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The default values are: None for Standard storage. ReadOnly for Premium storage. </summary>
         public CachingType? Caching { get; set; }
+
         /// <summary> The initial disk size in GB when creating new OS disk. </summary>
         public int? DiskSizeGB { get; set; }
+
         /// <summary> The managed disk parameters. </summary>
         public ManagedDisk ManagedDisk { get; set; }
+
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? WriteAcceleratorEnabled { get; set; }
     }

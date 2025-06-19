@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct SecurityEncryptionTypes : IEquatable<SecurityEncryptionTypes>
     {
         private readonly string _value;
+        /// <summary> NonPersistedTPM. </summary>
+        private const string NonPersistedTPMValue = "NonPersistedTPM";
+        /// <summary> VMGuestStateOnly. </summary>
+        private const string VMGuestStateOnlyValue = "VMGuestStateOnly";
 
         /// <summary> Initializes a new instance of <see cref="SecurityEncryptionTypes"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityEncryptionTypes(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NonPersistedTPMValue = "NonPersistedTPM";
-        private const string VMGuestStateOnlyValue = "VMGuestStateOnly";
+            _value = value;
+        }
 
         /// <summary> NonPersistedTPM. </summary>
         public static SecurityEncryptionTypes NonPersistedTPM { get; } = new SecurityEncryptionTypes(NonPersistedTPMValue);
+
         /// <summary> VMGuestStateOnly. </summary>
         public static SecurityEncryptionTypes VMGuestStateOnly { get; } = new SecurityEncryptionTypes(VMGuestStateOnlyValue);
+
         /// <summary> Determines if two <see cref="SecurityEncryptionTypes"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityEncryptionTypes left, SecurityEncryptionTypes right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityEncryptionTypes"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityEncryptionTypes left, SecurityEncryptionTypes right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityEncryptionTypes"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityEncryptionTypes"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityEncryptionTypes(string value) => new SecurityEncryptionTypes(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityEncryptionTypes other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityEncryptionTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

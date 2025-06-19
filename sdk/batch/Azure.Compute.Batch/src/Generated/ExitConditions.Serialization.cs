@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class ExitConditions : IUtf8JsonSerializable, IJsonModel<ExitConditions>
+    /// <summary> Specifies how the Batch service should respond when the Task completes. </summary>
+    public partial class ExitConditions : IJsonModel<ExitConditions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExitConditions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExitConditions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +28,16 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExitConditions)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(ExitCodes))
             {
                 writer.WritePropertyName("exitCodes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExitCodes)
+                foreach (ExitCodeMapping item in ExitCodes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -48,7 +47,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("exitCodeRanges"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExitCodeRanges)
+                foreach (ExitCodeRangeMapping item in ExitCodeRanges)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -69,15 +68,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("default"u8);
                 writer.WriteObjectValue(Default, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +85,27 @@ namespace Azure.Compute.Batch
             }
         }
 
-        ExitConditions IJsonModel<ExitConditions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExitConditions IJsonModel<ExitConditions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExitConditions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExitConditions)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExitConditions(document.RootElement, options);
         }
 
-        internal static ExitConditions DeserializeExitConditions(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExitConditions DeserializeExitConditions(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -111,84 +115,85 @@ namespace Azure.Compute.Batch
             ExitOptions preProcessingError = default;
             ExitOptions fileUploadError = default;
             ExitOptions @default = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("exitCodes"u8))
+                if (prop.NameEquals("exitCodes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ExitCodeMapping> array = new List<ExitCodeMapping>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ExitCodeMapping.DeserializeExitCodeMapping(item, options));
                     }
                     exitCodes = array;
                     continue;
                 }
-                if (property.NameEquals("exitCodeRanges"u8))
+                if (prop.NameEquals("exitCodeRanges"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ExitCodeRangeMapping> array = new List<ExitCodeRangeMapping>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ExitCodeRangeMapping.DeserializeExitCodeRangeMapping(item, options));
                     }
                     exitCodeRanges = array;
                     continue;
                 }
-                if (property.NameEquals("preProcessingError"u8))
+                if (prop.NameEquals("preProcessingError"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    preProcessingError = ExitOptions.DeserializeExitOptions(property.Value, options);
+                    preProcessingError = ExitOptions.DeserializeExitOptions(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("fileUploadError"u8))
+                if (prop.NameEquals("fileUploadError"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fileUploadError = ExitOptions.DeserializeExitOptions(property.Value, options);
+                    fileUploadError = ExitOptions.DeserializeExitOptions(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("default"u8))
+                if (prop.NameEquals("default"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    @default = ExitOptions.DeserializeExitOptions(property.Value, options);
+                    @default = ExitOptions.DeserializeExitOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ExitConditions(
                 exitCodes ?? new ChangeTrackingList<ExitCodeMapping>(),
                 exitCodeRanges ?? new ChangeTrackingList<ExitCodeRangeMapping>(),
                 preProcessingError,
                 fileUploadError,
                 @default,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ExitConditions>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExitConditions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -198,15 +203,20 @@ namespace Azure.Compute.Batch
             }
         }
 
-        ExitConditions IPersistableModel<ExitConditions>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExitConditions IPersistableModel<ExitConditions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExitConditions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExitConditions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExitConditions(document.RootElement, options);
                     }
                 default:
@@ -214,22 +224,7 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExitConditions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ExitConditions FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeExitConditions(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

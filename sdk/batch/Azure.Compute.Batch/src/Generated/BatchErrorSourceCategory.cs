@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchErrorSourceCategory : IEquatable<BatchErrorSourceCategory>
     {
         private readonly string _value;
+        /// <summary> The error is due to a user issue, such as misconfiguration. </summary>
+        private const string UserErrorValue = "usererror";
+        /// <summary> The error is due to an internal server issue. </summary>
+        private const string ServerErrorValue = "servererror";
 
         /// <summary> Initializes a new instance of <see cref="BatchErrorSourceCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchErrorSourceCategory(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UserErrorValue = "usererror";
-        private const string ServerErrorValue = "servererror";
+            _value = value;
+        }
 
         /// <summary> The error is due to a user issue, such as misconfiguration. </summary>
         public static BatchErrorSourceCategory UserError { get; } = new BatchErrorSourceCategory(UserErrorValue);
+
         /// <summary> The error is due to an internal server issue. </summary>
         public static BatchErrorSourceCategory ServerError { get; } = new BatchErrorSourceCategory(ServerErrorValue);
+
         /// <summary> Determines if two <see cref="BatchErrorSourceCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchErrorSourceCategory left, BatchErrorSourceCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchErrorSourceCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchErrorSourceCategory left, BatchErrorSourceCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchErrorSourceCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchErrorSourceCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchErrorSourceCategory(string value) => new BatchErrorSourceCategory(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchErrorSourceCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchErrorSourceCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

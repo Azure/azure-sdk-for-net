@@ -9,14 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchJobScheduleConfiguration : IUtf8JsonSerializable, IJsonModel<BatchJobScheduleConfiguration>
+    /// <summary>
+    /// The schedule according to which Jobs will be created. All times are fixed
+    /// respective to UTC and are not impacted by daylight saving time.
+    /// </summary>
+    public partial class BatchJobScheduleConfiguration : IJsonModel<BatchJobScheduleConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobScheduleConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchJobScheduleConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +31,11 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchJobScheduleConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DoNotRunUntil))
             {
                 writer.WritePropertyName("doNotRunUntil"u8);
@@ -54,15 +56,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("recurrenceInterval"u8);
                 writer.WriteStringValue(RecurrenceInterval.Value, "P");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +73,27 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchJobScheduleConfiguration IJsonModel<BatchJobScheduleConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJobScheduleConfiguration IJsonModel<BatchJobScheduleConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJobScheduleConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchJobScheduleConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBatchJobScheduleConfiguration(document.RootElement, options);
         }
 
-        internal static BatchJobScheduleConfiguration DeserializeBatchJobScheduleConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BatchJobScheduleConfiguration DeserializeBatchJobScheduleConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,59 +102,60 @@ namespace Azure.Compute.Batch
             DateTimeOffset? doNotRunAfter = default;
             TimeSpan? startWindow = default;
             TimeSpan? recurrenceInterval = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("doNotRunUntil"u8))
+                if (prop.NameEquals("doNotRunUntil"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    doNotRunUntil = property.Value.GetDateTimeOffset("O");
+                    doNotRunUntil = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("doNotRunAfter"u8))
+                if (prop.NameEquals("doNotRunAfter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    doNotRunAfter = property.Value.GetDateTimeOffset("O");
+                    doNotRunAfter = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("startWindow"u8))
+                if (prop.NameEquals("startWindow"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startWindow = property.Value.GetTimeSpan("P");
+                    startWindow = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("recurrenceInterval"u8))
+                if (prop.NameEquals("recurrenceInterval"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recurrenceInterval = property.Value.GetTimeSpan("P");
+                    recurrenceInterval = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new BatchJobScheduleConfiguration(doNotRunUntil, doNotRunAfter, startWindow, recurrenceInterval, serializedAdditionalRawData);
+            return new BatchJobScheduleConfiguration(doNotRunUntil, doNotRunAfter, startWindow, recurrenceInterval, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<BatchJobScheduleConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchJobScheduleConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -157,15 +165,20 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchJobScheduleConfiguration IPersistableModel<BatchJobScheduleConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJobScheduleConfiguration IPersistableModel<BatchJobScheduleConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJobScheduleConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchJobScheduleConfiguration(document.RootElement, options);
                     }
                 default:
@@ -173,22 +186,7 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchJobScheduleConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchJobScheduleConfiguration FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchJobScheduleConfiguration(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

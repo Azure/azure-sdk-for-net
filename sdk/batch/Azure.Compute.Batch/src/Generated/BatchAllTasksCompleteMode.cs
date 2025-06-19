@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchAllTasksCompleteMode : IEquatable<BatchAllTasksCompleteMode>
     {
         private readonly string _value;
+        /// <summary> Do nothing. The Job remains active unless terminated or disabled by some other means. </summary>
+        private const string NoActionValue = "noaction";
+        /// <summary> Terminate the Job. The Job's terminationReason is set to 'AllTasksComplete'. </summary>
+        private const string TerminateJobValue = "terminatejob";
 
         /// <summary> Initializes a new instance of <see cref="BatchAllTasksCompleteMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchAllTasksCompleteMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoActionValue = "noaction";
-        private const string TerminateJobValue = "terminatejob";
+            _value = value;
+        }
 
         /// <summary> Do nothing. The Job remains active unless terminated or disabled by some other means. </summary>
         public static BatchAllTasksCompleteMode NoAction { get; } = new BatchAllTasksCompleteMode(NoActionValue);
+
         /// <summary> Terminate the Job. The Job's terminationReason is set to 'AllTasksComplete'. </summary>
         public static BatchAllTasksCompleteMode TerminateJob { get; } = new BatchAllTasksCompleteMode(TerminateJobValue);
+
         /// <summary> Determines if two <see cref="BatchAllTasksCompleteMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchAllTasksCompleteMode left, BatchAllTasksCompleteMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchAllTasksCompleteMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchAllTasksCompleteMode left, BatchAllTasksCompleteMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchAllTasksCompleteMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchAllTasksCompleteMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchAllTasksCompleteMode(string value) => new BatchAllTasksCompleteMode(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchAllTasksCompleteMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchAllTasksCompleteMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -14,41 +14,58 @@ namespace Azure.Compute.Batch
     public readonly partial struct IpAddressProvisioningType : IEquatable<IpAddressProvisioningType>
     {
         private readonly string _value;
+        /// <summary> A public IP will be created and managed by Batch. There may be multiple public IPs depending on the size of the Pool. </summary>
+        private const string BatchManagedValue = "batchmanaged";
+        /// <summary> Public IPs are provided by the user and will be used to provision the Compute Nodes. </summary>
+        private const string UserManagedValue = "usermanaged";
+        /// <summary> No public IP Address will be created. </summary>
+        private const string NoPublicIpAddressesValue = "nopublicipaddresses";
 
         /// <summary> Initializes a new instance of <see cref="IpAddressProvisioningType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IpAddressProvisioningType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BatchManagedValue = "batchmanaged";
-        private const string UserManagedValue = "usermanaged";
-        private const string NoPublicIpAddressesValue = "nopublicipaddresses";
+            _value = value;
+        }
 
         /// <summary> A public IP will be created and managed by Batch. There may be multiple public IPs depending on the size of the Pool. </summary>
         public static IpAddressProvisioningType BatchManaged { get; } = new IpAddressProvisioningType(BatchManagedValue);
+
         /// <summary> Public IPs are provided by the user and will be used to provision the Compute Nodes. </summary>
         public static IpAddressProvisioningType UserManaged { get; } = new IpAddressProvisioningType(UserManagedValue);
+
         /// <summary> No public IP Address will be created. </summary>
         public static IpAddressProvisioningType NoPublicIpAddresses { get; } = new IpAddressProvisioningType(NoPublicIpAddressesValue);
+
         /// <summary> Determines if two <see cref="IpAddressProvisioningType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IpAddressProvisioningType left, IpAddressProvisioningType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IpAddressProvisioningType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IpAddressProvisioningType left, IpAddressProvisioningType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IpAddressProvisioningType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IpAddressProvisioningType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IpAddressProvisioningType(string value) => new IpAddressProvisioningType(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IpAddressProvisioningType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IpAddressProvisioningType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

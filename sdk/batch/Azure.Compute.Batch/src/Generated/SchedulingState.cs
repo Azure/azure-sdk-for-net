@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct SchedulingState : IEquatable<SchedulingState>
     {
         private readonly string _value;
+        /// <summary> Tasks can be scheduled on the Compute Node. </summary>
+        private const string EnabledValue = "enabled";
+        /// <summary> No new Tasks will be scheduled on the Compute Node. Tasks already running on the Compute Node may still run to completion. All Compute Nodes start with scheduling enabled. </summary>
+        private const string DisabledValue = "disabled";
 
         /// <summary> Initializes a new instance of <see cref="SchedulingState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SchedulingState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "enabled";
-        private const string DisabledValue = "disabled";
+            _value = value;
+        }
 
         /// <summary> Tasks can be scheduled on the Compute Node. </summary>
         public static SchedulingState Enabled { get; } = new SchedulingState(EnabledValue);
+
         /// <summary> No new Tasks will be scheduled on the Compute Node. Tasks already running on the Compute Node may still run to completion. All Compute Nodes start with scheduling enabled. </summary>
         public static SchedulingState Disabled { get; } = new SchedulingState(DisabledValue);
+
         /// <summary> Determines if two <see cref="SchedulingState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SchedulingState left, SchedulingState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SchedulingState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SchedulingState left, SchedulingState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SchedulingState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SchedulingState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SchedulingState(string value) => new SchedulingState(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SchedulingState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SchedulingState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

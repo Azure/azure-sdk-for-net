@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct ElevationLevel : IEquatable<ElevationLevel>
     {
         private readonly string _value;
+        /// <summary> The user is a standard user without elevated access. </summary>
+        private const string NonAdminValue = "nonadmin";
+        /// <summary> The user is a user with elevated access and operates with full Administrator permissions. </summary>
+        private const string AdminValue = "admin";
 
         /// <summary> Initializes a new instance of <see cref="ElevationLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElevationLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NonAdminValue = "nonadmin";
-        private const string AdminValue = "admin";
+            _value = value;
+        }
 
         /// <summary> The user is a standard user without elevated access. </summary>
         public static ElevationLevel NonAdmin { get; } = new ElevationLevel(NonAdminValue);
+
         /// <summary> The user is a user with elevated access and operates with full Administrator permissions. </summary>
         public static ElevationLevel Admin { get; } = new ElevationLevel(AdminValue);
+
         /// <summary> Determines if two <see cref="ElevationLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElevationLevel left, ElevationLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElevationLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElevationLevel left, ElevationLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElevationLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElevationLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElevationLevel(string value) => new ElevationLevel(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElevationLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElevationLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

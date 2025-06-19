@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct DynamicVNetAssignmentScope : IEquatable<DynamicVNetAssignmentScope>
     {
         private readonly string _value;
+        /// <summary> No dynamic VNet assignment is enabled. </summary>
+        private const string NoneValue = "none";
+        /// <summary> Dynamic VNet assignment is done per-job. </summary>
+        private const string JobValue = "job";
 
         /// <summary> Initializes a new instance of <see cref="DynamicVNetAssignmentScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynamicVNetAssignmentScope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "none";
-        private const string JobValue = "job";
+            _value = value;
+        }
 
         /// <summary> No dynamic VNet assignment is enabled. </summary>
         public static DynamicVNetAssignmentScope None { get; } = new DynamicVNetAssignmentScope(NoneValue);
+
         /// <summary> Dynamic VNet assignment is done per-job. </summary>
         public static DynamicVNetAssignmentScope Job { get; } = new DynamicVNetAssignmentScope(JobValue);
+
         /// <summary> Determines if two <see cref="DynamicVNetAssignmentScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DynamicVNetAssignmentScope left, DynamicVNetAssignmentScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DynamicVNetAssignmentScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DynamicVNetAssignmentScope left, DynamicVNetAssignmentScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DynamicVNetAssignmentScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DynamicVNetAssignmentScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DynamicVNetAssignmentScope(string value) => new DynamicVNetAssignmentScope(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DynamicVNetAssignmentScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DynamicVNetAssignmentScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

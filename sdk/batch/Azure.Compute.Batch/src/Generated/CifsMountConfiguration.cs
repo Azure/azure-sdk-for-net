@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> Information used to connect to a CIFS file system. </summary>
     public partial class CifsMountConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CifsMountConfiguration"/>. </summary>
         /// <param name="username"> The user to use for authentication against the CIFS file system. </param>
@@ -70,30 +41,29 @@ namespace Azure.Compute.Batch
         /// <param name="relativeMountPath"> The relative path on the compute node where the file system will be mounted. All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="mountOptions"> Additional command line options to pass to the mount command. These are 'net use' options in Windows and 'mount' options in Linux. </param>
         /// <param name="password"> The password to use for authentication against the CIFS file system. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CifsMountConfiguration(string username, string source, string relativeMountPath, string mountOptions, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CifsMountConfiguration(string username, string source, string relativeMountPath, string mountOptions, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Username = username;
             Source = source;
             RelativeMountPath = relativeMountPath;
             MountOptions = mountOptions;
             Password = password;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CifsMountConfiguration"/> for deserialization. </summary>
-        internal CifsMountConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The user to use for authentication against the CIFS file system. </summary>
         public string Username { get; set; }
+
         /// <summary> The URI of the file system to mount. </summary>
         public string Source { get; set; }
+
         /// <summary> The relative path on the compute node where the file system will be mounted. All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </summary>
         public string RelativeMountPath { get; set; }
+
         /// <summary> Additional command line options to pass to the mount command. These are 'net use' options in Windows and 'mount' options in Linux. </summary>
         public string MountOptions { get; set; }
+
         /// <summary> The password to use for authentication against the CIFS file system. </summary>
         public string Password { get; set; }
     }

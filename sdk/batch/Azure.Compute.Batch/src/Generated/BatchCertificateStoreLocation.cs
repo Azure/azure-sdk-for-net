@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchCertificateStoreLocation : IEquatable<BatchCertificateStoreLocation>
     {
         private readonly string _value;
+        /// <summary> Certificates should be installed to the CurrentUser Certificate store. </summary>
+        private const string CurrentUserValue = "currentuser";
+        /// <summary> Certificates should be installed to the LocalMachine Certificate store. </summary>
+        private const string LocalMachineValue = "localmachine";
 
         /// <summary> Initializes a new instance of <see cref="BatchCertificateStoreLocation"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchCertificateStoreLocation(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CurrentUserValue = "currentuser";
-        private const string LocalMachineValue = "localmachine";
+            _value = value;
+        }
 
         /// <summary> Certificates should be installed to the CurrentUser Certificate store. </summary>
         public static BatchCertificateStoreLocation CurrentUser { get; } = new BatchCertificateStoreLocation(CurrentUserValue);
+
         /// <summary> Certificates should be installed to the LocalMachine Certificate store. </summary>
         public static BatchCertificateStoreLocation LocalMachine { get; } = new BatchCertificateStoreLocation(LocalMachineValue);
+
         /// <summary> Determines if two <see cref="BatchCertificateStoreLocation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchCertificateStoreLocation left, BatchCertificateStoreLocation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchCertificateStoreLocation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchCertificateStoreLocation left, BatchCertificateStoreLocation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchCertificateStoreLocation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchCertificateStoreLocation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchCertificateStoreLocation(string value) => new BatchCertificateStoreLocation(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchCertificateStoreLocation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchCertificateStoreLocation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

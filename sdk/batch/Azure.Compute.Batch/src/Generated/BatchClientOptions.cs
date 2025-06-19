@@ -10,28 +10,30 @@ using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> Client options for BatchClient. </summary>
+    /// <summary> Client options for <see cref="BatchClient"/>. </summary>
     public partial class BatchClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_07_01_20_0;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_07_01;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2024-07-01.20.0". </summary>
-            V2024_07_01_20_0 = 1,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of BatchClientOptions. </summary>
+        /// <summary> Initializes a new instance of BatchClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public BatchClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2024_07_01_20_0 => "2024-07-01.20.0",
+                ServiceVersion.V2024_07_01 => "2024-07-01.20.0",
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> API Version 2024-07-01.20.0. </summary>
+            V2024_07_01 = 1
         }
     }
 }

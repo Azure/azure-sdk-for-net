@@ -14,50 +14,73 @@ namespace Azure.Compute.Batch
     public readonly partial struct ContainerHostDataPath : IEquatable<ContainerHostDataPath>
     {
         private readonly string _value;
+        /// <summary> The path for multi-instances task to shared their files. </summary>
+        private const string SharedValue = "Shared";
+        /// <summary> The path for start task. </summary>
+        private const string StartupValue = "Startup";
+        /// <summary> The path contains all virtual file systems are mounted on this node. </summary>
+        private const string VfsMountsValue = "VfsMounts";
+        /// <summary> The task path. </summary>
+        private const string TaskValue = "Task";
+        /// <summary> The job-prep task path. </summary>
+        private const string JobPrepValue = "JobPrep";
+        /// <summary> The applications path. </summary>
+        private const string ApplicationsValue = "Applications";
 
         /// <summary> Initializes a new instance of <see cref="ContainerHostDataPath"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerHostDataPath(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SharedValue = "Shared";
-        private const string StartupValue = "Startup";
-        private const string VfsMountsValue = "VfsMounts";
-        private const string TaskValue = "Task";
-        private const string JobPrepValue = "JobPrep";
-        private const string ApplicationsValue = "Applications";
+            _value = value;
+        }
 
         /// <summary> The path for multi-instances task to shared their files. </summary>
         public static ContainerHostDataPath Shared { get; } = new ContainerHostDataPath(SharedValue);
+
         /// <summary> The path for start task. </summary>
         public static ContainerHostDataPath Startup { get; } = new ContainerHostDataPath(StartupValue);
+
         /// <summary> The path contains all virtual file systems are mounted on this node. </summary>
         public static ContainerHostDataPath VfsMounts { get; } = new ContainerHostDataPath(VfsMountsValue);
+
         /// <summary> The task path. </summary>
         public static ContainerHostDataPath Task { get; } = new ContainerHostDataPath(TaskValue);
+
         /// <summary> The job-prep task path. </summary>
         public static ContainerHostDataPath JobPrep { get; } = new ContainerHostDataPath(JobPrepValue);
+
         /// <summary> The applications path. </summary>
         public static ContainerHostDataPath Applications { get; } = new ContainerHostDataPath(ApplicationsValue);
+
         /// <summary> Determines if two <see cref="ContainerHostDataPath"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerHostDataPath left, ContainerHostDataPath right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerHostDataPath"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerHostDataPath left, ContainerHostDataPath right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerHostDataPath"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerHostDataPath"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerHostDataPath(string value) => new ContainerHostDataPath(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerHostDataPath other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerHostDataPath other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

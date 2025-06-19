@@ -9,14 +9,24 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchCertificate : IUtf8JsonSerializable, IJsonModel<BatchCertificate>
+    /// <summary>
+    /// A Certificate that can be installed on Compute Nodes and can be used to
+    /// authenticate operations on the machine.
+    /// </summary>
+    public partial class BatchCertificate : IJsonModel<BatchCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchCertificate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BatchCertificate"/> for deserialization. </summary>
+        internal BatchCertificate()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +38,11 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchCertificate)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("thumbprint"u8);
             writer.WriteStringValue(Thumbprint);
             writer.WritePropertyName("thumbprintAlgorithm"u8);
@@ -85,15 +94,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -102,29 +111,34 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchCertificate IJsonModel<BatchCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchCertificate IJsonModel<BatchCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchCertificate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchCertificate)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBatchCertificate(document.RootElement, options);
         }
 
-        internal static BatchCertificate DeserializeBatchCertificate(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BatchCertificate DeserializeBatchCertificate(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string thumbprint = default;
             string thumbprintAlgorithm = default;
-            Uri url = default;
+            Uri uri = default;
             BatchCertificateState? state = default;
             DateTimeOffset? stateTransitionTime = default;
             BatchCertificateState? previousState = default;
@@ -134,108 +148,106 @@ namespace Azure.Compute.Batch
             BinaryData data = default;
             BatchCertificateFormat? certificateFormat = default;
             string password = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("thumbprint"u8))
+                if (prop.NameEquals("thumbprint"u8))
                 {
-                    thumbprint = property.Value.GetString();
+                    thumbprint = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("thumbprintAlgorithm"u8))
+                if (prop.NameEquals("thumbprintAlgorithm"u8))
                 {
-                    thumbprintAlgorithm = property.Value.GetString();
+                    thumbprintAlgorithm = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("url"u8))
+                if (prop.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new BatchCertificateState(property.Value.GetString());
+                    state = new BatchCertificateState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stateTransitionTime"u8))
+                if (prop.NameEquals("stateTransitionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stateTransitionTime = property.Value.GetDateTimeOffset("O");
+                    stateTransitionTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("previousState"u8))
+                if (prop.NameEquals("previousState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    previousState = new BatchCertificateState(property.Value.GetString());
+                    previousState = new BatchCertificateState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("previousStateTransitionTime"u8))
+                if (prop.NameEquals("previousStateTransitionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    previousStateTransitionTime = property.Value.GetDateTimeOffset("O");
+                    previousStateTransitionTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("publicData"u8))
+                if (prop.NameEquals("publicData"u8))
                 {
-                    publicData = property.Value.GetString();
+                    publicData = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deleteCertificateError"u8))
+                if (prop.NameEquals("deleteCertificateError"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deleteCertificateError = BatchCertificateDeleteError.DeserializeBatchCertificateDeleteError(property.Value, options);
+                    deleteCertificateError = BatchCertificateDeleteError.DeserializeBatchCertificateDeleteError(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("data"u8))
+                if (prop.NameEquals("data"u8))
                 {
-                    data = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
+                    data = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
-                if (property.NameEquals("certificateFormat"u8))
+                if (prop.NameEquals("certificateFormat"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    certificateFormat = new BatchCertificateFormat(property.Value.GetString());
+                    certificateFormat = new BatchCertificateFormat(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("password"u8))
+                if (prop.NameEquals("password"u8))
                 {
-                    password = property.Value.GetString();
+                    password = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BatchCertificate(
                 thumbprint,
                 thumbprintAlgorithm,
-                url,
+                uri,
                 state,
                 stateTransitionTime,
                 previousState,
@@ -245,13 +257,16 @@ namespace Azure.Compute.Batch
                 data,
                 certificateFormat,
                 password,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<BatchCertificate>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchCertificate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchCertificate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchCertificate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -261,15 +276,20 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchCertificate IPersistableModel<BatchCertificate>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchCertificate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchCertificate IPersistableModel<BatchCertificate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchCertificate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchCertificate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchCertificate(document.RootElement, options);
                     }
                 default:
@@ -277,22 +297,27 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchCertificate FromResponse(Response response)
+        /// <param name="batchCertificate"> The <see cref="BatchCertificate"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(BatchCertificate batchCertificate)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchCertificate(document.RootElement);
+            if (batchCertificate == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(batchCertificate, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="BatchCertificate"/> from. </param>
+        public static explicit operator BatchCertificate(Response result)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeBatchCertificate(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
