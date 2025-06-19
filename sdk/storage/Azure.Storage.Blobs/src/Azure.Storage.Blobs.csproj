@@ -10,6 +10,8 @@
     <DefineConstants>BlobSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Blobs;Microsoft;Azure;Blobs;Blob;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <!-- Suppress warnings from duplicated names analyzer -->
+    <NoWarn>$(NoWarn);AZC0035</NoWarn>
     <Description>
       This client library enables working with the Microsoft Azure Storage Blob service for storing binary and text data.
       For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs/README.md and https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.Blobs/CHANGELOG.md
