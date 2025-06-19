@@ -1023,6 +1023,32 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void VerifyImdsRetryDelayStrategyFor410Response()
+        {
+            // Arrange
+            var delayStrategy = new ImdsRetryDelayStrategy();
+            var mockResponse410 = new MockResponse(410);
+            var mockResponse404 = new MockResponse(404);
+            TimeSpan totalDelay410 = TimeSpan.Zero;
+            TimeSpan totalDelay404 = TimeSpan.Zero;
+
+            // Act - simulate the 3 retries with both status codes
+            for (int retry = 1; retry <= 3; retry++)
+            {
+                var delay410 = delayStrategy.GetNextDelay(mockResponse410, retry);
+                var delay404 = delayStrategy.GetNextDelay(mockResponse404, retry);
+                totalDelay410 = totalDelay410.Add(delay410);
+                totalDelay404 = totalDelay404.Add(delay404);
+            }
+
+            // Assert - 410 should have at least 70 seconds total, 404 should be much less
+            Assert.That(totalDelay410.TotalSeconds, Is.GreaterThanOrEqualTo(70),
+                "410 responses should have at least 70 seconds total retry duration");
+            Assert.That(totalDelay404.TotalSeconds, Is.LessThan(10),
+                "404 responses should use standard exponential backoff (~5.6 seconds)");
+        }
+
+        [Test]
         [TestCaseSource("ExceptionalEnvironmentConfigs")]
         public async Task VerifyAuthenticationFailedExceptionsAreDeferredToGetToken(Dictionary<string, string> environmentVariables)
         {
