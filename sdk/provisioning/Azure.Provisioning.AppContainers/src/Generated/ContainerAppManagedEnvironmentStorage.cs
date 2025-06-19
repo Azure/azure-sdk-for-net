@@ -38,6 +38,16 @@ public partial class ContainerAppManagedEnvironmentStorage : ProvisionableResour
     private ContainerAppAzureFileProperties? _managedEnvironmentStorageAzureFile;
 
     /// <summary>
+    /// Storage properties.
+    /// </summary>
+    public ManagedEnvironmentStorageProperties Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); AssignOrReplace(ref _properties, value); }
+    }
+    private ManagedEnvironmentStorageProperties? _properties;
+
+    /// <summary>
     /// Gets the Id.
     /// </summary>
     public BicepValue<ResourceIdentifier> Id 
@@ -76,7 +86,7 @@ public partial class ContainerAppManagedEnvironmentStorage : ProvisionableResour
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentStorage.</param>
     public ContainerAppManagedEnvironmentStorage(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/storages", resourceVersion ?? "2024-03-01")
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/storages", resourceVersion ?? "2025-01-01")
     {
     }
 
@@ -88,6 +98,7 @@ public partial class ContainerAppManagedEnvironmentStorage : ProvisionableResour
     {
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _managedEnvironmentStorageAzureFile = DefineModelProperty<ContainerAppAzureFileProperties>("ManagedEnvironmentStorageAzureFile", ["properties", "azureFile"]);
+        _properties = DefineModelProperty<ManagedEnvironmentStorageProperties>("Properties", ["properties"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<ContainerAppManagedEnvironment>("Parent", ["parent"], isRequired: true);
@@ -98,6 +109,11 @@ public partial class ContainerAppManagedEnvironmentStorage : ProvisionableResour
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-01-01.
+        /// </summary>
+        public static readonly string V2025_01_01 = "2025-01-01";
+
         /// <summary>
         /// 2024-03-01.
         /// </summary>

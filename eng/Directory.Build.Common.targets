@@ -105,6 +105,7 @@
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
     <PackageReference Remove="System.Buffers" />
     <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Remove="System.Memory" />
     <PackageReference Remove="System.Net.Http" />
     <PackageReference Remove="System.Numerics.Vectors" />
     <PackageReference Remove="System.Text.Encodings.Web" />
@@ -364,7 +365,7 @@
   <Target Name="RunApiCompat" DependsOnTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
   </Target>
 
-  <Target Name="GetPackageInfo">
+  <Target Name="GetPackageInfo" Returns="@(PackageInfoLine)">
     <PropertyGroup>
       <PackageIsNewSdk>false</PackageIsNewSdk>
       <PackageIsNewSdk Condition="'$(IsClientLibrary)' == 'true' or '$(IsFunctionsLibrary)' == 'true'">true</PackageIsNewSdk>
@@ -380,9 +381,14 @@
 
       <!-- Parse out the service directory based on the relative path to the sdk folder -->
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
+      
+      <!-- Format package info line for output -->
+      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'</PackageInfoText>
     </PropertyGroup>
 
-    <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'" Importance="High" />
+    <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">
+      <PackageInfoLine Include="$(PackageInfoText)" />
+    </ItemGroup>
   </Target>
 
   <Target Name="GetCodeGenProjects" Returns="@(ProjectsToInclude)">
