@@ -467,8 +467,9 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                request.OperationContext = options.OperationContext;
 
-                var response =  await CallMediaRestClient.UnholdAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await CallMediaRestClient.UnholdAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var result = new HoldResult();
                 result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
 
@@ -494,6 +495,7 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                request.OperationContext = options.OperationContext;
 
                 var response =  CallMediaRestClient.Unhold(CallConnectionId, request, cancellationToken: cancellationToken);
                 var result = new HoldResult();
