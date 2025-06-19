@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MongoDBAtlas;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> MongoDB specific Properties. </summary>
     public partial class MongoDBAtlasPartnerProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasPartnerProperties"/>. </summary>
         /// <param name="organizationName"> Organization name in MongoDB system. </param>
@@ -57,26 +29,23 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasPartnerProperties"/>. </summary>
         /// <param name="organizationId"> Organization Id in MongoDB system. </param>
-        /// <param name="redirectUri"> Redirect URL for the MongoDB. </param>
+        /// <param name="redirectUrl"> Redirect URL for the MongoDB. </param>
         /// <param name="organizationName"> Organization name in MongoDB system. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoDBAtlasPartnerProperties(string organizationId, string redirectUri, string organizationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBAtlasPartnerProperties(string organizationId, string redirectUrl, string organizationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OrganizationId = organizationId;
-            RedirectUri = redirectUri;
+            RedirectUrl = redirectUrl;
             OrganizationName = organizationName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasPartnerProperties"/> for deserialization. </summary>
-        internal MongoDBAtlasPartnerProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Organization Id in MongoDB system. </summary>
         public string OrganizationId { get; set; }
+
         /// <summary> Redirect URL for the MongoDB. </summary>
-        public string RedirectUri { get; set; }
+        public string RedirectUrl { get; set; }
+
         /// <summary> Organization name in MongoDB system. </summary>
         public string OrganizationName { get; set; }
     }

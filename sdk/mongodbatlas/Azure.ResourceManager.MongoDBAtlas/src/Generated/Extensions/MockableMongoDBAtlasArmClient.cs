@@ -6,38 +6,26 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.MongoDBAtlas.Mocking
+namespace Azure.ResourceManager.MongoDBAtlas
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary></summary>
     public partial class MockableMongoDBAtlasArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableMongoDBAtlasArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMongoDBAtlasArmClient for mocking. </summary>
         protected MockableMongoDBAtlasArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMongoDBAtlasArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMongoDBAtlasArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMongoDBAtlasArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableMongoDBAtlasArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MongoDBAtlasOrganizationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MongoDBAtlasOrganizationResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBAtlasOrganizationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="MongoDBAtlasOrganizationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MongoDBAtlasOrganizationResource"/> object. </returns>
         public virtual MongoDBAtlasOrganizationResource GetMongoDBAtlasOrganizationResource(ResourceIdentifier id)

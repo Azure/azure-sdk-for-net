@@ -6,31 +6,46 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.MongoDBAtlas.Models;
 
 namespace Azure.ResourceManager.MongoDBAtlas
 {
-    internal class MongoDBAtlasOrganizationOperationSource : IOperationSource<MongoDBAtlasOrganizationResource>
+    /// <summary></summary>
+    internal partial class MongoDBAtlasOrganizationOperationSource : IOperationSource<MongoDBAtlasOrganizationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal MongoDBAtlasOrganizationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         MongoDBAtlasOrganizationResource IOperationSource<MongoDBAtlasOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MongoDBAtlasOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMongoDBAtlasContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            MongoDBAtlasOrganizationData data = MongoDBAtlasOrganizationData.DeserializeMongoDBAtlasOrganizationData(document.RootElement, new ModelReaderWriterOptions("W"));
             return new MongoDBAtlasOrganizationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<MongoDBAtlasOrganizationResource> IOperationSource<MongoDBAtlasOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MongoDBAtlasOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMongoDBAtlasContext.Default);
-            return await Task.FromResult(new MongoDBAtlasOrganizationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            MongoDBAtlasOrganizationData data = MongoDBAtlasOrganizationData.DeserializeMongoDBAtlasOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MongoDBAtlasOrganizationResource(_client, data);
         }
     }
 }
