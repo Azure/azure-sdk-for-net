@@ -52,13 +52,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkData"/>. </summary>
-        /// <param name="properties"> The Internal Network Properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public NetworkFabricInternalNetworkData(InternalNetworkProperties properties)
+        /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
+        public NetworkFabricInternalNetworkData(int vlanId)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            Properties = properties;
+            ConnectedIPv4Subnets = new ChangeTrackingList<ConnectedSubnet>();
+            ConnectedIPv6Subnets = new ChangeTrackingList<ConnectedSubnet>();
+            VlanId = vlanId;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkData"/>. </summary>
@@ -66,11 +65,47 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The Internal Network Properties. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
+        /// <param name="connectedIPv4Subnets"> List of Connected IPv4 Subnets. </param>
+        /// <param name="connectedIPv6Subnets"> List of connected IPv6 Subnets. </param>
+        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
+        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="isMonitoringEnabled"> To check whether monitoring of internal network is enabled or not. </param>
+        /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
+        /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
+        /// <param name="bgpConfiguration"> BGP configuration properties. </param>
+        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
+        /// <param name="nativeIPv4PrefixLimit"> Native IPv4 Prefix Limit Configuration properties. </param>
+        /// <param name="nativeIPv6PrefixLimit"> Native IPv6 Prefix Limit Configuration properties. </param>
+        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricInternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, InternalNetworkProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkFabricInternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, StaticRouteConfigurationExtension? extension, int vlanId, BgpConfiguration bgpConfiguration, StaticRouteConfiguration staticRouteConfiguration, NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            Annotation = annotation;
+            Mtu = mtu;
+            ConnectedIPv4Subnets = connectedIPv4Subnets;
+            ConnectedIPv6Subnets = connectedIPv6Subnets;
+            ImportRoutePolicy = importRoutePolicy;
+            ExportRoutePolicy = exportRoutePolicy;
+            IngressAclId = ingressAclId;
+            EgressAclId = egressAclId;
+            IsMonitoringEnabled = isMonitoringEnabled;
+            Extension = extension;
+            VlanId = vlanId;
+            BgpConfiguration = bgpConfiguration;
+            StaticRouteConfiguration = staticRouteConfiguration;
+            NativeIPv4PrefixLimit = nativeIPv4PrefixLimit;
+            NativeIPv6PrefixLimit = nativeIPv6PrefixLimit;
+            LastOperation = lastOperation;
+            ConfigurationState = configurationState;
+            ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -79,7 +114,71 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> The Internal Network Properties. </summary>
-        public InternalNetworkProperties Properties { get; set; }
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
+        /// <summary> Maximum transmission unit. Default value is 1500. </summary>
+        public int? Mtu { get; set; }
+        /// <summary> List of Connected IPv4 Subnets. </summary>
+        public IList<ConnectedSubnet> ConnectedIPv4Subnets { get; }
+        /// <summary> List of connected IPv6 Subnets. </summary>
+        public IList<ConnectedSubnet> ConnectedIPv6Subnets { get; }
+        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
+        public ImportRoutePolicy ImportRoutePolicy { get; set; }
+        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
+        public ExportRoutePolicy ExportRoutePolicy { get; set; }
+        /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>
+        public ResourceIdentifier IngressAclId { get; set; }
+        /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
+        public ResourceIdentifier EgressAclId { get; set; }
+        /// <summary> To check whether monitoring of internal network is enabled or not. </summary>
+        public IsMonitoringEnabled? IsMonitoringEnabled { get; set; }
+        /// <summary> Extension. Example: NoExtension | NPB. </summary>
+        public StaticRouteConfigurationExtension? Extension { get; set; }
+        /// <summary> Vlan identifier. Example: 1001. </summary>
+        public int VlanId { get; set; }
+        /// <summary> BGP configuration properties. </summary>
+        public BgpConfiguration BgpConfiguration { get; set; }
+        /// <summary> Static Route Configuration properties. </summary>
+        public StaticRouteConfiguration StaticRouteConfiguration { get; set; }
+        /// <summary> Native IPv4 Prefix Limit Configuration properties. </summary>
+        internal NativeIPv4PrefixLimitProperties NativeIPv4PrefixLimit { get; set; }
+        /// <summary> Prefix limits. </summary>
+        public IList<PrefixLimitProperties> NativeIPv4PrefixLimits
+        {
+            get
+            {
+                if (NativeIPv4PrefixLimit is null)
+                    NativeIPv4PrefixLimit = new NativeIPv4PrefixLimitProperties();
+                return NativeIPv4PrefixLimit.PrefixLimits;
+            }
+        }
+
+        /// <summary> Native IPv6 Prefix Limit Configuration properties. </summary>
+        internal NativeIPv6PrefixLimitProperties NativeIPv6PrefixLimit { get; set; }
+        /// <summary> Prefix limits. </summary>
+        public IList<PrefixLimitProperties> NativeIPv6PrefixLimits
+        {
+            get
+            {
+                if (NativeIPv6PrefixLimit is null)
+                    NativeIPv6PrefixLimit = new NativeIPv6PrefixLimitProperties();
+                return NativeIPv6PrefixLimit.PrefixLimits;
+            }
+        }
+
+        /// <summary> Details of the last operation performed on the resource. </summary>
+        internal LastOperationProperties LastOperation { get; }
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get => LastOperation?.Details;
+        }
+
+        /// <summary> Configuration state of the resource. </summary>
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
     }
 }

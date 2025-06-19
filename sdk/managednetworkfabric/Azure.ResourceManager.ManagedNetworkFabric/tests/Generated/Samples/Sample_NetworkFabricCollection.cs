@@ -42,7 +42,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string networkFabricName = "example-fabric";
-            NetworkFabricData data = new NetworkFabricData(new AzureLocation("eastuseuap"), new NetworkFabricProperties(
+            NetworkFabricData data = new NetworkFabricData(
+                new AzureLocation("eastuseuap"),
                 "M4-A400-A100-C16-aa",
                 new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/example-fabricController"),
                 8,
@@ -112,6 +113,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                     },
                 }))
             {
+                Identity = new ManagedServiceIdentity("None")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("key872")] = new UserAssignedIdentity()
+},
+                },
                 Annotation = "annotation",
                 FabricVersion = "version1",
                 StorageAccountConfiguration = new StorageAccountConfiguration
@@ -133,15 +141,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                     NniDerivedUniqueRdConfigurationState = NNIDerivedUniqueRouteDistinguisherConfigurationState.Enabled,
                 },
                 StorageArrayCount = 1,
-            })
-            {
-                Identity = new ManagedServiceIdentity("None")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("key872")] = new UserAssignedIdentity()
-},
-                },
                 Tags =
 {
 ["keyId"] = "keyValue"

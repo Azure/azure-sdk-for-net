@@ -53,13 +53,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> The NetworkFabric Properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public NetworkFabricData(AzureLocation location, NetworkFabricProperties properties) : base(location)
+        /// <param name="networkFabricSku"> Supported Network Fabric SKU.Example: Compute / Aggregate racks. Once the user chooses a particular SKU, only supported racks can be added to the Network Fabric. The SKU determines whether it is a single / multi rack Network Fabric. </param>
+        /// <param name="networkFabricControllerId"> Azure resource ID for the NetworkFabricController the NetworkFabric belongs. </param>
+        /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
+        /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <param name="terminalServerConfiguration"> Network and credentials configuration currently applied to terminal server. </param>
+        /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSku"/>, <paramref name="networkFabricControllerId"/>, <paramref name="ipv4Prefix"/>, <paramref name="terminalServerConfiguration"/> or <paramref name="managementNetworkConfiguration"/> is null. </exception>
+        public NetworkFabricData(AzureLocation location, string networkFabricSku, ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string ipv4Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration) : base(location)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(networkFabricSku, nameof(networkFabricSku));
+            Argument.AssertNotNull(networkFabricControllerId, nameof(networkFabricControllerId));
+            Argument.AssertNotNull(ipv4Prefix, nameof(ipv4Prefix));
+            Argument.AssertNotNull(terminalServerConfiguration, nameof(terminalServerConfiguration));
+            Argument.AssertNotNull(managementNetworkConfiguration, nameof(managementNetworkConfiguration));
 
-            Properties = properties;
+            NetworkFabricSku = networkFabricSku;
+            RouterIds = new ChangeTrackingList<string>();
+            FabricLocks = new ChangeTrackingList<FabricLockProperties>();
+            NetworkFabricControllerId = networkFabricControllerId;
+            ServerCountPerRack = serverCountPerRack;
+            IPv4Prefix = ipv4Prefix;
+            FabricAsn = fabricAsn;
+            TerminalServerConfiguration = terminalServerConfiguration;
+            ManagementNetworkConfiguration = managementNetworkConfiguration;
+            Racks = new ChangeTrackingList<string>();
+            L2IsolationDomains = new ChangeTrackingList<string>();
+            L3IsolationDomains = new ChangeTrackingList<string>();
+            ControlPlaneAcls = new ChangeTrackingList<ResourceIdentifier>();
+            FeatureFlags = new ChangeTrackingList<FeatureFlagProperties>();
+            TrustedIPPrefixes = new ChangeTrackingList<ResourceIdentifier>();
+            ActiveCommitBatches = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricData"/>. </summary>
@@ -69,13 +94,67 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> The NetworkFabric Properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="networkFabricSku"> Supported Network Fabric SKU.Example: Compute / Aggregate racks. Once the user chooses a particular SKU, only supported racks can be added to the Network Fabric. The SKU determines whether it is a single / multi rack Network Fabric. </param>
+        /// <param name="fabricVersion"> The version of Network Fabric. </param>
+        /// <param name="routerIds"> Array of router IDs. </param>
+        /// <param name="storageAccountConfiguration"> Bring your own storage account configurations for Network Fabric. </param>
+        /// <param name="fabricLocks"> Network Fabric Lock details. </param>
+        /// <param name="networkFabricControllerId"> Azure resource ID for the NetworkFabricController the NetworkFabric belongs. </param>
+        /// <param name="rackCount"> Number of compute racks associated to Network Fabric. </param>
+        /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
+        /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
+        /// <param name="ipv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <param name="terminalServerConfiguration"> Network and credentials configuration currently applied to terminal server. </param>
+        /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
+        /// <param name="racks"> List of NetworkRack resource IDs under the Network Fabric. The number of racks allowed depends on the Network Fabric SKU. </param>
+        /// <param name="l2IsolationDomains"> List of L2 Isolation Domain resource IDs under the Network Fabric. </param>
+        /// <param name="l3IsolationDomains"> List of L3 Isolation Domain resource IDs under the Network Fabric. </param>
+        /// <param name="hardwareAlertThreshold"> Hardware alert threshold percentage. Possible values are from 20 to 100. </param>
+        /// <param name="controlPlaneAcls"> Control Plane Access Control List ARM resource IDs. </param>
+        /// <param name="featureFlags"> Feature flag status information. </param>
+        /// <param name="trustedIPPrefixes"> Trusted IP Prefixes ARM resource IDs. </param>
+        /// <param name="uniqueRdConfiguration"> Unique Route Distinguisher configuration. </param>
+        /// <param name="storageArrayCount"> Number of Storage arrays associated with the Network Fabric. </param>
+        /// <param name="activeCommitBatches"> Active commit batch identifiers. </param>
+        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkFabricProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, string networkFabricSku, string fabricVersion, IReadOnlyList<string> routerIds, StorageAccountConfiguration storageAccountConfiguration, IReadOnlyList<FabricLockProperties> fabricLocks, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration, IReadOnlyList<string> racks, IReadOnlyList<string> l2IsolationDomains, IReadOnlyList<string> l3IsolationDomains, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IReadOnlyList<FeatureFlagProperties> featureFlags, IList<ResourceIdentifier> trustedIPPrefixes, UniqueRouteDistinguisherProperties uniqueRdConfiguration, int? storageArrayCount, IReadOnlyList<string> activeCommitBatches, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Properties = properties;
             Identity = identity;
+            Annotation = annotation;
+            NetworkFabricSku = networkFabricSku;
+            FabricVersion = fabricVersion;
+            RouterIds = routerIds;
+            StorageAccountConfiguration = storageAccountConfiguration;
+            FabricLocks = fabricLocks;
+            NetworkFabricControllerId = networkFabricControllerId;
+            RackCount = rackCount;
+            ServerCountPerRack = serverCountPerRack;
+            IPv4Prefix = ipv4Prefix;
+            IPv6Prefix = ipv6Prefix;
+            FabricAsn = fabricAsn;
+            TerminalServerConfiguration = terminalServerConfiguration;
+            ManagementNetworkConfiguration = managementNetworkConfiguration;
+            Racks = racks;
+            L2IsolationDomains = l2IsolationDomains;
+            L3IsolationDomains = l3IsolationDomains;
+            HardwareAlertThreshold = hardwareAlertThreshold;
+            ControlPlaneAcls = controlPlaneAcls;
+            FeatureFlags = featureFlags;
+            TrustedIPPrefixes = trustedIPPrefixes;
+            UniqueRdConfiguration = uniqueRdConfiguration;
+            StorageArrayCount = storageArrayCount;
+            ActiveCommitBatches = activeCommitBatches;
+            LastOperation = lastOperation;
+            ConfigurationState = configurationState;
+            ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -84,9 +163,69 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> The NetworkFabric Properties. </summary>
-        public NetworkFabricProperties Properties { get; set; }
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
+        /// <summary> Supported Network Fabric SKU.Example: Compute / Aggregate racks. Once the user chooses a particular SKU, only supported racks can be added to the Network Fabric. The SKU determines whether it is a single / multi rack Network Fabric. </summary>
+        public string NetworkFabricSku { get; set; }
+        /// <summary> The version of Network Fabric. </summary>
+        public string FabricVersion { get; set; }
+        /// <summary> Array of router IDs. </summary>
+        public IReadOnlyList<string> RouterIds { get; }
+        /// <summary> Bring your own storage account configurations for Network Fabric. </summary>
+        public StorageAccountConfiguration StorageAccountConfiguration { get; set; }
+        /// <summary> Network Fabric Lock details. </summary>
+        public IReadOnlyList<FabricLockProperties> FabricLocks { get; }
+        /// <summary> Azure resource ID for the NetworkFabricController the NetworkFabric belongs. </summary>
+        public ResourceIdentifier NetworkFabricControllerId { get; set; }
+        /// <summary> Number of compute racks associated to Network Fabric. </summary>
+        public int? RackCount { get; set; }
+        /// <summary> Number of servers.Possible values are from 1-16. </summary>
+        public int ServerCountPerRack { get; set; }
+        /// <summary> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </summary>
+        public string IPv4Prefix { get; set; }
+        /// <summary> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </summary>
+        public string IPv6Prefix { get; set; }
+        /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
+        public long FabricAsn { get; set; }
+        /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
+        public TerminalServerConfiguration TerminalServerConfiguration { get; set; }
+        /// <summary> Configuration to be used to setup the management network. </summary>
+        public ManagementNetworkConfigurationProperties ManagementNetworkConfiguration { get; set; }
+        /// <summary> List of NetworkRack resource IDs under the Network Fabric. The number of racks allowed depends on the Network Fabric SKU. </summary>
+        public IReadOnlyList<string> Racks { get; }
+        /// <summary> List of L2 Isolation Domain resource IDs under the Network Fabric. </summary>
+        public IReadOnlyList<string> L2IsolationDomains { get; }
+        /// <summary> List of L3 Isolation Domain resource IDs under the Network Fabric. </summary>
+        public IReadOnlyList<string> L3IsolationDomains { get; }
+        /// <summary> Hardware alert threshold percentage. Possible values are from 20 to 100. </summary>
+        public int? HardwareAlertThreshold { get; set; }
+        /// <summary> Control Plane Access Control List ARM resource IDs. </summary>
+        public IList<ResourceIdentifier> ControlPlaneAcls { get; }
+        /// <summary> Feature flag status information. </summary>
+        public IReadOnlyList<FeatureFlagProperties> FeatureFlags { get; }
+        /// <summary> Trusted IP Prefixes ARM resource IDs. </summary>
+        public IList<ResourceIdentifier> TrustedIPPrefixes { get; }
+        /// <summary> Unique Route Distinguisher configuration. </summary>
+        public UniqueRouteDistinguisherProperties UniqueRdConfiguration { get; set; }
+        /// <summary> Number of Storage arrays associated with the Network Fabric. </summary>
+        public int? StorageArrayCount { get; set; }
+        /// <summary> Active commit batch identifiers. </summary>
+        public IReadOnlyList<string> ActiveCommitBatches { get; }
+        /// <summary> Details of the last operation performed on the resource. </summary>
+        internal LastOperationProperties LastOperation { get; }
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get => LastOperation?.Details;
+        }
+
+        /// <summary> Configuration state of the resource. </summary>
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
+        /// <summary> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </summary>
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
     }
 }

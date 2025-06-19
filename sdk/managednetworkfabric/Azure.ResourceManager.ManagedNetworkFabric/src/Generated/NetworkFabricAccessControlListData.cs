@@ -53,13 +53,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> The Access ControlList properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public NetworkFabricAccessControlListData(AzureLocation location, AccessControlListProperties properties) : base(location)
+        public NetworkFabricAccessControlListData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            Properties = properties;
+            MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();
+            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListData"/>. </summary>
@@ -69,11 +66,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> The Access ControlList properties. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="configurationType"> Input method to configure Access Control List. </param>
+        /// <param name="aclsUri"> Access Control List file URL. </param>
+        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
+        /// <param name="matchConfigurations"> List of match configurations. </param>
+        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
+        /// <param name="lastSyncedOn"> The last synced timestamp. </param>
+        /// <param name="aclType"> Access Control List (ACL) Type. </param>
+        /// <param name="deviceRole"> Device Role. </param>
+        /// <param name="globalAccessControlListActions"> Global Access Control List (ACL) actions. </param>
+        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AccessControlListProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, AclType? aclType, DeviceRole? deviceRole, GlobalAccessControlListActionProperties globalAccessControlListActions, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Properties = properties;
+            Annotation = annotation;
+            ConfigurationType = configurationType;
+            AclsUri = aclsUri;
+            DefaultAction = defaultAction;
+            MatchConfigurations = matchConfigurations;
+            DynamicMatchConfigurations = dynamicMatchConfigurations;
+            LastSyncedOn = lastSyncedOn;
+            AclType = aclType;
+            DeviceRole = deviceRole;
+            GlobalAccessControlListActions = globalAccessControlListActions;
+            LastOperation = lastOperation;
+            ConfigurationState = configurationState;
+            ProvisioningState = provisioningState;
+            AdministrativeState = administrativeState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,7 +105,51 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> The Access ControlList properties. </summary>
-        public AccessControlListProperties Properties { get; set; }
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
+        /// <summary> Input method to configure Access Control List. </summary>
+        public NetworkFabricConfigurationType? ConfigurationType { get; set; }
+        /// <summary> Access Control List file URL. </summary>
+        public Uri AclsUri { get; set; }
+        /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
+        public CommunityActionType? DefaultAction { get; set; }
+        /// <summary> List of match configurations. </summary>
+        public IList<AccessControlListMatchConfiguration> MatchConfigurations { get; }
+        /// <summary> List of dynamic match configurations. </summary>
+        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; }
+        /// <summary> The last synced timestamp. </summary>
+        public DateTimeOffset? LastSyncedOn { get; }
+        /// <summary> Access Control List (ACL) Type. </summary>
+        public AclType? AclType { get; set; }
+        /// <summary> Device Role. </summary>
+        public DeviceRole? DeviceRole { get; set; }
+        /// <summary> Global Access Control List (ACL) actions. </summary>
+        internal GlobalAccessControlListActionProperties GlobalAccessControlListActions { get; set; }
+        /// <summary> Configuration to enable or disable ACL action count. </summary>
+        public NetworkFabricBooleanValue? GlobalAccessControlListActionsEnableCount
+        {
+            get => GlobalAccessControlListActions is null ? default : GlobalAccessControlListActions.EnableCount;
+            set
+            {
+                if (GlobalAccessControlListActions is null)
+                    GlobalAccessControlListActions = new GlobalAccessControlListActionProperties();
+                GlobalAccessControlListActions.EnableCount = value;
+            }
+        }
+
+        /// <summary> Details of the last operation performed on the resource. </summary>
+        internal LastOperationProperties LastOperation { get; }
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get => LastOperation?.Details;
+        }
+
+        /// <summary> Configuration state of the resource. </summary>
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        /// <summary> Administrative state of the resource. </summary>
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
     }
 }

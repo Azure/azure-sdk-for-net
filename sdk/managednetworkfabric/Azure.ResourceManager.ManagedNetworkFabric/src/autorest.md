@@ -157,6 +157,13 @@ directive:
       $.NetworkDevice.properties.properties["x-ms-client-flatten"] = true;
       $.NetworkInterface.properties.properties["x-ms-client-flatten"] = true;
       $.NetworkDeviceSku.properties.properties["x-ms-client-flatten"] = true;
+      $.AccessControlList.properties.properties["x-ms-client-flatten"] = true;
+      $.NetworkFabricController.properties.properties["x-ms-client-flatten"] = true;
+      $.NetworkFabric.properties.properties["x-ms-client-flatten"] = true;
+      $.ExternalNetwork.properties.properties["x-ms-client-flatten"] = true;
+      $.InternalNetwork.properties.properties["x-ms-client-flatten"] = true;
+      $.InternetGateway.properties.properties["x-ms-client-flatten"] = true;
+  # change some properties back to optional to overcome some breaking changes
   - from: managednetworkfabric.json
     where: $.definitions
     transform: >
@@ -164,6 +171,7 @@ directive:
       $.BgpConfiguration.required = undefined;
       $.ExternalNetworkPropertiesOptionAProperties.required = undefined;
       $.OptionBLayer3Configuration.required = undefined;
+      $.AccessControlListProperties.required = undefined;
   # Removing the operations that are not allowed for the end users.
   - remove-operation: InternetGateways_Delete
   - remove-operation: InternetGateways_Create

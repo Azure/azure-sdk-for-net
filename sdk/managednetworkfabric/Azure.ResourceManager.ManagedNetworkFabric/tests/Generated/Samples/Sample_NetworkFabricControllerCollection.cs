@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string networkFabricControllerName = "example-networkController";
-            NetworkFabricControllerData data = new NetworkFabricControllerData(new AzureLocation("eastus"), new NetworkFabricControllerProperties
+            NetworkFabricControllerData data = new NetworkFabricControllerData(new AzureLocation("eastus"))
             {
                 Annotation = "annotation",
                 InfrastructureExpressRouteConnections = {new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"))
@@ -61,8 +61,6 @@ ExpressRouteAuthorizationKey = "xxx-xxx-xxx",
                 IPv4AddressSpace = "172.253.0.0/19",
                 IPv6AddressSpace = "::/60",
                 NfcSku = NetworkFabricControllerSKU.Standard,
-            })
-            {
                 Tags =
 {
 ["keyId"] = "KeyValue"

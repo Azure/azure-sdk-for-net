@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string externalNetworkName = "example-ext";
-            NetworkFabricExternalNetworkData data = new NetworkFabricExternalNetworkData(new ExternalNetworkProperties(PeeringOption.OptionA)
+            NetworkFabricExternalNetworkData data = new NetworkFabricExternalNetworkData(PeeringOption.OptionA)
             {
                 Annotation = "annotation",
                 NetworkToNetworkInterconnectId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric/networkToNetworkInterconnects/example-nni"),
@@ -109,7 +109,7 @@ IdleTimeExpiry = 7,
                     IPv4Routes = { new StaticRouteProperties("10.0.0.1/24", new string[] { "10.0.0.1" }) },
                     IPv6Routes = { new StaticRouteProperties("2fff::/64", new string[] { "3ffe::1" }) },
                 },
-            });
+            };
             ArmOperation<NetworkFabricExternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, externalNetworkName, data);
             NetworkFabricExternalNetworkResource result = lro.Value;
 

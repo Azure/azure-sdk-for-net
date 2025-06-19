@@ -38,7 +38,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Annotation))
+            {
+                writer.WritePropertyName("annotation"u8);
+                writer.WriteStringValue(Annotation);
+            }
+            if (Optional.IsDefined(InternetGatewayRuleId))
+            {
+                writer.WritePropertyName("internetGatewayRuleId"u8);
+                writer.WriteStringValue(InternetGatewayRuleId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IPV4Address))
+            {
+                writer.WritePropertyName("ipv4Address"u8);
+                writer.WriteStringValue(IPV4Address);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                writer.WriteNumberValue(Port.Value);
+            }
+            if (Optional.IsDefined(TypePropertiesType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(TypePropertiesType.Value.ToString());
+            }
+            if (Optional.IsDefined(InternetGatewayType))
+            {
+                writer.WritePropertyName("internetGatewayType"u8);
+                writer.WriteStringValue(InternetGatewayType.Value.ToString());
+            }
+            writer.WritePropertyName("networkFabricControllerId"u8);
+            writer.WriteStringValue(NetworkFabricControllerId);
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            {
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            writer.WriteEndObject();
         }
 
         NetworkFabricInternetGatewayData IJsonModel<NetworkFabricInternetGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -61,22 +104,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            InternetGatewayProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            string annotation = default;
+            ResourceIdentifier internetGatewayRuleId = default;
+            string ipv4Address = default;
+            int? port = default;
+            InternetGatewayType? type0 = default;
+            InternetGatewayType? internetGatewayType = default;
+            ResourceIdentifier networkFabricControllerId = default;
+            LastOperationProperties lastOperation = default;
+            NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
-                {
-                    properties = InternetGatewayProperties.DeserializeInternetGatewayProperties(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -120,6 +166,87 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("annotation"u8))
+                        {
+                            annotation = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("internetGatewayRuleId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            internetGatewayRuleId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("ipv4Address"u8))
+                        {
+                            ipv4Address = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("port"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            port = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("type"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            type0 = new InternetGatewayType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("internetGatewayType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            internetGatewayType = new InternetGatewayType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("networkFabricControllerId"u8))
+                        {
+                            networkFabricControllerId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("lastOperation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -133,7 +260,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties,
+                annotation,
+                internetGatewayRuleId,
+                ipv4Address,
+                port,
+                type0,
+                internetGatewayType,
+                networkFabricControllerId,
+                lastOperation,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

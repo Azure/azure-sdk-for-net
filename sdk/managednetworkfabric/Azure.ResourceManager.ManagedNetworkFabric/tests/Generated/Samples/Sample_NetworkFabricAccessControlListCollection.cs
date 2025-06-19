@@ -41,9 +41,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string accessControlListName = "example-acl";
-            NetworkFabricAccessControlListData data = new NetworkFabricAccessControlListData(new AzureLocation("eastUs"), new AccessControlListProperties(NetworkFabricConfigurationType.File)
+            NetworkFabricAccessControlListData data = new NetworkFabricAccessControlListData(new AzureLocation("eastUs"))
             {
                 Annotation = "annotation",
+                ConfigurationType = NetworkFabricConfigurationType.File,
                 AclsUri = new Uri("https://ACL-Storage-URL"),
                 DefaultAction = CommunityActionType.Permit,
                 MatchConfigurations = {new AccessControlListMatchConfiguration
@@ -124,8 +125,6 @@ Ports = {"100-200"},
                 AclType = AclType.Cp,
                 DeviceRole = DeviceRole.CE,
                 GlobalAccessControlListActionsEnableCount = NetworkFabricBooleanValue.True,
-            })
-            {
                 Tags =
 {
 ["keyID"] = "keyValue"

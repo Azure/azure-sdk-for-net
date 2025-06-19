@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string internalNetworkName = "example-internalnetwork";
-            NetworkFabricInternalNetworkData data = new NetworkFabricInternalNetworkData(new InternalNetworkProperties(755)
+            NetworkFabricInternalNetworkData data = new NetworkFabricInternalNetworkData(755)
             {
                 Annotation = "annotation",
                 Mtu = 1500,
@@ -120,7 +120,7 @@ MaximumRoutes = 23,
 Threshold = 7,
 IdleTimeExpiry = 28,
 }},
-            });
+            };
             ArmOperation<NetworkFabricInternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, internalNetworkName, data);
             NetworkFabricInternalNetworkResource result = lro.Value;
 
