@@ -23,21 +23,15 @@ public class PipelineBenchmark
 {
     private Benchmarks.Local.PipelineScenario _localScenario;
     private Benchmarks.Nuget.PipelineScenario _nugetScenario;
-    private HttpMessage _localMessage;
-    private HttpMessage _nugetMessage;
 
     [GlobalSetup]
     public void SetUp()
     {
         // Set up local scenario
         _localScenario = new Benchmarks.Local.PipelineScenario();
-        _localMessage = _localScenario._pipeline.CreateMessage();
-        _localMessage.Request.Uri.Reset(new Uri("https://www.example.com"));
 
         // Set up NuGet scenario
         _nugetScenario = new Benchmarks.Nuget.PipelineScenario();
-        _nugetMessage = _nugetScenario._pipeline.CreateMessage();
-        _nugetMessage.Request.Uri.Reset(new Uri("https://www.example.com"));
     }
 
     [Benchmark]
