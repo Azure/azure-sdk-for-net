@@ -146,6 +146,16 @@ public partial class ArmDeploymentProperties : ProvisionableConstruct
     private BicepValue<ExpressionEvaluationScope>? _expressionEvaluationScope;
 
     /// <summary>
+    /// The validation level of the deployment.
+    /// </summary>
+    public BicepValue<ValidationLevel> ValidationLevel 
+    {
+        get { Initialize(); return _validationLevel!; }
+        set { Initialize(); _validationLevel!.Assign(value); }
+    }
+    private BicepValue<ValidationLevel>? _validationLevel;
+
+    /// <summary>
     /// Creates a new ArmDeploymentProperties.
     /// </summary>
     public ArmDeploymentProperties()
@@ -166,5 +176,6 @@ public partial class ArmDeploymentProperties : ProvisionableConstruct
         _debugSettingDetailLevel = DefineProperty<string>("DebugSettingDetailLevel", ["debugSetting", "detailLevel"]);
         _errorDeployment = DefineModelProperty<ErrorDeployment>("ErrorDeployment", ["onErrorDeployment"]);
         _expressionEvaluationScope = DefineProperty<ExpressionEvaluationScope>("ExpressionEvaluationScope", ["expressionEvaluationOptions", "scope"]);
+        _validationLevel = DefineProperty<ValidationLevel>("ValidationLevel", ["validationLevel"]);
     }
 }

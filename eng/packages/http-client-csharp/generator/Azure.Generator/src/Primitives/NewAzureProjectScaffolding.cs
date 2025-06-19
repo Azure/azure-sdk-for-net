@@ -104,8 +104,11 @@ namespace Azure.Generator.Primitives
 
         private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation)
         {
-            hasOperation = false;
-            hasLongRunningOperation = false;
+            if (hasOperation && hasLongRunningOperation)
+            {
+                return;
+            }
+
             foreach (var method in rootClient.Methods)
             {
                 hasOperation = true;

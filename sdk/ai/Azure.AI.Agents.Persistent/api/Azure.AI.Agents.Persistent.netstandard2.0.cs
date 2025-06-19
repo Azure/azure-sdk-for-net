@@ -279,6 +279,7 @@ namespace Azure.AI.Agents.Persistent
     public partial class FabricDataAgentToolParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.FabricDataAgentToolParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.FabricDataAgentToolParameters>
     {
         public FabricDataAgentToolParameters() { }
+        public FabricDataAgentToolParameters(string connectionId) { }
         public System.Collections.Generic.IList<Azure.AI.Agents.Persistent.ToolConnection> ConnectionList { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.FabricDataAgentToolParameters System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.FabricDataAgentToolParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -44,7 +44,7 @@ namespace Azure.Generator.Providers
         private static readonly ParameterProvider ContinuationTokenParameter =
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
         private static readonly ParameterProvider NextLinkParameter =
-            new("nextLink", $"The next link to use for the next page of results.", new CSharpType(typeof(Uri)));
+            new("nextLink", $"The next link to use for the next page of results.", new CSharpType(typeof(Uri), isNullable: true));
         private static readonly ParameterProvider PageSizeHintParameter =
             new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
 
@@ -177,7 +177,7 @@ namespace Azure.Generator.Providers
                 : _requestFields[_nextTokenParameterIndex!.Value].Type;
 
             statements.Add(Declare("nextPage", nextPageType, _paging.NextLink != null ?
-                new TernaryConditionalExpression(ContinuationTokenParameter.NotEqual(Null), New.Instance<Uri>(ContinuationTokenParameter), _requestFields[0]) :
+                new TernaryConditionalExpression(ContinuationTokenParameter.NotEqual(Null), New.Instance<Uri>(ContinuationTokenParameter), Null) :
                 ContinuationTokenParameter.NullCoalesce(_requestFields[_nextTokenParameterIndex!.Value]), out var nextPageVariable));
 
             var doWhileStatement = _paging.NextLink != null ?
@@ -317,28 +317,24 @@ namespace Azure.Generator.Providers
             }
 
             TryExpression BuildTryExpression()
-                => new TryExpression(_clientField.Property("Pipeline").Invoke(_isAsync ? "SendAsync" : "Send", [messageVariable, This.Property("CancellationToken")], _isAsync).Terminate(), BuildGetResponse(messageVariable));
+                => new TryExpression(Return(_clientField.Property("Pipeline").Invoke(_isAsync ? "ProcessMessageAsync" : "ProcessMessage", [messageVariable, _contextField!.AsValueExpression], _isAsync)));
 
             return new MethodProvider(signature, body, this);
         }
 
-        private MethodBodyStatement[] BuildGetResponse(ValueExpression messageVariable)
+        private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri)
         {
-            return new MethodBodyStatement[]
-            {
-                new IfStatement(messageVariable.Property("Response").Property("IsError").As<bool>().And(_contextField!.Property("ErrorOptions").NotEqual(Static<ErrorOptions>().Property(nameof(ErrorOptions.NoThrow)))))
-                {
-                    Throw(New.Instance<RequestFailedException>(messageVariable.Property("Response")))
-                },
-                Return(messageVariable.Property("Response"))
-            };
+            var createNextLinkRequestMethodName =
+                _client.RestClient.GetCreateNextLinkRequestMethod(_operation).Signature.Name;
+            return new TernaryConditionalExpression(
+                nextPageUri.NotEqual(Null),
+                _clientField.Invoke(
+                    createNextLinkRequestMethodName,
+                    [nextPageUri, .. _requestFields.Select(f => f.AsValueExpression)]),
+                _clientField.Invoke(
+                    _createRequestMethodName,
+                    [.. _requestFields.Select(f => f.AsValueExpression)])).As<HttpMessage>();
         }
-
-        private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri) => _clientField.Invoke(
-            _createRequestMethodName,
-            // we replace the first argument (the initialUri) with the nextPageUri
-            [nextPageUri, .. _requestFields.Skip(1)])
-            .As<HttpMessage>();
 
         private ScopedApi<HttpMessage> InvokeCreateRequestForContinuationToken(ValueExpression continuationToken)
         {
