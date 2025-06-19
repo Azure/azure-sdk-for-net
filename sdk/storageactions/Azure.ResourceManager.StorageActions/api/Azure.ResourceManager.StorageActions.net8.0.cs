@@ -108,6 +108,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskProperties StorageTaskProperties(long? taskVersion = default(long?), bool isEnabled = false, string description = null, Azure.ResourceManager.StorageActions.Models.StorageTaskAction action = null, Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState? provisioningState = default(Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState?), System.DateTimeOffset? creationTimeInUtc = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance StorageTaskReportInstance(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.StorageActions.Models.StorageTaskReportProperties properties = null) { throw null; }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskReportProperties StorageTaskReportProperties(Azure.Core.ResourceIdentifier taskAssignmentId = null, Azure.Core.ResourceIdentifier storageAccountId = null, string startTime = null, string finishTime = null, string objectsTargetedCount = null, string objectsOperatedOnCount = null, string objectFailedCount = null, string objectsSucceededCount = null, string runStatusError = null, Azure.ResourceManager.StorageActions.Models.StorageTaskRunStatus? runStatusEnum = default(Azure.ResourceManager.StorageActions.Models.StorageTaskRunStatus?), string summaryReportPath = null, Azure.Core.ResourceIdentifier taskId = null, string taskVersion = null, Azure.ResourceManager.StorageActions.Models.StorageTaskRunResult? runResult = default(Azure.ResourceManager.StorageActions.Models.StorageTaskRunResult?)) { throw null; }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskUpdateProperties StorageTaskUpdateProperties(long? taskVersion = default(long?), bool? enabled = default(bool?), string description = null, Azure.ResourceManager.StorageActions.Models.StorageTaskAction action = null, Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState? provisioningState = default(Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState?), System.DateTimeOffset? creationTimeInUtc = default(System.DateTimeOffset?)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MatchedBlockName : System.IEquatable<Azure.ResourceManager.StorageActions.Models.MatchedBlockName>
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.StorageActions.Models
     {
         public StorageTaskPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.StorageActions.Models.StorageTaskProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageActions.Models.StorageTaskUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.StorageActions.Models.StorageTaskPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageActions.Models.StorageTaskPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -432,5 +433,21 @@ namespace Azure.ResourceManager.StorageActions.Models
         public static implicit operator Azure.ResourceManager.StorageActions.Models.StorageTaskRunStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.StorageActions.Models.StorageTaskRunStatus left, Azure.ResourceManager.StorageActions.Models.StorageTaskRunStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class StorageTaskUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageActions.Models.StorageTaskUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageActions.Models.StorageTaskUpdateProperties>
+    {
+        public StorageTaskUpdateProperties() { }
+        public Azure.ResourceManager.StorageActions.Models.StorageTaskAction Action { get { throw null; } set { } }
+        public System.DateTimeOffset? CreationTimeInUtc { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public bool? Enabled { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState? ProvisioningState { get { throw null; } }
+        public long? TaskVersion { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageActions.Models.StorageTaskUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageActions.Models.StorageTaskUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageActions.Models.StorageTaskUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageActions.Models.StorageTaskUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageActions.Models.StorageTaskUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageActions.Models.StorageTaskUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageActions.Models.StorageTaskUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
