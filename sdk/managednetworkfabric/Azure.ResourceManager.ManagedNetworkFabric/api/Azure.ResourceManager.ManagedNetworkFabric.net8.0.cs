@@ -2153,9 +2153,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     }
     public partial class BgpConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public BgpConfiguration() { }
-        public BgpConfiguration(long? peerAsn) { }
+        public BgpConfiguration(long peerAsn) { }
         public int? AllowAS { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.AllowASOverride? AllowASOverride { get { throw null; } set { } }
         public string Annotation { get { throw null; } set { } }
@@ -2732,9 +2731,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     }
     public partial class ExternalNetworkOptionAProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ExternalNetworkOptionAProperties() { }
-        public ExternalNetworkOptionAProperties(int? vlanId, long? peerAsn) { }
+        public ExternalNetworkOptionAProperties(int vlanId, long peerAsn) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration BfdConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.BmpConfigurationState? BmpConfigurationState { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier EgressAclId { get { throw null; } set { } }
@@ -5220,9 +5218,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     }
     public partial class OptionBLayer3Configuration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public OptionBLayer3Configuration() { }
-        public OptionBLayer3Configuration(long? peerAsn, int? vlanId) { }
+        public OptionBLayer3Configuration(long peerAsn, int vlanId) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.BmpConfigurationState? BmpConfigurationState { get { throw null; } set { } }
         public long? FabricAsn { get { throw null; } }
         public long? PeerAsn { get { throw null; } set { } }

@@ -46,12 +46,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OptionBLayer3Configuration"/>. </summary>
-        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
-        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
-        public OptionBLayer3Configuration(long? peerAsn, int? vlanId)
+        public OptionBLayer3Configuration()
         {
-            PeerAsn = peerAsn;
-            VlanId = vlanId;
             PeLoopbackIPAddress = new ChangeTrackingList<string>();
             PrefixLimits = new ChangeTrackingList<OptionBLayer3PrefixLimitProperties>();
         }
@@ -91,6 +87,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string SecondaryIPv4Prefix { get; set; }
         /// <summary> Secondary IPv6 Address Prefix. </summary>
         public string SecondaryIPv6Prefix { get; set; }
+        /// <summary> ASN of PE devices for CE/PE connectivity.Example : 28. </summary>
+        public long? PeerAsn { get; set; }
+        /// <summary> VLAN for CE/PE Layer 3 connectivity.Example : 501. </summary>
+        public int? VlanId { get; set; }
         /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
         public long? FabricAsn { get; }
         /// <summary> Provider Edge (PE) Loopback IP Address. </summary>

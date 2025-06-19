@@ -67,7 +67,7 @@ Annotation = "annotation",
                 EgressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
                 IsMonitoringEnabled = IsMonitoringEnabled.True,
                 Extension = StaticRouteConfigurationExtension.NoExtension,
-                BgpConfiguration = new BgpConfiguration(61234L)
+                BgpConfiguration = new BgpConfiguration
                 {
                     Annotation = "annotation",
                     BfdConfiguration = new BfdConfiguration
@@ -78,6 +78,7 @@ Annotation = "annotation",
                     DefaultRouteOriginate = NetworkFabricBooleanValue.True,
                     AllowAS = 10,
                     AllowASOverride = AllowASOverride.Enable,
+                    PeerAsn = 61234L,
                     IPv4ListenRangePrefixes = { "10.1.0.0/25" },
                     IPv6ListenRangePrefixes = { "2fff::/66" },
                     IPv4NeighborAddress = {new NeighborAddress

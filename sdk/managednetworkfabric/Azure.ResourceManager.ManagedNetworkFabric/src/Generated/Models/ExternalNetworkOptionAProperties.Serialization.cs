@@ -59,28 +59,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (VlanId != null)
+            if (Optional.IsDefined(VlanId))
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
-            }
-            else
-            {
-                writer.WriteNull("vlanId");
             }
             if (options.Format != "W" && Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (PeerAsn != null)
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
-            }
-            else
-            {
-                writer.WriteNull("peerASN");
             }
             if (Optional.IsDefined(BfdConfiguration))
             {
@@ -212,7 +204,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        vlanId = null;
                         continue;
                     }
                     vlanId = property.Value.GetInt32();
@@ -231,7 +222,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        peerAsn = null;
                         continue;
                     }
                     peerAsn = property.Value.GetInt64();

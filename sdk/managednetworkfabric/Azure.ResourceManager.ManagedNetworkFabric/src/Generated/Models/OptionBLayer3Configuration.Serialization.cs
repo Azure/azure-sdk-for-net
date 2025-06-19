@@ -54,23 +54,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
             }
-            if (PeerAsn != null)
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            else
-            {
-                writer.WriteNull("peerASN");
-            }
-            if (VlanId != null)
+            if (Optional.IsDefined(VlanId))
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
-            }
-            else
-            {
-                writer.WriteNull("vlanId");
             }
             if (options.Format != "W" && Optional.IsDefined(FabricAsn))
             {
@@ -177,7 +169,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        peerAsn = null;
                         continue;
                     }
                     peerAsn = property.Value.GetInt64();
@@ -187,7 +178,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        vlanId = null;
                         continue;
                     }
                     vlanId = property.Value.GetInt32();

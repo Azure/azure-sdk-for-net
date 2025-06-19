@@ -67,13 +67,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                         ExportIPv6RouteTargets = { "65046:10050" },
                     },
                 },
-                OptionAProperties = new ExternalNetworkOptionAProperties(1001, 65047L)
+                OptionAProperties = new ExternalNetworkOptionAProperties
                 {
                     PrimaryIPv4Prefix = "10.1.1.0/30",
                     PrimaryIPv6Prefix = "3FFE:FFFF:0:CD30::a0/126",
                     SecondaryIPv4Prefix = "10.1.1.4/30",
                     SecondaryIPv6Prefix = "3FFE:FFFF:0:CD30::a4/126",
                     Mtu = 1500,
+                    VlanId = 1001,
+                    PeerAsn = 65047L,
                     BfdConfiguration = new BfdConfiguration
                     {
                         IntervalInMilliSeconds = 300,

@@ -46,10 +46,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BgpConfiguration"/>. </summary>
-        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
-        public BgpConfiguration(long? peerAsn)
+        public BgpConfiguration()
         {
-            PeerAsn = peerAsn;
             IPv4ListenRangePrefixes = new ChangeTrackingList<string>();
             IPv6ListenRangePrefixes = new ChangeTrackingList<string>();
             IPv4NeighborAddress = new ChangeTrackingList<NeighborAddress>();
@@ -103,6 +101,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public AllowASOverride? AllowASOverride { get; set; }
         /// <summary> ASN of Network Fabric. Example: 65048. </summary>
         public long? FabricAsn { get; }
+        /// <summary> Peer ASN. Example: 65047. </summary>
+        public long? PeerAsn { get; set; }
         /// <summary> List of BGP IPv4 Listen Range prefixes. </summary>
         public IList<string> IPv4ListenRangePrefixes { get; }
         /// <summary> List of BGP IPv6 Listen Ranges prefixes. </summary>

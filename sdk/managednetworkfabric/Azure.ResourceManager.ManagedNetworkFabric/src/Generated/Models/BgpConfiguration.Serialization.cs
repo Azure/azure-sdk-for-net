@@ -64,14 +64,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (PeerAsn != null)
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
-            }
-            else
-            {
-                writer.WriteNull("peerASN");
             }
             if (Optional.IsCollectionDefined(IPv4ListenRangePrefixes))
             {
@@ -237,7 +233,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        peerAsn = null;
                         continue;
                     }
                     peerAsn = property.Value.GetInt64();

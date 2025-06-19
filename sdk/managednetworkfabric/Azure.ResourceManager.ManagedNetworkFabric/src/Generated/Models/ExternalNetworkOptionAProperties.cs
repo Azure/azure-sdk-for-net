@@ -47,12 +47,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExternalNetworkOptionAProperties"/>. </summary>
-        /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
-        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
-        public ExternalNetworkOptionAProperties(int? vlanId, long? peerAsn)
+        public ExternalNetworkOptionAProperties()
         {
-            VlanId = vlanId;
-            PeerAsn = peerAsn;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExternalNetworkOptionAProperties"/>. </summary>
@@ -104,8 +100,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string SecondaryIPv6Prefix { get; set; }
         /// <summary> MTU to use for option A peering. </summary>
         public int? Mtu { get; set; }
+        /// <summary> Vlan identifier. Example : 501. </summary>
+        public int? VlanId { get; set; }
         /// <summary> Fabric ASN number. Example 65001. </summary>
         public long? FabricAsn { get; }
+        /// <summary> Peer ASN number.Example : 28. </summary>
+        public long? PeerAsn { get; set; }
         /// <summary> BFD configuration properties. </summary>
         public BfdConfiguration BfdConfiguration { get; set; }
         /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>

@@ -10,14 +10,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public partial class ExternalNetworkOptionAProperties
     {
         /// <summary> Initializes a new instance of <see cref="ExternalNetworkOptionAProperties"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ExternalNetworkOptionAProperties(): this(null, null)
+        /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
+        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
+        public ExternalNetworkOptionAProperties(int vlanId, long peerAsn)
         {
+            VlanId = vlanId;
+            PeerAsn = peerAsn;
         }
-
-        /// <summary> Vlan identifier. Example : 501. </summary>
-        public int? VlanId { get; set; }
-        /// <summary> Peer ASN number.Example : 28. </summary>
-        public long? PeerAsn { get; set; }
     }
 }

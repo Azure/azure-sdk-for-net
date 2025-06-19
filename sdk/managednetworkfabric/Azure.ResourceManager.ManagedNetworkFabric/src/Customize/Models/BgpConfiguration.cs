@@ -3,19 +3,15 @@
 
 #nullable disable
 
-using System.ComponentModel;
-
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class BgpConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="BgpConfiguration"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public BgpConfiguration() : this(null)
+        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
+        public BgpConfiguration(long peerAsn) : this()
         {
+            PeerAsn = peerAsn;
         }
-
-        /// <summary> Peer ASN. Example: 65047. </summary>
-        public long? PeerAsn { get; set; }
     }
 }

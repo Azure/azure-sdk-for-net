@@ -50,12 +50,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                     Mtu = 1500,
                     Interfaces = { new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkDevices/example-networkDevice/networkInterfaces/example-networkInterface") },
                 },
-                OptionBLayer3Configuration = new OptionBLayer3Configuration(61234L, 1234)
+                OptionBLayer3Configuration = new OptionBLayer3Configuration
                 {
                     PrimaryIPv4Prefix = "10.0.0.12/30",
                     PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
                     SecondaryIPv4Prefix = "40.0.0.14/30",
                     SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
+                    PeerAsn = 61234L,
+                    VlanId = 1234,
                     PeLoopbackIPAddress = { "10.0.0.1" },
                     BmpConfigurationState = BmpConfigurationState.Enabled,
                     PrefixLimits = {new OptionBLayer3PrefixLimitProperties
