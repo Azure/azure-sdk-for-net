@@ -1,18 +1,12 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.0.0 (2025-06-27)
 
 This is the first stable release of StorageActions client library.
 
 ### Features Added
 
 - Replaced StorageTaskProperties to StorageTaskUpdateProperties in StorageTaskPatch.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.3 (2025-04-24)
 
