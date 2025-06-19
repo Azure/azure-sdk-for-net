@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Migrated the following types to System.ClientModel for 3rd-party Authentication support: `AuthenticationTokenProvider`, `GetTokenOptions`, `AccessToken`, and `OAuth2BearerTokenAuthenticationPolicy`.
+
 ### Bugs Fixed
 
 ### Other Changes

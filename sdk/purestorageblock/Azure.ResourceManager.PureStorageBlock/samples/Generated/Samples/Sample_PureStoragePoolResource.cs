@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_StoragePoolsGet()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_StoragePoolsDelete()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePool_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_StoragePoolsUpdate()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_Update_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePool_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetHealthStatus_StoragePoolsGetHealthStatus()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_GetHealthStatus_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_GetHealthStatus_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePools_GetHealthStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvsConnection_StoragePoolsGetAvsConnection()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_GetAvsConnection_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_GetAvsConnection_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePools_GetAvsConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAvsStatus_StoragePoolsGetAvsStatus()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_GetAvsStatus_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_GetAvsStatus_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePools_GetAvsStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task EnableAvsConnection_StoragePoolsEnableAvsConnection()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_EnableAvsConnection_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_EnableAvsConnection_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePools_EnableAvsConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DisableAvsConnection_StoragePoolsDisableAvsConnection()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_DisableAvsConnection_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_DisableAvsConnection_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePools_DisableAvsConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task FinalizeAvsConnection_StoragePoolsFinalizeAvsConnection()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_FinalizeAvsConnection_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_FinalizeAvsConnection_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePools_FinalizeAvsConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RepairAvsConnection_StoragePoolsRepairAvsConnection()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_RepairAvsConnection_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_RepairAvsConnection_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePools_RepairAvsConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

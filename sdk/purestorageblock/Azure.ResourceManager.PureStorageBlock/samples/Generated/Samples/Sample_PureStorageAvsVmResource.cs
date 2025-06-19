@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AvsVmsGet()
         {
-            // Generated from example definition: 2024-11-01-preview/AvsVms_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/AvsVms_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "AvsVm_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_AvsVmsDelete()
         {
-            // Generated from example definition: 2024-11-01-preview/AvsVms_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/AvsVms_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "AvsVm_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_AvsVmsUpdate()
         {
-            // Generated from example definition: 2024-11-01-preview/AvsVms_Update_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/AvsVms_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "AvsVm_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

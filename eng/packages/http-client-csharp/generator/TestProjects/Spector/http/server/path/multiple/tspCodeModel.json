@@ -192,7 +192,7 @@
      "type": {
       "$id": "20",
       "kind": "url",
-      "name": "url",
+      "name": "endpoint",
       "crossLanguageDefinitionId": "TypeSpec.url"
      },
      "location": "Uri",
@@ -202,7 +202,8 @@
      "isEndpoint": true,
      "skipUrlEncoding": false,
      "explode": false,
-     "kind": "Client"
+     "kind": "Client",
+     "serverUrlTemplate": "{endpoint}/server/path/multiple/{apiVersion}"
     },
     {
      "$id": "21",
@@ -229,7 +230,8 @@
        "crossLanguageDefinitionId": "TypeSpec.string"
       },
       "value": "v1.0"
-     }
+     },
+     "serverUrlTemplate": "{endpoint}/server/path/multiple/{apiVersion}"
     }
    ],
    "decorators": [],
