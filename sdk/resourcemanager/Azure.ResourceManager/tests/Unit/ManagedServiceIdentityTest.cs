@@ -21,8 +21,9 @@ namespace Azure.ResourceManager.Tests
 
         private JsonElement DeserializerHelper(string filename, out string json)
         {
-            json = File.ReadAllText(Path.Combine(TestAssetPath, filename));
-            using JsonDocument document = JsonDocument.Parse(json);
+            var originalJson = File.ReadAllText(Path.Combine(TestAssetPath, filename));
+            json = originalJson.Replace("\r\n", "").Replace("\n", "").Replace(" ", "");
+            using JsonDocument document = JsonDocument.Parse(originalJson);
             return document.RootElement.Clone();
         }
 
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual("77563a98-c9d9-407b-a7af-592d21fa2153", userIdentities.Values.First().PrincipalId.ToString());
             Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
             //Serialize to v3
-            var expectedV3 = expectedV4.Replace("\r\n", "").Replace(" ", "").Replace("SystemAssigned, UserAssigned", "SystemAssigned,UserAssigned");
+            var expectedV3 = expectedV4.Replace("SystemAssigned, UserAssigned", "SystemAssigned,UserAssigned");
             JsonAsserts.AssertConverterSerialization(expectedV3, back, new ModelReaderWriterOptions("W|v3"));
         }
 
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual("77563a98-c9d9-407b-a7af-592d21fa2153", userIdentities.Values.First().PrincipalId.ToString());
             Assert.AreEqual("SystemAssigned, UserAssigned", back.ManagedServiceIdentityType.ToString());
             //Serialize to v4
-            string expectedV4 = expectedV3.Replace("\r\n", "").Replace(" ", "").Replace("SystemAssigned,UserAssigned", "SystemAssigned, UserAssigned");
+            string expectedV4 = expectedV3.Replace("SystemAssigned,UserAssigned", "SystemAssigned, UserAssigned");
             JsonAsserts.AssertConverterSerialization(expectedV4, back);
         }
 
