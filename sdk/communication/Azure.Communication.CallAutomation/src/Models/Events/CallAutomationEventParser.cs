@@ -176,6 +176,10 @@ namespace Azure.Communication.CallAutomation
                     return MediaStreamingStopped.Deserialize(eventData);
                 case nameof(MediaStreamingFailed):
                     return MediaStreamingFailed.Deserialize(eventData);
+                case nameof(MoveParticipantFailed):
+                    return MoveParticipantFailed.Deserialize(eventData);
+                case nameof(MoveParticipantSucceeded):
+                    return MoveParticipantSucceeded.Deserialize(eventData);
                 #region Dialog
                 case nameof(DialogCompleted):
                     return DialogCompleted.Deserialize(eventData);
