@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, ManagedServiceIdentity model, JsonSerializerOptions options)
             {
-                bool useManagedServiceIdentityV3 = options is not null && options.Converters.Any();
+                bool useManagedServiceIdentityV3 = options is not null && options.Converters.Any(x => x.ToString().EndsWith("ManagedServiceIdentityTypeV3Converter"));
                 model.Write(writer, useManagedServiceIdentityV3 ? new ModelReaderWriterOptions("W|v3") : new ModelReaderWriterOptions("W"), options);
             }
             public override ManagedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
