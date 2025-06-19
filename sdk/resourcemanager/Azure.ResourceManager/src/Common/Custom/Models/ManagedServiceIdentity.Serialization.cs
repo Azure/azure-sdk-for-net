@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Models
     {
         private const string SystemAssignedUserAssignedV3Value = "SystemAssigned,UserAssigned";
 
-        private static bool UseManagedServiceIdentityV3(JsonSerializerOptions jOptions, ModelReaderWriterOptions options, out string format)
+        private static bool UseManagedServiceIdentityV3(ModelReaderWriterOptions options, out string format)
         {
             var originalFormat = options.Format.AsSpan();
             if (originalFormat.Length > 3)
@@ -34,19 +34,12 @@ namespace Azure.ResourceManager.Models
             }
 
             format = options.Format;
-
-            // TODO: Remove this check once we have a stable version of the SDK that uses v3 by default.
-            if (jOptions is not null && jOptions.Converters.Any(converter => converter is ManagedServiceIdentityTypeV3Converter))
-            {
-                return true;
-            }
-
             return false;
         }
 
         internal void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options, JsonSerializerOptions jOptions = null)
         {
-            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(jOptions, options, out string format);
+            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string format);
             format = format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
             options = new ModelReaderWriterOptions(format);
             if (format != "J")
@@ -215,7 +208,7 @@ namespace Azure.ResourceManager.Models
         internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element, ModelReaderWriterOptions options, JsonSerializerOptions jOptions)
         {
             options ??= new ModelReaderWriterOptions("W");
-            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(jOptions, options, out string format);
+            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string format);
             options = new ModelReaderWriterOptions(format);
 
             if (element.ValueKind == JsonValueKind.Null)
@@ -278,7 +271,7 @@ namespace Azure.ResourceManager.Models
         ManagedServiceIdentity IPersistableModel<ManagedServiceIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             options ??= new ModelReaderWriterOptions("W");
-            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(null, options, out string format);
+            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string format);
             format = format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
@@ -299,7 +292,12 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, ManagedServiceIdentity model, JsonSerializerOptions options)
             {
-                model.Write(writer, new ModelReaderWriterOptions("W"), options);
+                bool useManagedServiceIdentityV3 = false;
+                if (options is not null && options.Converters.Any(converter => converter is ManagedServiceIdentityTypeV3Converter))
+                {
+                    useManagedServiceIdentityV3 = true;
+                }
+                model.Write(writer, useManagedServiceIdentityV3 ? new ModelReaderWriterOptions("W|v3") : new ModelReaderWriterOptions("W"), options);
             }
             public override ManagedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
