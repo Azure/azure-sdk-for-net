@@ -17,14 +17,11 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="KeyVaultAccessControlClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<KeyVaultAccessControlClient, KeyVaultAccessControlClientOptions> AddKeyVaultAccessControlClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <param name="vaultUri"> A  to the vault on which the client operates. Appears as "DNS Name" in the Azure portal. You should validate that this URI references a valid Key Vault or Managed HSM resource. See  for details. </param>
+        public static IAzureClientBuilder<KeyVaultAccessControlClient, KeyVaultAdministrationClientOptions> AddKeyVaultAccessControlClient<TBuilder>(this TBuilder builder, Uri vaultUri)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
-            return builder.RegisterClientFactory<KeyVaultAccessControlClient, KeyVaultAccessControlClientOptions>((options, credential) => new KeyVaultAccessControlClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<KeyVaultAccessControlClient, KeyVaultAdministrationClientOptions>((options, credential) => new KeyVaultAccessControlClient(vaultUri, credential, options));
         }
 
         /// <summary> Registers a <see cref="KeyVaultAccessControlClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
@@ -32,10 +29,10 @@ namespace Microsoft.Extensions.Azure
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<KeyVaultAccessControlClient, KeyVaultAccessControlClientOptions> AddKeyVaultAccessControlClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<KeyVaultAccessControlClient, KeyVaultAdministrationClientOptions> AddKeyVaultAccessControlClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<KeyVaultAccessControlClient, KeyVaultAccessControlClientOptions>(configuration);
+            return builder.RegisterClientFactory<KeyVaultAccessControlClient, KeyVaultAdministrationClientOptions>(configuration);
         }
 
         /// <summary> Registers a <see cref="KeyVaultRestClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
