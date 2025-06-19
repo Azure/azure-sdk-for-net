@@ -19,8 +19,6 @@
       REST API Reference for File Service - https://docs.microsoft.com/en-us/rest/api/storageservices/file-service-rest-api
     </Description>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <!-- Suppress warnings from duplicated names analyzer -->
-    <NoWarn>$(NoWarn);AZC0034;AZC0035</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
