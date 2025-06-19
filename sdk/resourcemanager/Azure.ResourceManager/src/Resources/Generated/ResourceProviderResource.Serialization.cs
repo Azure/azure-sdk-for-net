@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
 
         ResourceProviderData IJsonModel<ResourceProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceProviderData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResourceProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceProviderData>(Data, options, AzureResourceManagerContext.Default);
+        BinaryData IPersistableModel<ResourceProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerContext.Default);
 
         ResourceProviderData IPersistableModel<ResourceProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceProviderData>(data, options, AzureResourceManagerContext.Default);
 

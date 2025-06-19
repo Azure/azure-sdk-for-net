@@ -1,5 +1,4 @@
 ﻿{
-  "identity": {
     "principalId": "22fddec1-8b9f-49dc-bd72-ddaf8f215570",
     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db40",
     "type": "SystemAssigned, UserAssigned",
@@ -13,5 +12,4 @@
             "principalId": "77563a98-c9d9-477b-a7af-592d2bfa2150"
         }
     }
-  }
 }

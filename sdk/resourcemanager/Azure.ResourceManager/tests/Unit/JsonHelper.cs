@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Tests
         {
             string content = File.ReadAllText(filepath);
             using var document = JsonDocument.Parse(content);
-            return JsonSerializer.Serialize(document.RootElement);
+            return document.RootElement.ToString().Replace("\r\n", "").Replace(" ", "");
         }
     }
 }
