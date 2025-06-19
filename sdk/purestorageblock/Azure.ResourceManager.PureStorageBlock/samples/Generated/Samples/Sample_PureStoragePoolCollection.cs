@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_StoragePoolsCreate()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_Create_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_Create_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_StoragePoolsGet()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_StoragePoolsListByResourceGroup()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePool_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_StoragePoolsGet()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StoragePoolsGet()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
