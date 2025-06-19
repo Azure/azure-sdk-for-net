@@ -34,7 +34,7 @@ namespace Azure.Identity
             // If this is a 410 response, use the extended delay to ensure 70+ seconds total
             if (response?.Status == 410)
             {
-                // Use exponential backoff: 10s, 20s, 40s = 70s total
+                // Use exponential backoff: 13s, 26s, 52s = 91s total (min 72.8s with jitter)
                 return TimeSpan.FromMilliseconds((1 << (retryNumber - 1)) * _delay410.TotalMilliseconds);
             }
 
