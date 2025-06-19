@@ -1,6 +1,8 @@
-# Microsoft Azure Grafana management client library for .NET
+# Microsoft Azure Managed Grafana management client library for .NET
 
-**[Describe the service briefly first.]**
+Microsoft Azure Managed Grafana is a fully managed service for analytics and monitoring solutions. It's supported by Grafana Enterprise1, which provides extensible data visualizations.
+
+This library supports managing Microsoft Azure Managed Grafana resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,10 +16,10 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure Grafana management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Managed Grafana management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.Grafana --prerelease
+dotnet add package Azure.ResourceManager.Grafana
 ```
 
 ### Prerequisites
@@ -37,7 +39,7 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azu
 Documentation is available to help you learn how to use this package:
 
 - [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
