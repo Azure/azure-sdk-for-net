@@ -305,6 +305,7 @@ Response result = await Client.CreateLedgerEntryAsync(content, collectionId, tag
 ```C# Snippet:RetrieveWithTag
 
 // Specify collection ID and tag. Optionally add a range of transaction IDs.
+// Only one tag is permitted in each retrieval operation.
 var result = Client.GetLedgerEntriesAsync(collectionId, "tag1");
 ```
 ### User management
