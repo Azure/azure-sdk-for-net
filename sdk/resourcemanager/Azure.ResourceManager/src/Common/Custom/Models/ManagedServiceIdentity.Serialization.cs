@@ -18,16 +18,46 @@ namespace Azure.ResourceManager.Models
     [JsonConverter(typeof(ManagedServiceIdentityConverter))]
     public partial class ManagedServiceIdentity : IJsonModel<ManagedServiceIdentity>
     {
-        internal void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options, JsonSerializerOptions jOptions = default)
+        private const string SystemAssignedUserAssignedV3Value = "SystemAssigned,UserAssigned";
+
+        private static bool UseManagedServiceIdentityV3(ModelReaderWriterOptions options, out string format)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var originalFormat = options.Format.AsSpan();
+            if (originalFormat.Length > 3)
+            {
+                var v3Format = "|v3".AsSpan();
+                if (originalFormat.Slice(originalFormat.Length - v3Format.Length).Equals(v3Format, StringComparison.Ordinal))
+                {
+                    format = originalFormat.Slice(0, originalFormat.Length - v3Format.Length).ToString();
+                    return true;
+                }
+            }
+
+            format = options.Format;
+            return false;
+        }
+
+        internal void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options, JsonSerializerOptions jOptions = null)
+        {
+            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string format);
+            format = format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            options = new ModelReaderWriterOptions(format);
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedServiceIdentity)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
-            JsonSerializer.Serialize(writer, ManagedServiceIdentityType, jOptions);
+            writer.WritePropertyName("type"u8);
+            if (useManagedServiceIdentityV3)
+            {
+                writer.WriteStringValue(SystemAssignedUserAssignedV3Value);
+            }
+            else
+            {
+                writer.WriteStringValue(ManagedServiceIdentityType.ToString());
+            }
+
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
@@ -45,7 +75,14 @@ namespace Azure.ResourceManager.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    if (item.Value is null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -54,7 +91,7 @@ namespace Azure.ResourceManager.Models
 
         void IJsonModel<ManagedServiceIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Write(writer, options, null);
+            Write(writer, options, jOptions: null);
         }
 
         ManagedServiceIdentity IJsonModel<ManagedServiceIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -171,11 +208,14 @@ namespace Azure.ResourceManager.Models
         internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element, ModelReaderWriterOptions options, JsonSerializerOptions jOptions)
         {
             options ??= new ModelReaderWriterOptions("W");
+            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string format);
+            options = new ModelReaderWriterOptions(format);
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+
             Guid? principalId = default;
             Guid? tenantId = default;
             ManagedServiceIdentityType type = default;
@@ -202,7 +242,7 @@ namespace Azure.ResourceManager.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>($"{{{property}}}", jOptions);
+                    type = useManagedServiceIdentityV3 ? ManagedServiceIdentityType.SystemAssignedUserAssigned : new ManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))
@@ -214,7 +254,7 @@ namespace Azure.ResourceManager.Models
                     Dictionary<ResourceIdentifier, UserAssignedIdentity> dictionary = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(new ResourceIdentifier(property0.Name), JsonSerializer.Deserialize<UserAssignedIdentity>(property0.Value.GetRawText()));
+                        dictionary.Add(new ResourceIdentifier(property0.Name), ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerContext.Default));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
@@ -230,7 +270,9 @@ namespace Azure.ResourceManager.Models
 
         ManagedServiceIdentity IPersistableModel<ManagedServiceIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            options ??= new ModelReaderWriterOptions("W");
+            var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string format);
+            format = format == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
