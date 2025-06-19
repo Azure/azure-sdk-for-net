@@ -151,10 +151,13 @@ rename-mapping:
   ViewDeviceConfigurationResponse: ViewDeviceConfigurationResult
 
 directive:
-  - from: NetworkFabricControllers.json
+  - from: swagger-document
     where: $.definitions
     transform:
       $.ExpressRouteConnectionInformation.required =  [ 'expressRouteCircuitId' ];
+      $.NetworkDevice.properties.properties["x-ms-client-flatten"] = true;
+      $.NetworkInterface.properties.properties["x-ms-client-flatten"] = true;
+      $.NetworkDeviceSku.properties.properties["x-ms-client-flatten"] = true;
   # Removing the operations that are not allowed for the end users.
   - remove-operation: InternetGateways_Delete
   - remove-operation: InternetGateways_Create

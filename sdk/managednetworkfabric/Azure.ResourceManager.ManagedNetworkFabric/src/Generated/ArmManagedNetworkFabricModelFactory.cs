@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -482,34 +483,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The NetworkDeviceSku properties. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceSkuData"/> instance for mocking. </returns>
-        public static NetworkDeviceSkuData NetworkDeviceSkuData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkDeviceSkuProperties properties = null)
-        {
-            return new NetworkDeviceSkuData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkDeviceSkuProperties"/>. </summary>
         /// <param name="model"> Model of the network device. </param>
         /// <param name="manufacturer"> Manufacturer of the network device. </param>
         /// <param name="supportedVersions"> List of supported version details of network device. </param>
         /// <param name="supportedRoleTypes"> Available roles for the network device. </param>
         /// <param name="interfaces"> List of network device interfaces. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.NetworkDeviceSkuProperties"/> instance for mocking. </returns>
-        public static NetworkDeviceSkuProperties NetworkDeviceSkuProperties(string model = null, string manufacturer = null, IEnumerable<SupportedVersionProperties> supportedVersions = null, IEnumerable<NetworkDeviceRoleName> supportedRoleTypes = null, IEnumerable<NetworkDeviceInterfaceProperties> interfaces = null, NetworkFabricProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceSkuData"/> instance for mocking. </returns>
+        public static NetworkDeviceSkuData NetworkDeviceSkuData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string model = null, string manufacturer = null, IEnumerable<SupportedVersionProperties> supportedVersions = null, IEnumerable<NetworkDeviceRoleName> supportedRoleTypes = null, IEnumerable<NetworkDeviceInterfaceProperties> interfaces = null, NetworkFabricProvisioningState? provisioningState = null)
         {
             supportedVersions ??= new List<SupportedVersionProperties>();
             supportedRoleTypes ??= new List<NetworkDeviceRoleName>();
             interfaces ??= new List<NetworkDeviceInterfaceProperties>();
 
-            return new NetworkDeviceSkuProperties(
+            return new NetworkDeviceSkuData(
+                id,
+                name,
+                resourceType,
+                systemData,
                 model,
                 manufacturer,
                 supportedVersions?.ToList(),
@@ -526,24 +517,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> The NetworkDevice properties. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceData"/> instance for mocking. </returns>
-        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkDeviceProperties properties = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new NetworkDeviceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkDeviceProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="hostName"> The host name of the device. </param>
         /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
@@ -558,10 +531,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <returns> A new <see cref="Models.NetworkDeviceProperties"/> instance for mocking. </returns>
-        public static NetworkDeviceProperties NetworkDeviceProperties(string annotation = null, string hostName = null, string serialNumber = null, string version = null, string networkDeviceSku = null, NetworkDeviceRole? networkDeviceRole = null, string networkRackId = null, string managementIPv4Address = null, string managementIPv6Address = null, string rwDeviceConfig = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceData"/> instance for mocking. </returns>
+        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, string hostName = null, string serialNumber = null, string version = null, string networkDeviceSku = null, NetworkDeviceRole? networkDeviceRole = null, ResourceIdentifier networkRackId = null, IPAddress managementIPv4Address = null, string managementIPv6Address = null, string rwDeviceConfig = null, string lastOperationDetails = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
-            return new NetworkDeviceProperties(
+            tags ??= new Dictionary<string, string>();
+
+            return new NetworkDeviceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
                 annotation,
                 hostName,
                 serialNumber,
@@ -1602,20 +1583,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The NetworkInterface properties. </param>
-        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/> instance for mocking. </returns>
-        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkInterfaceProperties properties = null)
-        {
-            return new NetworkDeviceInterfaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkInterfaceProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="physicalIdentifier"> Physical Identifier of the network interface. </param>
         /// <param name="connectedTo"> The ARM resource id of the interface or compute server its connected to. </param>
@@ -1627,10 +1594,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <returns> A new <see cref="Models.NetworkInterfaceProperties"/> instance for mocking. </returns>
-        public static NetworkInterfaceProperties NetworkInterfaceProperties(string annotation = null, string physicalIdentifier = null, string connectedTo = null, NetworkDeviceInterfaceType? interfaceType = null, string ipv4Address = null, string ipv6Address = null, string description = null, string additionalDescription = null, string lastOperationDetails = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/> instance for mocking. </returns>
+        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string annotation = null, string physicalIdentifier = null, string connectedTo = null, NetworkDeviceInterfaceType? interfaceType = null, IPAddress ipv4Address = null, string ipv6Address = null, string description = null, string additionalDescription = null, string lastOperationDetails = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
-            return new NetworkInterfaceProperties(
+            return new NetworkDeviceInterfaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
                 annotation,
                 physicalIdentifier,
                 connectedTo,
@@ -1940,6 +1911,52 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static ExternalNetworkOptionAProperties ExternalNetworkOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId)
         {
             return ExternalNetworkOptionAProperties(primaryIPv4Prefix: primaryIPv4Prefix, primaryIPv6Prefix: primaryIPv6Prefix, secondaryIPv4Prefix: secondaryIPv4Prefix, secondaryIPv6Prefix: secondaryIPv6Prefix, mtu: mtu, vlanId: vlanId, fabricAsn: fabricAsn, peerAsn: peerAsn, bfdConfiguration: bfdConfiguration, ingressAclId: ingressAclId, bmpConfigurationState: default, egressAclId: egressAclId, v4OverV6BgpSession: default, v6OverV4BgpSession: default, nativeIPv4PrefixLimits: default, nativeIPv6PrefixLimits: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="hostName"> The host name of the device. </param>
+        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
+        /// <param name="version"> Current version of the device as defined in SKU. </param>
+        /// <param name="networkDeviceSku"> Network Device SKU name. </param>
+        /// <param name="networkDeviceRole"> NetworkDeviceRole is the device role: Example: CE | ToR. </param>
+        /// <param name="networkRackId"> Reference to network rack resource id. </param>
+        /// <param name="managementIPv4Address"> Management IPv4 Address. </param>
+        /// <param name="managementIPv6Address"> Management IPv6 Address. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, ResourceIdentifier networkRackId, IPAddress managementIPv4Address, string managementIPv6Address, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkDeviceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, hostName: hostName, serialNumber: serialNumber, version: version, networkDeviceSku: networkDeviceSku, networkDeviceRole: networkDeviceRole, networkRackId: networkRackId, managementIPv4Address: managementIPv4Address, managementIPv6Address: managementIPv6Address, rwDeviceConfig: default, lastOperationDetails: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="physicalIdentifier"> Physical Identifier of the network interface. </param>
+        /// <param name="connectedTo"> The ARM resource id of the interface or compute server its connected to. </param>
+        /// <param name="interfaceType"> The Interface Type. Example: Management/Data. </param>
+        /// <param name="ipv4Address"> IPv4Address of the interface. </param>
+        /// <param name="ipv6Address"> IPv6Address of the interface. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress ipv4Address, string ipv6Address, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkDeviceInterfaceData(id: id, name: name, resourceType: resourceType, systemData: systemData, annotation: annotation, physicalIdentifier: physicalIdentifier, connectedTo: connectedTo, interfaceType: interfaceType, ipv4Address: ipv4Address, ipv6Address: ipv6Address, description: default, additionalDescription: default, lastOperationDetails: default, provisioningState: provisioningState, administrativeState: administrativeState);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration" />. </summary>

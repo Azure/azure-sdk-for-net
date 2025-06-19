@@ -52,13 +52,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuData"/>. </summary>
-        /// <param name="properties"> The NetworkDeviceSku properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public NetworkDeviceSkuData(NetworkDeviceSkuProperties properties)
+        /// <param name="model"> Model of the network device. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
+        public NetworkDeviceSkuData(string model)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(model, nameof(model));
 
-            Properties = properties;
+            Model = model;
+            SupportedVersions = new ChangeTrackingList<SupportedVersionProperties>();
+            SupportedRoleTypes = new ChangeTrackingList<NetworkDeviceRoleName>();
+            Interfaces = new ChangeTrackingList<NetworkDeviceInterfaceProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuData"/>. </summary>
@@ -66,11 +69,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The NetworkDeviceSku properties. </param>
+        /// <param name="model"> Model of the network device. </param>
+        /// <param name="manufacturer"> Manufacturer of the network device. </param>
+        /// <param name="supportedVersions"> List of supported version details of network device. </param>
+        /// <param name="supportedRoleTypes"> Available roles for the network device. </param>
+        /// <param name="interfaces"> List of network device interfaces. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkDeviceSkuProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkDeviceSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string model, string manufacturer, IList<SupportedVersionProperties> supportedVersions, IList<NetworkDeviceRoleName> supportedRoleTypes, IList<NetworkDeviceInterfaceProperties> interfaces, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            Model = model;
+            Manufacturer = manufacturer;
+            SupportedVersions = supportedVersions;
+            SupportedRoleTypes = supportedRoleTypes;
+            Interfaces = interfaces;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -79,7 +92,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> The NetworkDeviceSku properties. </summary>
-        public NetworkDeviceSkuProperties Properties { get; set; }
+        /// <summary> Model of the network device. </summary>
+        public string Model { get; set; }
+        /// <summary> Manufacturer of the network device. </summary>
+        public string Manufacturer { get; set; }
+        /// <summary> List of supported version details of network device. </summary>
+        public IList<SupportedVersionProperties> SupportedVersions { get; }
+        /// <summary> Available roles for the network device. </summary>
+        public IList<NetworkDeviceRoleName> SupportedRoleTypes { get; }
+        /// <summary> List of network device interfaces. </summary>
+        public IList<NetworkDeviceInterfaceProperties> Interfaces { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
     }
 }

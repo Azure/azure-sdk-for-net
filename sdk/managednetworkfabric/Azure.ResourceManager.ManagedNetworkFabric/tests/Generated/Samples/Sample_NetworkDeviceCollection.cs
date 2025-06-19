@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -41,13 +40,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string networkDeviceName = "example-device";
-            NetworkDeviceData data = new NetworkDeviceData(new AzureLocation("eastuseuap"), new NetworkDeviceProperties("Vendor;DCS-7280XXX-24;12.05;JPE2111XXXX")
+            NetworkDeviceData data = new NetworkDeviceData(new AzureLocation("eastuseuap"), "Vendor;DCS-7280XXX-24;12.05;JPE2111XXXX")
             {
                 Annotation = "annotation",
                 HostName = "NFA-Device",
                 NetworkDeviceSku = "DeviceSku",
-            })
-            {
                 Tags =
 {
 ["KeyId"] = "KeyValue"

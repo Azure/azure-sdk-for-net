@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
@@ -41,12 +40,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string networkInterfaceName = "example-interface";
-            NetworkDeviceInterfaceData data = new NetworkDeviceInterfaceData(new NetworkInterfaceProperties
+            NetworkDeviceInterfaceData data = new NetworkDeviceInterfaceData
             {
                 Annotation = "annotation",
                 Description = "device 1",
                 AdditionalDescription = "device 1",
-            });
+            };
             ArmOperation<NetworkDeviceInterfaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkInterfaceName, data);
             NetworkDeviceInterfaceResource result = lro.Value;
 

@@ -101,8 +101,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 },
                 Properties = new NetworkFabricControllerPatchProperties
                 {
-                    InfrastructureExpressRouteConnections = { new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"), "xxx-xxx-xxx") },
-                    WorkloadExpressRouteConnections = { new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"), "xxx-xxx-xxx") },
+                    InfrastructureExpressRouteConnections = {new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"))
+{
+ExpressRouteAuthorizationKey = "xxx-xxx-xxx",
+}},
+                    WorkloadExpressRouteConnections = {new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"))
+{
+ExpressRouteAuthorizationKey = "xxx-xxx-xxx",
+}},
                 },
             };
             ArmOperation<NetworkFabricControllerResource> lro = await networkFabricController.UpdateAsync(WaitUntil.Completed, patch);
