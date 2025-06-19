@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual("72f988af-86f1-41af-91ab-2d7cd011db47", data.ManagedIdentity.TenantId.ToString());
 
             data.Identity.SystemAssignedServiceIdentityType = SystemAssignedServiceIdentityType.None;
-            string expectedNone = "{\"identity\":{\"type\":\"None\",\"principalId\":\"22fdaec1-8b9f-49dc-bd72-ddaf8f215577\",\"tenantId\":\"72f988af-86f1-41af-91ab-2d7cd011db47\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
+            string expectedNone = "{\"identity\":{\"type\":\"None\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
             JsonAsserts.AssertSerialization(expectedNone, data);
         }
 
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual("72f988af-86f1-41af-91ab-2d7cd011db47", data.Identity.TenantId.ToString());
 
             data.ManagedIdentity.ManagedServiceIdentityType = ManagedServiceIdentityType.None;
-            string expectedNone = "{\"identity\":{\"type\":\"None\",\"principalId\":\"22fdaec1-8b9f-49dc-bd72-ddaf8f215577\",\"tenantId\":\"72f988af-86f1-41af-91ab-2d7cd011db47\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
+            string expectedNone = "{\"identity\":{\"type\":\"None\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
             JsonAsserts.AssertSerialization(expectedNone, data);
         }
     }
