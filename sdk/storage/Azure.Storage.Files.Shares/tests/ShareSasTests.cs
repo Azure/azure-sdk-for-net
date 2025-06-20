@@ -3,16 +3,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Files.Shares.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
-using Azure.Storage.Test.Shared;
-using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Files.Shares.Specialized;
+using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
+using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
@@ -989,6 +993,106 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Assert.IsNotNull(stringToSign);
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task ShareClient_UserDelegationSas_DelegatedObjectId()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
+                startsOn: Recording.UtcNow.AddHours(-1),
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            // We need to get the object ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(
+                permissions: ShareSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                ShareName = share.Name,
+                DelegatedUserObjectId = objectId?.ToString()
+            };
+
+            ShareSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(userDelegationKeyResponse.Value, service.AccountName);
+
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(share.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            Uri sasUri = shareUriBuilder.ToUri();
+
+            ShareClientOptions options = GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            ShareClient sasShare = InstrumentClient(new ShareClient(sasUri, TestEnvironment.Credential, options));
+
+            // Act
+            await sasShare.CreateDirectoryAsync(GetNewDirectoryName());
+        }
+
+        [RecordedTest]
+        [LiveOnly] // Cannot record Entra ID token
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task ShareClient_UserDelegationSas_DelegatedObjectId_Fail()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
+                startsOn: Recording.UtcNow.AddHours(-1),
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            // We need to get the object ID from the token credential used to authenticate the request
+            TokenCredential tokenCredential = TestEnvironment.Credential;
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Scopes),
+                CancellationToken.None);
+
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.Token);
+            jwtSecurityToken.Payload.TryGetValue(Constants.Sas.ObjectId, out object objectId);
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(
+                permissions: ShareSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                ShareName = share.Name,
+                DelegatedUserObjectId = objectId?.ToString()
+            };
+
+            ShareSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(userDelegationKeyResponse.Value, service.AccountName);
+
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(share.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            Uri sasUri = shareUriBuilder.ToUri();
+
+            ShareClientOptions options = GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+
+            // We are deliberately not using the token credential to cause an auth failure
+            ShareClient sasShare = InstrumentClient(new ShareClient(sasUri, options));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                sasShare.CreateDirectoryAsync(GetNewDirectoryName()),
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
     }
 }
