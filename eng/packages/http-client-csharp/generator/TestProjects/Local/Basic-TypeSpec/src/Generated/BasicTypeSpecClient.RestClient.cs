@@ -284,7 +284,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateListWithNextLinkRequest(RequestContext context)
+        internal HttpMessage CreateGetWithNextLinkRequest(RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -297,7 +297,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateNextListWithNextLinkRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateNextGetWithNextLinkRequest(Uri nextPage, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -309,7 +309,57 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateListWithContinuationTokenRequest(string token, RequestContext context)
+        internal HttpMessage CreateGetWithStringNextLinkRequest(RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkString", false);
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetWithStringNextLinkRequest(Uri nextPage, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetWithHeaderNextLinkRequest(RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkHeader", false);
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetWithHeaderNextLinkRequest(Uri nextPage, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetWithContinuationTokenRequest(string token, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -326,7 +376,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateListWithContinuationTokenHeaderResponseRequest(string token, RequestContext context)
+        internal HttpMessage CreateGetWithContinuationTokenHeaderResponseRequest(string token, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -343,7 +393,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateListWithPagingRequest(RequestContext context)
+        internal HttpMessage CreateGetWithPagingRequest(RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

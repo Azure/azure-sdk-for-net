@@ -1,5 +1,4 @@
 ﻿{
-  "identity": {
     "principalId": "22fddec1-8b9f-49dc-bd72-ddaf8f215577",
     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
     "type": "Test",
@@ -9,5 +8,4 @@
             "principalId": "77563a98-c9d9-4f7b-a7af-592d21fa2153"
         }
     }
-  }
 }

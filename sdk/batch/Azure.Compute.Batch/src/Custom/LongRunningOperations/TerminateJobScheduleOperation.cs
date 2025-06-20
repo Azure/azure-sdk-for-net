@@ -29,9 +29,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         private bool? _value;
         private Response _rawResponse;
-        private DateTimeOffset _creationTime;
         private string _jobScheduleId;
-        private bool firstGet = true;
 
         /// <summary>
         /// Initializes a new <see cref="TerminateJobScheduleOperation"/> instance
@@ -173,19 +171,6 @@ namespace Azure.Compute.Batch
             if (response != null)
             {
                 _rawResponse = response.GetRawResponse();
-
-                // we are going to save the first get responses creation time assuming
-                // this first get returns the current object
-                if (firstGet)
-                {
-                    _creationTime = (DateTimeOffset)response.Value.CreationTime;
-                    firstGet = false;
-                } // need to handle the case where we get back the response from a new object.
-                else if (response.Value.CreationTime != _creationTime)
-                {
-                    _value = true;
-                    _hasCompleted = true;
-                }
 
                 if (response.Value.State != BatchJobScheduleState.Terminating)
                 {

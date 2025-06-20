@@ -59,7 +59,7 @@ namespace Azure.Health.Deidentification
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextListJobsInternalRequest(nextLink, _maxpagesize, _continuationToken, _context) : _client.CreateListJobsInternalRequest(_maxpagesize, _continuationToken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetJobsInternalRequest(nextLink, _maxpagesize, _continuationToken, _context) : _client.CreateGetJobsInternalRequest(_maxpagesize, _continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeidentificationClient.GetJobsInternal");
             scope.Start();
             try
