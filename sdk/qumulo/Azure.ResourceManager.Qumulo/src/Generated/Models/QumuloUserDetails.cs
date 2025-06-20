@@ -46,8 +46,13 @@ namespace Azure.ResourceManager.Qumulo.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="QumuloUserDetails"/>. </summary>
-        public QumuloUserDetails()
+        /// <param name="email"> User Email. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
+        public QumuloUserDetails(string email)
         {
+            Argument.AssertNotNull(email, nameof(email));
+
+            Email = email;
         }
 
         /// <summary> Initializes a new instance of <see cref="QumuloUserDetails"/>. </summary>
@@ -57,6 +62,11 @@ namespace Azure.ResourceManager.Qumulo.Models
         {
             Email = email;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QumuloUserDetails"/> for deserialization. </summary>
+        internal QumuloUserDetails()
+        {
         }
 
         /// <summary> User Email. </summary>

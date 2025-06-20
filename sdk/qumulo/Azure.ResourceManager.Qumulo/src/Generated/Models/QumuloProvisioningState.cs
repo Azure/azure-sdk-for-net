@@ -5,28 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> Provisioning State of the File system resource. </summary>
-    public enum QumuloProvisioningState
+    public readonly partial struct QumuloProvisioningState : IEquatable<QumuloProvisioningState>
     {
-        /// <summary> File system resource state is unknown. </summary>
-        NotSpecified,
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="QumuloProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public QumuloProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string AcceptedValue = "Accepted";
+        private const string CreatingValue = "Creating";
+        private const string UpdatingValue = "Updating";
+        private const string DeletingValue = "Deleting";
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
+        private const string DeletedValue = "Deleted";
+
         /// <summary> File system resource creation request accepted. </summary>
-        Accepted,
+        public static QumuloProvisioningState Accepted { get; } = new QumuloProvisioningState(AcceptedValue);
         /// <summary> File system resource creation started. </summary>
-        Creating,
+        public static QumuloProvisioningState Creating { get; } = new QumuloProvisioningState(CreatingValue);
         /// <summary> File system resource is being updated. </summary>
-        Updating,
+        public static QumuloProvisioningState Updating { get; } = new QumuloProvisioningState(UpdatingValue);
         /// <summary> File system resource deletion started. </summary>
-        Deleting,
+        public static QumuloProvisioningState Deleting { get; } = new QumuloProvisioningState(DeletingValue);
         /// <summary> File system resource creation successful. </summary>
-        Succeeded,
+        public static QumuloProvisioningState Succeeded { get; } = new QumuloProvisioningState(SucceededValue);
         /// <summary> File system resource creation failed. </summary>
-        Failed,
+        public static QumuloProvisioningState Failed { get; } = new QumuloProvisioningState(FailedValue);
         /// <summary> File system resource creation canceled. </summary>
-        Canceled,
+        public static QumuloProvisioningState Canceled { get; } = new QumuloProvisioningState(CanceledValue);
         /// <summary> File system resource is deleted. </summary>
-        Deleted
+        public static QumuloProvisioningState Deleted { get; } = new QumuloProvisioningState(DeletedValue);
+        /// <summary> Determines if two <see cref="QumuloProvisioningState"/> values are the same. </summary>
+        public static bool operator ==(QumuloProvisioningState left, QumuloProvisioningState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="QumuloProvisioningState"/> values are not the same. </summary>
+        public static bool operator !=(QumuloProvisioningState left, QumuloProvisioningState right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QumuloProvisioningState"/>. </summary>
+        public static implicit operator QumuloProvisioningState(string value) => new QumuloProvisioningState(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is QumuloProvisioningState other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(QumuloProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }
