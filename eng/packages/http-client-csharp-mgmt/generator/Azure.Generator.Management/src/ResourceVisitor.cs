@@ -36,11 +36,11 @@ namespace Azure.Generator.Management
             if (type is ModelProvider && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
             {
                 type.Update(relativeFilePath: TransformRelativeFilePath(type));
-                type.Type.Update(TransformName(type));
+                type.Update(name: TransformName(type));
                 foreach (var serialization in type.SerializationProviders)
                 {
                     serialization.Update(relativeFilePath: TransformRelativeFilePathForSerialization(serialization));
-                    serialization.Type.Update(TransformName(serialization));
+                    serialization.Update(name: TransformName(serialization));
                 }
             }
         }
