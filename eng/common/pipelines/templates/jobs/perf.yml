@@ -112,7 +112,7 @@ jobs:
   - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
     parameters:
       AgentImage: $(OSVmImage)
-
+      
   - ${{ parameters.InstallLanguageSteps }}
 
   - template: /eng/common/TestResources/deploy-test-resources.yml
