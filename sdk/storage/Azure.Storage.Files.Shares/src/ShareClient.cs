@@ -4363,10 +4363,9 @@ namespace Azure.Storage.Files.Shares
 
         private void SetBuilderAndValidate(ShareSasBuilder builder)
         {
-            // Assign builder's ShareName if it is null.
+            // Assign builder's ShareName and Path, if they are null.
             builder.ShareName ??= Name;
 
-            // Validate that builder is properly set
             if (!builder.ShareName.Equals(Name, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(
@@ -4377,9 +4376,9 @@ namespace Azure.Storage.Files.Shares
             if (!string.IsNullOrEmpty(builder.FilePath))
             {
                 throw Errors.SasBuilderEmptyParam(
-                nameof(builder),
+                    nameof(builder),
                     nameof(builder.FilePath),
-                    nameof(Constants.Blob.Container.Name));
+                    nameof(Constants.File.Share.Name));
             }
         }
         #endregion
