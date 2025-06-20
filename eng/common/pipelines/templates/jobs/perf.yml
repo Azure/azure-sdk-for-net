@@ -7,7 +7,7 @@ parameters:
   default: '360'
 - name: LinuxPool
   type: string
-  default: 'azsdk-pool'
+  default: 'azsdk-pool-mms-ubuntu-2204-perf'
 - name: LinuxVmImage
   type: string
   default: 'ubuntu-22.04'
