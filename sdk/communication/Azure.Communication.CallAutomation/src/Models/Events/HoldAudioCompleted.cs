@@ -18,18 +18,18 @@ namespace Azure.Communication.CallAutomation
         public MediaEventReasonCode ReasonCode { get; internal set; }
 
         /// <summary> Initializes a new instance of <see cref="HoldAudioCompleted"/>. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        internal HoldAudioCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        internal HoldAudioCompleted(string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId)
         {
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
-            OperationContext = operationContext;
-            ResultInformation = resultInformation;
             ReasonCode = new MediaEventReasonCode(resultInformation.SubCode.ToString());
         }
 

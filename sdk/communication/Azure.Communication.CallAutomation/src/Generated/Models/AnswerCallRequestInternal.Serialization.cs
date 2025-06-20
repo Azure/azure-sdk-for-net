@@ -39,15 +39,15 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("answeredBy"u8);
                 writer.WriteObjectValue(AnsweredBy);
             }
-            if (Optional.IsDefined(MediaStreamingOptions))
+            if (Optional.IsDefined(TranscriptionConfiguration))
             {
-                writer.WritePropertyName("mediaStreamingOptions"u8);
-                writer.WriteObjectValue(MediaStreamingOptions);
+                writer.WritePropertyName("transcriptionConfiguration"u8);
+                writer.WriteObjectValue(TranscriptionConfiguration);
             }
-            if (Optional.IsDefined(TranscriptionOptions))
+            if (Optional.IsDefined(MediaStreamingConfiguration))
             {
-                writer.WritePropertyName("transcriptionOptions"u8);
-                writer.WriteObjectValue(TranscriptionOptions);
+                writer.WritePropertyName("mediaStreamingConfiguration"u8);
+                writer.WriteObjectValue(MediaStreamingConfiguration);
             }
             writer.WriteEndObject();
         }

@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.VisualBasic;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -172,10 +173,6 @@ namespace Azure.Communication.CallAutomation
             {
                 options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsUserIdentifier);
             }
-            else if (targetParticipant is MicrosoftTeamsAppIdentifier)
-            {
-                options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsAppIdentifier);
-            }
             else
             {
                 throw new ArgumentException("targetParticipant type is invalid.", nameof(targetParticipant));
@@ -284,12 +281,10 @@ namespace Azure.Communication.CallAutomation
             {
                 CustomCallingContext = new CustomCallingContextInternal(
                 options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CustomCallingContext?.TeamsPhoneCallDetails)),
+                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>()),
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
                 Transferee = options.Transferee == default ? null : CommunicationIdentifierSerializer.Serialize(options.Transferee),
                 OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
-                SourceCallerIdNumber = options.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerIdNumber.PhoneNumber)
             };
 
             return request;
@@ -388,8 +383,8 @@ namespace Azure.Communication.CallAutomation
             {
                 CustomCallingContext = new CustomCallingContextInternal(
                     options.ParticipantToAdd.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                    options.ParticipantToAdd.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                    CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.ParticipantToAdd.CustomCallingContext?.TeamsPhoneCallDetails)),
+                    options.ParticipantToAdd.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>()
+                    ),
                 SourceCallerIdNumber = options.ParticipantToAdd.SourceCallerIdNumber == null
                     ? null
                     : new PhoneNumberIdentifierModel(options.ParticipantToAdd.SourceCallerIdNumber.PhoneNumber),
@@ -832,51 +827,6 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Unmute participant from the call.
-        /// Only Acs Users are currently supported.
-        /// </summary>
-        /// <param name="targetParticipant">Participant to unmute.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns></returns>
-        public virtual Response<UnmuteParticipantResult> UnmuteParticipant(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
-        {
-            var options = new UnmuteParticipantOptions(targetParticipant);
-
-            return UnmuteParticipant(options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Unmute participants from the call.
-        /// Only Acs Users are currently supported.
-        /// </summary>
-        /// <param name="options">Options for the UnmuteParticipant operation.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="options"/> OperationContext is too long. </exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns></returns>
-        public virtual Response<UnmuteParticipantResult> UnmuteParticipant(UnmuteParticipantOptions options, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipant)}");
-            scope.Start();
-            try
-            {
-                UnmuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) });
-
-                request.OperationContext = options.OperationContext;
-
-                return RestClient.Unmute(CallConnectionId, request, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Mute participants on the call.
         /// Only Acs Users are currently supported.
         /// </summary>
@@ -915,50 +865,6 @@ namespace Azure.Communication.CallAutomation
                 request.OperationContext = options.OperationContext;
 
                 return await RestClient.MuteAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Unmute participants on the call.
-        /// Only Acs Users are currently supported.
-        /// </summary>
-        /// <param name="targetParticipant">Participant to unmute.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns></returns>
-        public async virtual Task<Response<UnmuteParticipantResult>> UnmuteParticipantAsync(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
-        {
-            var options = new UnmuteParticipantOptions(targetParticipant);
-
-            return await UnmuteParticipantAsync(options, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Unmute participants from the call.
-        /// Only Acs Users are currently supported.
-        /// </summary>
-        /// <param name="options">Options for the UnmuteParticipant operation.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="options"/> OperationContext is too long. </exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns></returns>
-        public async virtual Task<Response<UnmuteParticipantResult>> UnmuteParticipantAsync(UnmuteParticipantOptions options, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipant)}");
-            scope.Start();
-            try
-            {
-                UnmuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) });
-
-                request.OperationContext = options.OperationContext;
-
-                return await RestClient.UnmuteAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

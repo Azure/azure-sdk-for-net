@@ -16,21 +16,22 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                                         "\"operationContext\": \"someOperationContext\"" +
                                         "}";
 
-        private const string AddParticipantPayload = "{\"participant\":{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},\"operationContext\":\"someOperationContext\"}";
+        private const string AddParticipantPayload = "{\"participant\":{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false,\"isOnHold\":false},\"operationContext\":\"someOperationContext\"}";
 
-        private const string MoveParticipantsPayload = "{\"participants\":[{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false}],\"operationContext\":\"someOperationContext\"}";
+        private const string MoveParticipantsPayload = "{\"participants\":[{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false,\"isOnHold\":false}],\"operationContext\":\"someOperationContext\"}";
 
         private const string GetParticipantPayload = "{" +
             "\"identifier\":{" +
             "\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}" +
             "}," +
-            "\"isMuted\":false" +
+            "\"isMuted\":false," +
+            "\"isOnHold\":false" +
             "}";
 
         private const string GetParticipantsPayload = "{" +
             "\"value\":[" +
-               "{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false}," +
-               "{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true}" +
+               "{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false,\"isOnHold\":false}," +
+               "{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true ,\"isOnHold\":true}" +
                "]" +
             "}";
 
@@ -134,16 +135,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             verifyOperationContext(response);
         }
 
-        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget))]
-        public async Task TransferCallToParticipantAsync_simpleMethod_MicrosoftTeamsAppAsTarget_202Accepted(CallInvite callInvite)
-        {
-            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
-
-            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            verifyOperationContext(response);
-        }
-
         [TestCaseSource(nameof(TestData_TransferCallToParticipant_PhoneNumberIdentifier))]
         public async Task TransferCallToParticipantAsync_simpleMethod_PhoneNumberIdentifier_202Accepted(CallInvite callInvite)
         {
@@ -161,6 +152,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
+
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
         public async Task TransferCallToParticipantAsync_202Accepted(CallInvite callInvite)
         {
@@ -215,15 +207,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             verifyOperationContext(response);
         }
 
-        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget_TeamsCallContext))]
-        public async Task TransferCallToParticipantAsync_simpleMethod_MicrosoftTeamsAppAsTarget_WithTeamsCallDetails_202Accepted(CallInvite callInvite)
-        {
-            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
-
-            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            verifyOperationContext(response);
-        }
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
         public void TransferCallToParticipantAsync_404NotFound(CallInvite callInvite)
         {
@@ -443,15 +426,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
-        public void UnmuteParticipant_200Accepted(CommunicationIdentifier participant)
-        {
-            var callConnection = CreateMockCallConnection(200, OperationContextPayload);
-
-            var response = callConnection.UnmuteParticipant(participant);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
-        }
-
-        [TestCaseSource(nameof(TestData_MuteParticipant))]
         public void MuteParticipant_WithOptions_200Ok(CommunicationIdentifier participant)
         {
             var callConnection = CreateMockCallConnection(200, OperationContextPayload);
@@ -460,20 +434,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 OperationContext = OperationContext
             };
             var response = callConnection.MuteParticipant(options);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
-            Assert.AreEqual(OperationContext, response.Value.OperationContext);
-        }
-
-        [TestCaseSource(nameof(TestData_MuteParticipant))]
-        public void UnmuteParticipant_WithOptions_200Accepted(CommunicationIdentifier participant)
-        {
-            var callConnection = CreateMockCallConnection(200, OperationContextPayload);
-            var options = new UnmuteParticipantOptions(participant)
-            {
-                OperationContext = OperationContext
-            };
-
-            var response = callConnection.UnmuteParticipant(options);
             Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
             Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
@@ -493,23 +453,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(400);
             var participant = new PhoneNumberIdentifier("+15559501234");
             Assert.ThrowsAsync(typeof(RequestFailedException), async () => await callConnection.MuteParticipantAsync(participant));
-        }
-
-        [TestCaseSource(nameof(TestData_MuteParticipant))]
-        public async Task UnmuteParticipantAsync_200Accepted(CommunicationIdentifier participant)
-        {
-            var callConnection = CreateMockCallConnection(200, OperationContextPayload);
-
-            var response = await callConnection.UnmuteParticipantAsync(participant);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
-        }
-
-        [Test]
-        public void UnmuteParticipantAsync_NotAcsUser_400BadRequest()
-        {
-            var callConnection = CreateMockCallConnection(400);
-            var participant = new PhoneNumberIdentifier("+15559501234");
-            Assert.ThrowsAsync(typeof(RequestFailedException), async () => await callConnection.UnmuteParticipantAsync(participant));
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
@@ -536,32 +479,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             };
 
             Assert.ThrowsAsync(typeof(RequestFailedException), async () => await callConnection.MuteParticipantAsync(options));
-        }
-
-        [TestCaseSource(nameof(TestData_MuteParticipant))]
-        public async Task UnmuteParticipantAsync_WithOptions_200Accepted(CommunicationIdentifier participant)
-        {
-            var callConnection = CreateMockCallConnection(200, OperationContextPayload);
-            var options = new UnmuteParticipantOptions(participant)
-            {
-                OperationContext = OperationContext,
-            };
-
-            var response = await callConnection.UnmuteParticipantAsync(options);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
-            Assert.AreEqual(OperationContext, response.Value.OperationContext);
-        }
-
-        [TestCaseSource(nameof(TestData_MuteParticipant))]
-        public void UnmuteParticipantAsync_WithOptions_MoreThanOneParticipant_400BadRequest(CommunicationIdentifier participant)
-        {
-            var callConnection = CreateMockCallConnection(400);
-            var options = new UnmuteParticipantOptions(participant)
-            {
-                OperationContext = OperationContext,
-            };
-
-            Assert.ThrowsAsync(typeof(RequestFailedException), async () => await callConnection.UnmuteParticipantAsync(options));
         }
 
         [Test]
@@ -757,82 +674,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             };
         }
 
-        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget()
-        {
-            var callInvite = new CallInvite(new MicrosoftTeamsAppIdentifier("userId"));
-            callInvite.CustomCallingContext.AddVoip("key1", "value1");
-            return new[]
-            {
-                new object?[]
-                {
-                    callInvite
-                },
-            };
-        }
-
-        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_MicrosoftTeamsAppTarget_TeamsCallContext()
-        {
-            var callInvite = new CallInvite(new MicrosoftTeamsAppIdentifier("teamsAppId123"));
-            callInvite.CustomCallingContext.AddVoip("teamsKey", "teamsValue");
-
-            // Create TeamsPhoneCallerDetails
-            var teamsPhoneCallerDetails = new TeamsPhoneCallerDetails((new MicrosoftTeamsAppIdentifier("teamsAppId123")), name: "John Doe", phoneNumber: "+14255551234");
-            teamsPhoneCallerDetails.AdditionalCallerInformation.Add("Department", "Sales");
-            teamsPhoneCallerDetails.AdditionalCallerInformation.Add("Priority", "High");
-
-            // Create TeamsPhoneSourceDetails
-            var teamsPhoneSourceDetails = new TeamsPhoneSourceDetails((new MicrosoftTeamsAppIdentifier("teamsAppId123")), language: "en-US", status: "Active");
-
-            // Create TeamsPhoneCallDetails
-            var teamsPhoneCallDetails = new TeamsPhoneCallDetails()
-            {
-                TeamsPhoneCallerDetails = teamsPhoneCallerDetails,
-                TeamsPhoneSourceDetails = teamsPhoneSourceDetails,
-                SessionId = "session-123-abc",
-                Intent = "Sales Inquiry",
-                CallTopic = "New Product Information",
-                CallContext = "Customer is interested in our latest product line",
-                TranscriptUrl = "https://transcripts.example.com/call/123",
-                CallSentiment = "Positive",
-                SuggestedActions = "Offer product demo, Schedule follow-up"
-            };
-
-            callInvite.CustomCallingContext.SetTeamsPhoneCallDetails(teamsPhoneCallDetails);
-
-            return new[]
-            {
-                new object?[]
-                {
-                    callInvite
-                },
-            };
-        }
-
-        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_PhoneNumberIdentifier_MS()
-        {
-            var callInvite = new CallInvite(new PhoneNumberIdentifier(PhoneNumber), new PhoneNumberIdentifier("+17654321"));
-            callInvite.CustomCallingContext.AddSipX("key1", "value1", CustomCallingContext.SipHeaderPrefix.XMSCustom);
-            return new[]
-            {
-                new object?[]
-                {
-                    callInvite
-                },
-            };
-        }
-        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_PhoneNumberIdentifier()
-        {
-            var callInvite = new CallInvite(new PhoneNumberIdentifier(PhoneNumber), new PhoneNumberIdentifier("+17654321"));
-            callInvite.CustomCallingContext.AddSipX("key1", "value1", CustomCallingContext.SipHeaderPrefix.X);
-            return new[]
-            {
-                new object?[]
-                {
-                    callInvite
-                },
-            };
-        }
-
         private static IEnumerable<object?[]> TestData_GetParticipant()
         {
             return new[]
@@ -866,6 +707,31 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             };
         }
 
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_PhoneNumberIdentifier_MS()
+        {
+            var callInvite = new CallInvite(new PhoneNumberIdentifier(PhoneNumber), new PhoneNumberIdentifier("+17654321"));
+            callInvite.CustomCallingContext.AddSipX("key1", "value1", CustomCallingContext.SipHeaderPrefix.XMSCustom);
+            return new[]
+            {
+                new object?[]
+                {
+                    callInvite
+                },
+            };
+        }
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_PhoneNumberIdentifier()
+        {
+            var callInvite = new CallInvite(new PhoneNumberIdentifier(PhoneNumber), new PhoneNumberIdentifier("+17654321"));
+            callInvite.CustomCallingContext.AddSipX("key1", "value1", CustomCallingContext.SipHeaderPrefix.X);
+            return new[]
+            {
+                new object?[]
+                {
+                    callInvite
+                },
+            };
+        }
+
         private static IEnumerable<object?[]> TestData_MoveParticipants()
         {
             return new[]
@@ -888,6 +754,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var identifier = (CommunicationUserIdentifier) result.Participant.Identifier;
             Assert.AreEqual(ParticipantUserId, identifier.Id);
             Assert.IsFalse(result.Participant.IsMuted);
+            Assert.IsFalse(result.Participant.IsOnHold);
             Assert.AreEqual(OperationContext, result.OperationContext);
         }
 
@@ -896,6 +763,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var identifier = (CommunicationUserIdentifier)participant.Identifier;
             Assert.AreEqual(ParticipantUserId, identifier.Id);
             Assert.IsFalse(participant.IsMuted);
+            Assert.IsFalse(participant.IsOnHold);
         }
 
         private void verifyGetParticipantsResult(IReadOnlyList<CallParticipant> participants)
@@ -907,6 +775,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var identifier2 = (PhoneNumberIdentifier)participants[1].Identifier;
             Assert.AreEqual(PhoneNumber, identifier2.PhoneNumber);
             Assert.IsTrue(participants[1].IsMuted);
+            Assert.IsTrue(participants[1].IsOnHold);
         }
 
         private void verifyMoveParticipantsResult(MoveParticipantsResult result)
