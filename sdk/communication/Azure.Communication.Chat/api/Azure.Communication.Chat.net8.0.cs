@@ -152,7 +152,10 @@ namespace Azure.Communication.Chat
     }
     public abstract partial class ChatRetentionPolicy
     {
-        protected ChatRetentionPolicy() { }
+        protected ChatRetentionPolicy(Azure.Communication.Chat.RetentionPolicyKind kind) { }
+        public Azure.Communication.Chat.RetentionPolicyKind Kind { get { throw null; } }
+        public static Azure.Communication.Chat.ChatRetentionPolicy None() { throw null; }
+        public static Azure.Communication.Chat.ChatRetentionPolicy ThreadCreationDate(int deleteThreadAfterDays) { throw null; }
     }
     public abstract partial class ChatRetentionPolicyInternal
     {
@@ -234,10 +237,6 @@ namespace Azure.Communication.Chat
         public Azure.Communication.Chat.ChatThreadProperties ChatThread { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
     }
-    public partial class NoneRetentionPolicy : Azure.Communication.Chat.ChatRetentionPolicy
-    {
-        public NoneRetentionPolicy() { }
-    }
     public partial class NoneRetentionPolicyInternal : Azure.Communication.Chat.ChatRetentionPolicyInternal
     {
         public NoneRetentionPolicyInternal() { }
@@ -272,11 +271,6 @@ namespace Azure.Communication.Chat
     {
         internal SendChatMessageResult() { }
         public string Id { get { throw null; } }
-    }
-    public partial class ThreadCreationDateRetentionPolicy : Azure.Communication.Chat.ChatRetentionPolicy
-    {
-        public ThreadCreationDateRetentionPolicy(int deleteThreadAfterDays) { }
-        public int DeleteThreadAfterDays { get { throw null; } }
     }
     public partial class TypingNotificationOptions
     {
