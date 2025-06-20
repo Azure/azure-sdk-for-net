@@ -21,6 +21,8 @@
 - Added TeamsAppSource for use when creating outbound OPS calls
 - Recording with the call connection ID is now supported. OPS calls can be recorded using the call connection ID.
 - Added a backup identifier of the Cognitive Service resource for the call
+- Added Incomingcall event to support incoming call notification for Teams multipersona users
+- Added StartRecordingFailed event to indicate when the start recording API is unable to initiate the recording.
 
 ### Breaking Changes
 
