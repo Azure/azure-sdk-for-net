@@ -108,6 +108,12 @@ namespace Azure.Communication.CallAutomation
         public string MediaSubscriptionId { get { throw null; } }
         public int SampleRate { get { throw null; } }
     }
+    public partial class AzureCommunicationCallAutomationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCommunicationCallAutomationContext() { }
+        public static Azure.Communication.CallAutomation.AzureCommunicationCallAutomationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CallAutomationClient
     {
         protected CallAutomationClient() { }
