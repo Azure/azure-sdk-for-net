@@ -309,8 +309,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateGetWithContinuationTokenRequest(string token, RequestContext context)
-        internal HttpMessage CreateListWithStringNextLinkRequest(RequestContext context)
+        internal HttpMessage CreateGetWithStringNextLinkRequest(RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -323,7 +322,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateNextListWithStringNextLinkRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateNextGetWithStringNextLinkRequest(Uri nextPage, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -335,7 +334,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateListWithHeaderNextLinkRequest(RequestContext context)
+        internal HttpMessage CreateGetWithHeaderNextLinkRequest(RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -348,7 +347,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateNextListWithHeaderNextLinkRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateNextGetWithHeaderNextLinkRequest(Uri nextPage, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -360,7 +359,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateListWithContinuationTokenRequest(string token, RequestContext context)
+        internal HttpMessage CreateGetWithContinuationTokenRequest(string token, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
