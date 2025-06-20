@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary>
     /// The base class of a conversation input task.
     /// Please note <see cref="AnalyzeConversationInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ConversationLanguageUnderstandingInput"/>.
+    /// The available derived classes include <see cref="ConversationLanguageUnderstandingInput"/> and <see cref="ConversationalAITask"/>.
     /// </summary>
     public abstract partial class AnalyzeConversationInput
     {

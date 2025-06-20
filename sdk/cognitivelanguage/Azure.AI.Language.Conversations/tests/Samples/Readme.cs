@@ -8,6 +8,7 @@ using Azure.Core.TestFramework;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 #endregion
 
 #region Snippet:Conversation_Identity_Namespace
@@ -21,7 +22,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void CreateConversationClient()
         {
             #region Snippet:ConversationAnalysisClient_Create
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+            Uri endpoint = new Uri("{endpoint}");
             AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
@@ -31,9 +32,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void CreateConversationClientWithSpecificApiVersion()
         {
             #region Snippet:CreateConversationAnalysisClientForSpecificApiVersion
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+            Uri endpoint = new Uri("{endpoint}");
             AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-            ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2024_05_01);
+            ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2025_05_15_Preview);
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential, options);
             #endregion
         }
@@ -41,7 +42,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void CreateConversationClientWithDefaultAzureCredential()
         {
             #region Snippet:ConversationAnalysisClient_CreateWithDefaultAzureCredential
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+            Uri endpoint = new Uri("{endpoint}");
             DefaultAzureCredential credential = new DefaultAzureCredential();
 
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);

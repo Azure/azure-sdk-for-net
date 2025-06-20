@@ -1,6 +1,6 @@
-# Analyze a Conversation for PII Using Entity Masking
+# Analyze a Conversation for PII Using Character Masking
 
-This sample demonstrates how to detect and redact personally identifiable information (PII) in a conversation using Entity Mask Policy with Conversation PII analysis. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
+This sample demonstrates how to detect and redact personally identifiable information (PII) in a conversation using Character Mask Policy with Conversation PII analysis. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
 Start by importing the namespace for the `ConversationAnalysisClient` and related classes:
 
@@ -8,12 +8,13 @@ Start by importing the namespace for the `ConversationAnalysisClient` and relate
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 ```
 
 To analyze an utterance, you need to first create a `ConversationAnalysisClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:ConversationAnalysisClient_Create
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
@@ -23,9 +24,13 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 ## Asynchronous
 
-```C# Snippet:AnalyzeConversation_ConversationPiiWithEntityMaskPolicy
-var redactionPolicy = new EntityMaskTypePolicyType();
+```C# Snippet:AnalyzeConversation_ConversationPiiWithCharacterMaskPolicy
+var redactionPolicy = new CharacterMaskPolicyType
+{
+    RedactionCharacter = RedactionCharacter.Asterisk
+};
 
+// Simulate input conversation
 MultiLanguageConversationInput input = new MultiLanguageConversationInput(
     new List<ConversationInput>
     {
@@ -37,7 +42,7 @@ MultiLanguageConversationInput input = new MultiLanguageConversationInput(
         })
     });
 
-// Add action with EntityMaskTypePolicyType
+// Add action with CharacterMaskPolicyType
 List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
 {
     new PiiOperationAction
@@ -46,7 +51,7 @@ List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationO
         {
             RedactionPolicy = redactionPolicy
         },
-        Name = "Conversation PII with Entity Mask Policy"
+        Name = "Conversation PII with Character Mask Policy"
     }
 };
 
@@ -56,7 +61,6 @@ AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(i
 // Act: Perform the PII analysis
 Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
 AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
-
 // Assert: Validate the results
 foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
 {
@@ -78,14 +82,10 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
                     foreach (var entity in item.Entities)
                     {
                         Assert.That(redactedText, Does.Not.Contain(entity.Text),
-                        $"Expected entity '{entity.Text}' to be redacted but found in: {redactedText}");
+                            $"Expected entity '{entity.Text}' to be redacted but found in: {redactedText}");
 
-                        // Case-insensitive pattern to match entity mask variations
-                        string expectedMaskPattern = $@"\[{entity.Category}-?\d*\]";
-
-                        // Perform case-insensitive regex match
-                        StringAssert.IsMatch("(?i)" + expectedMaskPattern, redactedText,
-                        $"Expected redacted text to contain an entity mask similar to '[{entity.Category}]' but got: {redactedText}");
+                        Assert.That(redactedText, Does.Contain("*"),
+                            $"Expected redacted text to contain '*' but got: {redactedText}");
                     }
                 }
             }
@@ -98,6 +98,6 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
 
 Using the same `data` definition above, you can make a synchronous request by calling `AnalyzeConversationOperation`:
 
-```C# Snippet:AnalyzeConversation_ConversationPiiWithEntityMaskPolicySync
+```C# Snippet:AnalyzeConversation_ConversationPiiWithCharacterMaskPolicySync
 AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 ```
