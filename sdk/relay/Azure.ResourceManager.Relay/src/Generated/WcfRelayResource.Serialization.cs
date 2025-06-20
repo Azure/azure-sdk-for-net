@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Relay
 {
     public partial class WcfRelayResource : IJsonModel<WcfRelayData>
     {
+        private static WcfRelayData s_dataDeserializationInstance;
+        private static WcfRelayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WcfRelayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WcfRelayData>)Data).Write(writer, options);
 
-        WcfRelayData IJsonModel<WcfRelayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WcfRelayData>)Data).Create(ref reader, options);
+        WcfRelayData IJsonModel<WcfRelayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WcfRelayData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WcfRelayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WcfRelayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WcfRelayData>(Data, options, AzureResourceManagerRelayContext.Default);
 
-        WcfRelayData IPersistableModel<WcfRelayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WcfRelayData>(data, options);
+        WcfRelayData IPersistableModel<WcfRelayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WcfRelayData>(data, options, AzureResourceManagerRelayContext.Default);
 
-        string IPersistableModel<WcfRelayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WcfRelayData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WcfRelayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WcfRelayData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

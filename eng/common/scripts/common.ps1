@@ -1,6 +1,6 @@
 # cSpell:ignore Apireview
 # cSpell:ignore Onboarded
-$RepoRoot = Resolve-Path "${PSScriptRoot}..\..\..\.."
+$RepoRoot = Resolve-Path (Join-Path $PSScriptRoot .. .. ..)
 $EngDir = Join-Path $RepoRoot "eng"
 $EngCommonDir = Join-Path $EngDir "common"
 $EngCommonScriptsDir = Join-Path $EngCommonDir "scripts"
@@ -23,6 +23,9 @@ $Language = "Unknown"
 $PackageRepository = "Unknown"
 $packagePattern = "Unknown"
 $MetadataUri = "Unknown"
+
+# Whether the language repo supports automatically loading .env file generated from TestResources scripts.
+$SupportsTestResourcesDotenv = $false
 
 # Import common language settings
 $EngScriptsLanguageSettings = Join-path $EngScriptsDir "Language-Settings.ps1"

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     public partial class FarmBeatsExtensionResource : IJsonModel<FarmBeatsExtensionData>
     {
+        private static FarmBeatsExtensionData s_dataDeserializationInstance;
+        private static FarmBeatsExtensionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FarmBeatsExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FarmBeatsExtensionData>)Data).Write(writer, options);
 
-        FarmBeatsExtensionData IJsonModel<FarmBeatsExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FarmBeatsExtensionData>)Data).Create(ref reader, options);
+        FarmBeatsExtensionData IJsonModel<FarmBeatsExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FarmBeatsExtensionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FarmBeatsExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FarmBeatsExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FarmBeatsExtensionData>(Data, options, AzureResourceManagerAgFoodPlatformContext.Default);
 
-        FarmBeatsExtensionData IPersistableModel<FarmBeatsExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FarmBeatsExtensionData>(data, options);
+        FarmBeatsExtensionData IPersistableModel<FarmBeatsExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FarmBeatsExtensionData>(data, options, AzureResourceManagerAgFoodPlatformContext.Default);
 
-        string IPersistableModel<FarmBeatsExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FarmBeatsExtensionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FarmBeatsExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FarmBeatsExtensionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

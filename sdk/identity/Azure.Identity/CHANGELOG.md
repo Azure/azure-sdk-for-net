@@ -1,17 +1,36 @@
 # Release History
 
-## 1.14.0-beta.4 (Unreleased)
+## 1.15.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- `ManagedIdentityCredential` throws `CredentialUnavailableException` when the IMDS endpoint is unavailable. This addresses a regression in how it behaves in the `ChainedTokenCredential` ([47057](https://github.com/Azure/azure-sdk-for-net/issues/47057)).
+
+### Other Changes
+
+- `VisualStudioCredential` throws `CredentialUnavailableException` for all failures except for OperationCancelledException due to cancellation being requested for a `CancellationToken`. This ensures that it falls through for most failures when part of a chained credential.
+- Removed `AzureApplicationCredential`. For context, see issue [49781](https://github.com/Azure/azure-sdk-for-net/issues/49781).
+
+## 1.14.0 (2025-05-13)
+
+### Other Changes
+
+- Removed references to `Username`, `Password`, `AZURE_USERNAME`, and `AZURE_PASSWORD` in XML comments from `EnvironmentCredentialOptions` and `EnvironmentCredential` due to lack of MFA support. See [MFA enforcement details](https://aka.ms/azsdk/identity/mfa).
+- Marked `AZURE_USERNAME` and `AZURE_PASSWORD` as obsolete due to lack of MFA support. See [MFA enforcement details](https://aka.ms/azsdk/identity/mfa).
+- Added support for the `AZURE_TOKEN_CREDENTIALS` environment variable to `DefaultAzureCredential`, which allows for choosing between 'deployed service' and 'developer tools' credentials. Valid values are 'dev' for developer tools and 'prod' for deployed service.
+
+## 1.14.0-beta.4 (2025-05-01)
+
+### Bugs Fixed
 - Fixed an issue where Azure CLI credential could hang or delay due to I/O contention when standard input/output was shared with the host process ([#49582](https://github.com/Azure/azure-sdk-for-net/pull/49582)).
 
 ### Other Changes
 
-- Updated `Microsoft.Identity.Client` dependency to version 4.70.2
+- Updated `Microsoft.Identity.Client` dependency to version 4.71.1
 
 ## 1.14.0-beta.3 (2025-04-08)
 

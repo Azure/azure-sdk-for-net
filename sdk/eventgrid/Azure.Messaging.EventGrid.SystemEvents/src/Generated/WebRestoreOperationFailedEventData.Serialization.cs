@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(WebRestoreOperationFailedEventDataConverter))]
     public partial class WebRestoreOperationFailedEventData : IUtf8JsonSerializable, IJsonModel<WebRestoreOperationFailedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebRestoreOperationFailedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -173,7 +175,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WebRestoreOperationFailedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -211,6 +213,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class WebRestoreOperationFailedEventDataConverter : JsonConverter<WebRestoreOperationFailedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, WebRestoreOperationFailedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override WebRestoreOperationFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWebRestoreOperationFailedEventData(document.RootElement);
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 12.2.0-beta.1 (Unreleased)
+## 12.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.2.0-beta.1 (2025-06-17)
+
+### Features Added
+- Explicitly setting `BlobStorageResourceOptions.AccessTier` to `null` will disable preserving the access tier value from the source blob to the destination blob.
+
+### Bugs Fixed
+- Fixed bug where AccessTier for Premium Page Blobs were not being preserved.
+- Fixed some issues when transferring virtual directories with Blob Storage as the source.
 
 ## 12.1.0 (2025-02-27)
 

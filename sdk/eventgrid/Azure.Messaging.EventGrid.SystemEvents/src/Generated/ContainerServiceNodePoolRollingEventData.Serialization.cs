@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ContainerServiceNodePoolRollingEventDataConverter))]
     public partial class ContainerServiceNodePoolRollingEventData : IUtf8JsonSerializable, IJsonModel<ContainerServiceNodePoolRollingEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceNodePoolRollingEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -34,11 +36,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(ContainerServiceNodePoolRollingEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(NodePoolName))
-            {
-                writer.WritePropertyName("nodePoolName"u8);
-                writer.WriteStringValue(NodePoolName);
-            }
+            writer.WritePropertyName("nodePoolName"u8);
+            writer.WriteStringValue(NodePoolName);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -102,7 +101,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceNodePoolRollingEventData)} does not support writing '{options.Format}' format.");
             }
@@ -140,6 +139,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ContainerServiceNodePoolRollingEventDataConverter : JsonConverter<ContainerServiceNodePoolRollingEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ContainerServiceNodePoolRollingEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ContainerServiceNodePoolRollingEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeContainerServiceNodePoolRollingEventData(document.RootElement);
+            }
         }
     }
 }

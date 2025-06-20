@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class PublicIPAddressResource : IJsonModel<PublicIPAddressData>
     {
+        private static PublicIPAddressData s_dataDeserializationInstance;
+        private static PublicIPAddressData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PublicIPAddressData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PublicIPAddressData>)Data).Write(writer, options);
 
-        PublicIPAddressData IJsonModel<PublicIPAddressData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicIPAddressData>)Data).Create(ref reader, options);
+        PublicIPAddressData IJsonModel<PublicIPAddressData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicIPAddressData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PublicIPAddressData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PublicIPAddressData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublicIPAddressData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        PublicIPAddressData IPersistableModel<PublicIPAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicIPAddressData>(data, options);
+        PublicIPAddressData IPersistableModel<PublicIPAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicIPAddressData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<PublicIPAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicIPAddressData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PublicIPAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicIPAddressData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

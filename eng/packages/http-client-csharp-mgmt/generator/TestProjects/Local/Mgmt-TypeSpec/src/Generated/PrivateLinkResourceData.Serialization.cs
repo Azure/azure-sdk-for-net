@@ -11,13 +11,16 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
     /// <summary></summary>
-    public partial class PrivateLinkResourceData : IJsonModel<PrivateLinkResourceData>
+    internal partial class PrivateLinkResourceData : IJsonModel<PrivateLinkResourceData>
     {
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -43,15 +46,17 @@ namespace MgmtTypeSpec.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                JsonSerializer.Serialize(Identity);
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PrivateLinkResourceData IJsonModel<PrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PrivateLinkResourceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Resource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -62,6 +67,8 @@ namespace MgmtTypeSpec.Models
             return DeserializePrivateLinkResourceData(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static PrivateLinkResourceData DeserializePrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -97,7 +104,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    systemData = SystemData.DeserializeSystemData(prop.Value, options);
+                    systemData = prop.Value.Deserialize<SystemData>();
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -115,7 +122,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(prop.Value, options);
+                    identity = prop.Value.Deserialize<ManagedServiceIdentity>();
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,26 +140,29 @@ namespace MgmtTypeSpec.Models
                 identity);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PrivateLinkResourceData IPersistableModel<PrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrivateLinkResourceData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Resource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -167,17 +177,18 @@ namespace MgmtTypeSpec.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="privateLinkResourceData"> The <see cref="PrivateLinkResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(PrivateLinkResourceData privateLinkResourceData)
+        /// <param name="data"> The <see cref="PrivateLinkResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(PrivateLinkResourceData data)
         {
-            if (privateLinkResourceData == null)
+            if (data == null)
             {
                 return null;
             }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(privateLinkResourceData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             return content;
         }
 

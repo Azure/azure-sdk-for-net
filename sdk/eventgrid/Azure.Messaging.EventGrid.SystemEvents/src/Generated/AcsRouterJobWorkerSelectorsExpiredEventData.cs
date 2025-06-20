@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,18 +16,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobWorkerSelectorsExpiredEventData"/>. </summary>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
-        /// <param name="expiredRequestedWorkerSelectors"> Router Job Worker Selectors Expired Requested Worker Selectors. </param>
-        /// <param name="expiredAttachedWorkerSelectors"> Router Job Worker Selectors Expired Attached Worker Selectors. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labels"/>, <paramref name="tags"/>, <paramref name="expiredRequestedWorkerSelectors"/> or <paramref name="expiredAttachedWorkerSelectors"/> is null. </exception>
-        internal AcsRouterJobWorkerSelectorsExpiredEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors) : base(labels, tags)
+        /// <exception cref="ArgumentNullException"> <paramref name="labels"/> or <paramref name="tags"/> is null. </exception>
+        internal AcsRouterJobWorkerSelectorsExpiredEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags) : base(labels, tags)
         {
             Argument.AssertNotNull(labels, nameof(labels));
             Argument.AssertNotNull(tags, nameof(tags));
-            Argument.AssertNotNull(expiredRequestedWorkerSelectors, nameof(expiredRequestedWorkerSelectors));
-            Argument.AssertNotNull(expiredAttachedWorkerSelectors, nameof(expiredAttachedWorkerSelectors));
 
-            ExpiredRequestedWorkerSelectors = expiredRequestedWorkerSelectors.ToList();
-            ExpiredAttachedWorkerSelectors = expiredAttachedWorkerSelectors.ToList();
+            ExpiredRequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
+            ExpiredAttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobWorkerSelectorsExpiredEventData"/>. </summary>

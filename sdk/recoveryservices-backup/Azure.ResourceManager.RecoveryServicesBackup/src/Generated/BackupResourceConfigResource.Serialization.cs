@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupResourceConfigResource : IJsonModel<BackupResourceConfigData>
     {
+        private static BackupResourceConfigData s_dataDeserializationInstance;
+        private static BackupResourceConfigData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BackupResourceConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackupResourceConfigData>)Data).Write(writer, options);
 
-        BackupResourceConfigData IJsonModel<BackupResourceConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupResourceConfigData>)Data).Create(ref reader, options);
+        BackupResourceConfigData IJsonModel<BackupResourceConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupResourceConfigData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BackupResourceConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BackupResourceConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupResourceConfigData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        BackupResourceConfigData IPersistableModel<BackupResourceConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupResourceConfigData>(data, options);
+        BackupResourceConfigData IPersistableModel<BackupResourceConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupResourceConfigData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        string IPersistableModel<BackupResourceConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupResourceConfigData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BackupResourceConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupResourceConfigData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

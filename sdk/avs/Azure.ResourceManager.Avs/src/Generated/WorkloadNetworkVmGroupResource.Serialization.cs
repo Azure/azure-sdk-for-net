@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class WorkloadNetworkVmGroupResource : IJsonModel<WorkloadNetworkVmGroupData>
     {
+        private static WorkloadNetworkVmGroupData s_dataDeserializationInstance;
+        private static WorkloadNetworkVmGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkloadNetworkVmGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkVmGroupData>)Data).Write(writer, options);
 
-        WorkloadNetworkVmGroupData IJsonModel<WorkloadNetworkVmGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkVmGroupData>)Data).Create(ref reader, options);
+        WorkloadNetworkVmGroupData IJsonModel<WorkloadNetworkVmGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkVmGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkloadNetworkVmGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<WorkloadNetworkVmGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkVmGroupData>(Data, options, AzureResourceManagerAvsContext.Default);
 
-        WorkloadNetworkVmGroupData IPersistableModel<WorkloadNetworkVmGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkVmGroupData>(data, options);
+        WorkloadNetworkVmGroupData IPersistableModel<WorkloadNetworkVmGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkVmGroupData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<WorkloadNetworkVmGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkVmGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkloadNetworkVmGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkVmGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

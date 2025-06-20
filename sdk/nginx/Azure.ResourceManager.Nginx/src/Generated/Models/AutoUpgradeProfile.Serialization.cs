@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Nginx.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutoUpgradeProfile)} does not support writing '{options.Format}' format.");
             }

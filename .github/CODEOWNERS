@@ -46,7 +46,7 @@
 /sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
 
 # Smoke tests
-/common/SmokeTests/                                                @schaabs @tg-msft @jsquire
+/common/SmokeTests/                                                @jsquire @m-redding
 
 #########
 # SDK
@@ -63,8 +63,11 @@
 # ServiceLabel: %Azure.Core
 # AzureSdkOwners:                                                  @m-redding
 
+# ServiceLabel: %System.ClientModel
+# AzureSdkOwners:                                                  @m-redding
+
 # PRLabel: %Azure.Identity
-/sdk/identity/                                                     @schaabs @christothes @JonathanCrd @Azure/azure-sdk-write-identity
+/sdk/identity/                                                     @christothes @JonathanCrd @Azure/azure-sdk-write-identity
 
 # ServiceLabel: %Azure.Identity
 # AzureSdkOwners:                                                  @christothes @JonathanCrd
@@ -135,10 +138,9 @@
 # ServiceOwners:                                                   @miaojiang
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @jorgerangel-msft @jsquire
+/sdk/appconfiguration/                                             @shenmuxiaosen @avanigupta
 
 # ServiceLabel: %App Configuration
-# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @shenmuxiaosen @avanigupta
 
 # ServiceLabel: %App Services
@@ -189,10 +191,10 @@
 # ServiceLabel: %Bot Service
 # ServiceOwners:                                                   @sgellock
 
-# PRLabel: %Cloud Machine
+# PRLabel: %Azure Projects
 /sdk/cloudmachine/                                                 @christothes @KrzysztofCwalina
 
-# ServiceLabel: %Cloud Machine
+# ServiceLabel: %Azure Projects
 # AzureSdkOwners:                                                  @christothes @KrzysztofCwalina
 
 # PRLabel: %Cognitive - Language
@@ -229,20 +231,20 @@
 # ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/documentintelligence/                                         @kinelski @joseharriaga
+/sdk/documentintelligence/                                         @joseharriaga
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/formrecognizer/                                               @kinelski @joseharriaga
+/sdk/formrecognizer/                                               @joseharriaga
 
 # ServiceLabel: %Cognitive - Form Recognizer
-# AzureSdkOwners:                                                  @kinelski
+# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @ctstone @vkurpad
 
 # PRLabel: %Cognitive - Metrics Advisor
-/sdk/metricsadvisor/                                               @kinelski
+/sdk/metricsadvisor/                                               @jsquire
 
 # ServiceLabel: %Cognitive - Metrics Advisor
-# AzureSdkOwners:                                                  @kinelski
+# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @bowgong
 
 # PRLabel: %Cognitive - Anomaly Detector
@@ -369,10 +371,10 @@
 # ServiceOwners:                                                   @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @christothes @PallabPaul @amruthashree18
+/sdk/confidentialledger/                                           @christothes @PallabPaul @amruthashree18 @andpiccione @ivarprudnikov
 
 # ServiceLabel: %Confidential Ledger
-# ServiceOwners:                                                   @PallabPaul @amruthashree18
+# ServiceOwners:                                                   @PallabPaul @amruthashree18 @andpiccione @ivarprudnikov
 
 # ServiceLabel: %Consumption - Billing
 # ServiceOwners:                                                   @ccmbpxpcrew
@@ -399,7 +401,7 @@
 /sdk/containerregistry/                                            @Azure/azsdk-acr
 
 # ServiceLabel: %Container Registry
-# AzureSdkOwners:                                                  @annelo-msft
+# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @toddysm @yugangw-MSFT
 
 # ServiceLabel: %Container Service
@@ -534,7 +536,7 @@
 # ServiceOwners:                                                   @mconnew
 
 # ServiceLabel: %Functions
-# AzureSdkOwners:                                                  @JoshLove-msft
+# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @ahmedelnably @fabiocav
 
 # ServiceLabel: %Graph.Microsoft
@@ -574,10 +576,10 @@
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @schaabs @JonathanCrd @jsquire @christothes
+/sdk/keyvault/                                                     @jorgerangel-msft @jsquire @christothes
 
 # ServiceLabel: %KeyVault
-# AzureSdkOwners:                                                  @JonathanCrd
+# AzureSdkOwners:                                                  @jorgerangel-msft
 # ServiceOwners:                                                   @cheathamb36 @chen-karen @lgonsoulin
 
 # ServiceLabel: %Kubernetes Configuration
@@ -590,10 +592,10 @@
 # ServiceOwners:                                                   @Tanmayeekamath
 
 # PRLabel: %Load Test Service
-/sdk/loadtestservice/                                              @prativen @mitsha-microsoft @ninallam
+/sdk/loadtestservice/                                              @azure/testing-services
 
 # ServiceLabel: %Load Test Service
-# ServiceOwners:                                                   @prativen @mitsha-microsoft @ninallam
+# ServiceOwners:                                                   @azure/testing-services
 
 # ServiceLabel: %Logic App
 # ServiceOwners:                                                   @Azure/azure-logicapps-team
@@ -638,20 +640,18 @@
 # ServiceOwners:                                                   @kpiteira
 
 # PRLabel: %Monitor
-/sdk/monitor/*                                                     @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/*                                                     @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor
-/sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/Azure.Monitor.Ingestion/                              @Azure/azure-sdk-write-monitor-data-plane
 
 # ServiceLabel: %Monitor
-# AzureSdkOwners:                                                  @nisha-bhatia
 # ServiceOwners:                                                   @SameergMS @dadunl @AzMonEssential @AzmonAlerts @AzmonActionG @AzmonLogA
 
 # PRLabel: %Monitor - Query
-/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/Azure.Monitor.Query/                                  @Azure/azure-sdk-write-monitor-data-plane
 
 # ServiceLabel: %Monitor - Query
-# AzureSdkOwners:                                                  @nisha-bhatia
 # ServiceOwners:                                                   @SameergMS @dadunl @AzMonEssential @AzmonAlerts @AzmonActionG @AzmonLogA @ToddKingMSFT
 
 # ServiceLabel: %Monitor - ApplicationInsights
@@ -753,6 +753,12 @@
 # ServiceLabel: %Notification Hub
 # ServiceOwners:                                                   @tjsomasundaram
 
+# PRLabel: %Online Experimentation
+/sdk/onlineexperimentation/                                        @Azure/azure-sdk-write-onlineexperimentation
+
+# ServiceLabel: %Online Experimentation
+# ServiceOwners:                                                   @Azure/azure-sdk-write-onlineexperimentation
+
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash @ralph-msft
 
@@ -781,7 +787,7 @@
 # ServiceOwners:                                                   @sunilagarwal @lfittl-msft @sr-msft @niklarin
 
 # PRLabel: %Provisioning
-/sdk/provisioning/                                                 @ArthurMa1978 @ArcturusZhang
+/sdk/provisioning/                                                 @ArthurMa1978 @m-nash @ArcturusZhang
 
 # ServiceLabel: %Provisioning
 # AzureSdkOwners:                                                  @ArthurMa1978
@@ -823,7 +829,7 @@
 # ServiceOwners:                                                   @amirkeren
 
 # PRLabel: %Search
-/sdk/search/                                                       @ShivangiReja @kinelski @Azure/azsdk-search
+/sdk/search/                                                       @ShivangiReja @Azure/azsdk-search
 
 # ServiceLabel: %Search
 # AzureSdkOwners:                                                  @ShivangiReja
@@ -874,16 +880,19 @@
 # ServiceOwners:                                                   @azureSQLGitHub
 
 # PRLabel: %Storage
-/sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft @jalauzon-msft @nickliu-msft
+/sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
 
 # PRLabel: %Storage
-/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft @jalauzon-msft @nickliu-msft
+/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
 
 # PRLabel: %Storage
 /sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc @jalauzon-msft @nickliu-msft
 
 # ServiceLabel: %Storage
 # ServiceOwners:                                                   @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
+
+# PRLabel: %Storage
+/sdk/storagesync/                                                  @ankushbindlish2 @anpint @jlindamood
 
 # ServiceLabel: %Storsimple
 # ServiceOwners:                                                   @anoobbacker @ganzee @manuaery
@@ -952,6 +961,12 @@
 # -----------------------------------------------------------------
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
+
+# PRLabel: %API Center
+/sdk/apicenter/Azure.ResourceManager.ApiCenter/                    @alexyaang @azaslonov
+
+# ServiceLabel: %API Center %Mgmt
+# ServiceOwners:                                                   @alexyaang @azaslonov
 
 # PRLabel: %ARM
 /sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners
@@ -1041,13 +1056,25 @@
 # ServiceOwners:                                                   @thomasp98296
 
 # PRLabel: %Neon Postgres
-/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978
+/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978 @alluri02
+
+# ServiceLabel: %Neon Postgres %Mgmt
+# ServiceOwners:                                                   @alluri02
 
 # PRLabel: %Network - CDN
-/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978
+/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
+
+# PRLabel: %Network - DNS Private Resolver
+/sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
+
+# ServiceLabel: %Network - DNS Private Resolver %Mgmt
+# ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %Network - Front Door
-/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978
+/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978 @Ptnan7
+
+# ServiceLabel:  %Network - Front Door %Mgmt
+# ServiceOwners:                                                   @Ptnan7
 
 # PRLabel: %Network - Mobile
 /sdk/mobilenetwork/Azure.ResourceManager.*/                        @ArcturusZhang @ArthurMa1978
@@ -1070,11 +1097,23 @@
 # ServiceLabel: %Operator Nexus - Network Cloud %Mgmt
 # ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
 
+# PRLabel: %Oracle
+/sdk/oracle/Azure.ResourceManager.*/                               @v-mkidane
+
+# ServiceLabel: %Oracle %Mgmt
+# ServiceOwners:                                                   @v-mkidane
+
 # PRLabel: %Pinecone
 /sdk/pineconevectordb/Azure.ResourceManager.*/                     @aggarwalsw
 
 # ServiceLabel: %Pinecone %Mgmt
 # ServiceOwners:                                                   @aggarwalsw
+
+# PRLabel: %PureStorage
+/sdk/purestorageblock/Azure.ResourceManager.*/                     @deepakmauryams
+
+# ServiceLabel: %PureStorage %Mgmt
+# ServiceOwners:                                                   @deepakmauryams
 
 # PRLabel: %Quota
 /sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
@@ -1094,8 +1133,8 @@
 # ServiceLabel: %Recovery Services Data-Replication %Mgmt
 # ServiceOwners:                                                   @helen-afework
 
-# (Remove this when uncommenting path) PRLabel: %Secret Store Extension
-#/sdk/edgeworkloadsecurity/Azure.ResourceManager.*/                @cjoprey @locomotiveviaduct
+# PRLabel: %Secret Store Extension
+/sdk/secretsstoreextension/Azure.ResourceManager.*/                @cjoprey @locomotiveviaduct
 
 # ServiceLabel: %Secret Store Extension %Mgmt
 # ServiceOwners:                                                   @cjoprey @locomotiveviaduct
@@ -1108,6 +1147,12 @@
 
 # ServiceLabel: %Service Fabric
 # ServiceOwners:                                                   @QingChenmsft @vaishnavk @juhacket
+
+# PRLabel: %SiteManager
+/sdk/sitemanager/Azure.ResourceManager.*/                          @bsomeshekar
+
+# ServiceLabel: %SiteManager %Mgmt
+# ServiceOwners:                                                   @bsomeshekar
 
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @ArcturusZhang @ArthurMa1978
@@ -1127,6 +1172,7 @@
 # ServiceLabel: %Weights & Biases %Mgmt
 # ServiceOwners:                                                   @aggarwalsw
 
+
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
 /eng/common/                                                       @Azure/azure-sdk-eng
@@ -1140,18 +1186,19 @@
 /eng/common/pipelines/codeowners-linter.yml                        @jsquire
 /sdk/eventhub/tests.data.yml                                       @serkantkaraca @sjkwak
 /sdk/servicebus/tests.data.yml                                     @shankarsama @EldertGrootenboer
+/eng/pipelines/docindex.yml                                        @danieljurek @hallipr @weshaggard @benbp
 
 # Add owners for package dependency changes
-/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @m-nash @ArthurMa1978
+/eng/Packages.Data.props                                           @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
-/eng/http-client-csharp-emitter-package.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @nisha-bhatia
-/eng/http-client-csharp-emitter-package-lock.json                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @nisha-bhatia
+/eng/http-client-csharp-emitter-package.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
+/eng/http-client-csharp-emitter-package-lock.json                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 
 # ######## Code Generation ########
 
 #PRLabel: %CodeGen %Client
-/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire @nisha-bhatia
+/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire
 
 #PRLabel: %CodeGen %Mgmt
 /eng/packages/http-client-csharp-mgmt/                             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang

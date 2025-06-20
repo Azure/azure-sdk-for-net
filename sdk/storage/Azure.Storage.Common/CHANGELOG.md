@@ -1,15 +1,25 @@
 # Release History
 
-## 12.24.0-beta.1 (Unreleased)
+## 12.25.0-beta.2 (Unreleased)
 
 ### Features Added
-- `StorageBearerTokenChallengeAuthorizationPolicy` now will attempt to handle Continuous Access Evaluation (CAE) challenges, if present, by default.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.25.0-beta.1 (2025-06-09)
+
+### Features Added
+- This release contains bug fixes to improve quality.
+- Added more useful error message when the SDK encounters an x-ms-version mis-match issue.
+
+## 12.24.0-beta.1 (2025-05-06)
+
+### Features Added
+- `StorageBearerTokenChallengeAuthorizationPolicy` now will attempt to handle Continuous Access Evaluation (CAE) challenges, if present, by default.
 
 ## 12.23.0 (2025-03-11)
 

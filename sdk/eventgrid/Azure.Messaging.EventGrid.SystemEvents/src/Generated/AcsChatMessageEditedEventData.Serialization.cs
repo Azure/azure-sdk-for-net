@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsChatMessageEditedEventDataConverter))]
     public partial class AcsChatMessageEditedEventData : IUtf8JsonSerializable, IJsonModel<AcsChatMessageEditedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsChatMessageEditedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -35,19 +37,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MessageBody))
+            writer.WritePropertyName("messageBody"u8);
+            writer.WriteStringValue(MessageBody);
+            if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("messageBody"u8);
-                writer.WriteStringValue(MessageBody);
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WritePropertyName("metadata"u8);
-            writer.WriteStartObject();
-            foreach (var item in Metadata)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
             if (Optional.IsDefined(EditTime))
             {
                 writer.WritePropertyName("editTime"u8);
@@ -98,6 +100,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("metadata"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -186,7 +192,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 type,
                 version,
                 messageBody,
-                metadata,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 editTime);
         }
 
@@ -197,7 +203,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsChatMessageEditedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -235,6 +241,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsChatMessageEditedEventDataConverter : JsonConverter<AcsChatMessageEditedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsChatMessageEditedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsChatMessageEditedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatMessageEditedEventData(document.RootElement);
+            }
         }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Chaos
 {
     public partial class ChaosExperimentExecutionResource : IJsonModel<ChaosExperimentExecutionData>
     {
+        private static ChaosExperimentExecutionData s_dataDeserializationInstance;
+        private static ChaosExperimentExecutionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ChaosExperimentExecutionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ChaosExperimentExecutionData>)Data).Write(writer, options);
 
-        ChaosExperimentExecutionData IJsonModel<ChaosExperimentExecutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ChaosExperimentExecutionData>)Data).Create(ref reader, options);
+        ChaosExperimentExecutionData IJsonModel<ChaosExperimentExecutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ChaosExperimentExecutionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ChaosExperimentExecutionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ChaosExperimentExecutionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ChaosExperimentExecutionData>(Data, options, AzureResourceManagerChaosContext.Default);
 
-        ChaosExperimentExecutionData IPersistableModel<ChaosExperimentExecutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ChaosExperimentExecutionData>(data, options);
+        ChaosExperimentExecutionData IPersistableModel<ChaosExperimentExecutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ChaosExperimentExecutionData>(data, options, AzureResourceManagerChaosContext.Default);
 
-        string IPersistableModel<ChaosExperimentExecutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ChaosExperimentExecutionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ChaosExperimentExecutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ChaosExperimentExecutionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

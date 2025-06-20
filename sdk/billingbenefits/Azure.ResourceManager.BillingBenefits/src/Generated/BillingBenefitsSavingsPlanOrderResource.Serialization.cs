@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.BillingBenefits
 {
     public partial class BillingBenefitsSavingsPlanOrderResource : IJsonModel<BillingBenefitsSavingsPlanOrderData>
     {
+        private static BillingBenefitsSavingsPlanOrderData s_dataDeserializationInstance;
+        private static BillingBenefitsSavingsPlanOrderData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BillingBenefitsSavingsPlanOrderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingBenefitsSavingsPlanOrderData>)Data).Write(writer, options);
 
-        BillingBenefitsSavingsPlanOrderData IJsonModel<BillingBenefitsSavingsPlanOrderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingBenefitsSavingsPlanOrderData>)Data).Create(ref reader, options);
+        BillingBenefitsSavingsPlanOrderData IJsonModel<BillingBenefitsSavingsPlanOrderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingBenefitsSavingsPlanOrderData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingBenefitsSavingsPlanOrderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BillingBenefitsSavingsPlanOrderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingBenefitsSavingsPlanOrderData>(Data, options, AzureResourceManagerBillingBenefitsContext.Default);
 
-        BillingBenefitsSavingsPlanOrderData IPersistableModel<BillingBenefitsSavingsPlanOrderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingBenefitsSavingsPlanOrderData>(data, options);
+        BillingBenefitsSavingsPlanOrderData IPersistableModel<BillingBenefitsSavingsPlanOrderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingBenefitsSavingsPlanOrderData>(data, options, AzureResourceManagerBillingBenefitsContext.Default);
 
-        string IPersistableModel<BillingBenefitsSavingsPlanOrderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingBenefitsSavingsPlanOrderData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BillingBenefitsSavingsPlanOrderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingBenefitsSavingsPlanOrderData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

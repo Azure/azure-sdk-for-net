@@ -46,27 +46,41 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotEventData"/>. </summary>
-        internal AppConfigurationSnapshotEventData()
+        /// <param name="name"> The name of the snapshot. </param>
+        /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="syncToken"> The sync token representing the server state after the event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="eTag"/> or <paramref name="syncToken"/> is null. </exception>
+        internal AppConfigurationSnapshotEventData(string name, string eTag, string syncToken)
         {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(eTag, nameof(eTag));
+            Argument.AssertNotNull(syncToken, nameof(syncToken));
+
+            Name = name;
+            ETag = eTag;
+            SyncToken = syncToken;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotEventData"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationSnapshotEventData(string name, string etag, string syncToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppConfigurationSnapshotEventData(string name, string eTag, string syncToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            Etag = etag;
+            ETag = eTag;
             SyncToken = syncToken;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotEventData"/> for deserialization. </summary>
+        internal AppConfigurationSnapshotEventData()
+        {
+        }
+
         /// <summary> The name of the snapshot. </summary>
         public string Name { get; }
-        /// <summary> The etag representing the new state of the snapshot. </summary>
-        public string Etag { get; }
         /// <summary> The sync token representing the server state after the event. </summary>
         public string SyncToken { get; }
     }

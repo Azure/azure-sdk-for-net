@@ -46,22 +46,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CommunicationIdentifierModel"/>. </summary>
+        /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
         /// <param name="communicationUser"> The communication user. </param>
-        /// <param name="phoneNumber"> The phone number. </param>
-        /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
-        /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationUser"/>, <paramref name="phoneNumber"/>, <paramref name="microsoftTeamsUser"/> or <paramref name="microsoftTeamsApp"/> is null. </exception>
-        internal CommunicationIdentifierModel(CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp)
+        /// <exception cref="ArgumentNullException"> <paramref name="rawId"/> or <paramref name="communicationUser"/> is null. </exception>
+        internal CommunicationIdentifierModel(string rawId, CommunicationUserIdentifierModel communicationUser)
         {
+            Argument.AssertNotNull(rawId, nameof(rawId));
             Argument.AssertNotNull(communicationUser, nameof(communicationUser));
-            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
-            Argument.AssertNotNull(microsoftTeamsUser, nameof(microsoftTeamsUser));
-            Argument.AssertNotNull(microsoftTeamsApp, nameof(microsoftTeamsApp));
 
+            RawId = rawId;
             CommunicationUser = communicationUser;
-            PhoneNumber = phoneNumber;
-            MicrosoftTeamsUser = microsoftTeamsUser;
-            MicrosoftTeamsApp = microsoftTeamsApp;
         }
 
         /// <summary> Initializes a new instance of <see cref="CommunicationIdentifierModel"/>. </summary>
@@ -72,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationIdentifierModel(CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommunicationIdentifierModel(AcsCommunicationIdentifierKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             RawId = rawId;
@@ -89,7 +83,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> The identifier kind. Only required in responses. </summary>
-        public CommunicationIdentifierModelKind? Kind { get; }
+        public AcsCommunicationIdentifierKind? Kind { get; }
         /// <summary> Raw Id of the identifier. Optional in requests, required in responses. </summary>
         public string RawId { get; }
         /// <summary> The communication user. </summary>
@@ -99,6 +93,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The Microsoft Teams user. </summary>
         public MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get; }
         /// <summary> The Microsoft Teams application. </summary>
-        public MicrosoftTeamsAppIdentifierModel MicrosoftTeamsApp { get; }
+        public AcsMicrosoftTeamsAppIdentifier MicrosoftTeamsApp { get; }
     }
 }

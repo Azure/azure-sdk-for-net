@@ -435,6 +435,121 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void GetMessageAnnotationNormalizedValueReturnsNullWhenNoAnnotations()
+        {
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            var value = message.GetMessageAnnotationNormalizedValue("anyKey");
+            Assert.That(value, Is.Null, "A missing annotation section should return null.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method for enqueued time normalization.
+        /// </summary>
+        ///
+        [Test]
+        public void GetMessageAnnotationNormalizedValueNormalizesEnqueuedTime()
+        {
+            var key = AmqpProperty.EnqueuedTime.ToString();
+            var expected = new DateTimeOffset(2024, 5, 19, 12, 0, 0, TimeSpan.Zero);
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            message.MessageAnnotations.Add(key, expected.UtcDateTime);
+
+            var value = message.GetMessageAnnotationNormalizedValue(key);
+            Assert.That(value, Is.EqualTo(expected), "The enqueued time should be normalized to DateTimeOffset.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method for sequence number normalization.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(42, 42L)]
+        [TestCase(12345L, 12345L)]
+        [TestCase("12345", 12345L)]
+        public void GetMessageAnnotationNormalizedValueNormalizesSequenceNumber(object input,
+                                                                                long expected)
+        {
+            var key = AmqpProperty.SequenceNumber.ToString();
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            message.MessageAnnotations.Add(key, input);
+
+            var value = message.GetMessageAnnotationNormalizedValue(key);
+            Assert.That(value, Is.EqualTo(expected), "The sequence number should be normalized to long.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method for AmqpMessageId normalization.
+        /// </summary>
+        ///
+        [Test]
+        public void GetMessageAnnotationNormalizedValueNormalizesAmqpMessageId()
+        {
+            var key = "customId";
+            var id = new AmqpMessageId("id-123");
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            message.MessageAnnotations.Add(key, id);
+
+            var value = message.GetMessageAnnotationNormalizedValue(key);
+            Assert.That(value, Is.EqualTo(id.ToString()), "The AmqpMessageId should be normalized to string.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method for AmqpAddress normalization.
+        /// </summary>
+        ///
+        [Test]
+        public void GetMessageAnnotationNormalizedValueNormalizesAmqpAddress()
+        {
+            var key = "customAddress";
+            var address = new AmqpAddress("amqps://test");
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            message.MessageAnnotations.Add(key, address);
+
+            var value = message.GetMessageAnnotationNormalizedValue(key);
+            Assert.That(value, Is.EqualTo(address.ToString()), "The AmqpAddress should be normalized to string.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method for pass through of other types.
+        /// </summary>
+        ///
+        [Test]
+        public void GetMessageAnnotationNormalizedValueReturnsRawValueForOtherTypes()
+        {
+            var key = "customInt";
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            message.MessageAnnotations.Add(key, 42);
+
+            var value = message.GetMessageAnnotationNormalizedValue(key);
+            Assert.That(value, Is.EqualTo(42), "Other types should be returned as-is.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpAnnotatedMessageExtensions.GetMessageAnnotationNormalizedValue" />
+        ///   method when the key is not present.
+        /// </summary>
+        ///
+        [Test]
+        public void GetMessageAnnotationNormalizedValueReturnsNullWhenKeyNotPresent()
+        {
+            var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData([ReadOnlyMemory<byte>.Empty]));
+            message.MessageAnnotations.Add("someKey", "someValue");
+
+            var value = message.GetMessageAnnotationNormalizedValue("otherKey");
+            Assert.That(value, Is.Null, "A missing key should return null.");
+        }
+
+        /// <summary>
         ///   Creates a fully populated message with a consistent set of
         ///   test data.
         /// </summary>
