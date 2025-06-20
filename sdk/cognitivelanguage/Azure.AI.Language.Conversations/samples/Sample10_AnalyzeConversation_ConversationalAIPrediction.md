@@ -45,44 +45,43 @@ AnalyzeConversationInput data = new ConversationalAITask(
         }),
     new AIConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
-        // Use Utf16CodeUnit for strings in .NET.
         StringIndexType = StringIndexType.Utf16CodeUnit,
     });
 
 Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
-ConversationalAITaskResult ConversationalAITaskResult = response.Value as ConversationalAITaskResult;
-ConversationalAIResult conversationalAIResult = ConversationalAITaskResult.Result;
+ConversationalAITaskResult result = response.Value as ConversationalAITaskResult;
+ConversationalAIResult aiResult = result.Result;
 
-foreach (var conversation in conversationalAIResult?.Conversations ?? Enumerable.Empty<ConversationalAIAnalysis>())
+foreach (var conversation in aiResult?.Conversations ?? Enumerable.Empty<ConversationalAIAnalysis>())
 {
-    Console.WriteLine($"Conversation ID: {conversation.Id}");
+    Console.WriteLine($"Conversation ID: {conversation.Id}\n");
 
     Console.WriteLine("Intents:");
     foreach (var intent in conversation.Intents ?? Enumerable.Empty<ConversationalAIIntent>())
     {
-        Console.WriteLine($"Name: {intent.Name}");
-        Console.WriteLine($"Type: {intent.Type}");
+        Console.WriteLine($"  Name: {intent.Name}");
+        Console.WriteLine($"  Type: {intent.Type}");
 
-        Console.WriteLine("Conversation Item Ranges:");
+        Console.WriteLine("  Conversation Item Ranges:");
         foreach (var range in intent.ConversationItemRanges ?? Enumerable.Empty<ConversationItemRange>())
         {
-            Console.WriteLine($" - Offset: {range.Offset}, Count: {range.Count}");
+            Console.WriteLine($"    - Offset: {range.Offset}, Count: {range.Count}");
         }
 
-        Console.WriteLine("Entities (Scoped to Intent):");
+        Console.WriteLine("\n  Entities (Scoped to Intent):");
         foreach (var entity in intent.Entities ?? Enumerable.Empty<ConversationalAIEntity>())
         {
-            Console.WriteLine($"Name: {entity.Name}");
-            Console.WriteLine($"Text: {entity.Text}");
-            Console.WriteLine($"Confidence: {entity.ConfidenceScore}");
-            Console.WriteLine($"Offset: {entity.Offset}, Length: {entity.Length}");
-            Console.WriteLine($"Conversation Item ID: {entity.ConversationItemId}, Index: {entity.ConversationItemIndex}");
+            Console.WriteLine($"    Name: {entity.Name}");
+            Console.WriteLine($"    Text: {entity.Text}");
+            Console.WriteLine($"    Confidence: {entity.ConfidenceScore}");
+            Console.WriteLine($"    Offset: {entity.Offset}, Length: {entity.Length}");
+            Console.WriteLine($"    Conversation Item ID: {entity.ConversationItemId}, Index: {entity.ConversationItemIndex}");
 
             if (entity.Resolutions != null)
             {
                 foreach (var res in entity.Resolutions.OfType<DateTimeResolution>())
                 {
-                    Console.WriteLine($" - [DateTimeResolution] SubKind: {res.DateTimeSubKind}, Timex: {res.Timex}, Value: {res.Value}");
+                    Console.WriteLine($"    - [DateTimeResolution] SubKind: {res.DateTimeSubKind}, Timex: {res.Timex}, Value: {res.Value}");
                 }
             }
 
@@ -90,41 +89,45 @@ foreach (var conversation in conversationalAIResult?.Conversations ?? Enumerable
             {
                 foreach (var extra in entity.ExtraInformation.OfType<EntitySubtype>())
                 {
-                    Console.WriteLine($" - [EntitySubtype] Value: {extra.Value}");
+                    Console.WriteLine($"    - [EntitySubtype] Value: {extra.Value}");
                     foreach (var tag in extra.Tags ?? Enumerable.Empty<EntityTag>())
                     {
-                        Console.WriteLine($"   • Tag: {tag.Name}, Confidence: {tag.ConfidenceScore}");
+                        Console.WriteLine($"      • Tag: {tag.Name}, Confidence: {tag.ConfidenceScore}");
                     }
                 }
             }
 
             Console.WriteLine();
         }
+
+        Console.WriteLine();
     }
 
     Console.WriteLine("Global Entities:");
     foreach (var entity in conversation.Entities ?? Enumerable.Empty<ConversationalAIEntity>())
     {
-        Console.WriteLine($"Name: {entity.Name}");
-        Console.WriteLine($"Text: {entity.Text}");
-        Console.WriteLine($"Confidence: {entity.ConfidenceScore}");
-        Console.WriteLine($"Offset: {entity.Offset}, Length: {entity.Length}");
-        Console.WriteLine($"Conversation Item ID: {entity.ConversationItemId}, Index: {entity.ConversationItemIndex}");
+        Console.WriteLine($"  Name: {entity.Name}");
+        Console.WriteLine($"  Text: {entity.Text}");
+        Console.WriteLine($"  Confidence: {entity.ConfidenceScore}");
+        Console.WriteLine($"  Offset: {entity.Offset}, Length: {entity.Length}");
+        Console.WriteLine($"  Conversation Item ID: {entity.ConversationItemId}, Index: {entity.ConversationItemIndex}");
 
         if (entity.ExtraInformation != null)
         {
             foreach (var extra in entity.ExtraInformation.OfType<EntitySubtype>())
             {
-                Console.WriteLine($" - [EntitySubtype] Value: {extra.Value}");
+                Console.WriteLine($"    - [EntitySubtype] Value: {extra.Value}");
                 foreach (var tag in extra.Tags ?? Enumerable.Empty<EntityTag>())
                 {
-                    Console.WriteLine($"   • Tag: {tag.Name}, Confidence: {tag.ConfidenceScore}");
+                    Console.WriteLine($"      • Tag: {tag.Name}, Confidence: {tag.ConfidenceScore}");
                 }
             }
         }
 
         Console.WriteLine();
     }
+
+    Console.WriteLine(new string('-', 40));
 }
 ```
 
@@ -134,5 +137,5 @@ Using the same `data` definition above, you can make an asynchronous request by 
 
 ```C# Snippet:ConversationAnalysis_AnalyzeAIConversationAsync
 Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(data);
-ConversationalAITaskResult ConversationalAITaskResult = response.Value as ConversationalAITaskResult;
+ConversationalAITaskResult taskResult = response.Value as ConversationalAITaskResult;
 ```
