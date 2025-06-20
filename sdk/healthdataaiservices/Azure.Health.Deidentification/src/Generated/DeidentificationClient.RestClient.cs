@@ -33,9 +33,8 @@ namespace Azure.Health.Deidentification
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
+            request.Headers.SetValue("accept", "application/json");
             return message;
         }
 
@@ -48,10 +47,9 @@ namespace Azure.Health.Deidentification
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
+            request.Headers.SetValue("contentType", "application/json");
+            request.Headers.SetValue("accept", "application/json");
             request.Content = content;
             return message;
         }
@@ -64,7 +62,6 @@ namespace Azure.Health.Deidentification
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
                 uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
@@ -74,7 +71,7 @@ namespace Azure.Health.Deidentification
                 uri.AppendQuery("continuationToken", continuationToken, true);
             }
             request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
+            request.Headers.SetValue("accept", "application/json");
             return message;
         }
 
@@ -86,7 +83,7 @@ namespace Azure.Health.Deidentification
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
             request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
+            request.Headers.SetValue("accept", "application/json");
             return message;
         }
 
@@ -100,7 +97,6 @@ namespace Azure.Health.Deidentification
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath("/documents", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
                 uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
@@ -110,7 +106,7 @@ namespace Azure.Health.Deidentification
                 uri.AppendQuery("continuationToken", continuationToken, true);
             }
             request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
+            request.Headers.SetValue("accept", "application/json");
             return message;
         }
 
@@ -122,7 +118,7 @@ namespace Azure.Health.Deidentification
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
             request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
+            request.Headers.SetValue("accept", "application/json");
             return message;
         }
 
@@ -136,9 +132,8 @@ namespace Azure.Health.Deidentification
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
             uri.AppendPath(":cancel", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
+            request.Headers.SetValue("accept", "application/json");
             return message;
         }
 
@@ -151,9 +146,8 @@ namespace Azure.Health.Deidentification
             uri.Reset(_endpoint);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
+            request.Headers.SetValue("accept", "application/json");
             return message;
         }
 
@@ -165,10 +159,9 @@ namespace Azure.Health.Deidentification
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/deid", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
+            request.Headers.SetValue("contentType", "application/json");
+            request.Headers.SetValue("accept", "application/json");
             request.Content = content;
             return message;
         }
