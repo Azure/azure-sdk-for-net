@@ -29,7 +29,7 @@ stages:
               Image: windows-2022
             Linux:
               Pool: azsdk-pool
-              Image: ubuntu-22.04
+              Image: ubuntu-24.04
             Mac:
               Pool: Azure Pipelines
               Image: macos-latest
