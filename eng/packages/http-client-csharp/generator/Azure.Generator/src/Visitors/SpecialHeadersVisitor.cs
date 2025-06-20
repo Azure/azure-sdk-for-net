@@ -26,11 +26,11 @@ namespace Azure.Generator.Visitors
             ScmMethodProviderCollection? methods)
         {
             var clientRequestIdParameter =
-                serviceMethod.Operation.Parameters.FirstOrDefault(p => p.NameInRequest == "client-request-id");
+                serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == "client-request-id");
             var returnClientRequestIdParameter =
-                serviceMethod.Operation.Parameters.FirstOrDefault(p => p.NameInRequest == "return-client-request-id");
+                serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == "return-client-request-id");
             var xMsClientRequestIdParameter =
-                serviceMethod.Operation.Parameters.FirstOrDefault(p => p.NameInRequest == "x-ms-client-request-id");
+                serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == "x-ms-client-request-id");
 
             if (clientRequestIdParameter != null || returnClientRequestIdParameter != null || xMsClientRequestIdParameter != null)
             {
