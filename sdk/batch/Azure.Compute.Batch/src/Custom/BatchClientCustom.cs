@@ -109,7 +109,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePoolExistsRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreatePoolExistsRequest(poolId, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpdate, ifModifiedSince: requestConditions?.IfModifiedSince, ifUnmodifiedSince: requestConditions?.IfUnmodifiedSince, ifMatch: requestConditions?.IfMatch?.ToString(), ifNoneMatch: requestConditions?.IfNoneMatch?.ToString(), context);
                 return await Pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -152,7 +152,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePoolExistsRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
+                using HttpMessage message = CreatePoolExistsRequest(poolId, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpdate, ifModifiedSince: requestConditions?.IfModifiedSince, ifUnmodifiedSince: requestConditions?.IfUnmodifiedSince, ifMatch: requestConditions?.IfMatch?.ToString(), ifNoneMatch: requestConditions?.IfNoneMatch?.ToString(), context);
                 return Pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
             }
             catch (Exception e)
@@ -198,7 +198,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
+                using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, clientRequestId: null, returnClientRequestId: null, ocpDate, ifModifiedSince: requestConditions?.IfModifiedSince, ifUnmodifiedSince: requestConditions?.IfUnmodifiedSince, ifMatch: requestConditions?.IfMatch?.ToString(), ifNoneMatch: requestConditions?.IfNoneMatch?.ToString(), context);
                 return await Pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -244,7 +244,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
+                using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, clientRequestId: null, returnClientRequestId: null, ocpDate, ifModifiedSince: requestConditions?.IfModifiedSince, ifUnmodifiedSince: requestConditions?.IfUnmodifiedSince, ifMatch: requestConditions?.IfMatch?.ToString(), ifNoneMatch: requestConditions?.IfNoneMatch?.ToString(), context);
                 return Pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
             }
             catch (Exception e)
@@ -748,7 +748,7 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJob");
             scope.Start();
             try
-            {   Response response = await DeleteJobInternalAsync(jobId, timeOutInSeconds, ocpDate, force, requestConditions, context).ConfigureAwait(false);
+            {   Response response = await DeleteJobInternalAsync(jobId, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpDate, ifModifiedSince: requestConditions?.IfModifiedSince, ifUnmodifiedSince: requestConditions?.IfUnmodifiedSince, ifMatch: requestConditions?.IfMatch?.ToString(), ifNoneMatch: requestConditions?.IfNoneMatch?.ToString(), force, cancellationToken: context?.CancellationToken ?? CancellationToken.None).ConfigureAwait(false);
                 return new DeleteJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -790,7 +790,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = DeleteJobInternal(jobId, timeOutInSeconds, ocpDate, force, requestConditions, context);
+                Response response = DeleteJobInternal(jobId, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpDate, ifModifiedSince: requestConditions?.IfModifiedSince, ifUnmodifiedSince: requestConditions?.IfUnmodifiedSince, ifMatch: requestConditions?.IfMatch?.ToString(), ifNoneMatch: requestConditions?.IfNoneMatch?.ToString(), force, cancellationToken: context?.CancellationToken ?? CancellationToken.None);
                 return new DeleteJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -1372,7 +1372,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = await DeallocateNodeInternalAsync(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response response = await DeallocateNodeInternalAsync(poolId, nodeId, parameters, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return new DeallocateNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
             }
             catch (Exception e)
@@ -1403,7 +1403,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = DeallocateNodeInternal(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken);
+                Response response = DeallocateNodeInternal(poolId, nodeId, parameters, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpDate, cancellationToken: cancellationToken);
                 return new DeallocateNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
             }
             catch (Exception e)
@@ -1443,7 +1443,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = await StartNodeInternalAsync(poolId, nodeId, timeOutInSeconds, ocpDate, context: context).ConfigureAwait(false);
+                Response response = await StartNodeInternalAsync(poolId, nodeId, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpDate, context).ConfigureAwait(false);
                 return new StartNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
             }
             catch (Exception e)
@@ -1483,7 +1483,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = StartNodeInternal(poolId, nodeId, timeOutInSeconds, ocpDate, context: context);
+                Response response = StartNodeInternal(poolId, nodeId, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpDate, context);
                 return new StartNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
             }
             catch (Exception e)
@@ -1514,7 +1514,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = await RebootNodeInternalAsync(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response response = await RebootNodeInternalAsync(poolId, nodeId, parameters, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return new RebootNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
             }
             catch (Exception e)
@@ -1545,7 +1545,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = RebootNodeInternal(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken);
+                Response response = RebootNodeInternal(poolId, nodeId, parameters, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpDate, cancellationToken: cancellationToken);
                 return new RebootNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
             }
             catch (Exception e)
@@ -1580,7 +1580,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = await ReimageNodeInternalAsync(poolId: poolId, nodeId:  nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
+                Response response = await ReimageNodeInternalAsync(poolId: poolId, nodeId:  nodeId, parameters, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpDate, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return new ReimageNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
             }
             catch (Exception e)
@@ -1615,7 +1615,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = ReimageNodeInternal(poolId, nodeId, parameters, timeOutInSeconds, ocpDate, cancellationToken: cancellationToken);
+                Response response = ReimageNodeInternal(poolId, nodeId, parameters, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpDate, cancellationToken: cancellationToken);
                 return new ReimageNodeOperation(this, poolId: poolId, nodeId: nodeId, response);
             }
             catch (Exception e)
