@@ -7,13 +7,13 @@ parameters:
   default: '360'
 - name: LinuxPool
   type: string
-  default: 'azsdk-pool-mms-ubuntu-2204-perf'
+  default: 'azsdk-pool'
 - name: LinuxVmImage
   type: string
   default: 'ubuntu-22.04'
 - name: WindowsPool
   type: string
-  default: 'azsdk-pool-mms-win-2022-perf'
+  default: 'azsdk-pool'
 - name: WindowsVmImage
   type: string
   default: 'windows-2022'
@@ -112,7 +112,7 @@ jobs:
   - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
     parameters:
       AgentImage: $(OSVmImage)
-      
+
   - ${{ parameters.InstallLanguageSteps }}
 
   - template: /eng/common/TestResources/deploy-test-resources.yml
