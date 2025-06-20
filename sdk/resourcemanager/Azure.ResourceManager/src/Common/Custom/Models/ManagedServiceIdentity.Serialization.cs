@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Models
             return false;
         }
 
-        internal void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options, JsonSerializerOptions jOptions = null)
+        void IJsonModel<ManagedServiceIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string optionsFormat);
             var format = optionsFormat == "W" ? ((IPersistableModel<ManagedServiceIdentity>)this).GetFormatFromOptions(options) : optionsFormat;
@@ -90,11 +90,6 @@ namespace Azure.ResourceManager.Models
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
-        }
-
-        void IJsonModel<ManagedServiceIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            Write(writer, options, jOptions: null);
         }
 
         ManagedServiceIdentity IJsonModel<ManagedServiceIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -210,7 +205,7 @@ namespace Azure.ResourceManager.Models
             }
         }
 
-        internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element, ModelReaderWriterOptions options, JsonSerializerOptions jOptions)
+        internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
             var useManagedServiceIdentityV3 = UseManagedServiceIdentityV3(options, out string format);
@@ -276,11 +271,6 @@ namespace Azure.ResourceManager.Models
             return new ManagedServiceIdentity(principalId, tenantId, type, userAssignedIdentities ?? new ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity>());
         }
 
-        internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            return DeserializeManagedServiceIdentity(element, options, null);
-        }
-
         ManagedServiceIdentity IPersistableModel<ManagedServiceIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             options ??= new ModelReaderWriterOptions("W");
@@ -313,12 +303,12 @@ namespace Azure.ResourceManager.Models
 
             public override void Write(Utf8JsonWriter writer, ManagedServiceIdentity model, JsonSerializerOptions options)
             {
-                model.Write(writer, UseManagedServiceIdentityV3(options) ? V3Options : new ModelReaderWriterOptions("W"), options);
+                ((IJsonModel<ManagedServiceIdentity>)model).Write(writer, UseManagedServiceIdentityV3(options) ? V3Options : new ModelReaderWriterOptions("W"));
             }
             public override ManagedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeManagedServiceIdentity(document.RootElement, UseManagedServiceIdentityV3(options) ? V3Options : null, options);
+                return DeserializeManagedServiceIdentity(document.RootElement, UseManagedServiceIdentityV3(options) ? V3Options : null);
             }
         }
     }
