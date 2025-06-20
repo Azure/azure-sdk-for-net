@@ -44,7 +44,7 @@ namespace Azure.Compute.Batch
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new BatchErrorDetailsParser()
             };
-            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
+            Pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _endpoint = endpoint;
             _apiVersion = options.Version;
@@ -70,7 +70,7 @@ namespace Azure.Compute.Batch
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new BatchErrorDetailsParser()
             };
-            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
+            Pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _endpoint = endpoint;
             _apiVersion = options.Version;
@@ -110,7 +110,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreatePoolExistsRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
-                return await _pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
+                return await Pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -153,7 +153,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreatePoolExistsRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
-                return _pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
+                return Pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
-                return await _pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
+                return await Pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -245,7 +245,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
-                return _pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
+                return Pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
             }
             catch (Exception e)
             {
