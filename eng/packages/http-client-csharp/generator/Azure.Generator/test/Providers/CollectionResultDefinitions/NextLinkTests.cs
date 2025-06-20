@@ -169,6 +169,20 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
         }
 
         [Test]
+        public void NextLinkInBodyWithStringProperty()
+        {
+            CreatePagingOperation(InputResponseLocation.Body, useStringProperty: true);
+
+            var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
+                t => t is CollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
+            Assert.IsNotNull(collectionResultDefinition);
+
+            var writer = new TypeProviderWriter(collectionResultDefinition!);
+            var file = writer.Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        [Test]
         public void UsesValidFieldIdentifierNames()
         {
             MockHelpers.LoadMockPlugin();
