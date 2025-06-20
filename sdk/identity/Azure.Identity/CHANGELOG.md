@@ -3,6 +3,7 @@
 ## 1.15.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for the `AZURE_TOKEN_CREDENTIALS` environment variable to `DefaultAzureCredential`, which allows for additional credential selection options. The valid values now include any of the credential names available in the default chain (VisualStudioCredential, VisualStudioCodeCredential, AzureCliCredential, AzurePowerShellCredential, AzureDeveloperCliCredential, EnvironmentCredential, WorkloadIdentityCredential, ManagedIdentityCredential, InteractiveBrowserCredential, or BrokerAuthenticationCredential.) **Note:** BrokerAuthenticationCredential require that the project include a reference to Azure.Identity.Broker.
 
 ### Breaking Changes
 
