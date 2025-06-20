@@ -16,12 +16,9 @@ namespace Azure.Communication.CallAutomation
         /// Initializes a new instance of the <see cref="PostProcessingOptions"/> class.
         /// </summary>
         public PostProcessingOptions(
-            string cognitiveServicesEndpoint,
-            SummarizationSettings summarization = null,
-            TranscriptionSettings transcription = null)
+            TranscriptionSettings transcription
+        )
         {
-            this.CognitiveServicesEndpoint = cognitiveServicesEndpoint;
-            this.Summarization = summarization;
             this.Transcription = transcription;
         }
 
@@ -31,26 +28,8 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public string CognitiveServicesEndpoint { get; set; }
         /// <summary> Define options of the transcription for the post recording processing. </summary>
-        internal TranscriptionSettings Transcription { get; private set;}
+        public TranscriptionSettings Transcription { get; }
         /// <summary> Define options of the summarization for the post recording processing. </summary>
-        internal SummarizationSettings Summarization { get; private set; }
-
-        /// <summary>
-        /// Set the transcription settings for the post recording processing.
-        /// </summary>
-        /// <param name="enableTranscription"></param>
-        public void setTranscriptionSettings(bool enableTranscription)
-        {
-            this.Transcription = new TranscriptionSettings(enableTranscription);
-        }
-
-        /// <summary>
-        /// Set the summarization settings for the post recording processing.
-        /// </summary>
-        /// <param name="enableSummarization"></param>
-        public void setSummarizationSettings(bool enableSummarization)
-        {
-            this.Summarization = new SummarizationSettings(enableSummarization);
-        }
+        public SummarizationSettings Summarization { get; set; }
     }
 }

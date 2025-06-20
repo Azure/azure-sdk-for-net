@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsRouterJobClassificationFailedEventDataConverter))]
     public partial class AcsRouterJobClassificationFailedEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterJobClassificationFailedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterJobClassificationFailedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -40,13 +42,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
-            writer.WritePropertyName("errors"u8);
-            writer.WriteStartArray();
-            foreach (var item in Errors)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in ErrorsInternal)
+                {
+                    writer.WriteObjectValue<AcsRouterCommunicationError>(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
         }
 
         AcsRouterJobClassificationFailedEventData IJsonModel<AcsRouterJobClassificationFailedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -161,7 +166,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsRouterJobClassificationFailedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -199,6 +204,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsRouterJobClassificationFailedEventDataConverter : JsonConverter<AcsRouterJobClassificationFailedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsRouterJobClassificationFailedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsRouterJobClassificationFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsRouterJobClassificationFailedEventData(document.RootElement);
+            }
         }
     }
 }

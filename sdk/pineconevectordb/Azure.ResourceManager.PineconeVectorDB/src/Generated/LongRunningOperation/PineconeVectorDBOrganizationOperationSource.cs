@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PineconeVectorDB
 
         PineconeVectorDBOrganizationResource IOperationSource<PineconeVectorDBOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PineconeVectorDBOrganizationData>(response.Content);
+            var data = ModelReaderWriter.Read<PineconeVectorDBOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPineconeVectorDBContext.Default);
             return new PineconeVectorDBOrganizationResource(_client, data);
         }
 
         async ValueTask<PineconeVectorDBOrganizationResource> IOperationSource<PineconeVectorDBOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PineconeVectorDBOrganizationData>(response.Content);
+            var data = ModelReaderWriter.Read<PineconeVectorDBOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPineconeVectorDBContext.Default);
             return await Task.FromResult(new PineconeVectorDBOrganizationResource(_client, data)).ConfigureAwait(false);
         }
     }

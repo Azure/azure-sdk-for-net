@@ -25,6 +25,9 @@ internal readonly struct FeatureRole
 
 internal class RoleResolver(string id, Dictionary<Provisionable, List<FeatureRole>> annotations, IEnumerable<UserAssignedIdentity> managedIdentities, IEnumerable<BicepValue<Guid>> userPrincipals) : InfrastructureResolver
 {
+    private static string RoleAssignmentVersion =>
+        RoleAssignment.ResourceVersions.V2022_04_01;
+
     public override IEnumerable<Provisionable> ResolveResources(IEnumerable<Provisionable> resources, ProvisioningBuildOptions options)
     {
         Dictionary<string, int> roleCount = new();
@@ -50,7 +53,7 @@ internal class RoleResolver(string id, Dictionary<Provisionable, List<FeatureRol
 
                         string bicepId = $"{resource.BicepIdentifier}_admin_{role.Name}";
                         if (count > 1) bicepId = $"{resource.BicepIdentifier}_admin_{role.Name}_{count}";
-                        yield return new RoleAssignment(bicepId)
+                        yield return new RoleAssignment(bicepId, RoleAssignmentVersion)
                         {
                             Name = BicepFunction.CreateGuid(resource.BicepIdentifier, id, userPrincipal, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.Id)),
                             Scope = new IdentifierExpression(resource.BicepIdentifier),
@@ -62,7 +65,7 @@ internal class RoleResolver(string id, Dictionary<Provisionable, List<FeatureRol
 
                     foreach (UserAssignedIdentity identity in managedIdentities)
                     {
-                        yield return new RoleAssignment($"{resource.BicepIdentifier}_{identity.BicepIdentifier}_{role.Name}")
+                        yield return new RoleAssignment($"{resource.BicepIdentifier}_{identity.BicepIdentifier}_{role.Name}", RoleAssignmentVersion)
                         {
                             Name = BicepFunction.CreateGuid(resource.BicepIdentifier, identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.Id)),
                             Scope = new IdentifierExpression(resource.BicepIdentifier),

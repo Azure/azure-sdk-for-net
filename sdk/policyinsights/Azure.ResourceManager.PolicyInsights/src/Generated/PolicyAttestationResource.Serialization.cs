@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PolicyInsights
 {
     public partial class PolicyAttestationResource : IJsonModel<PolicyAttestationData>
     {
+        private static PolicyAttestationData s_dataDeserializationInstance;
+        private static PolicyAttestationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PolicyAttestationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicyAttestationData>)Data).Write(writer, options);
 
-        PolicyAttestationData IJsonModel<PolicyAttestationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyAttestationData>)Data).Create(ref reader, options);
+        PolicyAttestationData IJsonModel<PolicyAttestationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyAttestationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PolicyAttestationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<PolicyAttestationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PolicyAttestationData>(Data, options, AzureResourceManagerPolicyInsightsContext.Default);
 
-        PolicyAttestationData IPersistableModel<PolicyAttestationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyAttestationData>(data, options);
+        PolicyAttestationData IPersistableModel<PolicyAttestationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyAttestationData>(data, options, AzureResourceManagerPolicyInsightsContext.Default);
 
-        string IPersistableModel<PolicyAttestationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyAttestationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PolicyAttestationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyAttestationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

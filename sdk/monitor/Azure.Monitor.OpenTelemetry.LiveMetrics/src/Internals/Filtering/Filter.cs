@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
     /// The filter's configuration (condition) is specified in a <see cref="FilterInfo"/> DTO.
     /// </summary>
     /// <typeparam name="TTelemetry">Type of telemetry documents.</typeparam>
-    internal class Filter<TTelemetry> where TTelemetry : DocumentIngress
+    internal class Filter<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] TTelemetry> where TTelemetry : DocumentIngress
     {
         private const string FieldNameCustomDimensionsPrefix = "CustomDimensions.";
 
@@ -370,10 +370,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         {
             try
             {
-                Type propertyType = fieldName.Split(FieldNameTrainSeparator)
-                    .Aggregate(
-                        typeof(TTelemetry),
-                        (type, propertyName) => type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public).PropertyType);
+                Type propertyType = typeof(TTelemetry);
+
+                foreach (string propertyName in fieldName.Split(FieldNameTrainSeparator))
+                {
+                    propertyType = GetPropertyType(propertyType, propertyName);
+                }
 
                 if (fieldName == "Duration")
                 {
@@ -399,6 +401,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     string.Format(CultureInfo.InvariantCulture, "Error finding property {0} in the type {1}", fieldName, typeof(TTelemetry).FullName),
                     e);
             }
+        }
+
+        private static Type GetPropertyType(
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] Type type,
+            string propertyName)
+        {
+            PropertyInfo propertyInfo = type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public)
+                ?? throw new ArgumentOutOfRangeException(nameof(propertyName), $"Property '{propertyName}' not found on type '{type.FullName}'");
+
+            return propertyInfo.PropertyType;
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Justification = "Argument exceptions are valid.")]

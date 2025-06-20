@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningEnvironmentVersionResource : IJsonModel<MachineLearningEnvironmentVersionData>
     {
+        private static MachineLearningEnvironmentVersionData s_dataDeserializationInstance;
+        private static MachineLearningEnvironmentVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MachineLearningEnvironmentVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningEnvironmentVersionData>)Data).Write(writer, options);
 
-        MachineLearningEnvironmentVersionData IJsonModel<MachineLearningEnvironmentVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningEnvironmentVersionData>)Data).Create(ref reader, options);
+        MachineLearningEnvironmentVersionData IJsonModel<MachineLearningEnvironmentVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningEnvironmentVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MachineLearningEnvironmentVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<MachineLearningEnvironmentVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningEnvironmentVersionData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        MachineLearningEnvironmentVersionData IPersistableModel<MachineLearningEnvironmentVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningEnvironmentVersionData>(data, options);
+        MachineLearningEnvironmentVersionData IPersistableModel<MachineLearningEnvironmentVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningEnvironmentVersionData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningEnvironmentVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningEnvironmentVersionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningEnvironmentVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningEnvironmentVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

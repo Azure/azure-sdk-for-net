@@ -91,6 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "AzureMLUpdateResource": return AzureMLUpdateResourceActivity.DeserializeAzureMLUpdateResourceActivity(element, options);
                     case "Copy": return CopyActivity.DeserializeCopyActivity(element, options);
                     case "Custom": return CustomActivity.DeserializeCustomActivity(element, options);
+                    case "DatabricksJob": return DatabricksJobActivity.DeserializeDatabricksJobActivity(element, options);
                     case "DatabricksNotebook": return DatabricksNotebookActivity.DeserializeDatabricksNotebookActivity(element, options);
                     case "DatabricksSparkJar": return DatabricksSparkJarActivity.DeserializeDatabricksSparkJarActivity(element, options);
                     case "DatabricksSparkPython": return DatabricksSparkPythonActivity.DeserializeDatabricksSparkPythonActivity(element, options);
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ExecutionActivity)} does not support writing '{options.Format}' format.");
             }

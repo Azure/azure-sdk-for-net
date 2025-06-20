@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AvsScriptExecutionEventDataConverter))]
     public partial class AvsScriptExecutionEventData : IUtf8JsonSerializable, IJsonModel<AvsScriptExecutionEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsScriptExecutionEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -38,7 +40,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WriteStringValue(OperationId);
             writer.WritePropertyName("cmdletId"u8);
             writer.WriteStringValue(CmdletId);
-            if (Optional.IsCollectionDefined(Output))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
@@ -132,7 +134,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AvsScriptExecutionEventData)} does not support writing '{options.Format}' format.");
             }
@@ -170,6 +172,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AvsScriptExecutionEventDataConverter : JsonConverter<AvsScriptExecutionEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AvsScriptExecutionEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AvsScriptExecutionEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAvsScriptExecutionEventData(document.RootElement);
+            }
         }
     }
 }

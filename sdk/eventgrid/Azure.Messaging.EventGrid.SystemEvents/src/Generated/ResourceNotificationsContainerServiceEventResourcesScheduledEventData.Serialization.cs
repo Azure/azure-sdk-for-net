@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ResourceNotificationsContainerServiceEventResourcesScheduledEventDataConverter))]
     public partial class ResourceNotificationsContainerServiceEventResourcesScheduledEventData : IUtf8JsonSerializable, IJsonModel<ResourceNotificationsContainerServiceEventResourcesScheduledEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceNotificationsContainerServiceEventResourcesScheduledEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -95,7 +97,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceNotificationsContainerServiceEventResourcesScheduledEventData)} does not support writing '{options.Format}' format.");
             }
@@ -133,6 +135,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ResourceNotificationsContainerServiceEventResourcesScheduledEventDataConverter : JsonConverter<ResourceNotificationsContainerServiceEventResourcesScheduledEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ResourceNotificationsContainerServiceEventResourcesScheduledEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ResourceNotificationsContainerServiceEventResourcesScheduledEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeResourceNotificationsContainerServiceEventResourcesScheduledEventData(document.RootElement);
+            }
         }
     }
 }

@@ -1,8 +1,8 @@
 param baseName string = resourceGroup().name
-param location string = 'eastus'
+param location string = 'centralus'
 
 resource loadTests 'Microsoft.LoadTestService/loadTests@2022-12-01' = {
-  name: '${baseName}-loadTests'
+  name: '${baseName}-csharpsdk-loadTests'
   location: location
   properties: {
   }

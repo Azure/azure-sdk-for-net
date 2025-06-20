@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class RouteFilterRuleResource : IJsonModel<RouteFilterRuleData>
     {
+        private static RouteFilterRuleData s_dataDeserializationInstance;
+        private static RouteFilterRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RouteFilterRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RouteFilterRuleData>)Data).Write(writer, options);
 
-        RouteFilterRuleData IJsonModel<RouteFilterRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteFilterRuleData>)Data).Create(ref reader, options);
+        RouteFilterRuleData IJsonModel<RouteFilterRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteFilterRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RouteFilterRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<RouteFilterRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RouteFilterRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        RouteFilterRuleData IPersistableModel<RouteFilterRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RouteFilterRuleData>(data, options);
+        RouteFilterRuleData IPersistableModel<RouteFilterRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RouteFilterRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<RouteFilterRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteFilterRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RouteFilterRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteFilterRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

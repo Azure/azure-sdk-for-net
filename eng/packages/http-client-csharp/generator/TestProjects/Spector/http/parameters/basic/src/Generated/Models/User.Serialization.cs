@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Parameters.Basic.Models
 {
     public partial class User : IJsonModel<User>
     {
+        internal User() => throw null;
+
         void IJsonModel<User>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -35,7 +36,5 @@ namespace Parameters.Basic.Models
 
         /// <param name="user"> The <see cref="User"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(User user) => throw null;
-
-        public static explicit operator User(Response result) => throw null;
     }
 }

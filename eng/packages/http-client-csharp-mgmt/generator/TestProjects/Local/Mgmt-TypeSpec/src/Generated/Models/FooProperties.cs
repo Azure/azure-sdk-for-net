@@ -16,10 +16,18 @@ namespace MgmtTypeSpec.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        internal FooProperties()
+        /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
+        public FooProperties()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FooProperties"/>. </summary>
+        /// <param name="serviceUrl"> the service url. </param>
+        /// <param name="something"> something. </param>
+        /// <param name="boolValue"> boolean value. </param>
+        /// <param name="floatValue"> float value. </param>
+        /// <param name="doubleValue"> double value. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal FooProperties(Uri serviceUrl, string something, bool? boolValue, float? floatValue, double? doubleValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceUrl = serviceUrl;
@@ -31,18 +39,18 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> the service url. </summary>
-        public Uri ServiceUrl { get; }
+        public Uri ServiceUrl { get; set; }
 
         /// <summary> something. </summary>
-        public string Something { get; }
+        public string Something { get; set; }
 
         /// <summary> boolean value. </summary>
-        public bool? BoolValue { get; }
+        public bool? BoolValue { get; set; }
 
         /// <summary> float value. </summary>
-        public float? FloatValue { get; }
+        public float? FloatValue { get; set; }
 
         /// <summary> double value. </summary>
-        public double? DoubleValue { get; }
+        public double? DoubleValue { get; set; }
     }
 }

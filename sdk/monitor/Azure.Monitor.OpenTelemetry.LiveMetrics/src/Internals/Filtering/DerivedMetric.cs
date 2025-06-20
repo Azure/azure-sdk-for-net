@@ -5,6 +5,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -16,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
     /// which defines which field to use as a value, and an aggregation which dictates the algorithm of arriving at
     /// a single reportable value within a second.
     /// </summary>
-    internal class DerivedMetric<TTelemetry> where TTelemetry : DocumentIngress
+    internal class DerivedMetric<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] TTelemetry> where TTelemetry : DocumentIngress
     {
         private const string ProjectionCount = "Count()";
 

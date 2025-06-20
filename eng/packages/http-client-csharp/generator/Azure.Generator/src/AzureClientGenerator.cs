@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Visitors;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -49,5 +50,9 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientGenerator).Assembly.Location)!, "Shared", "Core");
         AddSharedSourceDirectory(sharedSourceDirectory);
         AddVisitor(new NamespaceVisitor());
+        AddVisitor(new DistributedTracingVisitor());
+        AddVisitor(new PipelinePropertyVisitor());
+        AddVisitor(new LroVisitor());
+        AddVisitor(new ModelFactoryVisitor());
     }
 }

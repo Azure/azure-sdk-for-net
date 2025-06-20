@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBTableRoleAssignmentResource : IJsonModel<CosmosDBTableRoleAssignmentData>
     {
+        private static CosmosDBTableRoleAssignmentData s_dataDeserializationInstance;
+        private static CosmosDBTableRoleAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CosmosDBTableRoleAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBTableRoleAssignmentData>)Data).Write(writer, options);
 
-        CosmosDBTableRoleAssignmentData IJsonModel<CosmosDBTableRoleAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBTableRoleAssignmentData>)Data).Create(ref reader, options);
+        CosmosDBTableRoleAssignmentData IJsonModel<CosmosDBTableRoleAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBTableRoleAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBTableRoleAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CosmosDBTableRoleAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBTableRoleAssignmentData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        CosmosDBTableRoleAssignmentData IPersistableModel<CosmosDBTableRoleAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBTableRoleAssignmentData>(data, options);
+        CosmosDBTableRoleAssignmentData IPersistableModel<CosmosDBTableRoleAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBTableRoleAssignmentData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CosmosDBTableRoleAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBTableRoleAssignmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBTableRoleAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBTableRoleAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

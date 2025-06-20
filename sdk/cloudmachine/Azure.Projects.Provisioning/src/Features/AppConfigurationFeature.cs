@@ -3,20 +3,23 @@
 
 using Azure.Projects.Core;
 using Azure.Provisioning.AppConfiguration;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Projects;
 
 public class AppConfigurationFeature : AzureProjectFeature
 {
     public AppConfigurationFeature()
-    {}
+    { }
+
+    public SkuName Sku { get; set; } = SkuName.Free;
 
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
-        AppConfigurationStore appConfigResource = new("appConfiguration")
+        AppConfigurationStore appConfigResource = new("appConfiguration", AppConfigurationStore.ResourceVersions.V2024_05_01)
         {
             Name = infrastructure.ProjectId,
-            SkuName = "Free",
+            SkuName = Sku.ToString(),
         };
         infrastructure.AddConstruct(Id, appConfigResource);
 
@@ -28,6 +31,13 @@ public class AppConfigurationFeature : AzureProjectFeature
 
         var endpoint = $"https://{infrastructure.ProjectId}.azconfig.io";
         EmitConnection(infrastructure, "Azure.Data.AppConfiguration.ConfigurationClient", endpoint);
+    }
+
+    public enum SkuName {
+        Free,
+        Developer,
+        Standard,
+        Premium
     }
 }
 
@@ -70,7 +80,7 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
         if (_bicepIdentifier == null) _bicepIdentifier = store.BicepIdentifier + "_setting";
 
         string bicepIdentifier = infrastructure.Features.CreateUniqueBicepIdentifier(_bicepIdentifier);
-        AppConfigurationKeyValue kvp = new(bicepIdentifier)
+        AppConfigurationKeyValue kvp = new(bicepIdentifier, AppConfigurationKeyValue.ResourceVersions.V2024_05_01)
         {
             Name = Key,
             Value = Value,

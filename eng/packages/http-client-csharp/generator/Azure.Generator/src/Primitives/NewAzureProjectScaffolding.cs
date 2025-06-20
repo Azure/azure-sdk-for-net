@@ -18,14 +18,15 @@ namespace Azure.Generator.Primitives
         private const string MSBuildThisFileDirectory = "$(MSBuildThisFileDirectory)";
         private const string RelativeCoreSegment = "sdk/core/Azure.Core/src/Shared/";
         private const string ParentDirectory = "../";
+        private const string SharedSourceLinkBase = "Shared/Core";
 
         /// <inheritdoc/>
         protected override string GetSourceProjectFileContent()
         {
             var builder = new CSharpProjectWriter()
             {
-                Description = $"This is the {AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace} client library for developing .NET applications with rich experience.",
-                AssemblyTitle = $"SDK Code Generation {AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace}",
+                Description = $"This is the {AzureClientGenerator.Instance.Configuration.PackageName} client library for developing .NET applications with rich experience.",
+                AssemblyTitle = $"SDK Code Generation {AzureClientGenerator.Instance.Configuration.PackageName}",
                 Version = "1.0.0-beta.1",
                 PackageTags = AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace,
                 GenerateDocumentationFile = true,
@@ -39,7 +40,7 @@ namespace Azure.Generator.Primitives
             int pathSegmentCount = GetPathSegmentCount();
             if (AzureClientGenerator.Instance.InputLibrary.InputNamespace.Auth?.ApiKey is not null)
             {
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), "Shared/Core"));
+                builder.CompileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), SharedSourceLinkBase));
             }
 
             bool hasOperation = false;
@@ -51,29 +52,42 @@ namespace Azure.Generator.Primitives
 
             if (hasOperation)
             {
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RawRequestUriBuilder.cs", pathSegmentCount), "Shared/Core"));
+                foreach (var file in _operationSharedFiles)
+                {
+                    builder.CompileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
+                }
             }
 
             if (hasLongRunningOperation)
             {
                 foreach (var file in _lroSharedFiles)
                 {
-                    builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), "Shared/Core"));
+                    builder.CompileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
                 }
             }
 
             return builder.Write();
         }
 
-        private static readonly IReadOnlyList<string> _lroSharedFiles =
+        private static readonly IReadOnlyList<string> _operationSharedFiles =
         [
+            "RawRequestUriBuilder.cs",
+            "TypeFormatters.cs",
+            "RequestHeaderExtensions.cs",
             "AppContextSwitchHelper.cs",
-            "AsyncLockWithValue.cs",
-            "FixedDelayWithNoJitterStrategy.cs",
             "ClientDiagnostics.cs",
             "DiagnosticScopeFactory.cs",
             "DiagnosticScope.cs",
             "HttpMessageSanitizer.cs",
+            "TrimmingAttribute.cs",
+            "NoValueResponseOfT.cs",
+        ];
+
+        private static readonly IReadOnlyList<string> _lroSharedFiles =
+        [
+            "AsyncLockWithValue.cs",
+            "FixedDelayWithNoJitterStrategy.cs",
+            "HttpPipelineExtensions.cs",
             "IOperationSource.cs",
             "NextLinkOperationImplementation.cs",
             "OperationFinalStateVia.cs",
@@ -81,16 +95,20 @@ namespace Azure.Generator.Primitives
             "OperationInternalBase.cs",
             "OperationInternalOfT.cs",
             "OperationPoller.cs",
+            "ProtocolOperation.cs",
+            "ProtocolOperationHelpers.cs",
             "SequentialDelayStrategy.cs",
             "TaskExtensions.cs",
-            "TrimmingAttribute.cs",
             "VoidValue.cs"
         ];
 
         private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation)
         {
-            hasOperation = false;
-            hasLongRunningOperation = false;
+            if (hasOperation && hasLongRunningOperation)
+            {
+                return;
+            }
+
             foreach (var method in rootClient.Methods)
             {
                 hasOperation = true;

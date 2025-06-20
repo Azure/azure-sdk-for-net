@@ -44,13 +44,21 @@ namespace Azure.ResourceManager.DnsResolver
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("domains"u8);
-            writer.WriteStartArray();
-            foreach (var item in Domains)
+            if (Optional.IsCollectionDefined(Domains))
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("domains"u8);
+                writer.WriteStartArray();
+                foreach (var item in Domains)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
+            if (options.Format != "W" && Optional.IsDefined(DomainsUri))
+            {
+                writer.WritePropertyName("domainsUrl"u8);
+                writer.WriteStringValue(DomainsUri.AbsoluteUri);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -92,6 +100,7 @@ namespace Azure.ResourceManager.DnsResolver
             ResourceType type = default;
             SystemData systemData = default;
             IList<string> domains = default;
+            Uri domainsUrl = default;
             DnsResolverProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -161,12 +170,25 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         if (property0.NameEquals("domains"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
                                 array.Add(item.GetString());
                             }
                             domains = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("domainsUrl"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            domainsUrl = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -204,7 +226,8 @@ namespace Azure.ResourceManager.DnsResolver
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 etag,
-                domains,
+                domains ?? new ChangeTrackingList<string>(),
+                domainsUrl,
                 provisioningState,
                 resourceGuid,
                 serializedAdditionalRawData);
@@ -217,7 +240,7 @@ namespace Azure.ResourceManager.DnsResolver
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsResolverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DnsResolverDomainListData)} does not support writing '{options.Format}' format.");
             }

@@ -14,12 +14,13 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
     name: "MIT License",
     company: "Microsoft Corporation"
   };
+  context.options["package-name"] ??= context.options["namespace"];
 
   // warn if use-model-namespaces is true, but namespace is not set
   if (context.options["model-namespace"] && !context.options["namespace"]) {
     $lib.reportDiagnostic(context.program, {
       code: "invalid-model-namespace-usage",
-      target: NoTarget,
+      target: NoTarget
     });
   }
 

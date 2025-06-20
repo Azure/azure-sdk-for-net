@@ -144,6 +144,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("privateEndpointVNetPolicies"u8);
                 writer.WriteStringValue(PrivateEndpointVnetPolicy.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(DefaultPublicNatGateway))
+            {
+                writer.WritePropertyName("defaultPublicNatGateway"u8);
+                JsonSerializer.Serialize(writer, DefaultPublicNatGateway);
+            }
             writer.WriteEndObject();
         }
 
@@ -189,6 +194,7 @@ namespace Azure.ResourceManager.Network
             IList<WritableSubResource> ipAllocations = default;
             IReadOnlyList<FlowLogData> flowLogs = default;
             PrivateEndpointVnetPolicy? privateEndpointVNetPolicies = default;
+            WritableSubResource defaultPublicNatGateway = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -421,6 +427,15 @@ namespace Azure.ResourceManager.Network
                             privateEndpointVNetPolicies = new PrivateEndpointVnetPolicy(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("defaultPublicNatGateway"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            defaultPublicNatGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -453,7 +468,8 @@ namespace Azure.ResourceManager.Network
                 encryption,
                 ipAllocations ?? new ChangeTrackingList<WritableSubResource>(),
                 flowLogs ?? new ChangeTrackingList<FlowLogData>(),
-                privateEndpointVNetPolicies);
+                privateEndpointVNetPolicies,
+                defaultPublicNatGateway);
         }
 
         BinaryData IPersistableModel<VirtualNetworkData>.Write(ModelReaderWriterOptions options)
@@ -463,7 +479,7 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support writing '{options.Format}' format.");
             }

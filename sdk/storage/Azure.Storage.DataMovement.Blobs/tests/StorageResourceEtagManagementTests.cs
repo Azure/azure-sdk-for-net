@@ -213,21 +213,21 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             List<string> names = Enumerable.Range(0, blobTypes.Count)
                 .Select(_ => Guid.NewGuid().ToString())
                 .ToList();
-            List<BlobItem> blobListItems = Enumerable.Range(0, blobTypes.Count)
-                .Select(i => BlobsModelFactory.BlobItem(
+            List<BlobHierarchyItem> blobListItems = Enumerable.Range(0, blobTypes.Count)
+                .Select(i => new BlobHierarchyItem(default, BlobsModelFactory.BlobItem(
                     name: names[i],
                     properties: BlobsModelFactory.BlobItemProperties(
                         accessTierInferred: false,
                         eTag: etags[i],
-                        blobType: blobTypes[i]))).ToList();
+                        blobType: blobTypes[i])))).ToList();
             Mock<BlobContainerClient> mock = new(new Uri("https://storageaccount.blob.core.windows.net/container"), new BlobClientOptions())
             {
                 CallBase = true
             };
-            mock.Setup(c => c.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .Returns(AsyncPageable<BlobItem>.FromPages(new List<Page<BlobItem>>()
+            mock.Setup(c => c.GetBlobsByHierarchyAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Returns(AsyncPageable<BlobHierarchyItem>.FromPages(new List<Page<BlobHierarchyItem>>()
                 {
-                    Page<BlobItem>.FromValues(
+                    Page<BlobHierarchyItem>.FromValues(
                         blobListItems,
                         continuationToken: null,
                         response: null)
