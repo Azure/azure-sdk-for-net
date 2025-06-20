@@ -93,7 +93,6 @@ namespace Azure.AI.Projects
         public Azure.AI.Inference.ImageEmbeddingsClient GetImageEmbeddingsClient() { throw null; }
         public virtual Azure.AI.Projects.Indexes GetIndexesClient(string apiVersion = "2025-05-15-preview") { throw null; }
         public virtual Azure.AI.Projects.RedTeams GetRedTeamsClient(string apiVersion = "2025-05-15-preview") { throw null; }
-        public virtual Azure.AI.Projects.ServicePatterns GetServicePatternsClient() { throw null; }
     }
     public partial class AIProjectClientOptions : Azure.Core.ClientOptions
     {
@@ -806,11 +805,6 @@ namespace Azure.AI.Projects
         public static implicit operator Azure.AI.Projects.SasCredentialType (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.SasCredentialType left, Azure.AI.Projects.SasCredentialType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ServicePatterns
-    {
-        protected ServicePatterns() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
     }
     public partial class Sku : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Sku>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Sku>
     {
