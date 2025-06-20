@@ -1254,7 +1254,6 @@ namespace Azure.Storage.Files.Shares.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed) { throw null; }
         public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed, int numberOfHandlesFailedToClose) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.UserDelegationKey UserDelegationKey(string signedOid = null, string signedTid = null, System.DateTimeOffset signedStart = default(System.DateTimeOffset), System.DateTimeOffset signedExpiry = default(System.DateTimeOffset), string signedService = null, string signedVersion = null, string value = null) { throw null; }
     }
     public partial class ShareProperties
     {
@@ -1419,11 +1418,11 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class UserDelegationKey
     {
         internal UserDelegationKey() { }
-        public System.DateTimeOffset SignedExpiry { get { throw null; } }
-        public string SignedOid { get { throw null; } }
+        public System.DateTimeOffset SignedExpiresOn { get { throw null; } }
+        public string SignedObjectId { get { throw null; } }
         public string SignedService { get { throw null; } }
-        public System.DateTimeOffset SignedStart { get { throw null; } }
-        public string SignedTid { get { throw null; } }
+        public System.DateTimeOffset SignedStartsOn { get { throw null; } }
+        public string SignedTenantId { get { throw null; } }
         public string SignedVersion { get { throw null; } }
         public string Value { get { throw null; } }
     }
@@ -1502,6 +1501,7 @@ namespace Azure.Storage.Sas
         public string ContentEncoding { get { throw null; } set { } }
         public string ContentLanguage { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
+        public string DelegatedUserObjectId { get { throw null; } set { } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string FilePath { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
@@ -1522,6 +1522,8 @@ namespace Azure.Storage.Sas
         public void SetPermissions(Azure.Storage.Sas.ShareSasPermissions permissions) { }
         public void SetPermissions(string rawPermissions) { }
         public void SetPermissions(string rawPermissions, bool normalize = false) { }
+        public Azure.Storage.Sas.ShareSasQueryParameters ToSasQueryParameters(Azure.Storage.Files.Shares.Models.UserDelegationKey userDelegationKey, string accountName) { throw null; }
+        public Azure.Storage.Sas.ShareSasQueryParameters ToSasQueryParameters(Azure.Storage.Files.Shares.Models.UserDelegationKey userDelegationKey, string accountName, out string stringToSign) { throw null; }
         public Azure.Storage.Sas.SasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
         public Azure.Storage.Sas.SasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential, out string stringToSign) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1536,6 +1538,17 @@ namespace Azure.Storage.Sas
         Write = 4,
         Delete = 8,
         List = 16,
+    }
+    public sealed partial class ShareSasQueryParameters : Azure.Storage.Sas.SasQueryParameters
+    {
+        internal ShareSasQueryParameters() { }
+        public System.DateTimeOffset KeyExpiresOn { get { throw null; } }
+        public string KeyObjectId { get { throw null; } }
+        public string KeyService { get { throw null; } }
+        public System.DateTimeOffset KeyStartsOn { get { throw null; } }
+        public string KeyTenantId { get { throw null; } }
+        public string KeyVersion { get { throw null; } }
+        public override string ToString() { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure
