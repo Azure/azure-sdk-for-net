@@ -3,20 +3,10 @@
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> No thread retention policy. </summary>
-    public partial class NoneRetentionPolicy : ChatRetentionPolicy
+    internal sealed class NoneRetentionPolicy : ChatRetentionPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="NoneRetentionPolicy"/>. </summary>
-        public NoneRetentionPolicy()
+        internal NoneRetentionPolicy() : base(RetentionPolicyKind.None)
         {
-            Kind = RetentionPolicyKind.None;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NoneRetentionPolicy"/>. </summary>
-        /// <param name="kind"> Retention Policy Type. </param>
-        internal NoneRetentionPolicy(RetentionPolicyKind kind) : base(kind)
-        {
-            Kind = kind;
         }
     }
 }

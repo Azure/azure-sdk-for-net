@@ -4,25 +4,30 @@
 namespace Azure.Communication.Chat
 {
     /// <summary>
-    /// Data retention policy for auto deletion.
-    /// Please note <see cref="ChatRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="NoneRetentionPolicy"/>.
+    /// Represents a data retention policy for chat threads.
+    /// Use the factory methods to create instances.
     /// </summary>
-    public abstract partial class ChatRetentionPolicy
+    public abstract class ChatRetentionPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="ChatRetentionPolicy"/>. </summary>
-        protected ChatRetentionPolicy()
-        {
-        }
+        /// <summary> Retention policy kind. </summary>
+        public RetentionPolicyKind Kind { get; }
 
-        /// <summary> Initializes a new instance of <see cref="ChatRetentionPolicy"/>. </summary>
-        /// <param name="kind"> Retention Policy Type. </param>
-        internal ChatRetentionPolicy(RetentionPolicyKind kind)
+        /// <summary> Constructor to set RetentionPolicyKind. </summary>
+        protected ChatRetentionPolicy(RetentionPolicyKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Retention Policy Type. </summary>
-        internal RetentionPolicyKind Kind { get; set; }
+        /// <summary>
+        /// Creates a retention policy with no auto-deletion.
+        /// </summary>
+        public static ChatRetentionPolicy None()
+            => new NoneRetentionPolicy();
+
+        /// <summary>
+        /// Creates a thread retention policy based on thread creation date.
+        /// </summary>
+        public static ChatRetentionPolicy ThreadCreationDate(int deleteThreadAfterDays)
+            => new ThreadCreationDateRetentionPolicy(deleteThreadAfterDays);
     }
 }

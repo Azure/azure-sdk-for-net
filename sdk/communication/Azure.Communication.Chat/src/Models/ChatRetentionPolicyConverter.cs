@@ -12,15 +12,15 @@ namespace Azure.Communication.Chat
             if (internalModel == null)
                 return null;
 
-            if (internalModel.Kind.Equals(RetentionPolicyKind.ThreadCreationDate))
+            if (internalModel.Kind == RetentionPolicyKind.None)
             {
-                return new ThreadCreationDateRetentionPolicy(
-                    ((ThreadCreationDateRetentionPolicyInternal)internalModel).DeleteThreadAfterDays);
+                return ChatRetentionPolicy.None();
             }
 
-            if (internalModel.Kind.Equals(RetentionPolicyKind.None))
+            if (internalModel.Kind == RetentionPolicyKind.ThreadCreationDate &&
+                internalModel is ThreadCreationDateRetentionPolicyInternal tcd)
             {
-                return new NoneRetentionPolicy();
+                return ChatRetentionPolicy.ThreadCreationDate(tcd.DeleteThreadAfterDays);
             }
 
             throw new NotSupportedException($"Unsupported kind: {internalModel.Kind}");
@@ -31,12 +31,18 @@ namespace Azure.Communication.Chat
             if (model == null)
                 return null;
 
-            return model switch
+            if (model.Kind == RetentionPolicyKind.None)
             {
-                ThreadCreationDateRetentionPolicy policy => new ThreadCreationDateRetentionPolicyInternal(policy.DeleteThreadAfterDays),
-                NoneRetentionPolicy => new NoneRetentionPolicyInternal(),
-                _ => throw new NotSupportedException($"Unsupported retention policy model type: {model.GetType()}")
-            };
+                return new NoneRetentionPolicyInternal();
+            }
+
+            if (model.Kind == RetentionPolicyKind.ThreadCreationDate &&
+                 model is ThreadCreationDateRetentionPolicy typedModel)
+            {
+                return new ThreadCreationDateRetentionPolicyInternal(typedModel.DeleteThreadAfterDays);
+            }
+
+            throw new NotSupportedException($"Unsupported retention policy model kind: {model.Kind}");
         }
     }
 }

@@ -3,27 +3,13 @@
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> Thread retention policy based on thread creation date. </summary>
-    public partial class ThreadCreationDateRetentionPolicy : ChatRetentionPolicy
+    internal sealed class ThreadCreationDateRetentionPolicy : ChatRetentionPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="ThreadCreationDateRetentionPolicy"/>. </summary>
-        /// <param name="deleteThreadAfterDays"> Indicates how many days after the thread creation the thread will be deleted. </param>
-        public ThreadCreationDateRetentionPolicy(int deleteThreadAfterDays)
+        internal ThreadCreationDateRetentionPolicy(int deleteThreadAfterDays) : base(RetentionPolicyKind.ThreadCreationDate)
         {
             DeleteThreadAfterDays = deleteThreadAfterDays;
-            Kind = RetentionPolicyKind.ThreadCreationDate;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThreadCreationDateRetentionPolicy"/>. </summary>
-        /// <param name="kind"> Retention Policy Type. </param>
-        /// <param name="deleteThreadAfterDays"> Indicates how many days after the thread creation the thread will be deleted. </param>
-        internal ThreadCreationDateRetentionPolicy(RetentionPolicyKind kind, int deleteThreadAfterDays) : base(kind)
-        {
-            DeleteThreadAfterDays = deleteThreadAfterDays;
-            Kind = kind;
-        }
-
-        /// <summary> Indicates how many days after the thread creation the thread will be deleted. </summary>
-        public int DeleteThreadAfterDays { get; }
+        internal int DeleteThreadAfterDays { get; }
     }
 }
