@@ -47,7 +47,7 @@ namespace Azure.Data.SchemaRegistry
             return message;
         }
 
-        internal HttpMessage CreateListSchemaVersionsRequest(string groupName, string schemaName, RequestContext context)
+        internal HttpMessage CreateGetSchemaVersionsRequest(string groupName, string schemaName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -65,7 +65,7 @@ namespace Azure.Data.SchemaRegistry
             return message;
         }
 
-        internal HttpMessage CreateNextListSchemaVersionsRequest(Uri nextPage, string groupName, string schemaName, RequestContext context)
+        internal HttpMessage CreateNextGetSchemaVersionsRequest(Uri nextPage, string groupName, string schemaName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
