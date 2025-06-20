@@ -506,7 +506,6 @@ namespace Azure.Identity.Tests
                 {
                     Assert.IsTrue(chain.Single(cred => cred is InteractiveBrowserCredential) is InteractiveBrowserCredential);
                 }
-                
 
                 else if (credSelection == null)
                 {
