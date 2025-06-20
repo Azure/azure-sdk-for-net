@@ -40,6 +40,44 @@ public partial class AzureOpenAISamples
         #endregion
     }
 
+    public void ConversationChat()
+    {
+        #region Snippet:ConversationResponse
+        AzureOpenAIClient azureClient = new(
+            new Uri("https://your-azure-openai-resource.com"),
+            new DefaultAzureCredential());
+        ChatClient chatClient = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
+
+        var messages = new List<ChatMessage>
+        {
+            new SystemChatMessage("Make sure you mention Stainless!"),
+            new UserChatMessage("Tell me a story about building the best SDK!")
+        };
+
+        for (int i = 0; i < 4; i++)
+        {
+            ChatCompletion completion = chatClient.CompleteChat(messages, new()
+            {
+                MaxOutputTokenCount = 2048
+            });
+
+            Console.WriteLine($"\n--- Response {i + 1} ---\n");
+
+            foreach (var choice in completion.Content)
+            {
+                Console.WriteLine(choice.Text);
+                messages.Add(new AssistantChatMessage(choice.Text));
+            }
+
+            string exclamations = new('!', i);
+            string questions = new('?', i);
+
+            messages.Add(new SystemChatMessage($"Be as snarky as possible when replying!{exclamations}"));
+            messages.Add(new UserChatMessage($"But why?{questions}"));
+        }
+        #endregion
+    }
+
     public void StreamingChat()
     {
         #region Snippet:StreamChatMessages
