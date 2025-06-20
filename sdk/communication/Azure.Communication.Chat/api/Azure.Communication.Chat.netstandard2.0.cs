@@ -157,10 +157,6 @@ namespace Azure.Communication.Chat
         public static Azure.Communication.Chat.ChatRetentionPolicy None() { throw null; }
         public static Azure.Communication.Chat.ChatRetentionPolicy ThreadCreationDate(int deleteThreadAfterDays) { throw null; }
     }
-    public abstract partial class ChatRetentionPolicyInternal
-    {
-        protected ChatRetentionPolicyInternal() { }
-    }
     public partial class ChatThreadClient
     {
         protected ChatThreadClient() { }
@@ -267,6 +263,11 @@ namespace Azure.Communication.Chat
     {
         internal SendChatMessageResult() { }
         public string Id { get { throw null; } }
+    }
+    public sealed partial class ThreadCreationDateRetentionPolicy : Azure.Communication.Chat.ChatRetentionPolicy
+    {
+        public ThreadCreationDateRetentionPolicy(int deleteThreadAfterDays) : base (default(Azure.Communication.Chat.RetentionPolicyKind)) { }
+        public int DeleteThreadAfterDays { get { throw null; } }
     }
     public partial class TypingNotificationOptions
     {

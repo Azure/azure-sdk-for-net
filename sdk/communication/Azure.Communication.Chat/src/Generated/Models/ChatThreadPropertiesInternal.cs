@@ -41,7 +41,8 @@ namespace Azure.Communication.Chat
         /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
         /// <param name="retentionPolicy">
         /// Data retention policy for auto deletion.
-        /// Please note <see cref="ChatRetentionPolicyInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
+        /// Please note <see cref="ChatRetentionPolicyInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NoneRetentionPolicyInternal"/> and <see cref="ThreadCreationDateRetentionPolicyInternal"/>.
         /// </param>
         internal ChatThreadPropertiesInternal(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifierModel createdByCommunicationIdentifier, DateTimeOffset? deletedOn, IReadOnlyDictionary<string, string> metadata, ChatRetentionPolicyInternal retentionPolicy)
         {
@@ -68,7 +69,8 @@ namespace Azure.Communication.Chat
         public IReadOnlyDictionary<string, string> Metadata { get; }
         /// <summary>
         /// Data retention policy for auto deletion.
-        /// Please note <see cref="ChatRetentionPolicyInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
+        /// Please note <see cref="ChatRetentionPolicyInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NoneRetentionPolicyInternal"/> and <see cref="ThreadCreationDateRetentionPolicyInternal"/>.
         /// </summary>
         public ChatRetentionPolicyInternal RetentionPolicy { get; }
     }
