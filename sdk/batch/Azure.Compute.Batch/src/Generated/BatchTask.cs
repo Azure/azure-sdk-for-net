@@ -67,7 +67,7 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="BatchTask"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Task within the Job. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. </param>
         /// <param name="displayName"> A display name for the Task. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
-        /// <param name="url"> The URL of the Task. </param>
+        /// <param name="uri"> The URL of the Task. </param>
         /// <param name="eTag"> The ETag of the Task. This is an opaque string. You can use it to detect whether the Task has changed between requests. In particular, you can be pass the ETag when updating a Task to specify that your changes should take effect only if nobody else has modified the Task in the meantime. </param>
         /// <param name="lastModified"> The last modified time of the Task. </param>
         /// <param name="creationTime"> The creation time of the Task. </param>
@@ -88,16 +88,16 @@ namespace Azure.Compute.Batch
         /// <param name="executionInfo"> Information about the execution of the Task. </param>
         /// <param name="nodeInfo"> Information about the Compute Node on which the Task ran. </param>
         /// <param name="multiInstanceSettings"> An object that indicates that the Task is a multi-instance Task, and contains information about how to run the multi-instance Task. </param>
-        /// <param name="stats"> Resource usage statistics for the Task. </param>
+        /// <param name="taskStatistics"> Resource usage statistics for the Task. </param>
         /// <param name="dependsOn"> The Tasks that this Task depends on. This Task will not be scheduled until all Tasks that it depends on have completed successfully. If any of those Tasks fail and exhaust their retry counts, this Task will never be scheduled. </param>
         /// <param name="applicationPackageReferences"> A list of Packages that the Batch service will deploy to the Compute Node before running the command line. Application packages are downloaded and deployed to a shared directory, not the Task working directory. Therefore, if a referenced package is already on the Node, and is up to date, then it is not re-downloaded; the existing copy on the Compute Node is used. If a referenced Package cannot be installed, for example because the package has been deleted or because download failed, the Task fails. </param>
         /// <param name="authenticationTokenSettings"> The settings for an authentication token that the Task can use to perform Batch service operations. If this property is set, the Batch service provides the Task with an authentication token which can be used to authenticate Batch service operations without requiring an Account access key. The token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable. The operations that the Task can carry out using the token depend on the settings. For example, a Task can request Job permissions in order to add other Tasks to the Job, or check the status of the Job or of other Tasks under the Job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTask(string id, string displayName, string url, string eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, ExitConditions exitConditions, BatchTaskState? state, DateTimeOffset? stateTransitionTime, BatchTaskState? previousState, DateTimeOffset? previousStateTransitionTime, string commandLine, BatchTaskContainerSettings containerSettings, IReadOnlyList<ResourceFile> resourceFiles, IReadOnlyList<OutputFile> outputFiles, IReadOnlyList<EnvironmentSetting> environmentSettings, AffinityInfo affinityInfo, BatchTaskConstraints constraints, int? requiredSlots, UserIdentity userIdentity, BatchTaskExecutionInfo executionInfo, BatchNodeInfo nodeInfo, MultiInstanceSettings multiInstanceSettings, BatchTaskStatistics stats, BatchTaskDependencies dependsOn, IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences, AuthenticationTokenSettings authenticationTokenSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchTask(string id, string displayName, Uri uri, ETag? eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, ExitConditions exitConditions, BatchTaskState? state, DateTimeOffset? stateTransitionTime, BatchTaskState? previousState, DateTimeOffset? previousStateTransitionTime, string commandLine, BatchTaskContainerSettings containerSettings, IReadOnlyList<ResourceFile> resourceFiles, IReadOnlyList<OutputFile> outputFiles, IReadOnlyList<EnvironmentSetting> environmentSettings, BatchAffinityInfo affinityInfo, BatchTaskConstraints constraints, int? requiredSlots, UserIdentity userIdentity, BatchTaskExecutionInfo executionInfo, BatchNodeInfo nodeInfo, MultiInstanceSettings multiInstanceSettings, BatchTaskStatistics taskStatistics, BatchTaskDependencies dependsOn, IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences, AuthenticationTokenSettings authenticationTokenSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
-            Url = url;
+            Uri = uri;
             ETag = eTag;
             LastModified = lastModified;
             CreationTime = creationTime;
@@ -118,7 +118,7 @@ namespace Azure.Compute.Batch
             ExecutionInfo = executionInfo;
             NodeInfo = nodeInfo;
             MultiInstanceSettings = multiInstanceSettings;
-            Stats = stats;
+            TaskStatistics = taskStatistics;
             DependsOn = dependsOn;
             ApplicationPackageReferences = applicationPackageReferences;
             AuthenticationTokenSettings = authenticationTokenSettings;
@@ -130,9 +130,9 @@ namespace Azure.Compute.Batch
         /// <summary> A display name for the Task. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </summary>
         public string DisplayName { get; }
         /// <summary> The URL of the Task. </summary>
-        public string Url { get; }
+        public Uri Uri { get; }
         /// <summary> The ETag of the Task. This is an opaque string. You can use it to detect whether the Task has changed between requests. In particular, you can be pass the ETag when updating a Task to specify that your changes should take effect only if nobody else has modified the Task in the meantime. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
         /// <summary> The last modified time of the Task. </summary>
         public DateTimeOffset? LastModified { get; }
         /// <summary> The creation time of the Task. </summary>
@@ -158,7 +158,7 @@ namespace Azure.Compute.Batch
         /// <summary> A list of environment variable settings for the Task. </summary>
         public IReadOnlyList<EnvironmentSetting> EnvironmentSettings { get; }
         /// <summary> A locality hint that can be used by the Batch service to select a Compute Node on which to start the new Task. </summary>
-        public AffinityInfo AffinityInfo { get; }
+        public BatchAffinityInfo AffinityInfo { get; }
         /// <summary> The execution constraints that apply to this Task. </summary>
         public BatchTaskConstraints Constraints { get; set; }
         /// <summary> The number of scheduling slots that the Task requires to run. The default is 1. A Task can only be scheduled to run on a compute node if the node has enough free scheduling slots available. For multi-instance Tasks, this must be 1. </summary>
@@ -172,7 +172,7 @@ namespace Azure.Compute.Batch
         /// <summary> An object that indicates that the Task is a multi-instance Task, and contains information about how to run the multi-instance Task. </summary>
         public MultiInstanceSettings MultiInstanceSettings { get; }
         /// <summary> Resource usage statistics for the Task. </summary>
-        public BatchTaskStatistics Stats { get; }
+        public BatchTaskStatistics TaskStatistics { get; }
         /// <summary> The Tasks that this Task depends on. This Task will not be scheduled until all Tasks that it depends on have completed successfully. If any of those Tasks fail and exhaust their retry counts, this Task will never be scheduled. </summary>
         public BatchTaskDependencies DependsOn { get; }
         /// <summary> A list of Packages that the Batch service will deploy to the Compute Node before running the command line. Application packages are downloaded and deployed to a shared directory, not the Task working directory. Therefore, if a referenced package is already on the Node, and is up to date, then it is not re-downloaded; the existing copy on the Compute Node is used. If a referenced Package cannot be installed, for example because the package has been deleted or because download failed, the Task fails. </summary>
