@@ -278,11 +278,22 @@ $customToken = New-Object -TypeName psobject
 
 if ($isAz14NewFormat) {{
     # Convert SecureString to plaintext for the SDK to use
-    $plainToken = ConvertFrom-SecureString -SecureString $token.Token -AsPlainText
+    if ($PSVersionTable.PSVersion.Major -ge 7) {{
+        $plainToken = ConvertFrom-SecureString -SecureString $token.Token -AsPlainText
+    }} else {{
+        # Windows PowerShell doesn't support -AsPlainText, use Marshal method
+        $plainToken = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.Token))
+    }}
     $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $plainToken
 }} elseif ($useSecureString) {{
     # Versions that support -AsSecureString parameter
-    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value (ConvertFrom-SecureString -AsPlainText $token.Token)
+    if ($PSVersionTable.PSVersion.Major -ge 7) {{
+        $customToken | Add-Member -MemberType NoteProperty -Name Token -Value (ConvertFrom-SecureString -AsPlainText $token.Token)
+    }} else {{
+        # Windows PowerShell doesn't support -AsPlainText, use Marshal method
+        $plainToken = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.Token))
+        $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $plainToken
+    }}
 }} else {{
     $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
 }}
