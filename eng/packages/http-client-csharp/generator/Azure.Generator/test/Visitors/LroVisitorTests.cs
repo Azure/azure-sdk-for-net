@@ -134,7 +134,7 @@ namespace Azure.Generator.Tests.Visitors
                 InputFactory.Parameter(
                     "p1",
                     InputPrimitiveType.String,
-                    kind: InputParameterKind.Method),
+                    kind: InputParameterKind.Method)
             ];
             var responseModel = InputFactory.Model("foo");
             var lro = InputFactory.Operation(
