@@ -4187,23 +4187,8 @@ namespace Azure.Storage.Files.Shares
             // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
             builder = ShareSasBuilder.DeepCopy(builder);
 
-            // Assign builder's ShareName and Path, if they are null.
-            builder.ShareName ??= Name;
+            SetBuilderAndValidate(builder);
 
-            if (!builder.ShareName.Equals(Name, StringComparison.InvariantCulture))
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.ShareName),
-                    nameof(ShareSasBuilder),
-                    nameof(Name));
-            }
-            if (!string.IsNullOrEmpty(builder.FilePath))
-            {
-                throw Errors.SasBuilderEmptyParam(
-                    nameof(builder),
-                    nameof(builder.FilePath),
-                    nameof(Constants.File.Share.Name));
-            }
             ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
             {
                 Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign).ToString()
@@ -4360,6 +4345,7 @@ namespace Azure.Storage.Files.Shares
             };
             return sasUri.ToUri();
         }
+        #endregion
 
         private void SetBuilderAndValidate(ShareSasBuilder builder)
         {
@@ -4381,7 +4367,6 @@ namespace Azure.Storage.Files.Shares
                     nameof(Constants.File.Share.Name));
             }
         }
-        #endregion
 
         #region GetParentClientCore
 

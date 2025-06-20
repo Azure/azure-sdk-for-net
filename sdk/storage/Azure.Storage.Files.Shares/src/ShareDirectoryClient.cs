@@ -3733,24 +3733,8 @@ namespace Azure.Storage.Files.Shares
             // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
             builder = ShareSasBuilder.DeepCopy(builder);
 
-            // Assign builder's ShareName and Path, if they are null.
-            builder.ShareName ??= ShareName;
-            builder.FilePath ??= Path;
+            SetBuilderAndValidate(builder);
 
-            if (!builder.ShareName.Equals(ShareName, StringComparison.InvariantCulture))
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.ShareName),
-                    nameof(ShareSasBuilder),
-                    nameof(ShareName));
-            }
-            if (!builder.FilePath.Equals(Path, StringComparison.InvariantCulture))
-            {
-                throw Errors.SasNamesNotMatching(
-                    nameof(builder.FilePath),
-                    nameof(ShareSasBuilder),
-                    nameof(Path));
-            }
             ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
             {
                 Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign).ToString()
@@ -3788,7 +3772,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public Uri GenerateUserDelegationSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey)
             => GenerateUserDelegationSasUri(permissions, expiresOn, userDelegationKey, out _);
 
@@ -3823,7 +3807,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public Uri GenerateUserDelegationSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey, out string stringToSign) =>
             GenerateUserDelegationSasUri(new ShareSasBuilder(permissions, expiresOn)
             {
@@ -3853,7 +3837,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public Uri GenerateUserDelegationSasUri(ShareSasBuilder builder, UserDelegationKey userDelegationKey)
             => GenerateUserDelegationSasUri(builder, userDelegationKey, out _);
 
@@ -3900,6 +3884,7 @@ namespace Azure.Storage.Files.Shares
             return sasUri.ToUri();
         }
 
+        #endregion
         private void SetBuilderAndValidate(ShareSasBuilder builder)
         {
             // Assign builder's ShareName and Path, if they are null.
@@ -3921,7 +3906,6 @@ namespace Azure.Storage.Files.Shares
                     nameof(Path));
             }
         }
-        #endregion
 
         #region GetParentClientCore
 
