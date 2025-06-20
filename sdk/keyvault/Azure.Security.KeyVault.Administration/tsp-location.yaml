@@ -1,5 +1,5 @@
 directory: specification/keyvault/Security.KeyVault.Administration
-commit: bc16bd3359c80260f1d1d523679fbe6806ce0813
+commit: 00cfd98592bdb4a50c65147304d8e7ffd2856f56
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
 

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -57,7 +58,7 @@ namespace Azure.Security.KeyVault.Administration
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
-                nextPage = responseWithType.NextLink;
+                nextPage = new Uri(responseWithType.NextLink);
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);

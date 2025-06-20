@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -89,10 +90,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<KeyVaultRoleDefinition> DeleteRoleDefinition(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        internal virtual Response<Models.KeyVaultRoleDefinition> DeleteRoleDefinition(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Response result = DeleteRoleDefinition(scope, roleDefinitionName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((KeyVaultRoleDefinition)result, result);
+            return Response.FromValue((Models.KeyVaultRoleDefinition)result, result);
         }
 
         /// <summary> Deletes a custom role definition. </summary>
@@ -100,10 +101,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<KeyVaultRoleDefinition>> DeleteRoleDefinitionAsync(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<Models.KeyVaultRoleDefinition>> DeleteRoleDefinitionAsync(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Response result = await DeleteRoleDefinitionAsync(scope, roleDefinitionName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((KeyVaultRoleDefinition)result, result);
+            return Response.FromValue((Models.KeyVaultRoleDefinition)result, result);
         }
 
         /// <summary>
@@ -172,10 +173,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="parameters"> Parameters for the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<KeyVaultRoleDefinition> CreateOrUpdateRoleDefinition(string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
+        internal virtual Response<Models.KeyVaultRoleDefinition> CreateOrUpdateRoleDefinition(string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             Response result = CreateOrUpdateRoleDefinition(scope, roleDefinitionName, parameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((KeyVaultRoleDefinition)result, result);
+            return Response.FromValue((Models.KeyVaultRoleDefinition)result, result);
         }
 
         /// <summary> Creates or updates a custom role definition. </summary>
@@ -184,10 +185,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="parameters"> Parameters for the role definition. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<KeyVaultRoleDefinition>> CreateOrUpdateRoleDefinitionAsync(string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<Models.KeyVaultRoleDefinition>> CreateOrUpdateRoleDefinitionAsync(string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             Response result = await CreateOrUpdateRoleDefinitionAsync(scope, roleDefinitionName, parameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((KeyVaultRoleDefinition)result, result);
+            return Response.FromValue((Models.KeyVaultRoleDefinition)result, result);
         }
 
         /// <summary>
@@ -253,10 +254,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<KeyVaultRoleDefinition> GetRoleDefinition(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        internal virtual Response<Models.KeyVaultRoleDefinition> GetRoleDefinition(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Response result = GetRoleDefinition(scope, roleDefinitionName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((KeyVaultRoleDefinition)result, result);
+            return Response.FromValue((Models.KeyVaultRoleDefinition)result, result);
         }
 
         /// <summary> Get the specified role definition. </summary>
@@ -264,10 +265,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<KeyVaultRoleDefinition>> GetRoleDefinitionAsync(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<Models.KeyVaultRoleDefinition>> GetRoleDefinitionAsync(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Response result = await GetRoleDefinitionAsync(scope, roleDefinitionName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((KeyVaultRoleDefinition)result, result);
+            return Response.FromValue((Models.KeyVaultRoleDefinition)result, result);
         }
 
         /// <summary>
@@ -331,7 +332,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<KeyVaultRoleDefinition> GetRoleDefinitions(string scope, string filter = default, CancellationToken cancellationToken = default)
+        internal virtual Pageable<Models.KeyVaultRoleDefinition> GetRoleDefinitions(string scope, string filter = default, CancellationToken cancellationToken = default)
         {
             return new KeyVaultAccessControlClientGetRoleDefinitionsCollectionResultOfT(this, scope, filter, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
@@ -341,7 +342,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<KeyVaultRoleDefinition> GetRoleDefinitionsAsync(string scope, string filter = default, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<Models.KeyVaultRoleDefinition> GetRoleDefinitionsAsync(string scope, string filter = default, CancellationToken cancellationToken = default)
         {
             return new KeyVaultAccessControlClientGetRoleDefinitionsAsyncCollectionResultOfT(this, scope, filter, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
@@ -409,10 +410,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<KeyVaultRoleAssignment> DeleteRoleAssignment(string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        internal virtual Response<Models.KeyVaultRoleAssignment> DeleteRoleAssignment(string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             Response result = DeleteRoleAssignment(scope, roleAssignmentName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((KeyVaultRoleAssignment)result, result);
+            return Response.FromValue((Models.KeyVaultRoleAssignment)result, result);
         }
 
         /// <summary> Deletes a role assignment. </summary>
@@ -420,10 +421,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<KeyVaultRoleAssignment>> DeleteRoleAssignmentAsync(string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<Models.KeyVaultRoleAssignment>> DeleteRoleAssignmentAsync(string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             Response result = await DeleteRoleAssignmentAsync(scope, roleAssignmentName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((KeyVaultRoleAssignment)result, result);
+            return Response.FromValue((Models.KeyVaultRoleAssignment)result, result);
         }
 
         /// <summary>
@@ -492,10 +493,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="parameters"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<KeyVaultRoleAssignment> CreateRoleAssignment(string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
+        internal virtual Response<Models.KeyVaultRoleAssignment> CreateRoleAssignment(string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             Response result = CreateRoleAssignment(scope, roleAssignmentName, parameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((KeyVaultRoleAssignment)result, result);
+            return Response.FromValue((Models.KeyVaultRoleAssignment)result, result);
         }
 
         /// <summary> Creates a role assignment. </summary>
@@ -504,10 +505,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="parameters"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<KeyVaultRoleAssignment>> CreateRoleAssignmentAsync(string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<Models.KeyVaultRoleAssignment>> CreateRoleAssignmentAsync(string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             Response result = await CreateRoleAssignmentAsync(scope, roleAssignmentName, parameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((KeyVaultRoleAssignment)result, result);
+            return Response.FromValue((Models.KeyVaultRoleAssignment)result, result);
         }
 
         /// <summary>
@@ -573,10 +574,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<KeyVaultRoleAssignment> GetRoleAssignment(string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        internal virtual Response<Models.KeyVaultRoleAssignment> GetRoleAssignment(string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             Response result = GetRoleAssignment(scope, roleAssignmentName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((KeyVaultRoleAssignment)result, result);
+            return Response.FromValue((Models.KeyVaultRoleAssignment)result, result);
         }
 
         /// <summary> Get the specified role assignment. </summary>
@@ -584,10 +585,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<KeyVaultRoleAssignment>> GetRoleAssignmentAsync(string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<Models.KeyVaultRoleAssignment>> GetRoleAssignmentAsync(string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
         {
             Response result = await GetRoleAssignmentAsync(scope, roleAssignmentName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((KeyVaultRoleAssignment)result, result);
+            return Response.FromValue((Models.KeyVaultRoleAssignment)result, result);
         }
 
         /// <summary>
@@ -651,7 +652,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<KeyVaultRoleAssignment> GetRoleAssignments(string scope, string filter = default, CancellationToken cancellationToken = default)
+        internal virtual Pageable<Models.KeyVaultRoleAssignment> GetRoleAssignments(string scope, string filter = default, CancellationToken cancellationToken = default)
         {
             return new KeyVaultAccessControlClientGetRoleAssignmentsCollectionResultOfT(this, scope, filter, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
@@ -661,7 +662,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<KeyVaultRoleAssignment> GetRoleAssignmentsAsync(string scope, string filter = default, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<Models.KeyVaultRoleAssignment> GetRoleAssignmentsAsync(string scope, string filter = default, CancellationToken cancellationToken = default)
         {
             return new KeyVaultAccessControlClientGetRoleAssignmentsAsyncCollectionResultOfT(this, scope, filter, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }

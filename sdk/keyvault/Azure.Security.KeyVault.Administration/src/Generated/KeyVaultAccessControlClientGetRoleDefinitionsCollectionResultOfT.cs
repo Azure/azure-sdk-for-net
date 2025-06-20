@@ -10,10 +10,11 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class KeyVaultAccessControlClientGetRoleDefinitionsCollectionResultOfT : Pageable<KeyVaultRoleDefinition>
+    internal partial class KeyVaultAccessControlClientGetRoleDefinitionsCollectionResultOfT : Pageable<Models.KeyVaultRoleDefinition>
     {
         private readonly KeyVaultAccessControlClient _client;
         private readonly string _scope;
@@ -41,7 +42,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of KeyVaultAccessControlClientGetRoleDefinitionsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<KeyVaultRoleDefinition>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<Models.KeyVaultRoleDefinition>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             do
@@ -52,8 +53,8 @@ namespace Azure.Security.KeyVault.Administration
                     yield break;
                 }
                 RoleDefinitionListResult responseWithType = (RoleDefinitionListResult)response;
-                nextPage = responseWithType.NextLink;
-                yield return Page<KeyVaultRoleDefinition>.FromValues((IReadOnlyList<KeyVaultRoleDefinition>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                nextPage = new Uri(responseWithType.NextLink);
+                yield return Page<Models.KeyVaultRoleDefinition>.FromValues((IReadOnlyList<Models.KeyVaultRoleDefinition>)responseWithType.Value, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);
         }

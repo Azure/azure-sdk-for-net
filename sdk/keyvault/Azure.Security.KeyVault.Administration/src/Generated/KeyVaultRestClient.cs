@@ -786,19 +786,19 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Retrieves a list of all the available account settings that can be configured. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<GetSettingsResult> GetSettings(CancellationToken cancellationToken = default)
+        internal virtual Response<Models.GetSettingsResult> GetSettings(CancellationToken cancellationToken = default)
         {
             Response result = GetSettings(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((GetSettingsResult)result, result);
+            return Response.FromValue((Models.GetSettingsResult)result, result);
         }
 
         /// <summary> Retrieves a list of all the available account settings that can be configured. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<GetSettingsResult>> GetSettingsAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<Models.GetSettingsResult>> GetSettingsAsync(CancellationToken cancellationToken = default)
         {
             Response result = await GetSettingsAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((GetSettingsResult)result, result);
+            return Response.FromValue((Models.GetSettingsResult)result, result);
         }
     }
 }
