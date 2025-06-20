@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.Chat
 {
     [CodeGenModel("NoneRetentionPolicy")]
-    public partial class NoneRetentionPolicyInternal
+    internal partial class NoneRetentionPolicyInternal
     {
     }
 }

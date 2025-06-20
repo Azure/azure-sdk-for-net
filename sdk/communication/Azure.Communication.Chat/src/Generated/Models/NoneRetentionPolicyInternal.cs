@@ -8,7 +8,7 @@
 namespace Azure.Communication.Chat
 {
     /// <summary> No thread retention policy. </summary>
-    public partial class NoneRetentionPolicyInternal : ChatRetentionPolicyInternal
+    internal partial class NoneRetentionPolicyInternal : ChatRetentionPolicyInternal
     {
         /// <summary> Initializes a new instance of <see cref="NoneRetentionPolicyInternal"/>. </summary>
         public NoneRetentionPolicyInternal()

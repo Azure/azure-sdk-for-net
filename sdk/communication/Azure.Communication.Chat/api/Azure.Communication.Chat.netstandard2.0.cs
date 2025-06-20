@@ -237,10 +237,6 @@ namespace Azure.Communication.Chat
         public Azure.Communication.Chat.ChatThreadProperties ChatThread { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
     }
-    public partial class NoneRetentionPolicyInternal : Azure.Communication.Chat.ChatRetentionPolicyInternal
-    {
-        public NoneRetentionPolicyInternal() { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RetentionPolicyKind : System.IEquatable<Azure.Communication.Chat.RetentionPolicyKind>
     {

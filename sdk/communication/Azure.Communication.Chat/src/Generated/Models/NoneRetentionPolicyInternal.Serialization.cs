@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class NoneRetentionPolicyInternal : IUtf8JsonSerializable
+    internal partial class NoneRetentionPolicyInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
