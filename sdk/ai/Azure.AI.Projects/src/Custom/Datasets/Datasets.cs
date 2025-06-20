@@ -32,7 +32,7 @@ namespace Azure.AI.Projects
             PendingUploadResponse pendingUploadResponse = PendingUpload(
                 name: name,
                 version: inputVersion,
-                body: pendingUploadRequest
+                pendingUploadRequest: pendingUploadRequest
             );
 
             string outputVersion = inputVersion;
@@ -142,7 +142,7 @@ namespace Azure.AI.Projects
             PendingUploadResponse pendingUploadResponse = await PendingUploadAsync(
                 name: name,
                 version: inputVersion,
-                body: pendingUploadRequest
+                pendingUploadRequest: pendingUploadRequest
             ).ConfigureAwait(false);
 
             string outputVersion = inputVersion;

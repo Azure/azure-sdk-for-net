@@ -358,12 +358,12 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            PendingUploadRequest body = new PendingUploadRequest
+            PendingUploadRequest pendingUploadRequest = new PendingUploadRequest
             {
                 PendingUploadId = "mxjahcghabuplfwtlopiqgxtcyw",
                 ConnectionName = "bknvpmlisrqxaphkf",
             };
-            Response<PendingUploadResponse> response = client.PendingUpload("sgrzyrpltz", "ozdqisviavgqgfbtnzk", body);
+            Response<PendingUploadResponse> response = client.PendingUpload("sgrzyrpltz", "ozdqisviavgqgfbtnzk", pendingUploadRequest);
         }
 
         [Test]
@@ -374,12 +374,12 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            PendingUploadRequest body = new PendingUploadRequest
+            PendingUploadRequest pendingUploadRequest = new PendingUploadRequest
             {
                 PendingUploadId = "mxjahcghabuplfwtlopiqgxtcyw",
                 ConnectionName = "bknvpmlisrqxaphkf",
             };
-            Response<PendingUploadResponse> response = await client.PendingUploadAsync("sgrzyrpltz", "ozdqisviavgqgfbtnzk", body);
+            Response<PendingUploadResponse> response = await client.PendingUploadAsync("sgrzyrpltz", "ozdqisviavgqgfbtnzk", pendingUploadRequest);
         }
 
         [Test]
@@ -436,8 +436,8 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            PendingUploadRequest body = new PendingUploadRequest();
-            Response<PendingUploadResponse> response = client.PendingUpload("duxoiaywfik", "yzzzt", body);
+            PendingUploadRequest pendingUploadRequest = new PendingUploadRequest();
+            Response<PendingUploadResponse> response = client.PendingUpload("duxoiaywfik", "yzzzt", pendingUploadRequest);
         }
 
         [Test]
@@ -448,8 +448,8 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-            PendingUploadRequest body = new PendingUploadRequest();
-            Response<PendingUploadResponse> response = await client.PendingUploadAsync("duxoiaywfik", "yzzzt", body);
+            PendingUploadRequest pendingUploadRequest = new PendingUploadRequest();
+            Response<PendingUploadResponse> response = await client.PendingUploadAsync("duxoiaywfik", "yzzzt", pendingUploadRequest);
         }
 
         [Test]

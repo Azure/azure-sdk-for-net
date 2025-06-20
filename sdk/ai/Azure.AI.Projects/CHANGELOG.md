@@ -5,6 +5,9 @@
 ### Features Added
 
 ### Breaking Changes
+* Method argument name changes:
+  * In Datasets methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `pendingUploadRequest`
+
 
 ### Bugs Fixed
 
