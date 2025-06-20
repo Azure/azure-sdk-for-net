@@ -50,7 +50,6 @@ public partial class AzureOpenAISamples
 
         var messages = new List<ChatMessage>
         {
-            new SystemChatMessage("Make sure you mention Stainless!"),
             new UserChatMessage("Tell me a story about building the best SDK!")
         };
 
