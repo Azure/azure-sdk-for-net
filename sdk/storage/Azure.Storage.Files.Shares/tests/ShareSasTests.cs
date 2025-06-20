@@ -845,6 +845,35 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task ShareClient_GetUserDelegationSAS()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
+                startsOn: Recording.UtcNow.AddHours(-1),
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            Uri sasUri = share.GenerateUserDelegationSasUri(
+                ShareSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddHours(1),
+                userDelegationKeyResponse.Value,
+                out string stringToSign);
+            ShareClientOptions options = GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            ShareClient sasShare = InstrumentClient(new ShareClient(sasUri, options));
+
+            // Act
+            await sasShare.CreateDirectoryAsync(GetNewDirectoryName());
+
+            // Assert
+            Assert.IsNotNull(stringToSign);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
         public async Task ShareClient_GetUserDelegationSAS_Builder()
         {
             // Arrange
@@ -861,13 +890,14 @@ namespace Azure.Storage.Files.Shares.Tests
                 expiresOn: Recording.UtcNow.AddHours(1));
 
             Uri sasUri = share.GenerateUserDelegationSasUri(builder, userDelegationKeyResponse.Value, out string stringToSign);
-            ShareClient sasShare = InstrumentClient(new ShareClient(sasUri, GetOptions()));
+            ShareClientOptions options = GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            ShareClient sasShare = InstrumentClient(new ShareClient(sasUri, options));
 
             // Act
-            Response<ShareProperties> propertiesResponse = await sasShare.GetPropertiesAsync();
+            await sasShare.CreateDirectoryAsync(GetNewDirectoryName());
 
             // Assert
-            Assert.IsNotNull(propertiesResponse.Value.LastModified);
             Assert.IsNotNull(stringToSign);
         }
     }
