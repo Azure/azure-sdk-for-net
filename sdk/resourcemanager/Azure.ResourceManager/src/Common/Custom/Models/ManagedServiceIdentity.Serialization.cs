@@ -307,6 +307,7 @@ namespace Azure.ResourceManager.Models
 
             // This method checks if the ManagedServiceIdentityTypeV3Converter exists and it indicates that the ManagedServiceIdentityType format is version 3.
             // Then, the format string in options.Format should be "W|v3", otherwise the default options.Format is "W".
+            // TODO: Remove this method when ManagedServiceIdentityTypeV3Converter is removed from the codebase after we apply the latest genertor changes.
             private bool UseManagedServiceIdentityV3(JsonSerializerOptions options)
                 => options is not null && options.Converters.Any(x => x.ToString().EndsWith("ManagedServiceIdentityTypeV3Converter"));
 
