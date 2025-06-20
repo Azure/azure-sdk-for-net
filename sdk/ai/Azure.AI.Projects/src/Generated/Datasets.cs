@@ -260,7 +260,7 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="version"> The specific version id of the DatasetVersion to create or replace. </param>
+        /// <param name="version"> The specific version id of the DatasetVersion to create or update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
@@ -299,7 +299,7 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="version"> The specific version id of the DatasetVersion to create or replace. </param>
+        /// <param name="version"> The specific version id of the DatasetVersion to create or update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
@@ -330,18 +330,18 @@ namespace Azure.AI.Projects
         /// <summary> Start a new or get an existing pending upload of a dataset for a specific version. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
-        /// <param name="body"> Parameters for the action. </param>
+        /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='PendingUploadAsync(string,string,PendingUploadRequest,CancellationToken)']/*" />
-        public virtual async Task<Response<PendingUploadResponse>> PendingUploadAsync(string name, string version, PendingUploadRequest body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PendingUploadResponse>> PendingUploadAsync(string name, string version, PendingUploadRequest pendingUploadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = pendingUploadRequest.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await PendingUploadAsync(name, version, content, context).ConfigureAwait(false);
             return Response.FromValue(PendingUploadResponse.FromResponse(response), response);
@@ -350,18 +350,18 @@ namespace Azure.AI.Projects
         /// <summary> Start a new or get an existing pending upload of a dataset for a specific version. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="version"> The specific version id of the DatasetVersion to operate on. </param>
-        /// <param name="body"> Parameters for the action. </param>
+        /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/Datasets.xml" path="doc/members/member[@name='PendingUpload(string,string,PendingUploadRequest,CancellationToken)']/*" />
-        public virtual Response<PendingUploadResponse> PendingUpload(string name, string version, PendingUploadRequest body, CancellationToken cancellationToken = default)
+        public virtual Response<PendingUploadResponse> PendingUpload(string name, string version, PendingUploadRequest pendingUploadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = pendingUploadRequest.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = PendingUpload(name, version, content, context);
             return Response.FromValue(PendingUploadResponse.FromResponse(response), response);

@@ -269,12 +269,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-PendingUploadRequest body = new PendingUploadRequest
+PendingUploadRequest pendingUploadRequest = new PendingUploadRequest
 {
     PendingUploadId = "mxjahcghabuplfwtlopiqgxtcyw",
     ConnectionName = "bknvpmlisrqxaphkf",
 };
-Response<PendingUploadResponse> response = await client.PendingUploadAsync("sgrzyrpltz", "ozdqisviavgqgfbtnzk", body);
+Response<PendingUploadResponse> response = await client.PendingUploadAsync("sgrzyrpltz", "ozdqisviavgqgfbtnzk", pendingUploadRequest);
 ]]></code>
 This sample shows how to call PendingUploadAsync.
 <code><![CDATA[
@@ -282,8 +282,8 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-PendingUploadRequest body = new PendingUploadRequest();
-Response<PendingUploadResponse> response = await client.PendingUploadAsync("duxoiaywfik", "yzzzt", body);
+PendingUploadRequest pendingUploadRequest = new PendingUploadRequest();
+Response<PendingUploadResponse> response = await client.PendingUploadAsync("duxoiaywfik", "yzzzt", pendingUploadRequest);
 ]]></code></example>
     </member>
     <member name="PendingUpload(string,string,PendingUploadRequest,CancellationToken)">
@@ -294,12 +294,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-PendingUploadRequest body = new PendingUploadRequest
+PendingUploadRequest pendingUploadRequest = new PendingUploadRequest
 {
     PendingUploadId = "mxjahcghabuplfwtlopiqgxtcyw",
     ConnectionName = "bknvpmlisrqxaphkf",
 };
-Response<PendingUploadResponse> response = client.PendingUpload("sgrzyrpltz", "ozdqisviavgqgfbtnzk", body);
+Response<PendingUploadResponse> response = client.PendingUpload("sgrzyrpltz", "ozdqisviavgqgfbtnzk", pendingUploadRequest);
 ]]></code>
 This sample shows how to call PendingUpload.
 <code><![CDATA[
@@ -307,8 +307,8 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Datasets client = new AIProjectClient(endpoint, credential).GetDatasetsClient(apiVersion: "2025-05-15-preview");
 
-PendingUploadRequest body = new PendingUploadRequest();
-Response<PendingUploadResponse> response = client.PendingUpload("duxoiaywfik", "yzzzt", body);
+PendingUploadRequest pendingUploadRequest = new PendingUploadRequest();
+Response<PendingUploadResponse> response = client.PendingUpload("duxoiaywfik", "yzzzt", pendingUploadRequest);
 ]]></code></example>
     </member>
     <member name="PendingUploadAsync(string,string,RequestContent,RequestContext)">
