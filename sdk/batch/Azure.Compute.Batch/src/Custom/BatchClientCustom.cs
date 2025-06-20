@@ -286,7 +286,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = await GetTaskFilePropertiesInternalAsync(jobId, taskId, filePath, timeOutInSeconds, ocpdate, null, null).ConfigureAwait(false);
+                Response response = await GetTaskFilePropertiesInternalAsync(jobId, taskId, filePath, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpdate, ifModifiedSince: null, ifUnmodifiedSince: null, cancellationToken: CancellationToken.None).ConfigureAwait(false);
                 return Response.FromValue(BatchFileProperties.FromResponse(response), response);
             }
             catch (Exception e)
@@ -328,8 +328,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = GetTaskFilePropertiesInternal(jobId, taskId, filePath, timeOutInSeconds, ocpdate, null, context);
+                Response response = GetTaskFilePropertiesInternal(jobId, taskId, filePath, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpdate, ifModifiedSince: null, ifUnmodifiedSince: null, cancellationToken: cancellationToken);
                 return Response.FromValue(BatchFileProperties.FromResponse(response), response);
             }
             catch (Exception e)
@@ -370,8 +369,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                RequestContext context = FromCancellationToken(cancellationToken);
-                Response response = await GetNodeFilePropertiesInternalAsync(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, null, context).ConfigureAwait(false);
+                Response response = await GetNodeFilePropertiesInternalAsync(poolId, nodeId, filePath, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpdate, ifModifiedSince: null, ifUnmodifiedSince: null, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(BatchFileProperties.FromResponse(response), response);
             }
             catch (Exception e)
@@ -412,7 +410,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = GetNodeFilePropertiesInternal(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, null, null);
+                Response response = GetNodeFilePropertiesInternal(poolId, nodeId, filePath, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpdate, ifModifiedSince: null, ifUnmodifiedSince: null, cancellationToken: CancellationToken.None);
                 return Response.FromValue(BatchFileProperties.FromResponse(response), response);
             }
             catch (Exception e)
@@ -453,8 +451,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNull(pool, nameof(pool));
 
             using RequestContent content = pool.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await UpdatePoolAsync(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            Response response = await UpdatePoolAsync(poolId, content, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpdate, ifModifiedSince: requestConditions?.IfModifiedSince, ifUnmodifiedSince: requestConditions?.IfUnmodifiedSince, ifMatch: requestConditions?.IfMatch?.ToString(), ifNoneMatch: requestConditions?.IfNoneMatch?.ToString(), context).ConfigureAwait(false);
             return response;
         }
 
@@ -489,8 +487,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNull(pool, nameof(pool));
 
             using RequestContent content = pool.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = UpdatePool(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context);
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            Response response = UpdatePool(poolId, content, timeOutInSeconds, clientRequestId: null, returnClientRequestId: null, ocpdate, ifModifiedSince: requestConditions?.IfModifiedSince, ifUnmodifiedSince: requestConditions?.IfUnmodifiedSince, ifMatch: requestConditions?.IfMatch?.ToString(), ifNoneMatch: requestConditions?.IfNoneMatch?.ToString(), context);
             return response;
         }
 
