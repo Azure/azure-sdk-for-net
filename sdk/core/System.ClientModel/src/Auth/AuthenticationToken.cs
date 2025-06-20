@@ -41,7 +41,7 @@ public class AuthenticationToken
     /// <summary>
     /// Gets the time when the provided token expires.
     /// </summary>
-    public DateTimeOffset ExpiresOn { get; }
+    public DateTimeOffset? ExpiresOn { get; }
 
     /// <summary>
     /// Gets the time when the token should be refreshed.

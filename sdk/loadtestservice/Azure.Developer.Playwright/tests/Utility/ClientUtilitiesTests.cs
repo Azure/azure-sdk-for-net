@@ -93,7 +93,7 @@ namespace Azure.Developer.Playwright.Tests.Utility
         {
             var environment = new TestEnvironment();
             var util = new ClientUtilities(environment);
-            Assert.Throws<Exception>(() => util.ValidateMptPAT(null, "wss://region.api.playwright.io/accounts/workspace123/"));
+            Assert.Throws<Exception>(() => util.ValidateMptPAT(null, "wss://region.api.playwright.io/playwrightworkspaces/workspace123/"));
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Azure.Developer.Playwright.Tests.Utility
             var jwtHandlerMock = new Mock<JsonWebTokenHandler>();
             jwtHandlerMock.Setup(j => j.ReadJsonWebToken("badtoken")).Throws(new Exception());
             var util = new ClientUtilities(jsonWebTokenHandler: jwtHandlerMock.Object, environment: environment);
-            Assert.Throws<Exception>(() => util.ValidateMptPAT("badtoken", "wss://region.api.playwright.io/accounts/workspace123/"));
+            Assert.Throws<Exception>(() => util.ValidateMptPAT("badtoken", "wss://region.api.playwright.io/playwrightworkspaces/workspace123/"));
         }
 
         [Test]
@@ -113,14 +113,14 @@ namespace Azure.Developer.Playwright.Tests.Utility
             var environment = new TestEnvironment();
             var token = TestUtilities.GetToken(new Dictionary<string, object>
             {
-                {"aid", "workspace321"},
+                {"pwid", "workspace321"},
             });
             var jwt = new JsonWebToken(token);
             var jwtHandlerMock = new Mock<JsonWebTokenHandler>();
             jwtHandlerMock.Setup(j => j.ReadJsonWebToken(It.IsAny<string>())).Returns(jwt);
 
             var util = new ClientUtilities(jsonWebTokenHandler: jwtHandlerMock.Object, environment: environment);
-            Assert.Throws<Exception>(() => util.ValidateMptPAT("token", "wss://region.api.playwright.io/accounts/workspace123/"));
+            Assert.Throws<Exception>(() => util.ValidateMptPAT("token", "wss://region.api.playwright.io/playwrightworkspaces/workspace123/"));
         }
 
         [Test]
@@ -129,14 +129,14 @@ namespace Azure.Developer.Playwright.Tests.Utility
             var environment = new TestEnvironment();
             var token = TestUtilities.GetToken(new Dictionary<string, object>
             {
-                {"aid", "workspace123"},
+                {"pwid", "workspace123"},
             }, DateTime.UtcNow.Add(TimeSpan.FromMinutes(-10)));
             var jwt = new JsonWebToken(token);
             var jwtHandlerMock = new Mock<JsonWebTokenHandler>();
             jwtHandlerMock.Setup(j => j.ReadJsonWebToken(It.IsAny<string>())).Returns(jwt);
 
             var util = new ClientUtilities(jsonWebTokenHandler: jwtHandlerMock.Object, environment: environment);
-            Assert.Throws<Exception>(() => util.ValidateMptPAT("token", "wss://region.api.playwright.io/accounts/workspace123/"));
+            Assert.Throws<Exception>(() => util.ValidateMptPAT("token", "wss://region.api.playwright.io/playwrightworkspaces/workspace123/"));
         }
 
         [Test]
@@ -145,14 +145,14 @@ namespace Azure.Developer.Playwright.Tests.Utility
             var environment = new TestEnvironment();
             var token = TestUtilities.GetToken(new Dictionary<string, object>
             {
-                {"aid", "workspace123"},
+                {"pwid", "workspace123"},
             });
             var jwt = new JsonWebToken(token);
             var jwtHandlerMock = new Mock<JsonWebTokenHandler>();
             jwtHandlerMock.Setup(j => j.ReadJsonWebToken(It.IsAny<string>())).Returns(jwt);
 
             var util = new ClientUtilities(jsonWebTokenHandler: jwtHandlerMock.Object, environment: environment);
-            Assert.DoesNotThrow(() => util.ValidateMptPAT("token", "wss://region.api.playwright.io/accounts/workspace123/"));
+            Assert.DoesNotThrow(() => util.ValidateMptPAT("token", "wss://region.api.playwright.io/playwrightworkspaces/workspace123/"));
         }
     }
 }
