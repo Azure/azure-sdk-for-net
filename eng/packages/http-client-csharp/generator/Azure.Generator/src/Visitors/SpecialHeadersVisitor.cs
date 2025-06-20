@@ -74,11 +74,15 @@ namespace Azure.Generator.Visitors
                     newStatements.Add(requestVariable!.As<Request>().SetHeaderValue(
                         clientRequestIdParameter.NameInRequest, requestVariable.Property(nameof(Request.ClientRequestId))));
                 }
-                if (returnClientRequestIdParameter != null)
+
+                if (returnClientRequestIdParameter?.DefaultValue?.Value != null)
                 {
-                    // Set the return-client-request-id header
-                    newStatements.Add(requestVariable!.As<Request>().SetHeaderValue(
-                        returnClientRequestIdParameter.NameInRequest, Literal(returnClientRequestIdParameter.DefaultValue?.Value ?? "true")));
+                    if (bool.TryParse(returnClientRequestIdParameter.DefaultValue.Value.ToString(), out bool value))
+                    {
+                        newStatements.Add(requestVariable!.As<Request>().SetHeaderValue(
+                            returnClientRequestIdParameter.NameInRequest,
+                            Literal(value.ToString().ToLowerInvariant())));
+                    }
                 }
 
                 // Add the return statement back
