@@ -2430,36 +2430,6 @@ namespace Azure.Storage.Blobs.Models
         }
         #endregion
 
-        #region BlobServiceProperties
-        /// <summary>
-        /// Creates a new BlobServiceProperties instance for mocking.
-        /// </summary>
-        public static BlobServiceProperties BlobServiceProperties(
-            BlobAnalyticsLogging logging = default,
-            BlobMetrics hourMetrics = default,
-            BlobMetrics minuteMetrics = default,
-            IList<BlobCorsRule> cors = default,
-            string defaultServiceVersion = default,
-            BlobRetentionPolicy deleteRetentionPolicy = default,
-            BlobStaticWebsite staticWebsite = default)
-        {
-            cors ??= new List<BlobCorsRule>();
-            return new BlobServiceProperties(logging, hourMetrics, minuteMetrics, cors, defaultServiceVersion, deleteRetentionPolicy, staticWebsite);
-        }
-        #endregion
-
-        #region BlobContainerClient
-        /// <summary>
-        /// Creates a new BlobContainerClient instance for mocking.
-        /// </summary>
-        public static BlobContainerClient BlobContainerClient(
-            Uri blobContainerUri,
-            BlobClientOptions options = default)
-        {
-            return new BlobContainerClient(blobContainerUri, options);
-        }
-        #endregion
-
         #region BlobImmutabilityPolicy
         /// <summary>
         /// Creates a new BlobImmutabilityPolicy instance for mocking.
@@ -2481,24 +2451,12 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobLegalHoldResult instance for mocking.
         /// </summary>
         public static BlobLegalHoldResult BlobLegalHoldResult(
-            bool hasLegalHold = default)
+            bool hasLegalHold = false)
         {
             return new BlobLegalHoldResult()
             {
                 HasLegalHold = hasLegalHold
             };
-        }
-        #endregion
-
-        #region ReleasedObjectInfo
-        /// <summary>
-        /// Creates a new ReleasedObjectInfo instance for mocking.
-        /// </summary>
-        public static ReleasedObjectInfo ReleasedObjectInfo(
-            ETag eTag,
-            DateTimeOffset lastModified)
-        {
-            return new ReleasedObjectInfo(eTag, lastModified);
         }
         #endregion
 

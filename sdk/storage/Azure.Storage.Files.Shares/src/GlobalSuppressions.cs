@@ -4,3 +4,8 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Naming", "AZC0034:Type name conflicts", Justification = "Storage-specific enum that shares name with Blobs storage", Scope = "type", Target = "~T:Azure.Storage.Files.Shares.Models.CopyStatus")]
+[assembly: SuppressMessage("ApiDesign", "AZC0035:Output model type should have a corresponding method in a model factory class", Justification = "This type has a public constructor and all properties are settable.", Scope = "type", Target = "~T:Azure.Storage.Files.Shares.Models.ShareFilePermission")]
+[assembly: SuppressMessage("ApiDesign", "AZC0035:Output model type should have a corresponding method in a model factory class", Justification = "This type has a public constructor and all properties are settable.", Scope = "type", Target = "~T:Azure.Storage.Files.Shares.ShareDirectoryClient")]
+[assembly: SuppressMessage("ApiDesign", "AZC0035:Output model type should have a corresponding method in a model factory class", Justification = "This type has a public constructor and all properties are settable.", Scope = "type", Target = "~T:Azure.Storage.Files.Shares.ShareFileClient")]
+[assembly: SuppressMessage("ApiDesign", "AZC0035:Output model type should have a corresponding method in a model factory class", Justification = "This type has a public constructor and all properties are settable.", Scope = "type", Target = "~T:Azure.Storage.Files.Shares.Models.ShareServiceProperties")]
+[assembly: SuppressMessage("ApiDesign", "AZC0035:Output model type should have a corresponding method in a model factory class", Justification = "This type has a public constructor and all properties are settable.", Scope = "type", Target = "~T:Azure.Storage.Files.Shares.ShareClient")]
