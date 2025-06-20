@@ -3745,7 +3745,7 @@ namespace Azure.Storage.Files.Shares
 
         #region GenerateUserDelegationSas
         /// <summary>
-        /// The <see cref="GenerateUserDelegationSasUri(ShareSasPermissions, DateTimeOffset, UserDelegationKey, out string)"/>
+        /// The <see cref="GenerateUserDelegationSasUri(ShareFileSasPermissions, DateTimeOffset, UserDelegationKey, out string)"/>
         /// returns a <see cref="Uri"/> that generates a Share Directory Service Shared Access Signature (SAS)
         /// Uri based on the Client properties and parameter passed. The SAS is signed by the user delegation key passed in.
         ///
@@ -3773,11 +3773,11 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
-        public Uri GenerateUserDelegationSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey)
+        public Uri GenerateUserDelegationSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey)
             => GenerateUserDelegationSasUri(permissions, expiresOn, userDelegationKey, out _);
 
         /// <summary>
-        /// The <see cref="GenerateUserDelegationSasUri(ShareSasPermissions, DateTimeOffset, UserDelegationKey, out string)"/>
+        /// The <see cref="GenerateUserDelegationSasUri(ShareFileSasPermissions, DateTimeOffset, UserDelegationKey, out string)"/>
         /// returns a <see cref="Uri"/> that generates a Share Directory Service Shared Access Signature (SAS)
         /// Uri based on the Client properties and parameter passed. The SAS is signed by the user delegation key passed in.
         ///
@@ -3808,7 +3808,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
-        public Uri GenerateUserDelegationSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey, out string stringToSign) =>
+        public Uri GenerateUserDelegationSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey, out string stringToSign) =>
             GenerateUserDelegationSasUri(new ShareSasBuilder(permissions, expiresOn)
             {
                 ShareName = ShareName,

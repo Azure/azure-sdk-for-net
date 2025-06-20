@@ -12,6 +12,7 @@ using NUnit.Framework;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
@@ -841,5 +842,33 @@ namespace Azure.Storage.Files.Shares.Tests
             await InvokeAccountSasFileToLeaseTest(permissions: permissions);
         }
         #endregion
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task ShareClient_GetUserDelegationSAS_Builder()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
+                startsOn: Recording.UtcNow.AddHours(-1),
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            ShareSasBuilder builder = new ShareSasBuilder(
+                permissions: ShareSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            Uri sasUri = share.GenerateUserDelegationSasUri(builder, userDelegationKeyResponse.Value, out string stringToSign);
+            ShareClient sasShare = InstrumentClient(new ShareClient(sasUri, GetOptions()));
+
+            // Act
+            Response<ShareProperties> propertiesResponse = await sasShare.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(propertiesResponse.Value.LastModified);
+            Assert.IsNotNull(stringToSign);
+        }
     }
 }
