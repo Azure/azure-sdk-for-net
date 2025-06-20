@@ -8,6 +8,7 @@ using Azure.Identity;
 using System.Collections.Generic;
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 
 namespace Azure.AI.OpenAI.Samples;
 
@@ -114,6 +115,28 @@ public partial class AzureOpenAISamples
                                 + "The mission marked a significant achievement in space exploration, fulfilling President John F. Kennedy's goal of landing a man on the Moon and returning him safely to Earth. "
                                 + "The lunar samples brought back provided invaluable insights into the Moon's composition and history.";
         return "Summarize the following text.%n" + "Text:%n" + textToSummarize + "%n Summary:%n";
+        #endregion
+    }
+
+    public void ResponseStreaming()
+    {
+        #region Snippet:ResponseStreaming
+        AzureOpenAIClient azureClient = new(
+            new Uri("https://your-azure-openai-resource.com"),
+            new DefaultAzureCredential());
+
+        // Replace with your deployment name
+        OpenAIResponseClient client = azureClient.GetOpenAIResponseClient("my-gpt-35-turbo-deployment");
+
+        ResponseCreationOptions options = new();
+        ResponseContentPart contentPart = ResponseContentPart.CreateInputTextPart("Tell me a 20-word story about building the best SDK!");
+        ResponseItem inputItem = ResponseItem.CreateUserMessageItem([contentPart]);
+
+        foreach (StreamingResponseUpdate update
+            in client.CreateResponseStreaming([inputItem], options))
+        {
+            Console.WriteLine(ModelReaderWriter.Write(update));
+        }
         #endregion
     }
 }
