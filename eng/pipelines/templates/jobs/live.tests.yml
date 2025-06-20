@@ -134,6 +134,11 @@ jobs:
           Write-Host "##vso[task.setvariable variable=TestResourcesDirectory]$directory"
         displayName: Set TestResources Location
 
+      # Install dotnet before resource deployment so the pre/post scripts can run dotnet commands.
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        parameters:
+          Container: ${{ parameters.UsePlatformContainer }}
+
       - ${{ if parameters.DeployTestResources }}:
         - ${{ each directory in coalesce(parameters.TestResourceDirectories, split(parameters.ServiceDirectory, '|')) }}:
           - template: /eng/common/TestResources/deploy-test-resources.yml
@@ -158,9 +163,6 @@ jobs:
             Write-Host "##vso[task.setvariable variable=TestMode]Record"
           }
         displayName: Set Test Mode
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-        parameters:
-          Container: ${{ parameters.UsePlatformContainer }}
 
       - ${{ if eq('true', parameters.UseFederatedAuth) }}:
         - task: AzurePowerShell@5

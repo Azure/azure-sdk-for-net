@@ -1,10 +1,16 @@
 # Release History
 
-## 7.20.0-beta.1 (Unreleased)
+## 7.21.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 7.20.1 (2025-06-12)
 
 ### Bugs Fixed
 
@@ -13,6 +19,8 @@
 ### Other Changes
 
 - Updated retry policy behavior when the service is throttling and the `TryTimeout` is shorter than the standard throttling time of 30 seconds.  Previously, the operation was immediately canceled with a server busy exception.  With these changes, the operation will begin consuming retry attempts while throttling until either the server busy state is cleared or all configured retry attempts are exhausted.  ([#50121](https://github.com/Azure/azure-sdk-for-net/issues/50121))
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.7.0, which contains several bug fixes and adds support for AOT. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
 
 ## 7.19.0 (2025-04-08)
 
