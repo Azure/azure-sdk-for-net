@@ -1125,6 +1125,7 @@
         "dnsprivateviewocid",
         "Ords",
         "Ocid",
+        "Ocids",
         "ncharacter",
         "ocpu",
         "Iorm",
@@ -1135,7 +1136,11 @@
         "Tcps",
         "Ezconnect",
         "Ezconnectplus",
-        "Oltp"
+        "Oltp",
+        "exadb",
+        "Exadb",
+        "Exascale",
+        "exascale"
       ]
     },
     {
@@ -1212,6 +1217,14 @@
       "words": [
         "checkin",
         "regionality"
+      ]
+    },
+    {
+      "filename": "**/sdk/provisioning/**/*.cs",
+      "words": [
+        "Awsec",
+        "Freemium",
+        "Mibps"
       ]
     },
     {
@@ -1602,8 +1615,9 @@
     {
       "filename": "**/sdk/containerinstance/**/*.cs",
       "words": [
-        "Noreuse",
-        "Unsecure"
+        "noreuse",
+        "ngroups",
+        "unsecure"
       ]
     },
     {
@@ -1726,6 +1740,23 @@
       "filename": "**/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/api/*.cs",
       "words": [
         "prebuilts"
+      ]
+    },
+    {
+      "filename": "**/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/**",
+      "words": [
+        "Ceus",
+        "Tonnis",
+        "Hnpcc",
+        "Ascvd",
+        "Mednax",
+        "Cusick",
+        "Acrad",
+        "Kellgren",
+        "Frax",
+        "Birads",
+        "Agatston",
+        "Tyrer"
       ]
     },
     {

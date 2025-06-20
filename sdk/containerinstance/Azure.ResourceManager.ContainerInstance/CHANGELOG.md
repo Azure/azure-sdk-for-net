@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.2 (2025-06-13)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2024-05' to 'package-preview-2024-11'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ff8bf88e72989f38431cecc8a2c2a7d6cff59d17/specification/containerinstance/resource-manager/readme.md.
 
 ## 1.3.0-beta.1 (2024-10-24)
 

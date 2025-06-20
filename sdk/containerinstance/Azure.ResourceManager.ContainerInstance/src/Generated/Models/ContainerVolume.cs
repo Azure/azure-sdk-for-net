@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
             Name = name;
             Secret = new ChangeTrackingDictionary<string, string>();
+            SecretReference = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerVolume"/>. </summary>
@@ -61,14 +62,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="azureFile"> The Azure File volume. </param>
         /// <param name="emptyDir"> The empty directory volume. </param>
         /// <param name="secret"> The secret volume. </param>
+        /// <param name="secretReference"> The secret reference volume. </param>
         /// <param name="gitRepo"> The git repo volume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerVolume(string name, ContainerInstanceAzureFileVolume azureFile, BinaryData emptyDir, IDictionary<string, string> secret, ContainerInstanceGitRepoVolume gitRepo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerVolume(string name, ContainerInstanceAzureFileVolume azureFile, BinaryData emptyDir, IDictionary<string, string> secret, IDictionary<string, string> secretReference, ContainerInstanceGitRepoVolume gitRepo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AzureFile = azureFile;
             EmptyDir = emptyDir;
             Secret = secret;
+            SecretReference = secretReference;
             GitRepo = gitRepo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -115,6 +118,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public BinaryData EmptyDir { get; set; }
         /// <summary> The secret volume. </summary>
         public IDictionary<string, string> Secret { get; }
+        /// <summary> The secret reference volume. </summary>
+        public IDictionary<string, string> SecretReference { get; }
         /// <summary> The git repo volume. </summary>
         public ContainerInstanceGitRepoVolume GitRepo { get; set; }
     }

@@ -47,6 +47,6 @@ public partial class KubernetesObjectReference : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _namespace = DefineProperty<string>("Namespace", ["namespace"], isOutput: true);
+        _namespace = DefineProperty<string>("Namespace", ["Namespace"], isOutput: true);
     }
 }
