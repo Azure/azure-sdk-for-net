@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Models
             if (originalFormat.Length > 3)
             {
                 var v3Format = "|v3".AsSpan();
-                if (originalFormat.Slice(originalFormat.Length - v3Format.Length).Equals(v3Format, StringComparison.Ordinal))
+                if (originalFormat.EndsWith(v3Format))
                 {
                     format = originalFormat.Slice(0, originalFormat.Length - v3Format.Length).ToString();
                     return true;
