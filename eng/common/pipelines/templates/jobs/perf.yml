@@ -13,7 +13,7 @@ parameters:
   default: 'ubuntu-22.04'
 - name: WindowsPool
   type: string
-  default: 'azsdk-pool'
+  default: 'azsdk-pool-mms-win-2022-perf'
 - name: WindowsVmImage
   type: string
   default: 'windows-2022'
