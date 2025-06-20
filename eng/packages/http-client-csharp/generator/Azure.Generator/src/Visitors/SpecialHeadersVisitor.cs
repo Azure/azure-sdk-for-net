@@ -79,6 +79,7 @@ namespace Azure.Generator.Visitors
                 {
                     if (bool.TryParse(returnClientRequestIdParameter.DefaultValue.Value.ToString(), out bool value))
                     {
+                        // Set the return-client-request-id header
                         newStatements.Add(requestVariable!.As<Request>().SetHeaderValue(
                             returnClientRequestIdParameter.NameInRequest,
                             Literal(value.ToString().ToLowerInvariant())));
