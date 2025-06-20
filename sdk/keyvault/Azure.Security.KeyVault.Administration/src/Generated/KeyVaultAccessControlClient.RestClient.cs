@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        internal HttpMessage CreateListRoleDefinitionsRequest(string scope, string filter, RequestContext context)
+        internal HttpMessage CreateGetRoleDefinitionsRequest(string scope, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -94,7 +94,7 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        internal HttpMessage CreateNextListRoleDefinitionsRequest(Uri nextPage, string scope, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetRoleDefinitionsRequest(Uri nextPage, string scope, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -159,7 +159,7 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        internal HttpMessage CreateListRoleAssignmentsRequest(string scope, string filter, RequestContext context)
+        internal HttpMessage CreateGetRoleAssignmentsRequest(string scope, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -179,7 +179,7 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        internal HttpMessage CreateNextListRoleAssignmentsRequest(Uri nextPage, string scope, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetRoleAssignmentsRequest(Uri nextPage, string scope, string filter, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

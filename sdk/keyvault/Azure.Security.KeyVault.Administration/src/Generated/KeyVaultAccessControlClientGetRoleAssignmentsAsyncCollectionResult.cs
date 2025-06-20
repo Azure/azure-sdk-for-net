@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Administration
     {
         private readonly KeyVaultAccessControlClient _client;
         private readonly string _scope;
-        private readonly string _$filter;
+        private readonly string _filter;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of KeyVaultAccessControlClientGetRoleAssignmentsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Administration
 
             _client = client;
             _scope = scope;
-            _$filter = filter;
+            _filter = filter;
             _context = context;
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextListRoleAssignmentsRequest(nextLink, _scope, _$filter, _context) : _client.CreateListRoleAssignmentsRequest(_scope, _$filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetRoleAssignmentsRequest(nextLink, _scope, _filter, _context) : _client.CreateGetRoleAssignmentsRequest(_scope, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KeyVaultAccessControlClient.GetRoleAssignments");
             scope.Start();
             try
