@@ -14,44 +14,29 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class UserDelegationKey
     {
         /// <summary> Initializes a new instance of <see cref="UserDelegationKey"/>. </summary>
-        /// <param name="signedOid"> The Azure Active Directory object ID in GUID format. </param>
-        /// <param name="signedTid"> The Azure Active Directory tenant ID in GUID format. </param>
-        /// <param name="signedStart"> The date-time the key is active. </param>
-        /// <param name="signedExpiry"> The date-time the key expires. </param>
+        /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
+        /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
+        /// <param name="signedStartsOn"> The date-time the key is active. </param>
+        /// <param name="signedExpiresOn"> The date-time the key expires. </param>
         /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
         /// <param name="signedVersion"> The service version that created the key. </param>
         /// <param name="value"> The key as a base64 string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="signedOid"/>, <paramref name="signedTid"/>, <paramref name="signedService"/>, <paramref name="signedVersion"/> or <paramref name="value"/> is null. </exception>
-        internal UserDelegationKey(string signedOid, string signedTid, DateTimeOffset signedStart, DateTimeOffset signedExpiry, string signedService, string signedVersion, string value)
+        /// <exception cref="ArgumentNullException"> <paramref name="signedObjectId"/>, <paramref name="signedTenantId"/>, <paramref name="signedService"/>, <paramref name="signedVersion"/> or <paramref name="value"/> is null. </exception>
+        internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value)
         {
-            Argument.AssertNotNull(signedOid, nameof(signedOid));
-            Argument.AssertNotNull(signedTid, nameof(signedTid));
+            Argument.AssertNotNull(signedObjectId, nameof(signedObjectId));
+            Argument.AssertNotNull(signedTenantId, nameof(signedTenantId));
             Argument.AssertNotNull(signedService, nameof(signedService));
             Argument.AssertNotNull(signedVersion, nameof(signedVersion));
             Argument.AssertNotNull(value, nameof(value));
 
-            SignedOid = signedOid;
-            SignedTid = signedTid;
-            SignedStart = signedStart;
-            SignedExpiry = signedExpiry;
+            SignedObjectId = signedObjectId;
+            SignedTenantId = signedTenantId;
+            SignedStartsOn = signedStartsOn;
+            SignedExpiresOn = signedExpiresOn;
             SignedService = signedService;
             SignedVersion = signedVersion;
             Value = value;
         }
-
-        /// <summary> The Azure Active Directory object ID in GUID format. </summary>
-        public string SignedOid { get; }
-        /// <summary> The Azure Active Directory tenant ID in GUID format. </summary>
-        public string SignedTid { get; }
-        /// <summary> The date-time the key is active. </summary>
-        public DateTimeOffset SignedStart { get; }
-        /// <summary> The date-time the key expires. </summary>
-        public DateTimeOffset SignedExpiry { get; }
-        /// <summary> Abbreviation of the Azure Storage service that accepts the key. </summary>
-        public string SignedService { get; }
-        /// <summary> The service version that created the key. </summary>
-        public string SignedVersion { get; }
-        /// <summary> The key as a base64 string. </summary>
-        public string Value { get; }
     }
 }
