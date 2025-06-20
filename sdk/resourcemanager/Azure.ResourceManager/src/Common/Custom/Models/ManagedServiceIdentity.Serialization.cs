@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Models
     {
         private const string SystemAssignedUserAssignedV3Value = "SystemAssigned,UserAssigned";
 
+        // This method checks if the format string in options.Format ends with the "|v3" suffix.
+        // The "|v3" suffix indicates that the ManagedServiceIdentityType format is version 3.
+        // If the suffix is present, it is removed, and the base format is returned via the 'format' parameter.
+        // This allows the method to handle version-specific logic while preserving the base format.
         private static bool UseManagedServiceIdentityV3(ModelReaderWriterOptions options, out string format)
         {
             var originalFormat = options.Format.AsSpan();
@@ -301,6 +305,8 @@ namespace Azure.ResourceManager.Models
         {
             private static readonly ModelReaderWriterOptions V3Options = new ModelReaderWriterOptions("W|v3");
 
+            // This method checks if the ManagedServiceIdentityTypeV3Converter exists and it indicates that the ManagedServiceIdentityType format is version 3.
+            // Then, the format string in options.Format should be "W|v3", otherwise the default options.Format is "W".
             private bool UseManagedServiceIdentityV3(JsonSerializerOptions options)
                 => options is not null && options.Converters.Any(x => x.ToString().EndsWith("ManagedServiceIdentityTypeV3Converter"));
 
