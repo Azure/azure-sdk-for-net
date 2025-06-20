@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -277,12 +278,13 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            BlobClientOptions clientOptions = GetUserAgentClientOptions();
             BlobContainerClient client = _credentialType switch
             {
-                CredentialType.None => new BlobContainerClient(containerUri),
-                CredentialType.SharedKey => new BlobContainerClient(containerUri, await _getStorageSharedKeyCredential(containerUri, cancellationToken).ConfigureAwait(false)),
-                CredentialType.Token => new BlobContainerClient(containerUri, _tokenCredential),
-                CredentialType.Sas => new BlobContainerClient(containerUri, await _getAzureSasCredential(containerUri, cancellationToken).ConfigureAwait(false)),
+                CredentialType.None => new BlobContainerClient(containerUri, clientOptions),
+                CredentialType.SharedKey => new BlobContainerClient(containerUri, await _getStorageSharedKeyCredential(containerUri, cancellationToken).ConfigureAwait(false), clientOptions),
+                CredentialType.Token => new BlobContainerClient(containerUri, _tokenCredential, clientOptions),
+                CredentialType.Sas => new BlobContainerClient(containerUri, await _getAzureSasCredential(containerUri, cancellationToken).ConfigureAwait(false), clientOptions),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new BlobStorageResourceContainer(client, options);
@@ -321,14 +323,15 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            BlobClientOptions clientOptions = GetUserAgentClientOptions();
             if (options is BlockBlobStorageResourceOptions)
             {
                 BlockBlobClient blockClient = _credentialType switch
                 {
-                    CredentialType.None => new BlockBlobClient(blobUri),
-                    CredentialType.SharedKey => new BlockBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false)),
-                    CredentialType.Token => new BlockBlobClient(blobUri, _tokenCredential),
-                    CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false)),
+                    CredentialType.None => new BlockBlobClient(blobUri, clientOptions),
+                    CredentialType.SharedKey => new BlockBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
+                    CredentialType.Token => new BlockBlobClient(blobUri, _tokenCredential, clientOptions),
+                    CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
                 return new BlockBlobStorageResource(blockClient, options as BlockBlobStorageResourceOptions);
@@ -337,10 +340,10 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 PageBlobClient pageClient = _credentialType switch
                 {
-                    CredentialType.None => new PageBlobClient(blobUri),
-                    CredentialType.SharedKey => new PageBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false)),
-                    CredentialType.Token => new PageBlobClient(blobUri, _tokenCredential),
-                    CredentialType.Sas => new PageBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false)),
+                    CredentialType.None => new PageBlobClient(blobUri, clientOptions),
+                    CredentialType.SharedKey => new PageBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
+                    CredentialType.Token => new PageBlobClient(blobUri, _tokenCredential, clientOptions),
+                    CredentialType.Sas => new PageBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
                 return new PageBlobStorageResource(pageClient, options as PageBlobStorageResourceOptions);
@@ -349,20 +352,20 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 AppendBlobClient appendClient = _credentialType switch
                 {
-                    CredentialType.None => new AppendBlobClient(blobUri),
-                    CredentialType.SharedKey => new AppendBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false)),
-                    CredentialType.Token => new AppendBlobClient(blobUri, _tokenCredential),
-                    CredentialType.Sas => new AppendBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false)),
+                    CredentialType.None => new AppendBlobClient(blobUri, clientOptions),
+                    CredentialType.SharedKey => new AppendBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
+                    CredentialType.Token => new AppendBlobClient(blobUri, _tokenCredential, clientOptions),
+                    CredentialType.Sas => new AppendBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
                 return new AppendBlobStorageResource(appendClient, options as AppendBlobStorageResourceOptions);
             }
             BlockBlobClient client = _credentialType switch
             {
-                CredentialType.None => new BlockBlobClient(blobUri),
-                CredentialType.SharedKey => new BlockBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false)),
-                CredentialType.Token => new BlockBlobClient(blobUri, _tokenCredential),
-                CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false)),
+                CredentialType.None => new BlockBlobClient(blobUri, clientOptions),
+                CredentialType.SharedKey => new BlockBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions),
+                CredentialType.Token => new BlockBlobClient(blobUri, _tokenCredential, clientOptions),
+                CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false), clientOptions    ),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new BlockBlobStorageResource(client, options as BlockBlobStorageResourceOptions);
@@ -726,5 +729,18 @@ namespace Azure.Storage.DataMovement.Blobs
         private static ArgumentException BadCredentialTypeException(CredentialType credentialType)
             => new ArgumentException(
                 $"No support for credential type {Enum.GetName(typeof(CredentialType), credentialType)}.");
+
+        private static BlobClientOptions GetUserAgentClientOptions()
+        {
+            BlobClientOptions options = new BlobClientOptions();
+
+            // We grab the assembly of BlobsStorageResourceProvider which is Azure.Storage.DataMovement.Blobs.
+            // Then we can grab the version to set in the ApplicationId which will prefix the User Agent string
+            // with the version.
+            Assembly assembly = typeof(BlobsStorageResourceProvider).Assembly;
+            string version = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
+            options.Diagnostics.ApplicationId = $"DataMovement/{version}";
+            return options;
+        }
     }
 }
