@@ -68,33 +68,6 @@ namespace Azure.Core.Samples
         }
         #endregion
 
-        #region Snippet:RemoveUserAgentPolicy
-        public class RemoveUserAgentPolicy : HttpPipelineSynchronousPolicy
-        {
-            public override void OnSendingRequest(HttpMessage message)
-            {
-                message.Request.Headers.Remove(HttpHeader.Names.UserAgent);
-            }
-        }
-        #endregion
-
-        public void RemoveUserAgentUse()
-        {
-            #region Snippet:RemoveUserAgentPolicyUse
-            Uri serviceEndpoint = new Uri("https://example.contoso.com");
-#if SNIPPET
-            TokenCredential credential = new DefaultAzureCredential();
-#else
-            TokenCredential credential = Mock.Of<TokenCredential>();
-#endif
-
-            SampleClientOptions clientOptions = new SampleClientOptions();
-            clientOptions.AddPolicy(new RemoveUserAgentPolicy(), HttpPipelinePosition.PerRetry);
-
-            SampleClient client = new SampleClient(serviceEndpoint, credential, clientOptions);
-            #endregion
-        }
-
         private class RequestFailedDetailsParserSample
         {
             public SampleClientOptions options;
