@@ -17,7 +17,7 @@ namespace Samples
 
         private static global::Azure.Core.ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new global::Azure.Core.StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        internal global::Azure.Core.HttpMessage CreateFooRequest(global::Azure.RequestContext context)
+        internal global::Azure.Core.HttpMessage CreateFooRequest(string someOtherParameter, global::Azure.RequestContext context)
         {
             global::Azure.Core.HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             global::Azure.Core.Request request = message.Request;
@@ -25,6 +25,10 @@ namespace Samples
             global::Azure.Core.RawRequestUriBuilder uri = new global::Azure.Core.RawRequestUriBuilder();
             uri.Reset(_endpoint);
             request.Uri = uri;
+            if ((someOtherParameter != null))
+            {
+                request.Headers.SetValue("some-other-parameter", someOtherParameter);
+            }
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
             request.Headers.SetValue("return-client-request-id", "true");
             return message;

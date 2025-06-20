@@ -19,25 +19,7 @@ namespace Azure.Generator.Tests.Visitors
         public void RemovesSpecialHeaderParametersFromServiceMethods()
         {
             var visitor = new TestSpecialHeadersVisitor();
-            List<InputParameter> parameters =
-            [
-                InputFactory.Parameter(
-                    "client-request-id",
-                    type: InputPrimitiveType.String,
-                    nameInRequest: "client-request-id",
-                    location: InputRequestLocation.Header),
-                InputFactory.Parameter(
-                    "return-client-request-id",
-                    type: new InputLiteralType("return-client-request-id", "ns", InputPrimitiveType.Boolean, true),
-                    defaultValue: new InputConstant(true, InputPrimitiveType.Boolean),
-                    nameInRequest: "return-client-request-id",
-                    location: InputRequestLocation.Header),
-                InputFactory.Parameter(
-                    "x-ms-client-request-id",
-                    type: InputPrimitiveType.String,
-                    nameInRequest: "x-ms-client-request-id",
-                    location: InputRequestLocation.Header),
-            ];
+            var parameters = CreateParameters();
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -72,6 +54,72 @@ namespace Azure.Generator.Tests.Visitors
             var file = writer.Write();
 
             Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        private static List<InputParameter> CreateParameters()
+        {
+            List<InputParameter> parameters =
+            [
+                InputFactory.Parameter(
+                    "client-request-id",
+                    type: InputPrimitiveType.String,
+                    nameInRequest: "client-request-id",
+                    location: InputRequestLocation.Header),
+                InputFactory.Parameter(
+                    "return-client-request-id",
+                    type: new InputLiteralType("return-client-request-id", "ns", InputPrimitiveType.Boolean, true),
+                    defaultValue: new InputConstant(true, InputPrimitiveType.Boolean),
+                    nameInRequest: "return-client-request-id",
+                    location: InputRequestLocation.Header),
+                InputFactory.Parameter(
+                    "x-ms-client-request-id",
+                    type: InputPrimitiveType.String,
+                    nameInRequest: "x-ms-client-request-id",
+                    location: InputRequestLocation.Header),
+                InputFactory.Parameter(
+                    "some-other-parameter",
+                    type: InputPrimitiveType.String,
+                    nameInRequest: "some-other-parameter",
+                    location: InputRequestLocation.Header)
+            ];
+            return parameters;
+        }
+
+        [Test]
+        public void DoesNotChangeExistingParameters()
+        {
+            var visitor = new TestSpecialHeadersVisitor();
+            var operationParameters = CreateParameters();
+            var serviceMethodParameters = CreateParameters();
+            var responseModel = InputFactory.Model("foo");
+            var operation = InputFactory.Operation(
+                "foo",
+                parameters: operationParameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
+            var serviceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                operation,
+                parameters: serviceMethodParameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+            var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
+            MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            var responseModelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(responseModel);
+            Assert.IsNotNull(responseModelProvider);
+
+            var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
+            methodCollection = visitor.InvokeVisitServiceMethod(serviceMethod, clientProvider!, methodCollection);
+
+            Assert.AreEqual(1, serviceMethod.Parameters.Count);
+            Assert.AreSame(serviceMethodParameters.Last(), serviceMethod.Parameters[0]);
+
+            Assert.AreEqual(1, serviceMethod.Operation.Parameters.Count);
+            Assert.AreSame(operationParameters.Last(), serviceMethod.Operation.Parameters[0]);
+
+            Assert.AreNotSame(serviceMethodParameters[0], serviceMethod.Parameters[0]);
         }
 
         private class TestSpecialHeadersVisitor : SpecialHeadersVisitor
