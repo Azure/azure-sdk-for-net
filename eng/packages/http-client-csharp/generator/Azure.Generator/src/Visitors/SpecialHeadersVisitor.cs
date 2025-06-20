@@ -20,25 +20,28 @@ namespace Azure.Generator.Visitors
     /// </summary>
     internal class SpecialHeadersVisitor : ScmLibraryVisitor
     {
+        private const string ClientRequestIdParameterName = "client-request-id";
+        private const string ReturnClientRequestIdParameterName = "return-client-request-id";
+        private const string XMsClientRequestIdParameterName = "x-ms-client-request-id";
         protected override ScmMethodProviderCollection? Visit(
             InputServiceMethod serviceMethod,
             ClientProvider client,
             ScmMethodProviderCollection? methods)
         {
             var clientRequestIdParameter =
-                serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == "client-request-id");
+                serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == ClientRequestIdParameterName);
             var returnClientRequestIdParameter =
-                serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == "return-client-request-id");
+                serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == ReturnClientRequestIdParameterName);
             var xMsClientRequestIdParameter =
-                serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == "x-ms-client-request-id");
+                serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == XMsClientRequestIdParameterName);
 
             if (clientRequestIdParameter != null || returnClientRequestIdParameter != null || xMsClientRequestIdParameter != null)
             {
                 serviceMethod.Update(parameters: serviceMethod.Parameters
-                    .Where(p => p != clientRequestIdParameter && p != returnClientRequestIdParameter && p != xMsClientRequestIdParameter)
+                    .Where(p => p.NameInRequest != ClientRequestIdParameterName && p.NameInRequest != ReturnClientRequestIdParameterName && p.NameInRequest != XMsClientRequestIdParameterName)
                     .ToList());
                 serviceMethod.Operation.Update(parameters: serviceMethod.Operation.Parameters
-                    .Where(p => p != clientRequestIdParameter && p != returnClientRequestIdParameter && p != xMsClientRequestIdParameter)
+                    .Where(p => p.NameInRequest != ClientRequestIdParameterName && p.NameInRequest != ReturnClientRequestIdParameterName && p.NameInRequest != XMsClientRequestIdParameterName)
                     .ToList());
 
                 // Create a new method collection with the updated service method
