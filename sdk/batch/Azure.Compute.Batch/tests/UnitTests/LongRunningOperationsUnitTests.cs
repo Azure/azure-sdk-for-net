@@ -527,7 +527,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             int CallsToGet = 0;
 
             BatchJobSchedule batchJobScheduleTerminating = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow, BatchJobScheduleState.Terminating, null, null, null, null, null, null, null, null, null);
-            BatchJobSchedule batchJobScheduleActive = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow.AddHours(1), BatchJobScheduleState.Terminating, null, null, null, null, null, null, null, null, null);
+            BatchJobSchedule batchJobScheduleActive = new BatchJobSchedule(JobId, null, null, null, null, DateTimeOffset.UtcNow.AddHours(1), BatchJobScheduleState.Active, null, null, null, null, null, null, null, null, null);
 
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.GetJobScheduleAsync(
