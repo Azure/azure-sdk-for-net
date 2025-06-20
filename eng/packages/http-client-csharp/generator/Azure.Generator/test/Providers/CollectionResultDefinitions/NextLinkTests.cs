@@ -153,7 +153,21 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             Assert.IsNotNull(felineClientCollectionResult);
         }
 
-        private static void CreatePagingOperation(InputResponseLocation responseLocation)
+        [Test]
+        public void NextLinkInBodyOfTWithStringProperty()
+        {
+            CreatePagingOperation(InputResponseLocation.Body, useStringProperty: true);
+
+            var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
+                t => t is CollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResultOfT");
+            Assert.IsNotNull(collectionResultDefinition);
+
+            var writer = new TypeProviderWriter(collectionResultDefinition!);
+            var file = writer.Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        private static void CreatePagingOperation(InputResponseLocation responseLocation, bool useStringProperty = false)
         {
             var inputModel = InputFactory.Model("cat", properties:
             [
@@ -164,7 +178,10 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
                 [200],
                 InputFactory.Model(
                     "page",
-                    properties: [InputFactory.Property("cats", InputFactory.Array(inputModel)), InputFactory.Property("nextCat", InputPrimitiveType.Url)]));
+                    properties: [
+                        InputFactory.Property("cats", InputFactory.Array(inputModel)),
+                        InputFactory.Property("nextCat", useStringProperty ? InputPrimitiveType.String : InputPrimitiveType.Url)
+                    ]));
             var operation = InputFactory.Operation("getCats", responses: [response]);
             var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation, pagingMetadata: pagingMetadata);
             var client = InputFactory.Client("catClient", methods: [inputServiceMethod]);

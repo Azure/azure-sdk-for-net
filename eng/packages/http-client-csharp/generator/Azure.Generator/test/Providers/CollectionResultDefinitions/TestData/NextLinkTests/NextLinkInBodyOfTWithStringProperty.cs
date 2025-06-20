@@ -14,25 +14,25 @@ using Samples.Models;
 
 namespace Samples
 {
-    internal partial class CatClientGetCatsCollectionResult : global::Azure.Pageable<global::System.BinaryData>
+    internal partial class CatClientGetCatsCollectionResultOfT : global::Azure.Pageable<global::Samples.Models.Cat>
     {
         private readonly global::Samples.CatClient _client;
         private readonly global::Azure.RequestContext _context;
 
-        /// <summary> Initializes a new instance of CatClientGetCatsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of CatClientGetCatsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CatClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
+        public CatClientGetCatsCollectionResultOfT(global::Samples.CatClient client, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _context = context;
         }
 
-        /// <summary> Gets the pages of CatClientGetCatsCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of CatClientGetCatsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of CatClientGetCatsCollectionResult as an enumerable collection. </returns>
-        public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of CatClientGetCatsCollectionResultOfT as an enumerable collection. </returns>
+        public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::Samples.Models.Cat>> AsPages(string continuationToken, int? pageSizeHint)
         {
             global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             do
@@ -43,13 +43,8 @@ namespace Samples
                     yield break;
                 }
                 global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
-                global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
-                foreach (var item in responseWithType.Cats)
-                {
-                    items.Add(global::System.BinaryData.FromObjectAsJson(item));
-                }
-                nextPage = response.Headers.TryGetValue("nextCat", out string value) ? new global::System.Uri(value) : null;
-                yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                nextPage = new global::System.Uri(responseWithType.NextCat);
+                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)responseWithType.Cats), nextPage?.AbsoluteUri, response);
             }
             while ((nextPage != null));
         }
