@@ -37,7 +37,9 @@ namespace Azure.Generator.Visitors
                 serviceMethod.Update(parameters: serviceMethod.Parameters
                     .Where(p => p != clientRequestIdParameter && p != returnClientRequestIdParameter && p != xMsClientRequestIdParameter)
                     .ToList());
-                serviceMethod.Operation.Update(parameters: serviceMethod.Parameters);
+                serviceMethod.Operation.Update(parameters: serviceMethod.Operation.Parameters
+                    .Where(p => p != clientRequestIdParameter && p != returnClientRequestIdParameter && p != xMsClientRequestIdParameter)
+                    .ToList());
 
                 // Create a new method collection with the updated service method
                 methods = new ScmMethodProviderCollection(serviceMethod, client);
