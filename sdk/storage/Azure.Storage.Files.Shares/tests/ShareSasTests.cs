@@ -900,5 +900,95 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Assert.IsNotNull(stringToSign);
         }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task DirectoryClient_GetUserDelegationSAS()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(service);
+            ShareDirectoryClient directory = test.Directory;
+
+            Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
+                startsOn: Recording.UtcNow.AddHours(-1),
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            Uri sasUri = directory.GenerateUserDelegationSasUri(
+                ShareFileSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddHours(1),
+                userDelegationKeyResponse.Value,
+                out string stringToSign);
+            ShareClientOptions options = GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            ShareDirectoryClient sasDirectory = InstrumentClient(new ShareDirectoryClient(sasUri, options));
+
+            // Act
+            await sasDirectory.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(stringToSign);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task FileClient_GetUserDelegationSAS()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(service);
+            ShareFileClient file = test.File;
+
+            Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
+                startsOn: Recording.UtcNow.AddHours(-1),
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            Uri sasUri = file.GenerateUserDelegationSasUri(
+                ShareFileSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddHours(1),
+                userDelegationKeyResponse.Value,
+                out string stringToSign);
+            ShareClientOptions options = GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            ShareFileClient sasFile = InstrumentClient(new ShareFileClient(sasUri, options));
+
+            // Act
+            await sasFile.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(stringToSign);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task FileClient_GetUserDelegationSAS_Builder()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(service);
+            ShareFileClient file = test.File;
+
+            Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
+                startsOn: Recording.UtcNow.AddHours(-1),
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            ShareSasBuilder builder = new ShareSasBuilder(
+                permissions: ShareFileSasPermissions.All,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            Uri sasUri = file.GenerateUserDelegationSasUri(
+                builder,
+                userDelegationKeyResponse.Value,
+                out string stringToSign);
+            ShareClientOptions options = GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            ShareFileClient sasFile = InstrumentClient(new ShareFileClient(sasUri, options));
+
+            // Act
+            await sasFile.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(stringToSign);
+        }
     }
 }
