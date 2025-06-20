@@ -1,6 +1,6 @@
-# Microsoft Azure ConnectedCache management client library for .NET
+# Microsoft Azure Connected Cache management client library for .NET
 
-**[Describe the service briefly first.]**
+Microsoft Connected Cache for Enterprise and Education (preview) is a software-only caching solution that delivers Microsoft content within enterprise and education networks.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure ConnectedCache management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Connected Cache management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.ConnectedCache --prerelease
