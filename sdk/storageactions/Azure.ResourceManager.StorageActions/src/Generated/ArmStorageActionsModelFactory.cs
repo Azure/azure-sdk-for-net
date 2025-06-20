@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
@@ -82,6 +83,28 @@ namespace Azure.ResourceManager.StorageActions.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.StorageTaskPreviewBlobProperties"/>. </summary>
+        /// <param name="name"> Name of test blob. </param>
+        /// <param name="properties"> properties key value pairs to be tested for a match against the provided condition. </param>
+        /// <param name="metadata"> metadata key value pairs to be tested for a match against the provided condition. </param>
+        /// <param name="tags"> tags key value pairs to be tested for a match against the provided condition. </param>
+        /// <param name="matchedBlock"> Represents the condition block name that matched blob properties. </param>
+        /// <returns> A new <see cref="Models.StorageTaskPreviewBlobProperties"/> instance for mocking. </returns>
+        public static StorageTaskPreviewBlobProperties StorageTaskPreviewBlobProperties(string name = null, IEnumerable<StorageTaskPreviewKeyValueProperties> properties = null, IEnumerable<StorageTaskPreviewKeyValueProperties> metadata = null, IEnumerable<StorageTaskPreviewKeyValueProperties> tags = null, MatchedBlockName? matchedBlock = null)
+        {
+            properties ??= new List<StorageTaskPreviewKeyValueProperties>();
+            metadata ??= new List<StorageTaskPreviewKeyValueProperties>();
+            tags ??= new List<StorageTaskPreviewKeyValueProperties>();
+
+            return new StorageTaskPreviewBlobProperties(
+                name,
+                properties?.ToList(),
+                metadata?.ToList(),
+                tags?.ToList(),
+                matchedBlock,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.StorageTaskReportInstance"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -133,28 +156,6 @@ namespace Azure.ResourceManager.StorageActions.Models
                 taskId,
                 taskVersion,
                 runResult,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StorageTaskPreviewBlobProperties"/>. </summary>
-        /// <param name="name"> Name of test blob. </param>
-        /// <param name="properties"> properties key value pairs to be tested for a match against the provided condition. </param>
-        /// <param name="metadata"> metadata key value pairs to be tested for a match against the provided condition. </param>
-        /// <param name="tags"> tags key value pairs to be tested for a match against the provided condition. </param>
-        /// <param name="matchedBlock"> Represents the condition block name that matched blob properties. </param>
-        /// <returns> A new <see cref="Models.StorageTaskPreviewBlobProperties"/> instance for mocking. </returns>
-        public static StorageTaskPreviewBlobProperties StorageTaskPreviewBlobProperties(string name = null, IEnumerable<StorageTaskPreviewKeyValueProperties> properties = null, IEnumerable<StorageTaskPreviewKeyValueProperties> metadata = null, IEnumerable<StorageTaskPreviewKeyValueProperties> tags = null, MatchedBlockName? matchedBlock = null)
-        {
-            properties ??= new List<StorageTaskPreviewKeyValueProperties>();
-            metadata ??= new List<StorageTaskPreviewKeyValueProperties>();
-            tags ??= new List<StorageTaskPreviewKeyValueProperties>();
-
-            return new StorageTaskPreviewBlobProperties(
-                name,
-                properties?.ToList(),
-                metadata?.ToList(),
-                tags?.ToList(),
-                matchedBlock,
                 serializedAdditionalRawData: null);
         }
     }

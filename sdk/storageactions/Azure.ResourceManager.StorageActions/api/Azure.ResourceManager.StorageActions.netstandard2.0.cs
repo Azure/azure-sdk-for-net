@@ -365,8 +365,8 @@ namespace Azure.ResourceManager.StorageActions.Models
     }
     public partial class StorageTaskReportInstance : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance>
     {
-        public StorageTaskReportInstance() { }
-        public Azure.ResourceManager.StorageActions.Models.StorageTaskReportProperties Properties { get { throw null; } set { } }
+        internal StorageTaskReportInstance() { }
+        public Azure.ResourceManager.StorageActions.Models.StorageTaskReportProperties Properties { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.StorageActions.Models
     }
     public partial class StorageTaskReportProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageActions.Models.StorageTaskReportProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageActions.Models.StorageTaskReportProperties>
     {
-        public StorageTaskReportProperties() { }
+        internal StorageTaskReportProperties() { }
         public string FinishTime { get { throw null; } }
         public string ObjectFailedCount { get { throw null; } }
         public string ObjectsOperatedOnCount { get { throw null; } }
