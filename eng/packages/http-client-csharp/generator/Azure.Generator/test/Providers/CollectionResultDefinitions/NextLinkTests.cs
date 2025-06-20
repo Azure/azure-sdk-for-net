@@ -168,7 +168,6 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
         }
 
-        private static void CreatePagingOperation(InputResponseLocation responseLocation, bool useStringProperty = false)
         [Test]
         public void UsesValidFieldIdentifierNames()
         {
@@ -205,7 +204,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             Assert.IsTrue(fields.Any(f => f.Name == "_foo"));
         }
 
-        private static void CreatePagingOperation(InputResponseLocation responseLocation)
+        private static void CreatePagingOperation(InputResponseLocation responseLocation, bool useStringProperty = false)
         {
             var inputModel = InputFactory.Model("cat", properties:
             [
