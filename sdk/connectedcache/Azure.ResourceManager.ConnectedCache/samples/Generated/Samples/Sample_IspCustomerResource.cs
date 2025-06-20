@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string resourceGroupName = "rgConnectedCache";
             string customerResourceName = "cmcjfueweicolcjkwmsuvcj";
             ResourceIdentifier ispCustomerResourceId = IspCustomerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName);
-            IspCustomerResource ispCustomerResource = client.GetIspCustomerResource(ispCustomerResourceId);
+            IspCustomerResource ispCustomer = client.GetIspCustomerResource(ispCustomerResourceId);
 
             // invoke the operation
-            IspCustomerResource result = await ispCustomerResource.GetAsync();
+            IspCustomerResource result = await ispCustomer.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            IspCustomerResourceData resourceData = result.Data;
+            IspCustomerData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string resourceGroupName = "rgConnectedCache";
             string customerResourceName = "hdontfoythjsaeyjhrakckgimgchxwzttbcnvntpvdsgeumxpgnjurptd";
             ResourceIdentifier ispCustomerResourceId = IspCustomerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName);
-            IspCustomerResource ispCustomerResource = client.GetIspCustomerResource(ispCustomerResourceId);
+            IspCustomerResource ispCustomer = client.GetIspCustomerResource(ispCustomerResourceId);
 
             // invoke the operation
-            await ispCustomerResource.DeleteAsync(WaitUntil.Completed);
+            await ispCustomer.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string resourceGroupName = "rgConnectedCache";
             string customerResourceName = "MccRPTest2";
             ResourceIdentifier ispCustomerResourceId = IspCustomerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName);
-            IspCustomerResource ispCustomerResource = client.GetIspCustomerResource(ispCustomerResourceId);
+            IspCustomerResource ispCustomer = client.GetIspCustomerResource(ispCustomerResourceId);
 
             // invoke the operation
             ConnectedCachePatchContent content = new ConnectedCachePatchContent
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
 ["key1653"] = "nzjczrhclhkndesgy"
 },
             };
-            IspCustomerResource result = await ispCustomerResource.UpdateAsync(content);
+            IspCustomerResource result = await ispCustomer.UpdateAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            IspCustomerResourceData resourceData = result.Data;
+            IspCustomerData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

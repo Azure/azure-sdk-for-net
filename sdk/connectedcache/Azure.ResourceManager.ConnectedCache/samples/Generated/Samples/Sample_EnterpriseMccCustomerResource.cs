@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string resourceGroupName = "rgConnectedCache";
             string customerResourceName = "pvilvqkofbjbykupeewgvzlmjao";
             ResourceIdentifier enterpriseMccCustomerResourceId = EnterpriseMccCustomerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName);
-            EnterpriseMccCustomerResource enterpriseMccCustomerResource = client.GetEnterpriseMccCustomerResource(enterpriseMccCustomerResourceId);
+            EnterpriseMccCustomerResource enterpriseMccCustomer = client.GetEnterpriseMccCustomerResource(enterpriseMccCustomerResourceId);
 
             // invoke the operation
-            EnterpriseMccCustomerResource result = await enterpriseMccCustomerResource.GetAsync();
+            EnterpriseMccCustomerResource result = await enterpriseMccCustomer.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            EnterpriseMccCustomerResourceData resourceData = result.Data;
+            EnterpriseMccCustomerData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string resourceGroupName = "rgConnectedCache";
             string customerResourceName = "zktb";
             ResourceIdentifier enterpriseMccCustomerResourceId = EnterpriseMccCustomerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName);
-            EnterpriseMccCustomerResource enterpriseMccCustomerResource = client.GetEnterpriseMccCustomerResource(enterpriseMccCustomerResourceId);
+            EnterpriseMccCustomerResource enterpriseMccCustomer = client.GetEnterpriseMccCustomerResource(enterpriseMccCustomerResourceId);
 
             // invoke the operation
-            await enterpriseMccCustomerResource.DeleteAsync(WaitUntil.Completed);
+            await enterpriseMccCustomer.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string resourceGroupName = "rgConnectedCache";
             string customerResourceName = "MccRPTest1";
             ResourceIdentifier enterpriseMccCustomerResourceId = EnterpriseMccCustomerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName);
-            EnterpriseMccCustomerResource enterpriseMccCustomerResource = client.GetEnterpriseMccCustomerResource(enterpriseMccCustomerResourceId);
+            EnterpriseMccCustomerResource enterpriseMccCustomer = client.GetEnterpriseMccCustomerResource(enterpriseMccCustomerResourceId);
 
             // invoke the operation
             ConnectedCachePatchContent content = new ConnectedCachePatchContent
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
 ["key1878"] = "warz"
 },
             };
-            EnterpriseMccCustomerResource result = await enterpriseMccCustomerResource.UpdateAsync(content);
+            EnterpriseMccCustomerResource result = await enterpriseMccCustomer.UpdateAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            EnterpriseMccCustomerResourceData resourceData = result.Data;
+            EnterpriseMccCustomerData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

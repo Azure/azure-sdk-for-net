@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIspCustomerResources_IspCustomerListBySubscriptionGeneratedByMaximumSetRule()
+        public async Task GetIspCustomers_IspCustomerListBySubscriptionGeneratedByMaximumSetRule()
         {
             // Generated from example definition: 2024-11-30-preview/IspCustomers_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "IspCustomerResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (IspCustomerResource item in subscriptionResource.GetIspCustomerResourcesAsync())
+            await foreach (IspCustomerResource item in subscriptionResource.GetIspCustomersAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                IspCustomerResourceData resourceData = item.Data;
+                IspCustomerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetEnterpriseMccCustomerResources_EnterpriseMccCustomersListBySubscription()
+        public async Task GetEnterpriseMccCustomers_EnterpriseMccCustomersListBySubscription()
         {
             // Generated from example definition: 2024-11-30-preview/EnterpriseMccCustomers_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "EnterpriseMccCustomerResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (EnterpriseMccCustomerResource item in subscriptionResource.GetEnterpriseMccCustomerResourcesAsync())
+            await foreach (EnterpriseMccCustomerResource item in subscriptionResource.GetEnterpriseMccCustomersAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                EnterpriseMccCustomerResourceData resourceData = item.Data;
+                EnterpriseMccCustomerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

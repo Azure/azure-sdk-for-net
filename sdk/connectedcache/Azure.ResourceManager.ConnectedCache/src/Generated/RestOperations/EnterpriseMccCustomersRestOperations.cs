@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EnterpriseMccCustomerResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string customerResourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<EnterpriseMccCustomerData>> GetAsync(string subscriptionId, string resourceGroupName, string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 case 200:
                     {
-                        EnterpriseMccCustomerResourceData value = default;
+                        EnterpriseMccCustomerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = EnterpriseMccCustomerResourceData.DeserializeEnterpriseMccCustomerResourceData(document.RootElement);
+                        value = EnterpriseMccCustomerData.DeserializeEnterpriseMccCustomerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EnterpriseMccCustomerResourceData)null, message.Response);
+                    return Response.FromValue((EnterpriseMccCustomerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EnterpriseMccCustomerResourceData> Get(string subscriptionId, string resourceGroupName, string customerResourceName, CancellationToken cancellationToken = default)
+        public Response<EnterpriseMccCustomerData> Get(string subscriptionId, string resourceGroupName, string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,19 +120,19 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 case 200:
                     {
-                        EnterpriseMccCustomerResourceData value = default;
+                        EnterpriseMccCustomerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = EnterpriseMccCustomerResourceData.DeserializeEnterpriseMccCustomerResourceData(document.RootElement);
+                        value = EnterpriseMccCustomerData.DeserializeEnterpriseMccCustomerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EnterpriseMccCustomerResourceData)null, message.Response);
+                    return Response.FromValue((EnterpriseMccCustomerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string customerResourceName, EnterpriseMccCustomerResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string customerResourceName, EnterpriseMccCustomerData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ConnectedCache
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string customerResourceName, EnterpriseMccCustomerResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string customerResourceName, EnterpriseMccCustomerData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string customerResourceName, EnterpriseMccCustomerResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string customerResourceName, EnterpriseMccCustomerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string customerResourceName, EnterpriseMccCustomerResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string customerResourceName, EnterpriseMccCustomerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EnterpriseMccCustomerResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string customerResourceName, ConnectedCachePatchContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<EnterpriseMccCustomerData>> UpdateAsync(string subscriptionId, string resourceGroupName, string customerResourceName, ConnectedCachePatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -283,9 +283,9 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 case 200:
                     {
-                        EnterpriseMccCustomerResourceData value = default;
+                        EnterpriseMccCustomerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = EnterpriseMccCustomerResourceData.DeserializeEnterpriseMccCustomerResourceData(document.RootElement);
+                        value = EnterpriseMccCustomerData.DeserializeEnterpriseMccCustomerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EnterpriseMccCustomerResourceData> Update(string subscriptionId, string resourceGroupName, string customerResourceName, ConnectedCachePatchContent content, CancellationToken cancellationToken = default)
+        public Response<EnterpriseMccCustomerData> Update(string subscriptionId, string resourceGroupName, string customerResourceName, ConnectedCachePatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -314,9 +314,9 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 case 200:
                     {
-                        EnterpriseMccCustomerResourceData value = default;
+                        EnterpriseMccCustomerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = EnterpriseMccCustomerResourceData.DeserializeEnterpriseMccCustomerResourceData(document.RootElement);
+                        value = EnterpriseMccCustomerData.DeserializeEnterpriseMccCustomerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

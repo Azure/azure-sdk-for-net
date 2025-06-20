@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
 
         /// <summary> Gets a collection of IspCustomerResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of IspCustomerResources and their operations over a IspCustomerResource. </returns>
-        public virtual IspCustomerResourceCollection GetIspCustomerResources()
+        public virtual IspCustomerCollection GetIspCustomers()
         {
-            return GetCachedClient(client => new IspCustomerResourceCollection(client, Id));
+            return GetCachedClient(client => new IspCustomerCollection(client, Id));
         }
 
         /// <summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IspCustomerResource>> GetIspCustomerResourceAsync(string customerResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IspCustomerResource>> GetIspCustomerAsync(string customerResourceName, CancellationToken cancellationToken = default)
         {
-            return await GetIspCustomerResources().GetAsync(customerResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetIspCustomers().GetAsync(customerResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -97,16 +97,16 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IspCustomerResource> GetIspCustomerResource(string customerResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<IspCustomerResource> GetIspCustomer(string customerResourceName, CancellationToken cancellationToken = default)
         {
-            return GetIspCustomerResources().Get(customerResourceName, cancellationToken);
+            return GetIspCustomers().Get(customerResourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EnterpriseMccCustomerResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of EnterpriseMccCustomerResources and their operations over a EnterpriseMccCustomerResource. </returns>
-        public virtual EnterpriseMccCustomerResourceCollection GetEnterpriseMccCustomerResources()
+        public virtual EnterpriseMccCustomerCollection GetEnterpriseMccCustomers()
         {
-            return GetCachedClient(client => new EnterpriseMccCustomerResourceCollection(client, Id));
+            return GetCachedClient(client => new EnterpriseMccCustomerCollection(client, Id));
         }
 
         /// <summary>
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EnterpriseMccCustomerResource>> GetEnterpriseMccCustomerResourceAsync(string customerResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnterpriseMccCustomerResource>> GetEnterpriseMccCustomerAsync(string customerResourceName, CancellationToken cancellationToken = default)
         {
-            return await GetEnterpriseMccCustomerResources().GetAsync(customerResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetEnterpriseMccCustomers().GetAsync(customerResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EnterpriseMccCustomerResource> GetEnterpriseMccCustomerResource(string customerResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<EnterpriseMccCustomerResource> GetEnterpriseMccCustomer(string customerResourceName, CancellationToken cancellationToken = default)
         {
-            return GetEnterpriseMccCustomerResources().Get(customerResourceName, cancellationToken);
+            return GetEnterpriseMccCustomers().Get(customerResourceName, cancellationToken);
         }
     }
 }

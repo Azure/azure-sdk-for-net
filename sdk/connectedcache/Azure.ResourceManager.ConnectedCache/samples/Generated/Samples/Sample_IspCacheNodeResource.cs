@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "sgtqjsitdrskmgyrrkntszwrrjjkretscpjgaezraucvcwececlelcsorfunrnvxyxcsrg";
             string cacheNodeResourceName = "lbsziwmudcjnwnwy";
             ResourceIdentifier ispCacheNodeResourceId = IspCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            IspCacheNodeResource ispCacheNodeResource = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
+            IspCacheNodeResource ispCacheNode = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
 
             // invoke the operation
-            IspCacheNodeResource result = await ispCacheNodeResource.GetAsync();
+            IspCacheNodeResource result = await ispCacheNode.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            IspCacheNodeResourceData resourceData = result.Data;
+            IspCacheNodeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "lvpcosvbfxtpzscakewx";
             string cacheNodeResourceName = "wsiruvexelltpbouqxvsogqpxdizcwqwfowybncvjunlakjwcpgmqbdbgzjrsmxlkczxnsxfonhnqqa";
             ResourceIdentifier ispCacheNodeResourceId = IspCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            IspCacheNodeResource ispCacheNodeResource = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
+            IspCacheNodeResource ispCacheNode = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
 
             // invoke the operation
-            await ispCacheNodeResource.DeleteAsync(WaitUntil.Completed);
+            await ispCacheNode.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "MccRPTest1";
             string cacheNodeResourceName = "MCCCachenode1";
             ResourceIdentifier ispCacheNodeResourceId = IspCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            IspCacheNodeResource ispCacheNodeResource = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
+            IspCacheNodeResource ispCacheNode = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
 
             // invoke the operation
             ConnectedCachePatchContent content = new ConnectedCachePatchContent
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
 ["key1653"] = "nzjczrhclhkndesgy"
 },
             };
-            IspCacheNodeResource result = await ispCacheNodeResource.UpdateAsync(content);
+            IspCacheNodeResource result = await ispCacheNode.UpdateAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            IspCacheNodeResourceData resourceData = result.Data;
+            IspCacheNodeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "MccRPTest1";
             string cacheNodeResourceName = "MCCCachenode1";
             ResourceIdentifier ispCacheNodeResourceId = IspCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            IspCacheNodeResource ispCacheNodeResource = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
+            IspCacheNodeResource ispCacheNode = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
 
             // invoke the operation
-            MccCacheNodeBgpCidrDetails result = await ispCacheNodeResource.GetBgpCidrsAsync();
+            MccCacheNodeBgpCidrDetails result = await ispCacheNode.GetBgpCidrsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "MccRPTest1";
             string cacheNodeResourceName = "MCCCachenode1";
             ResourceIdentifier ispCacheNodeResourceId = IspCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            IspCacheNodeResource ispCacheNodeResource = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
+            IspCacheNodeResource ispCacheNode = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
 
             // invoke the operation
-            MccCacheNodeInstallDetails result = await ispCacheNodeResource.GetCacheNodeInstallDetailsAsync();
+            MccCacheNodeInstallDetails result = await ispCacheNode.GetCacheNodeInstallDetailsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "MccRPTest1";
             string cacheNodeResourceName = "MCCCachenode1";
             ResourceIdentifier ispCacheNodeResourceId = IspCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            IspCacheNodeResource ispCacheNodeResource = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
+            IspCacheNodeResource ispCacheNode = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
 
             // invoke the operation
-            MccCacheNodeAutoUpdateHistory result = await ispCacheNodeResource.GetCacheNodeAutoUpdateHistoryAsync();
+            MccCacheNodeAutoUpdateHistoryData result = await ispCacheNode.GetCacheNodeAutoUpdateHistoryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "MccRPTest1";
             string cacheNodeResourceName = "MCCCachenode1";
             ResourceIdentifier ispCacheNodeResourceId = IspCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            IspCacheNodeResource ispCacheNodeResource = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
+            IspCacheNodeResource ispCacheNode = client.GetIspCacheNodeResource(ispCacheNodeResourceId);
 
             // invoke the operation
-            MccCacheNodeIssueHistory result = await ispCacheNodeResource.GetCacheNodeMccIssueDetailsHistoryAsync();
+            MccCacheNodeIssueHistoryData result = await ispCacheNode.GetCacheNodeMccIssueDetailsHistoryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

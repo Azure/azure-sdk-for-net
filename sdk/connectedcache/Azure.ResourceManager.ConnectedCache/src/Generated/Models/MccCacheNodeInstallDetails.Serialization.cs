@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             {
                 return null;
             }
-            CacheNodeInstallProperties properties = default;
+            MccCacheNodeInstallProperties properties = default;
             IReadOnlyDictionary<string, string> tags = default;
             string location = default;
             ResourceIdentifier id = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    properties = CacheNodeInstallProperties.DeserializeCacheNodeInstallProperties(property.Value, options);
+                    properties = MccCacheNodeInstallProperties.DeserializeMccCacheNodeInstallProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

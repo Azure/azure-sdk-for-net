@@ -18,10 +18,10 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ConnectedCache
 {
     /// <summary>
-    /// A Class representing an IspCustomerResource along with the instance operations that can be performed on it.
+    /// A Class representing an IspCustomer along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IspCustomerResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetIspCustomerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetIspCustomerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetIspCustomer method.
     /// </summary>
     public partial class IspCustomerResource : ArmResource
     {
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ConnectedCache
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _ispCustomerResourceIspCustomersClientDiagnostics;
-        private readonly IspCustomersRestOperations _ispCustomerResourceIspCustomersRestClient;
-        private readonly IspCustomerResourceData _data;
+        private readonly ClientDiagnostics _ispCustomerClientDiagnostics;
+        private readonly IspCustomersRestOperations _ispCustomerRestClient;
+        private readonly IspCustomerData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ConnectedCache/ispCustomers";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <summary> Initializes a new instance of the <see cref="IspCustomerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal IspCustomerResource(ArmClient client, IspCustomerResourceData data) : this(client, data.Id)
+        internal IspCustomerResource(ArmClient client, IspCustomerData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IspCustomerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _ispCustomerResourceIspCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string ispCustomerResourceIspCustomersApiVersion);
-            _ispCustomerResourceIspCustomersRestClient = new IspCustomersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ispCustomerResourceIspCustomersApiVersion);
+            _ispCustomerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string ispCustomerApiVersion);
+            _ispCustomerRestClient = new IspCustomersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ispCustomerApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ConnectedCache
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual IspCustomerResourceData Data
+        public virtual IspCustomerData Data
         {
             get
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.ConnectedCache
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of IspCacheNodeResources in the IspCustomerResource. </summary>
+        /// <summary> Gets a collection of IspCacheNodeResources in the IspCustomer. </summary>
         /// <returns> An object representing collection of IspCacheNodeResources and their operations over a IspCacheNodeResource. </returns>
-        public virtual IspCacheNodeResourceCollection GetIspCacheNodeResources()
+        public virtual IspCacheNodeCollection GetIspCacheNodes()
         {
-            return GetCachedClient(client => new IspCacheNodeResourceCollection(client, Id));
+            return GetCachedClient(client => new IspCacheNodeCollection(client, Id));
         }
 
         /// <summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <exception cref="ArgumentNullException"> <paramref name="cacheNodeResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IspCacheNodeResource>> GetIspCacheNodeResourceAsync(string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IspCacheNodeResource>> GetIspCacheNodeAsync(string cacheNodeResourceName, CancellationToken cancellationToken = default)
         {
-            return await GetIspCacheNodeResources().GetAsync(cacheNodeResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetIspCacheNodes().GetAsync(cacheNodeResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <exception cref="ArgumentNullException"> <paramref name="cacheNodeResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IspCacheNodeResource> GetIspCacheNodeResource(string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<IspCacheNodeResource> GetIspCacheNode(string cacheNodeResourceName, CancellationToken cancellationToken = default)
         {
-            return GetIspCacheNodeResources().Get(cacheNodeResourceName, cancellationToken);
+            return GetIspCacheNodes().Get(cacheNodeResourceName, cancellationToken);
         }
 
         /// <summary>
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IspCustomerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCustomerResourceIspCustomersClientDiagnostics.CreateScope("IspCustomerResource.Get");
+            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerResource.Get");
             scope.Start();
             try
             {
-                var response = await _ispCustomerResourceIspCustomersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _ispCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IspCustomerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCustomerResourceIspCustomersClientDiagnostics.CreateScope("IspCustomerResource.Get");
+            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerResource.Get");
             scope.Start();
             try
             {
-                var response = _ispCustomerResourceIspCustomersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _ispCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCustomerResourceIspCustomersClientDiagnostics.CreateScope("IspCustomerResource.Delete");
+            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerResource.Delete");
             scope.Start();
             try
             {
-                var response = await _ispCustomerResourceIspCustomersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedCacheArmOperation(_ispCustomerResourceIspCustomersClientDiagnostics, Pipeline, _ispCustomerResourceIspCustomersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _ispCustomerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ConnectedCacheArmOperation(_ispCustomerClientDiagnostics, Pipeline, _ispCustomerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _ispCustomerResourceIspCustomersClientDiagnostics.CreateScope("IspCustomerResource.Delete");
+            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerResource.Delete");
             scope.Start();
             try
             {
-                var response = _ispCustomerResourceIspCustomersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ConnectedCacheArmOperation(_ispCustomerResourceIspCustomersClientDiagnostics, Pipeline, _ispCustomerResourceIspCustomersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _ispCustomerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ConnectedCacheArmOperation(_ispCustomerClientDiagnostics, Pipeline, _ispCustomerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -351,11 +351,11 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _ispCustomerResourceIspCustomersClientDiagnostics.CreateScope("IspCustomerResource.Update");
+            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerResource.Update");
             scope.Start();
             try
             {
-                var response = await _ispCustomerResourceIspCustomersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _ispCustomerRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,11 +393,11 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _ispCustomerResourceIspCustomersClientDiagnostics.CreateScope("IspCustomerResource.Update");
+            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerResource.Update");
             scope.Start();
             try
             {
-                var response = _ispCustomerResourceIspCustomersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var response = _ispCustomerRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return Response.FromValue(new IspCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.ConnectedCache
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _ispCustomerResourceIspCustomersClientDiagnostics.CreateScope("IspCustomerResource.AddTag");
+            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerResource.AddTag");
             scope.Start();
             try
             {
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _ispCustomerResourceIspCustomersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _ispCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new IspCustomerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ConnectedCache
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _ispCustomerResourceIspCustomersClientDiagnostics.CreateScope("IspCustomerResource.AddTag");
+            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerResource.AddTag");
             scope.Start();
             try
             {
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _ispCustomerResourceIspCustomersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _ispCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new IspCustomerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _ispCustomerResourceIspCustomersClientDiagnostics.CreateScope("IspCustomerResource.SetTags");
+            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerResource.SetTags");
             scope.Start();
             try
             {
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _ispCustomerResourceIspCustomersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _ispCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new IspCustomerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _ispCustomerResourceIspCustomersClientDiagnostics.CreateScope("IspCustomerResource.SetTags");
+            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerResource.SetTags");
             scope.Start();
             try
             {
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _ispCustomerResourceIspCustomersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _ispCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new IspCustomerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _ispCustomerResourceIspCustomersClientDiagnostics.CreateScope("IspCustomerResource.RemoveTag");
+            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerResource.RemoveTag");
             scope.Start();
             try
             {
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _ispCustomerResourceIspCustomersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _ispCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new IspCustomerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _ispCustomerResourceIspCustomersClientDiagnostics.CreateScope("IspCustomerResource.RemoveTag");
+            using var scope = _ispCustomerClientDiagnostics.CreateScope("IspCustomerResource.RemoveTag");
             scope.Start();
             try
             {
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _ispCustomerResourceIspCustomersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _ispCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new IspCustomerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

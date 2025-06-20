@@ -11,19 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ConnectedCache
 {
-    public partial class IspCacheNodeResource : IJsonModel<IspCacheNodeResourceData>
+    public partial class IspCacheNodeResource : IJsonModel<IspCacheNodeData>
     {
-        private static IspCacheNodeResourceData s_dataDeserializationInstance;
-        private static IspCacheNodeResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IspCacheNodeData s_dataDeserializationInstance;
+        private static IspCacheNodeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        void IJsonModel<IspCacheNodeResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IspCacheNodeResourceData>)Data).Write(writer, options);
+        void IJsonModel<IspCacheNodeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IspCacheNodeData>)Data).Write(writer, options);
 
-        IspCacheNodeResourceData IJsonModel<IspCacheNodeResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IspCacheNodeResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        IspCacheNodeData IJsonModel<IspCacheNodeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IspCacheNodeData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IspCacheNodeResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IspCacheNodeResourceData>(Data, options, AzureResourceManagerConnectedCacheContext.Default);
+        BinaryData IPersistableModel<IspCacheNodeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IspCacheNodeData>(Data, options, AzureResourceManagerConnectedCacheContext.Default);
 
-        IspCacheNodeResourceData IPersistableModel<IspCacheNodeResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IspCacheNodeResourceData>(data, options, AzureResourceManagerConnectedCacheContext.Default);
+        IspCacheNodeData IPersistableModel<IspCacheNodeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IspCacheNodeData>(data, options, AzureResourceManagerConnectedCacheContext.Default);
 
-        string IPersistableModel<IspCacheNodeResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IspCacheNodeResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<IspCacheNodeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IspCacheNodeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

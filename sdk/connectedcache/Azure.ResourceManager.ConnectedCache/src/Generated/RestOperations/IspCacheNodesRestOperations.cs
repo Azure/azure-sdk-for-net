@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IspCacheNodeResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<IspCacheNodeData>> GetAsync(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 case 200:
                     {
-                        IspCacheNodeResourceData value = default;
+                        IspCacheNodeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = IspCacheNodeResourceData.DeserializeIspCacheNodeResourceData(document.RootElement);
+                        value = IspCacheNodeData.DeserializeIspCacheNodeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IspCacheNodeResourceData)null, message.Response);
+                    return Response.FromValue((IspCacheNodeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IspCacheNodeResourceData> Get(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        public Response<IspCacheNodeData> Get(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,19 +128,19 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 case 200:
                     {
-                        IspCacheNodeResourceData value = default;
+                        IspCacheNodeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = IspCacheNodeResourceData.DeserializeIspCacheNodeResourceData(document.RootElement);
+                        value = IspCacheNodeData.DeserializeIspCacheNodeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IspCacheNodeResourceData)null, message.Response);
+                    return Response.FromValue((IspCacheNodeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, IspCacheNodeResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, IspCacheNodeData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ConnectedCache
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, IspCacheNodeResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, IspCacheNodeData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/>, <paramref name="cacheNodeResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, IspCacheNodeResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, IspCacheNodeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/>, <paramref name="cacheNodeResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, IspCacheNodeResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, IspCacheNodeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/>, <paramref name="cacheNodeResourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IspCacheNodeResourceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, ConnectedCachePatchContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<IspCacheNodeData>> UpdateAsync(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, ConnectedCachePatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 case 200:
                     {
-                        IspCacheNodeResourceData value = default;
+                        IspCacheNodeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = IspCacheNodeResourceData.DeserializeIspCacheNodeResourceData(document.RootElement);
+                        value = IspCacheNodeData.DeserializeIspCacheNodeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/>, <paramref name="cacheNodeResourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IspCacheNodeResourceData> Update(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, ConnectedCachePatchContent content, CancellationToken cancellationToken = default)
+        public Response<IspCacheNodeData> Update(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, ConnectedCachePatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -338,9 +338,9 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 case 200:
                     {
-                        IspCacheNodeResourceData value = default;
+                        IspCacheNodeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = IspCacheNodeResourceData.DeserializeIspCacheNodeResourceData(document.RootElement);
+                        value = IspCacheNodeData.DeserializeIspCacheNodeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MccCacheNodeAutoUpdateHistory>> GetCacheNodeAutoUpdateHistoryAsync(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<MccCacheNodeAutoUpdateHistoryData>> GetCacheNodeAutoUpdateHistoryAsync(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -799,9 +799,9 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 case 200:
                     {
-                        MccCacheNodeAutoUpdateHistory value = default;
+                        MccCacheNodeAutoUpdateHistoryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = MccCacheNodeAutoUpdateHistory.DeserializeMccCacheNodeAutoUpdateHistory(document.RootElement);
+                        value = MccCacheNodeAutoUpdateHistoryData.DeserializeMccCacheNodeAutoUpdateHistoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MccCacheNodeAutoUpdateHistory> GetCacheNodeAutoUpdateHistory(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        public Response<MccCacheNodeAutoUpdateHistoryData> GetCacheNodeAutoUpdateHistory(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -830,9 +830,9 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 case 200:
                     {
-                        MccCacheNodeAutoUpdateHistory value = default;
+                        MccCacheNodeAutoUpdateHistoryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = MccCacheNodeAutoUpdateHistory.DeserializeMccCacheNodeAutoUpdateHistory(document.RootElement);
+                        value = MccCacheNodeAutoUpdateHistoryData.DeserializeMccCacheNodeAutoUpdateHistoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MccCacheNodeIssueHistory>> GetCacheNodeMccIssueDetailsHistoryAsync(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<MccCacheNodeIssueHistoryData>> GetCacheNodeMccIssueDetailsHistoryAsync(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -901,9 +901,9 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 case 200:
                     {
-                        MccCacheNodeIssueHistory value = default;
+                        MccCacheNodeIssueHistoryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = MccCacheNodeIssueHistory.DeserializeMccCacheNodeIssueHistory(document.RootElement);
+                        value = MccCacheNodeIssueHistoryData.DeserializeMccCacheNodeIssueHistoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="customerResourceName"/> or <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MccCacheNodeIssueHistory> GetCacheNodeMccIssueDetailsHistory(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        public Response<MccCacheNodeIssueHistoryData> GetCacheNodeMccIssueDetailsHistory(string subscriptionId, string resourceGroupName, string customerResourceName, string cacheNodeResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -932,9 +932,9 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 case 200:
                     {
-                        MccCacheNodeIssueHistory value = default;
+                        MccCacheNodeIssueHistoryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = MccCacheNodeIssueHistory.DeserializeMccCacheNodeIssueHistory(document.RootElement);
+                        value = MccCacheNodeIssueHistoryData.DeserializeMccCacheNodeIssueHistoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

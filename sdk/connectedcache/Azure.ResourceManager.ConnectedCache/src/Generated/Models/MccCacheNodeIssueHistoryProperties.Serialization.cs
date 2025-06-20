@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
             string customerId = default;
             string cacheNodeId = default;
-            IReadOnlyList<MccIssue> mccIssueHistory = default;
+            IReadOnlyList<MccCacheNodeIssue> mccIssueHistory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    List<MccIssue> array = new List<MccIssue>();
+                    List<MccCacheNodeIssue> array = new List<MccCacheNodeIssue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MccIssue.DeserializeMccIssue(item, options));
+                        array.Add(MccCacheNodeIssue.DeserializeMccCacheNodeIssue(item, options));
                     }
                     mccIssueHistory = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MccCacheNodeIssueHistoryProperties(customerId, cacheNodeId, mccIssueHistory ?? new ChangeTrackingList<MccIssue>(), serializedAdditionalRawData);
+            return new MccCacheNodeIssueHistoryProperties(customerId, cacheNodeId, mccIssueHistory ?? new ChangeTrackingList<MccCacheNodeIssue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MccCacheNodeIssueHistoryProperties>.Write(ModelReaderWriterOptions options)

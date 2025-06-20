@@ -11,19 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ConnectedCache
 {
-    public partial class EnterpriseMccCustomerResource : IJsonModel<EnterpriseMccCustomerResourceData>
+    public partial class EnterpriseMccCustomerResource : IJsonModel<EnterpriseMccCustomerData>
     {
-        private static EnterpriseMccCustomerResourceData s_dataDeserializationInstance;
-        private static EnterpriseMccCustomerResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static EnterpriseMccCustomerData s_dataDeserializationInstance;
+        private static EnterpriseMccCustomerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        void IJsonModel<EnterpriseMccCustomerResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EnterpriseMccCustomerResourceData>)Data).Write(writer, options);
+        void IJsonModel<EnterpriseMccCustomerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EnterpriseMccCustomerData>)Data).Write(writer, options);
 
-        EnterpriseMccCustomerResourceData IJsonModel<EnterpriseMccCustomerResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EnterpriseMccCustomerResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        EnterpriseMccCustomerData IJsonModel<EnterpriseMccCustomerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EnterpriseMccCustomerData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EnterpriseMccCustomerResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EnterpriseMccCustomerResourceData>(Data, options, AzureResourceManagerConnectedCacheContext.Default);
+        BinaryData IPersistableModel<EnterpriseMccCustomerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EnterpriseMccCustomerData>(Data, options, AzureResourceManagerConnectedCacheContext.Default);
 
-        EnterpriseMccCustomerResourceData IPersistableModel<EnterpriseMccCustomerResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EnterpriseMccCustomerResourceData>(data, options, AzureResourceManagerConnectedCacheContext.Default);
+        EnterpriseMccCustomerData IPersistableModel<EnterpriseMccCustomerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EnterpriseMccCustomerData>(data, options, AzureResourceManagerConnectedCacheContext.Default);
 
-        string IPersistableModel<EnterpriseMccCustomerResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EnterpriseMccCustomerResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<EnterpriseMccCustomerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EnterpriseMccCustomerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

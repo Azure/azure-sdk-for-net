@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "cygqjgtcetihsajgyqwwrbclssqsvhgltrboemcqqtpoxdbhykqxblaihmrumyhbsx";
             string cacheNodeResourceName = "fqxfadsultwjfzdwlqkvneakfsbyhratytmssmiukpbnus";
             ResourceIdentifier enterpriseMccCacheNodeResourceId = EnterpriseMccCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            EnterpriseMccCacheNodeResource enterpriseMccCacheNodeResource = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
+            EnterpriseMccCacheNodeResource enterpriseMccCacheNode = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
 
             // invoke the operation
-            EnterpriseMccCacheNodeResource result = await enterpriseMccCacheNodeResource.GetAsync();
+            EnterpriseMccCacheNodeResource result = await enterpriseMccCacheNode.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            EnterpriseMccCacheNodeResourceData resourceData = result.Data;
+            EnterpriseMccCacheNodeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "hsincngmssuzeyispnufqwinpopadvhsbsemisguxgovwdjwviqexocelijvuyr";
             string cacheNodeResourceName = "vwtrhdoxvkrunpliwcao";
             ResourceIdentifier enterpriseMccCacheNodeResourceId = EnterpriseMccCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            EnterpriseMccCacheNodeResource enterpriseMccCacheNodeResource = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
+            EnterpriseMccCacheNodeResource enterpriseMccCacheNode = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
 
             // invoke the operation
-            await enterpriseMccCacheNodeResource.DeleteAsync(WaitUntil.Completed);
+            await enterpriseMccCacheNode.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "qanjqtvrxzjkljdysdjvdiqcxkttskpdzykzuefhbhz";
             string cacheNodeResourceName = "kllmlvazrcxmfjfozulzqnsgvspgwmhogcafvauchunlgfr";
             ResourceIdentifier enterpriseMccCacheNodeResourceId = EnterpriseMccCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            EnterpriseMccCacheNodeResource enterpriseMccCacheNodeResource = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
+            EnterpriseMccCacheNodeResource enterpriseMccCacheNode = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
 
             // invoke the operation
             ConnectedCachePatchContent content = new ConnectedCachePatchContent
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
 ["key1653"] = "nzjczrhclhkndesgy"
 },
             };
-            EnterpriseMccCacheNodeResource result = await enterpriseMccCacheNodeResource.UpdateAsync(content);
+            EnterpriseMccCacheNodeResource result = await enterpriseMccCacheNode.UpdateAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            EnterpriseMccCacheNodeResourceData resourceData = result.Data;
+            EnterpriseMccCacheNodeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "fzwxcjmdpxxzayecabqqlh";
             string cacheNodeResourceName = "ccexmqqttritxvtctivraso";
             ResourceIdentifier enterpriseMccCacheNodeResourceId = EnterpriseMccCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            EnterpriseMccCacheNodeResource enterpriseMccCacheNodeResource = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
+            EnterpriseMccCacheNodeResource enterpriseMccCacheNode = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
 
             // invoke the operation
-            MccCacheNodeInstallDetails result = await enterpriseMccCacheNodeResource.GetCacheNodeInstallDetailsAsync();
+            MccCacheNodeInstallDetails result = await enterpriseMccCacheNode.GetCacheNodeInstallDetailsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "MccRPTest1";
             string cacheNodeResourceName = "MCCCachenode1";
             ResourceIdentifier enterpriseMccCacheNodeResourceId = EnterpriseMccCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            EnterpriseMccCacheNodeResource enterpriseMccCacheNodeResource = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
+            EnterpriseMccCacheNodeResource enterpriseMccCacheNode = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
 
             // invoke the operation
-            MccCacheNodeAutoUpdateHistory result = await enterpriseMccCacheNodeResource.GetCacheNodeAutoUpdateHistoryAsync();
+            MccCacheNodeAutoUpdateHistoryData result = await enterpriseMccCacheNode.GetCacheNodeAutoUpdateHistoryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "MccRPTest1";
             string cacheNodeResourceName = "MCCCachenode1";
             ResourceIdentifier enterpriseMccCacheNodeResourceId = EnterpriseMccCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            EnterpriseMccCacheNodeResource enterpriseMccCacheNodeResource = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
+            EnterpriseMccCacheNodeResource enterpriseMccCacheNode = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
 
             // invoke the operation
-            MccCacheNodeIssueHistory result = await enterpriseMccCacheNodeResource.GetCacheNodeMccIssueDetailsHistoryAsync();
+            MccCacheNodeIssueHistoryData result = await enterpriseMccCacheNode.GetCacheNodeMccIssueDetailsHistoryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.ConnectedCache.Samples
             string customerResourceName = "MccRPTest1";
             string cacheNodeResourceName = "MCCCachenode1";
             ResourceIdentifier enterpriseMccCacheNodeResourceId = EnterpriseMccCacheNodeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, customerResourceName, cacheNodeResourceName);
-            EnterpriseMccCacheNodeResource enterpriseMccCacheNodeResource = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
+            EnterpriseMccCacheNodeResource enterpriseMccCacheNode = client.GetEnterpriseMccCacheNodeResource(enterpriseMccCacheNodeResourceId);
 
             // invoke the operation
-            MccCacheNodeTlsCertificateHistory result = await enterpriseMccCacheNodeResource.GetCacheNodeTlsCertificateHistoryAsync();
+            MccCacheNodeTlsCertificateHistoryData result = await enterpriseMccCacheNode.GetCacheNodeTlsCertificateHistoryAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

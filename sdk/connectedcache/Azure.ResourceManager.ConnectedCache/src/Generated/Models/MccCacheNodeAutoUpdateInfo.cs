@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="movedToTerminalStateOn"> Auto update image uri after update. </param>
         /// <param name="ruleRequestedWeek"> Auto update image uri before update. </param>
         /// <param name="ruleRequestedDay"> Auto update image uri after update. </param>
-        /// <param name="createdDateTimeUtc"> Auto update entity created datetime. </param>
-        /// <param name="updatedRegistryDateTimeUtc"> Auto update entity last updated datetime. </param>
+        /// <param name="createdOn"> Auto update entity created datetime. </param>
+        /// <param name="updatedRegistryOn"> Auto update entity last updated datetime. </param>
         /// <param name="planChangeLogText"> This text describing the purpose of the plan of auto update. </param>
         /// <param name="autoUpdateLastAppliedStatus"> Auto update last applied status. </param>
         /// <param name="autoUpdateLastAppliedStatusText"> Auto update last applied status text. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="ruleRequestedMinute"> Auto update rule requested minute. </param>
         /// <param name="ruleRequestedHour"> Auto update rule requested hour. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MccCacheNodeAutoUpdateInfo(string imageUriBeforeUpdate, string imageUriTargeted, string imageUriTerminal, int? autoUpdateRingType, DateTimeOffset? movedToTerminalStateOn, int? ruleRequestedWeek, int? ruleRequestedDay, DateTimeOffset? createdDateTimeUtc, DateTimeOffset? updatedRegistryDateTimeUtc, string planChangeLogText, int? autoUpdateLastAppliedStatus, string autoUpdateLastAppliedStatusText, string autoUpdateLastAppliedStatusDetailedText, long? planId, string timeToGoLiveDateTime, string ruleRequestedMinute, string ruleRequestedHour, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MccCacheNodeAutoUpdateInfo(string imageUriBeforeUpdate, string imageUriTargeted, string imageUriTerminal, int? autoUpdateRingType, DateTimeOffset? movedToTerminalStateOn, int? ruleRequestedWeek, int? ruleRequestedDay, DateTimeOffset? createdOn, DateTimeOffset? updatedRegistryOn, string planChangeLogText, int? autoUpdateLastAppliedStatus, string autoUpdateLastAppliedStatusText, string autoUpdateLastAppliedStatusDetailedText, long? planId, string timeToGoLiveDateTime, string ruleRequestedMinute, string ruleRequestedHour, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImageUriBeforeUpdate = imageUriBeforeUpdate;
             ImageUriTargeted = imageUriTargeted;
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             MovedToTerminalStateOn = movedToTerminalStateOn;
             RuleRequestedWeek = ruleRequestedWeek;
             RuleRequestedDay = ruleRequestedDay;
-            CreatedDateTimeUtc = createdDateTimeUtc;
-            UpdatedRegistryDateTimeUtc = updatedRegistryDateTimeUtc;
+            CreatedOn = createdOn;
+            UpdatedRegistryOn = updatedRegistryOn;
             PlanChangeLogText = planChangeLogText;
             AutoUpdateLastAppliedStatus = autoUpdateLastAppliedStatus;
             AutoUpdateLastAppliedStatusText = autoUpdateLastAppliedStatusText;
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <summary> Auto update image uri after update. </summary>
         public int? RuleRequestedDay { get; }
         /// <summary> Auto update entity created datetime. </summary>
-        public DateTimeOffset? CreatedDateTimeUtc { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Auto update entity last updated datetime. </summary>
-        public DateTimeOffset? UpdatedRegistryDateTimeUtc { get; }
+        public DateTimeOffset? UpdatedRegistryOn { get; }
         /// <summary> This text describing the purpose of the plan of auto update. </summary>
         public string PlanChangeLogText { get; }
         /// <summary> Auto update last applied status. </summary>

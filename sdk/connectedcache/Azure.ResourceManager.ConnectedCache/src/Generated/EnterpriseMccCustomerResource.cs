@@ -18,10 +18,10 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ConnectedCache
 {
     /// <summary>
-    /// A Class representing an EnterpriseMccCustomerResource along with the instance operations that can be performed on it.
+    /// A Class representing an EnterpriseMccCustomer along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EnterpriseMccCustomerResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetEnterpriseMccCustomerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEnterpriseMccCustomerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEnterpriseMccCustomer method.
     /// </summary>
     public partial class EnterpriseMccCustomerResource : ArmResource
     {
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ConnectedCache
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics;
-        private readonly EnterpriseMccCustomersRestOperations _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient;
-        private readonly EnterpriseMccCustomerResourceData _data;
+        private readonly ClientDiagnostics _enterpriseMccCustomerClientDiagnostics;
+        private readonly EnterpriseMccCustomersRestOperations _enterpriseMccCustomerRestClient;
+        private readonly EnterpriseMccCustomerData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ConnectedCache/enterpriseMccCustomers";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <summary> Initializes a new instance of the <see cref="EnterpriseMccCustomerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EnterpriseMccCustomerResource(ArmClient client, EnterpriseMccCustomerResourceData data) : this(client, data.Id)
+        internal EnterpriseMccCustomerResource(ArmClient client, EnterpriseMccCustomerData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EnterpriseMccCustomerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string enterpriseMccCustomerResourceEnterpriseMccCustomersApiVersion);
-            _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient = new EnterpriseMccCustomersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, enterpriseMccCustomerResourceEnterpriseMccCustomersApiVersion);
+            _enterpriseMccCustomerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string enterpriseMccCustomerApiVersion);
+            _enterpriseMccCustomerRestClient = new EnterpriseMccCustomersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, enterpriseMccCustomerApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ConnectedCache
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual EnterpriseMccCustomerResourceData Data
+        public virtual EnterpriseMccCustomerData Data
         {
             get
             {
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.ConnectedCache
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of EnterpriseMccCacheNodeResources in the EnterpriseMccCustomerResource. </summary>
+        /// <summary> Gets a collection of EnterpriseMccCacheNodeResources in the EnterpriseMccCustomer. </summary>
         /// <returns> An object representing collection of EnterpriseMccCacheNodeResources and their operations over a EnterpriseMccCacheNodeResource. </returns>
-        public virtual EnterpriseMccCacheNodeResourceCollection GetEnterpriseMccCacheNodeResources()
+        public virtual EnterpriseMccCacheNodeCollection GetEnterpriseMccCacheNodes()
         {
-            return GetCachedClient(client => new EnterpriseMccCacheNodeResourceCollection(client, Id));
+            return GetCachedClient(client => new EnterpriseMccCacheNodeCollection(client, Id));
         }
 
         /// <summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <exception cref="ArgumentNullException"> <paramref name="cacheNodeResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EnterpriseMccCacheNodeResource>> GetEnterpriseMccCacheNodeResourceAsync(string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnterpriseMccCacheNodeResource>> GetEnterpriseMccCacheNodeAsync(string cacheNodeResourceName, CancellationToken cancellationToken = default)
         {
-            return await GetEnterpriseMccCacheNodeResources().GetAsync(cacheNodeResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetEnterpriseMccCacheNodes().GetAsync(cacheNodeResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <exception cref="ArgumentNullException"> <paramref name="cacheNodeResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cacheNodeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EnterpriseMccCacheNodeResource> GetEnterpriseMccCacheNodeResource(string cacheNodeResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<EnterpriseMccCacheNodeResource> GetEnterpriseMccCacheNode(string cacheNodeResourceName, CancellationToken cancellationToken = default)
         {
-            return GetEnterpriseMccCacheNodeResources().Get(cacheNodeResourceName, cancellationToken);
+            return GetEnterpriseMccCacheNodes().Get(cacheNodeResourceName, cancellationToken);
         }
 
         /// <summary>
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EnterpriseMccCustomerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.Get");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.Get");
             scope.Start();
             try
             {
-                var response = await _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _enterpriseMccCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EnterpriseMccCustomerResource(Client, response.Value), response.GetRawResponse());
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EnterpriseMccCustomerResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.Get");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.Get");
             scope.Start();
             try
             {
-                var response = _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _enterpriseMccCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EnterpriseMccCustomerResource(Client, response.Value), response.GetRawResponse());
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.Delete");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.Delete");
             scope.Start();
             try
             {
-                var response = await _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedCacheArmOperation(_enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics, Pipeline, _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _enterpriseMccCustomerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ConnectedCacheArmOperation(_enterpriseMccCustomerClientDiagnostics, Pipeline, _enterpriseMccCustomerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.Delete");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.Delete");
             scope.Start();
             try
             {
-                var response = _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ConnectedCacheArmOperation(_enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics, Pipeline, _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _enterpriseMccCustomerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ConnectedCacheArmOperation(_enterpriseMccCustomerClientDiagnostics, Pipeline, _enterpriseMccCustomerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -351,11 +351,11 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.Update");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.Update");
             scope.Start();
             try
             {
-                var response = await _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _enterpriseMccCustomerRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new EnterpriseMccCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,11 +393,11 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.Update");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.Update");
             scope.Start();
             try
             {
-                var response = _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var response = _enterpriseMccCustomerRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return Response.FromValue(new EnterpriseMccCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.ConnectedCache
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.AddTag");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.AddTag");
             scope.Start();
             try
             {
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _enterpriseMccCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new EnterpriseMccCustomerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ConnectedCache
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.AddTag");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.AddTag");
             scope.Start();
             try
             {
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _enterpriseMccCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new EnterpriseMccCustomerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.SetTags");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.SetTags");
             scope.Start();
             try
             {
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _enterpriseMccCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new EnterpriseMccCustomerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.SetTags");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.SetTags");
             scope.Start();
             try
             {
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _enterpriseMccCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new EnterpriseMccCustomerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.RemoveTag");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.RemoveTag");
             scope.Start();
             try
             {
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _enterpriseMccCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new EnterpriseMccCustomerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.RemoveTag");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerResource.RemoveTag");
             scope.Start();
             try
             {
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _enterpriseMccCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new EnterpriseMccCustomerResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

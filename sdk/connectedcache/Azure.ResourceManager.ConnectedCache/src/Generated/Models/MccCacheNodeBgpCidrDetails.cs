@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MccCacheNodeBgpCidrDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BgpCidrsConfiguration properties, IReadOnlyDictionary<string, string> tags, string location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MccCacheNodeBgpCidrDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MccCacheNodeBgpCidrsConfiguration properties, IReadOnlyDictionary<string, string> tags, string location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Tags = tags;
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         }
 
         /// <summary> Mcc cache node resource Bgp Cidr properties. </summary>
-        internal BgpCidrsConfiguration Properties { get; }
+        internal MccCacheNodeBgpCidrsConfiguration Properties { get; }
         /// <summary> Mcc cache node Bgp Cidr details. </summary>
-        public IReadOnlyList<string> BgpCidrs
+        public IReadOnlyList<string> MccCacheNodeBgpCidrs
         {
             get => Properties?.BgpCidrs;
         }

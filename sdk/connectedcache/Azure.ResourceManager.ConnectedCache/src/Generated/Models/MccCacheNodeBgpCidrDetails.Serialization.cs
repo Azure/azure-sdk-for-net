@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             {
                 return null;
             }
-            BgpCidrsConfiguration properties = default;
+            MccCacheNodeBgpCidrsConfiguration properties = default;
             IReadOnlyDictionary<string, string> tags = default;
             string location = default;
             ResourceIdentifier id = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    properties = BgpCidrsConfiguration.DeserializeBgpCidrsConfiguration(property.Value, options);
+                    properties = MccCacheNodeBgpCidrsConfiguration.DeserializeMccCacheNodeBgpCidrsConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

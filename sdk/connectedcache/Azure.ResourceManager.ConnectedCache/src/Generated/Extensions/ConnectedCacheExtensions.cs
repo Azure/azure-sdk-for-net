@@ -112,17 +112,17 @@ namespace Azure.ResourceManager.ConnectedCache
         /// Gets a collection of IspCustomerResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheResourceGroupResource.GetIspCustomerResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheResourceGroupResource.GetIspCustomers()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of IspCustomerResources and their operations over a IspCustomerResource. </returns>
-        public static IspCustomerResourceCollection GetIspCustomerResources(this ResourceGroupResource resourceGroupResource)
+        public static IspCustomerCollection GetIspCustomers(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableConnectedCacheResourceGroupResource(resourceGroupResource).GetIspCustomerResources();
+            return GetMockableConnectedCacheResourceGroupResource(resourceGroupResource).GetIspCustomers();
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheResourceGroupResource.GetIspCustomerResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheResourceGroupResource.GetIspCustomerAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<IspCustomerResource>> GetIspCustomerResourceAsync(this ResourceGroupResource resourceGroupResource, string customerResourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<IspCustomerResource>> GetIspCustomerAsync(this ResourceGroupResource resourceGroupResource, string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableConnectedCacheResourceGroupResource(resourceGroupResource).GetIspCustomerResourceAsync(customerResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableConnectedCacheResourceGroupResource(resourceGroupResource).GetIspCustomerAsync(customerResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheResourceGroupResource.GetIspCustomerResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheResourceGroupResource.GetIspCustomer(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -194,28 +194,28 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<IspCustomerResource> GetIspCustomerResource(this ResourceGroupResource resourceGroupResource, string customerResourceName, CancellationToken cancellationToken = default)
+        public static Response<IspCustomerResource> GetIspCustomer(this ResourceGroupResource resourceGroupResource, string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableConnectedCacheResourceGroupResource(resourceGroupResource).GetIspCustomerResource(customerResourceName, cancellationToken);
+            return GetMockableConnectedCacheResourceGroupResource(resourceGroupResource).GetIspCustomer(customerResourceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of EnterpriseMccCustomerResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheResourceGroupResource.GetEnterpriseMccCustomerResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheResourceGroupResource.GetEnterpriseMccCustomers()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of EnterpriseMccCustomerResources and their operations over a EnterpriseMccCustomerResource. </returns>
-        public static EnterpriseMccCustomerResourceCollection GetEnterpriseMccCustomerResources(this ResourceGroupResource resourceGroupResource)
+        public static EnterpriseMccCustomerCollection GetEnterpriseMccCustomers(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableConnectedCacheResourceGroupResource(resourceGroupResource).GetEnterpriseMccCustomerResources();
+            return GetMockableConnectedCacheResourceGroupResource(resourceGroupResource).GetEnterpriseMccCustomers();
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheResourceGroupResource.GetEnterpriseMccCustomerResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheResourceGroupResource.GetEnterpriseMccCustomerAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EnterpriseMccCustomerResource>> GetEnterpriseMccCustomerResourceAsync(this ResourceGroupResource resourceGroupResource, string customerResourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EnterpriseMccCustomerResource>> GetEnterpriseMccCustomerAsync(this ResourceGroupResource resourceGroupResource, string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableConnectedCacheResourceGroupResource(resourceGroupResource).GetEnterpriseMccCustomerResourceAsync(customerResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableConnectedCacheResourceGroupResource(resourceGroupResource).GetEnterpriseMccCustomerAsync(customerResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheResourceGroupResource.GetEnterpriseMccCustomerResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheResourceGroupResource.GetEnterpriseMccCustomer(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -287,11 +287,11 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<EnterpriseMccCustomerResource> GetEnterpriseMccCustomerResource(this ResourceGroupResource resourceGroupResource, string customerResourceName, CancellationToken cancellationToken = default)
+        public static Response<EnterpriseMccCustomerResource> GetEnterpriseMccCustomer(this ResourceGroupResource resourceGroupResource, string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableConnectedCacheResourceGroupResource(resourceGroupResource).GetEnterpriseMccCustomerResource(customerResourceName, cancellationToken);
+            return GetMockableConnectedCacheResourceGroupResource(resourceGroupResource).GetEnterpriseMccCustomer(customerResourceName, cancellationToken);
         }
 
         /// <summary>
@@ -316,18 +316,18 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheSubscriptionResource.GetIspCustomerResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheSubscriptionResource.GetIspCustomers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="IspCustomerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IspCustomerResource> GetIspCustomerResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<IspCustomerResource> GetIspCustomersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableConnectedCacheSubscriptionResource(subscriptionResource).GetIspCustomerResourcesAsync(cancellationToken);
+            return GetMockableConnectedCacheSubscriptionResource(subscriptionResource).GetIspCustomersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -352,18 +352,18 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheSubscriptionResource.GetIspCustomerResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheSubscriptionResource.GetIspCustomers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="IspCustomerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IspCustomerResource> GetIspCustomerResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<IspCustomerResource> GetIspCustomers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableConnectedCacheSubscriptionResource(subscriptionResource).GetIspCustomerResources(cancellationToken);
+            return GetMockableConnectedCacheSubscriptionResource(subscriptionResource).GetIspCustomers(cancellationToken);
         }
 
         /// <summary>
@@ -388,18 +388,18 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheSubscriptionResource.GetEnterpriseMccCustomerResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheSubscriptionResource.GetEnterpriseMccCustomers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="EnterpriseMccCustomerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EnterpriseMccCustomerResource> GetEnterpriseMccCustomerResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EnterpriseMccCustomerResource> GetEnterpriseMccCustomersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableConnectedCacheSubscriptionResource(subscriptionResource).GetEnterpriseMccCustomerResourcesAsync(cancellationToken);
+            return GetMockableConnectedCacheSubscriptionResource(subscriptionResource).GetEnterpriseMccCustomersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -424,18 +424,18 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheSubscriptionResource.GetEnterpriseMccCustomerResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConnectedCacheSubscriptionResource.GetEnterpriseMccCustomers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EnterpriseMccCustomerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EnterpriseMccCustomerResource> GetEnterpriseMccCustomerResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<EnterpriseMccCustomerResource> GetEnterpriseMccCustomers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableConnectedCacheSubscriptionResource(subscriptionResource).GetEnterpriseMccCustomerResources(cancellationToken);
+            return GetMockableConnectedCacheSubscriptionResource(subscriptionResource).GetEnterpriseMccCustomers(cancellationToken);
         }
     }
 }

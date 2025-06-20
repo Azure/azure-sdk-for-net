@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("ruleRequestedDay"u8);
                 writer.WriteNumberValue(RuleRequestedDay.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedDateTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateTimeUtc"u8);
-                writer.WriteStringValue(CreatedDateTimeUtc.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedRegistryDateTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(UpdatedRegistryOn))
             {
                 writer.WritePropertyName("updatedRegistryDateTimeUtc"u8);
-                writer.WriteStringValue(UpdatedRegistryDateTimeUtc.Value, "O");
+                writer.WriteStringValue(UpdatedRegistryOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PlanChangeLogText))
             {

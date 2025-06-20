@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmConnectedCacheModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ConnectedCache.IspCustomerResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedCache.IspCustomerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ConnectedCache.IspCustomerResourceData"/> instance for mocking. </returns>
-        public static IspCustomerResourceData IspCustomerResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CustomerProperty properties = null)
+        /// <returns> A new <see cref="ConnectedCache.IspCustomerData"/> instance for mocking. </returns>
+        public static IspCustomerData IspCustomerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MccCustomerProperty properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IspCustomerResourceData(
+            return new IspCustomerData(
                 id,
                 name,
                 resourceType,
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomerProperty"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MccCustomerProperty"/>. </summary>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="customer"> Mcc customer resource (customer entity). </param>
         /// <param name="additionalCustomerProperties"> Mcc customer resource additional properties. </param>
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="statusDetails"> Mcc response status details for retrieving response inner details. </param>
         /// <param name="status"> HTTP error status code. </param>
         /// <param name="error"> Mcc response error details. </param>
-        /// <returns> A new <see cref="Models.CustomerProperty"/> instance for mocking. </returns>
-        public static CustomerProperty CustomerProperty(ProvisioningState? provisioningState = null, CustomerEntity customer = null, AdditionalCustomerProperties additionalCustomerProperties = null, string statusCode = null, string statusText = null, string statusDetails = null, string status = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.MccCustomerProperty"/> instance for mocking. </returns>
+        public static MccCustomerProperty MccCustomerProperty(ConnectedCacheProvisioningState? provisioningState = null, MccCustomerEntity customer = null, MccCustomerAdditionalProperties additionalCustomerProperties = null, string statusCode = null, string statusText = null, string statusDetails = null, string status = null, ResponseError error = null)
         {
-            return new CustomerProperty(
+            return new MccCustomerProperty(
                 provisioningState,
                 customer,
                 additionalCustomerProperties,
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomerEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MccCustomerEntity"/>. </summary>
         /// <param name="fullyQualifiedResourceId"> Customer resource Azure fully qualified resource Id. </param>
         /// <param name="customerId"> Customer resource Guid Id. </param>
         /// <param name="customerName"> Customer resource name. </param>
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="deleteAsyncOperationId"> Customer resource deletion async operation Id. </param>
         /// <param name="clientTenantId"> Customer resource client tenant Id of subscription. </param>
         /// <param name="synchWithAzureAttemptsCount"> Customer resource sync attempts. </param>
-        /// <param name="lastSyncWithAzureTimestamp"> Customer resource last Azure sync timestamp. </param>
+        /// <param name="lastSyncedWithAzureOn"> Customer resource last Azure sync timestamp. </param>
         /// <param name="isEnterpriseManaged"> Customer resource flag for enterprise management as boolean. </param>
         /// <param name="shouldMigrate"> Customer resource flag for migration. </param>
         /// <param name="resendSignupCode"> Customer resource flag for resending signup code as boolean. </param>
         /// <param name="verifySignupCode"> Customer resource flag for requiring verification of signup code as boolean. </param>
         /// <param name="verifySignupPhrase"> Customer resource phrase for verifying signup. </param>
-        /// <returns> A new <see cref="Models.CustomerEntity"/> instance for mocking. </returns>
-        public static CustomerEntity CustomerEntity(string fullyQualifiedResourceId = null, string customerId = null, string customerName = null, string contactEmail = null, string contactPhone = null, string contactName = null, bool? isEntitled = null, int? releaseVersion = null, string createAsyncOperationId = null, string deleteAsyncOperationId = null, string clientTenantId = null, int? synchWithAzureAttemptsCount = null, DateTimeOffset? lastSyncWithAzureTimestamp = null, bool? isEnterpriseManaged = null, bool? shouldMigrate = null, bool? resendSignupCode = null, bool? verifySignupCode = null, string verifySignupPhrase = null)
+        /// <returns> A new <see cref="Models.MccCustomerEntity"/> instance for mocking. </returns>
+        public static MccCustomerEntity MccCustomerEntity(ResourceIdentifier fullyQualifiedResourceId = null, string customerId = null, string customerName = null, string contactEmail = null, string contactPhone = null, string contactName = null, bool? isEntitled = null, int? releaseVersion = null, string createAsyncOperationId = null, string deleteAsyncOperationId = null, string clientTenantId = null, int? synchWithAzureAttemptsCount = null, DateTimeOffset? lastSyncedWithAzureOn = null, bool? isEnterpriseManaged = null, bool? shouldMigrate = null, bool? resendSignupCode = null, bool? verifySignupCode = null, string verifySignupPhrase = null)
         {
-            return new CustomerEntity(
+            return new MccCustomerEntity(
                 fullyQualifiedResourceId,
                 customerId,
                 customerName,
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 deleteAsyncOperationId,
                 clientTenantId,
                 synchWithAzureAttemptsCount,
-                lastSyncWithAzureTimestamp,
+                lastSyncedWithAzureOn,
                 isEnterpriseManaged,
                 shouldMigrate,
                 resendSignupCode,
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AdditionalCustomerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MccCustomerAdditionalProperties"/>. </summary>
         /// <param name="customerPropertiesOverviewCacheEfficiency"> Customer resource cache efficiency. </param>
         /// <param name="customerPropertiesOverviewAverageEgressMbps"> Customer resource average egress in Mbps. </param>
         /// <param name="customerPropertiesOverviewAverageMissMbps"> Customer resource average cache miss throughput in Mbps. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="signupStatusText"> Customer resource signup status as string text. </param>
         /// <param name="signupPhaseStatusCode"> Customer resource signup phase status code as integer. </param>
         /// <param name="signupPhaseStatusText"> Customer resource signup phase status as string text. </param>
-        /// <param name="peeringDbLastUpdateDateValue"> Customer resource last PeeringDB update timestamp. </param>
+        /// <param name="peeringDBLastUpdatedOn"> Customer resource last PeeringDB update timestamp. </param>
         /// <param name="customerOrgName"> Customer resource owner organization name. </param>
         /// <param name="customerEmail"> Customer resource contact email. </param>
         /// <param name="customerTransitAsn"> Customer resource transit Asn (autonomous system number). </param>
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="customerEntitlementSkuId"> Customer resource entitlement Sku Id. </param>
         /// <param name="customerEntitlementSkuGuid"> Customer resource entitlement Sku Guid. </param>
         /// <param name="customerEntitlementSkuName"> Customer resource entitlement Sku name. </param>
-        /// <param name="customerEntitlementExpiration"> Customer resource entitlement expiration date string. </param>
+        /// <param name="customerEntitlementExpiryOn"> Customer resource entitlement expiration date string. </param>
         /// <param name="optionalProperty1"> Optional property #1 of Mcc response object. </param>
         /// <param name="optionalProperty2"> Optional property #2 of Mcc response object. </param>
         /// <param name="optionalProperty3"> Optional property #3 of Mcc response object. </param>
         /// <param name="optionalProperty4"> Optional property #4 of Mcc response object. </param>
         /// <param name="optionalProperty5"> Optional property #5 of Mcc response object. </param>
-        /// <returns> A new <see cref="Models.AdditionalCustomerProperties"/> instance for mocking. </returns>
-        public static AdditionalCustomerProperties AdditionalCustomerProperties(float? customerPropertiesOverviewCacheEfficiency = null, float? customerPropertiesOverviewAverageEgressMbps = null, float? customerPropertiesOverviewAverageMissMbps = null, float? customerPropertiesOverviewEgressMbpsMax = null, DateTimeOffset? customerPropertiesOverviewEgressMbpsMaxOn = null, float? customerPropertiesOverviewMissMbpsMax = null, DateTimeOffset? customerPropertiesOverviewMissMbpsMaxOn = null, int? customerPropertiesOverviewCacheNodesHealthyCount = null, int? customerPropertiesOverviewCacheNodesUnhealthyCount = null, bool? signupStatus = null, int? signupStatusCode = null, string signupStatusText = null, int? signupPhaseStatusCode = null, string signupPhaseStatusText = null, DateTimeOffset? peeringDbLastUpdateDateValue = null, string customerOrgName = null, string customerEmail = null, string customerTransitAsn = null, CustomerTransitState? customerTransitState = null, string customerAsn = null, float? customerAsnEstimatedEgressPeekGbps = null, string customerEntitlementSkuId = null, string customerEntitlementSkuGuid = null, string customerEntitlementSkuName = null, DateTimeOffset? customerEntitlementExpiration = null, string optionalProperty1 = null, string optionalProperty2 = null, string optionalProperty3 = null, string optionalProperty4 = null, string optionalProperty5 = null)
+        /// <returns> A new <see cref="Models.MccCustomerAdditionalProperties"/> instance for mocking. </returns>
+        public static MccCustomerAdditionalProperties MccCustomerAdditionalProperties(float? customerPropertiesOverviewCacheEfficiency = null, float? customerPropertiesOverviewAverageEgressMbps = null, float? customerPropertiesOverviewAverageMissMbps = null, float? customerPropertiesOverviewEgressMbpsMax = null, DateTimeOffset? customerPropertiesOverviewEgressMbpsMaxOn = null, float? customerPropertiesOverviewMissMbpsMax = null, DateTimeOffset? customerPropertiesOverviewMissMbpsMaxOn = null, int? customerPropertiesOverviewCacheNodesHealthyCount = null, int? customerPropertiesOverviewCacheNodesUnhealthyCount = null, bool? signupStatus = null, int? signupStatusCode = null, string signupStatusText = null, int? signupPhaseStatusCode = null, string signupPhaseStatusText = null, DateTimeOffset? peeringDBLastUpdatedOn = null, string customerOrgName = null, string customerEmail = null, string customerTransitAsn = null, CustomerTransitState? customerTransitState = null, string customerAsn = null, float? customerAsnEstimatedEgressPeekGbps = null, string customerEntitlementSkuId = null, string customerEntitlementSkuGuid = null, string customerEntitlementSkuName = null, DateTimeOffset? customerEntitlementExpiryOn = null, string optionalProperty1 = null, string optionalProperty2 = null, string optionalProperty3 = null, string optionalProperty4 = null, string optionalProperty5 = null)
         {
-            return new AdditionalCustomerProperties(
+            return new MccCustomerAdditionalProperties(
                 customerPropertiesOverviewCacheEfficiency,
                 customerPropertiesOverviewAverageEgressMbps,
                 customerPropertiesOverviewAverageMissMbps,
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 signupStatusText,
                 signupPhaseStatusCode,
                 signupPhaseStatusText,
-                peeringDbLastUpdateDateValue,
+                peeringDBLastUpdatedOn,
                 customerOrgName,
                 customerEmail,
                 customerTransitAsn,
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 customerEntitlementSkuId,
                 customerEntitlementSkuGuid,
                 customerEntitlementSkuName,
-                customerEntitlementExpiration,
+                customerEntitlementExpiryOn,
                 optionalProperty1,
                 optionalProperty2,
                 optionalProperty3,
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedCache.IspCacheNodeResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedCache.IspCacheNodeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ConnectedCache.IspCacheNodeResourceData"/> instance for mocking. </returns>
-        public static IspCacheNodeResourceData IspCacheNodeResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CacheNodeProperty properties = null)
+        /// <returns> A new <see cref="ConnectedCache.IspCacheNodeData"/> instance for mocking. </returns>
+        public static IspCacheNodeData IspCacheNodeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MccCacheNodeProperty properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IspCacheNodeResourceData(
+            return new IspCacheNodeData(
                 id,
                 name,
                 resourceType,
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CacheNodeProperty"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MccCacheNodeProperty"/>. </summary>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="cacheNode"> Mcc cache node resource (cache node entity). </param>
         /// <param name="additionalCacheNodeProperties"> Mcc cache node resource additional properties. </param>
@@ -209,10 +209,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="statusDetails"> Mcc response status details for retrieving response inner details. </param>
         /// <param name="status"> HTTP error status code. </param>
         /// <param name="error"> Mcc response error details. </param>
-        /// <returns> A new <see cref="Models.CacheNodeProperty"/> instance for mocking. </returns>
-        public static CacheNodeProperty CacheNodeProperty(ProvisioningState? provisioningState = null, CacheNodeEntity cacheNode = null, AdditionalCacheNodeProperties additionalCacheNodeProperties = null, string statusCode = null, string statusText = null, string statusDetails = null, string status = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.MccCacheNodeProperty"/> instance for mocking. </returns>
+        public static MccCacheNodeProperty MccCacheNodeProperty(ConnectedCacheProvisioningState? provisioningState = null, MccCacheNodeEntity cacheNode = null, MccCacheNodeAdditionalProperties additionalCacheNodeProperties = null, string statusCode = null, string statusText = null, string statusDetails = null, string status = null, ResponseError error = null)
         {
-            return new CacheNodeProperty(
+            return new MccCacheNodeProperty(
                 provisioningState,
                 cacheNode,
                 additionalCacheNodeProperties,
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CacheNodeEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MccCacheNodeEntity"/>. </summary>
         /// <param name="fullyQualifiedResourceId"> Cache node resource Azure fully qualified resource Id. </param>
         /// <param name="customerId"> Cache node resource customer resource GUID Id. </param>
         /// <param name="customerName"> Cache node resource customer resource name. </param>
@@ -243,13 +243,13 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="clientTenantId"> Cache node resource customer resource client tenant Id of subscription. </param>
         /// <param name="category"> Cache node resource category. </param>
         /// <param name="releaseVersion"> Cache node resource release version. </param>
-        /// <param name="lastSyncWithAzureTimestamp"> Cache node resource last sync timestamp. </param>
-        /// <param name="lastUpdatedTimestamp"> Cache node resource last backend updated timestamp. </param>
+        /// <param name="lastSyncedWithAzureOn"> Cache node resource last sync timestamp. </param>
+        /// <param name="lastUpdatedOn"> Cache node resource last backend updated timestamp. </param>
         /// <param name="synchWithAzureAttemptsCount"> Cache node resource attempts to sync with Azure. </param>
         /// <param name="containerConfigurations"> Cache node resource container configuration details. </param>
         /// <param name="cidrCsv"> Cache node resource comma separated values of Cidrs. </param>
-        /// <param name="cidrCsvLastUpdateOn"> Cache node resource last Cidr Csv update timestamp. </param>
-        /// <param name="bgpCidrCsvLastUpdateOn"> Cache node resource last Bgp Cidr Csv update timestamp. </param>
+        /// <param name="cidrCsvLastUpdatedOn"> Cache node resource last Cidr Csv update timestamp. </param>
+        /// <param name="bgpCidrCsvLastUpdatedOn"> Cache node resource last Bgp Cidr Csv update timestamp. </param>
         /// <param name="bgpLastReportedOn"> Cache node resource last Bgp report timestamp. </param>
         /// <param name="bgpReviewStateText"> Cache node resource Bgp review state string text in detail. </param>
         /// <param name="bgpReviewState"> Cache node resource Bgp review state string text. </param>
@@ -277,12 +277,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="autoUpdateRequestedWeek"> Customer requested week of month for mcc install of auto update cycle. 0 is default no selection. 1-5 are valid weeks of month, 1 is first week, 2 is second week, etc. </param>
         /// <param name="autoUpdateRequestedDay"> Customer requested day of week for mcc install of auto update cycle. 0 is default no selection. 1-7 are days of week, 1 is Sunday, 2 is Monday, etc. </param>
         /// <param name="autoUpdateRequestedTime"> Customer requested time of the day for mcc install of auto update cycle, should be hh:mm. </param>
-        /// <returns> A new <see cref="Models.CacheNodeEntity"/> instance for mocking. </returns>
-        public static CacheNodeEntity CacheNodeEntity(string fullyQualifiedResourceId = null, string customerId = null, string customerName = null, string ipAddress = null, string customerIndex = null, string cacheNodeId = null, string cacheNodeName = null, int? customerAsn = null, bool? isEnabled = null, int? maxAllowableEgressInMbps = null, float? maxAllowableProbability = null, string xCid = null, bool? isEnterpriseManaged = null, string createAsyncOperationId = null, string deleteAsyncOperationId = null, string clientTenantId = null, string category = null, int? releaseVersion = null, DateTimeOffset? lastSyncWithAzureTimestamp = null, DateTimeOffset? lastUpdatedTimestamp = null, int? synchWithAzureAttemptsCount = null, string containerConfigurations = null, IEnumerable<string> cidrCsv = null, DateTimeOffset? cidrCsvLastUpdateOn = null, DateTimeOffset? bgpCidrCsvLastUpdateOn = null, DateTimeOffset? bgpLastReportedOn = null, string bgpReviewStateText = null, BgpReviewStateEnum? bgpReviewState = null, string bgpReviewFeedback = null, int? bgpNumberOfTimesUpdated = null, int? bgpNumberOfRecords = null, int? bgpCidrBlocksCount = null, int? bgpAddressSpace = null, bool? shouldMigrate = null, int? bgpFileBytesTruncated = null, int? cidrSelectionType = null, bool? isFrozen = null, int? reviewState = null, string reviewStateText = null, string reviewFeedback = null, ConfigurationState? configurationState = null, string configurationStateText = null, int? addressSpace = null, int? workerConnections = null, DateTimeOffset? workerConnectionsLastUpdatedOn = null, int? containerResyncTrigger = null, string imageUri = null, string fullyQualifiedDomainName = null, AutoUpdateRingType? autoUpdateRingType = null, int? autoUpdateRequestedWeek = null, int? autoUpdateRequestedDay = null, string autoUpdateRequestedTime = null)
+        /// <returns> A new <see cref="Models.MccCacheNodeEntity"/> instance for mocking. </returns>
+        public static MccCacheNodeEntity MccCacheNodeEntity(ResourceIdentifier fullyQualifiedResourceId = null, string customerId = null, string customerName = null, string ipAddress = null, string customerIndex = null, string cacheNodeId = null, string cacheNodeName = null, int? customerAsn = null, bool? isEnabled = null, int? maxAllowableEgressInMbps = null, float? maxAllowableProbability = null, string xCid = null, bool? isEnterpriseManaged = null, string createAsyncOperationId = null, string deleteAsyncOperationId = null, string clientTenantId = null, string category = null, int? releaseVersion = null, DateTimeOffset? lastSyncedWithAzureOn = null, DateTimeOffset? lastUpdatedOn = null, int? synchWithAzureAttemptsCount = null, string containerConfigurations = null, IEnumerable<string> cidrCsv = null, DateTimeOffset? cidrCsvLastUpdatedOn = null, DateTimeOffset? bgpCidrCsvLastUpdatedOn = null, DateTimeOffset? bgpLastReportedOn = null, string bgpReviewStateText = null, MccCacheNodeBgpReviewState? bgpReviewState = null, string bgpReviewFeedback = null, int? bgpNumberOfTimesUpdated = null, int? bgpNumberOfRecords = null, int? bgpCidrBlocksCount = null, int? bgpAddressSpace = null, bool? shouldMigrate = null, int? bgpFileBytesTruncated = null, int? cidrSelectionType = null, bool? isFrozen = null, int? reviewState = null, string reviewStateText = null, string reviewFeedback = null, MccCacheNodeConfigurationState? configurationState = null, string configurationStateText = null, int? addressSpace = null, int? workerConnections = null, DateTimeOffset? workerConnectionsLastUpdatedOn = null, int? containerResyncTrigger = null, Uri imageUri = null, string fullyQualifiedDomainName = null, AutoUpdateRingType? autoUpdateRingType = null, int? autoUpdateRequestedWeek = null, int? autoUpdateRequestedDay = null, string autoUpdateRequestedTime = null)
         {
             cidrCsv ??= new List<string>();
 
-            return new CacheNodeEntity(
+            return new MccCacheNodeEntity(
                 fullyQualifiedResourceId,
                 customerId,
                 customerName,
@@ -301,13 +301,13 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 clientTenantId,
                 category,
                 releaseVersion,
-                lastSyncWithAzureTimestamp,
-                lastUpdatedTimestamp,
+                lastSyncedWithAzureOn,
+                lastUpdatedOn,
                 synchWithAzureAttemptsCount,
                 containerConfigurations,
                 cidrCsv?.ToList(),
-                cidrCsvLastUpdateOn,
-                bgpCidrCsvLastUpdateOn,
+                cidrCsvLastUpdatedOn,
+                bgpCidrCsvLastUpdatedOn,
                 bgpLastReportedOn,
                 bgpReviewStateText,
                 bgpReviewState,
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AdditionalCacheNodeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MccCacheNodeAdditionalProperties"/>. </summary>
         /// <param name="cacheNodePropertiesDetailsIssuesList"> issues list to return the issues as part of the additional cache node properties. </param>
         /// <param name="issuesList"> current cache node issue list. </param>
         /// <param name="issuesCount"> Number of cache node issues. </param>
@@ -374,14 +374,14 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="optionalProperty3"> Optional property #3 of Mcc response object. </param>
         /// <param name="optionalProperty4"> Optional property #4 of Mcc response object. </param>
         /// <param name="optionalProperty5"> Optional property #5 of Mcc response object. </param>
-        /// <returns> A new <see cref="Models.AdditionalCacheNodeProperties"/> instance for mocking. </returns>
-        public static AdditionalCacheNodeProperties AdditionalCacheNodeProperties(IEnumerable<string> cacheNodePropertiesDetailsIssuesList = null, IEnumerable<string> issuesList = null, int? issuesCount = null, MccCacheNodeTlsCertificate currentTlsCertificate = null, MccCacheNodeAutoUpdateInfo lastAutoUpdateInfo = null, string aggregatedStatusDetails = null, string aggregatedStatusText = null, int? aggregatedStatusCode = null, string productVersion = null, bool? isProvisioned = null, string cacheNodeStateDetailedText = null, string cacheNodeStateShortText = null, int? cacheNodeState = null, IEnumerable<CacheNodeDriveConfiguration> driveConfiguration = null, string bgpAsnToIPAddressMapping = null, string proxyUri = null, ProxyRequired? isProxyRequired = null, OSType? osType = null, string autoUpdateVersion = null, string updateInfoDetails = null, DateTimeOffset? updateRequestedOn = null, string autoUpdateNextAvailableVersion = null, DateTimeOffset? autoUpdateNextAvailableOn = null, string autoUpdateAppliedVersion = null, string autoUpdateLastAppliedDetails = null, string autoUpdateLastAppliedState = null, DateTimeOffset? autoUpdateLastAppliedOn = null, DateTimeOffset? autoUpdateLastTriggeredOn = null, int? creationMethod = null, string tlsStatus = null, string optionalProperty1 = null, string optionalProperty2 = null, string optionalProperty3 = null, string optionalProperty4 = null, string optionalProperty5 = null)
+        /// <returns> A new <see cref="Models.MccCacheNodeAdditionalProperties"/> instance for mocking. </returns>
+        public static MccCacheNodeAdditionalProperties MccCacheNodeAdditionalProperties(IEnumerable<string> cacheNodePropertiesDetailsIssuesList = null, IEnumerable<string> issuesList = null, int? issuesCount = null, MccCacheNodeTlsCertificate currentTlsCertificate = null, MccCacheNodeAutoUpdateInfo lastAutoUpdateInfo = null, string aggregatedStatusDetails = null, string aggregatedStatusText = null, int? aggregatedStatusCode = null, string productVersion = null, bool? isProvisioned = null, string cacheNodeStateDetailedText = null, string cacheNodeStateShortText = null, int? cacheNodeState = null, IEnumerable<CacheNodeDriveConfiguration> driveConfiguration = null, string bgpAsnToIPAddressMapping = null, Uri proxyUri = null, MccCacheNodeProxyRequired? isProxyRequired = null, MccCacheNodeOSType? osType = null, string autoUpdateVersion = null, string updateInfoDetails = null, DateTimeOffset? updateRequestedOn = null, string autoUpdateNextAvailableVersion = null, DateTimeOffset? autoUpdateNextAvailableOn = null, string autoUpdateAppliedVersion = null, string autoUpdateLastAppliedDetails = null, string autoUpdateLastAppliedState = null, DateTimeOffset? autoUpdateLastAppliedOn = null, DateTimeOffset? autoUpdateLastTriggeredOn = null, int? creationMethod = null, string tlsStatus = null, string optionalProperty1 = null, string optionalProperty2 = null, string optionalProperty3 = null, string optionalProperty4 = null, string optionalProperty5 = null)
         {
             cacheNodePropertiesDetailsIssuesList ??= new List<string>();
             issuesList ??= new List<string>();
             driveConfiguration ??= new List<CacheNodeDriveConfiguration>();
 
-            return new AdditionalCacheNodeProperties(
+            return new MccCacheNodeAdditionalProperties(
                 cacheNodePropertiesDetailsIssuesList?.ToList(),
                 issuesList?.ToList(),
                 issuesCount,
@@ -396,8 +396,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 cacheNodeStateShortText,
                 cacheNodeState,
                 driveConfiguration?.ToList(),
-                bgpAsnToIPAddressMapping != null ? new BgpConfiguration(bgpAsnToIPAddressMapping, serializedAdditionalRawData: null) : null,
-                proxyUri != null ? new ProxyUrlConfiguration(proxyUri, serializedAdditionalRawData: null) : null,
+                bgpAsnToIPAddressMapping != null ? new MccCacheNodeBgpConfiguration(bgpAsnToIPAddressMapping, serializedAdditionalRawData: null) : null,
+                proxyUri != null ? new MccCacheNodeProxyUriConfiguration(proxyUri, serializedAdditionalRawData: null) : null,
                 isProxyRequired,
                 osType,
                 autoUpdateVersion,
@@ -450,8 +450,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="movedToTerminalStateOn"> Auto update image uri after update. </param>
         /// <param name="ruleRequestedWeek"> Auto update image uri before update. </param>
         /// <param name="ruleRequestedDay"> Auto update image uri after update. </param>
-        /// <param name="createdDateTimeUtc"> Auto update entity created datetime. </param>
-        /// <param name="updatedRegistryDateTimeUtc"> Auto update entity last updated datetime. </param>
+        /// <param name="createdOn"> Auto update entity created datetime. </param>
+        /// <param name="updatedRegistryOn"> Auto update entity last updated datetime. </param>
         /// <param name="planChangeLogText"> This text describing the purpose of the plan of auto update. </param>
         /// <param name="autoUpdateLastAppliedStatus"> Auto update last applied status. </param>
         /// <param name="autoUpdateLastAppliedStatusText"> Auto update last applied status text. </param>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="ruleRequestedMinute"> Auto update rule requested minute. </param>
         /// <param name="ruleRequestedHour"> Auto update rule requested hour. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeAutoUpdateInfo"/> instance for mocking. </returns>
-        public static MccCacheNodeAutoUpdateInfo MccCacheNodeAutoUpdateInfo(string imageUriBeforeUpdate = null, string imageUriTargeted = null, string imageUriTerminal = null, int? autoUpdateRingType = null, DateTimeOffset? movedToTerminalStateOn = null, int? ruleRequestedWeek = null, int? ruleRequestedDay = null, DateTimeOffset? createdDateTimeUtc = null, DateTimeOffset? updatedRegistryDateTimeUtc = null, string planChangeLogText = null, int? autoUpdateLastAppliedStatus = null, string autoUpdateLastAppliedStatusText = null, string autoUpdateLastAppliedStatusDetailedText = null, long? planId = null, string timeToGoLiveDateTime = null, string ruleRequestedMinute = null, string ruleRequestedHour = null)
+        public static MccCacheNodeAutoUpdateInfo MccCacheNodeAutoUpdateInfo(string imageUriBeforeUpdate = null, string imageUriTargeted = null, string imageUriTerminal = null, int? autoUpdateRingType = null, DateTimeOffset? movedToTerminalStateOn = null, int? ruleRequestedWeek = null, int? ruleRequestedDay = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedRegistryOn = null, string planChangeLogText = null, int? autoUpdateLastAppliedStatus = null, string autoUpdateLastAppliedStatusText = null, string autoUpdateLastAppliedStatusDetailedText = null, long? planId = null, string timeToGoLiveDateTime = null, string ruleRequestedMinute = null, string ruleRequestedHour = null)
         {
             return new MccCacheNodeAutoUpdateInfo(
                 imageUriBeforeUpdate,
@@ -471,8 +471,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 movedToTerminalStateOn,
                 ruleRequestedWeek,
                 ruleRequestedDay,
-                createdDateTimeUtc,
-                updatedRegistryDateTimeUtc,
+                createdOn,
+                updatedRegistryOn,
                 planChangeLogText,
                 autoUpdateLastAppliedStatus,
                 autoUpdateLastAppliedStatusText,
@@ -489,13 +489,13 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="bgpCidrs"> Mcc cache node resource Bgp Cidr properties. </param>
+        /// <param name="mccCacheNodeBgpCidrs"> Mcc cache node resource Bgp Cidr properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeBgpCidrDetails"/> instance for mocking. </returns>
-        public static MccCacheNodeBgpCidrDetails MccCacheNodeBgpCidrDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> bgpCidrs = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
+        public static MccCacheNodeBgpCidrDetails MccCacheNodeBgpCidrDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> mccCacheNodeBgpCidrs = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
         {
-            bgpCidrs ??= new List<string>();
+            mccCacheNodeBgpCidrs ??= new List<string>();
             tags ??= new Dictionary<string, string>();
 
             return new MccCacheNodeBgpCidrDetails(
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 name,
                 resourceType,
                 systemData,
-                bgpCidrs != null ? new BgpCidrsConfiguration(bgpCidrs?.ToList(), serializedAdditionalRawData: null) : null,
+                mccCacheNodeBgpCidrs != null ? new MccCacheNodeBgpCidrsConfiguration(mccCacheNodeBgpCidrs?.ToList(), serializedAdditionalRawData: null) : null,
                 tags,
                 location,
                 serializedAdditionalRawData: null);
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeInstallDetails"/> instance for mocking. </returns>
-        public static MccCacheNodeInstallDetails MccCacheNodeInstallDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CacheNodeInstallProperties properties = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
+        public static MccCacheNodeInstallDetails MccCacheNodeInstallDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeInstallProperties properties = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CacheNodeInstallProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MccCacheNodeInstallProperties"/>. </summary>
         /// <param name="customerId"> Mcc customer resource Id. </param>
         /// <param name="cacheNodeId"> Mcc cache node resource Id. </param>
         /// <param name="primaryAccountKey"> Mcc primary account key. Internal to Mcc. </param>
@@ -542,12 +542,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tlsCertificateProvisioningKey"> Mcc Tls certificate provisioning key. </param>
         /// <param name="driveConfiguration"> Cache node resource drive configurations. </param>
         /// <param name="proxyUri"> proxyUrl configuration of the cache node. </param>
-        /// <returns> A new <see cref="Models.CacheNodeInstallProperties"/> instance for mocking. </returns>
-        public static CacheNodeInstallProperties CacheNodeInstallProperties(string customerId = null, string cacheNodeId = null, string primaryAccountKey = null, string secondaryAccountKey = null, string registrationKey = null, string tlsCertificateProvisioningKey = null, IEnumerable<CacheNodeDriveConfiguration> driveConfiguration = null, string proxyUri = null)
+        /// <returns> A new <see cref="Models.MccCacheNodeInstallProperties"/> instance for mocking. </returns>
+        public static MccCacheNodeInstallProperties MccCacheNodeInstallProperties(string customerId = null, string cacheNodeId = null, string primaryAccountKey = null, string secondaryAccountKey = null, string registrationKey = null, string tlsCertificateProvisioningKey = null, IEnumerable<CacheNodeDriveConfiguration> driveConfiguration = null, Uri proxyUri = null)
         {
             driveConfiguration ??= new List<CacheNodeDriveConfiguration>();
 
-            return new CacheNodeInstallProperties(
+            return new MccCacheNodeInstallProperties(
                 customerId,
                 cacheNodeId,
                 primaryAccountKey,
@@ -555,11 +555,11 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 registrationKey,
                 tlsCertificateProvisioningKey,
                 driveConfiguration?.ToList(),
-                proxyUri != null ? new ProxyUrlConfiguration(proxyUri, serializedAdditionalRawData: null) : null,
+                proxyUri != null ? new MccCacheNodeProxyUriConfiguration(proxyUri, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MccCacheNodeAutoUpdateHistory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MccCacheNodeAutoUpdateHistoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -567,12 +567,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="properties"> Mcc cache node resource auto update history properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Models.MccCacheNodeAutoUpdateHistory"/> instance for mocking. </returns>
-        public static MccCacheNodeAutoUpdateHistory MccCacheNodeAutoUpdateHistory(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeAutoUpdateHistoryProperties properties = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
+        /// <returns> A new <see cref="Models.MccCacheNodeAutoUpdateHistoryData"/> instance for mocking. </returns>
+        public static MccCacheNodeAutoUpdateHistoryData MccCacheNodeAutoUpdateHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeAutoUpdateHistoryProperties properties = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MccCacheNodeAutoUpdateHistory(
+            return new MccCacheNodeAutoUpdateHistoryData(
                 id,
                 name,
                 resourceType,
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             return new MccCacheNodeAutoUpdateHistoryProperties(customerId, cacheNodeId, autoUpdateHistory?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MccCacheNodeIssueHistory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MccCacheNodeIssueHistoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -603,12 +603,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="properties"> Mcc cache node resource issue history properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Models.MccCacheNodeIssueHistory"/> instance for mocking. </returns>
-        public static MccCacheNodeIssueHistory MccCacheNodeIssueHistory(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeIssueHistoryProperties properties = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
+        /// <returns> A new <see cref="Models.MccCacheNodeIssueHistoryData"/> instance for mocking. </returns>
+        public static MccCacheNodeIssueHistoryData MccCacheNodeIssueHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeIssueHistoryProperties properties = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MccCacheNodeIssueHistory(
+            return new MccCacheNodeIssueHistoryData(
                 id,
                 name,
                 resourceType,
@@ -624,24 +624,24 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="cacheNodeId"> Mcc cache node resource Id. </param>
         /// <param name="mccIssueHistory"> Cache node resource issue details history. </param>
         /// <returns> A new <see cref="Models.MccCacheNodeIssueHistoryProperties"/> instance for mocking. </returns>
-        public static MccCacheNodeIssueHistoryProperties MccCacheNodeIssueHistoryProperties(string customerId = null, string cacheNodeId = null, IEnumerable<MccIssue> mccIssueHistory = null)
+        public static MccCacheNodeIssueHistoryProperties MccCacheNodeIssueHistoryProperties(string customerId = null, string cacheNodeId = null, IEnumerable<MccCacheNodeIssue> mccIssueHistory = null)
         {
-            mccIssueHistory ??= new List<MccIssue>();
+            mccIssueHistory ??= new List<MccCacheNodeIssue>();
 
             return new MccCacheNodeIssueHistoryProperties(customerId, cacheNodeId, mccIssueHistory?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MccIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MccCacheNodeIssue"/>. </summary>
         /// <param name="mccIssueType"> Mcc cache node issue type. </param>
         /// <param name="toastString"> Mcc cache node issues toastString. </param>
         /// <param name="detailString"> Mcc cache node issue detail string. </param>
         /// <param name="helpLink"> Mcc cache node issue related help link. </param>
         /// <param name="issueStartOn"> Mcc cache node issue start date. </param>
         /// <param name="issueEndOn"> Mcc cache node issue end date. </param>
-        /// <returns> A new <see cref="Models.MccIssue"/> instance for mocking. </returns>
-        public static MccIssue MccIssue(string mccIssueType = null, string toastString = null, string detailString = null, string helpLink = null, DateTimeOffset? issueStartOn = null, DateTimeOffset? issueEndOn = null)
+        /// <returns> A new <see cref="Models.MccCacheNodeIssue"/> instance for mocking. </returns>
+        public static MccCacheNodeIssue MccCacheNodeIssue(string mccIssueType = null, string toastString = null, string detailString = null, string helpLink = null, DateTimeOffset? issueStartOn = null, DateTimeOffset? issueEndOn = null)
         {
-            return new MccIssue(
+            return new MccCacheNodeIssue(
                 mccIssueType,
                 toastString,
                 detailString,
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedCache.EnterpriseMccCustomerResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedCache.EnterpriseMccCustomerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -659,12 +659,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ConnectedCache.EnterpriseMccCustomerResourceData"/> instance for mocking. </returns>
-        public static EnterpriseMccCustomerResourceData EnterpriseMccCustomerResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CustomerProperty properties = null)
+        /// <returns> A new <see cref="ConnectedCache.EnterpriseMccCustomerData"/> instance for mocking. </returns>
+        public static EnterpriseMccCustomerData EnterpriseMccCustomerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MccCustomerProperty properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EnterpriseMccCustomerResourceData(
+            return new EnterpriseMccCustomerData(
                 id,
                 name,
                 resourceType,
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedCache.EnterpriseMccCacheNodeResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedCache.EnterpriseMccCacheNodeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -683,12 +683,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ConnectedCache.EnterpriseMccCacheNodeResourceData"/> instance for mocking. </returns>
-        public static EnterpriseMccCacheNodeResourceData EnterpriseMccCacheNodeResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CacheNodeProperty properties = null)
+        /// <returns> A new <see cref="ConnectedCache.EnterpriseMccCacheNodeData"/> instance for mocking. </returns>
+        public static EnterpriseMccCacheNodeData EnterpriseMccCacheNodeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MccCacheNodeProperty properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EnterpriseMccCacheNodeResourceData(
+            return new EnterpriseMccCacheNodeData(
                 id,
                 name,
                 resourceType,
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MccCacheNodeTlsCertificateHistory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MccCacheNodeTlsCertificateHistoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -707,12 +707,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="properties"> Mcc cache node resource Tls certificate details. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Models.MccCacheNodeTlsCertificateHistory"/> instance for mocking. </returns>
-        public static MccCacheNodeTlsCertificateHistory MccCacheNodeTlsCertificateHistory(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeTlsCertificateProperties properties = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
+        /// <returns> A new <see cref="Models.MccCacheNodeTlsCertificateHistoryData"/> instance for mocking. </returns>
+        public static MccCacheNodeTlsCertificateHistoryData MccCacheNodeTlsCertificateHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MccCacheNodeTlsCertificateProperties properties = null, IReadOnlyDictionary<string, string> tags = null, string location = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MccCacheNodeTlsCertificateHistory(
+            return new MccCacheNodeTlsCertificateHistoryData(
                 id,
                 name,
                 resourceType,

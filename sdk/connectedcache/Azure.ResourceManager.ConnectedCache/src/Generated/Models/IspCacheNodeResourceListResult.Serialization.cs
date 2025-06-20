@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             {
                 return null;
             }
-            IReadOnlyList<IspCacheNodeResourceData> value = default;
+            IReadOnlyList<IspCacheNodeData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<IspCacheNodeResourceData> array = new List<IspCacheNodeResourceData>();
+                    List<IspCacheNodeData> array = new List<IspCacheNodeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IspCacheNodeResourceData.DeserializeIspCacheNodeResourceData(item, options));
+                        array.Add(IspCacheNodeData.DeserializeIspCacheNodeData(item, options));
                     }
                     value = array;
                     continue;

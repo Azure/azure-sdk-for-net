@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableConnectedCacheSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _ispCustomerResourceIspCustomersClientDiagnostics;
-        private IspCustomersRestOperations _ispCustomerResourceIspCustomersRestClient;
-        private ClientDiagnostics _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics;
-        private EnterpriseMccCustomersRestOperations _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient;
+        private ClientDiagnostics _ispCustomerClientDiagnostics;
+        private IspCustomersRestOperations _ispCustomerRestClient;
+        private ClientDiagnostics _enterpriseMccCustomerClientDiagnostics;
+        private EnterpriseMccCustomersRestOperations _enterpriseMccCustomerRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableConnectedCacheSubscriptionResource"/> class for mocking. </summary>
         protected MockableConnectedCacheSubscriptionResource()
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         {
         }
 
-        private ClientDiagnostics IspCustomerResourceIspCustomersClientDiagnostics => _ispCustomerResourceIspCustomersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", IspCustomerResource.ResourceType.Namespace, Diagnostics);
-        private IspCustomersRestOperations IspCustomerResourceIspCustomersRestClient => _ispCustomerResourceIspCustomersRestClient ??= new IspCustomersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IspCustomerResource.ResourceType));
-        private ClientDiagnostics EnterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics => _enterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", EnterpriseMccCustomerResource.ResourceType.Namespace, Diagnostics);
-        private EnterpriseMccCustomersRestOperations EnterpriseMccCustomerResourceEnterpriseMccCustomersRestClient => _enterpriseMccCustomerResourceEnterpriseMccCustomersRestClient ??= new EnterpriseMccCustomersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EnterpriseMccCustomerResource.ResourceType));
+        private ClientDiagnostics IspCustomerClientDiagnostics => _ispCustomerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", IspCustomerResource.ResourceType.Namespace, Diagnostics);
+        private IspCustomersRestOperations IspCustomerRestClient => _ispCustomerRestClient ??= new IspCustomersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IspCustomerResource.ResourceType));
+        private ClientDiagnostics EnterpriseMccCustomerClientDiagnostics => _enterpriseMccCustomerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", EnterpriseMccCustomerResource.ResourceType.Namespace, Diagnostics);
+        private EnterpriseMccCustomersRestOperations EnterpriseMccCustomerRestClient => _enterpriseMccCustomerRestClient ??= new EnterpriseMccCustomersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EnterpriseMccCustomerResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IspCustomerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IspCustomerResource> GetIspCustomerResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IspCustomerResource> GetIspCustomersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IspCustomerResourceIspCustomersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IspCustomerResourceIspCustomersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IspCustomerResource(Client, IspCustomerResourceData.DeserializeIspCustomerResourceData(e)), IspCustomerResourceIspCustomersClientDiagnostics, Pipeline, "MockableConnectedCacheSubscriptionResource.GetIspCustomerResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IspCustomerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IspCustomerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IspCustomerResource(Client, IspCustomerData.DeserializeIspCustomerData(e)), IspCustomerClientDiagnostics, Pipeline, "MockableConnectedCacheSubscriptionResource.GetIspCustomers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IspCustomerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IspCustomerResource> GetIspCustomerResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<IspCustomerResource> GetIspCustomers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IspCustomerResourceIspCustomersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IspCustomerResourceIspCustomersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IspCustomerResource(Client, IspCustomerResourceData.DeserializeIspCustomerResourceData(e)), IspCustomerResourceIspCustomersClientDiagnostics, Pipeline, "MockableConnectedCacheSubscriptionResource.GetIspCustomerResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IspCustomerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IspCustomerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IspCustomerResource(Client, IspCustomerData.DeserializeIspCustomerData(e)), IspCustomerClientDiagnostics, Pipeline, "MockableConnectedCacheSubscriptionResource.GetIspCustomers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EnterpriseMccCustomerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EnterpriseMccCustomerResource> GetEnterpriseMccCustomerResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EnterpriseMccCustomerResource> GetEnterpriseMccCustomersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EnterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EnterpriseMccCustomerResource(Client, EnterpriseMccCustomerResourceData.DeserializeEnterpriseMccCustomerResourceData(e)), EnterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics, Pipeline, "MockableConnectedCacheSubscriptionResource.GetEnterpriseMccCustomerResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EnterpriseMccCustomerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnterpriseMccCustomerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EnterpriseMccCustomerResource(Client, EnterpriseMccCustomerData.DeserializeEnterpriseMccCustomerData(e)), EnterpriseMccCustomerClientDiagnostics, Pipeline, "MockableConnectedCacheSubscriptionResource.GetEnterpriseMccCustomers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EnterpriseMccCustomerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EnterpriseMccCustomerResource> GetEnterpriseMccCustomerResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<EnterpriseMccCustomerResource> GetEnterpriseMccCustomers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EnterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnterpriseMccCustomerResourceEnterpriseMccCustomersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EnterpriseMccCustomerResource(Client, EnterpriseMccCustomerResourceData.DeserializeEnterpriseMccCustomerResourceData(e)), EnterpriseMccCustomerResourceEnterpriseMccCustomersClientDiagnostics, Pipeline, "MockableConnectedCacheSubscriptionResource.GetEnterpriseMccCustomerResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EnterpriseMccCustomerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnterpriseMccCustomerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EnterpriseMccCustomerResource(Client, EnterpriseMccCustomerData.DeserializeEnterpriseMccCustomerData(e)), EnterpriseMccCustomerClientDiagnostics, Pipeline, "MockableConnectedCacheSubscriptionResource.GetEnterpriseMccCustomers", "value", "nextLink", cancellationToken);
         }
     }
 }

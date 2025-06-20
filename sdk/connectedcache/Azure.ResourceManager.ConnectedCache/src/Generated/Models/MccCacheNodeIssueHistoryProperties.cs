@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <summary> Initializes a new instance of <see cref="MccCacheNodeIssueHistoryProperties"/>. </summary>
         internal MccCacheNodeIssueHistoryProperties()
         {
-            MccIssueHistory = new ChangeTrackingList<MccIssue>();
+            MccIssueHistory = new ChangeTrackingList<MccCacheNodeIssue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MccCacheNodeIssueHistoryProperties"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="cacheNodeId"> Mcc cache node resource Id. </param>
         /// <param name="mccIssueHistory"> Cache node resource issue details history. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MccCacheNodeIssueHistoryProperties(string customerId, string cacheNodeId, IReadOnlyList<MccIssue> mccIssueHistory, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MccCacheNodeIssueHistoryProperties(string customerId, string cacheNodeId, IReadOnlyList<MccCacheNodeIssue> mccIssueHistory, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomerId = customerId;
             CacheNodeId = cacheNodeId;
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <summary> Mcc cache node resource Id. </summary>
         public string CacheNodeId { get; }
         /// <summary> Cache node resource issue details history. </summary>
-        public IReadOnlyList<MccIssue> MccIssueHistory { get; }
+        public IReadOnlyList<MccCacheNodeIssue> MccIssueHistory { get; }
     }
 }
