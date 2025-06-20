@@ -392,12 +392,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             ShareClientOptions options = new ShareClientOptions();
 
-            // We grab the assembly of BlobsStorageResourceProvider which is Azure.Storage.DataMovement.Files.Shares.
+            // We grab the assembly of ShareFilesStorageResourceProvider which is Azure.Storage.DataMovement.Files.Shares.
             // Then we can grab the version to set in the ApplicationId which will prefix the User Agent string
             // with the version.
             Assembly assembly = typeof(ShareFilesStorageResourceProvider).Assembly;
-            string version = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
-            options.Diagnostics.ApplicationId = $"DataMovement/{version}";
+            AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            if (versionAttribute == null)
+            {
+                throw Errors.RequiredVersionClientAssembly(assembly, versionAttribute);
+            }
+            options.Diagnostics.ApplicationId = $"DataMovement/{versionAttribute.InformationalVersion}";
             return options;
         }
     }

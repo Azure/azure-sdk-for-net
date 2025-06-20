@@ -738,8 +738,12 @@ namespace Azure.Storage.DataMovement.Blobs
             // Then we can grab the version to set in the ApplicationId which will prefix the User Agent string
             // with the version.
             Assembly assembly = typeof(BlobsStorageResourceProvider).Assembly;
-            string version = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
-            options.Diagnostics.ApplicationId = $"DataMovement/{version}";
+            AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            if (versionAttribute == null)
+            {
+                throw Errors.RequiredVersionClientAssembly(assembly, versionAttribute);
+            }
+            options.Diagnostics.ApplicationId = $"DataMovement/{versionAttribute.InformationalVersion}";
             return options;
         }
     }
