@@ -1,4 +1,4 @@
-directory: specification\orbital\Microsoft.PlanetaryComputer\main.tsp
+directory: specification\orbital\Microsoft.PlanetaryComputer
 repo: Azure/azure-rest-api-specs
 commit: 01291230497cee1787800060ce175e3ca7d6a50b
 
