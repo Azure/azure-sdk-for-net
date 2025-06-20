@@ -9,7 +9,7 @@ To create a new `TextAnalysisClient`, you will need the service endpoint and cre
 ```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
 Uri endpoint = new Uri("endpoint");
 AzureKeyCredential credential = new("your apikey");
-TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview);
+TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
 var client = new TextAnalysisClient(endpoint, credential, options);
 ```
 
@@ -150,6 +150,14 @@ foreach (DocumentError analyzeTextDocumentError in piiTaskResult.Results.Errors)
     Console.WriteLine();
     continue;
 }
+```
+
+The new features — `ValueExclusion`, `Synonyms`, and `new entity types` — are supported in version V2025_05_15_Preview or later.
+```C#
+Uri endpoint = new Uri("endpoint");
+AzureKeyCredential credential = new("your apikey");
+TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview);
+var client = new TextAnalysisClient(endpoint, credential, options);
 ```
 
 ## Recognizing Personally Identifiable Information in multiple documents with Value Exclusion

@@ -60,7 +60,7 @@ Now in `Azure.AI.Language.Text`, you create a `TextAnalysisClient` along with `A
 ```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
 Uri endpoint = new Uri("endpoint");
 AzureKeyCredential credential = new("your apikey");
-TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview);
+TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
 var client = new TextAnalysisClient(endpoint, credential, options);
 ```
 
