@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct OSType : IEquatable<OSType>
     {
         private readonly string _value;
+        /// <summary> The Linux operating system. </summary>
+        private const string LinuxValue = "linux";
+        /// <summary> The Windows operating system. </summary>
+        private const string WindowsValue = "windows";
 
         /// <summary> Initializes a new instance of <see cref="OSType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OSType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LinuxValue = "linux";
-        private const string WindowsValue = "windows";
+            _value = value;
+        }
 
         /// <summary> The Linux operating system. </summary>
         public static OSType Linux { get; } = new OSType(LinuxValue);
+
         /// <summary> The Windows operating system. </summary>
         public static OSType Windows { get; } = new OSType(WindowsValue);
+
         /// <summary> Determines if two <see cref="OSType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OSType left, OSType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OSType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OSType left, OSType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OSType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OSType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OSType(string value) => new OSType(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OSType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> The Task counts for a Job. </summary>
     public partial class BatchTaskCounts
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskCounts"/>. </summary>
         /// <param name="active"> The number of Tasks in the active state. </param>
@@ -66,30 +37,29 @@ namespace Azure.Compute.Batch
         /// <param name="completed"> The number of Tasks in the completed state. </param>
         /// <param name="succeeded"> The number of Tasks which succeeded. A Task succeeds if its result (found in the executionInfo property) is 'success'. </param>
         /// <param name="failed"> The number of Tasks which failed. A Task fails if its result (found in the executionInfo property) is 'failure'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskCounts(int active, int running, int completed, int succeeded, int failed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchTaskCounts(int active, int running, int completed, int succeeded, int failed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Active = active;
             Running = running;
             Completed = completed;
             Succeeded = succeeded;
             Failed = failed;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchTaskCounts"/> for deserialization. </summary>
-        internal BatchTaskCounts()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The number of Tasks in the active state. </summary>
         public int Active { get; }
+
         /// <summary> The number of Tasks in the running or preparing state. </summary>
         public int Running { get; }
+
         /// <summary> The number of Tasks in the completed state. </summary>
         public int Completed { get; }
+
         /// <summary> The number of Tasks which succeeded. A Task succeeds if its result (found in the executionInfo property) is 'success'. </summary>
         public int Succeeded { get; }
+
         /// <summary> The number of Tasks which failed. A Task fails if its result (found in the executionInfo property) is 'failure'. </summary>
         public int Failed { get; }
     }

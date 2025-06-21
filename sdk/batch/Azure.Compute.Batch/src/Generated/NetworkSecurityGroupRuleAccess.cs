@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct NetworkSecurityGroupRuleAccess : IEquatable<NetworkSecurityGroupRuleAccess>
     {
         private readonly string _value;
+        /// <summary> Allow access. </summary>
+        private const string AllowValue = "allow";
+        /// <summary> Deny access. </summary>
+        private const string DenyValue = "deny";
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupRuleAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkSecurityGroupRuleAccess(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowValue = "allow";
-        private const string DenyValue = "deny";
+            _value = value;
+        }
 
         /// <summary> Allow access. </summary>
         public static NetworkSecurityGroupRuleAccess Allow { get; } = new NetworkSecurityGroupRuleAccess(AllowValue);
+
         /// <summary> Deny access. </summary>
         public static NetworkSecurityGroupRuleAccess Deny { get; } = new NetworkSecurityGroupRuleAccess(DenyValue);
+
         /// <summary> Determines if two <see cref="NetworkSecurityGroupRuleAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkSecurityGroupRuleAccess left, NetworkSecurityGroupRuleAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkSecurityGroupRuleAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkSecurityGroupRuleAccess left, NetworkSecurityGroupRuleAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkSecurityGroupRuleAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkSecurityGroupRuleAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkSecurityGroupRuleAccess(string value) => new NetworkSecurityGroupRuleAccess(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkSecurityGroupRuleAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkSecurityGroupRuleAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchPoolIdentityType : IEquatable<BatchPoolIdentityType>
     {
         private readonly string _value;
+        /// <summary> Batch pool has user assigned identities with it. </summary>
+        private const string UserAssignedValue = "UserAssigned";
+        /// <summary> Batch pool has no identity associated with it. Setting `None` in update pool will remove existing identities. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="BatchPoolIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchPoolIdentityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UserAssignedValue = "UserAssigned";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> Batch pool has user assigned identities with it. </summary>
         public static BatchPoolIdentityType UserAssigned { get; } = new BatchPoolIdentityType(UserAssignedValue);
+
         /// <summary> Batch pool has no identity associated with it. Setting `None` in update pool will remove existing identities. </summary>
         public static BatchPoolIdentityType None { get; } = new BatchPoolIdentityType(NoneValue);
+
         /// <summary> Determines if two <see cref="BatchPoolIdentityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchPoolIdentityType left, BatchPoolIdentityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchPoolIdentityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchPoolIdentityType left, BatchPoolIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchPoolIdentityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchPoolIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchPoolIdentityType(string value) => new BatchPoolIdentityType(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchPoolIdentityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchPoolIdentityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

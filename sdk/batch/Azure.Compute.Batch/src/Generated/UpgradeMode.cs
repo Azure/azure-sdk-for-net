@@ -14,41 +14,58 @@ namespace Azure.Compute.Batch
     public readonly partial struct UpgradeMode : IEquatable<UpgradeMode>
     {
         private readonly string _value;
+        /// <summary> TAll virtual machines in the scale set are automatically updated at the same time. </summary>
+        private const string AutomaticValue = "automatic";
+        /// <summary> You control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action. </summary>
+        private const string ManualValue = "manual";
+        /// <summary> The existing instances in a scale set are brought down in batches to be upgraded. Once the upgraded batch is complete, the instances will begin taking traffic again and the next batch will begin. This continues until all instances brought up-to-date. </summary>
+        private const string RollingValue = "rolling";
 
         /// <summary> Initializes a new instance of <see cref="UpgradeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UpgradeMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutomaticValue = "automatic";
-        private const string ManualValue = "manual";
-        private const string RollingValue = "rolling";
+            _value = value;
+        }
 
         /// <summary> TAll virtual machines in the scale set are automatically updated at the same time. </summary>
         public static UpgradeMode Automatic { get; } = new UpgradeMode(AutomaticValue);
+
         /// <summary> You control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action. </summary>
         public static UpgradeMode Manual { get; } = new UpgradeMode(ManualValue);
+
         /// <summary> The existing instances in a scale set are brought down in batches to be upgraded. Once the upgraded batch is complete, the instances will begin taking traffic again and the next batch will begin. This continues until all instances brought up-to-date. </summary>
         public static UpgradeMode Rolling { get; } = new UpgradeMode(RollingValue);
+
         /// <summary> Determines if two <see cref="UpgradeMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UpgradeMode left, UpgradeMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UpgradeMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UpgradeMode left, UpgradeMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UpgradeMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UpgradeMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UpgradeMode(string value) => new UpgradeMode(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UpgradeMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UpgradeMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

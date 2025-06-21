@@ -14,41 +14,58 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchNodeCommunicationMode : IEquatable<BatchNodeCommunicationMode>
     {
         private readonly string _value;
+        /// <summary> The node communication mode is automatically set by the Batch service. </summary>
+        private const string DefaultValue = "default";
+        /// <summary> Nodes using the classic communication mode require inbound TCP communication on ports 29876 and 29877 from the "BatchNodeManagement.{region}" service tag and outbound TCP communication on port 443 to the "Storage.region" and "BatchNodeManagement.{region}" service tags. </summary>
+        private const string ClassicValue = "classic";
+        /// <summary> Nodes using the simplified communication mode require outbound TCP communication on port 443 to the "BatchNodeManagement.{region}" service tag. No open inbound ports are required. </summary>
+        private const string SimplifiedValue = "simplified";
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeCommunicationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchNodeCommunicationMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "default";
-        private const string ClassicValue = "classic";
-        private const string SimplifiedValue = "simplified";
+            _value = value;
+        }
 
         /// <summary> The node communication mode is automatically set by the Batch service. </summary>
         public static BatchNodeCommunicationMode Default { get; } = new BatchNodeCommunicationMode(DefaultValue);
+
         /// <summary> Nodes using the classic communication mode require inbound TCP communication on ports 29876 and 29877 from the "BatchNodeManagement.{region}" service tag and outbound TCP communication on port 443 to the "Storage.region" and "BatchNodeManagement.{region}" service tags. </summary>
         public static BatchNodeCommunicationMode Classic { get; } = new BatchNodeCommunicationMode(ClassicValue);
+
         /// <summary> Nodes using the simplified communication mode require outbound TCP communication on port 443 to the "BatchNodeManagement.{region}" service tag. No open inbound ports are required. </summary>
         public static BatchNodeCommunicationMode Simplified { get; } = new BatchNodeCommunicationMode(SimplifiedValue);
+
         /// <summary> Determines if two <see cref="BatchNodeCommunicationMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchNodeCommunicationMode left, BatchNodeCommunicationMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchNodeCommunicationMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchNodeCommunicationMode left, BatchNodeCommunicationMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchNodeCommunicationMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchNodeCommunicationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchNodeCommunicationMode(string value) => new BatchNodeCommunicationMode(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchNodeCommunicationMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchNodeCommunicationMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

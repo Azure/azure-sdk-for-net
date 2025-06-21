@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> An error that occurred when executing or evaluating a Pool autoscale formula. </summary>
     public partial class AutoScaleRunError
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutoScaleRunError"/>. </summary>
         internal AutoScaleRunError()
@@ -55,20 +26,22 @@ namespace Azure.Compute.Batch
         /// <param name="code"> An identifier for the autoscale error. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the autoscale error, intended to be suitable for display in a user interface. </param>
         /// <param name="values"> A list of additional error details related to the autoscale error. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoScaleRunError(string code, string message, IReadOnlyList<NameValuePair> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutoScaleRunError(string code, string message, IList<NameValuePair> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
             Values = values;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An identifier for the autoscale error. Codes are invariant and are intended to be consumed programmatically. </summary>
         public string Code { get; }
+
         /// <summary> A message describing the autoscale error, intended to be suitable for display in a user interface. </summary>
         public string Message { get; }
+
         /// <summary> A list of additional error details related to the autoscale error. </summary>
-        public IReadOnlyList<NameValuePair> Values { get; }
+        public IList<NameValuePair> Values { get; }
     }
 }

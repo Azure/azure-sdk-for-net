@@ -14,47 +14,68 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchJobScheduleState : IEquatable<BatchJobScheduleState>
     {
         private readonly string _value;
+        /// <summary> The Job Schedule is active and will create Jobs as per its schedule. </summary>
+        private const string ActiveValue = "active";
+        /// <summary> The Job Schedule has terminated, either by reaching its end time or by the user terminating it explicitly. </summary>
+        private const string CompletedValue = "completed";
+        /// <summary> The user has disabled the Job Schedule. The scheduler will not initiate any new Jobs will on this schedule, but any existing active Job will continue to run. </summary>
+        private const string DisabledValue = "disabled";
+        /// <summary> The Job Schedule has no more work to do, or has been explicitly terminated by the user, but the termination operation is still in progress. The scheduler will not initiate any new Jobs for this Job Schedule, nor is any existing Job active. </summary>
+        private const string TerminatingValue = "terminating";
+        /// <summary> The user has requested that the Job Schedule be deleted, but the delete operation is still in progress. The scheduler will not initiate any new Jobs for this Job Schedule, and will delete any existing Jobs and Tasks under the Job Schedule, including any active Job. The Job Schedule will be deleted when all Jobs and Tasks under the Job Schedule have been deleted. </summary>
+        private const string DeletingValue = "deleting";
 
         /// <summary> Initializes a new instance of <see cref="BatchJobScheduleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchJobScheduleState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "active";
-        private const string CompletedValue = "completed";
-        private const string DisabledValue = "disabled";
-        private const string TerminatingValue = "terminating";
-        private const string DeletingValue = "deleting";
+            _value = value;
+        }
 
         /// <summary> The Job Schedule is active and will create Jobs as per its schedule. </summary>
         public static BatchJobScheduleState Active { get; } = new BatchJobScheduleState(ActiveValue);
+
         /// <summary> The Job Schedule has terminated, either by reaching its end time or by the user terminating it explicitly. </summary>
         public static BatchJobScheduleState Completed { get; } = new BatchJobScheduleState(CompletedValue);
+
         /// <summary> The user has disabled the Job Schedule. The scheduler will not initiate any new Jobs will on this schedule, but any existing active Job will continue to run. </summary>
         public static BatchJobScheduleState Disabled { get; } = new BatchJobScheduleState(DisabledValue);
+
         /// <summary> The Job Schedule has no more work to do, or has been explicitly terminated by the user, but the termination operation is still in progress. The scheduler will not initiate any new Jobs for this Job Schedule, nor is any existing Job active. </summary>
         public static BatchJobScheduleState Terminating { get; } = new BatchJobScheduleState(TerminatingValue);
+
         /// <summary> The user has requested that the Job Schedule be deleted, but the delete operation is still in progress. The scheduler will not initiate any new Jobs for this Job Schedule, and will delete any existing Jobs and Tasks under the Job Schedule, including any active Job. The Job Schedule will be deleted when all Jobs and Tasks under the Job Schedule have been deleted. </summary>
         public static BatchJobScheduleState Deleting { get; } = new BatchJobScheduleState(DeletingValue);
+
         /// <summary> Determines if two <see cref="BatchJobScheduleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchJobScheduleState left, BatchJobScheduleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchJobScheduleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchJobScheduleState left, BatchJobScheduleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchJobScheduleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchJobScheduleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchJobScheduleState(string value) => new BatchJobScheduleState(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchJobScheduleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchJobScheduleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

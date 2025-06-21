@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct InboundEndpointProtocol : IEquatable<InboundEndpointProtocol>
     {
         private readonly string _value;
+        /// <summary> Use TCP for the endpoint. </summary>
+        private const string TcpValue = "tcp";
+        /// <summary> Use UDP for the endpoint. </summary>
+        private const string UdpValue = "udp";
 
         /// <summary> Initializes a new instance of <see cref="InboundEndpointProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InboundEndpointProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TcpValue = "tcp";
-        private const string UdpValue = "udp";
+            _value = value;
+        }
 
         /// <summary> Use TCP for the endpoint. </summary>
         public static InboundEndpointProtocol Tcp { get; } = new InboundEndpointProtocol(TcpValue);
+
         /// <summary> Use UDP for the endpoint. </summary>
         public static InboundEndpointProtocol Udp { get; } = new InboundEndpointProtocol(UdpValue);
+
         /// <summary> Determines if two <see cref="InboundEndpointProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InboundEndpointProtocol left, InboundEndpointProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InboundEndpointProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InboundEndpointProtocol left, InboundEndpointProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InboundEndpointProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InboundEndpointProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InboundEndpointProtocol(string value) => new InboundEndpointProtocol(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InboundEndpointProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InboundEndpointProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

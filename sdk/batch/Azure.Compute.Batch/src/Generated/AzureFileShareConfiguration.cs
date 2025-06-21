@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> Information used to connect to an Azure Fileshare. </summary>
     public partial class AzureFileShareConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureFileShareConfiguration"/>. </summary>
         /// <param name="accountName"> The Azure Storage account name. </param>
@@ -70,30 +41,29 @@ namespace Azure.Compute.Batch
         /// <param name="azureFileUri"> The Azure Files URL. This is of the form 'https://{account}.file.core.windows.net/'. </param>
         /// <param name="relativeMountPath"> The relative path on the compute node where the file system will be mounted. All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="mountOptions"> Additional command line options to pass to the mount command. These are 'net use' options in Windows and 'mount' options in Linux. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFileShareConfiguration(string accountName, string accountKey, Uri azureFileUri, string relativeMountPath, string mountOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFileShareConfiguration(string accountName, string accountKey, Uri azureFileUri, string relativeMountPath, string mountOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountName = accountName;
             AccountKey = accountKey;
             AzureFileUri = azureFileUri;
             RelativeMountPath = relativeMountPath;
             MountOptions = mountOptions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureFileShareConfiguration"/> for deserialization. </summary>
-        internal AzureFileShareConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure Storage account name. </summary>
         public string AccountName { get; set; }
+
         /// <summary> The Azure Storage account key. </summary>
         public string AccountKey { get; set; }
+
         /// <summary> The Azure Files URL. This is of the form 'https://{account}.file.core.windows.net/'. </summary>
         public Uri AzureFileUri { get; set; }
+
         /// <summary> The relative path on the compute node where the file system will be mounted. All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </summary>
         public string RelativeMountPath { get; set; }
+
         /// <summary> Additional command line options to pass to the mount command. These are 'net use' options in Windows and 'mount' options in Linux. </summary>
         public string MountOptions { get; set; }
     }

@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct SecurityTypes : IEquatable<SecurityTypes>
     {
         private readonly string _value;
+        /// <summary> Trusted launch protects against advanced and persistent attack techniques. </summary>
+        private const string TrustedLaunchValue = "trustedLaunch";
+        /// <summary> Azure confidential computing offers confidential VMs are for tenants with high security and confidentiality requirements. These VMs provide a strong, hardware-enforced boundary to help meet your security needs. You can use confidential VMs for migrations without making changes to your code, with the platform protecting your VM's state from being read or modified. </summary>
+        private const string ConfidentialVMValue = "confidentialVM";
 
         /// <summary> Initializes a new instance of <see cref="SecurityTypes"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityTypes(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrustedLaunchValue = "trustedLaunch";
-        private const string ConfidentialVMValue = "confidentialVM";
+            _value = value;
+        }
 
         /// <summary> Trusted launch protects against advanced and persistent attack techniques. </summary>
         public static SecurityTypes TrustedLaunch { get; } = new SecurityTypes(TrustedLaunchValue);
+
         /// <summary> Azure confidential computing offers confidential VMs are for tenants with high security and confidentiality requirements. These VMs provide a strong, hardware-enforced boundary to help meet your security needs. You can use confidential VMs for migrations without making changes to your code, with the platform protecting your VM's state from being read or modified. </summary>
         public static SecurityTypes ConfidentialVM { get; } = new SecurityTypes(ConfidentialVMValue);
+
         /// <summary> Determines if two <see cref="SecurityTypes"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityTypes left, SecurityTypes right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityTypes"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityTypes left, SecurityTypes right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityTypes"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityTypes"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityTypes(string value) => new SecurityTypes(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityTypes other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

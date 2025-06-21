@@ -14,41 +14,58 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchTaskAddStatus : IEquatable<BatchTaskAddStatus>
     {
         private readonly string _value;
+        /// <summary> The Task was added successfully. </summary>
+        private const string SuccessValue = "success";
+        /// <summary> The Task failed to add due to a client error and should not be retried without modifying the request as appropriate. </summary>
+        private const string ClientErrorValue = "clienterror";
+        /// <summary> Task failed to add due to a server error and can be retried without modification. </summary>
+        private const string ServerErrorValue = "servererror";
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskAddStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchTaskAddStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SuccessValue = "success";
-        private const string ClientErrorValue = "clienterror";
-        private const string ServerErrorValue = "servererror";
+            _value = value;
+        }
 
         /// <summary> The Task was added successfully. </summary>
         public static BatchTaskAddStatus Success { get; } = new BatchTaskAddStatus(SuccessValue);
+
         /// <summary> The Task failed to add due to a client error and should not be retried without modifying the request as appropriate. </summary>
         public static BatchTaskAddStatus ClientError { get; } = new BatchTaskAddStatus(ClientErrorValue);
+
         /// <summary> Task failed to add due to a server error and can be retried without modification. </summary>
         public static BatchTaskAddStatus ServerError { get; } = new BatchTaskAddStatus(ServerErrorValue);
+
         /// <summary> Determines if two <see cref="BatchTaskAddStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchTaskAddStatus left, BatchTaskAddStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchTaskAddStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchTaskAddStatus left, BatchTaskAddStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchTaskAddStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchTaskAddStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchTaskAddStatus(string value) => new BatchTaskAddStatus(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchTaskAddStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchTaskAddStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> The properties of a file on a Compute Node. </summary>
     public partial class FileProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FileProperties"/>. </summary>
         /// <param name="lastModified"> The time at which the file was last modified. </param>
@@ -60,30 +31,29 @@ namespace Azure.Compute.Batch
         /// <param name="contentLength"> The length of the file. </param>
         /// <param name="contentType"> The content type of the file. </param>
         /// <param name="fileMode"> The file mode attribute in octal format. The file mode is returned only for files on Linux Compute Nodes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileProperties(DateTimeOffset? creationTime, DateTimeOffset lastModified, long contentLength, string contentType, string fileMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FileProperties(DateTimeOffset? creationTime, DateTimeOffset lastModified, long contentLength, string contentType, string fileMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreationTime = creationTime;
             LastModified = lastModified;
             ContentLength = contentLength;
             ContentType = contentType;
             FileMode = fileMode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FileProperties"/> for deserialization. </summary>
-        internal FileProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The file creation time. The creation time is not returned for files on Linux Compute Nodes. </summary>
         public DateTimeOffset? CreationTime { get; }
+
         /// <summary> The time at which the file was last modified. </summary>
         public DateTimeOffset LastModified { get; }
+
         /// <summary> The length of the file. </summary>
         public long ContentLength { get; }
+
         /// <summary> The content type of the file. </summary>
         public string ContentType { get; }
+
         /// <summary> The file mode attribute in octal format. The file mode is returned only for files on Linux Compute Nodes. </summary>
         public string FileMode { get; }
     }

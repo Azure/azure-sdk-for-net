@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct DiskEncryptionTarget : IEquatable<DiskEncryptionTarget>
     {
         private readonly string _value;
+        /// <summary> The OS Disk on the compute node is encrypted. </summary>
+        private const string OsDiskValue = "osdisk";
+        /// <summary> The temporary disk on the compute node is encrypted. On Linux this encryption applies to other partitions (such as those on mounted data disks) when encryption occurs at boot time. </summary>
+        private const string TemporaryDiskValue = "temporarydisk";
 
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionTarget"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DiskEncryptionTarget(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OsDiskValue = "osdisk";
-        private const string TemporaryDiskValue = "temporarydisk";
+            _value = value;
+        }
 
         /// <summary> The OS Disk on the compute node is encrypted. </summary>
         public static DiskEncryptionTarget OsDisk { get; } = new DiskEncryptionTarget(OsDiskValue);
+
         /// <summary> The temporary disk on the compute node is encrypted. On Linux this encryption applies to other partitions (such as those on mounted data disks) when encryption occurs at boot time. </summary>
         public static DiskEncryptionTarget TemporaryDisk { get; } = new DiskEncryptionTarget(TemporaryDiskValue);
+
         /// <summary> Determines if two <see cref="DiskEncryptionTarget"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DiskEncryptionTarget left, DiskEncryptionTarget right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DiskEncryptionTarget"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DiskEncryptionTarget left, DiskEncryptionTarget right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskEncryptionTarget"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DiskEncryptionTarget"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DiskEncryptionTarget(string value) => new DiskEncryptionTarget(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DiskEncryptionTarget other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DiskEncryptionTarget other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

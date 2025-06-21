@@ -14,41 +14,58 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchNodeDisableSchedulingOption : IEquatable<BatchNodeDisableSchedulingOption>
     {
         private readonly string _value;
+        /// <summary> Terminate running Task processes and requeue the Tasks. The Tasks may run again on other Compute Nodes, or when Task scheduling is re-enabled on this Compute Node. Enter offline state as soon as Tasks have been terminated. </summary>
+        private const string RequeueValue = "requeue";
+        /// <summary> Terminate running Tasks. The Tasks will be completed with failureInfo indicating that they were terminated, and will not run again. Enter offline state as soon as Tasks have been terminated. </summary>
+        private const string TerminateValue = "terminate";
+        /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Enter offline state when all Tasks have completed. </summary>
+        private const string TaskCompletionValue = "taskcompletion";
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeDisableSchedulingOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchNodeDisableSchedulingOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RequeueValue = "requeue";
-        private const string TerminateValue = "terminate";
-        private const string TaskCompletionValue = "taskcompletion";
+            _value = value;
+        }
 
         /// <summary> Terminate running Task processes and requeue the Tasks. The Tasks may run again on other Compute Nodes, or when Task scheduling is re-enabled on this Compute Node. Enter offline state as soon as Tasks have been terminated. </summary>
         public static BatchNodeDisableSchedulingOption Requeue { get; } = new BatchNodeDisableSchedulingOption(RequeueValue);
+
         /// <summary> Terminate running Tasks. The Tasks will be completed with failureInfo indicating that they were terminated, and will not run again. Enter offline state as soon as Tasks have been terminated. </summary>
         public static BatchNodeDisableSchedulingOption Terminate { get; } = new BatchNodeDisableSchedulingOption(TerminateValue);
+
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Enter offline state when all Tasks have completed. </summary>
         public static BatchNodeDisableSchedulingOption TaskCompletion { get; } = new BatchNodeDisableSchedulingOption(TaskCompletionValue);
+
         /// <summary> Determines if two <see cref="BatchNodeDisableSchedulingOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchNodeDisableSchedulingOption left, BatchNodeDisableSchedulingOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchNodeDisableSchedulingOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchNodeDisableSchedulingOption left, BatchNodeDisableSchedulingOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchNodeDisableSchedulingOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchNodeDisableSchedulingOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchNodeDisableSchedulingOption(string value) => new BatchNodeDisableSchedulingOption(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchNodeDisableSchedulingOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchNodeDisableSchedulingOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

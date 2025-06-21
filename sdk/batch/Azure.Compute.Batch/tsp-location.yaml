@@ -1,3 +1,4 @@
 directory: specification/batch/Azure.Batch
-commit: dfa17e7ea91cf080769d7df32c349a35ccaa49ad
+commit: 6bbc511b0a42f9ca9992ef16146a12f5cc2a171a
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json

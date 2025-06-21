@@ -14,41 +14,58 @@ namespace Azure.Compute.Batch
     public readonly partial struct StorageAccountType : IEquatable<StorageAccountType>
     {
         private readonly string _value;
+        /// <summary> The data disk should use standard locally redundant storage. </summary>
+        private const string StandardLRSValue = "standard_lrs";
+        /// <summary> The data disk should use premium locally redundant storage. </summary>
+        private const string PremiumLRSValue = "premium_lrs";
+        /// <summary> The data disk / OS disk should use standard SSD locally redundant storage. </summary>
+        private const string StandardSSDLRSValue = "standardssd_lrs";
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageAccountType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardLRSValue = "standard_lrs";
-        private const string PremiumLRSValue = "premium_lrs";
-        private const string StandardSSDLRSValue = "standardssd_lrs";
+            _value = value;
+        }
 
         /// <summary> The data disk should use standard locally redundant storage. </summary>
         public static StorageAccountType StandardLRS { get; } = new StorageAccountType(StandardLRSValue);
+
         /// <summary> The data disk should use premium locally redundant storage. </summary>
         public static StorageAccountType PremiumLRS { get; } = new StorageAccountType(PremiumLRSValue);
+
         /// <summary> The data disk / OS disk should use standard SSD locally redundant storage. </summary>
         public static StorageAccountType StandardSSDLRS { get; } = new StorageAccountType(StandardSSDLRSValue);
+
         /// <summary> Determines if two <see cref="StorageAccountType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageAccountType left, StorageAccountType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageAccountType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageAccountType left, StorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageAccountType(string value) => new StorageAccountType(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageAccountType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

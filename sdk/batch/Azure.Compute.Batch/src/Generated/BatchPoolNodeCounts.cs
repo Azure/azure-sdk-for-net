@@ -13,45 +13,13 @@ namespace Azure.Compute.Batch
     /// <summary> The number of Compute Nodes in each state for a Pool. </summary>
     public partial class BatchPoolNodeCounts
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchPoolNodeCounts"/>. </summary>
         /// <param name="poolId"> The ID of the Pool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
         internal BatchPoolNodeCounts(string poolId)
         {
-            Argument.AssertNotNull(poolId, nameof(poolId));
-
             PoolId = poolId;
         }
 
@@ -59,24 +27,21 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool. </param>
         /// <param name="dedicated"> The number of dedicated Compute Nodes in each state. </param>
         /// <param name="lowPriority"> The number of Spot/Low-priority Compute Nodes in each state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolNodeCounts(string poolId, BatchNodeCounts dedicated, BatchNodeCounts lowPriority, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchPoolNodeCounts(string poolId, BatchNodeCounts dedicated, BatchNodeCounts lowPriority, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PoolId = poolId;
             Dedicated = dedicated;
             LowPriority = lowPriority;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchPoolNodeCounts"/> for deserialization. </summary>
-        internal BatchPoolNodeCounts()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the Pool. </summary>
         public string PoolId { get; }
+
         /// <summary> The number of dedicated Compute Nodes in each state. </summary>
         public BatchNodeCounts Dedicated { get; }
+
         /// <summary> The number of Spot/Low-priority Compute Nodes in each state. </summary>
         public BatchNodeCounts LowPriority { get; }
     }

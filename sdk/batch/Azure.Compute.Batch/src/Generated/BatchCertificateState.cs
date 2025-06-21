@@ -14,41 +14,58 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchCertificateState : IEquatable<BatchCertificateState>
     {
         private readonly string _value;
+        /// <summary> The Certificate is available for use in Pools. </summary>
+        private const string ActiveValue = "active";
+        /// <summary> The user has requested that the Certificate be deleted, but the delete operation has not yet completed. You may not reference the Certificate when creating or updating Pools. </summary>
+        private const string DeletingValue = "deleting";
+        /// <summary> The user requested that the Certificate be deleted, but there are Pools that still have references to the Certificate, or it is still installed on one or more Nodes. (The latter can occur if the Certificate has been removed from the Pool, but the Compute Node has not yet restarted. Compute Nodes refresh their Certificates only when they restart.) You may use the cancel Certificate delete operation to cancel the delete, or the delete Certificate operation to retry the delete. </summary>
+        private const string DeleteFailedValue = "deletefailed";
 
         /// <summary> Initializes a new instance of <see cref="BatchCertificateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchCertificateState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "active";
-        private const string DeletingValue = "deleting";
-        private const string DeleteFailedValue = "deletefailed";
+            _value = value;
+        }
 
         /// <summary> The Certificate is available for use in Pools. </summary>
         public static BatchCertificateState Active { get; } = new BatchCertificateState(ActiveValue);
+
         /// <summary> The user has requested that the Certificate be deleted, but the delete operation has not yet completed. You may not reference the Certificate when creating or updating Pools. </summary>
         public static BatchCertificateState Deleting { get; } = new BatchCertificateState(DeletingValue);
+
         /// <summary> The user requested that the Certificate be deleted, but there are Pools that still have references to the Certificate, or it is still installed on one or more Nodes. (The latter can occur if the Certificate has been removed from the Pool, but the Compute Node has not yet restarted. Compute Nodes refresh their Certificates only when they restart.) You may use the cancel Certificate delete operation to cancel the delete, or the delete Certificate operation to retry the delete. </summary>
         public static BatchCertificateState DeleteFailed { get; } = new BatchCertificateState(DeleteFailedValue);
+
         /// <summary> Determines if two <see cref="BatchCertificateState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchCertificateState left, BatchCertificateState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchCertificateState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchCertificateState left, BatchCertificateState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchCertificateState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchCertificateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchCertificateState(string value) => new BatchCertificateState(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchCertificateState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchCertificateState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

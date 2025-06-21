@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchPoolLifetimeOption : IEquatable<BatchPoolLifetimeOption>
     {
         private readonly string _value;
+        /// <summary> The Pool exists for the lifetime of the Job Schedule. The Batch Service creates the Pool when it creates the first Job on the schedule. You may apply this option only to Job Schedules, not to Jobs. </summary>
+        private const string JobScheduleValue = "jobschedule";
+        /// <summary> The Pool exists for the lifetime of the Job to which it is dedicated. The Batch service creates the Pool when it creates the Job. If the 'job' option is applied to a Job Schedule, the Batch service creates a new auto Pool for every Job created on the schedule. </summary>
+        private const string JobValue = "job";
 
         /// <summary> Initializes a new instance of <see cref="BatchPoolLifetimeOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchPoolLifetimeOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string JobScheduleValue = "jobschedule";
-        private const string JobValue = "job";
+            _value = value;
+        }
 
         /// <summary> The Pool exists for the lifetime of the Job Schedule. The Batch Service creates the Pool when it creates the first Job on the schedule. You may apply this option only to Job Schedules, not to Jobs. </summary>
         public static BatchPoolLifetimeOption JobSchedule { get; } = new BatchPoolLifetimeOption(JobScheduleValue);
+
         /// <summary> The Pool exists for the lifetime of the Job to which it is dedicated. The Batch service creates the Pool when it creates the Job. If the 'job' option is applied to a Job Schedule, the Batch service creates a new auto Pool for every Job created on the schedule. </summary>
         public static BatchPoolLifetimeOption Job { get; } = new BatchPoolLifetimeOption(JobValue);
+
         /// <summary> Determines if two <see cref="BatchPoolLifetimeOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchPoolLifetimeOption left, BatchPoolLifetimeOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchPoolLifetimeOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchPoolLifetimeOption left, BatchPoolLifetimeOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchPoolLifetimeOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchPoolLifetimeOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchPoolLifetimeOption(string value) => new BatchPoolLifetimeOption(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchPoolLifetimeOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchPoolLifetimeOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

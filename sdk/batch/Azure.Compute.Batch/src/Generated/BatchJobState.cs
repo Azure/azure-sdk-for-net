@@ -14,53 +14,78 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchJobState : IEquatable<BatchJobState>
     {
         private readonly string _value;
+        /// <summary> The Job is available to have Tasks scheduled. </summary>
+        private const string ActiveValue = "active";
+        /// <summary> A user has requested that the Job be disabled, but the disable operation is still in progress (for example, waiting for Tasks to terminate). </summary>
+        private const string DisablingValue = "disabling";
+        /// <summary> A user has disabled the Job. No Tasks are running, and no new Tasks will be scheduled. </summary>
+        private const string DisabledValue = "disabled";
+        /// <summary> A user has requested that the Job be enabled, but the enable operation is still in progress. </summary>
+        private const string EnablingValue = "enabling";
+        /// <summary> The Job is about to complete, either because a Job Manager Task has completed or because the user has terminated the Job, but the terminate operation is still in progress (for example, because Job Release Tasks are running). </summary>
+        private const string TerminatingValue = "terminating";
+        /// <summary> All Tasks have terminated, and the system will not accept any more Tasks or any further changes to the Job. </summary>
+        private const string CompletedValue = "completed";
+        /// <summary> A user has requested that the Job be deleted, but the delete operation is still in progress (for example, because the system is still terminating running Tasks). </summary>
+        private const string DeletingValue = "deleting";
 
         /// <summary> Initializes a new instance of <see cref="BatchJobState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchJobState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "active";
-        private const string DisablingValue = "disabling";
-        private const string DisabledValue = "disabled";
-        private const string EnablingValue = "enabling";
-        private const string TerminatingValue = "terminating";
-        private const string CompletedValue = "completed";
-        private const string DeletingValue = "deleting";
+            _value = value;
+        }
 
         /// <summary> The Job is available to have Tasks scheduled. </summary>
         public static BatchJobState Active { get; } = new BatchJobState(ActiveValue);
+
         /// <summary> A user has requested that the Job be disabled, but the disable operation is still in progress (for example, waiting for Tasks to terminate). </summary>
         public static BatchJobState Disabling { get; } = new BatchJobState(DisablingValue);
+
         /// <summary> A user has disabled the Job. No Tasks are running, and no new Tasks will be scheduled. </summary>
         public static BatchJobState Disabled { get; } = new BatchJobState(DisabledValue);
+
         /// <summary> A user has requested that the Job be enabled, but the enable operation is still in progress. </summary>
         public static BatchJobState Enabling { get; } = new BatchJobState(EnablingValue);
+
         /// <summary> The Job is about to complete, either because a Job Manager Task has completed or because the user has terminated the Job, but the terminate operation is still in progress (for example, because Job Release Tasks are running). </summary>
         public static BatchJobState Terminating { get; } = new BatchJobState(TerminatingValue);
+
         /// <summary> All Tasks have terminated, and the system will not accept any more Tasks or any further changes to the Job. </summary>
         public static BatchJobState Completed { get; } = new BatchJobState(CompletedValue);
+
         /// <summary> A user has requested that the Job be deleted, but the delete operation is still in progress (for example, because the system is still terminating running Tasks). </summary>
         public static BatchJobState Deleting { get; } = new BatchJobState(DeletingValue);
+
         /// <summary> Determines if two <see cref="BatchJobState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchJobState left, BatchJobState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchJobState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchJobState left, BatchJobState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchJobState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchJobState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchJobState(string value) => new BatchJobState(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchJobState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchJobState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -14,41 +14,58 @@ namespace Azure.Compute.Batch
     public readonly partial struct AllocationState : IEquatable<AllocationState>
     {
         private readonly string _value;
+        /// <summary> The Pool is not resizing. There are no changes to the number of Compute Nodes in the Pool in progress. A Pool enters this state when it is created and when no operations are being performed on the Pool to change the number of Compute Nodes. </summary>
+        private const string SteadyValue = "steady";
+        /// <summary> The Pool is resizing; that is, Compute Nodes are being added to or removed from the Pool. </summary>
+        private const string ResizingValue = "resizing";
+        /// <summary> The Pool was resizing, but the user has requested that the resize be stopped, but the stop request has not yet been completed. </summary>
+        private const string StoppingValue = "stopping";
 
         /// <summary> Initializes a new instance of <see cref="AllocationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AllocationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SteadyValue = "steady";
-        private const string ResizingValue = "resizing";
-        private const string StoppingValue = "stopping";
+            _value = value;
+        }
 
         /// <summary> The Pool is not resizing. There are no changes to the number of Compute Nodes in the Pool in progress. A Pool enters this state when it is created and when no operations are being performed on the Pool to change the number of Compute Nodes. </summary>
         public static AllocationState Steady { get; } = new AllocationState(SteadyValue);
+
         /// <summary> The Pool is resizing; that is, Compute Nodes are being added to or removed from the Pool. </summary>
         public static AllocationState Resizing { get; } = new AllocationState(ResizingValue);
+
         /// <summary> The Pool was resizing, but the user has requested that the resize be stopped, but the stop request has not yet been completed. </summary>
         public static AllocationState Stopping { get; } = new AllocationState(StoppingValue);
+
         /// <summary> Determines if two <see cref="AllocationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AllocationState left, AllocationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AllocationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AllocationState left, AllocationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AllocationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AllocationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AllocationState(string value) => new AllocationState(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AllocationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AllocationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -14,35 +14,48 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchAccessScope : IEquatable<BatchAccessScope>
     {
         private readonly string _value;
+        /// <summary> Grants access to perform all operations on the Job containing the Task. </summary>
+        private const string JobValue = "job";
 
         /// <summary> Initializes a new instance of <see cref="BatchAccessScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchAccessScope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string JobValue = "job";
+            _value = value;
+        }
 
         /// <summary> Grants access to perform all operations on the Job containing the Task. </summary>
         public static BatchAccessScope Job { get; } = new BatchAccessScope(JobValue);
+
         /// <summary> Determines if two <see cref="BatchAccessScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchAccessScope left, BatchAccessScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchAccessScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchAccessScope left, BatchAccessScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchAccessScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchAccessScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchAccessScope(string value) => new BatchAccessScope(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchAccessScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchAccessScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

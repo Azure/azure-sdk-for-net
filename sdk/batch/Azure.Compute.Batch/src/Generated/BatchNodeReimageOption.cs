@@ -14,44 +14,63 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchNodeReimageOption : IEquatable<BatchNodeReimageOption>
     {
         private readonly string _value;
+        /// <summary> Terminate running Task processes and requeue the Tasks. The Tasks will run again when a Compute Node is available. Reimage the Compute Node as soon as Tasks have been terminated. </summary>
+        private const string RequeueValue = "requeue";
+        /// <summary> Terminate running Tasks. The Tasks will be completed with failureInfo indicating that they were terminated, and will not run again. Reimage the Compute Node as soon as Tasks have been terminated. </summary>
+        private const string TerminateValue = "terminate";
+        /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Reimage the Compute Node when all Tasks have completed. </summary>
+        private const string TaskCompletionValue = "taskcompletion";
+        /// <summary> Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Reimage the Compute Node when all Task retention periods have expired. </summary>
+        private const string RetainedDataValue = "retaineddata";
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeReimageOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchNodeReimageOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RequeueValue = "requeue";
-        private const string TerminateValue = "terminate";
-        private const string TaskCompletionValue = "taskcompletion";
-        private const string RetainedDataValue = "retaineddata";
+            _value = value;
+        }
 
         /// <summary> Terminate running Task processes and requeue the Tasks. The Tasks will run again when a Compute Node is available. Reimage the Compute Node as soon as Tasks have been terminated. </summary>
         public static BatchNodeReimageOption Requeue { get; } = new BatchNodeReimageOption(RequeueValue);
+
         /// <summary> Terminate running Tasks. The Tasks will be completed with failureInfo indicating that they were terminated, and will not run again. Reimage the Compute Node as soon as Tasks have been terminated. </summary>
         public static BatchNodeReimageOption Terminate { get; } = new BatchNodeReimageOption(TerminateValue);
+
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Reimage the Compute Node when all Tasks have completed. </summary>
         public static BatchNodeReimageOption TaskCompletion { get; } = new BatchNodeReimageOption(TaskCompletionValue);
+
         /// <summary> Allow currently running Tasks to complete, then wait for all Task data retention periods to expire. Schedule no new Tasks while waiting. Reimage the Compute Node when all Task retention periods have expired. </summary>
         public static BatchNodeReimageOption RetainedData { get; } = new BatchNodeReimageOption(RetainedDataValue);
+
         /// <summary> Determines if two <see cref="BatchNodeReimageOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchNodeReimageOption left, BatchNodeReimageOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchNodeReimageOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchNodeReimageOption left, BatchNodeReimageOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchNodeReimageOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchNodeReimageOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchNodeReimageOption(string value) => new BatchNodeReimageOption(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchNodeReimageOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchNodeReimageOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

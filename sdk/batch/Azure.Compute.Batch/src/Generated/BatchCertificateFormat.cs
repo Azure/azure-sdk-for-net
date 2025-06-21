@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchCertificateFormat : IEquatable<BatchCertificateFormat>
     {
         private readonly string _value;
+        /// <summary> The Certificate is a PFX (PKCS#12) formatted Certificate or Certificate chain. </summary>
+        private const string PfxValue = "pfx";
+        /// <summary> The Certificate is a base64-encoded X.509 Certificate. </summary>
+        private const string CerValue = "cer";
 
         /// <summary> Initializes a new instance of <see cref="BatchCertificateFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchCertificateFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PfxValue = "pfx";
-        private const string CerValue = "cer";
+            _value = value;
+        }
 
         /// <summary> The Certificate is a PFX (PKCS#12) formatted Certificate or Certificate chain. </summary>
         public static BatchCertificateFormat Pfx { get; } = new BatchCertificateFormat(PfxValue);
+
         /// <summary> The Certificate is a base64-encoded X.509 Certificate. </summary>
         public static BatchCertificateFormat Cer { get; } = new BatchCertificateFormat(CerValue);
+
         /// <summary> Determines if two <see cref="BatchCertificateFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchCertificateFormat left, BatchCertificateFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchCertificateFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchCertificateFormat left, BatchCertificateFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchCertificateFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchCertificateFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchCertificateFormat(string value) => new BatchCertificateFormat(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchCertificateFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchCertificateFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

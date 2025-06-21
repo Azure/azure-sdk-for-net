@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchNodeFillType : IEquatable<BatchNodeFillType>
     {
         private readonly string _value;
+        /// <summary> Tasks should be assigned evenly across all Compute Nodes in the Pool. </summary>
+        private const string SpreadValue = "spread";
+        /// <summary> As many Tasks as possible (taskSlotsPerNode) should be assigned to each Compute Node in the Pool before any Tasks are assigned to the next Compute Node in the Pool. </summary>
+        private const string PackValue = "pack";
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeFillType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchNodeFillType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SpreadValue = "spread";
-        private const string PackValue = "pack";
+            _value = value;
+        }
 
         /// <summary> Tasks should be assigned evenly across all Compute Nodes in the Pool. </summary>
         public static BatchNodeFillType Spread { get; } = new BatchNodeFillType(SpreadValue);
+
         /// <summary> As many Tasks as possible (taskSlotsPerNode) should be assigned to each Compute Node in the Pool before any Tasks are assigned to the next Compute Node in the Pool. </summary>
         public static BatchNodeFillType Pack { get; } = new BatchNodeFillType(PackValue);
+
         /// <summary> Determines if two <see cref="BatchNodeFillType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchNodeFillType left, BatchNodeFillType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchNodeFillType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchNodeFillType left, BatchNodeFillType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchNodeFillType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchNodeFillType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchNodeFillType(string value) => new BatchNodeFillType(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchNodeFillType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchNodeFillType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

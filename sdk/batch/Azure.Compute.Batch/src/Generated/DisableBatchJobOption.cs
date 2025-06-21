@@ -14,41 +14,58 @@ namespace Azure.Compute.Batch
     public readonly partial struct DisableBatchJobOption : IEquatable<DisableBatchJobOption>
     {
         private readonly string _value;
+        /// <summary> Terminate running Tasks and requeue them. The Tasks will run again when the Job is enabled. </summary>
+        private const string RequeueValue = "requeue";
+        /// <summary> Terminate running Tasks. The Tasks will be completed with failureInfo indicating that they were terminated, and will not run again. </summary>
+        private const string TerminateValue = "terminate";
+        /// <summary> Allow currently running Tasks to complete. </summary>
+        private const string WaitValue = "wait";
 
         /// <summary> Initializes a new instance of <see cref="DisableBatchJobOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DisableBatchJobOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RequeueValue = "requeue";
-        private const string TerminateValue = "terminate";
-        private const string WaitValue = "wait";
+            _value = value;
+        }
 
         /// <summary> Terminate running Tasks and requeue them. The Tasks will run again when the Job is enabled. </summary>
         public static DisableBatchJobOption Requeue { get; } = new DisableBatchJobOption(RequeueValue);
+
         /// <summary> Terminate running Tasks. The Tasks will be completed with failureInfo indicating that they were terminated, and will not run again. </summary>
         public static DisableBatchJobOption Terminate { get; } = new DisableBatchJobOption(TerminateValue);
+
         /// <summary> Allow currently running Tasks to complete. </summary>
         public static DisableBatchJobOption Wait { get; } = new DisableBatchJobOption(WaitValue);
+
         /// <summary> Determines if two <see cref="DisableBatchJobOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DisableBatchJobOption left, DisableBatchJobOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DisableBatchJobOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DisableBatchJobOption left, DisableBatchJobOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DisableBatchJobOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DisableBatchJobOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DisableBatchJobOption(string value) => new DisableBatchJobOption(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DisableBatchJobOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DisableBatchJobOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

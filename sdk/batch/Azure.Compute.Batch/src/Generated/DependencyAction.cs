@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct DependencyAction : IEquatable<DependencyAction>
     {
         private readonly string _value;
+        /// <summary> Satisfy tasks waiting on this task; once all dependencies are satisfied, the task will be scheduled to run. </summary>
+        private const string SatisfyValue = "satisfy";
+        /// <summary> Blocks tasks waiting on this task, preventing them from being scheduled. </summary>
+        private const string BlockValue = "block";
 
         /// <summary> Initializes a new instance of <see cref="DependencyAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DependencyAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SatisfyValue = "satisfy";
-        private const string BlockValue = "block";
+            _value = value;
+        }
 
         /// <summary> Satisfy tasks waiting on this task; once all dependencies are satisfied, the task will be scheduled to run. </summary>
         public static DependencyAction Satisfy { get; } = new DependencyAction(SatisfyValue);
+
         /// <summary> Blocks tasks waiting on this task, preventing them from being scheduled. </summary>
         public static DependencyAction Block { get; } = new DependencyAction(BlockValue);
+
         /// <summary> Determines if two <see cref="DependencyAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DependencyAction left, DependencyAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DependencyAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DependencyAction left, DependencyAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DependencyAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DependencyAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DependencyAction(string value) => new DependencyAction(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DependencyAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DependencyAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

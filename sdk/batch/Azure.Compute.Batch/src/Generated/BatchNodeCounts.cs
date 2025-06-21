@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> The number of Compute Nodes in each Compute Node state. </summary>
     public partial class BatchNodeCounts
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeCounts"/>. </summary>
         /// <param name="creating"> The number of Compute Nodes in the creating state. </param>
@@ -102,8 +73,8 @@ namespace Azure.Compute.Batch
         /// <param name="deallocating"> The number of Compute Nodes in the deallocating state. </param>
         /// <param name="total"> The total number of Compute Nodes. </param>
         /// <param name="upgradingOs"> The number of Compute Nodes in the upgradingOS state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int deallocated, int deallocating, int total, int upgradingOs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchNodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int deallocated, int deallocating, int total, int upgradingOs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Creating = creating;
             Idle = idle;
@@ -122,46 +93,57 @@ namespace Azure.Compute.Batch
             Deallocating = deallocating;
             Total = total;
             UpgradingOs = upgradingOs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchNodeCounts"/> for deserialization. </summary>
-        internal BatchNodeCounts()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The number of Compute Nodes in the creating state. </summary>
         public int Creating { get; }
+
         /// <summary> The number of Compute Nodes in the idle state. </summary>
         public int Idle { get; }
+
         /// <summary> The number of Compute Nodes in the offline state. </summary>
         public int Offline { get; }
+
         /// <summary> The number of Compute Nodes in the preempted state. </summary>
         public int Preempted { get; }
+
         /// <summary> The count of Compute Nodes in the rebooting state. </summary>
         public int Rebooting { get; }
+
         /// <summary> The number of Compute Nodes in the reimaging state. </summary>
         public int Reimaging { get; }
+
         /// <summary> The number of Compute Nodes in the running state. </summary>
         public int Running { get; }
+
         /// <summary> The number of Compute Nodes in the starting state. </summary>
         public int Starting { get; }
+
         /// <summary> The number of Compute Nodes in the startTaskFailed state. </summary>
         public int StartTaskFailed { get; }
+
         /// <summary> The number of Compute Nodes in the leavingPool state. </summary>
         public int LeavingPool { get; }
+
         /// <summary> The number of Compute Nodes in the unknown state. </summary>
         public int Unknown { get; }
+
         /// <summary> The number of Compute Nodes in the unusable state. </summary>
         public int Unusable { get; }
+
         /// <summary> The number of Compute Nodes in the waitingForStartTask state. </summary>
         public int WaitingForStartTask { get; }
+
         /// <summary> The number of Compute Nodes in the deallocated state. </summary>
         public int Deallocated { get; }
+
         /// <summary> The number of Compute Nodes in the deallocating state. </summary>
         public int Deallocating { get; }
+
         /// <summary> The total number of Compute Nodes. </summary>
         public int Total { get; }
+
         /// <summary> The number of Compute Nodes in the upgradingOS state. </summary>
         public int UpgradingOs { get; }
     }

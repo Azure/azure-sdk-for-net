@@ -14,37 +14,8 @@ namespace Azure.Compute.Batch
     /// <summary> Parameters for removing nodes from an Azure Batch Pool. </summary>
     public partial class BatchNodeRemoveOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeRemoveOptions"/>. </summary>
         /// <param name="nodeIds"> A list containing the IDs of the Compute Nodes to be removed from the specified Pool. A maximum of 100 nodes may be removed per request. </param>
@@ -60,24 +31,21 @@ namespace Azure.Compute.Batch
         /// <param name="nodeIds"> A list containing the IDs of the Compute Nodes to be removed from the specified Pool. A maximum of 100 nodes may be removed per request. </param>
         /// <param name="resizeTimeout"> The timeout for removal of Compute Nodes to the Pool. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </param>
         /// <param name="nodeDeallocationOption"> Determines what to do with a Compute Node and its running task(s) after it has been selected for deallocation. The default value is requeue. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeRemoveOptions(IList<string> nodeIds, TimeSpan? resizeTimeout, BatchNodeDeallocationOption? nodeDeallocationOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchNodeRemoveOptions(IList<string> nodeIds, TimeSpan? resizeTimeout, BatchNodeDeallocationOption? nodeDeallocationOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NodeIds = nodeIds;
             ResizeTimeout = resizeTimeout;
             NodeDeallocationOption = nodeDeallocationOption;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchNodeRemoveOptions"/> for deserialization. </summary>
-        internal BatchNodeRemoveOptions()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list containing the IDs of the Compute Nodes to be removed from the specified Pool. A maximum of 100 nodes may be removed per request. </summary>
         public IList<string> NodeIds { get; }
+
         /// <summary> The timeout for removal of Compute Nodes to the Pool. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). </summary>
         public TimeSpan? ResizeTimeout { get; set; }
+
         /// <summary> Determines what to do with a Compute Node and its running task(s) after it has been selected for deallocation. The default value is requeue. </summary>
         public BatchNodeDeallocationOption? NodeDeallocationOption { get; set; }
     }
