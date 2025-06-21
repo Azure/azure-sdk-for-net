@@ -317,4 +317,15 @@ public static class BicepFunction
     /// <returns>An interpolated string.</returns>
     public static BicepValue<string> Interpolate(BicepInterpolatedStringHandler handler) =>
         handler.Build();
+
+    /// <summary>
+    /// Joins a string array into a single string, separated using a delimiter.
+    /// </summary>
+    /// <param name="inputArray">An array of strings to join.</param>
+    /// <param name="delimiter">The delimiter to use for splitting the string.</param>
+    /// <returns></returns>
+    public static BicepValue<string> Join(BicepList<string> inputArray, BicepValue<string> delimiter)
+    {
+        return BicepSyntax.Call("join", inputArray.Compile(), delimiter.Compile());
+    }
 }
