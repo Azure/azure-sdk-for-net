@@ -1,4 +1,4 @@
-# Sample file search with agent in Azure.AI.Agents.Persistent.
+# Sample file search with agent and streaming in Azure.AI.Agents.Persistent.
 
 In this example we will create the local file, upload it to the newly created `VectorStore`, which will be used in the file search. In this example we will stream the result.
 
