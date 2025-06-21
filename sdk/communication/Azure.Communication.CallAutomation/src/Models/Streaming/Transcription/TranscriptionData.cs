@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
         internal TranscriptionData(string text, string format, double confidence, long offset, long duration, IEnumerable<WordDataInternal> words, string participantRawID, TranscriptionResultState resultState)
         {
             Text = text;
-            Format = ConvertToTextFormatEnum(format);
+            Format = format;
             Confidence = confidence;
             Offset = TimeSpan.FromTicks(offset);
             Duration = TimeSpan.FromTicks(duration);
@@ -31,51 +31,43 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The display form of the recognized word
         /// </summary>
-        public string Text { get; set; }
+        public string Text { get; }
 
         /// <summary>
         /// The format of text
         /// </summary>
-        public TextFormat Format { get; set; }
+        public string Format { get; }
 
         /// <summary>
         /// Confidence of recognition of the whole phrase, from 0.0 (no confidence) to 1.0 (full confidence)
         /// </summary>
-        public double Confidence { get; set; }
+        public double Confidence { get; }
 
         /// <summary>
         /// The position of this payload
         /// </summary>
 
-        public TimeSpan Offset { get; set; }
+        public TimeSpan Offset { get;}
 
         /// <summary>
         /// Duration in ticks. 1 tick = 100 nanoseconds.
         /// </summary>
-        public TimeSpan Duration { get; set; }
+        public TimeSpan Duration { get; }
 
         /// <summary>
         /// The result for each word of the phrase
         /// </summary>
-        public IEnumerable<WordData> Words { get; set; }
+        public IEnumerable<WordData> Words { get; }
 
         /// <summary>
         /// The identified speaker based on participant raw ID
         /// </summary>
-        public CommunicationIdentifier Participant { get; set; }
+        public CommunicationIdentifier Participant { get; }
 
         /// <summary>
         /// Status of the result of transcription
         /// </summary>
-        public TranscriptionResultState ResultState { get; set; }
-
-        private static TextFormat ConvertToTextFormatEnum(string format)
-        {
-            if (TextFormat.Display.ToString().Equals(format, StringComparison.OrdinalIgnoreCase))
-                return TextFormat.Display;
-            else
-                throw new NotSupportedException(format);
-        }
+        public TranscriptionResultState ResultState { get; }
 
         private static IEnumerable<WordData> ConvertToWordData(IEnumerable<WordDataInternal> wordData)
         {
