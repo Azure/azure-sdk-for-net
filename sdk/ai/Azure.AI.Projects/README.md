@@ -177,10 +177,17 @@ Your Azure AI Foundry project may have one or more AI models deployed that suppo
 The code below assumes `ModelDeploymentName` (a string) is defined. It's the deployment name of an AI model in your Foundry Project, or a connected Azure OpenAI resource. As shown in the "Models + endpoints" tab, under the "Name" column.
 
 ```C# Snippet:AI_Projects_ChatClientSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
+var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
+
+AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+
+var credential = new DefaultAzureCredential();
+BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
+
+ChatCompletionsClient chatClient = new ChatCompletionsClient(new Uri(inferenceEndpoint), credential, clientOptions);
 
 var requestOptions = new ChatCompletionsOptions()
 {

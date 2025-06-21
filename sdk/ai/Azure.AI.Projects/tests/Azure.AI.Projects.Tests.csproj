@@ -13,7 +13,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Azure.AI.Agents.Persistent" VersionOverride="1.0.0"/>
+    <PackageReference Include="Azure.AI.Agents.Persistent" VersionOverride="1.0.0" />
     <PackageReference Include="Azure.AI.OpenAI" VersionOverride="2.2.0-beta.4" />
     <PackageReference Include="Azure.AI.Inference" />
     <PackageReference Include="NUnit" />

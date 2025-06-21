@@ -9,6 +9,8 @@
   * In Datasets methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `pendingUploadRequest`
 
 
+* Removing `GetChatCompletionsClient`, `GetEmbeddingsClient`, and `GetImageEmbeddingsClient` methods from `AIProjectClient`. The Inference client should be used directly instead.
+
 ### Bugs Fixed
 
 ### Other Changes
