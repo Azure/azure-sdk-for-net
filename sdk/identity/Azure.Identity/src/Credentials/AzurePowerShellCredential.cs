@@ -210,7 +210,8 @@ namespace Azure.Identity
 
         private static void ValidateResult(string output)
         {
-            if (output.IndexOf(@"<Property Name=""Token"" Type=""System.String"">", StringComparison.OrdinalIgnoreCase) < 0)
+            // Check for Token property in the XML output, regardless of the property type, to handle both legacy and new secure string format.
+            if (output.IndexOf(@"<Property Name=""Token""", StringComparison.OrdinalIgnoreCase) < 0)
             {
                 throw new CredentialUnavailableException("PowerShell did not return a valid response.");
             }
@@ -261,7 +262,12 @@ if ($tenantId.Length -gt 0) {{
     $params['TenantId'] = '{tenantId}'
 }}
 
-$useSecureString = $m.Version -ge [version]'2.17.0'
+# Check if Az.Accounts version is 5.0.0 or higher (Az 14.0.0+), which uses PSSecureAccessToken by default
+$isAz14NewFormat = $m.Version -ge [version]'5.0.0'
+# Check if we're using Az.Accounts 2.17.0+ but below 5.0.0, which supports -AsSecureString parameter
+$useSecureString = ($m.Version -ge [version]'2.17.0' -and $m.Version -lt [version]'5.0.0')
+
+# For versions 2.17.0+ but below 5.0.0, explicitly request secure string
 if ($useSecureString) {{
     $params['AsSecureString'] = $true
 }}
@@ -269,8 +275,25 @@ if ($useSecureString) {{
 $token = Get-AzAccessToken @params
 
 $customToken = New-Object -TypeName psobject
-if ($useSecureString) {{
-    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value (ConvertFrom-SecureString -AsPlainText $token.Token)
+
+if ($isAz14NewFormat) {{
+    # Convert SecureString to plaintext for the SDK to use
+    if ($PSVersionTable.PSVersion.Major -ge 7) {{
+        $plainToken = ConvertFrom-SecureString -SecureString $token.Token -AsPlainText
+    }} else {{
+        # Windows PowerShell doesn't support -AsPlainText, use Marshal method
+        $plainToken = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.Token))
+    }}
+    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $plainToken
+}} elseif ($useSecureString) {{
+    # Versions that support -AsSecureString parameter
+    if ($PSVersionTable.PSVersion.Major -ge 7) {{
+        $customToken | Add-Member -MemberType NoteProperty -Name Token -Value (ConvertFrom-SecureString -AsPlainText $token.Token)
+    }} else {{
+        # Windows PowerShell doesn't support -AsPlainText, use Marshal method
+        $plainToken = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.Token))
+        $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $plainToken
+    }}
 }} else {{
     $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
 }}

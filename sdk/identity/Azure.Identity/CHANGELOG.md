@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support in `AzurePowerShellCredential` for the Az.Accounts 5.0.0+ (Az 14.0.0+) breaking change where `Get-AzAccessToken` returns `PSSecureAccessToken` with a `SecureString` Token property instead of plaintext.
+
 ### Breaking Changes
 
 ### Bugs Fixed
