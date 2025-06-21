@@ -107,7 +107,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             InScope = true,
         });
 
-        IReadOnlyList<ChatDataSource> sourcesFromOptions = options.GetDataSources();
+        IReadOnlyList<ChatDataSource> sourcesFromOptions = options.DataSources;
         Assert.That(sourcesFromOptions, Has.Count.EqualTo(1));
         Assert.That(sourcesFromOptions[0], Is.InstanceOf<ElasticsearchChatDataSource>());
         Assert.That(((ElasticsearchChatDataSource)sourcesFromOptions[0]).IndexName, Is.EqualTo("my-index-name"));
