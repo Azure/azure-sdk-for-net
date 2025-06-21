@@ -5,27 +5,34 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration
+namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> The settings list result. </summary>
-    public partial class GetSettingsResult
+    internal partial class GetSettingsResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="GetSettingsResult"/>. </summary>
         internal GetSettingsResult()
         {
-            Settings = new ChangeTrackingList<KeyVaultSetting>();
+            Settings = new ChangeTrackingList<Setting>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GetSettingsResult"/>. </summary>
         /// <param name="settings"> A response message containing a list of account settings with their associated value. </param>
-        internal GetSettingsResult(IReadOnlyList<KeyVaultSetting> settings)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GetSettingsResult(IReadOnlyList<Setting> settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Settings = settings;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A response message containing a list of account settings with their associated value. </summary>
-        public IReadOnlyList<KeyVaultSetting> Settings { get; }
+        public IReadOnlyList<Setting> Settings { get; }
     }
 }
