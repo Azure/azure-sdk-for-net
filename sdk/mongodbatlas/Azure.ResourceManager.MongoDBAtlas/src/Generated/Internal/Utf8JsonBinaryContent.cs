@@ -13,32 +13,38 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoDBAtlas
 {
-    internal class Utf8JsonRequestContent : RequestContent
+    internal partial class Utf8JsonBinaryContent : RequestContent
     {
         private readonly MemoryStream _stream;
         private readonly RequestContent _content;
 
-        public Utf8JsonRequestContent()
+        public Utf8JsonBinaryContent()
         {
             _stream = new MemoryStream();
             _content = Create(_stream);
             JsonWriter = new Utf8JsonWriter(_stream);
         }
 
+        /// <summary> Gets the JsonWriter. </summary>
         public Utf8JsonWriter JsonWriter { get; }
 
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
         {
             await JsonWriter.FlushAsync().ConfigureAwait(false);
             await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
         {
             JsonWriter.Flush();
             _content.WriteTo(stream, cancellationToken);
         }
 
+        /// <param name="length"></param>
         public override bool TryComputeLength(out long length)
         {
             length = JsonWriter.BytesCommitted + JsonWriter.BytesPending;
