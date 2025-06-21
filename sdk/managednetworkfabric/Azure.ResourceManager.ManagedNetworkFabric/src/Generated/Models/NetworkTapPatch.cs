@@ -11,32 +11,60 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The NetworkFabric resource definition. </summary>
-    public partial class NetworkTapPatch : NetworkRackPatch
+    public partial class NetworkTapPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetworkTapPatch"/>. </summary>
         public NetworkTapPatch()
         {
-            Destinations = new ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="pollingType"> Polling type. </param>
-        /// <param name="destinations"> List of destination properties to send the filter traffic. </param>
-        internal NetworkTapPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, NetworkTapPollingType? pollingType, IList<NetworkTapPatchableParametersDestinationsItem> destinations) : base(tags, serializedAdditionalRawData)
+        internal NetworkTapPatch(IDictionary<string, string> tags, NetworkTapPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Annotation = annotation;
-            PollingType = pollingType;
-            Destinations = destinations;
+            Tags = tags;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
-        /// <summary> Polling type. </summary>
-        public NetworkTapPollingType? PollingType { get; set; }
-        /// <summary> List of destination properties to send the filter traffic. </summary>
-        public IList<NetworkTapPatchableParametersDestinationsItem> Destinations { get; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> Resource properties. </summary>
+        public NetworkTapPatchProperties Properties { get; set; }
     }
 }

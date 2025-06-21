@@ -27,15 +27,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"ipExtendedCommunityResourceId: {ipExtendedCommunityResourceId}");
 
             // Get the collection of this IpExtendedCommunity
-            NetworkFabricIPExtendedCommunityCollection collection = ResourceGroupResource.GetNetworkFabricIPExtendedCommunities();
+            ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
+            ResourceGroupResource resourceGroup = Client.GetResourceGroupResource(resourceGroupId);
+            NetworkFabricIPExtendedCommunityCollection collection = resourceGroup.GetNetworkFabricIPExtendedCommunities();
 
             TestContext.Out.WriteLine($"IpExtendedCommunityTest started.....");
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricIPExtendedCommunityData data = new NetworkFabricIPExtendedCommunityData(new AzureLocation(TestEnvironment.Location), new IPExtendedCommunityRule[] { new IPExtendedCommunityRule(CommunityActionType.Permit, 4155123341, new string[] { "1234:2345" }) })
+            NetworkFabricIPExtendedCommunityData data = new NetworkFabricIPExtendedCommunityData(
+                new AzureLocation(TestEnvironment.Location),
+                new IPExtendedCommunityProperties(
+                    new IPExtendedCommunityRule[]
+                    {
+                        new IPExtendedCommunityRule(CommunityActionType.Permit, 4155123341, new string[] { "1234:2345" })
+                    }
+                )
+                {
+                    Annotation = "annotation",
+                }
+            )
             {
-                Annotation = "annotation",
                 Tags =
                 {
                     ["keyID"] = "KeyValue",
@@ -57,8 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
             var listByResourceGroup = new List<NetworkFabricIPExtendedCommunityResource>();
-            NetworkFabricIPExtendedCommunityCollection collectionOp = ResourceGroupResource.GetNetworkFabricIPExtendedCommunities();
-            await foreach (NetworkFabricIPExtendedCommunityResource item in collectionOp.GetAllAsync())
+            await foreach (NetworkFabricIPExtendedCommunityResource item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }

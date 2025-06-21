@@ -27,11 +27,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             ResourceIdentifier neighborGroupResourceId = NetworkFabricNeighborGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NeighborGroupName);
             TestContext.Out.WriteLine($"neighborGroupResourceId: {neighborGroupResourceId}");
             TestContext.Out.WriteLine($"NeighborGroup Test started.....");
-            NetworkFabricNeighborGroupCollection collection = ResourceGroupResource.GetNetworkFabricNeighborGroups();
+            ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
+            ResourceGroupResource resourceGroup = Client.GetResourceGroupResource(resourceGroupId);
+            NetworkFabricNeighborGroupCollection collection = resourceGroup.GetNetworkFabricNeighborGroups();
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricNeighborGroupData data = new NetworkFabricNeighborGroupData(new AzureLocation("eastus"))
+            var properties = new NeighborGroupProperties()
             {
                 Annotation = "annotation",
                 Destination = new NeighborGroupDestination()
@@ -42,9 +44,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     },
                     IPv6Addresses =
                     {
-                    "2F::/100"
+                        "2F::/100"
                     },
-                },
+                }
+            };
+
+            NetworkFabricNeighborGroupData data = new NetworkFabricNeighborGroupData(new AzureLocation("eastus"), properties)
+            {
                 Tags =
                 {
                     ["key8107"] = "1234",
@@ -56,31 +62,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             Assert.AreEqual(resourceData.Name, TestEnvironment.NeighborGroupName);
 
             // Update
-            NetworkFabricNeighborGroupPatch patch = new NetworkFabricNeighborGroupPatch()
+            var patchProperties = new NeighborGroupPatchProperties()
             {
                 Annotation = "Updating",
-                Destination = new NeighborGroupDestination()
+                Destination = new NeighborGroupDestinationPatch()
                 {
                     IPv4Addresses =
                     {
-                        IPAddress.Parse("10.10.10.10"),IPAddress.Parse("20.10.10.10"),IPAddress.Parse("30.10.10.10"),IPAddress.Parse("40.10.10.10"),IPAddress.Parse("50.10.10.10"),IPAddress.Parse("60.10.10.10"),IPAddress.Parse("70.10.10.10"),IPAddress.Parse("80.10.10.10"),IPAddress.Parse("90.10.10.10")
+                        "10.10.10.10", "20.10.10.10", "30.10.10.10", "40.10.10.10", "50.10.10.10",
+                        "60.10.10.10", "70.10.10.10", "80.10.10.10", "90.10.10.10"
                     },
                     IPv6Addresses =
-                        {
-                            "2F::/100", "3F::/100"
-                        },
-                },
-                Tags =
-                {
-                    ["key6025"] = "2345",
-                },
+                    {
+                        "2F::/100", "3F::/100"
+                    },
+                }
             };
+
+            NetworkFabricNeighborGroupPatch patch = new NetworkFabricNeighborGroupPatch(
+                new Dictionary<string, string> { ["key6025"] = "2345" }, // tags
+                patchProperties, // NeighborGroupPatchProperties
+                null // serializedAdditionalRawData
+            );
             NetworkFabricNeighborGroupResource networkFabricNeighborGroup = Client.GetNetworkFabricNeighborGroupResource(resourceData.Id);
             TestContext.Out.WriteLine($"PATCH - test started.");
             ArmOperation<NetworkFabricNeighborGroupResource> lroPatch = await networkFabricNeighborGroup.UpdateAsync(WaitUntil.Completed, patch);
             NetworkFabricNeighborGroupResource resultPatch = lroPatch.Value;
             NetworkFabricNeighborGroupData resourcePatchData = resultPatch.Data;
-            Assert.AreEqual(resourcePatchData.Destination.IPv6Addresses.Count, 2);
+            Assert.AreEqual(resourcePatchData.Properties.Destination.IPv6Addresses.Count, 2);
             TestContext.Out.WriteLine($"PATCH - test completed.");
 
             NetworkFabricNeighborGroupResource ntpResource = Client.GetNetworkFabricNeighborGroupResource(neighborGroupResourceId);
