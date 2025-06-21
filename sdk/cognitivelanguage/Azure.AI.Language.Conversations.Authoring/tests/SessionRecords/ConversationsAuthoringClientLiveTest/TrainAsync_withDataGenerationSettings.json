@@ -1,0 +1,54 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/:train?api-version=2025-05-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "497",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250530.1 (.NET 9.0.5; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "modelLabel": "MyModel",
+        "trainingConfigVersion": "2025-05-15-preview-ConvLevel",
+        "trainingMode": "standard",
+        "evaluationOptions": {
+          "kind": "percentage",
+          "trainingSplitPercentage": 80,
+          "testingSplitPercentage": 20
+        },
+        "dataGenerationSettings": {
+          "enableDataGeneration": true,
+          "dataGenerationConnectionInfo": {
+            "kind": "AzureOpenAI",
+            "deploymentName": "gpt-4o",
+            "resourceId": "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai"
+          }
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "bcccddc2-3451-42af-b5da-94b2f6a2a4d2",
+        "Content-Length": "0",
+        "Date": "Fri, 30 May 2025 20:53:26 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/train/jobs/b517f06d-fe36-4838-843d-1cd43002e6bc_638841600000000000?api-version=2025-05-15-preview",
+        "request-id": "bcccddc2-3451-42af-b5da-94b2f6a2a4d2",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "125",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1849595719"
+  }
+}
