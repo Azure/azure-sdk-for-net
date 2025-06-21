@@ -50,7 +50,7 @@ namespace Azure.Communication.Chat
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ChatRetentionPolicy>(this);
+            content.JsonWriter.WriteObjectValue<ChatRetentionPolicyInternal>(this);
             return content;
         }
     }

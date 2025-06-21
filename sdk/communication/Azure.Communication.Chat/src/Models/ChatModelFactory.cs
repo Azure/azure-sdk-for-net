@@ -29,7 +29,6 @@ namespace Azure.Communication.Chat
         /// <param name="editedOn"> The timestamp when the chat message was edited. </param>
         /// <param name="metadata"> Property bag of message metadata key - value pairs. </param>
         /// <returns>A new <see cref="Chat.ChatMessage"/> instance for mocking.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ChatMessage ChatMessage(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn, IReadOnlyDictionary<string, string> metadata)
             => new ChatMessage(id, type, sequenceId, version, content, senderDisplayName, createdOn, senderId, deletedOn, editedOn, metadata);
 
@@ -47,7 +46,6 @@ namespace Azure.Communication.Chat
         /// <param name="deletedOn"> The timestamp when the chat message was deleted. </param>
         /// <param name="editedOn"> The timestamp when the chat message was edited. </param>
         /// <returns>A new <see cref="Chat.ChatMessage"/> instance for mocking.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ChatMessage ChatMessage(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
             => ChatMessage(id, type, sequenceId, version, content, senderDisplayName, createdOn, senderId, deletedOn, editedOn, null);
 
@@ -59,7 +57,6 @@ namespace Azure.Communication.Chat
         /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="lastMessageReceivedOn"> The timestamp when the last message arrived at the server. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <returns>A new <see cref="ChatThreadItem"/> instance for mocking.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ChatThreadItem ChatThreadItem(string id, string topic, DateTimeOffset? deletedOn, DateTimeOffset? lastMessageReceivedOn)
             => new ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn);
 
@@ -70,7 +67,6 @@ namespace Azure.Communication.Chat
         /// <param name="chatMessageId"> Id for the chat message that has been read. </param>
         /// <param name="readOn"> Read receipt timestamp. </param>
         /// <returns>A new <see cref="ChatMessageReadReceipt"/> instance for mocking.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ChatMessageReadReceipt ChatMessageReadReceipt(CommunicationIdentifier sender, string chatMessageId, DateTimeOffset readOn)
             => new ChatMessageReadReceipt(sender, chatMessageId, readOn);
 

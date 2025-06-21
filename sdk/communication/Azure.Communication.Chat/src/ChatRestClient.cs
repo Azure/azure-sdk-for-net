@@ -52,7 +52,7 @@ namespace Azure.Communication.Chat
 
             if (options.RetentionPolicy != null)
             {
-                createChatThreadRequest.RetentionPolicy = options.RetentionPolicy;
+                createChatThreadRequest.RetentionPolicy = ChatRetentionPolicyConverter.ConvertBack(options.RetentionPolicy);
             }
 
             var model = createChatThreadRequest;

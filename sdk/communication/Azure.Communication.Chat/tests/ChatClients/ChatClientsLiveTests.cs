@@ -67,7 +67,7 @@ namespace Azure.Communication.Chat.Tests
             options.Participants.Add(participant1);
             options.Participants.Add(new ChatParticipant(user2) { DisplayName = "user2" });
             options.Participants.Add(new ChatParticipant(user3) { DisplayName = "user3" });
-            options.RetentionPolicy = new ThreadCreationDateRetentionPolicy(60);
+            options.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(60);
 
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(options);
 
@@ -343,7 +343,7 @@ namespace Azure.Communication.Chat.Tests
 
             // Update properties adding retention policy deleteAfterDays
             var updateOptionsWithNewRetentionPolicy = new UpdateChatThreadPropertiesOptions();
-            updateOptionsWithNewRetentionPolicy.RetentionPolicy = new ThreadCreationDateRetentionPolicy(40);
+            updateOptionsWithNewRetentionPolicy.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(40);
 
             await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNewRetentionPolicy);
             var updateResponseWithNewRetentionPolicy = await chatThreadClient.GetPropertiesAsync();
@@ -357,7 +357,7 @@ namespace Azure.Communication.Chat.Tests
 
             // Update properties changing retention policy deleteAfterDays
             updateOptionsWithNewRetentionPolicy = new UpdateChatThreadPropertiesOptions();
-            updateOptionsWithNewRetentionPolicy.RetentionPolicy = new ThreadCreationDateRetentionPolicy(50);
+            updateOptionsWithNewRetentionPolicy.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(50);
 
             await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNewRetentionPolicy);
             updateResponseWithNewRetentionPolicy = await chatThreadClient.GetPropertiesAsync();
@@ -371,7 +371,7 @@ namespace Azure.Communication.Chat.Tests
 
             // Update properties updating tetention policy to NoneRetentionPolicy
             var updateOptionsWithNoneRetentionPolicy = new UpdateChatThreadPropertiesOptions();
-            updateOptionsWithNoneRetentionPolicy.RetentionPolicy = new NoneRetentionPolicy();
+            updateOptionsWithNoneRetentionPolicy.RetentionPolicy = ChatRetentionPolicy.None();
 
             await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNoneRetentionPolicy);
             var updateResponseWithNoneRetentionPolicy = await chatThreadClient.GetPropertiesAsync();
@@ -436,7 +436,7 @@ namespace Azure.Communication.Chat.Tests
             var fullUpdateOptions = new UpdateChatThreadPropertiesOptions
             {
                 Topic = "Full update topic",
-                RetentionPolicy = new ThreadCreationDateRetentionPolicy(90)
+                RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(90)
             };
             fullUpdateOptions.Metadata.Add("KeyA", "ValueA");
             fullUpdateOptions.Metadata.Add("KeyB", "ValueB");

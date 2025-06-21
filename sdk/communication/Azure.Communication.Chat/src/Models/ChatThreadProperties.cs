@@ -17,7 +17,7 @@ namespace Azure.Communication.Chat
             CreatedBy = CommunicationIdentifierSerializer.Deserialize(chatThreadPropertiesInternal.CreatedByCommunicationIdentifier);
             DeletedOn = chatThreadPropertiesInternal.DeletedOn;
             Metadata = chatThreadPropertiesInternal.Metadata;
-            RetentionPolicy = chatThreadPropertiesInternal.RetentionPolicy;
+            RetentionPolicy = ChatRetentionPolicyConverter.Convert(chatThreadPropertiesInternal.RetentionPolicy);
         }
 
         internal ChatThreadProperties(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifier createdBy, DateTimeOffset deletedOn)

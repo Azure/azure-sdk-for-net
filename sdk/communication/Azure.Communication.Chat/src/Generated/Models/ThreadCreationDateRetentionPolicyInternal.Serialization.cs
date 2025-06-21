@@ -10,40 +10,48 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class NoneRetentionPolicy : IUtf8JsonSerializable
+    internal partial class ThreadCreationDateRetentionPolicyInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("deleteThreadAfterDays"u8);
+            writer.WriteNumberValue(DeleteThreadAfterDays);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
-        internal static NoneRetentionPolicy DeserializeNoneRetentionPolicy(JsonElement element)
+        internal static ThreadCreationDateRetentionPolicyInternal DeserializeThreadCreationDateRetentionPolicyInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            int deleteThreadAfterDays = default;
             RetentionPolicyKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("deleteThreadAfterDays"u8))
+                {
+                    deleteThreadAfterDays = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new RetentionPolicyKind(property.Value.GetString());
                     continue;
                 }
             }
-            return new NoneRetentionPolicy(kind);
+            return new ThreadCreationDateRetentionPolicyInternal(kind, deleteThreadAfterDays);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new NoneRetentionPolicy FromResponse(Response response)
+        internal static new ThreadCreationDateRetentionPolicyInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNoneRetentionPolicy(document.RootElement);
+            return DeserializeThreadCreationDateRetentionPolicyInternal(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

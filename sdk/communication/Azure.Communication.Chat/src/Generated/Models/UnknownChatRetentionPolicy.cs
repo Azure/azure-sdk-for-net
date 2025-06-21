@@ -8,7 +8,7 @@
 namespace Azure.Communication.Chat
 {
     /// <summary> Unknown version of ChatRetentionPolicy. </summary>
-    internal partial class UnknownChatRetentionPolicy : ChatRetentionPolicy
+    internal partial class UnknownChatRetentionPolicy : ChatRetentionPolicyInternal
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChatRetentionPolicy"/>. </summary>
         /// <param name="kind"> Retention Policy Type. </param>
