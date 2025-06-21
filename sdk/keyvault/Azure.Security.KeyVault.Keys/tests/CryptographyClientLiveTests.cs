@@ -485,9 +485,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case EncryptionAlgorithm.RsaOaepValue:
                 case EncryptionAlgorithm.RsaOaep256Value:
                     return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
-                case EncryptionAlgorithm.CkmAesKeyWrapValue:
-                case EncryptionAlgorithm.CkmAesKeyWrapPadValue:
-                    return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 256 });
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }

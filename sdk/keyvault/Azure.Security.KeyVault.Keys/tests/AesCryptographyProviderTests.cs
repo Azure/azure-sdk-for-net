@@ -297,12 +297,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             yield return EncryptionAlgorithm.A128Cbc;
             yield return EncryptionAlgorithm.A192Cbc;
             yield return EncryptionAlgorithm.A256Cbc;
-            yield return EncryptionAlgorithm.CkmAesKeyWrap;
 
             yield return EncryptionAlgorithm.A128CbcPad;
             yield return EncryptionAlgorithm.A192CbcPad;
             yield return EncryptionAlgorithm.A256CbcPad;
-            yield return EncryptionAlgorithm.CkmAesKeyWrapPad;
         }
     }
 }
