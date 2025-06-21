@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_OrganizationsCreateOrUpdateMaximumSet()
         {
-            // Generated from example definition: 2024-11-18-preview/Organizations_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Organizations_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_OrganizationsGetMaximumSet()
         {
-            // Generated from example definition: 2024-11-18-preview/Organizations_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Organizations_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_OrganizationsListByResourceGroupMaximumSet()
         {
-            // Generated from example definition: 2024-11-18-preview/Organizations_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Organizations_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_OrganizationsListByResourceGroupMaximumSetGeneratedByMinimumSetRule()
         {
-            // Generated from example definition: 2024-11-18-preview/Organizations_ListByResourceGroup_MinimumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Organizations_ListByResourceGroup_MinimumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_OrganizationsGetMaximumSet()
         {
-            // Generated from example definition: 2024-11-18-preview/Organizations_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Organizations_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_OrganizationsGetMaximumSet()
         {
-            // Generated from example definition: 2024-11-18-preview/Organizations_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Organizations_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
