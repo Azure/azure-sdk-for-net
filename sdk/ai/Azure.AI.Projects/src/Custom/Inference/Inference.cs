@@ -7,7 +7,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Azure.AI.Inference;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Identity;
