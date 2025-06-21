@@ -13,13 +13,15 @@ namespace Azure.Security.CodeTransparency
     /// <summary> Client options for CodeTransparencyClient. </summary>
     public partial class CodeTransparencyClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_01_31_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_31_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "2025-01-31-preview". </summary>
             V2025_01_31_Preview = 1,
+            /// <summary> Service version "2025-05-31-preview". </summary>
+            V2025_05_31_Preview = 2,
         }
 
         internal string Version { get; }
@@ -30,6 +32,7 @@ namespace Azure.Security.CodeTransparency
             Version = version switch
             {
                 ServiceVersion.V2025_01_31_Preview => "2025-01-31-preview",
+                ServiceVersion.V2025_05_31_Preview => "2025-05-31-preview",
                 _ => throw new NotSupportedException()
             };
         }
