@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="interval"> Run interval of task execution. This is a required field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </param>
         /// <param name="intervalUnit"> Run interval unit of task execution. This is a required field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </param>
         /// <param name="endBy"> When to end task execution. This is a required field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </param>
-        /// <param name="startOn"> When to start task execution. This is an optional field when ExecutionTrigger.properties.type is 'RunOnce'; this property should not be present when ExecutionTrigger.properties.type is 'OnSchedule'. </param>
+        /// <param name="startOn"> When to start task execution. This is a required field when ExecutionTrigger.properties.type is 'RunOnce'; this property should not be present when ExecutionTrigger.properties.type is 'OnSchedule'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExecutionTriggerParameters(DateTimeOffset? startFrom, int? interval, ExecutionIntervalUnit? intervalUnit, DateTimeOffset? endBy, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> When to end task execution. This is a required field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </summary>
         [WirePath("endBy")]
         public DateTimeOffset? EndBy { get; set; }
-        /// <summary> When to start task execution. This is an optional field when ExecutionTrigger.properties.type is 'RunOnce'; this property should not be present when ExecutionTrigger.properties.type is 'OnSchedule'. </summary>
+        /// <summary> When to start task execution. This is a required field when ExecutionTrigger.properties.type is 'RunOnce'; this property should not be present when ExecutionTrigger.properties.type is 'OnSchedule'. </summary>
         [WirePath("startOn")]
         public DateTimeOffset? StartOn { get; set; }
     }
