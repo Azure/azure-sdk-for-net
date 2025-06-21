@@ -399,7 +399,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             if (versionAttribute == null)
             {
-                throw Errors.RequiredVersionClientAssembly(assembly, versionAttribute);
+                throw Azure.Storage.Errors.RequiredVersionClientAssembly(assembly, versionAttribute);
             }
             options.Diagnostics.ApplicationId = $"DataMovement/{versionAttribute.InformationalVersion}";
             return options;
