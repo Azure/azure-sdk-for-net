@@ -62,6 +62,26 @@ namespace Azure.ResourceManager.StorageActions.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.StorageTaskUpdateProperties"/>. </summary>
+        /// <param name="taskVersion"> Storage task version. </param>
+        /// <param name="enabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
+        /// <param name="description"> Text that describes the purpose of the storage task. </param>
+        /// <param name="action"> The storage task action that is executed. </param>
+        /// <param name="provisioningState"> Represents the provisioning state of the storage task. </param>
+        /// <param name="creationTimeInUtc"> The creation date and time of the storage task in UTC. </param>
+        /// <returns> A new <see cref="Models.StorageTaskUpdateProperties"/> instance for mocking. </returns>
+        public static StorageTaskUpdateProperties StorageTaskUpdateProperties(long? taskVersion = null, bool? enabled = null, string description = null, StorageTaskAction action = null, StorageTaskProvisioningState? provisioningState = null, DateTimeOffset? creationTimeInUtc = null)
+        {
+            return new StorageTaskUpdateProperties(
+                taskVersion,
+                enabled,
+                description,
+                action,
+                provisioningState,
+                creationTimeInUtc,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.StorageTaskReportInstance"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
