@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_OrganizationsCreateOrUpdateGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2024-10-01-preview/Organizations_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: 2024-10-01/Organizations_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,9 +59,8 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Samples
                     EmailAddress = "btables@arize.com",
                     Upn = "xzvwwbjpqakqqyfudyp",
                     PhoneNumber = "akbqdbs",
-                })
+                }, new ArizeAIObservabilityEvalOfferPartnerProperties("this is a great description"))
                 {
-                    PartnerDescription = "this is a great description",
                     SingleSignOnProperties = new ArizeAIObservabilityEvalSingleSignOnPropertiesV2(ArizeAIObservabilityEvalSingleSignOnType.Saml)
                     {
                         State = ArizeAIObservabilityEvalSingleSignOnState.Initial,
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_OrganizationsGetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2024-10-01-preview/Organizations_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2024-10-01/Organizations_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_OrganizationsListByResourceGroupGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2024-10-01-preview/Organizations_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: 2024-10-01/Organizations_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_OrganizationsGetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2024-10-01-preview/Organizations_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2024-10-01/Organizations_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -187,7 +186,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_OrganizationsGetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2024-10-01-preview/Organizations_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2024-10-01/Organizations_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
