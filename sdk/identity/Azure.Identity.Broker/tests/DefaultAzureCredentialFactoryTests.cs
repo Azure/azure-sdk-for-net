@@ -32,6 +32,7 @@ namespace Azure.Identity.Broker.Tests
         [TestCaseSource(nameof(CredSelection))]
         public void ValidateDefaultAzureCredentialAZURE_TOKEN_CREDENTIALS_Honored_WithBroker(string credSelection)
         {
+            var initFactory = new DefaultAzureCredentialFactory(new());
             using (new TestEnvVar(new Dictionary<string, string>
             {
                 { "AZURE_CLIENT_ID", null },
