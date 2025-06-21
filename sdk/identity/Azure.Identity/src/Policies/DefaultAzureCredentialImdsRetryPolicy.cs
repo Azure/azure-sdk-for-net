@@ -13,7 +13,7 @@ namespace Azure.Identity
         private static ManagedIdentityResponseClassifier classifier = new ManagedIdentityResponseClassifier();
 
         public DefaultAzureCredentialImdsRetryPolicy(RetryOptions retryOptions, DelayStrategy delayStrategy = null) : base(retryOptions.MaxRetries,
-                    delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy(retryOptions.Delay, retryOptions.MaxDelay))
+                    delayStrategy ?? new ImdsRetryDelayStrategy(retryOptions.Delay, retryOptions.MaxDelay))
         { }
 
         protected override bool ShouldRetry(HttpMessage message, Exception exception)
