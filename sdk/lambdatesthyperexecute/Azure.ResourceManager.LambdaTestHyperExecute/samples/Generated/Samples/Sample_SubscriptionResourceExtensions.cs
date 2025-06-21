@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetLambdaTestHyperExecuteOrganizations_OrganizationsListBySubscriptionMaximumSetGenGeneratedByMaximumSetRuleGeneratedByMaximumSetRuleGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2024-02-01-preview/Organizations_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: 2024-02-01/Organizations_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetLambdaTestHyperExecuteOrganizations_OrganizationsListBySubscriptionMaximumSetGenGeneratedByMaximumSetRuleGeneratedByMaximumSetRuleGeneratedByMinimumSetRule()
         {
-            // Generated from example definition: 2024-02-01-preview/Organizations_ListBySubscription_MinimumSet_Gen.json
+            // Generated from example definition: 2024-02-01/Organizations_ListBySubscription_MinimumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
