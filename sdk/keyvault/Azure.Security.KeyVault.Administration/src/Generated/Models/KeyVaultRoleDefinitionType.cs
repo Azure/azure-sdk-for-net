@@ -10,7 +10,7 @@ using System;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> The role definition type. </summary>
-    internal internal readonly partial struct KeyVaultRoleDefinitionType : IEquatable<KeyVaultRoleDefinitionType>
+    internal readonly partial struct KeyVaultRoleDefinitionType : IEquatable<KeyVaultRoleDefinitionType>
     {
         /// <summary> Microsoft-defined role definitions. </summary>
         private const string MicrosoftAuthorizationRoleDefinitionsValue = "Microsoft.Authorization/roleDefinitions";

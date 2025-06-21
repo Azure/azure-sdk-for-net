@@ -22,8 +22,8 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             Actions = new ChangeTrackingList<string>();
             NotActions = new ChangeTrackingList<string>();
-            DataActions = new ChangeTrackingList<DataAction>();
-            NotDataActions = new ChangeTrackingList<DataAction>();
+            DataActions = new ChangeTrackingList<KeyVaultDataAction>();
+            NotDataActions = new ChangeTrackingList<KeyVaultDataAction>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultPermission"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="dataActions"> Data action permissions that are granted. </param>
         /// <param name="notDataActions"> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultPermission(IList<string> actions, IList<string> notActions, IList<DataAction> dataActions, IList<DataAction> notDataActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultPermission(IList<string> actions, IList<string> notActions, IList<KeyVaultDataAction> dataActions, IList<KeyVaultDataAction> notDataActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Actions = actions;
             NotActions = notActions;
@@ -48,9 +48,9 @@ namespace Azure.Security.KeyVault.Administration.Models
         public IList<string> NotActions { get; }
 
         /// <summary> Data action permissions that are granted. </summary>
-        public IList<DataAction> DataActions { get; }
+        public IList<KeyVaultDataAction> DataActions { get; }
 
         /// <summary> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </summary>
-        public IList<DataAction> NotDataActions { get; }
+        public IList<KeyVaultDataAction> NotDataActions { get; }
     }
 }

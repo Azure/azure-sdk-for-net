@@ -10,7 +10,7 @@ using System;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> The role scope. </summary>
-    internal internal readonly partial struct KeyVaultRoleScope : IEquatable<KeyVaultRoleScope>
+    internal readonly partial struct KeyVaultRoleScope : IEquatable<KeyVaultRoleScope>
     {
         /// <summary> Global scope. </summary>
         private const string GlobalValue = "/";
