@@ -17,7 +17,7 @@ namespace Azure.Security.CodeTransparency.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_GetTransparencyConfigCbor_GetTransparencyConfigCbor()
+        public void Example_CodeTransparency_GetTransparencyConfigCbor_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -31,7 +31,7 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_GetTransparencyConfigCbor_GetTransparencyConfigCbor_Async()
+        public async Task Example_CodeTransparency_GetTransparencyConfigCbor_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -45,7 +45,7 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_GetTransparencyConfigCbor_GetTransparencyConfigCbor_Convenience()
+        public void Example_CodeTransparency_GetTransparencyConfigCbor_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -56,7 +56,7 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_GetTransparencyConfigCbor_GetTransparencyConfigCbor_Convenience_Async()
+        public async Task Example_CodeTransparency_GetTransparencyConfigCbor_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -67,7 +67,57 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_GetPublicKeys_GetPublicKeys()
+        public void Example_CodeTransparency_GetTransparencyConfigCbor_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response response = client.GetTransparencyConfigCbor(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CodeTransparency_GetTransparencyConfigCbor_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response response = await client.GetTransparencyConfigCborAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CodeTransparency_GetTransparencyConfigCbor_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response<BinaryData> response = client.GetTransparencyConfigCbor();
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CodeTransparency_GetTransparencyConfigCbor_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response<BinaryData> response = await client.GetTransparencyConfigCborAsync();
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CodeTransparency_GetPublicKeys_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -81,7 +131,7 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_GetPublicKeys_GetPublicKeys_Async()
+        public async Task Example_CodeTransparency_GetPublicKeys_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -95,7 +145,7 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_GetPublicKeys_GetPublicKeys_Convenience()
+        public void Example_CodeTransparency_GetPublicKeys_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -106,7 +156,7 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_GetPublicKeys_GetPublicKeys_Convenience_Async()
+        public async Task Example_CodeTransparency_GetPublicKeys_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -117,13 +167,95 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_GetOperation_GetOperation()
+        public void Example_CodeTransparency_GetPublicKeys_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response response = client.GetOperation("2.131", null);
+            Response response = client.GetPublicKeys(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("alg").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("crv").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("d").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("dp").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("dq").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("e").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("k").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("kid").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("kty").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("n").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("p").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("q").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("qi").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("use").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("x").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("x5c")[0].ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("y").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CodeTransparency_GetPublicKeys_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response response = await client.GetPublicKeysAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("alg").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("crv").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("d").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("dp").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("dq").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("e").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("k").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("kid").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("kty").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("n").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("p").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("q").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("qi").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("use").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("x").ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("x5c")[0].ToString());
+            Console.WriteLine(result.GetProperty("keys")[0].GetProperty("y").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CodeTransparency_GetPublicKeys_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response<JwksDocument> response = client.GetPublicKeys();
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CodeTransparency_GetPublicKeys_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response<JwksDocument> response = await client.GetPublicKeysAsync();
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CodeTransparency_GetOperation_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response response = client.GetOperation("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -131,13 +263,13 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_GetOperation_GetOperation_Async()
+        public async Task Example_CodeTransparency_GetOperation_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response response = await client.GetOperationAsync("2.131", null);
+            Response response = await client.GetOperationAsync("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -145,35 +277,35 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_GetOperation_GetOperation_Convenience()
+        public void Example_CodeTransparency_GetOperation_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response<BinaryData> response = client.GetOperation("2.131");
+            Response<BinaryData> response = client.GetOperation("<operationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_GetOperation_GetOperation_Convenience_Async()
+        public async Task Example_CodeTransparency_GetOperation_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response<BinaryData> response = await client.GetOperationAsync("2.131");
+            Response<BinaryData> response = await client.GetOperationAsync("<operationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_GetEntry_GetEntry()
+        public void Example_CodeTransparency_GetOperation_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response response = client.GetEntry("2.131", null);
+            Response response = client.GetOperation("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -181,13 +313,13 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_GetEntry_GetEntry_Async()
+        public async Task Example_CodeTransparency_GetOperation_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response response = await client.GetEntryAsync("2.131", null);
+            Response response = await client.GetOperationAsync("<operationId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -195,35 +327,35 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_GetEntry_GetEntry_Convenience()
+        public void Example_CodeTransparency_GetOperation_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response<BinaryData> response = client.GetEntry("2.131");
+            Response<BinaryData> response = client.GetOperation("<operationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_GetEntry_GetEntry_Convenience_Async()
+        public async Task Example_CodeTransparency_GetOperation_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response<BinaryData> response = await client.GetEntryAsync("2.131");
+            Response<BinaryData> response = await client.GetOperationAsync("<operationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_GetEntryStatement_GetEntryStatement()
+        public void Example_CodeTransparency_GetEntry_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response response = client.GetEntryStatement("2.131", null);
+            Response response = client.GetEntry("<entryId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -231,13 +363,13 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_GetEntryStatement_GetEntryStatement_Async()
+        public async Task Example_CodeTransparency_GetEntry_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response response = await client.GetEntryStatementAsync("2.131", null);
+            Response response = await client.GetEntryAsync("<entryId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -245,24 +377,174 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_GetEntryStatement_GetEntryStatement_Convenience()
+        public void Example_CodeTransparency_GetEntry_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response<BinaryData> response = client.GetEntryStatement("2.131");
+            Response<BinaryData> response = client.GetEntry("<entryId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_GetEntryStatement_GetEntryStatement_Convenience_Async()
+        public async Task Example_CodeTransparency_GetEntry_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response<BinaryData> response = await client.GetEntryStatementAsync("2.131");
+            Response<BinaryData> response = await client.GetEntryAsync("<entryId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CodeTransparency_GetEntry_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response response = client.GetEntry("<entryId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CodeTransparency_GetEntry_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response response = await client.GetEntryAsync("<entryId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CodeTransparency_GetEntry_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response<BinaryData> response = client.GetEntry("<entryId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CodeTransparency_GetEntry_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response<BinaryData> response = await client.GetEntryAsync("<entryId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CodeTransparency_GetEntryStatement_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response response = client.GetEntryStatement("<entryId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CodeTransparency_GetEntryStatement_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response response = await client.GetEntryStatementAsync("<entryId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CodeTransparency_GetEntryStatement_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response<BinaryData> response = client.GetEntryStatement("<entryId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CodeTransparency_GetEntryStatement_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response<BinaryData> response = await client.GetEntryStatementAsync("<entryId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CodeTransparency_GetEntryStatement_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response response = client.GetEntryStatement("<entryId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CodeTransparency_GetEntryStatement_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response response = await client.GetEntryStatementAsync("<entryId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CodeTransparency_GetEntryStatement_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response<BinaryData> response = client.GetEntryStatement("<entryId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CodeTransparency_GetEntryStatement_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
+
+            Response<BinaryData> response = await client.GetEntryStatementAsync("<entryId>");
         }
     }
 }
