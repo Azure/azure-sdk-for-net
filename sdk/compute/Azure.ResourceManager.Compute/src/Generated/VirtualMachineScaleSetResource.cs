@@ -40,6 +40,8 @@ namespace Azure.ResourceManager.Compute
         private readonly VirtualMachineScaleSetsRestOperations _virtualMachineScaleSetRestClient;
         private readonly ClientDiagnostics _virtualMachineScaleSetRollingUpgradeClientDiagnostics;
         private readonly VirtualMachineScaleSetRollingUpgradesRestOperations _virtualMachineScaleSetRollingUpgradeRestClient;
+        private readonly ClientDiagnostics _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics;
+        private readonly VirtualMachineScaleSetLifeCycleHookEventsRestOperations _virtualMachineScaleSetLifeCycleHookEventsRestClient;
         private readonly VirtualMachineScaleSetData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -70,6 +72,8 @@ namespace Azure.ResourceManager.Compute
             _virtualMachineScaleSetRollingUpgradeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetRollingUpgradeResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualMachineScaleSetRollingUpgradeResource.ResourceType, out string virtualMachineScaleSetRollingUpgradeApiVersion);
             _virtualMachineScaleSetRollingUpgradeRestClient = new VirtualMachineScaleSetRollingUpgradesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetRollingUpgradeApiVersion);
+            _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _virtualMachineScaleSetLifeCycleHookEventsRestClient = new VirtualMachineScaleSetLifeCycleHookEventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -2261,6 +2265,140 @@ namespace Azure.ResourceManager.Compute
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// The operation to update an VMScaleSet lifecycle hook event.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/lifecycleHookEvents/{lifeCycleHookEventName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetLifeCycleHookEvents_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="lifeCycleHookEventName"> The name of the VMScaleSet lifecycle hook event. </param>
+        /// <param name="vmssLchEvent"> Parameters supplied to the Update VMScaleSet lifecycle hook event. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="lifeCycleHookEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="lifeCycleHookEventName"/> or <paramref name="vmssLchEvent"/> is null. </exception>
+        public virtual async Task<Response<VmScaleSetLifecycleHookEvent>> UpdateVirtualMachineScaleSetLifeCycleHookEventAsync(string lifeCycleHookEventName, VmScaleSetLifecycleHookEvent vmssLchEvent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(lifeCycleHookEventName, nameof(lifeCycleHookEventName));
+            Argument.AssertNotNull(vmssLchEvent, nameof(vmssLchEvent));
+
+            using var scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetResource.UpdateVirtualMachineScaleSetLifeCycleHookEvent");
+            scope.Start();
+            try
+            {
+                var response = await _virtualMachineScaleSetLifeCycleHookEventsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifeCycleHookEventName, vmssLchEvent, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to update an VMScaleSet lifecycle hook event.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/lifecycleHookEvents/{lifeCycleHookEventName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetLifeCycleHookEvents_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="lifeCycleHookEventName"> The name of the VMScaleSet lifecycle hook event. </param>
+        /// <param name="vmssLchEvent"> Parameters supplied to the Update VMScaleSet lifecycle hook event. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="lifeCycleHookEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="lifeCycleHookEventName"/> or <paramref name="vmssLchEvent"/> is null. </exception>
+        public virtual Response<VmScaleSetLifecycleHookEvent> UpdateVirtualMachineScaleSetLifeCycleHookEvent(string lifeCycleHookEventName, VmScaleSetLifecycleHookEvent vmssLchEvent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(lifeCycleHookEventName, nameof(lifeCycleHookEventName));
+            Argument.AssertNotNull(vmssLchEvent, nameof(vmssLchEvent));
+
+            using var scope = _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics.CreateScope("VirtualMachineScaleSetResource.UpdateVirtualMachineScaleSetLifeCycleHookEvent");
+            scope.Start();
+            try
+            {
+                var response = _virtualMachineScaleSetLifeCycleHookEventsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, lifeCycleHookEventName, vmssLchEvent, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of all lifecycle hook in a VMScaleSet.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/lifecycleHookEvents</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetLifeCycleHookEvents_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VmScaleSetLifecycleHookEvent"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VmScaleSetLifecycleHookEvent> GetVirtualMachineScaleSetLifeCycleHookEventsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => VmScaleSetLifecycleHookEvent.DeserializeVmScaleSetLifecycleHookEvent(e), _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics, Pipeline, "VirtualMachineScaleSetResource.GetVirtualMachineScaleSetLifeCycleHookEvents", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all lifecycle hook in a VMScaleSet.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/lifecycleHookEvents</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetLifeCycleHookEvents_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VmScaleSetLifecycleHookEvent"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VmScaleSetLifecycleHookEvent> GetVirtualMachineScaleSetLifeCycleHookEvents(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetLifeCycleHookEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => VmScaleSetLifecycleHookEvent.DeserializeVmScaleSetLifecycleHookEvent(e), _virtualMachineScaleSetLifeCycleHookEventsClientDiagnostics, Pipeline, "VirtualMachineScaleSetResource.GetVirtualMachineScaleSetLifeCycleHookEvents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
