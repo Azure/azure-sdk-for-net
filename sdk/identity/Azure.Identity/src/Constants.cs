@@ -41,5 +41,17 @@ namespace Azure.Identity
         // Credential selection options
         public const string DevCredentials = "dev";
         public const string ProdCredentials = "prod";
+
+        // Individual credential type constants
+        public const string VisualStudioCredential = "visualstudiocredential";
+        public const string VisualStudioCodeCredential = "visualstudiocodecredential";
+        public const string AzureCliCredential = "azureclicredential";
+        public const string AzurePowerShellCredential = "azurepowershellcredential";
+        public const string AzureDeveloperCliCredential = "azuredeveloperclicredential";
+        public const string EnvironmentCredential = "environmentcredential";
+        public const string WorkloadIdentityCredential = "workloadidentitycredential";
+        public const string ManagedIdentityCredential = "managedidentitycredential";
+        public const string InteractiveBrowserCredential = "interactivebrowsercredential";
+        public const string BrokerAuthenticationCredential = "brokerauthenticationcredential";
     }
 }
