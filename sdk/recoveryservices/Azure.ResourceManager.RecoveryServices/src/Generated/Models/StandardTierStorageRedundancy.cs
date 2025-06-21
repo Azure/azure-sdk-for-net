@@ -22,10 +22,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string InvalidValue = "Invalid";
         private const string LocallyRedundantValue = "LocallyRedundant";
         private const string GeoRedundantValue = "GeoRedundant";
         private const string ZoneRedundantValue = "ZoneRedundant";
 
+        /// <summary> Invalid. </summary>
+        public static StandardTierStorageRedundancy Invalid { get; } = new StandardTierStorageRedundancy(InvalidValue);
         /// <summary> LocallyRedundant. </summary>
         public static StandardTierStorageRedundancy LocallyRedundant { get; } = new StandardTierStorageRedundancy(LocallyRedundantValue);
         /// <summary> GeoRedundant. </summary>

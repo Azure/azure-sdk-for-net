@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> The storage redundancy setting of a vault. </summary>
-        public StandardTierStorageRedundancy? StandardTierStorageRedundancy { get; }
+        public StandardTierStorageRedundancy? StandardTierStorageRedundancy { get; set; }
         /// <summary> Flag to show if Cross Region Restore is enabled on the Vault or not. </summary>
-        public CrossRegionRestore? CrossRegionRestore { get; }
+        public CrossRegionRestore? CrossRegionRestore { get; set; }
     }
 }
