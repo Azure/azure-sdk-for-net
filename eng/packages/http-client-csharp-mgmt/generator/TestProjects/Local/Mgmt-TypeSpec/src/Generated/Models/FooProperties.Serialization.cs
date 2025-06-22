@@ -9,13 +9,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
-    /// <summary></summary>
+    /// <summary> The FooProperties. </summary>
     public partial class FooProperties : IJsonModel<FooProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -205,25 +203,5 @@ namespace MgmtTypeSpec.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FooProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="fooProperties"> The <see cref="FooProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(FooProperties fooProperties)
-        {
-            if (fooProperties == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(fooProperties, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FooProperties"/> from. </param>
-        public static explicit operator FooProperties(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeFooProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -19,17 +19,17 @@ namespace Azure.Generator.Management
             return type;
         }
 
-        protected override MethodProvider? VisitMethod(MethodProvider method)
-        {
-            foreach (var parameter in method.Signature.Parameters)
-            {
-                if (ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(parameter.Type))
-                {
-                    parameter.Update("data");
-                }
-            }
-            return base.VisitMethod(method);
-        }
+        // protected override MethodProvider? VisitMethod(MethodProvider method)
+        // {
+        //     foreach (var parameter in method.Signature.Parameters)
+        //     {
+        //         if (ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(parameter.Type))
+        //         {
+        //             parameter.Update("data");
+        //         }
+        //     }
+        //     return base.VisitMethod(method);
+        // }
 
         private void TransformResource(InputModelType model, TypeProvider type)
         {
