@@ -14,36 +14,6 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Model factory for models. </summary>
     public static partial class DocumentIntelligenceModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentIntelligenceError"/>. </summary>
-        /// <param name="code"> One of a server-defined set of error codes. </param>
-        /// <param name="message"> A human-readable representation of the error. </param>
-        /// <param name="target"> The target of the error. </param>
-        /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        /// <param name="innerError"> An object containing more specific information than the current object about the error. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceError"/> instance for mocking. </returns>
-        public static DocumentIntelligenceError DocumentIntelligenceError(string code = null, string message = null, string target = null, IEnumerable<DocumentIntelligenceError> details = null, DocumentIntelligenceInnerError innerError = null)
-        {
-            details ??= new List<DocumentIntelligenceError>();
-
-            return new DocumentIntelligenceError(
-                code,
-                message,
-                target,
-                details?.ToList(),
-                innerError,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentIntelligenceInnerError"/>. </summary>
-        /// <param name="code"> One of a server-defined set of error codes. </param>
-        /// <param name="message"> A human-readable representation of the error. </param>
-        /// <param name="innerError"> Inner error. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceInnerError"/> instance for mocking. </returns>
-        public static DocumentIntelligenceInnerError DocumentIntelligenceInnerError(string code = null, string message = null, DocumentIntelligenceInnerError innerError = null)
-        {
-            return new DocumentIntelligenceInnerError(code, message, innerError, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentPage"/>. </summary>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="angle">
@@ -484,6 +454,36 @@ namespace Azure.AI.DocumentIntelligence
         public static DocumentIntelligenceWarning DocumentIntelligenceWarning(string code = null, string message = null, string target = null)
         {
             return new DocumentIntelligenceWarning(code, message, target, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentIntelligenceError"/>. </summary>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <param name="target"> The target of the error. </param>
+        /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
+        /// <param name="innerError"> An object containing more specific information than the current object about the error. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceError"/> instance for mocking. </returns>
+        public static DocumentIntelligenceError DocumentIntelligenceError(string code = null, string message = null, string target = null, IEnumerable<DocumentIntelligenceError> details = null, DocumentIntelligenceInnerError innerError = null)
+        {
+            details ??= new List<DocumentIntelligenceError>();
+
+            return new DocumentIntelligenceError(
+                code,
+                message,
+                target,
+                details?.ToList(),
+                innerError,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentIntelligenceInnerError"/>. </summary>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <param name="innerError"> Inner error. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceInnerError"/> instance for mocking. </returns>
+        public static DocumentIntelligenceInnerError DocumentIntelligenceInnerError(string code = null, string message = null, DocumentIntelligenceInnerError innerError = null)
+        {
+            return new DocumentIntelligenceInnerError(code, message, innerError, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AnalyzeBatchDocumentsOptions"/>. </summary>
