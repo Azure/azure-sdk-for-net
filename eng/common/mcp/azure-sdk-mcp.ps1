@@ -26,7 +26,7 @@ if ($Clean) {
 }
 
 if ($UpdateVsCodeConfig) {
-    $vscodeConfigPath = Join-Path $PSScriptRoot "../../../.vscode/mcp.json"
+    $vscodeConfigPath = Join-Path $PSScriptRoot ".." ".." ".." ".vscode" "mcp.json"
     if (Test-Path $vscodeConfigPath) {
         $vscodeConfig = Get-Content -Raw $vscodeConfigPath | ConvertFrom-Json -AsHashtable
     }
