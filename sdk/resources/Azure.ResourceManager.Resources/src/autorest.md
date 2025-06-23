@@ -38,6 +38,8 @@ rename-mapping:
   DeploymentExtensionConfigItem: ArmDeploymentExtensionConfigItem
   DeploymentExternalInput: ArmDeploymentExternalInput
   DeploymentExternalInputDefinition: ArmDeploymentExternalInputDefinition
+  ContainerConfiguration: ScriptContainerConfiguration
+  ContainerGroupSubnetId: ScriptContainerGroupSubnetId
 
 patch-initializer-customization:
   ArmDeploymentContent:

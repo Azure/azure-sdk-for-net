@@ -8,17 +8,18 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class ContainerConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerConfiguration>
+    public partial class ScriptContainerConfiguration : IUtf8JsonSerializable, IJsonModel<ScriptContainerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptContainerConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ContainerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScriptContainerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,16 +30,26 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScriptContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptContainerConfiguration)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ContainerGroupName))
             {
                 writer.WritePropertyName("containerGroupName"u8);
                 writer.WriteStringValue(ContainerGroupName);
+            }
+            if (Optional.IsCollectionDefined(SubnetIds))
+            {
+                writer.WritePropertyName("subnetIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubnetIds)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -57,19 +68,19 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        ContainerConfiguration IJsonModel<ContainerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ScriptContainerConfiguration IJsonModel<ScriptContainerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScriptContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptContainerConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContainerConfiguration(document.RootElement, options);
+            return DeserializeScriptContainerConfiguration(document.RootElement, options);
         }
 
-        internal static ContainerConfiguration DeserializeContainerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ScriptContainerConfiguration DeserializeScriptContainerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,6 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string containerGroupName = default;
+            IList<ScriptContainerGroupSubnetId> subnetIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,13 +99,27 @@ namespace Azure.ResourceManager.Resources.Models
                     containerGroupName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("subnetIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ScriptContainerGroupSubnetId> array = new List<ScriptContainerGroupSubnetId>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ScriptContainerGroupSubnetId.DeserializeScriptContainerGroupSubnetId(item, options));
+                    }
+                    subnetIds = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerConfiguration(containerGroupName, serializedAdditionalRawData);
+            return new ScriptContainerConfiguration(containerGroupName, subnetIds ?? new ChangeTrackingList<ScriptContainerGroupSubnetId>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -130,13 +156,36 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubnetIds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subnetIds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SubnetIds))
+                {
+                    if (SubnetIds.Any())
+                    {
+                        builder.Append("  subnetIds: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SubnetIds)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  subnetIds: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ContainerConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ScriptContainerConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScriptContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -145,26 +194,26 @@ namespace Azure.ResourceManager.Resources.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptContainerConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ContainerConfiguration IPersistableModel<ContainerConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ScriptContainerConfiguration IPersistableModel<ScriptContainerConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScriptContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContainerConfiguration(document.RootElement, options);
+                        return DeserializeScriptContainerConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptContainerConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ContainerConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScriptContainerConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
