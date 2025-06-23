@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Avs
     }
     public partial class AvsPrivateCloudClusterVirtualMachineData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.AvsPrivateCloudClusterVirtualMachineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.AvsPrivateCloudClusterVirtualMachineData>
     {
-        internal AvsPrivateCloudClusterVirtualMachineData() { }
+        public AvsPrivateCloudClusterVirtualMachineData() { }
         public string DisplayName { get { throw null; } }
         public string FolderPath { get { throw null; } }
         public string MoRefId { get { throw null; } }
@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.Avs
     }
     public partial class ScriptCmdletData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.ScriptCmdletData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.ScriptCmdletData>
     {
-        internal ScriptCmdletData() { }
+        public ScriptCmdletData() { }
         public Azure.ResourceManager.Avs.Models.ScriptCmdletAudience? Audience { get { throw null; } }
         public string Description { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Avs.Models.ScriptParameter> Parameters { get { throw null; } }
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.Avs
     }
     public partial class ScriptPackageData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.ScriptPackageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.ScriptPackageData>
     {
-        internal ScriptPackageData() { }
+        public ScriptPackageData() { }
         public string Company { get { throw null; } }
         public string Description { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.ScriptPackageProvisioningState? ProvisioningState { get { throw null; } }
@@ -1033,7 +1033,7 @@ namespace Azure.ResourceManager.Avs
     }
     public partial class WorkloadNetworkData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.WorkloadNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.WorkloadNetworkData>
     {
-        internal WorkloadNetworkData() { }
+        public WorkloadNetworkData() { }
         public Azure.ResourceManager.Avs.Models.WorkloadNetworkProvisioningState? ProvisioningState { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Avs.WorkloadNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.WorkloadNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1213,8 +1213,8 @@ namespace Azure.ResourceManager.Avs
     }
     public partial class WorkloadNetworkGatewayData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.WorkloadNetworkGatewayData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.WorkloadNetworkGatewayData>
     {
-        internal WorkloadNetworkGatewayData() { }
-        public string DisplayName { get { throw null; } }
+        public WorkloadNetworkGatewayData() { }
+        public string DisplayName { get { throw null; } set { } }
         public string Path { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.WorkloadNetworkProvisioningState? ProvisioningState { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1456,8 +1456,8 @@ namespace Azure.ResourceManager.Avs
     }
     public partial class WorkloadNetworkVirtualMachineData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.WorkloadNetworkVirtualMachineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.WorkloadNetworkVirtualMachineData>
     {
-        internal WorkloadNetworkVirtualMachineData() { }
-        public string DisplayName { get { throw null; } }
+        public WorkloadNetworkVirtualMachineData() { }
+        public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Avs.Models.WorkloadNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Avs.Models.WorkloadNetworkVmType? VmType { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

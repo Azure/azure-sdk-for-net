@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ScriptPackageData"/>. </summary>
-        internal ScriptPackageData()
+        public ScriptPackageData()
         {
         }
 
