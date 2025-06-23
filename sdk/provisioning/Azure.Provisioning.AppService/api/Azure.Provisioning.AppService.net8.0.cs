@@ -2222,7 +2222,6 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.AppService.AppServiceIdentityProviders IdentityProviders { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
         public Azure.Provisioning.AppService.WebAppLoginInfo Login { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.AppService.AuthPlatform Platform { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
