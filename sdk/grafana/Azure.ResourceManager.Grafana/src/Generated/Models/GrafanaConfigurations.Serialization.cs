@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 return null;
             }
             GrafanaSmtpSettings smtp = default;
-            GfrafanaSnapshotsSettings snapshots = default;
+            GrafanaSnapshotsSettings snapshots = default;
             GrafanaUserSettings users = default;
             GrafanaSecuritySettings security = default;
             UnifiedAlertingScreenshots unifiedAlertingScreenshots = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    snapshots = GfrafanaSnapshotsSettings.DeserializeGfrafanaSnapshotsSettings(property.Value, options);
+                    snapshots = GrafanaSnapshotsSettings.DeserializeGrafanaSnapshotsSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("users"u8))

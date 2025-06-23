@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    internal partial class GfrafanaSnapshotsSettings : IUtf8JsonSerializable, IJsonModel<GfrafanaSnapshotsSettings>
+    internal partial class GrafanaSnapshotsSettings : IUtf8JsonSerializable, IJsonModel<GrafanaSnapshotsSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GfrafanaSnapshotsSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GrafanaSnapshotsSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GfrafanaSnapshotsSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GrafanaSnapshotsSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GfrafanaSnapshotsSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GrafanaSnapshotsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GfrafanaSnapshotsSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GrafanaSnapshotsSettings)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(IsExternalEnabled))
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Grafana.Models
             }
         }
 
-        GfrafanaSnapshotsSettings IJsonModel<GfrafanaSnapshotsSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GrafanaSnapshotsSettings IJsonModel<GrafanaSnapshotsSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GfrafanaSnapshotsSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GrafanaSnapshotsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GfrafanaSnapshotsSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GrafanaSnapshotsSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGfrafanaSnapshotsSettings(document.RootElement, options);
+            return DeserializeGrafanaSnapshotsSettings(document.RootElement, options);
         }
 
-        internal static GfrafanaSnapshotsSettings DeserializeGfrafanaSnapshotsSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GrafanaSnapshotsSettings DeserializeGrafanaSnapshotsSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,38 +96,38 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GfrafanaSnapshotsSettings(externalEnabled, serializedAdditionalRawData);
+            return new GrafanaSnapshotsSettings(externalEnabled, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GfrafanaSnapshotsSettings>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GrafanaSnapshotsSettings>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GfrafanaSnapshotsSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GrafanaSnapshotsSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GfrafanaSnapshotsSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GrafanaSnapshotsSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GfrafanaSnapshotsSettings IPersistableModel<GfrafanaSnapshotsSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GrafanaSnapshotsSettings IPersistableModel<GrafanaSnapshotsSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GfrafanaSnapshotsSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GrafanaSnapshotsSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGfrafanaSnapshotsSettings(document.RootElement, options);
+                        return DeserializeGrafanaSnapshotsSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GfrafanaSnapshotsSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GrafanaSnapshotsSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GfrafanaSnapshotsSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GrafanaSnapshotsSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

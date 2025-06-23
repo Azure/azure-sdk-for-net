@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="security"> Grafana security settings. </param>
         /// <param name="unifiedAlertingScreenshots"> Grafana Unified Alerting Screenshots settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GrafanaConfigurations(GrafanaSmtpSettings smtp, GfrafanaSnapshotsSettings snapshots, GrafanaUserSettings users, GrafanaSecuritySettings security, UnifiedAlertingScreenshots unifiedAlertingScreenshots, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GrafanaConfigurations(GrafanaSmtpSettings smtp, GrafanaSnapshotsSettings snapshots, GrafanaUserSettings users, GrafanaSecuritySettings security, UnifiedAlertingScreenshots unifiedAlertingScreenshots, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Smtp = smtp;
             Snapshots = snapshots;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// </summary>
         public GrafanaSmtpSettings Smtp { get; set; }
         /// <summary> Grafana Snapshots settings. </summary>
-        internal GfrafanaSnapshotsSettings Snapshots { get; set; }
+        internal GrafanaSnapshotsSettings Snapshots { get; set; }
         /// <summary> Set to false to disable external snapshot publish endpoint. </summary>
         public bool? IsExternalEnabled
         {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Grafana.Models
             set
             {
                 if (Snapshots is null)
-                    Snapshots = new GfrafanaSnapshotsSettings();
+                    Snapshots = new GrafanaSnapshotsSettings();
                 Snapshots.IsExternalEnabled = value;
             }
         }

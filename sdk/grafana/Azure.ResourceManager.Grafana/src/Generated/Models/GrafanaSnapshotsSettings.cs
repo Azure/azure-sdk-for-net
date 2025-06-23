@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> Grafana Snapshots settings. </summary>
-    internal partial class GfrafanaSnapshotsSettings
+    internal partial class GrafanaSnapshotsSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.Grafana.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GfrafanaSnapshotsSettings"/>. </summary>
-        public GfrafanaSnapshotsSettings()
+        /// <summary> Initializes a new instance of <see cref="GrafanaSnapshotsSettings"/>. </summary>
+        public GrafanaSnapshotsSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GfrafanaSnapshotsSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaSnapshotsSettings"/>. </summary>
         /// <param name="isExternalEnabled"> Set to false to disable external snapshot publish endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GfrafanaSnapshotsSettings(bool? isExternalEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GrafanaSnapshotsSettings(bool? isExternalEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsExternalEnabled = isExternalEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
