@@ -48,10 +48,7 @@ namespace Azure.Generator.Tests.Visitors
             var model = new ModelProvider(inputType);
 
             // simulate a customized model
-            model.GetType().BaseType!.GetField(
-                "_customCodeView",
-                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?
-                .SetValue(model, new Lazy<TypeProvider>(() => new TestTypeProvider()));
+            MockHelpers.SetCustomCodeView(model, new TestTypeProvider());
             var updatedModel = visitor.InvokePreVisitModel(inputType, model);
 
             Assert.IsNotNull(updatedModel);
