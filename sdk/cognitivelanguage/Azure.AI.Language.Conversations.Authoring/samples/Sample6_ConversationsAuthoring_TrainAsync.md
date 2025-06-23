@@ -42,9 +42,55 @@ Operation<ConversationAuthoringTrainingJobResult> operation = await projectClien
     details: trainingJobDetails
 );
 
- // Extract the operation-location header
+// Extract the operation-location header
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
 
+Console.WriteLine($"Training completed with status: {operation.GetRawResponse().Status}");
+```
+
+## Train a Model with Data Generation (Async)
+
+To train a model asynchronously with data generation, use the `TrainAsync` method on the `ConversationAuthoringProject` client.
+By providing `DataGenerationSettings`, the service can generate additional training data using an external resource such as Azure OpenAI.
+The method returns an `Operation<TrainingJobResult>` object, and the `operation-location` header can be used to track the training status.
+
+```C# Snippet:Sample6_ConversationsAuthoring_TrainAsync_WithDataGeneration
+string projectName = "EmailAppEnglish";
+
+// Create connection info for data generation
+var connectionInfo = new AnalyzeConversationAuthoringDataGenerationConnectionInfo(
+    kind: AnalyzeConversationAuthoringDataGenerationConnectionKind.AzureOpenAI,
+    deploymentName: "gpt-4o")
+{
+    ResourceId = "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai"
+};
+
+// Prepare training job details
+var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
+    modelLabel: "ModelWithDG",
+    trainingMode: ConversationAuthoringTrainingMode.Standard)
+{
+    TrainingConfigVersion = "2025-05-15-preview-ConvLevel",
+    EvaluationOptions = new ConversationAuthoringEvaluationDetails
+    {
+        Kind = ConversationAuthoringEvaluationKind.Percentage,
+        TestingSplitPercentage = 20,
+        TrainingSplitPercentage = 80
+    },
+    DataGenerationSettings = new AnalyzeConversationAuthoringDataGenerationSettings(
+        enableDataGeneration: true,
+        dataGenerationConnectionInfo: connectionInfo)
+};
+
+// Start training
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
+    waitUntil: WaitUntil.Completed,
+    details: trainingJobDetails);
+
+// Extract and print operation location and status
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
+Console.WriteLine($"Operation Location: {operationLocation}");
 Console.WriteLine($"Training completed with status: {operation.GetRawResponse().Status}");
 ```

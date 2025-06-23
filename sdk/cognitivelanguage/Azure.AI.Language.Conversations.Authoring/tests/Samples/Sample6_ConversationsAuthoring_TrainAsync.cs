@@ -45,10 +45,59 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 details: trainingJobDetails
             );
 
-             // Extract the operation-location header
+            // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
+            Console.WriteLine($"Training completed with status: {operation.GetRawResponse().Status}");
+            #endregion
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task TrainAsync_withDataGenerationSettings()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample6_ConversationsAuthoring_TrainAsync_WithDataGeneration
+            string projectName = "EmailAppEnglish";
+
+            // Create connection info for data generation
+            var connectionInfo = new AnalyzeConversationAuthoringDataGenerationConnectionInfo(
+                kind: AnalyzeConversationAuthoringDataGenerationConnectionKind.AzureOpenAI,
+                deploymentName: "gpt-4o")
+            {
+                ResourceId = "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai"
+            };
+
+            // Prepare training job details
+            var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
+                modelLabel: "ModelWithDG",
+                trainingMode: ConversationAuthoringTrainingMode.Standard)
+            {
+                TrainingConfigVersion = "2025-05-15-preview-ConvLevel",
+                EvaluationOptions = new ConversationAuthoringEvaluationDetails
+                {
+                    Kind = ConversationAuthoringEvaluationKind.Percentage,
+                    TestingSplitPercentage = 20,
+                    TrainingSplitPercentage = 80
+                },
+                DataGenerationSettings = new AnalyzeConversationAuthoringDataGenerationSettings(
+                    enableDataGeneration: true,
+                    dataGenerationConnectionInfo: connectionInfo)
+            };
+
+            // Start training
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+            Operation<ConversationAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
+                waitUntil: WaitUntil.Completed,
+                details: trainingJobDetails);
+
+            // Extract and print operation location and status
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
             Console.WriteLine($"Training completed with status: {operation.GetRawResponse().Status}");
             #endregion
         }
