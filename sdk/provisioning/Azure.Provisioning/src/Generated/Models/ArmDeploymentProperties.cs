@@ -5,6 +5,8 @@
 
 #nullable enable
 
+using Azure.Core;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
 
@@ -81,6 +83,28 @@ public partial class ArmDeploymentProperties : ProvisionableConstruct
     private BicepValue<BinaryData>? _parameters;
 
     /// <summary>
+    /// External input values, used by external tooling for parameter
+    /// evaluation.
+    /// </summary>
+    public BicepDictionary<ArmDeploymentExternalInput> ExternalInputs 
+    {
+        get { Initialize(); return _externalInputs!; }
+        set { Initialize(); _externalInputs!.Assign(value); }
+    }
+    private BicepDictionary<ArmDeploymentExternalInput>? _externalInputs;
+
+    /// <summary>
+    /// External input definitions, used by external tooling to define expected
+    /// external input values.
+    /// </summary>
+    public BicepDictionary<ArmDeploymentExternalInputDefinition> ExternalInputDefinitions 
+    {
+        get { Initialize(); return _externalInputDefinitions!; }
+        set { Initialize(); _externalInputDefinitions!.Assign(value); }
+    }
+    private BicepDictionary<ArmDeploymentExternalInputDefinition>? _externalInputDefinitions;
+
+    /// <summary>
     /// The URI of parameters file. You use this element to link to an existing
     /// parameters file. Use either the parametersLink property or the
     /// parameters property, but not both.
@@ -91,6 +115,18 @@ public partial class ArmDeploymentProperties : ProvisionableConstruct
         set { Initialize(); AssignOrReplace(ref _parametersLink, value); }
     }
     private ArmDeploymentParametersLink? _parametersLink;
+
+    /// <summary>
+    /// The configurations to use for deployment extensions. The keys of this
+    /// object are deployment extension aliases as defined in the deployment
+    /// template.
+    /// </summary>
+    public BicepDictionary<BicepDictionary<ArmDeploymentExtensionConfigItem>> ExtensionConfigs 
+    {
+        get { Initialize(); return _extensionConfigs!; }
+        set { Initialize(); _extensionConfigs!.Assign(value); }
+    }
+    private BicepDictionary<BicepDictionary<ArmDeploymentExtensionConfigItem>>? _extensionConfigs;
 
     /// <summary>
     /// The mode that is used to deploy resources. This value can be either
@@ -171,7 +207,10 @@ public partial class ArmDeploymentProperties : ProvisionableConstruct
         _template = DefineProperty<BinaryData>("Template", ["template"]);
         _templateLink = DefineModelProperty<ArmDeploymentTemplateLink>("TemplateLink", ["templateLink"]);
         _parameters = DefineProperty<BinaryData>("Parameters", ["parameters"]);
+        _externalInputs = DefineDictionaryProperty<ArmDeploymentExternalInput>("ExternalInputs", ["externalInputs"]);
+        _externalInputDefinitions = DefineDictionaryProperty<ArmDeploymentExternalInputDefinition>("ExternalInputDefinitions", ["externalInputDefinitions"]);
         _parametersLink = DefineModelProperty<ArmDeploymentParametersLink>("ParametersLink", ["parametersLink"]);
+        _extensionConfigs = DefineDictionaryProperty<BicepDictionary<ArmDeploymentExtensionConfigItem>>("ExtensionConfigs", ["extensionConfigs"]);
         _mode = DefineProperty<ArmDeploymentMode>("Mode", ["mode"], isOutput: true);
         _debugSettingDetailLevel = DefineProperty<string>("DebugSettingDetailLevel", ["debugSetting", "detailLevel"]);
         _errorDeployment = DefineModelProperty<ErrorDeployment>("ErrorDeployment", ["onErrorDeployment"]);
