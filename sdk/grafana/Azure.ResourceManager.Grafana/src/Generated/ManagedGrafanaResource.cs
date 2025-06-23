@@ -298,11 +298,11 @@ namespace Azure.ResourceManager.Grafana
             return GetManagedPrivateEndpointModels().Get(managedPrivateEndpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IntegrationFabricResources in the ManagedGrafana. </summary>
-        /// <returns> An object representing collection of IntegrationFabricResources and their operations over a IntegrationFabricResource. </returns>
-        public virtual IntegrationFabricCollection GetIntegrationFabrics()
+        /// <summary> Gets a collection of GrafanaIntegrationFabricResources in the ManagedGrafana. </summary>
+        /// <returns> An object representing collection of GrafanaIntegrationFabricResources and their operations over a GrafanaIntegrationFabricResource. </returns>
+        public virtual GrafanaIntegrationFabricCollection GetGrafanaIntegrationFabrics()
         {
-            return GetCachedClient(client => new IntegrationFabricCollection(client, Id));
+            return GetCachedClient(client => new GrafanaIntegrationFabricCollection(client, Id));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="IntegrationFabricResource"/></description>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,9 +331,9 @@ namespace Azure.ResourceManager.Grafana
         /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="integrationFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IntegrationFabricResource>> GetIntegrationFabricAsync(string integrationFabricName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GrafanaIntegrationFabricResource>> GetGrafanaIntegrationFabricAsync(string integrationFabricName, CancellationToken cancellationToken = default)
         {
-            return await GetIntegrationFabrics().GetAsync(integrationFabricName, cancellationToken).ConfigureAwait(false);
+            return await GetGrafanaIntegrationFabrics().GetAsync(integrationFabricName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Grafana
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="IntegrationFabricResource"/></description>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,9 +362,9 @@ namespace Azure.ResourceManager.Grafana
         /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="integrationFabricName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IntegrationFabricResource> GetIntegrationFabric(string integrationFabricName, CancellationToken cancellationToken = default)
+        public virtual Response<GrafanaIntegrationFabricResource> GetGrafanaIntegrationFabric(string integrationFabricName, CancellationToken cancellationToken = default)
         {
-            return GetIntegrationFabrics().Get(integrationFabricName, cancellationToken);
+            return GetGrafanaIntegrationFabrics().Get(integrationFabricName, cancellationToken);
         }
 
         /// <summary>

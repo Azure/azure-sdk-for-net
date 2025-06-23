@@ -3,10 +3,8 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Grafana.Models;
+using System.ComponentModel;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Grafana
@@ -18,14 +16,17 @@ namespace Azure.ResourceManager.Grafana
     public partial class GrafanaPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="GrafanaPrivateLinkResourceData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public GrafanaPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
         /// <summary> The private link resource required member names. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The private link resource Private link DNS zone name. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<string> RequiredZoneNames { get; }
     }
 }

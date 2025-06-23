@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> Grafana security settings. </summary>
-    internal partial class Security
+    /// <summary> The parameters for a PATCH request to a Integration Fabric resource. </summary>
+    public partial class GrafanaIntegrationFabricPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,36 @@ namespace Azure.ResourceManager.Grafana.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Security"/>. </summary>
-        public Security()
+        /// <summary> Initializes a new instance of <see cref="GrafanaIntegrationFabricPatch"/>. </summary>
+        public GrafanaIntegrationFabricPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Security"/>. </summary>
-        /// <param name="csrfAlwaysCheck"> Set to true to execute the CSRF check even if the login cookie is not in a request (default false). </param>
+        /// <summary> Initializes a new instance of <see cref="GrafanaIntegrationFabricPatch"/>. </summary>
+        /// <param name="tags"> The new tags of the Integration Fabric resource. </param>
+        /// <param name="properties"> The new properties of this Integration Fabric resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Security(bool? csrfAlwaysCheck, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GrafanaIntegrationFabricPatch(IDictionary<string, string> tags, IntegrationFabricPropertiesUpdateParameters properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CsrfAlwaysCheck = csrfAlwaysCheck;
+            Tags = tags;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Set to true to execute the CSRF check even if the login cookie is not in a request (default false). </summary>
-        public bool? CsrfAlwaysCheck { get; set; }
+        /// <summary> The new tags of the Integration Fabric resource. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> The new properties of this Integration Fabric resource. </summary>
+        internal IntegrationFabricPropertiesUpdateParameters Properties { get; set; }
+        /// <summary> The new integration scenarios covered by this integration fabric. </summary>
+        public IList<string> IntegrationFabricPropertiesUpdateParametersScenarios
+        {
+            get
+            {
+                if (Properties is null)
+                    Properties = new IntegrationFabricPropertiesUpdateParameters();
+                return Properties.Scenarios;
+            }
+        }
     }
 }

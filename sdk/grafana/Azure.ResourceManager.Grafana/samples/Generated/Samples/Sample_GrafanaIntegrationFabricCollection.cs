@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Grafana.Samples
 {
-    public partial class Sample_IntegrationFabricCollection
+    public partial class Sample_GrafanaIntegrationFabricCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -36,26 +36,26 @@ namespace Azure.ResourceManager.Grafana.Samples
             ResourceIdentifier managedGrafanaResourceId = ManagedGrafanaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             ManagedGrafanaResource managedGrafana = client.GetManagedGrafanaResource(managedGrafanaResourceId);
 
-            // get the collection of this IntegrationFabricResource
-            IntegrationFabricCollection collection = managedGrafana.GetIntegrationFabrics();
+            // get the collection of this GrafanaIntegrationFabricResource
+            GrafanaIntegrationFabricCollection collection = managedGrafana.GetGrafanaIntegrationFabrics();
 
             // invoke the operation
             string integrationFabricName = "sampleIntegration";
-            IntegrationFabricData data = new IntegrationFabricData(new AzureLocation("West US"))
+            GrafanaIntegrationFabricData data = new GrafanaIntegrationFabricData(new AzureLocation("West US"))
             {
-                Properties = new IntegrationFabricProperties
+                Properties = new GrafanaIntegrationFabricProperties
                 {
                     TargetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerService/managedClusters/myAks"),
                     DataSourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Monitor/accounts/myAmw"),
                     Scenarios = { "scenario1", "scenario2" },
                 },
             };
-            ArmOperation<IntegrationFabricResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, integrationFabricName, data);
-            IntegrationFabricResource result = lro.Value;
+            ArmOperation<GrafanaIntegrationFabricResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, integrationFabricName, data);
+            GrafanaIntegrationFabricResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            IntegrationFabricData resourceData = result.Data;
+            GrafanaIntegrationFabricData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -80,16 +80,16 @@ namespace Azure.ResourceManager.Grafana.Samples
             ResourceIdentifier managedGrafanaResourceId = ManagedGrafanaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             ManagedGrafanaResource managedGrafana = client.GetManagedGrafanaResource(managedGrafanaResourceId);
 
-            // get the collection of this IntegrationFabricResource
-            IntegrationFabricCollection collection = managedGrafana.GetIntegrationFabrics();
+            // get the collection of this GrafanaIntegrationFabricResource
+            GrafanaIntegrationFabricCollection collection = managedGrafana.GetGrafanaIntegrationFabrics();
 
             // invoke the operation
             string integrationFabricName = "sampleIntegration";
-            IntegrationFabricResource result = await collection.GetAsync(integrationFabricName);
+            GrafanaIntegrationFabricResource result = await collection.GetAsync(integrationFabricName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            IntegrationFabricData resourceData = result.Data;
+            GrafanaIntegrationFabricData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Grafana.Samples
             ResourceIdentifier managedGrafanaResourceId = ManagedGrafanaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             ManagedGrafanaResource managedGrafana = client.GetManagedGrafanaResource(managedGrafanaResourceId);
 
-            // get the collection of this IntegrationFabricResource
-            IntegrationFabricCollection collection = managedGrafana.GetIntegrationFabrics();
+            // get the collection of this GrafanaIntegrationFabricResource
+            GrafanaIntegrationFabricCollection collection = managedGrafana.GetGrafanaIntegrationFabrics();
 
             // invoke the operation and iterate over the result
-            await foreach (IntegrationFabricResource item in collection.GetAllAsync())
+            await foreach (GrafanaIntegrationFabricResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                IntegrationFabricData resourceData = item.Data;
+                GrafanaIntegrationFabricData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Grafana.Samples
             ResourceIdentifier managedGrafanaResourceId = ManagedGrafanaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             ManagedGrafanaResource managedGrafana = client.GetManagedGrafanaResource(managedGrafanaResourceId);
 
-            // get the collection of this IntegrationFabricResource
-            IntegrationFabricCollection collection = managedGrafana.GetIntegrationFabrics();
+            // get the collection of this GrafanaIntegrationFabricResource
+            GrafanaIntegrationFabricCollection collection = managedGrafana.GetGrafanaIntegrationFabrics();
 
             // invoke the operation
             string integrationFabricName = "sampleIntegration";
@@ -180,13 +180,13 @@ namespace Azure.ResourceManager.Grafana.Samples
             ResourceIdentifier managedGrafanaResourceId = ManagedGrafanaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             ManagedGrafanaResource managedGrafana = client.GetManagedGrafanaResource(managedGrafanaResourceId);
 
-            // get the collection of this IntegrationFabricResource
-            IntegrationFabricCollection collection = managedGrafana.GetIntegrationFabrics();
+            // get the collection of this GrafanaIntegrationFabricResource
+            GrafanaIntegrationFabricCollection collection = managedGrafana.GetGrafanaIntegrationFabrics();
 
             // invoke the operation
             string integrationFabricName = "sampleIntegration";
-            NullableResponse<IntegrationFabricResource> response = await collection.GetIfExistsAsync(integrationFabricName);
-            IntegrationFabricResource result = response.HasValue ? response.Value : null;
+            NullableResponse<GrafanaIntegrationFabricResource> response = await collection.GetIfExistsAsync(integrationFabricName);
+            GrafanaIntegrationFabricResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Grafana.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                IntegrationFabricData resourceData = result.Data;
+                GrafanaIntegrationFabricData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

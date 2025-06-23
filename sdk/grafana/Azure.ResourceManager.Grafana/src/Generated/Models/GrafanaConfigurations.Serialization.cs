@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Smtp smtp = default;
-            Snapshots snapshots = default;
-            Users users = default;
-            Security security = default;
+            GrafanaSmtpSettings smtp = default;
+            GfrafanaSnapshotsSettings snapshots = default;
+            GrafanaUserSettings users = default;
+            GrafanaSecuritySettings security = default;
             UnifiedAlertingScreenshots unifiedAlertingScreenshots = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    smtp = Smtp.DeserializeSmtp(property.Value, options);
+                    smtp = GrafanaSmtpSettings.DeserializeGrafanaSmtpSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("snapshots"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    snapshots = Snapshots.DeserializeSnapshots(property.Value, options);
+                    snapshots = GfrafanaSnapshotsSettings.DeserializeGfrafanaSnapshotsSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("users"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    users = Users.DeserializeUsers(property.Value, options);
+                    users = GrafanaUserSettings.DeserializeGrafanaUserSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("security"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    security = Security.DeserializeSecurity(property.Value, options);
+                    security = GrafanaSecuritySettings.DeserializeGrafanaSecuritySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unifiedAlertingScreenshots"u8))

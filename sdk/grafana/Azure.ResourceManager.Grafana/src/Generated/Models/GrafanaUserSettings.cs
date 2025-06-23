@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> Grafana Snapshots settings. </summary>
-    internal partial class Snapshots
+    /// <summary> Grafana users settings. </summary>
+    public partial class GrafanaUserSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,25 @@ namespace Azure.ResourceManager.Grafana.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Snapshots"/>. </summary>
-        public Snapshots()
+        /// <summary> Initializes a new instance of <see cref="GrafanaUserSettings"/>. </summary>
+        public GrafanaUserSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Snapshots"/>. </summary>
-        /// <param name="externalEnabled"> Set to false to disable external snapshot publish endpoint. </param>
+        /// <summary> Initializes a new instance of <see cref="GrafanaUserSettings"/>. </summary>
+        /// <param name="viewersCanEdit"> Set to true so viewers can access and use explore and perform temporary edits on panels in dashboards they have access to. They cannot save their changes. </param>
+        /// <param name="editorsCanAdmin"> Set to true so editors can administrate dashboards, folders and teams they create. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Snapshots(bool? externalEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GrafanaUserSettings(bool? viewersCanEdit, bool? editorsCanAdmin, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ExternalEnabled = externalEnabled;
+            ViewersCanEdit = viewersCanEdit;
+            EditorsCanAdmin = editorsCanAdmin;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Set to false to disable external snapshot publish endpoint. </summary>
-        public bool? ExternalEnabled { get; set; }
+        /// <summary> Set to true so viewers can access and use explore and perform temporary edits on panels in dashboards they have access to. They cannot save their changes. </summary>
+        public bool? ViewersCanEdit { get; set; }
+        /// <summary> Set to true so editors can administrate dashboards, folders and teams they create. </summary>
+        public bool? EditorsCanAdmin { get; set; }
     }
 }

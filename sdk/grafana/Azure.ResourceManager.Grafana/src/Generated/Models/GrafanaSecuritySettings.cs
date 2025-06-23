@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Grafana.Models;
-using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Grafana
+namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary>
-    /// A class representing the IntegrationFabric data model.
-    /// The integration fabric resource type.
-    /// </summary>
-    public partial class IntegrationFabricData : TrackedResourceData
+    /// <summary> Grafana security settings. </summary>
+    internal partial class GrafanaSecuritySettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,33 +45,21 @@ namespace Azure.ResourceManager.Grafana
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IntegrationFabricData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public IntegrationFabricData(AzureLocation location) : base(location)
+        /// <summary> Initializes a new instance of <see cref="GrafanaSecuritySettings"/>. </summary>
+        public GrafanaSecuritySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IntegrationFabricData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"></param>
+        /// <summary> Initializes a new instance of <see cref="GrafanaSecuritySettings"/>. </summary>
+        /// <param name="isCsrfAlwaysCheckEnabled"> Set to true to execute the CSRF check even if the login cookie is not in a request (default false). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IntegrationFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationFabricProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal GrafanaSecuritySettings(bool? isCsrfAlwaysCheckEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            IsCsrfAlwaysCheckEnabled = isCsrfAlwaysCheckEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IntegrationFabricData"/> for deserialization. </summary>
-        internal IntegrationFabricData()
-        {
-        }
-
-        /// <summary> Gets or sets the properties. </summary>
-        public IntegrationFabricProperties Properties { get; set; }
+        /// <summary> Set to true to execute the CSRF check even if the login cookie is not in a request (default false). </summary>
+        public bool? IsCsrfAlwaysCheckEnabled { get; set; }
     }
 }

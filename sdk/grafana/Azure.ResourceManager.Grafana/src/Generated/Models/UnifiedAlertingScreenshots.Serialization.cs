@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Grafana.Models
                 throw new FormatException($"The model {nameof(UnifiedAlertingScreenshots)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(CaptureEnabled))
+            if (Optional.IsDefined(IsCaptureEnabled))
             {
                 writer.WritePropertyName("captureEnabled"u8);
-                writer.WriteBooleanValue(CaptureEnabled.Value);
+                writer.WriteBooleanValue(IsCaptureEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

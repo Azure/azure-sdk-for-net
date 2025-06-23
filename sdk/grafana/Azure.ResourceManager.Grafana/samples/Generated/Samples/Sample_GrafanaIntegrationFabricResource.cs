@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Grafana.Samples
 {
-    public partial class Sample_IntegrationFabricResource
+    public partial class Sample_GrafanaIntegrationFabricResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.Grafana.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this IntegrationFabricResource created on azure
-            // for more information of creating IntegrationFabricResource, please refer to the document of IntegrationFabricResource
+            // this example assumes you already have this GrafanaIntegrationFabricResource created on azure
+            // for more information of creating GrafanaIntegrationFabricResource, please refer to the document of GrafanaIntegrationFabricResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string workspaceName = "myWorkspace";
             string integrationFabricName = "sampleIntegration";
-            ResourceIdentifier integrationFabricResourceId = IntegrationFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, integrationFabricName);
-            IntegrationFabricResource integrationFabric = client.GetIntegrationFabricResource(integrationFabricResourceId);
+            ResourceIdentifier grafanaIntegrationFabricResourceId = GrafanaIntegrationFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, integrationFabricName);
+            GrafanaIntegrationFabricResource grafanaIntegrationFabric = client.GetGrafanaIntegrationFabricResource(grafanaIntegrationFabricResourceId);
 
             // invoke the operation
-            IntegrationFabricResource result = await integrationFabric.GetAsync();
+            GrafanaIntegrationFabricResource result = await grafanaIntegrationFabric.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            IntegrationFabricData resourceData = result.Data;
+            GrafanaIntegrationFabricData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.Grafana.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this IntegrationFabricResource created on azure
-            // for more information of creating IntegrationFabricResource, please refer to the document of IntegrationFabricResource
+            // this example assumes you already have this GrafanaIntegrationFabricResource created on azure
+            // for more information of creating GrafanaIntegrationFabricResource, please refer to the document of GrafanaIntegrationFabricResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string workspaceName = "myWorkspace";
             string integrationFabricName = "sampleIntegration";
-            ResourceIdentifier integrationFabricResourceId = IntegrationFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, integrationFabricName);
-            IntegrationFabricResource integrationFabric = client.GetIntegrationFabricResource(integrationFabricResourceId);
+            ResourceIdentifier grafanaIntegrationFabricResourceId = GrafanaIntegrationFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, integrationFabricName);
+            GrafanaIntegrationFabricResource grafanaIntegrationFabric = client.GetGrafanaIntegrationFabricResource(grafanaIntegrationFabricResourceId);
 
             // invoke the operation
-            await integrationFabric.DeleteAsync(WaitUntil.Completed);
+            await grafanaIntegrationFabric.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.Grafana.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this IntegrationFabricResource created on azure
-            // for more information of creating IntegrationFabricResource, please refer to the document of IntegrationFabricResource
+            // this example assumes you already have this GrafanaIntegrationFabricResource created on azure
+            // for more information of creating GrafanaIntegrationFabricResource, please refer to the document of GrafanaIntegrationFabricResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string workspaceName = "myWorkspace";
             string integrationFabricName = "sampleIntegration";
-            ResourceIdentifier integrationFabricResourceId = IntegrationFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, integrationFabricName);
-            IntegrationFabricResource integrationFabric = client.GetIntegrationFabricResource(integrationFabricResourceId);
+            ResourceIdentifier grafanaIntegrationFabricResourceId = GrafanaIntegrationFabricResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, integrationFabricName);
+            GrafanaIntegrationFabricResource grafanaIntegrationFabric = client.GetGrafanaIntegrationFabricResource(grafanaIntegrationFabricResourceId);
 
             // invoke the operation
-            IntegrationFabricPatch patch = new IntegrationFabricPatch
+            GrafanaIntegrationFabricPatch patch = new GrafanaIntegrationFabricPatch
             {
                 Tags =
 {
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.Grafana.Samples
 },
                 IntegrationFabricPropertiesUpdateParametersScenarios = { "scenario1" },
             };
-            ArmOperation<IntegrationFabricResource> lro = await integrationFabric.UpdateAsync(WaitUntil.Completed, patch);
-            IntegrationFabricResource result = lro.Value;
+            ArmOperation<GrafanaIntegrationFabricResource> lro = await grafanaIntegrationFabric.UpdateAsync(WaitUntil.Completed, patch);
+            GrafanaIntegrationFabricResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            IntegrationFabricData resourceData = result.Data;
+            GrafanaIntegrationFabricData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

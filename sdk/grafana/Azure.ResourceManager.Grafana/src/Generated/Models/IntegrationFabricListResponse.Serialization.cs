@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            IReadOnlyList<IntegrationFabricData> value = default;
+            IReadOnlyList<GrafanaIntegrationFabricData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<IntegrationFabricData> array = new List<IntegrationFabricData>();
+                    List<GrafanaIntegrationFabricData> array = new List<GrafanaIntegrationFabricData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationFabricData.DeserializeIntegrationFabricData(item, options));
+                        array.Add(GrafanaIntegrationFabricData.DeserializeGrafanaIntegrationFabricData(item, options));
                     }
                     value = array;
                     continue;

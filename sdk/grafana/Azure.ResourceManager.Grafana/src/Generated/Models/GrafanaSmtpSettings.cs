@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Grafana.Models
     /// Email server settings.
     /// https://grafana.com/docs/grafana/v9.0/setup-grafana/configure-grafana/#smtp
     /// </summary>
-    public partial class Smtp
+    public partial class GrafanaSmtpSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.Grafana.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Smtp"/>. </summary>
-        public Smtp()
+        /// <summary> Initializes a new instance of <see cref="GrafanaSmtpSettings"/>. </summary>
+        public GrafanaSmtpSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Smtp"/>. </summary>
-        /// <param name="enabled"> Enable this to allow Grafana to send email. Default is false. </param>
+        /// <summary> Initializes a new instance of <see cref="GrafanaSmtpSettings"/>. </summary>
+        /// <param name="isEnabled"> Enable this to allow Grafana to send email. Default is false. </param>
         /// <param name="host"> SMTP server hostname with port, e.g. test.email.net:587. </param>
         /// <param name="user"> User of SMTP auth. </param>
         /// <param name="password"> Password of SMTP auth. If the password contains # or ;, then you have to wrap it with triple quotes. </param>
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Grafana.Models
         /// https://pkg.go.dev/crypto/tls#Config
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Smtp(bool? enabled, string host, string user, string password, string fromAddress, string fromName, StartTLSPolicy? startTLSPolicy, bool? skipVerify, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GrafanaSmtpSettings(bool? isEnabled, string host, string user, string password, string fromAddress, string fromName, GrafanaStartTlsPolicy? startTLSPolicy, bool? skipVerify, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Host = host;
             User = user;
             Password = password;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Grafana.Models
         }
 
         /// <summary> Enable this to allow Grafana to send email. Default is false. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> SMTP server hostname with port, e.g. test.email.net:587. </summary>
         public string Host { get; set; }
         /// <summary> User of SMTP auth. </summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// The StartTLSPolicy setting of the SMTP configuration
         /// https://pkg.go.dev/github.com/go-mail/mail#StartTLSPolicy
         /// </summary>
-        public StartTLSPolicy? StartTLSPolicy { get; set; }
+        public GrafanaStartTlsPolicy? StartTLSPolicy { get; set; }
         /// <summary>
         /// Verify SSL for SMTP server. Default is false
         /// https://pkg.go.dev/crypto/tls#Config

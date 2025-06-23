@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> The IntegrationFabricProperties. </summary>
-    public partial class IntegrationFabricProperties
+    /// <summary> The GrafanaIntegrationFabricProperties. </summary>
+    public partial class GrafanaIntegrationFabricProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.Grafana.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IntegrationFabricProperties"/>. </summary>
-        public IntegrationFabricProperties()
+        /// <summary> Initializes a new instance of <see cref="GrafanaIntegrationFabricProperties"/>. </summary>
+        public GrafanaIntegrationFabricProperties()
         {
             Scenarios = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IntegrationFabricProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaIntegrationFabricProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="targetResourceId"> The resource Id of the Azure resource being integrated with Azure Managed Grafana. E.g., an Azure Kubernetes Service cluster. </param>
         /// <param name="dataSourceResourceId"> The resource Id of the Azure resource which is used to configure Grafana data source. E.g., an Azure Monitor Workspace, an Azure Data Explorer cluster, etc. </param>
         /// <param name="scenarios"> A list of integration scenarios covered by this integration fabric. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IntegrationFabricProperties(GrafanaProvisioningState? provisioningState, ResourceIdentifier targetResourceId, ResourceIdentifier dataSourceResourceId, IList<string> scenarios, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GrafanaIntegrationFabricProperties(GrafanaProvisioningState? provisioningState, ResourceIdentifier targetResourceId, ResourceIdentifier dataSourceResourceId, IList<string> scenarios, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             TargetResourceId = targetResourceId;

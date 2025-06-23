@@ -62,25 +62,25 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
                     },
                     GrafanaConfigurations = new GrafanaConfigurations
                     {
-                        Smtp = new Smtp
+                        Smtp = new GrafanaSmtpSettings
                         {
-                            Enabled = true,
+                            IsEnabled = true,
                             Host = "smtp.sendemail.com:587",
                             User = "username",
                             Password = "<password>",
                             FromAddress = "test@sendemail.com",
                             FromName = "emailsender",
-                            StartTLSPolicy = StartTLSPolicy.OpportunisticStartTLS,
+                            StartTLSPolicy = GrafanaStartTlsPolicy.OpportunisticStartTls,
                             SkipVerify = true,
                         },
-                        ExternalEnabled = true,
-                        Users = new Users
+                        IsExternalEnabled = true,
+                        Users = new GrafanaUserSettings
                         {
                             ViewersCanEdit = true,
                             EditorsCanAdmin = true,
                         },
-                        CsrfAlwaysCheck = false,
-                        CaptureEnabled = false,
+                        IsCsrfAlwaysCheckEnabled = false,
+                        IsCaptureEnabled = false,
                     },
                     GrafanaPlugins =
 {

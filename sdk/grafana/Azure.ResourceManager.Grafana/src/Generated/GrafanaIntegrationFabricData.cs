@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Grafana.Models;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Grafana.Models
+namespace Azure.ResourceManager.Grafana
 {
-    /// <summary> The parameters for a PATCH request to a Integration Fabric resource. </summary>
-    public partial class IntegrationFabricPatch
+    /// <summary>
+    /// A class representing the GrafanaIntegrationFabric data model.
+    /// The integration fabric resource type.
+    /// </summary>
+    public partial class GrafanaIntegrationFabricData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,36 +51,33 @@ namespace Azure.ResourceManager.Grafana.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IntegrationFabricPatch"/>. </summary>
-        public IntegrationFabricPatch()
+        /// <summary> Initializes a new instance of <see cref="GrafanaIntegrationFabricData"/>. </summary>
+        /// <param name="location"> The location. </param>
+        public GrafanaIntegrationFabricData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IntegrationFabricPatch"/>. </summary>
-        /// <param name="tags"> The new tags of the Integration Fabric resource. </param>
-        /// <param name="properties"> The new properties of this Integration Fabric resource. </param>
+        /// <summary> Initializes a new instance of <see cref="GrafanaIntegrationFabricData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IntegrationFabricPatch(IDictionary<string, string> tags, IntegrationFabricPropertiesUpdateParameters properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GrafanaIntegrationFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GrafanaIntegrationFabricProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Tags = tags;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The new tags of the Integration Fabric resource. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> The new properties of this Integration Fabric resource. </summary>
-        internal IntegrationFabricPropertiesUpdateParameters Properties { get; set; }
-        /// <summary> The new integration scenarios covered by this integration fabric. </summary>
-        public IList<string> IntegrationFabricPropertiesUpdateParametersScenarios
+        /// <summary> Initializes a new instance of <see cref="GrafanaIntegrationFabricData"/> for deserialization. </summary>
+        internal GrafanaIntegrationFabricData()
         {
-            get
-            {
-                if (Properties is null)
-                    Properties = new IntegrationFabricPropertiesUpdateParameters();
-                return Properties.Scenarios;
-            }
         }
+
+        /// <summary> Gets or sets the properties. </summary>
+        public GrafanaIntegrationFabricProperties Properties { get; set; }
     }
 }

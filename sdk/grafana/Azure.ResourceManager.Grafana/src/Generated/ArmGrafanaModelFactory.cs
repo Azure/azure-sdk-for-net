@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new ManagedPrivateEndpointConnectionState(status, description, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Grafana.IntegrationFabricData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Grafana.GrafanaIntegrationFabricData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Grafana.IntegrationFabricData"/> instance for mocking. </returns>
-        public static IntegrationFabricData IntegrationFabricData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IntegrationFabricProperties properties = null)
+        /// <returns> A new <see cref="Grafana.GrafanaIntegrationFabricData"/> instance for mocking. </returns>
+        public static GrafanaIntegrationFabricData GrafanaIntegrationFabricData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GrafanaIntegrationFabricProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IntegrationFabricData(
+            return new GrafanaIntegrationFabricData(
                 id,
                 name,
                 resourceType,
@@ -270,17 +270,17 @@ namespace Azure.ResourceManager.Grafana.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.IntegrationFabricProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GrafanaIntegrationFabricProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="targetResourceId"> The resource Id of the Azure resource being integrated with Azure Managed Grafana. E.g., an Azure Kubernetes Service cluster. </param>
         /// <param name="dataSourceResourceId"> The resource Id of the Azure resource which is used to configure Grafana data source. E.g., an Azure Monitor Workspace, an Azure Data Explorer cluster, etc. </param>
         /// <param name="scenarios"> A list of integration scenarios covered by this integration fabric. </param>
-        /// <returns> A new <see cref="Models.IntegrationFabricProperties"/> instance for mocking. </returns>
-        public static IntegrationFabricProperties IntegrationFabricProperties(GrafanaProvisioningState? provisioningState = null, ResourceIdentifier targetResourceId = null, ResourceIdentifier dataSourceResourceId = null, IEnumerable<string> scenarios = null)
+        /// <returns> A new <see cref="Models.GrafanaIntegrationFabricProperties"/> instance for mocking. </returns>
+        public static GrafanaIntegrationFabricProperties GrafanaIntegrationFabricProperties(GrafanaProvisioningState? provisioningState = null, ResourceIdentifier targetResourceId = null, ResourceIdentifier dataSourceResourceId = null, IEnumerable<string> scenarios = null)
         {
             scenarios ??= new List<string>();
 
-            return new IntegrationFabricProperties(provisioningState, targetResourceId, dataSourceResourceId, scenarios?.ToList(), serializedAdditionalRawData: null);
+            return new GrafanaIntegrationFabricProperties(provisioningState, targetResourceId, dataSourceResourceId, scenarios?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Grafana.ManagedDashboardData"/>. </summary>

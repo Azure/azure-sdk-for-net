@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    public partial class IntegrationFabricPatch : IUtf8JsonSerializable, IJsonModel<IntegrationFabricPatch>
+    public partial class GrafanaIntegrationFabricPatch : IUtf8JsonSerializable, IJsonModel<GrafanaIntegrationFabricPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationFabricPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GrafanaIntegrationFabricPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IntegrationFabricPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GrafanaIntegrationFabricPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GrafanaIntegrationFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationFabricPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GrafanaIntegrationFabricPatch)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Tags))
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.Grafana.Models
             }
         }
 
-        IntegrationFabricPatch IJsonModel<IntegrationFabricPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GrafanaIntegrationFabricPatch IJsonModel<GrafanaIntegrationFabricPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GrafanaIntegrationFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationFabricPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GrafanaIntegrationFabricPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIntegrationFabricPatch(document.RootElement, options);
+            return DeserializeGrafanaIntegrationFabricPatch(document.RootElement, options);
         }
 
-        internal static IntegrationFabricPatch DeserializeIntegrationFabricPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GrafanaIntegrationFabricPatch DeserializeGrafanaIntegrationFabricPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -122,38 +122,38 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IntegrationFabricPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
+            return new GrafanaIntegrationFabricPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IntegrationFabricPatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GrafanaIntegrationFabricPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GrafanaIntegrationFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationFabricPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GrafanaIntegrationFabricPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IntegrationFabricPatch IPersistableModel<IntegrationFabricPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GrafanaIntegrationFabricPatch IPersistableModel<GrafanaIntegrationFabricPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GrafanaIntegrationFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIntegrationFabricPatch(document.RootElement, options);
+                        return DeserializeGrafanaIntegrationFabricPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationFabricPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GrafanaIntegrationFabricPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IntegrationFabricPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GrafanaIntegrationFabricPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

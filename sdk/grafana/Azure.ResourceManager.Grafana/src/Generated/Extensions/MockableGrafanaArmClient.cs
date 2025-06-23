@@ -83,15 +83,15 @@ namespace Azure.ResourceManager.Grafana.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationFabricResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationFabricResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationFabricResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="GrafanaIntegrationFabricResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GrafanaIntegrationFabricResource.CreateResourceIdentifier" /> to create a <see cref="GrafanaIntegrationFabricResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationFabricResource"/> object. </returns>
-        public virtual IntegrationFabricResource GetIntegrationFabricResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GrafanaIntegrationFabricResource"/> object. </returns>
+        public virtual GrafanaIntegrationFabricResource GetGrafanaIntegrationFabricResource(ResourceIdentifier id)
         {
-            IntegrationFabricResource.ValidateResourceId(id);
-            return new IntegrationFabricResource(Client, id);
+            GrafanaIntegrationFabricResource.ValidateResourceId(id);
+            return new GrafanaIntegrationFabricResource(Client, id);
         }
 
         /// <summary>

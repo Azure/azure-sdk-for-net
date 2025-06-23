@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    public partial class Users : IUtf8JsonSerializable, IJsonModel<Users>
+    internal partial class GrafanaSecuritySettings : IUtf8JsonSerializable, IJsonModel<GrafanaSecuritySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Users>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GrafanaSecuritySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Users>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GrafanaSecuritySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,21 +28,16 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Users>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GrafanaSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Users)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GrafanaSecuritySettings)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ViewersCanEdit))
+            if (Optional.IsDefined(IsCsrfAlwaysCheckEnabled))
             {
-                writer.WritePropertyName("viewersCanEdit"u8);
-                writer.WriteBooleanValue(ViewersCanEdit.Value);
-            }
-            if (Optional.IsDefined(EditorsCanAdmin))
-            {
-                writer.WritePropertyName("editorsCanAdmin"u8);
-                writer.WriteBooleanValue(EditorsCanAdmin.Value);
+                writer.WritePropertyName("csrfAlwaysCheck"u8);
+                writer.WriteBooleanValue(IsCsrfAlwaysCheckEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,19 +56,19 @@ namespace Azure.ResourceManager.Grafana.Models
             }
         }
 
-        Users IJsonModel<Users>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GrafanaSecuritySettings IJsonModel<GrafanaSecuritySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Users>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GrafanaSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Users)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GrafanaSecuritySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUsers(document.RootElement, options);
+            return DeserializeGrafanaSecuritySettings(document.RootElement, options);
         }
 
-        internal static Users DeserializeUsers(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GrafanaSecuritySettings DeserializeGrafanaSecuritySettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,28 +76,18 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            bool? viewersCanEdit = default;
-            bool? editorsCanAdmin = default;
+            bool? csrfAlwaysCheck = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("viewersCanEdit"u8))
+                if (property.NameEquals("csrfAlwaysCheck"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    viewersCanEdit = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("editorsCanAdmin"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    editorsCanAdmin = property.Value.GetBoolean();
+                    csrfAlwaysCheck = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,38 +96,38 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Users(viewersCanEdit, editorsCanAdmin, serializedAdditionalRawData);
+            return new GrafanaSecuritySettings(csrfAlwaysCheck, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Users>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GrafanaSecuritySettings>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Users>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GrafanaSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Users)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GrafanaSecuritySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Users IPersistableModel<Users>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GrafanaSecuritySettings IPersistableModel<GrafanaSecuritySettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Users>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GrafanaSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUsers(document.RootElement, options);
+                        return DeserializeGrafanaSecuritySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Users)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GrafanaSecuritySettings)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Users>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GrafanaSecuritySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

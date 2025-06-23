@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.Grafana.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UnifiedAlertingScreenshots"/>. </summary>
-        /// <param name="captureEnabled"> Set to false to disable capture screenshot in Unified Alert due to performance issue. </param>
+        /// <param name="isCaptureEnabled"> Set to false to disable capture screenshot in Unified Alert due to performance issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnifiedAlertingScreenshots(bool? captureEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UnifiedAlertingScreenshots(bool? isCaptureEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CaptureEnabled = captureEnabled;
+            IsCaptureEnabled = isCaptureEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Set to false to disable capture screenshot in Unified Alert due to performance issue. </summary>
-        public bool? CaptureEnabled { get; set; }
+        public bool? IsCaptureEnabled { get; set; }
     }
 }
