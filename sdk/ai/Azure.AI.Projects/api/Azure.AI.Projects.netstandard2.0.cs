@@ -83,14 +83,11 @@ namespace Azure.AI.Projects
         public Azure.AI.Projects.Telemetry Telemetry { get { throw null; } }
         public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
         public OpenAI.Chat.ChatClient GetAzureOpenAIChatClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null) { throw null; }
-        public Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient() { throw null; }
         public override System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId) { throw null; }
         public virtual Azure.AI.Projects.Connections GetConnectionsClient(string apiVersion = "2025-05-15-preview") { throw null; }
         public virtual Azure.AI.Projects.Datasets GetDatasetsClient(string apiVersion = "2025-05-15-preview") { throw null; }
         public virtual Azure.AI.Projects.Deployments GetDeploymentsClient(string apiVersion = "2025-05-15-preview") { throw null; }
-        public Azure.AI.Inference.EmbeddingsClient GetEmbeddingsClient() { throw null; }
         public virtual Azure.AI.Projects.Evaluations GetEvaluationsClient(string apiVersion = "2025-05-15-preview") { throw null; }
-        public Azure.AI.Inference.ImageEmbeddingsClient GetImageEmbeddingsClient() { throw null; }
         public virtual Azure.AI.Projects.Indexes GetIndexesClient(string apiVersion = "2025-05-15-preview") { throw null; }
         public virtual Azure.AI.Projects.RedTeams GetRedTeamsClient(string apiVersion = "2025-05-15-preview") { throw null; }
     }
