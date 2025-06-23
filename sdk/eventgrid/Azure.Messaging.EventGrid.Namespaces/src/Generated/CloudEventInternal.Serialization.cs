@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
@@ -267,17 +266,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(cloudEventInternal, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="CloudEventInternal"/> from. </param>
-        public static explicit operator CloudEventInternal(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeCloudEventInternal(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

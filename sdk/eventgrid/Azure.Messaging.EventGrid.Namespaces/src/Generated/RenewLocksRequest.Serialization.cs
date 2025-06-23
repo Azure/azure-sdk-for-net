@@ -9,12 +9,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> The RenewLocksRequest. </summary>
     internal partial class RenewLocksRequest : IJsonModel<RenewLocksRequest>
     {
         /// <summary> Initializes a new instance of <see cref="RenewLocksRequest"/> for deserialization. </summary>
@@ -170,17 +169,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(renewLocksRequest, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="RenewLocksRequest"/> from. </param>
-        public static explicit operator RenewLocksRequest(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeRenewLocksRequest(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

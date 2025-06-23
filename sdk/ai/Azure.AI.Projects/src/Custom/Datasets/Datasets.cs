@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using System.Runtime.InteropServices.ComTypes;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace Azure.AI.Projects
 {
@@ -31,7 +32,7 @@ namespace Azure.AI.Projects
             PendingUploadResponse pendingUploadResponse = PendingUpload(
                 name: name,
                 version: inputVersion,
-                body: pendingUploadRequest
+                pendingUploadRequest: pendingUploadRequest
             );
 
             string outputVersion = inputVersion;
@@ -66,10 +67,10 @@ namespace Azure.AI.Projects
 
             var (containerClient, outputVersion) = CreateDatasetAndGetContainerClient(name, version, connectionName);
 
-            using (var fileStream = File.OpenRead(filePath))
+            using (FileStream fileStream = File.OpenRead(filePath))
             {
-                var blobName = Path.GetFileName(filePath);
-                var blobClient = containerClient.GetBlobClient(blobName);
+                string blobName = Path.GetFileName(filePath);
+                BlobClient blobClient = containerClient.GetBlobClient(blobName);
                 blobClient.Upload(fileStream);
 
                 var uriBuilder = new UriBuilder(blobClient.Uri) { Query = "" };
@@ -86,7 +87,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public DatasetVersion UploadFolder(string name, string version, string folderPath, string? connectionName = null)
+        public DatasetVersion UploadFolder(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -100,10 +101,14 @@ namespace Azure.AI.Projects
             BlobClient? blobClient = null;
             foreach (var filePath in Directory.EnumerateFiles(folderPath, "*", SearchOption.AllDirectories))
             {
-                var relativePath = new Uri(folderPath).MakeRelativeUri(new Uri(filePath));
-                using (var fileStream = File.OpenRead(filePath))
+                string fileName = Path.GetFileName(filePath);
+                if (filePattern != null && !filePattern.IsMatch(fileName))
                 {
-                    blobClient = containerClient.GetBlobClient(relativePath.OriginalString);
+                    continue;
+                }
+                using (FileStream fileStream = File.OpenRead(filePath))
+                {
+                    blobClient = containerClient.GetBlobClient(fileName);
                     blobClient.Upload(fileStream);
                     filesUploaded = true;
                 }
@@ -137,7 +142,7 @@ namespace Azure.AI.Projects
             PendingUploadResponse pendingUploadResponse = await PendingUploadAsync(
                 name: name,
                 version: inputVersion,
-                body: pendingUploadRequest
+                pendingUploadRequest: pendingUploadRequest
             ).ConfigureAwait(false);
 
             string outputVersion = inputVersion;
@@ -171,10 +176,10 @@ namespace Azure.AI.Projects
 
             var (containerClient, outputVersion) = await CreateDatasetAndGetContainerClientAsync(name, version, connectionName).ConfigureAwait(false);
 
-            using (var fileStream = File.OpenRead(filePath))
+            using (FileStream fileStream = File.OpenRead(filePath))
             {
-                var blobName = Path.GetFileName(filePath);
-                var blobClient = containerClient.GetBlobClient(blobName);
+                string blobName = Path.GetFileName(filePath);
+                BlobClient blobClient = containerClient.GetBlobClient(blobName);
                 await blobClient.UploadAsync(fileStream).ConfigureAwait(false);
 
                 var uriBuilder = new UriBuilder(blobClient.Uri) { Query = "" };
@@ -191,7 +196,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public async Task<DatasetVersion> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null)
+        public async Task<DatasetVersion> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -205,10 +210,14 @@ namespace Azure.AI.Projects
             BlobClient? blobClient = null;
             foreach (var filePath in Directory.EnumerateFiles(folderPath, "*", SearchOption.AllDirectories))
             {
-                var relativePath = new Uri(folderPath).MakeRelativeUri(new Uri(filePath));
-                using (var fileStream = File.OpenRead(filePath))
+                string fileName = Path.GetFileName(filePath);
+                if (filePattern != null && !filePattern.IsMatch(fileName))
                 {
-                    blobClient = containerClient.GetBlobClient(relativePath.OriginalString);
+                    continue;
+                }
+                using (FileStream fileStream = File.OpenRead(filePath))
+                {
+                    blobClient = containerClient.GetBlobClient(fileName);
                     await blobClient.UploadAsync(fileStream).ConfigureAwait(false);
                     filesUploaded = true;
                 }

@@ -260,7 +260,7 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="version"> The specific version id of the Index to create or replace. </param>
+        /// <param name="version"> The specific version id of the Index to create or update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
@@ -299,7 +299,7 @@ namespace Azure.AI.Projects
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="version"> The specific version id of the Index to create or replace. </param>
+        /// <param name="version"> The specific version id of the Index to create or update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>

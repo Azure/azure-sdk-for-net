@@ -192,7 +192,7 @@ public class PlaywrightServiceBrowserClientTests
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
-            {"aid", "account-id-guid"},
+            {"pwid", "account-id-guid"},
         });
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
@@ -212,7 +212,7 @@ public class PlaywrightServiceBrowserClientTests
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
-            {"aid", "account-id-guid"},
+            {"pwid", "account-id-guid"},
         });
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         defaultAzureCredentialMock
@@ -269,7 +269,7 @@ public class PlaywrightServiceBrowserClientTests
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
-            {"aid", "account-id-guid"},
+            {"pwid", "account-id-guid"},
         }, DateTime.UtcNow.AddMinutes(-1));
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
@@ -288,12 +288,12 @@ public class PlaywrightServiceBrowserClientTests
         var environment = new TestEnvironment();
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
-            {"aid", "eastus_bd830e63-6120-40cb-8cd7-f0739502d888"},
+            {"pwid", "eastus_bd830e63-6120-40cb-8cd7-f0739502d888"},
         });
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         var testRubric = new Dictionary<string, string>
         {
-            { "url", "wss://eastus.api.playwright.microsoft.com/accounts/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers" },
+            { "url", "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers" },
             { "workspaceId", "eastus_bd830e63-6120-40cb-8cd7-f0739502d888" },
             { "region", "eastus" },
             { "domain", "playwright.microsoft.com" }
@@ -456,7 +456,7 @@ public class PlaywrightServiceBrowserClientTests
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
-            {"aid", "account-id-guid"},
+            {"pwid", "account-id-guid"},
         });
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
@@ -476,7 +476,7 @@ public class PlaywrightServiceBrowserClientTests
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
-            {"aid", "account-id-guid"},
+            {"pwid", "account-id-guid"},
         });
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         defaultAzureCredentialMock
@@ -533,7 +533,7 @@ public class PlaywrightServiceBrowserClientTests
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
-            {"aid", "account-id-guid"},
+            {"pwid", "account-id-guid"},
         }, DateTime.UtcNow.AddMinutes(-1));
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
@@ -552,12 +552,12 @@ public class PlaywrightServiceBrowserClientTests
         var environment = new TestEnvironment();
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
-            {"aid", "eastus_bd830e63-6120-40cb-8cd7-f0739502d888"},
+            {"pwid", "eastus_bd830e63-6120-40cb-8cd7-f0739502d888"},
         });
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         var testRubric = new Dictionary<string, string>
         {
-            { "url", "wss://eastus.api.playwright.microsoft.com/accounts/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers" },
+            { "url", "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers" },
             { "workspaceId", "eastus_bd830e63-6120-40cb-8cd7-f0739502d888" },
             { "region", "eastus" },
             { "domain", "playwright.microsoft.com" }

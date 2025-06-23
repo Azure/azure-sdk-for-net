@@ -6,7 +6,6 @@ using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -30,10 +29,10 @@ namespace Azure.Generator.Providers
             => new HttpRequestProvider(original);
 
         public override MethodBodyStatement SetHeaders(IReadOnlyList<ValueExpression> arguments)
-            => Original.Property(nameof(PipelineRequest.Headers)).Invoke(nameof(RequestHeaders.SetValue), arguments).Terminate();
+            => Original.Property(nameof(Request.Headers)).Invoke(nameof(RequestHeaders.SetValue), arguments).Terminate();
 
         public override MethodBodyStatement SetMethod(string httpMethod)
-            => Original.Property(nameof(PipelineRequest.Method)).Assign(CreateRequestMethod(httpMethod)).Terminate();
+            => Original.Property(nameof(Request.Method)).Assign(CreateRequestMethod(httpMethod)).Terminate();
 
         public override MethodBodyStatement SetUri(ValueExpression value)
             => Original.Property("Uri").Assign(value).Terminate();

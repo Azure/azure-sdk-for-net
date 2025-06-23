@@ -359,14 +359,14 @@ namespace Azure.AI.Projects
         public virtual Azure.Pageable<Azure.AI.Projects.DatasetVersion> GetVersions(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetVersionsAsync(string name, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.Projects.DatasetVersion> GetVersionsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.Projects.PendingUploadResponse> PendingUpload(string name, string version, Azure.AI.Projects.PendingUploadRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Projects.PendingUploadResponse> PendingUpload(string name, string version, Azure.AI.Projects.PendingUploadRequest pendingUploadRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PendingUpload(string name, string version, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.PendingUploadResponse>> PendingUploadAsync(string name, string version, Azure.AI.Projects.PendingUploadRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.PendingUploadResponse>> PendingUploadAsync(string name, string version, Azure.AI.Projects.PendingUploadRequest pendingUploadRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PendingUploadAsync(string name, string version, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public Azure.AI.Projects.DatasetVersion UploadFile(string name, string version, string filePath, string? connectionName = null) { throw null; }
         public System.Threading.Tasks.Task<Azure.AI.Projects.DatasetVersion> UploadFileAsync(string name, string version, string filePath, string? connectionName = null) { throw null; }
-        public Azure.AI.Projects.DatasetVersion UploadFolder(string name, string version, string folderPath, string? connectionName = null) { throw null; }
-        public System.Threading.Tasks.Task<Azure.AI.Projects.DatasetVersion> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null) { throw null; }
+        public Azure.AI.Projects.DatasetVersion UploadFolder(string name, string version, string folderPath, string? connectionName = null, System.Text.RegularExpressions.Regex? filePattern = null) { throw null; }
+        public System.Threading.Tasks.Task<Azure.AI.Projects.DatasetVersion> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null, System.Text.RegularExpressions.Regex? filePattern = null) { throw null; }
     }
     public abstract partial class DatasetVersion : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DatasetVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetVersion>
     {

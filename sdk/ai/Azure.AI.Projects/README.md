@@ -299,7 +299,8 @@ dataset = datasets.UploadFolder(
     name: datasetName,
     version: datasetVersion2,
     folderPath: folderPath,
-    connectionName: connectionName
+    connectionName: connectionName,
+    filePattern: new Regex(".*\\.txt")
 );
 Console.WriteLine(dataset);
 
