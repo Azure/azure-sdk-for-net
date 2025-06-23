@@ -68,8 +68,8 @@ using Azure.AI.Language.Text;
 With your **endpoint** and **API key**, you can instantiate a `TextAnalysisClient`:
 
 ```C# Snippet:CreateTextClient
-Uri endpoint = new Uri("endpoint");
-AzureKeyCredential credential = new("your apikey");
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 ```
 
@@ -92,7 +92,7 @@ using Azure.Identity;
 Then you can create an instance of `DefaultAzureCredential` and pass it to a new instance of your client:
 
 ```C# Snippet:TextAnalysisClient_CreateWithDefaultAzureCredential
-Uri endpoint = new Uri("endpoint");
+Uri endpoint = new Uri("{endpoint}");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 ```
@@ -110,8 +110,8 @@ You have the flexibility to explicitly select a supported service API version wh
 For example,
 
 ```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
-Uri endpoint = new Uri("endpoint");
-AzureKeyCredential credential = new("your apikey");
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
 var client = new TextAnalysisClient(endpoint, credential, options);
 ```

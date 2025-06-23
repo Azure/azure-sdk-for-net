@@ -7,8 +7,8 @@ This sample demonstrates how to recognize Personally Identifiable Information (P
 To create a new `TextAnalysisClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
-Uri endpoint = new Uri("endpoint");
-AzureKeyCredential credential = new("your apikey");
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
 var client = new TextAnalysisClient(endpoint, credential, options);
 ```
@@ -151,11 +151,11 @@ foreach (DocumentError analyzeTextDocumentError in piiTaskResult.Results.Errors)
 }
 ```
 
-The new features — `ValueExclusion`, `Synonyms`, and `new entity types` — are supported in version V2025_05_15_Preview or later.
-```C#
-Uri endpoint = new Uri("endpoint");
-AzureKeyCredential credential = new("your apikey");
-TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview);
+The new features ï¿½ `ValueExclusion`, `Synonyms`, and `new entity types` ï¿½ are supported in version V2025_05_15_Preview or later.
+```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
 var client = new TextAnalysisClient(endpoint, credential, options);
 ```
 
