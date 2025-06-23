@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Text;
 using Azure.Core;
+using Azure.Storage.Common;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Models
@@ -2425,6 +2426,52 @@ namespace Azure.Storage.Blobs.Models
                 BlobContentLength = blobContentLength,
                 PageRanges = pageRanges,
                 ClearRanges = clearRanges
+            };
+        }
+        #endregion
+
+        #region BlobImmutabilityPolicy
+        /// <summary>
+        /// Creates a new BlobImmutabilityPolicy instance for mocking.
+        /// </summary>
+        public static BlobImmutabilityPolicy BlobImmutabilityPolicy(
+            DateTimeOffset? expiresOn = default,
+            BlobImmutabilityPolicyMode? policyMode = default)
+        {
+            return new BlobImmutabilityPolicy()
+            {
+                ExpiresOn = expiresOn,
+                PolicyMode = policyMode
+            };
+        }
+        #endregion
+
+        #region BlobLegalHoldResult
+        /// <summary>
+        /// Creates a new BlobLegalHoldResult instance for mocking.
+        /// </summary>
+        public static BlobLegalHoldResult BlobLegalHoldResult(
+            bool hasLegalHold = false)
+        {
+            return new BlobLegalHoldResult()
+            {
+                HasLegalHold = hasLegalHold
+            };
+        }
+        #endregion
+
+        #region PageRangeItem
+        /// <summary>
+        /// Creates a new PageRangeItem instance for mocking.
+        /// </summary>
+        public static PageRangeItem PageRangeItem(
+            HttpRange range = default,
+            bool isClear = default)
+        {
+            return new PageRangeItem()
+            {
+                Range = range,
+                IsClear = isClear
             };
         }
         #endregion
