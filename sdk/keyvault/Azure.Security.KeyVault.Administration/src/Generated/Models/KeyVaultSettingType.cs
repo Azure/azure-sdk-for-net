@@ -7,12 +7,11 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> The type specifier of the value. </summary>
-    internal internal readonly partial struct KeyVaultSettingType : IEquatable<KeyVaultSettingType>
+    public internal readonly partial struct KeyVaultSettingType : IEquatable<KeyVaultSettingType>
     {
         private readonly string _value;
         /// <summary> A boolean setting value. </summary>

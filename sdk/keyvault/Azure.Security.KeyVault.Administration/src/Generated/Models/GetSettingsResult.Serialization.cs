@@ -10,12 +10,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> The settings list result. </summary>
-    internal partial class GetSettingsResult : IJsonModel<GetSettingsResult>
+    public partial class GetSettingsResult : IJsonModel<GetSettingsResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -39,7 +38,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartArray();
-                foreach (Setting item in Settings)
+                foreach (KeyVaultSetting item in Settings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -87,7 +86,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 return null;
             }
-            IReadOnlyList<Setting> settings = default;
+            IReadOnlyList<KeyVaultSetting> settings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -97,10 +96,10 @@ namespace Azure.Security.KeyVault.Administration.Models
                     {
                         continue;
                     }
-                    List<Setting> array = new List<Setting>();
+                    List<KeyVaultSetting> array = new List<KeyVaultSetting>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Setting.DeserializeSetting(item, options));
+                        array.Add(KeyVaultSetting.DeserializeKeyVaultSetting(item, options));
                     }
                     settings = array;
                     continue;
@@ -110,7 +109,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GetSettingsResult(settings ?? new ChangeTrackingList<Setting>(), additionalBinaryDataProperties);
+            return new GetSettingsResult(settings ?? new ChangeTrackingList<KeyVaultSetting>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

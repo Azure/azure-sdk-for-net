@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Security.KeyVault.Administration;
+using Azure.Security.KeyVault.Administration.Models;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role definition permissions. </summary>
-    internal partial class KeyVaultPermission
+    public partial class KeyVaultPermission
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

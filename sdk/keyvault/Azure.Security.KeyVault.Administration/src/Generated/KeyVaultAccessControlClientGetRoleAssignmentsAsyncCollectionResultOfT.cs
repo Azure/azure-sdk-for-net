@@ -15,7 +15,7 @@ using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class KeyVaultAccessControlClientGetRoleAssignmentsAsyncCollectionResultOfT : AsyncPageable<Models.KeyVaultRoleAssignment>
+    internal partial class KeyVaultAccessControlClientGetRoleAssignmentsAsyncCollectionResultOfT : AsyncPageable<KeyVaultRoleAssignment>
     {
         private readonly KeyVaultAccessControlClient _client;
         private readonly string _scope;
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of KeyVaultAccessControlClientGetRoleAssignmentsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<Models.KeyVaultRoleAssignment>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<KeyVaultRoleAssignment>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             do
@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 RoleAssignmentListResult responseWithType = (RoleAssignmentListResult)response;
                 nextPage = new Uri(responseWithType.NextLink);
-                yield return Page<Models.KeyVaultRoleAssignment>.FromValues((IReadOnlyList<Models.KeyVaultRoleAssignment>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<KeyVaultRoleAssignment>.FromValues((IReadOnlyList<KeyVaultRoleAssignment>)responseWithType.Value, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);
         }

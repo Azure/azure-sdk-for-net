@@ -10,12 +10,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role Assignments. </summary>
-    internal partial class KeyVaultRoleAssignment : IJsonModel<KeyVaultRoleAssignment>
+    public partial class KeyVaultRoleAssignment : IJsonModel<KeyVaultRoleAssignment>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
