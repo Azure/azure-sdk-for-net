@@ -147,7 +147,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         public async Task ImportProjectAsync_WithAssignedResourcesAndMetadata()
         {
             // Arrange
-            string projectName = "EmailApp";
+            string projectName = "TestImportedApp0623";
 
             // Create metadata
             var projectMetadata = new ConversationAuthoringCreateProjectDetails(
@@ -349,7 +349,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         public async Task TrainAsync_withDataGenerationSettings()
         {
             // Arrange
-            string projectName = "Test-data-labels";
+            string projectName = "EmailAppEnglish";
 
             var connectionInfo = new AnalyzeConversationAuthoringDataGenerationConnectionInfo(
                 kind: AnalyzeConversationAuthoringDataGenerationConnectionKind.AzureOpenAI,
@@ -358,7 +358,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             connectionInfo.ResourceId = "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai";
 
             var trainingJobDetails = new ConversationAuthoringTrainingJobDetails(
-                modelLabel: "MyModel",
+                modelLabel: "ModelWithDG",
                 trainingMode: ConversationAuthoringTrainingMode.Standard
             )
             {
@@ -633,8 +633,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         public async Task DeployProjectAsync_WithAssignedResources()
         {
             // Arrange
-            string projectName = "Test-data-labels";
-            string deploymentName = "deployment2";
+            string projectName = "EmailAppEnglish";
+            string deploymentName = "assignedDeployment";
 
             // Create the assignedAoaiResource
             var assignedAoaiResource = new AnalyzeConversationAuthoringDataGenerationConnectionInfo(
@@ -647,15 +647,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             // Create the assignedResource
             var assignedResource = new ConversationAuthoringDeploymentResource(
-                resourceId: "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/language-sdk-rg/providers/Microsoft.CognitiveServices/accounts/sdk-test-01",
-                region: "eastus"
+                resourceId: "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/bidishac-dev/providers/Microsoft.CognitiveServices/accounts/bidishac-scus",
+                region: "South Central US"
             )
             {
                 AssignedAoaiResource = assignedAoaiResource
             };
 
             // Create deployment details with assigned resources
-            var deploymentDetails = new ConversationAuthoringCreateDeploymentDetails("MyModel");
+            var deploymentDetails = new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
 
             // Use Add to populate the read-only AssignedResources
             deploymentDetails.AssignedResources.Add(assignedResource);
