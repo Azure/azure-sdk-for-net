@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Client options for <see cref="KeyVaultRestClient"/>. </summary>
-    public partial class KeyVaultRestClientOptions : ClientOptions
+    internal partial class KeyVaultRestClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V7_6;
 

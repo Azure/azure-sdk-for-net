@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -16,6 +17,22 @@ namespace Azure.Security.KeyVault.Administration
         private const string GlobalValue = "/";
         /// <summary> Keys scope. </summary>
         private const string KeysValue = "/keys";
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public KeyVaultRoleScope(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Global scope. </summary>
+        public static KeyVaultRoleScope Global { get; } = new KeyVaultRoleScope(GlobalValue);
+
+        /// <summary> Keys scope. </summary>
+        public static KeyVaultRoleScope Keys { get; } = new KeyVaultRoleScope(KeysValue);
 
         /// <summary> Determines if two <see cref="KeyVaultRoleScope"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
@@ -32,6 +49,17 @@ namespace Azure.Security.KeyVault.Administration
         public static implicit operator KeyVaultRoleScope(string value) => new KeyVaultRoleScope(value);
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is KeyVaultRoleScope other && Equals(other);
+
+        /// <inheritdoc/>
         public bool Equals(KeyVaultRoleScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }
