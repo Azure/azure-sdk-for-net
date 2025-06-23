@@ -907,35 +907,6 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task DirectoryClient_GetUserDelegationSAS()
-        {
-            // Arrange
-            ShareServiceClient service = GetServiceClient_OAuth();
-            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync(service);
-            ShareDirectoryClient directory = test.Directory;
-
-            Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
-
-            Uri sasUri = directory.GenerateUserDelegationSasUri(
-                ShareFileSasPermissions.All,
-                expiresOn: Recording.UtcNow.AddHours(1),
-                userDelegationKeyResponse.Value,
-                out string stringToSign);
-            ShareClientOptions options = GetOptions();
-            options.ShareTokenIntent = ShareTokenIntent.Backup;
-            ShareDirectoryClient sasDirectory = InstrumentClient(new ShareDirectoryClient(sasUri, options));
-
-            // Act
-            await sasDirectory.GetPropertiesAsync();
-
-            // Assert
-            Assert.IsNotNull(stringToSign);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
         public async Task FileClient_GetUserDelegationSAS()
         {
             // Arrange

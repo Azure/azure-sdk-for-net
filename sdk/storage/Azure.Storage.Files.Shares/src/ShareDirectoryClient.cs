@@ -3627,6 +3627,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(permissions, expiresOn, out _);
@@ -3694,6 +3695,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareSasBuilder builder)
             => GenerateSasUri(builder, out _);
@@ -3743,148 +3745,6 @@ namespace Azure.Storage.Files.Shares
         }
         #endregion
 
-        #region GenerateUserDelegationSas
-        /// <summary>
-        /// The <see cref="GenerateUserDelegationSasUri(ShareFileSasPermissions, DateTimeOffset, UserDelegationKey, out string)"/>
-        /// returns a <see cref="Uri"/> that generates a Share Directory Service Shared Access Signature (SAS)
-        /// Uri based on the Client properties and parameter passed. The SAS is signed by the user delegation key passed in.
-        ///
-        /// For more information, see
-        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
-        /// Creating an user delegation SAS</see>.
-        /// </summary>
-        /// <param name="permissions">
-        /// Required. Specifies the list of permissions to be associated with the SAS.
-        /// See <see cref="ShareSasPermissions"/>.
-        /// </param>
-        /// <param name="expiresOn">
-        /// Required. Specifies the time at which the SAS becomes invalid. This field
-        /// must be omitted if it has been specified in an associated stored access policy.
-        /// </param>
-        /// <param name="userDelegationKey">
-        /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Uri"/> containing the SAS Uri.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="Exception"/> will be thrown if a failure occurs.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
-        public Uri GenerateUserDelegationSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey)
-            => GenerateUserDelegationSasUri(permissions, expiresOn, userDelegationKey, out _);
-
-        /// <summary>
-        /// The <see cref="GenerateUserDelegationSasUri(ShareFileSasPermissions, DateTimeOffset, UserDelegationKey, out string)"/>
-        /// returns a <see cref="Uri"/> that generates a Share Directory Service Shared Access Signature (SAS)
-        /// Uri based on the Client properties and parameter passed. The SAS is signed by the user delegation key passed in.
-        ///
-        /// For more information, see
-        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
-        /// Creating an user delegation SAS</see>.
-        /// </summary>
-        /// <param name="permissions">
-        /// Required. Specifies the list of permissions to be associated with the SAS.
-        /// See <see cref="ShareSasPermissions"/>.
-        /// </param>
-        /// <param name="expiresOn">
-        /// Required. Specifies the time at which the SAS becomes invalid. This field
-        /// must be omitted if it has been specified in an associated stored access policy.
-        /// </param>
-        /// <param name="userDelegationKey">
-        /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
-        /// </param>
-        /// <param name="stringToSign">
-        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Uri"/> containing the SAS Uri.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="Exception"/> will be thrown if a failure occurs.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
-        public Uri GenerateUserDelegationSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey, out string stringToSign) =>
-            GenerateUserDelegationSasUri(new ShareSasBuilder(permissions, expiresOn)
-            {
-                ShareName = ShareName,
-                FilePath = Path,
-            }, userDelegationKey, out stringToSign);
-
-        /// <summary>
-        /// The <see cref="GenerateUserDelegationSasUri(ShareSasBuilder, UserDelegationKey, out string)"/>
-        /// returns a <see cref="Uri"/> that generates a Share Directory Service Shared Access Signature (SAS)
-        /// Uri based on the Client properties and builder passed. The SAS is signed by the user delegation key passed in.
-        ///
-        /// For more information, see
-        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
-        /// Creating an user delegation SAS</see>.
-        /// </summary>
-        /// <param name="builder">
-        /// Required. Used to generate a Shared Access Signature (SAS).
-        /// </param>
-        /// <param name="userDelegationKey">
-        /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Uri"/> containing the SAS Uri.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="Exception"/> will be thrown if a failure occurs.
-        /// </remarks>
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
-        public Uri GenerateUserDelegationSasUri(ShareSasBuilder builder, UserDelegationKey userDelegationKey)
-            => GenerateUserDelegationSasUri(builder, userDelegationKey, out _);
-
-        /// <summary>
-        /// The <see cref="GenerateUserDelegationSasUri(ShareSasBuilder, UserDelegationKey, out string)"/>
-        /// returns a <see cref="Uri"/> that generates a Share Directory Service Shared Access Signature (SAS)
-        /// Uri based on the Client properties and builder passed. The SAS is signed by the user delegation key passed in.
-        ///
-        /// For more information, see
-        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-user-delegation-sas">
-        /// Creating an user delegation SAS</see>.
-        /// </summary>
-        /// <param name="builder">
-        /// Required. Used to generate a Shared Access Signature (SAS).
-        /// </param>
-        /// <param name="userDelegationKey">
-        /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="ShareServiceClient.GetUserDelegationKeyAsync"/>.
-        /// </param>
-        /// <param name="stringToSign">
-        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Uri"/> containing the SAS Uri.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="Exception"/> will be thrown if a failure occurs.
-        /// </remarks>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
-        public Uri GenerateUserDelegationSasUri(ShareSasBuilder builder, UserDelegationKey userDelegationKey, out string stringToSign)
-        {
-            builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
-
-            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
-            builder = ShareSasBuilder.DeepCopy(builder);
-
-            SetBuilderAndValidate(builder);
-
-            ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
-            {
-                Sas = builder.ToSasQueryParameters(userDelegationKey, this.AccountName, out stringToSign)
-            };
-            return sasUri.ToUri();
-        }
-
-        #endregion
         private void SetBuilderAndValidate(ShareSasBuilder builder)
         {
             // Assign builder's ShareName and Path, if they are null.
