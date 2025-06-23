@@ -513,6 +513,36 @@ namespace Azure.AI.Language.Conversations
             return new ConversationTargetIntentResult(TargetProjectKind.Conversation, apiVersion, confidence, serializedAdditionalRawData: null, result);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeConversationOperationState"/>. </summary>
+        /// <param name="displayName"> display name. </param>
+        /// <param name="createdDateTime"> Date and time job created. </param>
+        /// <param name="expirationDateTime"> Date and time job expires. </param>
+        /// <param name="jobId"> job ID. </param>
+        /// <param name="lastUpdatedDateTime"> last updated date and time. </param>
+        /// <param name="status"> status. </param>
+        /// <param name="errors"> errors. </param>
+        /// <param name="nextLink"> next link. </param>
+        /// <param name="actions"> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </param>
+        /// <param name="statistics"> Contains the statistics for the submitted job. </param>
+        /// <returns> A new <see cref="Models.AnalyzeConversationOperationState"/> instance for mocking. </returns>
+        public static AnalyzeConversationOperationState AnalyzeConversationOperationState(string displayName = null, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, Guid jobId = default, DateTimeOffset lastUpdatedDateTime = default, ConversationActionState status = default, IEnumerable<ConversationError> errors = null, string nextLink = null, ConversationActions actions = null, ConversationRequestStatistics statistics = null)
+        {
+            errors ??= new List<ConversationError>();
+
+            return new AnalyzeConversationOperationState(
+                displayName,
+                createdDateTime,
+                expirationDateTime,
+                jobId,
+                lastUpdatedDateTime,
+                status,
+                errors?.ToList(),
+                nextLink,
+                actions,
+                statistics,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ConversationError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
@@ -550,36 +580,6 @@ namespace Azure.AI.Language.Conversations
                 details,
                 target,
                 innererror,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeConversationOperationState"/>. </summary>
-        /// <param name="displayName"> display name. </param>
-        /// <param name="createdDateTime"> Date and time job created. </param>
-        /// <param name="expirationDateTime"> Date and time job expires. </param>
-        /// <param name="jobId"> job ID. </param>
-        /// <param name="lastUpdatedDateTime"> last updated date and time. </param>
-        /// <param name="status"> status. </param>
-        /// <param name="errors"> errors. </param>
-        /// <param name="nextLink"> next link. </param>
-        /// <param name="actions"> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </param>
-        /// <param name="statistics"> Contains the statistics for the submitted job. </param>
-        /// <returns> A new <see cref="Models.AnalyzeConversationOperationState"/> instance for mocking. </returns>
-        public static AnalyzeConversationOperationState AnalyzeConversationOperationState(string displayName = null, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, Guid jobId = default, DateTimeOffset lastUpdatedDateTime = default, ConversationActionState status = default, IEnumerable<ConversationError> errors = null, string nextLink = null, ConversationActions actions = null, ConversationRequestStatistics statistics = null)
-        {
-            errors ??= new List<ConversationError>();
-
-            return new AnalyzeConversationOperationState(
-                displayName,
-                createdDateTime,
-                expirationDateTime,
-                jobId,
-                lastUpdatedDateTime,
-                status,
-                errors?.ToList(),
-                nextLink,
-                actions,
-                statistics,
                 serializedAdditionalRawData: null);
         }
 
