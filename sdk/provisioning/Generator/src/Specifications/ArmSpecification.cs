@@ -3,10 +3,15 @@
 
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppService;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
@@ -68,5 +73,12 @@ public class ArmSpecification : Specification
         Roles.Add(new Role("UserAccessAdministrator", "18d7d88d-d35e-4fb5-a5c3-7773c20a72d9", "Lets you manage user access to Azure resources."));
         Roles.Add(new Role("ManagedIdentityContributor", "e40ec5ca-96e0-45a2-b4ff-59039f2c2b59", "Create, Read, Update, and Delete User Assigned Identity"));
         Roles.Add(new Role("ManagedIdentityOperator", "f1a07417-d97a-45cb-824c-7a7467783830", "Read and Assign User Assigned Identity"));
+    }
+    private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
+    {
+        // Add missing resources
+        var dict = base.FindConstructibleResources();
+        dict.Add(typeof(AzureCliScript), typeof(ArmDeploymentScriptCollection).GetMethod("CreateOrUpdate")!);
+        return dict;
     }
 }
