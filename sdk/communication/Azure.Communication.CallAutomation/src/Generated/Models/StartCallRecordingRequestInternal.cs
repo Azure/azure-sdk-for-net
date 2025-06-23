@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="StartCallRecordingRequestInternal"/>. </summary>
         /// <param name="callLocator"> The call locator. (Only one of callLocator or callConnectionId to be used). </param>
-        /// <param name="callConnectionId"> The call connectionId. (Only one of callLocator or callConnectionId to be used). </param>
+        /// <param name="callConnectionId"> The call connection Id. (Only one of callLocator or callConnectionId to be used). </param>
         /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
         /// <param name="recordingContentType"> The content type of call recording. </param>
         /// <param name="recordingChannelType"> The channel type of call recording. </param>
@@ -40,8 +40,7 @@ namespace Azure.Communication.CallAutomation
         /// </param>
         /// <param name="pauseOnStart"> When set to true will start recording in Pause mode, which can be resumed. </param>
         /// <param name="externalStorage"> Optional property to specify location where recording will be stored. </param>
-        /// <param name="postProcessingOptions"> The post processing options for the recording. </param>
-        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string callConnectionId, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, bool? pauseOnStart, RecordingStorageInternal externalStorage, PostProcessingOptions postProcessingOptions)
+        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string callConnectionId, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity, bool? pauseOnStart, RecordingStorageInternal externalStorage)
         {
             CallLocator = callLocator;
             CallConnectionId = callConnectionId;
@@ -53,12 +52,11 @@ namespace Azure.Communication.CallAutomation
             ChannelAffinity = channelAffinity;
             PauseOnStart = pauseOnStart;
             ExternalStorage = externalStorage;
-            PostProcessingOptions = postProcessingOptions;
         }
 
         /// <summary> The call locator. (Only one of callLocator or callConnectionId to be used). </summary>
         public CallLocatorInternal CallLocator { get; set; }
-        /// <summary> The call connectionId. (Only one of callLocator or callConnectionId to be used). </summary>
+        /// <summary> The call connection Id. (Only one of callLocator or callConnectionId to be used). </summary>
         public string CallConnectionId { get; set; }
         /// <summary> The uri to send notifications to. </summary>
         public string RecordingStateCallbackUri { get; set; }
@@ -86,7 +84,5 @@ namespace Azure.Communication.CallAutomation
         public bool? PauseOnStart { get; set; }
         /// <summary> Optional property to specify location where recording will be stored. </summary>
         public RecordingStorageInternal ExternalStorage { get; set; }
-        /// <summary> The post processing options for the recording. </summary>
-        public PostProcessingOptions PostProcessingOptions { get; set; }
     }
 }
