@@ -5,6 +5,8 @@
 ### Features Added
 - Added delete operation for `ThreadMessages`.
 
+- Tracing for Agents
+
 ### Breaking Changes
 
 ### Bugs Fixed
