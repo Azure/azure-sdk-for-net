@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Container group subnet information. </summary>
-    public partial class ScriptContainerGroupSubnetId
+    public partial class ScriptContainerGroupSubnet
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,29 +46,29 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScriptContainerGroupSubnetId"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptContainerGroupSubnet"/>. </summary>
         /// <param name="id"> Resource ID of subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ScriptContainerGroupSubnetId(ResourceIdentifier id)
+        public ScriptContainerGroupSubnet(ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScriptContainerGroupSubnetId"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptContainerGroupSubnet"/>. </summary>
         /// <param name="id"> Resource ID of subnet. </param>
         /// <param name="name"> Friendly name for the subnet. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptContainerGroupSubnetId(ResourceIdentifier id, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScriptContainerGroupSubnet(ResourceIdentifier id, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScriptContainerGroupSubnetId"/> for deserialization. </summary>
-        internal ScriptContainerGroupSubnetId()
+        /// <summary> Initializes a new instance of <see cref="ScriptContainerGroupSubnet"/> for deserialization. </summary>
+        internal ScriptContainerGroupSubnet()
         {
         }
 

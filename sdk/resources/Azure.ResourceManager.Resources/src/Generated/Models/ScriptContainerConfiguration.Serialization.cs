@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string containerGroupName = default;
-            IList<ScriptContainerGroupSubnetId> subnetIds = default;
+            IList<ScriptContainerGroupSubnet> subnetIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    List<ScriptContainerGroupSubnetId> array = new List<ScriptContainerGroupSubnetId>();
+                    List<ScriptContainerGroupSubnet> array = new List<ScriptContainerGroupSubnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptContainerGroupSubnetId.DeserializeScriptContainerGroupSubnetId(item, options));
+                        array.Add(ScriptContainerGroupSubnet.DeserializeScriptContainerGroupSubnet(item, options));
                     }
                     subnetIds = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ScriptContainerConfiguration(containerGroupName, subnetIds ?? new ChangeTrackingList<ScriptContainerGroupSubnetId>(), serializedAdditionalRawData);
+            return new ScriptContainerConfiguration(containerGroupName, subnetIds ?? new ChangeTrackingList<ScriptContainerGroupSubnet>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

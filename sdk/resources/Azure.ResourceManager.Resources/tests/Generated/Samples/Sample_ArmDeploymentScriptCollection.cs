@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Resources.Samples
                 ContainerSettings = new ScriptContainerConfiguration
                 {
                     ContainerGroupName = "contoso-aci",
-                    SubnetIds = { new ScriptContainerGroupSubnetId(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scriptRG/providers/Microsoft.Network/virtualNetworks/scriptSubnet/subnets/subnetwork1")), new ScriptContainerGroupSubnetId(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scriptRG/providers/Microsoft.Network/virtualNetworks/scriptSubnet/subnets/subnetwork2")) },
+                    SubnetIds = { new ScriptContainerGroupSubnet(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scriptRG/providers/Microsoft.Network/virtualNetworks/scriptSubnet/subnets/subnetwork1")), new ScriptContainerGroupSubnet(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scriptRG/providers/Microsoft.Network/virtualNetworks/scriptSubnet/subnets/subnetwork2")) },
                 },
                 CleanupPreference = ScriptCleanupOptions.Always,
                 SupportingScriptUris = { new Uri("https://uri1.to.supporting.script"), new Uri("https://uri2.to.supporting.script") },

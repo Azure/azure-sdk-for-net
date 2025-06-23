@@ -2235,7 +2235,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         public ScriptContainerConfiguration() { }
         public string ContainerGroupName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnetId> SubnetIds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet> SubnetIds { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2243,17 +2243,17 @@ namespace Azure.ResourceManager.Resources.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScriptContainerGroupSubnetId : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnetId>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnetId>
+    public partial class ScriptContainerGroupSubnet : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>
     {
-        public ScriptContainerGroupSubnetId(Azure.Core.ResourceIdentifier id) { }
+        public ScriptContainerGroupSubnet(Azure.Core.ResourceIdentifier id) { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnetId System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnetId>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnetId>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnetId System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnetId>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnetId>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnetId>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScriptEnvironmentVariable : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable>
     {

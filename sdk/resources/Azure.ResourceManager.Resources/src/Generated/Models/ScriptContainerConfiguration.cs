@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="ScriptContainerConfiguration"/>. </summary>
         public ScriptContainerConfiguration()
         {
-            SubnetIds = new ChangeTrackingList<ScriptContainerGroupSubnetId>();
+            SubnetIds = new ChangeTrackingList<ScriptContainerGroupSubnet>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScriptContainerConfiguration"/>. </summary>
         /// <param name="containerGroupName"> Container group name, if not specified then the name will get auto-generated. Not specifying a 'containerGroupName' indicates the system to generate a unique name which might end up flagging an Azure Policy as non-compliant. Use 'containerGroupName' when you have an Azure Policy that expects a specific naming convention or when you want to fully control the name. 'containerGroupName' property must be between 1 and 63 characters long, must contain only lowercase letters, numbers, and dashes and it cannot start or end with a dash and consecutive dashes are not allowed. To specify a 'containerGroupName', add the following object to properties: { "containerSettings": { "containerGroupName": "contoso-container" } }. If you do not want to specify a 'containerGroupName' then do not add 'containerSettings' property. </param>
         /// <param name="subnetIds"> The subnet resource IDs for a container group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptContainerConfiguration(string containerGroupName, IList<ScriptContainerGroupSubnetId> subnetIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScriptContainerConfiguration(string containerGroupName, IList<ScriptContainerGroupSubnet> subnetIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerGroupName = containerGroupName;
             SubnetIds = subnetIds;
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string ContainerGroupName { get; set; }
         /// <summary> The subnet resource IDs for a container group. </summary>
         [WirePath("subnetIds")]
-        public IList<ScriptContainerGroupSubnetId> SubnetIds { get; }
+        public IList<ScriptContainerGroupSubnet> SubnetIds { get; }
     }
 }
