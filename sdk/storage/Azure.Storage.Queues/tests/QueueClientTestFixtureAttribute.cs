@@ -47,7 +47,7 @@ namespace Azure.Storage.Queues.Tests
                 additionalParameters: additionalParameters)
                 {
                     RecordingServiceVersion = StorageVersionExtensions.MaxVersion;
-                    LiveServiceVersions = new object[] { StorageVersionExtensions.MaxVersion };
+                    LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion };
                 }
     }
 }

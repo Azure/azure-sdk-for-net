@@ -153,6 +153,40 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task SendMessageAsync_UserDelegationSAS_Builder()
+        {
+            // Arrange
+            string queueName = GetNewQueueName();
+            QueueServiceClient service = GetServiceClient_OAuth();
+            await using DisposingQueue test = await GetTestQueueAsync(service);
+
+            Response<UserDelegationKey> userDelegationKeyResponse = await service.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
+
+            QueueSasBuilder queueSasBuilder = new QueueSasBuilder(QueueSasPermissions.All, Recording.UtcNow.AddHours(1))
+            {
+                QueueName = test.Queue.Name
+            };
+
+            Uri queueUri = test.Queue.GenerateUserDelegationSasUri(queueSasBuilder, userDelegationKey);
+
+            QueueClient queueClient = InstrumentClient(new QueueClient(queueUri, GetOptions()));
+
+            // Act
+            Response<SendReceipt> response = await queueClient.SendMessageAsync(
+                messageText: GetNewString(),
+                visibilityTimeout: new TimeSpan(0, 0, 1),
+                timeToLive: new TimeSpan(1, 0, 0));
+
+            // Assert
+            Assert.NotNull(response.Value);
+        }
+
+        [RecordedTest]
         [LiveOnly] // Cannot record Entra ID token
         [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
         public async Task SendMessageAsync_UserDelegationSAS_DelegatedObjectId()
