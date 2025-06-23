@@ -28,35 +28,30 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exampledata",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6024",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6025",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6026",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 },
                 limit = 10,
                 orderby = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6030",
-["name"] = "ASC"
+name = "ASC",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6032",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 }
             },
                 facets = new object[]
@@ -125,35 +120,30 @@ count = "desc",
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exampledata",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6024",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6025",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6026",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 },
                 limit = 10,
                 orderby = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6030",
-["name"] = "ASC"
+name = "ASC",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6032",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 }
             },
                 facets = new object[]
@@ -223,31 +213,26 @@ count = "desc",
             {
                 Keywords = "exampledata",
                 Limit = 10,
-                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Orderby = {BinaryData.FromObjectAsJson(new
 {
-["$id"] = "6030",
-["name"] = "ASC"
-}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+name = "ASC",
+}), BinaryData.FromObjectAsJson(new
 {
-["$id"] = "6032",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 })},
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6024",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6025",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6026",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 }),
                 Facets = {new SearchFacetItem
 {
@@ -306,31 +291,26 @@ Count = SearchSortOrder.Descend,
             {
                 Keywords = "exampledata",
                 Limit = 10,
-                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Orderby = {BinaryData.FromObjectAsJson(new
 {
-["$id"] = "6030",
-["name"] = "ASC"
-}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+name = "ASC",
+}), BinaryData.FromObjectAsJson(new
 {
-["$id"] = "6032",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 })},
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6024",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6025",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6026",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 }),
                 Facets = {new SearchFacetItem
 {
@@ -388,24 +368,21 @@ Count = SearchSortOrder.Descend,
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6109",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6110",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 },
 new Dictionary<string, object>
 {
-["$id"] = "6111",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
 }
-            }
+            },
                 },
             });
             Response response = client.Query(content);
@@ -425,24 +402,21 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6109",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6110",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 },
 new Dictionary<string, object>
 {
-["$id"] = "6111",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
 }
-            }
+            },
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -462,24 +436,21 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6109",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6110",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 },
 new Dictionary<string, object>
 {
-["$id"] = "6111",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -496,24 +467,21 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6109",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6110",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 },
 new Dictionary<string, object>
 {
-["$id"] = "6111",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -530,45 +498,39 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6162",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6163",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 },
 new Dictionary<string, object>
 {
-["$id"] = "6164",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
 },
+new
+{
+or = new object[]
+{
 new Dictionary<string, object>
 {
-["$id"] = "6165",
-["or"] = new object[]
-{
-new Dictionary<string, object>
-{
-["$id"] = "6166",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "6167",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "prefix",
 ["attributeValue"] = "https://"
 }
+},
 }
-}
-            }
+            },
                 },
             });
             Response response = client.Query(content);
@@ -588,45 +550,39 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6162",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6163",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 },
 new Dictionary<string, object>
 {
-["$id"] = "6164",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
 },
+new
+{
+or = new object[]
+{
 new Dictionary<string, object>
 {
-["$id"] = "6165",
-["or"] = new object[]
-{
-new Dictionary<string, object>
-{
-["$id"] = "6166",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "6167",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "prefix",
 ["attributeValue"] = "https://"
 }
+},
 }
-}
-            }
+            },
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -646,45 +602,39 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6162",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6163",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 },
 new Dictionary<string, object>
 {
-["$id"] = "6164",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
 },
+new
+{
+or = new object[]
+{
 new Dictionary<string, object>
 {
-["$id"] = "6165",
-["or"] = new object[]
-{
-new Dictionary<string, object>
-{
-["$id"] = "6166",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "6167",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "prefix",
 ["attributeValue"] = "https://"
 }
+},
 }
-}
-            }
+            },
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -701,45 +651,39 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6162",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6163",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 },
 new Dictionary<string, object>
 {
-["$id"] = "6164",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "contains",
 ["attributeValue"] = ".csv"
 },
+new
+{
+or = new object[]
+{
 new Dictionary<string, object>
 {
-["$id"] = "6165",
-["or"] = new object[]
-{
-new Dictionary<string, object>
-{
-["$id"] = "6166",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "6167",
 ["attributeName"] = "qualifiedName",
 ["operator"] = "prefix",
 ["attributeValue"] = "https://"
 }
+},
 }
-}
-            }
+            },
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -756,147 +700,119 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6220",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6221",
-["assetType"] = "SQL Server"
+assetType = "SQL Server",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6222",
-["assetType"] = "Azure SQL Server"
+assetType = "Azure SQL Server",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6223",
-["assetType"] = "Azure SQL Database"
+assetType = "Azure SQL Database",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6224",
-["assetType"] = "Azure SQL Data Warehouse"
+assetType = "Azure SQL Data Warehouse",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6225",
-["assetType"] = "Azure SQL Managed Instance"
+assetType = "Azure SQL Managed Instance",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6226",
-["assetType"] = "Azure Storage Account"
+assetType = "Azure Storage Account",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6227",
-["assetType"] = "Azure Blob Storage"
+assetType = "Azure Blob Storage",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6228",
-["assetType"] = "Azure Files"
+assetType = "Azure Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6229",
-["assetType"] = "Azure Table Storage"
+assetType = "Azure Table Storage",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6230",
-["assetType"] = "Azure Data Lake Storage Gen1"
+assetType = "Azure Data Lake Storage Gen1",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6231",
-["assetType"] = "Azure Data Lake Storage Gen2"
+assetType = "Azure Data Lake Storage Gen2",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6232",
-["assetType"] = "Azure Cosmos DB"
+assetType = "Azure Cosmos DB",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6233",
-["assetType"] = "Azure Data Factory"
+assetType = "Azure Data Factory",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6234",
-["assetType"] = "Azure Cognitive Search"
+assetType = "Azure Cognitive Search",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6235",
-["assetType"] = "Power BI"
+assetType = "Power BI",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6236",
-["assetType"] = "Azure Data Explorer"
+assetType = "Azure Data Explorer",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6237",
-["assetType"] = "Amazon S3"
+assetType = "Amazon S3",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6238",
-["assetType"] = "Azure Data Share"
+assetType = "Azure Data Share",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6239",
-["assetType"] = "Teradata"
+assetType = "Teradata",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6240",
-["assetType"] = "SAP S4HANA"
+assetType = "SAP S4HANA",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6241",
-["assetType"] = "SAP ECC"
+assetType = "SAP ECC",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6242",
-["assetType"] = "SQL Server Integration Services"
+assetType = "SQL Server Integration Services",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6243",
-["assetType"] = "hive"
+assetType = "hive",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6244",
-["assetType"] = "Azure Database for MySQL"
+assetType = "Azure Database for MySQL",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6245",
-["assetType"] = "Azure Database for MariaDB"
+assetType = "Azure Database for MariaDB",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6246",
-["assetType"] = "Azure Database for PostgreSQL"
+assetType = "Azure Database for PostgreSQL",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6247",
-["assetType"] = "Azure Synapse Analytics"
+assetType = "Azure Synapse Analytics",
 }
-            }
+            },
                 },
             });
             Response response = client.Query(content);
@@ -916,147 +832,119 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6220",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6221",
-["assetType"] = "SQL Server"
+assetType = "SQL Server",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6222",
-["assetType"] = "Azure SQL Server"
+assetType = "Azure SQL Server",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6223",
-["assetType"] = "Azure SQL Database"
+assetType = "Azure SQL Database",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6224",
-["assetType"] = "Azure SQL Data Warehouse"
+assetType = "Azure SQL Data Warehouse",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6225",
-["assetType"] = "Azure SQL Managed Instance"
+assetType = "Azure SQL Managed Instance",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6226",
-["assetType"] = "Azure Storage Account"
+assetType = "Azure Storage Account",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6227",
-["assetType"] = "Azure Blob Storage"
+assetType = "Azure Blob Storage",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6228",
-["assetType"] = "Azure Files"
+assetType = "Azure Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6229",
-["assetType"] = "Azure Table Storage"
+assetType = "Azure Table Storage",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6230",
-["assetType"] = "Azure Data Lake Storage Gen1"
+assetType = "Azure Data Lake Storage Gen1",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6231",
-["assetType"] = "Azure Data Lake Storage Gen2"
+assetType = "Azure Data Lake Storage Gen2",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6232",
-["assetType"] = "Azure Cosmos DB"
+assetType = "Azure Cosmos DB",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6233",
-["assetType"] = "Azure Data Factory"
+assetType = "Azure Data Factory",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6234",
-["assetType"] = "Azure Cognitive Search"
+assetType = "Azure Cognitive Search",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6235",
-["assetType"] = "Power BI"
+assetType = "Power BI",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6236",
-["assetType"] = "Azure Data Explorer"
+assetType = "Azure Data Explorer",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6237",
-["assetType"] = "Amazon S3"
+assetType = "Amazon S3",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6238",
-["assetType"] = "Azure Data Share"
+assetType = "Azure Data Share",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6239",
-["assetType"] = "Teradata"
+assetType = "Teradata",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6240",
-["assetType"] = "SAP S4HANA"
+assetType = "SAP S4HANA",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6241",
-["assetType"] = "SAP ECC"
+assetType = "SAP ECC",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6242",
-["assetType"] = "SQL Server Integration Services"
+assetType = "SQL Server Integration Services",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6243",
-["assetType"] = "hive"
+assetType = "hive",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6244",
-["assetType"] = "Azure Database for MySQL"
+assetType = "Azure Database for MySQL",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6245",
-["assetType"] = "Azure Database for MariaDB"
+assetType = "Azure Database for MariaDB",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6246",
-["assetType"] = "Azure Database for PostgreSQL"
+assetType = "Azure Database for PostgreSQL",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6247",
-["assetType"] = "Azure Synapse Analytics"
+assetType = "Azure Synapse Analytics",
 }
-            }
+            },
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -1076,147 +964,119 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6220",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6221",
-["assetType"] = "SQL Server"
+assetType = "SQL Server",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6222",
-["assetType"] = "Azure SQL Server"
+assetType = "Azure SQL Server",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6223",
-["assetType"] = "Azure SQL Database"
+assetType = "Azure SQL Database",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6224",
-["assetType"] = "Azure SQL Data Warehouse"
+assetType = "Azure SQL Data Warehouse",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6225",
-["assetType"] = "Azure SQL Managed Instance"
+assetType = "Azure SQL Managed Instance",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6226",
-["assetType"] = "Azure Storage Account"
+assetType = "Azure Storage Account",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6227",
-["assetType"] = "Azure Blob Storage"
+assetType = "Azure Blob Storage",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6228",
-["assetType"] = "Azure Files"
+assetType = "Azure Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6229",
-["assetType"] = "Azure Table Storage"
+assetType = "Azure Table Storage",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6230",
-["assetType"] = "Azure Data Lake Storage Gen1"
+assetType = "Azure Data Lake Storage Gen1",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6231",
-["assetType"] = "Azure Data Lake Storage Gen2"
+assetType = "Azure Data Lake Storage Gen2",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6232",
-["assetType"] = "Azure Cosmos DB"
+assetType = "Azure Cosmos DB",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6233",
-["assetType"] = "Azure Data Factory"
+assetType = "Azure Data Factory",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6234",
-["assetType"] = "Azure Cognitive Search"
+assetType = "Azure Cognitive Search",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6235",
-["assetType"] = "Power BI"
+assetType = "Power BI",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6236",
-["assetType"] = "Azure Data Explorer"
+assetType = "Azure Data Explorer",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6237",
-["assetType"] = "Amazon S3"
+assetType = "Amazon S3",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6238",
-["assetType"] = "Azure Data Share"
+assetType = "Azure Data Share",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6239",
-["assetType"] = "Teradata"
+assetType = "Teradata",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6240",
-["assetType"] = "SAP S4HANA"
+assetType = "SAP S4HANA",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6241",
-["assetType"] = "SAP ECC"
+assetType = "SAP ECC",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6242",
-["assetType"] = "SQL Server Integration Services"
+assetType = "SQL Server Integration Services",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6243",
-["assetType"] = "hive"
+assetType = "hive",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6244",
-["assetType"] = "Azure Database for MySQL"
+assetType = "Azure Database for MySQL",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6245",
-["assetType"] = "Azure Database for MariaDB"
+assetType = "Azure Database for MariaDB",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6246",
-["assetType"] = "Azure Database for PostgreSQL"
+assetType = "Azure Database for PostgreSQL",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6247",
-["assetType"] = "Azure Synapse Analytics"
+assetType = "Azure Synapse Analytics",
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -1233,147 +1093,119 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6220",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6221",
-["assetType"] = "SQL Server"
+assetType = "SQL Server",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6222",
-["assetType"] = "Azure SQL Server"
+assetType = "Azure SQL Server",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6223",
-["assetType"] = "Azure SQL Database"
+assetType = "Azure SQL Database",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6224",
-["assetType"] = "Azure SQL Data Warehouse"
+assetType = "Azure SQL Data Warehouse",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6225",
-["assetType"] = "Azure SQL Managed Instance"
+assetType = "Azure SQL Managed Instance",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6226",
-["assetType"] = "Azure Storage Account"
+assetType = "Azure Storage Account",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6227",
-["assetType"] = "Azure Blob Storage"
+assetType = "Azure Blob Storage",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6228",
-["assetType"] = "Azure Files"
+assetType = "Azure Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6229",
-["assetType"] = "Azure Table Storage"
+assetType = "Azure Table Storage",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6230",
-["assetType"] = "Azure Data Lake Storage Gen1"
+assetType = "Azure Data Lake Storage Gen1",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6231",
-["assetType"] = "Azure Data Lake Storage Gen2"
+assetType = "Azure Data Lake Storage Gen2",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6232",
-["assetType"] = "Azure Cosmos DB"
+assetType = "Azure Cosmos DB",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6233",
-["assetType"] = "Azure Data Factory"
+assetType = "Azure Data Factory",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6234",
-["assetType"] = "Azure Cognitive Search"
+assetType = "Azure Cognitive Search",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6235",
-["assetType"] = "Power BI"
+assetType = "Power BI",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6236",
-["assetType"] = "Azure Data Explorer"
+assetType = "Azure Data Explorer",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6237",
-["assetType"] = "Amazon S3"
+assetType = "Amazon S3",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6238",
-["assetType"] = "Azure Data Share"
+assetType = "Azure Data Share",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6239",
-["assetType"] = "Teradata"
+assetType = "Teradata",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6240",
-["assetType"] = "SAP S4HANA"
+assetType = "SAP S4HANA",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6241",
-["assetType"] = "SAP ECC"
+assetType = "SAP ECC",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6242",
-["assetType"] = "SQL Server Integration Services"
+assetType = "SQL Server Integration Services",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6243",
-["assetType"] = "hive"
+assetType = "hive",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6244",
-["assetType"] = "Azure Database for MySQL"
+assetType = "Azure Database for MySQL",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6245",
-["assetType"] = "Azure Database for MariaDB"
+assetType = "Azure Database for MariaDB",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6246",
-["assetType"] = "Azure Database for PostgreSQL"
+assetType = "Azure Database for PostgreSQL",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6247",
-["assetType"] = "Azure Synapse Analytics"
+assetType = "Azure Synapse Analytics",
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -1390,33 +1222,29 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6289",
-                    ["or"] = new object[]
+                    or = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "6290",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "6291",
 ["attributeName"] = "createTime",
 ["operator"] = "ge",
 ["attributeValue"] = 1545580800000L
 },
 new Dictionary<string, object>
 {
-["$id"] = "6292",
 ["attributeName"] = "modifiedTime",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
 }
-            }
+            },
                 },
             });
             Response response = client.Query(content);
@@ -1436,33 +1264,29 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6289",
-                    ["or"] = new object[]
+                    or = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "6290",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "6291",
 ["attributeName"] = "createTime",
 ["operator"] = "ge",
 ["attributeValue"] = 1545580800000L
 },
 new Dictionary<string, object>
 {
-["$id"] = "6292",
 ["attributeName"] = "modifiedTime",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
 }
-            }
+            },
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -1482,33 +1306,29 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6289",
-                    ["or"] = new object[]
+                    or = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "6290",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "6291",
 ["attributeName"] = "createTime",
 ["operator"] = "ge",
 ["attributeValue"] = 1545580800000L
 },
 new Dictionary<string, object>
 {
-["$id"] = "6292",
 ["attributeName"] = "modifiedTime",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -1525,33 +1345,29 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6289",
-                    ["or"] = new object[]
+                    or = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "6290",
 ["attributeName"] = "name",
 ["operator"] = "eq",
 ["attributeValue"] = "exampledata.csv"
 },
 new Dictionary<string, object>
 {
-["$id"] = "6291",
 ["attributeName"] = "createTime",
 ["operator"] = "ge",
 ["attributeValue"] = 1545580800000L
 },
 new Dictionary<string, object>
 {
-["$id"] = "6292",
 ["attributeName"] = "modifiedTime",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -1568,40 +1384,35 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6354",
-                    ["or"] = new object[]
+                    or = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "6355",
 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
 ["operator"] = "eq|ne|contains|prefix",
 ["attributeValue"] = "string value"
 },
 new Dictionary<string, object>
 {
-["$id"] = "6356",
 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
 ["operator"] = "eq|ne|gt|ge|lt|le",
 ["attributeValue"] = 123
 },
 new Dictionary<string, object>
 {
-["$id"] = "6357",
 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
 ["operator"] = "eq|ne",
 ["attributeValue"] = true
 },
 new Dictionary<string, object>
 {
-["$id"] = "6358",
 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
 }
-            }
+            },
                 },
             });
             Response response = client.Query(content);
@@ -1621,40 +1432,35 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6354",
-                    ["or"] = new object[]
+                    or = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "6355",
 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
 ["operator"] = "eq|ne|contains|prefix",
 ["attributeValue"] = "string value"
 },
 new Dictionary<string, object>
 {
-["$id"] = "6356",
 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
 ["operator"] = "eq|ne|gt|ge|lt|le",
 ["attributeValue"] = 123
 },
 new Dictionary<string, object>
 {
-["$id"] = "6357",
 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
 ["operator"] = "eq|ne",
 ["attributeValue"] = true
 },
 new Dictionary<string, object>
 {
-["$id"] = "6358",
 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
 }
-            }
+            },
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -1674,40 +1480,35 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6354",
-                    ["or"] = new object[]
+                    or = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "6355",
 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
 ["operator"] = "eq|ne|contains|prefix",
 ["attributeValue"] = "string value"
 },
 new Dictionary<string, object>
 {
-["$id"] = "6356",
 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
 ["operator"] = "eq|ne|gt|ge|lt|le",
 ["attributeValue"] = 123
 },
 new Dictionary<string, object>
 {
-["$id"] = "6357",
 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
 ["operator"] = "eq|ne",
 ["attributeValue"] = true
 },
 new Dictionary<string, object>
 {
-["$id"] = "6358",
 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -1724,40 +1525,35 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6354",
-                    ["or"] = new object[]
+                    or = new object[]
             {
 new Dictionary<string, object>
 {
-["$id"] = "6355",
 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
 ["operator"] = "eq|ne|contains|prefix",
 ["attributeValue"] = "string value"
 },
 new Dictionary<string, object>
 {
-["$id"] = "6356",
 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
 ["operator"] = "eq|ne|gt|ge|lt|le",
 ["attributeValue"] = 123
 },
 new Dictionary<string, object>
 {
-["$id"] = "6357",
 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
 ["operator"] = "eq|ne",
 ["attributeValue"] = true
 },
 new Dictionary<string, object>
 {
-["$id"] = "6358",
 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
 ["operator"] = "timerange",
 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -1774,11 +1570,10 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6381",
-                    ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
-                    ["includeSubClassifications"] = true
+                    classification = "MICROSOFT.PERSONAL.EMAIL",
+                    includeSubClassifications = true,
                 },
             });
             Response response = client.Query(content);
@@ -1798,11 +1593,10 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6381",
-                    ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
-                    ["includeSubClassifications"] = true
+                    classification = "MICROSOFT.PERSONAL.EMAIL",
+                    includeSubClassifications = true,
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -1822,11 +1616,10 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6381",
-                    ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
-                    ["includeSubClassifications"] = true
+                    classification = "MICROSOFT.PERSONAL.EMAIL",
+                    includeSubClassifications = true,
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -1843,11 +1636,10 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6381",
-                    ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
-                    ["includeSubClassifications"] = true
+                    classification = "MICROSOFT.PERSONAL.EMAIL",
+                    includeSubClassifications = true,
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -1864,10 +1656,9 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6431",
-                    ["collectionId"] = "collectionName"
+                    collectionId = "collectionName",
                 },
             });
             Response response = client.Query(content);
@@ -1887,10 +1678,9 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6431",
-                    ["collectionId"] = "collectionName"
+                    collectionId = "collectionName",
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -1910,10 +1700,9 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6431",
-                    ["collectionId"] = "collectionName"
+                    collectionId = "collectionName",
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -1930,10 +1719,9 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6431",
-                    ["collectionId"] = "collectionName"
+                    collectionId = "collectionName",
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -1949,10 +1737,9 @@ new Dictionary<string, object>
 
             using RequestContent content = RequestContent.Create(new
             {
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6480",
-                    ["objectType"] = "Tables"
+                    objectType = "Tables",
                 },
                 limit = 10,
                 facets = new object[]
@@ -1995,10 +1782,9 @@ count = 10,
 
             using RequestContent content = RequestContent.Create(new
             {
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6480",
-                    ["objectType"] = "Tables"
+                    objectType = "Tables",
                 },
                 limit = 10,
                 facets = new object[]
@@ -2042,10 +1828,9 @@ count = 10,
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6480",
-                    ["objectType"] = "Tables"
+                    objectType = "Tables",
                 }),
                 Facets = {new SearchFacetItem
 {
@@ -2079,10 +1864,9 @@ Facet = "label",
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6480",
-                    ["objectType"] = "Tables"
+                    objectType = "Tables",
                 }),
                 Facets = {new SearchFacetItem
 {
@@ -2116,17 +1900,15 @@ Facet = "label",
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6610",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6611",
-["fileExtension"] = "txt"
+fileExtension = "txt",
 }
-            }
+            },
                 },
             });
             Response response = client.Query(content);
@@ -2146,17 +1928,15 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6610",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6611",
-["fileExtension"] = "txt"
+fileExtension = "txt",
 }
-            }
+            },
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -2176,17 +1956,15 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6610",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6611",
-["fileExtension"] = "txt"
+fileExtension = "txt",
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -2203,17 +1981,15 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6610",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6611",
-["fileExtension"] = "txt"
+fileExtension = "txt",
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -2231,34 +2007,29 @@ new Dictionary<string, object>
             {
                 keywords = "<term name>",
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6654",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6655",
-["objectType"] = "Glossary terms"
+objectType = "Glossary terms",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6656",
-["or"] = new object[]
+or = new object[]
 {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6657",
-["glossaryType"] = "AtlasGlossary"
+glossaryType = "AtlasGlossary",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6658",
-["glossaryType"] = "AtlasGlossaryTerm"
+glossaryType = "AtlasGlossaryTerm",
 }
+},
 }
-}
-            }
+            },
                 },
                 facets = new object[]
             {
@@ -2300,34 +2071,29 @@ count = "desc",
             {
                 keywords = "<term name>",
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6654",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6655",
-["objectType"] = "Glossary terms"
+objectType = "Glossary terms",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6656",
-["or"] = new object[]
+or = new object[]
 {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6657",
-["glossaryType"] = "AtlasGlossary"
+glossaryType = "AtlasGlossary",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6658",
-["glossaryType"] = "AtlasGlossaryTerm"
+glossaryType = "AtlasGlossaryTerm",
 }
+},
 }
-}
-            }
+            },
                 },
                 facets = new object[]
             {
@@ -2369,34 +2135,29 @@ count = "desc",
             {
                 Keywords = "<term name>",
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6654",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6655",
-["objectType"] = "Glossary terms"
+objectType = "Glossary terms",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6656",
-["or"] = new object[]
+or = new object[]
 {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6657",
-["glossaryType"] = "AtlasGlossary"
+glossaryType = "AtlasGlossary",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6658",
-["glossaryType"] = "AtlasGlossaryTerm"
+glossaryType = "AtlasGlossaryTerm",
 }
+},
 }
-}
-            }
+            },
                 }),
                 Facets = {new SearchFacetItem
 {
@@ -2431,34 +2192,29 @@ Count = SearchSortOrder.Descend,
             {
                 Keywords = "<term name>",
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6654",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6655",
-["objectType"] = "Glossary terms"
+objectType = "Glossary terms",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6656",
-["or"] = new object[]
+or = new object[]
 {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6657",
-["glossaryType"] = "AtlasGlossary"
+glossaryType = "AtlasGlossary",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6658",
-["glossaryType"] = "AtlasGlossaryTerm"
+glossaryType = "AtlasGlossaryTerm",
 }
+},
 }
-}
-            }
+            },
                 }),
                 Facets = {new SearchFacetItem
 {
@@ -2492,17 +2248,15 @@ Count = SearchSortOrder.Descend,
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6726",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6727",
-["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
+id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
 }
-            }
+            },
                 },
             });
             Response response = client.Query(content);
@@ -2522,17 +2276,15 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6726",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6727",
-["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
+id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
 }
-            }
+            },
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -2552,17 +2304,15 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6726",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6727",
-["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
+id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -2579,17 +2329,15 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6726",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6727",
-["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
+id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -2606,14 +2354,12 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6755",
-                    ["not"] = new Dictionary<string, object>
+                    not = new
                     {
-                        ["$id"] = "6756",
-                        ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
-                    }
+                        classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+                    },
                 },
             });
             Response response = client.Query(content);
@@ -2633,14 +2379,12 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6755",
-                    ["not"] = new Dictionary<string, object>
+                    not = new
                     {
-                        ["$id"] = "6756",
-                        ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
-                    }
+                        classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+                    },
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -2660,14 +2404,12 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6755",
-                    ["not"] = new Dictionary<string, object>
+                    not = new
                     {
-                        ["$id"] = "6756",
-                        ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
-                    }
+                        classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+                    },
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -2684,14 +2426,12 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6755",
-                    ["not"] = new Dictionary<string, object>
+                    not = new
                     {
-                        ["$id"] = "6756",
-                        ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
-                    }
+                        classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+                    },
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -2708,52 +2448,43 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6798",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6799",
-["objectType"] = "Dashboards"
+objectType = "Dashboards",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6800",
-["objectType"] = "Data pipelines"
+objectType = "Data pipelines",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6801",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6802",
-["objectType"] = "Folders"
+objectType = "Folders",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6803",
-["objectType"] = "Glossary terms"
+objectType = "Glossary terms",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6804",
-["objectType"] = "Reports"
+objectType = "Reports",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6805",
-["objectType"] = "Stored procedures"
+objectType = "Stored procedures",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6806",
-["objectType"] = "Tables"
+objectType = "Tables",
 }
-            }
+            },
                 },
             });
             Response response = client.Query(content);
@@ -2773,52 +2504,43 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6798",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6799",
-["objectType"] = "Dashboards"
+objectType = "Dashboards",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6800",
-["objectType"] = "Data pipelines"
+objectType = "Data pipelines",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6801",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6802",
-["objectType"] = "Folders"
+objectType = "Folders",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6803",
-["objectType"] = "Glossary terms"
+objectType = "Glossary terms",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6804",
-["objectType"] = "Reports"
+objectType = "Reports",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6805",
-["objectType"] = "Stored procedures"
+objectType = "Stored procedures",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6806",
-["objectType"] = "Tables"
+objectType = "Tables",
 }
-            }
+            },
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -2838,52 +2560,43 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6798",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6799",
-["objectType"] = "Dashboards"
+objectType = "Dashboards",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6800",
-["objectType"] = "Data pipelines"
+objectType = "Data pipelines",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6801",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6802",
-["objectType"] = "Folders"
+objectType = "Folders",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6803",
-["objectType"] = "Glossary terms"
+objectType = "Glossary terms",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6804",
-["objectType"] = "Reports"
+objectType = "Reports",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6805",
-["objectType"] = "Stored procedures"
+objectType = "Stored procedures",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6806",
-["objectType"] = "Tables"
+objectType = "Tables",
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -2900,52 +2613,43 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6798",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6799",
-["objectType"] = "Dashboards"
+objectType = "Dashboards",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6800",
-["objectType"] = "Data pipelines"
+objectType = "Data pipelines",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6801",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6802",
-["objectType"] = "Folders"
+objectType = "Folders",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6803",
-["objectType"] = "Glossary terms"
+objectType = "Glossary terms",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6804",
-["objectType"] = "Reports"
+objectType = "Reports",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6805",
-["objectType"] = "Stored procedures"
+objectType = "Stored procedures",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6806",
-["objectType"] = "Tables"
+objectType = "Tables",
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -2962,36 +2666,31 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exampledata",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6844",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6845",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6846",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 },
                 limit = 2,
                 continuationToken = "<token>",
                 orderby = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6851",
-["name"] = "ASC"
+name = "ASC",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6853",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 }
             },
                 facets = new object[]
@@ -3060,36 +2759,31 @@ count = "desc",
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exampledata",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6844",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6845",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6846",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 },
                 limit = 2,
                 continuationToken = "<token>",
                 orderby = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6851",
-["name"] = "ASC"
+name = "ASC",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6853",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 }
             },
                 facets = new object[]
@@ -3160,31 +2854,26 @@ count = "desc",
                 Keywords = "exampledata",
                 Limit = 2,
                 ContinuationToken = "<token>",
-                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Orderby = {BinaryData.FromObjectAsJson(new
 {
-["$id"] = "6851",
-["name"] = "ASC"
-}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+name = "ASC",
+}), BinaryData.FromObjectAsJson(new
 {
-["$id"] = "6853",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 })},
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6844",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6845",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6846",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 }),
                 Facets = {new SearchFacetItem
 {
@@ -3244,31 +2933,26 @@ Count = SearchSortOrder.Descend,
                 Keywords = "exampledata",
                 Limit = 2,
                 ContinuationToken = "<token>",
-                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Orderby = {BinaryData.FromObjectAsJson(new
 {
-["$id"] = "6851",
-["name"] = "ASC"
-}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+name = "ASC",
+}), BinaryData.FromObjectAsJson(new
 {
-["$id"] = "6853",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 })},
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6844",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6845",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6846",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 }),
                 Facets = {new SearchFacetItem
 {
@@ -3326,35 +3010,30 @@ Count = SearchSortOrder.Descend,
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exampledata",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6931",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6932",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6933",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 },
                 limit = 2,
                 orderby = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6937",
-["name"] = "ASC"
+name = "ASC",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6939",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 }
             },
                 facets = new object[]
@@ -3423,35 +3102,30 @@ count = "desc",
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exampledata",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "6931",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6932",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6933",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 },
                 limit = 2,
                 orderby = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6937",
-["name"] = "ASC"
+name = "ASC",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6939",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 }
             },
                 facets = new object[]
@@ -3521,31 +3195,26 @@ count = "desc",
             {
                 Keywords = "exampledata",
                 Limit = 2,
-                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Orderby = {BinaryData.FromObjectAsJson(new
 {
-["$id"] = "6937",
-["name"] = "ASC"
-}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+name = "ASC",
+}), BinaryData.FromObjectAsJson(new
 {
-["$id"] = "6939",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 })},
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6931",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6932",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6933",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 }),
                 Facets = {new SearchFacetItem
 {
@@ -3604,31 +3273,26 @@ Count = SearchSortOrder.Descend,
             {
                 Keywords = "exampledata",
                 Limit = 2,
-                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Orderby = {BinaryData.FromObjectAsJson(new
 {
-["$id"] = "6937",
-["name"] = "ASC"
-}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+name = "ASC",
+}), BinaryData.FromObjectAsJson(new
 {
-["$id"] = "6939",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 })},
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "6931",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "6932",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "6933",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 }),
                 Facets = {new SearchFacetItem
 {
@@ -3686,36 +3350,31 @@ Count = SearchSortOrder.Descend,
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exampledata",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7017",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7018",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7019",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 },
                 limit = 2,
                 continuationToken = "<token>",
                 orderby = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7024",
-["name"] = "ASC"
+name = "ASC",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7026",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 }
             },
                 facets = new object[]
@@ -3784,36 +3443,31 @@ count = "desc",
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exampledata",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7017",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7018",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7019",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 },
                 limit = 2,
                 continuationToken = "<token>",
                 orderby = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7024",
-["name"] = "ASC"
+name = "ASC",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7026",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 }
             },
                 facets = new object[]
@@ -3884,31 +3538,26 @@ count = "desc",
                 Keywords = "exampledata",
                 Limit = 2,
                 ContinuationToken = "<token>",
-                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Orderby = {BinaryData.FromObjectAsJson(new
 {
-["$id"] = "7024",
-["name"] = "ASC"
-}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+name = "ASC",
+}), BinaryData.FromObjectAsJson(new
 {
-["$id"] = "7026",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 })},
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7017",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7018",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7019",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 }),
                 Facets = {new SearchFacetItem
 {
@@ -3968,31 +3617,26 @@ Count = SearchSortOrder.Descend,
                 Keywords = "exampledata",
                 Limit = 2,
                 ContinuationToken = "<token>",
-                Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Orderby = {BinaryData.FromObjectAsJson(new
 {
-["$id"] = "7024",
-["name"] = "ASC"
-}), BinaryData.FromObjectAsJson(new Dictionary<string, object>
+name = "ASC",
+}), BinaryData.FromObjectAsJson(new
 {
-["$id"] = "7026",
-["updateTime"] = "DESC"
+updateTime = "DESC",
 })},
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7017",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7018",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7019",
-["entityType"] = "azure_blob_path"
+entityType = "azure_blob_path",
 }
-            }
+            },
                 }),
                 Facets = {new SearchFacetItem
 {
@@ -4050,27 +3694,23 @@ Count = SearchSortOrder.Descend,
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7103",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7104",
-["createTime"] = new Dictionary<string, object>
+createTime = new Dictionary<string, object>
 {
-["$id"] = "7105",
 ["operator"] = "lt",
 ["timeThreshold"] = 1545580800000L
-}
 },
-new Dictionary<string, object>
+},
+new
 {
-["$id"] = "7106",
-["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
 }
-            }
+            },
                 },
             });
             Response response = client.Query(content);
@@ -4090,27 +3730,23 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7103",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7104",
-["createTime"] = new Dictionary<string, object>
+createTime = new Dictionary<string, object>
 {
-["$id"] = "7105",
 ["operator"] = "lt",
 ["timeThreshold"] = 1545580800000L
-}
 },
-new Dictionary<string, object>
+},
+new
 {
-["$id"] = "7106",
-["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
 }
-            }
+            },
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -4130,27 +3766,23 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7103",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7104",
-["createTime"] = new Dictionary<string, object>
+createTime = new Dictionary<string, object>
 {
-["$id"] = "7105",
 ["operator"] = "lt",
 ["timeThreshold"] = 1545580800000L
-}
 },
-new Dictionary<string, object>
+},
+new
 {
-["$id"] = "7106",
-["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -4167,27 +3799,23 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7103",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7104",
-["createTime"] = new Dictionary<string, object>
+createTime = new Dictionary<string, object>
 {
-["$id"] = "7105",
 ["operator"] = "lt",
 ["timeThreshold"] = 1545580800000L
-}
 },
-new Dictionary<string, object>
+},
+new
 {
-["$id"] = "7106",
-["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
+updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -4204,51 +3832,43 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exampledata",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7139",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7140",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7141",
-["not"] = new Dictionary<string, object>
+not = new
 {
-["$id"] = "7142",
-["or"] = new object[]
+or = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "7143",
 ["attributeName"] = "size",
 ["operator"] = "eq",
 ["attributeValue"] = 0
 },
 new Dictionary<string, object>
 {
-["$id"] = "7144",
 ["attributeName"] = "fileSize",
 ["operator"] = "eq",
 ["attributeValue"] = 0
 }
-}
-}
 },
-new Dictionary<string, object>
+},
+},
+new
 {
-["$id"] = "7145",
-["not"] = new Dictionary<string, object>
+not = new
 {
-["$id"] = "7146",
-["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+},
 }
-}
-            }
+            },
                 },
                 limit = 10,
                 taxonomySetting = new
@@ -4284,51 +3904,43 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exampledata",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7139",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7140",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7141",
-["not"] = new Dictionary<string, object>
+not = new
 {
-["$id"] = "7142",
-["or"] = new object[]
+or = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "7143",
 ["attributeName"] = "size",
 ["operator"] = "eq",
 ["attributeValue"] = 0
 },
 new Dictionary<string, object>
 {
-["$id"] = "7144",
 ["attributeName"] = "fileSize",
 ["operator"] = "eq",
 ["attributeValue"] = 0
 }
-}
-}
 },
-new Dictionary<string, object>
+},
+},
+new
 {
-["$id"] = "7145",
-["not"] = new Dictionary<string, object>
+not = new
 {
-["$id"] = "7146",
-["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+},
 }
-}
-            }
+            },
                 },
                 limit = 10,
                 taxonomySetting = new
@@ -4365,51 +3977,43 @@ new Dictionary<string, object>
             {
                 Keywords = "exampledata",
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7139",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7140",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7141",
-["not"] = new Dictionary<string, object>
+not = new
 {
-["$id"] = "7142",
-["or"] = new object[]
+or = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "7143",
 ["attributeName"] = "size",
 ["operator"] = "eq",
 ["attributeValue"] = 0
 },
 new Dictionary<string, object>
 {
-["$id"] = "7144",
 ["attributeName"] = "fileSize",
 ["operator"] = "eq",
 ["attributeValue"] = 0
 }
-}
-}
 },
-new Dictionary<string, object>
+},
+},
+new
 {
-["$id"] = "7145",
-["not"] = new Dictionary<string, object>
+not = new
 {
-["$id"] = "7146",
-["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+},
 }
-}
-            }
+            },
                 }),
                 TaxonomySetting = new SearchTaxonomySetting
                 {
@@ -4439,51 +4043,43 @@ new Dictionary<string, object>
             {
                 Keywords = "exampledata",
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7139",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7140",
-["objectType"] = "Files"
+objectType = "Files",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7141",
-["not"] = new Dictionary<string, object>
+not = new
 {
-["$id"] = "7142",
-["or"] = new object[]
+or = new object[]
 {
 new Dictionary<string, object>
 {
-["$id"] = "7143",
 ["attributeName"] = "size",
 ["operator"] = "eq",
 ["attributeValue"] = 0
 },
 new Dictionary<string, object>
 {
-["$id"] = "7144",
 ["attributeName"] = "fileSize",
 ["operator"] = "eq",
 ["attributeValue"] = 0
 }
-}
-}
 },
-new Dictionary<string, object>
+},
+},
+new
 {
-["$id"] = "7145",
-["not"] = new Dictionary<string, object>
+not = new
 {
-["$id"] = "7146",
-["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+classification = "MICROSOFT.SYSTEM.TEMP_FILE",
+},
 }
-}
-            }
+            },
                 }),
                 TaxonomySetting = new SearchTaxonomySetting
                 {
@@ -4513,28 +4109,24 @@ new Dictionary<string, object>
             {
                 keywords = "<asset name>",
                 limit = 3,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7200",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7201",
-["term"] = "ExampleTerm"
+term = "ExampleTerm",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7202",
-["term"] = "ExampleTerm",
-["glossary"] = "GlossaryName"
+term = "ExampleTerm",
+glossary = "GlossaryName",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7203",
-["termGuid"] = "<term guid>"
+termGuid = "<term guid>",
 }
-            }
+            },
                 },
             });
             Response response = client.Query(content);
@@ -4555,28 +4147,24 @@ new Dictionary<string, object>
             {
                 keywords = "<asset name>",
                 limit = 3,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7200",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7201",
-["term"] = "ExampleTerm"
+term = "ExampleTerm",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7202",
-["term"] = "ExampleTerm",
-["glossary"] = "GlossaryName"
+term = "ExampleTerm",
+glossary = "GlossaryName",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7203",
-["termGuid"] = "<term guid>"
+termGuid = "<term guid>",
 }
-            }
+            },
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -4597,28 +4185,24 @@ new Dictionary<string, object>
             {
                 Keywords = "<asset name>",
                 Limit = 3,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7200",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7201",
-["term"] = "ExampleTerm"
+term = "ExampleTerm",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7202",
-["term"] = "ExampleTerm",
-["glossary"] = "GlossaryName"
+term = "ExampleTerm",
+glossary = "GlossaryName",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7203",
-["termGuid"] = "<term guid>"
+termGuid = "<term guid>",
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -4636,28 +4220,24 @@ new Dictionary<string, object>
             {
                 Keywords = "<asset name>",
                 Limit = 3,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7200",
-                    ["or"] = new object[]
+                    or = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7201",
-["term"] = "ExampleTerm"
+term = "ExampleTerm",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7202",
-["term"] = "ExampleTerm",
-["glossary"] = "GlossaryName"
+term = "ExampleTerm",
+glossary = "GlossaryName",
 },
-new Dictionary<string, object>
+new
 {
-["$id"] = "7203",
-["termGuid"] = "<term guid>"
+termGuid = "<term guid>",
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -4674,18 +4254,16 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7236",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7237",
-["entityType"] = "azure_blob_path",
-["includeSubTypes"] = false
+entityType = "azure_blob_path",
+includeSubTypes = false,
 }
-            }
+            },
                 },
             });
             Response response = client.Query(content);
@@ -4705,18 +4283,16 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 limit = 10,
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7236",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7237",
-["entityType"] = "azure_blob_path",
-["includeSubTypes"] = false
+entityType = "azure_blob_path",
+includeSubTypes = false,
 }
-            }
+            },
                 },
             });
             Response response = await client.QueryAsync(content);
@@ -4736,18 +4312,16 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7236",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7237",
-["entityType"] = "azure_blob_path",
-["includeSubTypes"] = false
+entityType = "azure_blob_path",
+includeSubTypes = false,
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = client.Query(body);
@@ -4764,18 +4338,16 @@ new Dictionary<string, object>
             QueryConfig body = new QueryConfig
             {
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7236",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7237",
-["entityType"] = "azure_blob_path",
-["includeSubTypes"] = false
+entityType = "azure_blob_path",
+includeSubTypes = false,
 }
-            }
+            },
                 }),
             };
             Response<QueryResult> response = await client.QueryAsync(body);
@@ -4792,18 +4364,16 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exampledata",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7294",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7295",
-["entityType"] = "azure_blob_path",
-["includeSubTypes"] = false
+entityType = "azure_blob_path",
+includeSubTypes = false,
 }
-            }
+            },
                 },
                 limit = 10,
             });
@@ -4824,18 +4394,16 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exampledata",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7294",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7295",
-["entityType"] = "azure_blob_path",
-["includeSubTypes"] = false
+entityType = "azure_blob_path",
+includeSubTypes = false,
 }
-            }
+            },
                 },
                 limit = 10,
             });
@@ -4857,18 +4425,16 @@ new Dictionary<string, object>
             {
                 Keywords = "exampledata",
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7294",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7295",
-["entityType"] = "azure_blob_path",
-["includeSubTypes"] = false
+entityType = "azure_blob_path",
+includeSubTypes = false,
 }
-            }
+            },
                 }),
             };
             Response<SuggestResult> response = client.Suggest(body);
@@ -4886,18 +4452,16 @@ new Dictionary<string, object>
             {
                 Keywords = "exampledata",
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7294",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7295",
-["entityType"] = "azure_blob_path",
-["includeSubTypes"] = false
+entityType = "azure_blob_path",
+includeSubTypes = false,
 }
-            }
+            },
                 }),
             };
             Response<SuggestResult> response = await client.SuggestAsync(body);
@@ -4914,18 +4478,16 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exa",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7350",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7351",
-["entityType"] = "azure_blob_path",
-["includeSubTypes"] = false
+entityType = "azure_blob_path",
+includeSubTypes = false,
 }
-            }
+            },
                 },
                 limit = 10,
             });
@@ -4946,18 +4508,16 @@ new Dictionary<string, object>
             using RequestContent content = RequestContent.Create(new
             {
                 keywords = "exa",
-                filter = new Dictionary<string, object>
+                filter = new
                 {
-                    ["$id"] = "7350",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7351",
-["entityType"] = "azure_blob_path",
-["includeSubTypes"] = false
+entityType = "azure_blob_path",
+includeSubTypes = false,
 }
-            }
+            },
                 },
                 limit = 10,
             });
@@ -4979,18 +4539,16 @@ new Dictionary<string, object>
             {
                 Keywords = "exa",
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7350",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7351",
-["entityType"] = "azure_blob_path",
-["includeSubTypes"] = false
+entityType = "azure_blob_path",
+includeSubTypes = false,
 }
-            }
+            },
                 }),
             };
             Response<AutoCompleteResult> response = client.AutoComplete(body);
@@ -5008,18 +4566,16 @@ new Dictionary<string, object>
             {
                 Keywords = "exa",
                 Limit = 10,
-                Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+                Filter = BinaryData.FromObjectAsJson(new
                 {
-                    ["$id"] = "7350",
-                    ["and"] = new object[]
+                    and = new object[]
             {
-new Dictionary<string, object>
+new
 {
-["$id"] = "7351",
-["entityType"] = "azure_blob_path",
-["includeSubTypes"] = false
+entityType = "azure_blob_path",
+includeSubTypes = false,
 }
-            }
+            },
                 }),
             };
             Response<AutoCompleteResult> response = await client.AutoCompleteAsync(body);
