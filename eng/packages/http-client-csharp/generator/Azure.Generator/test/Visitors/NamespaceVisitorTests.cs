@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
