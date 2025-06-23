@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,28 +15,55 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Domains))
+            {
+                writer.WritePropertyName("domains"u8);
+                writer.WriteStartObject();
+                foreach (var item in Domains)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue<SipDomain>(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsCollectionDefined(Trunks))
             {
-                writer.WritePropertyName("trunks");
+                writer.WritePropertyName("trunks"u8);
                 writer.WriteStartObject();
                 foreach (var item in Trunks)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SipTrunk>(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(Routes))
             {
-                writer.WritePropertyName("routes");
+                writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SipTrunkRoute>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SipConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSipConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }
