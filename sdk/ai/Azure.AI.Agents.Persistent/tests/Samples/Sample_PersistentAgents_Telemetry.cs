@@ -32,7 +32,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
 #endif
         #region Snippet:AgentsTelemetrySetupTracingToConsoleAsync
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                        .AddSource("Azure.AI.Agents.Persistent.PersistentAgentsClient") // Add the required sources name
+                        .AddSource("Azure.AI.Agents.Persistent.*") // Add the required sources name
                         .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
                         .AddConsoleExporter() // Export traces to the console
                         .Build();
@@ -118,7 +118,7 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
 #endif
         #region Snippet:AgentsTelemetrySetupTracingToConsole
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                        .AddSource("Azure.AI.Agents.Persistent.PersistentAgentsClient") // Add the required sources name
+                        .AddSource("Azure.AI.Agents.Persistent.*") // Add the required sources name
                         .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
                         .AddConsoleExporter() // Export traces to the console
                         .Build();
@@ -197,21 +197,15 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var appInsightsConnectionString = System.Environment.GetEnvironmentVariable("AI_APPINSIGHTS_CONNECTION_STRING");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        var appInsightsConnectionString = TestEnvironment.AI_APPINSIGHTS_CONNECTION_STRING;
 #endif
         #region Snippet:AgentsTelemetrySetupTracingToAzureMonitorAsync
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
-            .AddSource("Azure.AI.Agents.Persistent.PersistentAgentsClient")
+            .AddSource("Azure.AI.Agents.Persistent.*")
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
-            .AddAzureMonitorTraceExporter(o =>
-            {
-                o.ConnectionString = appInsightsConnectionString;
-            })
-            .Build();
+            .AddAzureMonitorTraceExporter().Build();
         #endregion
 
         using (tracerProvider)
@@ -288,21 +282,15 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var appInsightsConnectionString = System.Environment.GetEnvironmentVariable("AI_APPINSIGHTS_CONNECTION_STRING");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        var appInsightsConnectionString = TestEnvironment.AI_APPINSIGHTS_CONNECTION_STRING;
 #endif
         #region Snippet:AgentsTelemetrySetupTracingToAzureMonitor
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
-            .AddSource("Azure.AI.Agents.Persistent.PersistentAgentsClient")
+            .AddSource("Azure.AI.Agents.Persistent.*")
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
-            .AddAzureMonitorTraceExporter(o =>
-            {
-                o.ConnectionString = appInsightsConnectionString;
-            })
-            .Build();
+            .AddAzureMonitorTraceExporter().Build();
         #endregion
 
         using (tracerProvider)

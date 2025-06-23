@@ -886,16 +886,15 @@ For tracing to Azure Monitor from your application, install the Azure.Monitor.Op
 dotnet add package Azure.Monitor.OpenTelemetry.Exporter
 ```
 
+You also have to configure the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to point to your Azure Monitor resource.
+```bash
+
 Here is an example how to set up tracing to Azure monitor:
 ```C# Snippet:AgentsTelemetrySetupTracingToAzureMonitor
 var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .AddSource("Azure.AI.Agents.Persistent.PersistentAgentsClient")
+    .AddSource("Azure.AI.Agents.Persistent.*")
     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
-    .AddAzureMonitorTraceExporter(o =>
-    {
-        o.ConnectionString = appInsightsConnectionString;
-    })
-    .Build();
+    .AddAzureMonitorTraceExporter().Build();
 ```
 
 ##### Tracing to Console
@@ -910,7 +909,7 @@ dotnet add package OpenTelemetry.Exporter.Console
 Here is an example how to set up tracing to console:
 ```C# Snippet:AgentsTelemetrySetupTracingToConsole
 var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource("Azure.AI.Agents.Persistent.PersistentAgentsClient") // Add the required sources name
+                .AddSource("Azure.AI.Agents.Persistent.*") // Add the required sources name
                 .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
                 .AddConsoleExporter() // Export traces to the console
                 .Build();
