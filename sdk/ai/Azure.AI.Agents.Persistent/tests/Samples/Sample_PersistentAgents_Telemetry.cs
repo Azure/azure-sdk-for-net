@@ -116,6 +116,12 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
+        #region Snippet:EnableActivitySourceToGetTraces
+        AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+        #endregion
+        #region Snippet:DisableContentRecordingForTraces
+        AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
+        #endregion
         #region Snippet:AgentsTelemetrySetupTracingToConsole
         var tracerProvider = Sdk.CreateTracerProviderBuilder()
                         .AddSource("Azure.AI.Agents.Persistent.*") // Add the required sources name
