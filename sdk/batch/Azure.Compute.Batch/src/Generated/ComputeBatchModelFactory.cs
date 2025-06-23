@@ -28,36 +28,6 @@ namespace Azure.Compute.Batch
             return new BatchApplication(id, displayName, versions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchError"/>. </summary>
-        /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
-        /// <param name="message"> A message describing the error, intended to be suitable for display in a user interface. </param>
-        /// <param name="values"> A collection of key-value pairs containing additional details about the error. </param>
-        /// <returns> A new <see cref="Batch.BatchError"/> instance for mocking. </returns>
-        public static BatchError BatchError(string code = null, BatchErrorMessage message = null, IEnumerable<BatchErrorDetail> values = null)
-        {
-            values ??= new List<BatchErrorDetail>();
-
-            return new BatchError(code, message, values?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchErrorMessage"/>. </summary>
-        /// <param name="lang"> The language code of the error message. </param>
-        /// <param name="value"> The text of the message. </param>
-        /// <returns> A new <see cref="Batch.BatchErrorMessage"/> instance for mocking. </returns>
-        public static BatchErrorMessage BatchErrorMessage(string lang = null, string value = null)
-        {
-            return new BatchErrorMessage(lang, value, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchErrorDetail"/>. </summary>
-        /// <param name="key"> An identifier specifying the meaning of the Value property. </param>
-        /// <param name="value"> The additional information included with the error response. </param>
-        /// <returns> A new <see cref="Batch.BatchErrorDetail"/> instance for mocking. </returns>
-        public static BatchErrorDetail BatchErrorDetail(string key = null, string value = null)
-        {
-            return new BatchErrorDetail(key, value, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Batch.BatchPoolUsageMetrics"/>. </summary>
         /// <param name="poolId"> The ID of the Pool whose metrics are aggregated in this entry. </param>
         /// <param name="startTime"> The start time of the aggregation interval covered by this entry. </param>
@@ -1155,6 +1125,36 @@ namespace Azure.Compute.Batch
                 location,
                 error,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchError"/>. </summary>
+        /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
+        /// <param name="message"> A message describing the error, intended to be suitable for display in a user interface. </param>
+        /// <param name="values"> A collection of key-value pairs containing additional details about the error. </param>
+        /// <returns> A new <see cref="Batch.BatchError"/> instance for mocking. </returns>
+        public static BatchError BatchError(string code = null, BatchErrorMessage message = null, IEnumerable<BatchErrorDetail> values = null)
+        {
+            values ??= new List<BatchErrorDetail>();
+
+            return new BatchError(code, message, values?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchErrorMessage"/>. </summary>
+        /// <param name="lang"> The language code of the error message. </param>
+        /// <param name="value"> The text of the message. </param>
+        /// <returns> A new <see cref="Batch.BatchErrorMessage"/> instance for mocking. </returns>
+        public static BatchErrorMessage BatchErrorMessage(string lang = null, string value = null)
+        {
+            return new BatchErrorMessage(lang, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchErrorDetail"/>. </summary>
+        /// <param name="key"> An identifier specifying the meaning of the Value property. </param>
+        /// <param name="value"> The additional information included with the error response. </param>
+        /// <returns> A new <see cref="Batch.BatchErrorDetail"/> instance for mocking. </returns>
+        public static BatchErrorDetail BatchErrorDetail(string key = null, string value = null)
+        {
+            return new BatchErrorDetail(key, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchSubtask"/>. </summary>
