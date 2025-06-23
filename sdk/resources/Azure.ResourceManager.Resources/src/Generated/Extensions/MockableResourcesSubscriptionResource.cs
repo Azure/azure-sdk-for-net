@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.12.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.11.0 (2025-06-23)
+
+### Features Added
+
+- Bump `DeploymentScript` api-version to `2023-08-01`.
 
 ## 1.10.0 (2025-06-06)
 

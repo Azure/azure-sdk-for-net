@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DeploymentScriptsGet()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Get.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2023-08-01/examples/DeploymentScripts_Get.json
             // this example is just showing the usage of "DeploymentScripts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeploymentScriptsDelete()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Delete.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2023-08-01/examples/DeploymentScripts_Delete.json
             // this example is just showing the usage of "DeploymentScripts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DeploymentScriptsUpdate()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Update.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2023-08-01/examples/DeploymentScripts_Update.json
             // this example is just showing the usage of "DeploymentScripts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetLogs_DeploymentScriptsGetLogs()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_GetLogs.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2023-08-01/examples/DeploymentScripts_GetLogs.json
             // this example is just showing the usage of "DeploymentScripts_GetLogs" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
