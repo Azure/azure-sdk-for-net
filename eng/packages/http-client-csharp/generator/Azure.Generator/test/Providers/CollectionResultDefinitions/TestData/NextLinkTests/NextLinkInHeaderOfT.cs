@@ -43,7 +43,7 @@ namespace Samples
                     yield break;
                 }
                 global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
-                nextPage = response.Headers.TryGetValue("nextCat", out string value) ? value : null;
+                nextPage = response.Headers.TryGetValue("nextCat", out string value) ? new global::System.Uri(value) : null;
                 yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)responseWithType.Cats), nextPage?.AbsoluteUri, response);
             }
             while ((nextPage != null));
@@ -59,12 +59,7 @@ namespace Samples
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, this.CancellationToken);
-                if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
-                {
-                    throw new global::Azure.RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (global::System.Exception e)
             {

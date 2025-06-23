@@ -86,18 +86,6 @@ namespace Azure.Generator
             return base.CreateCSharpTypeCore(inputType);
         }
 
-        /// <inheritdoc/>
-        protected override ParameterProvider? CreateParameterCore(InputParameter parameter)
-        {
-            // Skip the x-ms-client-request-id parameter as it is handled as part of the Azure.Core pipeline.
-            if (parameter.NameInRequest == "x-ms-client-request-id")
-            {
-                return null;
-            }
-
-            return base.CreateParameterCore(parameter);
-        }
-
         private CSharpType? CreateKnownPrimitiveType(InputPrimitiveType inputType)
         {
             InputPrimitiveType? primitiveType = inputType;
