@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Update serialization of ManagedServiceIdentity and ManagedServiceIdentityType.
+- Use ModelReaderWriter instead of System.Text.Json.JsonSerializer for serialization of ManagedServiceIdentity.
 
 ## 1.13.1 (2025-04-24)
 
