@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.ServerSentEvents;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Agents.Persistent.Telemetry;
 
 #nullable enable
 
@@ -21,14 +22,17 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
 {
     private readonly Func<Task<Response>> _sendRequestAsync;
     private readonly CancellationToken _cancellationToken;
+    private readonly OpenTelemetryScope? _scope;
 
     public AsyncStreamingUpdateCollection(Func<Task<Response>> sendRequestAsync,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        OpenTelemetryScope? scope = null)
     {
         Argument.AssertNotNull(sendRequestAsync, nameof(sendRequestAsync));
 
         _sendRequestAsync = sendRequestAsync;
         _cancellationToken = cancellationToken;
+        _scope = scope;
     }
 
     public override ContinuationToken? GetContinuationToken(ClientResult page)
@@ -48,11 +52,14 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
     protected async override IAsyncEnumerable<StreamingUpdate> GetValuesFromPageAsync(ClientResult page)
     {
 #pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
-        await using IAsyncEnumerator<StreamingUpdate> enumerator = new AsyncStreamingUpdateEnumerator(page, _cancellationToken);
+        await using IAsyncEnumerator<StreamingUpdate> enumerator = new AsyncStreamingUpdateEnumerator(page, _cancellationToken, _scope);
 #pragma warning restore AZC0100 // ConfigureAwait(false) must be used.
         while (await enumerator.MoveNextAsync().ConfigureAwait(false))
         {
-            yield return enumerator.Current;
+            var update = enumerator.Current;
+            // Send to telemetry (if needed)
+            _scope?.RecordStreamingUpdate(update);
+            yield return update;
         }
     }
 
@@ -74,14 +81,18 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
         private IEnumerator<StreamingUpdate>? _updates;
 
         private StreamingUpdate? _current;
+        private OpenTelemetryScope? _scope;
         private bool _started;
+        private bool _hasYieldedUpdate; // Track if any updates have been yielded
 
-        public AsyncStreamingUpdateEnumerator(ClientResult page, CancellationToken cancellationToken)
+        public AsyncStreamingUpdateEnumerator(ClientResult page, CancellationToken cancellationToken, OpenTelemetryScope? scope = null)
         {
             Argument.AssertNotNull(page, nameof(page));
 
+            _scope = scope;
             _response = page.GetRawResponse();
             _cancellationToken = cancellationToken;
+            _hasYieldedUpdate = false;
         }
 
         StreamingUpdate IAsyncEnumerator<StreamingUpdate>.Current
@@ -94,36 +105,67 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
                 throw new ObjectDisposedException(nameof(AsyncStreamingUpdateEnumerator));
             }
 
+            if (_cancellationToken.IsCancellationRequested)
+            {
+                _scope?.RecordCancellation();
+                _scope?.Dispose();
+                _scope = null;
+            }
+
             _cancellationToken.ThrowIfCancellationRequested();
-            _events ??= CreateEventEnumeratorAsync();
-            _started = true;
-
-            if (_updates is not null && _updates.MoveNext())
+            try
             {
-                _current = _updates.Current;
-                return true;
-            }
+	            _events ??= CreateEventEnumeratorAsync();
+	            _started = true;
 
-            if (await _events.MoveNextAsync().ConfigureAwait(false))
+	            if (_updates is not null && _updates.MoveNext())
+	            {
+	                _current = _updates.Current;
+                    _hasYieldedUpdate = true;
+	                return true;
+	            }
+
+	            if (await _events.MoveNextAsync().ConfigureAwait(false))
+	            {
+	                if (_events.Current.Data.AsSpan().SequenceEqual(TerminalData))
+	                {
+	                    _current = default;
+                        if (_scope != null && _started && !_hasYieldedUpdate)
+                        {
+                            _scope.RecordError(new InvalidOperationException("No events were received from the stream."));
+                            _scope.Dispose();
+                            _scope = null;
+                        }
+	                    return false;
+	                }
+
+	                var updates = StreamingUpdate.FromEvent(_events.Current);
+	                _updates = updates.GetEnumerator();
+
+	                if (_updates.MoveNext())
+	                {
+	                    _current = _updates.Current;
+                        _hasYieldedUpdate = true;
+	                    return true;
+	                }
+	            }
+
+	            _current = default;
+                if (_scope != null && _started && !_hasYieldedUpdate)
+                {
+                    _scope.RecordError(new InvalidOperationException("No events were received from the stream."));
+                    _scope.Dispose();
+                    _scope = null;
+                }
+	            return false;
+            }
+            catch (Exception ex)
             {
-                if (_events.Current.Data.AsSpan().SequenceEqual(TerminalData))
-                {
-                    _current = default;
-                    return false;
-                }
-
-                var updates = StreamingUpdate.FromEvent(_events.Current);
-                _updates = updates.GetEnumerator();
-
-                if (_updates.MoveNext())
-                {
-                    _current = _updates.Current;
-                    return true;
-                }
+                _scope?.RecordError(ex);
+                _scope?.Dispose();
+                _scope = null;
+                throw;
             }
-
-            _current = default;
-            return false;
         }
 
         private IAsyncEnumerator<SseItem<byte[]>> CreateEventEnumeratorAsync()
@@ -148,6 +190,7 @@ internal class AsyncStreamingUpdateCollection : AsyncCollectionResult<StreamingU
         {
             if (_events is not null)
             {
+                _scope?.Dispose();
                 await _events.DisposeAsync().ConfigureAwait(false);
                 _events = null;
 
