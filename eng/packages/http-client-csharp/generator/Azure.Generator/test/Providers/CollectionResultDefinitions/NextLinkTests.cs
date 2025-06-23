@@ -155,6 +155,34 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
         }
 
         [Test]
+        public void NextLinkInBodyOfTWithStringProperty()
+        {
+            CreatePagingOperation(InputResponseLocation.Body, useStringProperty: true);
+
+            var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
+                t => t is CollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResultOfT");
+            Assert.IsNotNull(collectionResultDefinition);
+
+            var writer = new TypeProviderWriter(collectionResultDefinition!);
+            var file = writer.Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        [Test]
+        public void NextLinkInBodyWithStringProperty()
+        {
+            CreatePagingOperation(InputResponseLocation.Body, useStringProperty: true);
+
+            var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
+                t => t is CollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
+            Assert.IsNotNull(collectionResultDefinition);
+
+            var writer = new TypeProviderWriter(collectionResultDefinition!);
+            var file = writer.Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        [Test]
         public void UsesValidFieldIdentifierNames()
         {
             MockHelpers.LoadMockPlugin();
@@ -190,7 +218,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             Assert.IsTrue(fields.Any(f => f.Name == "_foo"));
         }
 
-        private static void CreatePagingOperation(InputResponseLocation responseLocation)
+        private static void CreatePagingOperation(InputResponseLocation responseLocation, bool useStringProperty = false)
         {
             var inputModel = InputFactory.Model("cat", properties:
             [
@@ -201,7 +229,10 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
                 [200],
                 InputFactory.Model(
                     "page",
-                    properties: [InputFactory.Property("cats", InputFactory.Array(inputModel)), InputFactory.Property("nextCat", InputPrimitiveType.Url)]));
+                    properties: [
+                        InputFactory.Property("cats", InputFactory.Array(inputModel)),
+                        InputFactory.Property("nextCat", useStringProperty ? InputPrimitiveType.String : InputPrimitiveType.Url)
+                    ]));
             var operation = InputFactory.Operation("getCats", responses: [response]);
             var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation, pagingMetadata: pagingMetadata);
             var client = InputFactory.Client("catClient", methods: [inputServiceMethod]);
