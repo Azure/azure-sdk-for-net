@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                JsonSerializer.Serialize(writer, Subnet);
+                ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    subnet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerEventHubsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("ignoreMissingVnetServiceEndpoint"u8))
