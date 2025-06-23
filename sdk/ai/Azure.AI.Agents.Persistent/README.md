@@ -874,9 +874,9 @@ Assert.AreEqual(
 
 You can add an Application Insights Azure resource to your Azure AI Foundry project. See the Tracing tab in your AI Foundry project. If one was enabled, you use the Application Insights connection string, configure your Agents, and observe the full execution path through Azure Monitor. Typically, you might want to start tracing before you create an Agent.
 
-Tracing also requires enabling OpenTelemetry support. One way to do this is to set the AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE environment variable value to `true`.
+Tracing also requires enabling OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable value to `true`.
 
-To enabled content recording, set the AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED environment variable to `true`. Content in this context refers to chat message content, function call tool related function names, function parameter names and values.
+To enabled content recording, set the `AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED` environment variable to `true`. Content in this context refers to chat message content, function call tool related function names, function parameter names and values.
 
 ##### Tracing to Azure Montior
 
@@ -887,7 +887,6 @@ dotnet add package Azure.Monitor.OpenTelemetry.Exporter
 ```
 
 You also have to configure the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to point to your Azure Monitor resource.
-```bash
 
 Here is an example how to set up tracing to Azure monitor:
 ```C# Snippet:AgentsTelemetrySetupTracingToAzureMonitor
