@@ -59,15 +59,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("usesTaskDependencies"u8);
                 writer.WriteBooleanValue(UsesTaskDependencies.Value);
             }
-            if (Optional.IsDefined(OnAllTasksComplete))
+            if (Optional.IsDefined(AllTasksCompleteMode))
             {
                 writer.WritePropertyName("onAllTasksComplete"u8);
-                writer.WriteStringValue(OnAllTasksComplete.Value.ToString());
+                writer.WriteStringValue(AllTasksCompleteMode.Value.ToString());
             }
-            if (Optional.IsDefined(OnTaskFailure))
+            if (Optional.IsDefined(TaskFailureMode))
             {
                 writer.WritePropertyName("onTaskFailure"u8);
-                writer.WriteStringValue(OnTaskFailure.Value.ToString());
+                writer.WriteStringValue(TaskFailureMode.Value.ToString());
             }
             if (Optional.IsDefined(NetworkConfiguration))
             {
@@ -158,8 +158,8 @@ namespace Azure.Compute.Batch
             int? maxParallelTasks = default;
             string displayName = default;
             bool? usesTaskDependencies = default;
-            OnAllBatchTasksComplete? onAllTasksComplete = default;
-            OnBatchTaskFailure? onTaskFailure = default;
+            BatchAllTasksCompleteMode? onAllTasksComplete = default;
+            BatchTaskFailureMode? onTaskFailure = default;
             BatchJobNetworkConfiguration networkConfiguration = default;
             BatchJobConstraints constraints = default;
             BatchJobManagerTask jobManagerTask = default;
@@ -167,7 +167,7 @@ namespace Azure.Compute.Batch
             BatchJobReleaseTask jobReleaseTask = default;
             IList<EnvironmentSetting> commonEnvironmentSettings = default;
             BatchPoolInfo poolInfo = default;
-            IList<MetadataItem> metadata = default;
+            IList<BatchMetadataItem> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -219,7 +219,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    onAllTasksComplete = new OnAllBatchTasksComplete(property.Value.GetString());
+                    onAllTasksComplete = new BatchAllTasksCompleteMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("onTaskFailure"u8))
@@ -228,7 +228,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    onTaskFailure = new OnBatchTaskFailure(property.Value.GetString());
+                    onTaskFailure = new BatchTaskFailureMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("networkConfiguration"u8))
@@ -301,10 +301,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<MetadataItem> array = new List<MetadataItem>();
+                    List<BatchMetadataItem> array = new List<BatchMetadataItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataItem.DeserializeMetadataItem(item, options));
+                        array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
@@ -330,7 +330,7 @@ namespace Azure.Compute.Batch
                 jobReleaseTask,
                 commonEnvironmentSettings ?? new ChangeTrackingList<EnvironmentSetting>(),
                 poolInfo,
-                metadata ?? new ChangeTrackingList<MetadataItem>(),
+                metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
                 serializedAdditionalRawData);
         }
 

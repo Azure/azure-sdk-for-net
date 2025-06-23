@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AvsVmVolumesGet()
         {
-            // Generated from example definition: 2024-11-01-preview/AvsVmVolumes_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/AvsVmVolumes_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "AvsVmVolume_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_AvsVmVolumesDelete()
         {
-            // Generated from example definition: 2024-11-01-preview/AvsVmVolumes_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/AvsVmVolumes_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "AvsVmVolume_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_AvsVmVolumesUpdate()
         {
-            // Generated from example definition: 2024-11-01-preview/AvsVmVolumes_Update_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/AvsVmVolumes_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "AvsVmVolume_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

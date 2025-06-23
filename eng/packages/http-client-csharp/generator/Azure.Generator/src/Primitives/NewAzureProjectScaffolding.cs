@@ -40,7 +40,7 @@ namespace Azure.Generator.Primitives
             int pathSegmentCount = GetPathSegmentCount();
             if (AzureClientGenerator.Instance.InputLibrary.InputNamespace.Auth?.ApiKey is not null)
             {
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), SharedSourceLinkBase));
+                builder.CompileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), SharedSourceLinkBase));
             }
 
             bool hasOperation = false;
@@ -54,7 +54,7 @@ namespace Azure.Generator.Primitives
             {
                 foreach (var file in _operationSharedFiles)
                 {
-                    builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
+                    builder.CompileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
                 }
             }
 
@@ -62,7 +62,7 @@ namespace Azure.Generator.Primitives
             {
                 foreach (var file in _lroSharedFiles)
                 {
-                    builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
+                    builder.CompileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
                 }
             }
 
@@ -104,8 +104,11 @@ namespace Azure.Generator.Primitives
 
         private static void TraverseInput(InputClient rootClient, ref bool hasOperation, ref bool hasLongRunningOperation)
         {
-            hasOperation = false;
-            hasLongRunningOperation = false;
+            if (hasOperation && hasLongRunningOperation)
+            {
+                return;
+            }
+
             foreach (var method in rootClient.Methods)
             {
                 hasOperation = true;

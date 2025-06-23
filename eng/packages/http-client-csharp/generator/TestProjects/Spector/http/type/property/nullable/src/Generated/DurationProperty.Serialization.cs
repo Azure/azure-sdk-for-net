@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace _Type.Property.Nullable
 {
@@ -34,9 +33,6 @@ namespace _Type.Property.Nullable
         protected virtual DurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<DurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="durationProperty"> The <see cref="DurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(DurationProperty durationProperty) => throw null;
 
         public static explicit operator DurationProperty(Response result) => throw null;
     }

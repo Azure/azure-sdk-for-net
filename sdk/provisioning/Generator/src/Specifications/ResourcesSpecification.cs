@@ -25,6 +25,7 @@ public class ResourcesSpecification : Specification
         RemoveProperty<ArmDeploymentPropertiesExtended>("DebugSettingDetailLevel");
 
         // Patch models
+        CustomizeProperty<TenantDataBoundaryResource>("Name", p => p.Path = ["name"]);
         CustomizeResource<ArmDeploymentResource>(r => r.FromExpression = true);
         CustomizeEnum<ResourceTypeAliasPatternType>(e => { foreach (EnumValue member in e.Values) { member.Value = member.Name; } });
         CustomizeEnum<ResourceTypeAliasType>(e => { foreach (EnumValue member in e.Values) { member.Value = member.Name; } });

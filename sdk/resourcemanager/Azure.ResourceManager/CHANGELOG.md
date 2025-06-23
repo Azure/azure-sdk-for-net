@@ -1,14 +1,10 @@
 # Release History
 
-## 1.14.0-beta.1 (Unreleased)
+## 1.14.0-beta.1 (2025-06-23)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Use ModelReaderWriter instead of System.Text.Json.JsonSerializer for serialization of ManagedServiceIdentity.
 
 ## 1.13.1 (2025-04-24)
 
