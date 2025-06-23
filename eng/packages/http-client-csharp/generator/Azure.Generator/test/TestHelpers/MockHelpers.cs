@@ -32,6 +32,7 @@ namespace Azure.Generator.Tests.TestHelpers
             Func<IReadOnlyList<InputEnumType>>? inputEnums = null,
             Func<IReadOnlyList<InputModelType>>? inputModels = null,
             Func<IReadOnlyList<InputClient>>? clients = null,
+            Func<InputClient, ClientProvider?>? createClientCore = null,
             ClientResponseApi? clientResponseApi = null,
             ClientPipelineApi? clientPipelineApi = null,
             HttpMessageApi? httpMessageApi = null,
@@ -60,6 +61,12 @@ namespace Azure.Generator.Tests.TestHelpers
             {
                 mockTypeFactory = new Mock<AzureTypeFactory>() { CallBase = true };
                 mockTypeFactory.Protected().Setup<CSharpType>("CreateCSharpTypeCore", ItExpr.IsAny<InputType>()).Returns(createCSharpTypeCore);
+            }
+
+            if (createClientCore is not null)
+            {
+                mockTypeFactory ??= new Mock<AzureTypeFactory>() { CallBase = true };
+                mockTypeFactory.Protected().Setup<ClientProvider?>("CreateClientCore", ItExpr.IsAny<InputClient>()).Returns(createClientCore);
             }
 
             // initialize the mock singleton instance of the plugin
