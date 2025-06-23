@@ -14,7 +14,7 @@ Use the client library for Azure Event Grid System Events to:
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Messaging.EventGrid.SystemEvents --prerelease
+dotnet add package Azure.Messaging.EventGrid.SystemEvents
 ```
 
 ### Prerequisites
