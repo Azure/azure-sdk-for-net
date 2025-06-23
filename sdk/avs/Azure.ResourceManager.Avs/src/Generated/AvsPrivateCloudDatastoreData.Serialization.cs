@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(NetAppVolume))
             {
                 writer.WritePropertyName("netAppVolume"u8);
-                JsonSerializer.Serialize(writer, NetAppVolume);
+                ((IJsonModel<WritableSubResource>)NetAppVolume).Write(writer, options);
             }
             if (Optional.IsDefined(DiskPoolVolume))
             {
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAvsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            netAppVolume = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            netAppVolume = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerAvsContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("diskPoolVolume"u8))
