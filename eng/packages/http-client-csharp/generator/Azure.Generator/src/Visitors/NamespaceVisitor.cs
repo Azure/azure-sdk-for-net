@@ -54,9 +54,13 @@ namespace Azure.Generator.Visitors
         {
             if (AzureClientGenerator.Instance.Configuration.UseModelNamespace())
             {
-                type.Update(
-                    @namespace: AzureClientGenerator.Instance.TypeFactory.GetCleanNameSpace(
-                        $"{AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace}.Models"));
+                if (type.CustomCodeView == null)
+                {
+                    // If the type is customized, then we don't want to override the namespace.
+                    type.Update(
+                        @namespace: AzureClientGenerator.Instance.TypeFactory.GetCleanNameSpace(
+                            $"{AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace}.Models"));
+                }
             }
             else
             {

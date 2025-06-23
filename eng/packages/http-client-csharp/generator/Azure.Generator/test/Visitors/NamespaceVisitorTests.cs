@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
@@ -39,6 +40,25 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
+        public void DoesNotChangeNamespaceOfCustomizedModel()
+        {
+            MockHelpers.LoadMockPlugin(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": true }");
+            var visitor = new TestNamespaceVisitor();
+            var inputType = InputFactory.Model("TestModel", "Samples");
+            var model = new ModelProvider(inputType);
+
+            // simulate a customized model
+            model.GetType().BaseType!.GetField(
+                "_customCodeView",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?
+                .SetValue(model, new Lazy<TypeProvider>(() => new TestTypeProvider()));
+            var updatedModel = visitor.InvokePreVisitModel(inputType, model);
+
+            Assert.IsNotNull(updatedModel);
+            Assert.AreEqual("Samples", updatedModel!.Type.Namespace);
+        }
+
+        [Test]
         public void DoesNotUseModelsNamespaceIfConfigNotSet()
         {
             MockHelpers.LoadMockPlugin();
@@ -57,6 +77,15 @@ namespace Azure.Generator.Tests.Visitors
             {
                 return base.PreVisitModel(inputType, type);
             }
+        }
+
+        private class TestTypeProvider : TypeProvider
+        {
+            protected override string BuildNamespace() => "Samples";
+
+            protected override string BuildRelativeFilePath() => $"{Name}.cs";
+
+            protected override string BuildName() => "TestModel";
         }
     }
 }
