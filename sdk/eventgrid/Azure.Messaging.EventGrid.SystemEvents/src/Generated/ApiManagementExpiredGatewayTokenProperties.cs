@@ -46,27 +46,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementExpiredGatewayTokenProperties"/>. </summary>
-        /// <param name="expiredAtUtc"> Timestamp when the gateway token has expired. </param>
-        internal ApiManagementExpiredGatewayTokenProperties(DateTimeOffset expiredAtUtc)
-        {
-            ExpiredAtUtc = expiredAtUtc;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiManagementExpiredGatewayTokenProperties"/>. </summary>
-        /// <param name="expiredAtUtc"> Timestamp when the gateway token has expired. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementExpiredGatewayTokenProperties(DateTimeOffset expiredAtUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            ExpiredAtUtc = expiredAtUtc;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiManagementExpiredGatewayTokenProperties"/> for deserialization. </summary>
         internal ApiManagementExpiredGatewayTokenProperties()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApiManagementExpiredGatewayTokenProperties"/>. </summary>
+        /// <param name="expiresOn"> Timestamp when the gateway token has expired. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementExpiredGatewayTokenProperties(DateTimeOffset? expiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ExpiresOn = expiresOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
         /// <summary> Timestamp when the gateway token has expired. </summary>
-        public DateTimeOffset ExpiredAtUtc { get; }
+        public DateTimeOffset? ExpiresOn { get; }
     }
 }
