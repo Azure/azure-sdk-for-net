@@ -145,7 +145,7 @@ public abstract partial class Specification
             });
     }
 
-    private Dictionary<Type, MethodInfo> FindConstructibleResources()
+    protected virtual Dictionary<Type, MethodInfo> FindConstructibleResources()
     {
         // Find constructible resources
         Dictionary<Type, MethodInfo> resources = [];
