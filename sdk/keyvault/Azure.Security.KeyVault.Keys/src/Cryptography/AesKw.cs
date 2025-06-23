@@ -18,8 +18,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public static readonly AesKw Aes128Kw = new AesKw("A128KW", 128);
         public static readonly AesKw Aes192Kw = new AesKw("A192KW", 192);
         public static readonly AesKw Aes256Kw = new AesKw("A256KW", 256);
-        internal static readonly AesKw CkmAesKeyWrap = new AesKw("CKM_AES_KEY_WRAP", 128);
-        internal static readonly AesKw CkmAesKeyWrapPad = new AesKw("CKM_AES_KEY_WRAP_PAD", 128);
 
         private static readonly byte[] s_defaultIv = new byte[] { 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6 };
 

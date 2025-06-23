@@ -123,8 +123,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             A128KWValue => AesKw.Aes128Kw,
             A192KWValue => AesKw.Aes192Kw,
             A256KWValue => AesKw.Aes256Kw,
-            CkmAesKeyWrapValue => AesKw.CkmAesKeyWrap,
-            CkmAesKeyWrapPadValue => AesKw.CkmAesKeyWrapPad,
             _ => null,
         };
     }
