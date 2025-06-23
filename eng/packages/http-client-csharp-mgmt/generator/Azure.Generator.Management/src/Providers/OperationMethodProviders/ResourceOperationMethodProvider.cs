@@ -34,6 +34,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected readonly MethodSignature _signature;
         protected readonly MethodBodyStatement[] _bodyStatements;
 
+        private readonly CSharpType? _responseGenericType;
+        private readonly bool _isGeneric;
+        private readonly bool _isLongRunningOperation;
+
         public ResourceOperationMethodProvider(
             ResourceClientProvider resourceClientProvider,
             InputServiceMethod method,
@@ -44,6 +48,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _serviceMethod = method;
             _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
+            _responseGenericType = _serviceMethod.GetResponseBodyType();
+            _isGeneric = _responseGenericType != null;
+            _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
             _clientDiagnosticsField = resourceClientProvider.GetClientDiagnosticsField();
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
@@ -87,10 +94,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private TryExpression BuildTryExpression()
         {
-            var cancellationTokenParameter = _convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
+            var cancellationTokenParameter = _convenienceMethod.Signature.Parameters.FirstOrDefault(p => p.Type.Equals(typeof(CancellationToken))) ?? KnownParameters.CancellationTokenParameter;
 
             var requestMethod = _resourceClientProvider.GetClientProvider().GetRequestMethodByOperation(_serviceMethod.Operation);
-
             var tryStatements = new List<MethodBodyStatement>
             {
                 ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable)
@@ -103,7 +109,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (_serviceMethod.IsLongRunningOperation())
+            if (_isLongRunningOperation)
             {
                 tryStatements.AddRange(
                 BuildLroHandling(
@@ -123,22 +129,17 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out VariableExpression responseVariable)
         {
-            var responseType = _convenienceMethod.Signature.ReturnType!.UnWrapAsync();
-
-            // Check if the return type is a generic Response<T> or just Response
-            if (!responseType.Equals(typeof(Response)))
+            if (_isGeneric && !_isLongRunningOperation)
             {
-                // For methods returning Response<T> (e.g., Response<MyResource>), use generic response processing
                 return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                     messageVariable,
                     contextVariable,
-                    responseType,
+                    _responseGenericType!,
                     _isAsync,
                     out responseVariable);
             }
             else
             {
-                // For methods returning just Response (no generic type), use non-generic response processing
                 return ResourceMethodSnippets.CreateNonGenericResponsePipelineProcessing(
                     messageVariable,
                     contextVariable,
@@ -155,9 +156,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var statements = new List<MethodBodyStatement>();
 
             var finalStateVia = _serviceMethod.GetOperationFinalStateVia();
-            bool isGeneric = _serviceMethod.GetResponseBodyType() != null;
 
-            var armOperationType = isGeneric
+            var armOperationType = _isGeneric
                 ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type
                     .MakeGenericType([_resourceClientProvider.ResourceClientCSharpType])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
@@ -166,11 +166,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _clientDiagnosticsField,
                 This.Property("Pipeline"),
                 messageVariable.Property("Request"),
-                isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable,
+                responseVariable,
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
 
-            var operationInstanceArguments = isGeneric
+            var operationInstanceArguments = _isGeneric
                 ? [
                     New.Instance(_resourceClientProvider.Source.Type, This.Property("Client")),
                     .. armOperationArguments
@@ -184,13 +184,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 out var operationVariable);
             statements.Add(operationDeclaration);
 
-            var waitMethod = isGeneric
+            var waitMethod = _isGeneric
                 ? (_isAsync ? "WaitForCompletionAsync" : "WaitForCompletion")
                 : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
 
             var waitInvocation = _isAsync
-                ? operationVariable.Invoke(waitMethod, [cancellationTokenParameter], null, _isAsync).Terminate()
-                : operationVariable.Invoke(waitMethod, cancellationTokenParameter).Terminate();
+                           ? operationVariable.Invoke(waitMethod, [cancellationTokenParameter], null, _isAsync).Terminate()
+                           : operationVariable.Invoke(waitMethod, cancellationTokenParameter).Terminate();
 
             var waitIfCompletedStatement = new IfStatement(
                 KnownAzureParameters.WaitUntil.Equal(
@@ -243,7 +243,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             foreach (var parameter in _convenienceMethod.Signature.Parameters)
             {
-                if (!_resourceClientProvider.ImplicitParameterNames.Contains(parameter.Name))
+                if (parameter.Type.Equals(typeof(RequestContext)))
+                {
+                    result.Add(KnownParameters.CancellationTokenParameter);
+                }
+                else if (!_resourceClientProvider.ImplicitParameterNames.Contains(parameter.Name))
                 {
                     result.Add(parameter);
                 }

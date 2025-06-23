@@ -44,11 +44,12 @@ namespace Azure.Generator.Providers
         private static readonly ParameterProvider ContinuationTokenParameter =
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
         private static readonly ParameterProvider NextLinkParameter =
-            new("nextLink", $"The next link to use for the next page of results.", new CSharpType(typeof(Uri)));
+            new("nextLink", $"The next link to use for the next page of results.", new CSharpType(typeof(Uri), isNullable: true));
         private static readonly ParameterProvider PageSizeHintParameter =
             new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
 
         private readonly bool _isProtocol;
+        private readonly PropertyProvider? _nextPageProperty;
 
         public CollectionResultDefinition(ClientProvider client, InputPagingServiceMethod serviceMethod, CSharpType? itemModelType, bool isAsync)
         {
@@ -84,7 +85,7 @@ namespace Azure.Generator.Providers
                 var field = new FieldProvider(
                     FieldModifiers.Private | FieldModifiers.ReadOnly,
                     parameter.Type,
-                    $"_{parameter.Name}",
+                    $"_{parameter.Name.ToVariableName()}",
                     this);
                 fields.Add(field);
                 if (field.Name == "_context")
@@ -116,9 +117,9 @@ namespace Azure.Generator.Providers
             // Use the canonical view in case the property was customized.
             if (_nextPageLocation == InputResponseLocation.Body)
             {
-                _nextPagePropertyName =
-                    responseModel.CanonicalView.Properties.FirstOrDefault(
-                        p => p.WireInfo?.SerializedName == nextPagePropertyName)?.Name;
+                _nextPageProperty = responseModel.CanonicalView.Properties.FirstOrDefault(
+                    p => p.WireInfo?.SerializedName == nextPagePropertyName);
+                _nextPagePropertyName = _nextPageProperty?.Name;
             }
             else if (_nextPageLocation == InputResponseLocation.Header)
             {
@@ -177,7 +178,7 @@ namespace Azure.Generator.Providers
                 : _requestFields[_nextTokenParameterIndex!.Value].Type;
 
             statements.Add(Declare("nextPage", nextPageType, _paging.NextLink != null ?
-                new TernaryConditionalExpression(ContinuationTokenParameter.NotEqual(Null), New.Instance<Uri>(ContinuationTokenParameter), _requestFields[0]) :
+                new TernaryConditionalExpression(ContinuationTokenParameter.NotEqual(Null), New.Instance<Uri>(ContinuationTokenParameter), Null) :
                 ContinuationTokenParameter.NullCoalesce(_requestFields[_nextTokenParameterIndex!.Value]), out var nextPageVariable));
 
             var doWhileStatement = _paging.NextLink != null ?
@@ -202,7 +203,7 @@ namespace Azure.Generator.Providers
                 doWhileStatement.Add(ConvertItemsToListOfBinaryData(responseWithTypeVariable, out var itemsVariable));
 
                 // Extract next page
-                doWhileStatement.Add(nextPageVariable.Assign(_nextPagePropertyName is null ? Null : BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
+                doWhileStatement.Add(nextPageVariable.Assign(BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
 
                 // Create and yield the page
                 doWhileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable, nextPageExpression, responseVariable])));
@@ -210,7 +211,7 @@ namespace Azure.Generator.Providers
             else
             {
                 // Extract next page
-                doWhileStatement.Add(nextPageVariable.Assign(_nextPagePropertyName is null ? Null : BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
+                doWhileStatement.Add(nextPageVariable.Assign(BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
 
                 // Create and yield the page
                 doWhileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [responseWithTypeVariable.Property(_itemsPropertyName).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), nextPageExpression, responseVariable])));
@@ -263,18 +264,37 @@ namespace Azure.Generator.Providers
                 return Null;
             }
 
-            switch (_nextPageLocation)
+            return _nextPageLocation switch
             {
-                case InputResponseLocation.Body:
-                    return responseWithTypeVariable.Property(_nextPagePropertyName);
-                case InputResponseLocation.Header:
-                    return new TernaryConditionalExpression(
-                        responseVariable.Property("Headers").Invoke("TryGetValue", Literal(_nextPagePropertyName), new DeclarationExpression(typeof(string), "value", out var nextLinkHeader, isOut: true)).As<bool>(),
-                        nextLinkHeader,
-                        Null);
-                default:
-                    // Invalid location is logged by the emitter.
-                    return Null;
+                InputResponseLocation.Body =>NeedsConversionToUri() ? New.Instance<Uri>(responseWithTypeVariable.Property(_nextPagePropertyName)) : responseWithTypeVariable.Property(_nextPagePropertyName),
+                InputResponseLocation.Header => new TernaryConditionalExpression(
+                    responseVariable.Property("Headers")
+                        .Invoke("TryGetValue", Literal(_nextPagePropertyName),
+                            new DeclarationExpression(typeof(string), "value", out var nextLinkHeader, isOut: true))
+                        .As<bool>(),
+                     NeedsConversionToUri() ? New.Instance<Uri>(nextLinkHeader) : nextLinkHeader,
+                    Null),
+                _ => Null
+            };
+
+            bool NeedsConversionToUri()
+            {
+                if (_paging.NextLink == null)
+                {
+                    return false;
+                }
+                if (_nextPageLocation == InputResponseLocation.Body &&
+                    _nextPageProperty?.Type.Equals(typeof(string)) == true)
+                {
+                    return true;
+                }
+
+                if (_nextPageLocation == InputResponseLocation.Header)
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
 
@@ -317,28 +337,24 @@ namespace Azure.Generator.Providers
             }
 
             TryExpression BuildTryExpression()
-                => new TryExpression(_clientField.Property("Pipeline").Invoke(_isAsync ? "SendAsync" : "Send", [messageVariable, This.Property("CancellationToken")], _isAsync).Terminate(), BuildGetResponse(messageVariable));
+                => new TryExpression(Return(_clientField.Property("Pipeline").Invoke(_isAsync ? "ProcessMessageAsync" : "ProcessMessage", [messageVariable, _contextField!.AsValueExpression], _isAsync)));
 
             return new MethodProvider(signature, body, this);
         }
 
-        private MethodBodyStatement[] BuildGetResponse(ValueExpression messageVariable)
+        private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri)
         {
-            return new MethodBodyStatement[]
-            {
-                new IfStatement(messageVariable.Property("Response").Property("IsError").As<bool>().And(_contextField!.Property("ErrorOptions").NotEqual(Static<ErrorOptions>().Property(nameof(ErrorOptions.NoThrow)))))
-                {
-                    Throw(New.Instance<RequestFailedException>(messageVariable.Property("Response")))
-                },
-                Return(messageVariable.Property("Response"))
-            };
+            var createNextLinkRequestMethodName =
+                _client.RestClient.GetCreateNextLinkRequestMethod(_operation).Signature.Name;
+            return new TernaryConditionalExpression(
+                nextPageUri.NotEqual(Null),
+                _clientField.Invoke(
+                    createNextLinkRequestMethodName,
+                    [nextPageUri, .. _requestFields.Select(f => f.AsValueExpression)]),
+                _clientField.Invoke(
+                    _createRequestMethodName,
+                    [.. _requestFields.Select(f => f.AsValueExpression)])).As<HttpMessage>();
         }
-
-        private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri) => _clientField.Invoke(
-            _createRequestMethodName,
-            // we replace the first argument (the initialUri) with the nextPageUri
-            [nextPageUri, .. _requestFields.Skip(1)])
-            .As<HttpMessage>();
 
         private ScopedApi<HttpMessage> InvokeCreateRequestForContinuationToken(ValueExpression continuationToken)
         {
