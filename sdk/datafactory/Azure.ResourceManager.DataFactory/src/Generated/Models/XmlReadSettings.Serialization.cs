@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ValidationMode))
             {
                 writer.WritePropertyName("validationMode"u8);
-                JsonSerializer.Serialize(writer, ValidationMode);
+                ((IJsonModel<DataFactoryElement<string>>)ValidationMode).Write(writer, options);
             }
             if (Optional.IsDefined(DetectDataType))
             {
                 writer.WritePropertyName("detectDataType"u8);
-                JsonSerializer.Serialize(writer, DetectDataType);
+                ((IJsonModel<DataFactoryElement<bool>>)DetectDataType).Write(writer, options);
             }
             if (Optional.IsDefined(Namespaces))
             {
                 writer.WritePropertyName("namespaces"u8);
-                JsonSerializer.Serialize(writer, Namespaces);
+                ((IJsonModel<DataFactoryElement<bool>>)Namespaces).Write(writer, options);
             }
             if (Optional.IsDefined(NamespacePrefixes))
             {
                 writer.WritePropertyName("namespacePrefixes"u8);
-                JsonSerializer.Serialize(writer, NamespacePrefixes);
+                ((IJsonModel<DataFactoryElement<IDictionary<string, string>>>)NamespacePrefixes).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

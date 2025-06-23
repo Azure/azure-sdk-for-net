@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -43,27 +44,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Pfx))
             {
                 writer.WritePropertyName("pfx"u8);
-                JsonSerializer.Serialize(writer, Pfx);
+                ((IJsonModel<DataFactorySecret>)Pfx).Write(writer, options);
             }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                JsonSerializer.Serialize(writer, Username);
+                ((IJsonModel<DataFactoryElement<string>>)Username).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                JsonSerializer.Serialize(writer, Password);
+                ((IJsonModel<DataFactorySecret>)Password).Write(writer, options);
             }
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                JsonSerializer.Serialize(writer, Resource);
+                ((IJsonModel<DataFactoryElement<string>>)Resource).Write(writer, options);
             }
             if (Optional.IsDefined(UserTenant))
             {
                 writer.WritePropertyName("userTenant"u8);
-                JsonSerializer.Serialize(writer, UserTenant);
+                ((IJsonModel<DataFactoryElement<string>>)UserTenant).Write(writer, options);
             }
             if (Optional.IsDefined(Credential))
             {
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pfx = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
+                    pfx = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("username"u8))
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    password = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
+                    password = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("resource"u8))

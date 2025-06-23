@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
-                JsonSerializer.Serialize(writer, ColumnDelimiter);
+                ((IJsonModel<DataFactoryElement<string>>)ColumnDelimiter).Write(writer, options);
             }
             if (Optional.IsDefined(RowDelimiter))
             {
                 writer.WritePropertyName("rowDelimiter"u8);
-                JsonSerializer.Serialize(writer, RowDelimiter);
+                ((IJsonModel<DataFactoryElement<string>>)RowDelimiter).Write(writer, options);
             }
             if (Optional.IsDefined(EscapeChar))
             {
                 writer.WritePropertyName("escapeChar"u8);
-                JsonSerializer.Serialize(writer, EscapeChar);
+                ((IJsonModel<DataFactoryElement<string>>)EscapeChar).Write(writer, options);
             }
             if (Optional.IsDefined(QuoteChar))
             {
                 writer.WritePropertyName("quoteChar"u8);
-                JsonSerializer.Serialize(writer, QuoteChar);
+                ((IJsonModel<DataFactoryElement<string>>)QuoteChar).Write(writer, options);
             }
             if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
-                JsonSerializer.Serialize(writer, NullValue);
+                ((IJsonModel<DataFactoryElement<string>>)NullValue).Write(writer, options);
             }
             if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
-                JsonSerializer.Serialize(writer, EncodingName);
+                ((IJsonModel<DataFactoryElement<string>>)EncodingName).Write(writer, options);
             }
             if (Optional.IsDefined(TreatEmptyAsNull))
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
-                JsonSerializer.Serialize(writer, TreatEmptyAsNull);
+                ((IJsonModel<DataFactoryElement<bool>>)TreatEmptyAsNull).Write(writer, options);
             }
             if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
-                JsonSerializer.Serialize(writer, SkipLineCount);
+                ((IJsonModel<DataFactoryElement<int>>)SkipLineCount).Write(writer, options);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
-                JsonSerializer.Serialize(writer, FirstRowAsHeader);
+                ((IJsonModel<DataFactoryElement<bool>>)FirstRowAsHeader).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

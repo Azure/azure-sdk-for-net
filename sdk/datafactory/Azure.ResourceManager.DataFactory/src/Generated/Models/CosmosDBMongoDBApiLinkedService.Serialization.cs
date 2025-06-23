@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IsServerVersionAbove32))
             {
                 writer.WritePropertyName("isServerVersionAbove32"u8);
-                JsonSerializer.Serialize(writer, IsServerVersionAbove32);
+                ((IJsonModel<DataFactoryElement<bool>>)IsServerVersionAbove32).Write(writer, options);
             }
             writer.WritePropertyName("connectionString"u8);
-            JsonSerializer.Serialize(writer, ConnectionString);
+            ((IJsonModel<DataFactoryElement<string>>)ConnectionString).Write(writer, options);
             writer.WritePropertyName("database"u8);
-            JsonSerializer.Serialize(writer, Database);
+            ((IJsonModel<DataFactoryElement<string>>)Database).Write(writer, options);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {

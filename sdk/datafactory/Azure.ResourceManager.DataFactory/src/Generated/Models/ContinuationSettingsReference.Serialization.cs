@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ContinuationTtlInMinutes))
             {
                 writer.WritePropertyName("continuationTtlInMinutes"u8);
-                JsonSerializer.Serialize(writer, ContinuationTtlInMinutes);
+                ((IJsonModel<DataFactoryElement<int>>)ContinuationTtlInMinutes).Write(writer, options);
             }
             if (Optional.IsDefined(IdleCondition))
             {
                 writer.WritePropertyName("idleCondition"u8);
-                JsonSerializer.Serialize(writer, IdleCondition);
+                ((IJsonModel<DataFactoryElement<string>>)IdleCondition).Write(writer, options);
             }
             if (Optional.IsDefined(CustomizedCheckpointKey))
             {
                 writer.WritePropertyName("customizedCheckpointKey"u8);
-                JsonSerializer.Serialize(writer, CustomizedCheckpointKey);
+                ((IJsonModel<DataFactoryElement<string>>)CustomizedCheckpointKey).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("value"u8);
-            JsonSerializer.Serialize(writer, Value);
+            ((IJsonModel<DataFactoryElement<string>>)Value).Write(writer, options);
             if (Optional.IsDefined(IsSensitive))
             {
                 writer.WritePropertyName("isSensitive"u8);

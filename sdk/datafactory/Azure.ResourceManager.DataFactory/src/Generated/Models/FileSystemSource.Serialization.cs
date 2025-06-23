@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                JsonSerializer.Serialize(writer, Recursive);
+                ((IJsonModel<DataFactoryElement<bool>>)Recursive).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

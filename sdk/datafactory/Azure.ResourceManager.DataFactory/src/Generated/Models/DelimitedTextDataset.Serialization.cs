@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -46,47 +47,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
-                JsonSerializer.Serialize(writer, ColumnDelimiter);
+                ((IJsonModel<DataFactoryElement<string>>)ColumnDelimiter).Write(writer, options);
             }
             if (Optional.IsDefined(RowDelimiter))
             {
                 writer.WritePropertyName("rowDelimiter"u8);
-                JsonSerializer.Serialize(writer, RowDelimiter);
+                ((IJsonModel<DataFactoryElement<string>>)RowDelimiter).Write(writer, options);
             }
             if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
-                JsonSerializer.Serialize(writer, EncodingName);
+                ((IJsonModel<DataFactoryElement<string>>)EncodingName).Write(writer, options);
             }
             if (Optional.IsDefined(CompressionCodec))
             {
                 writer.WritePropertyName("compressionCodec"u8);
-                JsonSerializer.Serialize(writer, CompressionCodec);
+                ((IJsonModel<DataFactoryElement<string>>)CompressionCodec).Write(writer, options);
             }
             if (Optional.IsDefined(CompressionLevel))
             {
                 writer.WritePropertyName("compressionLevel"u8);
-                JsonSerializer.Serialize(writer, CompressionLevel);
+                ((IJsonModel<DataFactoryElement<string>>)CompressionLevel).Write(writer, options);
             }
             if (Optional.IsDefined(QuoteChar))
             {
                 writer.WritePropertyName("quoteChar"u8);
-                JsonSerializer.Serialize(writer, QuoteChar);
+                ((IJsonModel<DataFactoryElement<string>>)QuoteChar).Write(writer, options);
             }
             if (Optional.IsDefined(EscapeChar))
             {
                 writer.WritePropertyName("escapeChar"u8);
-                JsonSerializer.Serialize(writer, EscapeChar);
+                ((IJsonModel<DataFactoryElement<string>>)EscapeChar).Write(writer, options);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
-                JsonSerializer.Serialize(writer, FirstRowAsHeader);
+                ((IJsonModel<DataFactoryElement<bool>>)FirstRowAsHeader).Write(writer, options);
             }
             if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
-                JsonSerializer.Serialize(writer, NullValue);
+                ((IJsonModel<DataFactoryElement<string>>)NullValue).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

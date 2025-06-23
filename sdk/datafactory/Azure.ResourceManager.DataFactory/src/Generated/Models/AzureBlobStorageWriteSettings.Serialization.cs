@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(BlockSizeInMB))
             {
                 writer.WritePropertyName("blockSizeInMB"u8);
-                JsonSerializer.Serialize(writer, BlockSizeInMB);
+                ((IJsonModel<DataFactoryElement<int>>)BlockSizeInMB).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

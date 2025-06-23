@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -53,32 +54,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
-                JsonSerializer.Serialize(writer, Host);
+                ((IJsonModel<DataFactoryElement<string>>)Host).Write(writer, options);
             }
             if (Optional.IsDefined(ConsumerKey))
             {
                 writer.WritePropertyName("consumerKey"u8);
-                JsonSerializer.Serialize(writer, ConsumerKey);
+                ((IJsonModel<DataFactorySecret>)ConsumerKey).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateKey))
             {
                 writer.WritePropertyName("privateKey"u8);
-                JsonSerializer.Serialize(writer, PrivateKey);
+                ((IJsonModel<DataFactorySecret>)PrivateKey).Write(writer, options);
             }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
-                JsonSerializer.Serialize(writer, UseEncryptedEndpoints);
+                ((IJsonModel<DataFactoryElement<bool>>)UseEncryptedEndpoints).Write(writer, options);
             }
             if (Optional.IsDefined(UseHostVerification))
             {
                 writer.WritePropertyName("useHostVerification"u8);
-                JsonSerializer.Serialize(writer, UseHostVerification);
+                ((IJsonModel<DataFactoryElement<bool>>)UseHostVerification).Write(writer, options);
             }
             if (Optional.IsDefined(UsePeerVerification))
             {
                 writer.WritePropertyName("usePeerVerification"u8);
-                JsonSerializer.Serialize(writer, UsePeerVerification);
+                ((IJsonModel<DataFactoryElement<bool>>)UsePeerVerification).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            consumerKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            consumerKey = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("privateKey"u8))
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            privateKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            privateKey = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))

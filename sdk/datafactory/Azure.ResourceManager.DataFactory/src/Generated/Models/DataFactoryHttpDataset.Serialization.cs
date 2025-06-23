@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -41,22 +42,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RelativeUri))
             {
                 writer.WritePropertyName("relativeUrl"u8);
-                JsonSerializer.Serialize(writer, RelativeUri);
+                ((IJsonModel<DataFactoryElement<string>>)RelativeUri).Write(writer, options);
             }
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
-                JsonSerializer.Serialize(writer, RequestMethod);
+                ((IJsonModel<DataFactoryElement<string>>)RequestMethod).Write(writer, options);
             }
             if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
-                JsonSerializer.Serialize(writer, RequestBody);
+                ((IJsonModel<DataFactoryElement<string>>)RequestBody).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
-                JsonSerializer.Serialize(writer, AdditionalHeaders);
+                ((IJsonModel<DataFactoryElement<string>>)AdditionalHeaders).Write(writer, options);
             }
             if (Optional.IsDefined(Format))
             {
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

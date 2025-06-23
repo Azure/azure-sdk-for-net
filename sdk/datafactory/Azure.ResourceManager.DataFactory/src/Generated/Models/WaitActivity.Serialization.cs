@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("waitTimeInSeconds"u8);
-            JsonSerializer.Serialize(writer, WaitTimeInSeconds);
+            ((IJsonModel<DataFactoryElement<int>>)WaitTimeInSeconds).Write(writer, options);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {

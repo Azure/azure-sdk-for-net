@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                JsonSerializer.Serialize(writer, ConnectionString);
+                ((IJsonModel<DataFactoryElement<string>>)ConnectionString).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("pwd"u8);
-                JsonSerializer.Serialize(writer, Password);
+                ((IJsonModel<DataFactoryKeyVaultSecret>)Password).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactoryKeyVaultSecret>(property0.Value.GetRawText());
+                            password = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

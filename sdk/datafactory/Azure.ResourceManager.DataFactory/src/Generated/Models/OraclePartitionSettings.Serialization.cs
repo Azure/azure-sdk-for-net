@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
-                JsonSerializer.Serialize(writer, PartitionColumnName);
+                ((IJsonModel<DataFactoryElement<string>>)PartitionColumnName).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
-                JsonSerializer.Serialize(writer, PartitionUpperBound);
+                ((IJsonModel<DataFactoryElement<string>>)PartitionUpperBound).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
-                JsonSerializer.Serialize(writer, PartitionLowerBound);
+                ((IJsonModel<DataFactoryElement<string>>)PartitionLowerBound).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                JsonSerializer.Serialize(writer, Filter);
+                ((IJsonModel<DataFactoryElement<string>>)Filter).Write(writer, options);
             }
             if (Optional.IsDefined(CursorMethods))
             {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
-                JsonSerializer.Serialize(writer, BatchSize);
+                ((IJsonModel<DataFactoryElement<int>>)BatchSize).Write(writer, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                JsonSerializer.Serialize(writer, QueryTimeout);
+                ((IJsonModel<DataFactoryElement<string>>)QueryTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

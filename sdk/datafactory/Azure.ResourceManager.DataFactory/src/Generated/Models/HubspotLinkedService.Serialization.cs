@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -39,36 +40,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("clientId"u8);
-            JsonSerializer.Serialize(writer, ClientId);
+            ((IJsonModel<DataFactoryElement<string>>)ClientId).Write(writer, options);
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                JsonSerializer.Serialize(writer, ClientSecret);
+                ((IJsonModel<DataFactorySecret>)ClientSecret).Write(writer, options);
             }
             if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
-                JsonSerializer.Serialize(writer, AccessToken);
+                ((IJsonModel<DataFactorySecret>)AccessToken).Write(writer, options);
             }
             if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
-                JsonSerializer.Serialize(writer, RefreshToken);
+                ((IJsonModel<DataFactorySecret>)RefreshToken).Write(writer, options);
             }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
-                JsonSerializer.Serialize(writer, UseEncryptedEndpoints);
+                ((IJsonModel<DataFactoryElement<bool>>)UseEncryptedEndpoints).Write(writer, options);
             }
             if (Optional.IsDefined(UseHostVerification))
             {
                 writer.WritePropertyName("useHostVerification"u8);
-                JsonSerializer.Serialize(writer, UseHostVerification);
+                ((IJsonModel<DataFactoryElement<bool>>)UseHostVerification).Write(writer, options);
             }
             if (Optional.IsDefined(UsePeerVerification))
             {
                 writer.WritePropertyName("usePeerVerification"u8);
-                JsonSerializer.Serialize(writer, UsePeerVerification);
+                ((IJsonModel<DataFactoryElement<bool>>)UsePeerVerification).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            clientSecret = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("accessToken"u8))
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            accessToken = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("refreshToken"u8))
@@ -225,7 +226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            refreshToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            refreshToken = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))

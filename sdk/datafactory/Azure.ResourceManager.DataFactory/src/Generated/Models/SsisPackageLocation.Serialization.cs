@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PackagePath))
             {
                 writer.WritePropertyName("packagePath"u8);
-                JsonSerializer.Serialize(writer, PackagePath);
+                ((IJsonModel<DataFactoryElement<string>>)PackagePath).Write(writer, options);
             }
             if (Optional.IsDefined(LocationType))
             {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PackagePassword))
             {
                 writer.WritePropertyName("packagePassword"u8);
-                JsonSerializer.Serialize(writer, PackagePassword);
+                ((IJsonModel<DataFactorySecret>)PackagePassword).Write(writer, options);
             }
             if (Optional.IsDefined(AccessCredential))
             {
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConfigurationPath))
             {
                 writer.WritePropertyName("configurationPath"u8);
-                JsonSerializer.Serialize(writer, ConfigurationPath);
+                ((IJsonModel<DataFactoryElement<string>>)ConfigurationPath).Write(writer, options);
             }
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PackageContent))
             {
                 writer.WritePropertyName("packageContent"u8);
-                JsonSerializer.Serialize(writer, PackageContent);
+                ((IJsonModel<DataFactoryElement<string>>)PackageContent).Write(writer, options);
             }
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            packagePassword = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            packagePassword = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("accessCredential"u8))

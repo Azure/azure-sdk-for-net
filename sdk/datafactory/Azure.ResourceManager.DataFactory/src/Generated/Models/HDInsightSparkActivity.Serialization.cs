@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -39,9 +40,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("rootPath"u8);
-            JsonSerializer.Serialize(writer, RootPath);
+            ((IJsonModel<DataFactoryElement<string>>)RootPath).Write(writer, options);
             writer.WritePropertyName("entryFilePath"u8);
-            JsonSerializer.Serialize(writer, EntryFilePath);
+            ((IJsonModel<DataFactoryElement<string>>)EntryFilePath).Write(writer, options);
             if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SparkJobLinkedService))
             {
                 writer.WritePropertyName("sparkJobLinkedService"u8);
-                JsonSerializer.Serialize(writer, SparkJobLinkedService);
+                ((IJsonModel<DataFactoryLinkedServiceReference>)SparkJobLinkedService).Write(writer, options);
             }
             if (Optional.IsDefined(ClassName))
             {
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ProxyUser))
             {
                 writer.WritePropertyName("proxyUser"u8);
-                JsonSerializer.Serialize(writer, ProxyUser);
+                ((IJsonModel<DataFactoryElement<string>>)ProxyUser).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SparkConfig))
             {
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -297,7 +298,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sparkJobLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            sparkJobLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("className"u8))

@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
-                JsonSerializer.Serialize(writer, RequestMethod);
+                ((IJsonModel<DataFactoryElement<string>>)RequestMethod).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
-                JsonSerializer.Serialize(writer, AdditionalHeaders);
+                ((IJsonModel<DataFactoryElement<IDictionary<string, string>>>)AdditionalHeaders).Write(writer, options);
             }
             if (Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
-                JsonSerializer.Serialize(writer, HttpRequestTimeout);
+                ((IJsonModel<DataFactoryElement<string>>)HttpRequestTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(RequestInterval))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(HttpCompressionType))
             {
                 writer.WritePropertyName("httpCompressionType"u8);
-                JsonSerializer.Serialize(writer, HttpCompressionType);
+                ((IJsonModel<DataFactoryElement<string>>)HttpCompressionType).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

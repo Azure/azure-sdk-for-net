@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -39,15 +40,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-            JsonSerializer.Serialize(writer, Uri);
+            ((IJsonModel<DataFactoryElement<string>>)Uri).Write(writer, options);
             writer.WritePropertyName("servicePrincipalId"u8);
-            JsonSerializer.Serialize(writer, ServicePrincipalId);
+            ((IJsonModel<DataFactoryElement<string>>)ServicePrincipalId).Write(writer, options);
             writer.WritePropertyName("servicePrincipalKey"u8);
-            JsonSerializer.Serialize(writer, ServicePrincipalKey);
+            ((IJsonModel<DataFactorySecret>)ServicePrincipalKey).Write(writer, options);
             writer.WritePropertyName("tenant"u8);
-            JsonSerializer.Serialize(writer, Tenant);
+            ((IJsonModel<DataFactoryElement<string>>)Tenant).Write(writer, options);
             writer.WritePropertyName("aadResourceId"u8);
-            JsonSerializer.Serialize(writer, AadResourceId);
+            ((IJsonModel<DataFactoryElement<string>>)AadResourceId).Write(writer, options);
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("servicePrincipalKey"u8))
                         {
-                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            servicePrincipalKey = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))

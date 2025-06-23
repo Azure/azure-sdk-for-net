@@ -39,19 +39,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(QuoteAllText))
             {
                 writer.WritePropertyName("quoteAllText"u8);
-                JsonSerializer.Serialize(writer, QuoteAllText);
+                ((IJsonModel<DataFactoryElement<bool>>)QuoteAllText).Write(writer, options);
             }
             writer.WritePropertyName("fileExtension"u8);
-            JsonSerializer.Serialize(writer, FileExtension);
+            ((IJsonModel<DataFactoryElement<string>>)FileExtension).Write(writer, options);
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
-                JsonSerializer.Serialize(writer, MaxRowsPerFile);
+                ((IJsonModel<DataFactoryElement<int>>)MaxRowsPerFile).Write(writer, options);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
-                JsonSerializer.Serialize(writer, FileNamePrefix);
+                ((IJsonModel<DataFactoryElement<string>>)FileNamePrefix).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-                JsonSerializer.Serialize(writer, FolderPath);
+                ((IJsonModel<DataFactoryElement<string>>)FolderPath).Write(writer, options);
             }
             if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
-                JsonSerializer.Serialize(writer, FileName);
+                ((IJsonModel<DataFactoryElement<string>>)FileName).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

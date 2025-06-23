@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RelativeUri))
             {
                 writer.WritePropertyName("relativeUrl"u8);
-                JsonSerializer.Serialize(writer, RelativeUri);
+                ((IJsonModel<DataFactoryElement<string>>)RelativeUri).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

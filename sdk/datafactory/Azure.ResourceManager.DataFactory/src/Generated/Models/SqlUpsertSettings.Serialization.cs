@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UseTempDB))
             {
                 writer.WritePropertyName("useTempDB"u8);
-                JsonSerializer.Serialize(writer, UseTempDB);
+                ((IJsonModel<DataFactoryElement<bool>>)UseTempDB).Write(writer, options);
             }
             if (Optional.IsDefined(InterimSchemaName))
             {
                 writer.WritePropertyName("interimSchemaName"u8);
-                JsonSerializer.Serialize(writer, InterimSchemaName);
+                ((IJsonModel<DataFactoryElement<string>>)InterimSchemaName).Write(writer, options);
             }
             if (Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
-                JsonSerializer.Serialize(writer, Keys);
+                ((IJsonModel<DataFactoryElement<IList<string>>>)Keys).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

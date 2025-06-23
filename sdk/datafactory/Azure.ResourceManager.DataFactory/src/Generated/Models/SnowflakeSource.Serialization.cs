@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                JsonSerializer.Serialize(writer, Query);
+                ((IJsonModel<DataFactoryElement<string>>)Query).Write(writer, options);
             }
             writer.WritePropertyName("exportSettings"u8);
             writer.WriteObjectValue(ExportSettings, options);

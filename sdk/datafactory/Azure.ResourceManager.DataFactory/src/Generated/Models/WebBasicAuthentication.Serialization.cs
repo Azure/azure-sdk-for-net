@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -37,9 +38,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("username"u8);
-            JsonSerializer.Serialize(writer, Username);
+            ((IJsonModel<DataFactoryElement<string>>)Username).Write(writer, options);
             writer.WritePropertyName("password"u8);
-            JsonSerializer.Serialize(writer, Password);
+            ((IJsonModel<DataFactorySecret>)Password).Write(writer, options);
         }
 
         WebBasicAuthentication IJsonModel<WebBasicAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
+                    password = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("url"u8))

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -39,9 +40,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
-            JsonSerializer.Serialize(writer, Host);
+            ((IJsonModel<DataFactoryElement<string>>)Host).Write(writer, options);
             writer.WritePropertyName("port"u8);
-            JsonSerializer.Serialize(writer, Port);
+            ((IJsonModel<DataFactoryElement<int>>)Port).Write(writer, options);
             if (Optional.IsDefined(ServerType))
             {
                 writer.WritePropertyName("serverType"u8);
@@ -57,47 +58,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                JsonSerializer.Serialize(writer, Username);
+                ((IJsonModel<DataFactoryElement<string>>)Username).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                JsonSerializer.Serialize(writer, Password);
+                ((IJsonModel<DataFactorySecret>)Password).Write(writer, options);
             }
             if (Optional.IsDefined(HttpPath))
             {
                 writer.WritePropertyName("httpPath"u8);
-                JsonSerializer.Serialize(writer, HttpPath);
+                ((IJsonModel<DataFactoryElement<string>>)HttpPath).Write(writer, options);
             }
             if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
-                JsonSerializer.Serialize(writer, EnableSsl);
+                ((IJsonModel<DataFactoryElement<bool>>)EnableSsl).Write(writer, options);
             }
             if (Optional.IsDefined(EnableServerCertificateValidation))
             {
                 writer.WritePropertyName("enableServerCertificateValidation"u8);
-                JsonSerializer.Serialize(writer, EnableServerCertificateValidation);
+                ((IJsonModel<DataFactoryElement<bool>>)EnableServerCertificateValidation).Write(writer, options);
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
-                JsonSerializer.Serialize(writer, TrustedCertPath);
+                ((IJsonModel<DataFactoryElement<string>>)TrustedCertPath).Write(writer, options);
             }
             if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
-                JsonSerializer.Serialize(writer, UseSystemTrustStore);
+                ((IJsonModel<DataFactoryElement<bool>>)UseSystemTrustStore).Write(writer, options);
             }
             if (Optional.IsDefined(AllowHostNameCNMismatch))
             {
                 writer.WritePropertyName("allowHostNameCNMismatch"u8);
-                JsonSerializer.Serialize(writer, AllowHostNameCNMismatch);
+                ((IJsonModel<DataFactoryElement<bool>>)AllowHostNameCNMismatch).Write(writer, options);
             }
             if (Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
-                JsonSerializer.Serialize(writer, AllowSelfSignedServerCert);
+                ((IJsonModel<DataFactoryElement<bool>>)AllowSelfSignedServerCert).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -280,7 +281,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("httpPath"u8))

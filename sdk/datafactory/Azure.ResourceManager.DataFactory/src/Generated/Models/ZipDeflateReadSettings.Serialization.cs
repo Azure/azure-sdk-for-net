@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PreserveZipFileNameAsFolder))
             {
                 writer.WritePropertyName("preserveZipFileNameAsFolder"u8);
-                JsonSerializer.Serialize(writer, PreserveZipFileNameAsFolder);
+                ((IJsonModel<DataFactoryElement<bool>>)PreserveZipFileNameAsFolder).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

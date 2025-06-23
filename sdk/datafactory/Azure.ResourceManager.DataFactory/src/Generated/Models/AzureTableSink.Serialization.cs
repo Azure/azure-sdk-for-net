@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AzureTableDefaultPartitionKeyValue))
             {
                 writer.WritePropertyName("azureTableDefaultPartitionKeyValue"u8);
-                JsonSerializer.Serialize(writer, AzureTableDefaultPartitionKeyValue);
+                ((IJsonModel<DataFactoryElement<string>>)AzureTableDefaultPartitionKeyValue).Write(writer, options);
             }
             if (Optional.IsDefined(AzureTablePartitionKeyName))
             {
                 writer.WritePropertyName("azureTablePartitionKeyName"u8);
-                JsonSerializer.Serialize(writer, AzureTablePartitionKeyName);
+                ((IJsonModel<DataFactoryElement<string>>)AzureTablePartitionKeyName).Write(writer, options);
             }
             if (Optional.IsDefined(AzureTableRowKeyName))
             {
                 writer.WritePropertyName("azureTableRowKeyName"u8);
-                JsonSerializer.Serialize(writer, AzureTableRowKeyName);
+                ((IJsonModel<DataFactoryElement<string>>)AzureTableRowKeyName).Write(writer, options);
             }
             if (Optional.IsDefined(AzureTableInsertType))
             {
                 writer.WritePropertyName("azureTableInsertType"u8);
-                JsonSerializer.Serialize(writer, AzureTableInsertType);
+                ((IJsonModel<DataFactoryElement<string>>)AzureTableInsertType).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

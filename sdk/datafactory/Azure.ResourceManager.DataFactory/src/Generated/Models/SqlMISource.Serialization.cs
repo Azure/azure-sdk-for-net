@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SqlReaderQuery))
             {
                 writer.WritePropertyName("sqlReaderQuery"u8);
-                JsonSerializer.Serialize(writer, SqlReaderQuery);
+                ((IJsonModel<DataFactoryElement<string>>)SqlReaderQuery).Write(writer, options);
             }
             if (Optional.IsDefined(SqlReaderStoredProcedureName))
             {
                 writer.WritePropertyName("sqlReaderStoredProcedureName"u8);
-                JsonSerializer.Serialize(writer, SqlReaderStoredProcedureName);
+                ((IJsonModel<DataFactoryElement<string>>)SqlReaderStoredProcedureName).Write(writer, options);
             }
             if (Optional.IsDefined(StoredProcedureParameters))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IsolationLevel))
             {
                 writer.WritePropertyName("isolationLevel"u8);
-                JsonSerializer.Serialize(writer, IsolationLevel);
+                ((IJsonModel<DataFactoryElement<string>>)IsolationLevel).Write(writer, options);
             }
             if (Optional.IsDefined(ProduceAdditionalTypes))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-                JsonSerializer.Serialize(writer, PartitionOption);
+                ((IJsonModel<DataFactoryElement<string>>)PartitionOption).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionSettings))
             {

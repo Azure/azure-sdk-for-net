@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExcludeLastRequest))
             {
                 writer.WritePropertyName("excludeLastRequest"u8);
-                JsonSerializer.Serialize(writer, ExcludeLastRequest);
+                ((IJsonModel<DataFactoryElement<bool>>)ExcludeLastRequest).Write(writer, options);
             }
             if (Optional.IsDefined(BaseRequestId))
             {
                 writer.WritePropertyName("baseRequestId"u8);
-                JsonSerializer.Serialize(writer, BaseRequestId);
+                ((IJsonModel<DataFactoryElement<int>>)BaseRequestId).Write(writer, options);
             }
             if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
-                JsonSerializer.Serialize(writer, CustomRfcReadTableFunctionModule);
+                ((IJsonModel<DataFactoryElement<string>>)CustomRfcReadTableFunctionModule).Write(writer, options);
             }
             if (Optional.IsDefined(SapDataColumnDelimiter))
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
-                JsonSerializer.Serialize(writer, SapDataColumnDelimiter);
+                ((IJsonModel<DataFactoryElement<string>>)SapDataColumnDelimiter).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

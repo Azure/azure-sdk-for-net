@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(NotebookReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
-            JsonSerializer.Serialize(writer, ReferenceName);
+            ((IJsonModel<DataFactoryElement<string>>)ReferenceName).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

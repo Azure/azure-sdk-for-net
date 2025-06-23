@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            JsonSerializer.Serialize(writer, Endpoint);
+            ((IJsonModel<DataFactoryElement<string>>)Endpoint).Write(writer, options);
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                JsonSerializer.Serialize(writer, Authentication);
+                ((IJsonModel<DataFactoryElement<string>>)Authentication).Write(writer, options);
             }
             if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
-                JsonSerializer.Serialize(writer, WorkspaceResourceId);
+                ((IJsonModel<DataFactoryElement<string>>)WorkspaceResourceId).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)

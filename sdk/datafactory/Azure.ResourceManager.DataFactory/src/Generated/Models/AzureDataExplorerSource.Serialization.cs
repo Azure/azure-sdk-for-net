@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("query"u8);
-            JsonSerializer.Serialize(writer, Query);
+            ((IJsonModel<DataFactoryElement<string>>)Query).Write(writer, options);
             if (Optional.IsDefined(NoTruncation))
             {
                 writer.WritePropertyName("noTruncation"u8);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                JsonSerializer.Serialize(writer, QueryTimeout);
+                ((IJsonModel<DataFactoryElement<string>>)QueryTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

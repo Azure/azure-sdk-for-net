@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PageSize))
             {
                 writer.WritePropertyName("pageSize"u8);
-                JsonSerializer.Serialize(writer, PageSize);
+                ((IJsonModel<DataFactoryElement<int>>)PageSize).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

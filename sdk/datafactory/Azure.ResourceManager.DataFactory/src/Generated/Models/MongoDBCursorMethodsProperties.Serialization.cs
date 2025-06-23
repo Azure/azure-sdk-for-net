@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Project))
             {
                 writer.WritePropertyName("project"u8);
-                JsonSerializer.Serialize(writer, Project);
+                ((IJsonModel<DataFactoryElement<string>>)Project).Write(writer, options);
             }
             if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
-                JsonSerializer.Serialize(writer, Sort);
+                ((IJsonModel<DataFactoryElement<string>>)Sort).Write(writer, options);
             }
             if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip"u8);
-                JsonSerializer.Serialize(writer, Skip);
+                ((IJsonModel<DataFactoryElement<int>>)Skip).Write(writer, options);
             }
             if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
-                JsonSerializer.Serialize(writer, Limit);
+                ((IJsonModel<DataFactoryElement<int>>)Limit).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

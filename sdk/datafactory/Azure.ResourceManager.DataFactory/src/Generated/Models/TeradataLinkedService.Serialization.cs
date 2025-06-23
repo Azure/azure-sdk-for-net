@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                JsonSerializer.Serialize(writer, ConnectionString);
+                ((IJsonModel<DataFactoryElement<string>>)ConnectionString).Write(writer, options);
             }
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                JsonSerializer.Serialize(writer, Server);
+                ((IJsonModel<DataFactoryElement<string>>)Server).Write(writer, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -56,42 +57,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                JsonSerializer.Serialize(writer, Username);
+                ((IJsonModel<DataFactoryElement<string>>)Username).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                JsonSerializer.Serialize(writer, Password);
+                ((IJsonModel<DataFactorySecret>)Password).Write(writer, options);
             }
             if (Optional.IsDefined(SslMode))
             {
                 writer.WritePropertyName("sslMode"u8);
-                JsonSerializer.Serialize(writer, SslMode);
+                ((IJsonModel<DataFactoryElement<string>>)SslMode).Write(writer, options);
             }
             if (Optional.IsDefined(PortNumber))
             {
                 writer.WritePropertyName("portNumber"u8);
-                JsonSerializer.Serialize(writer, PortNumber);
+                ((IJsonModel<DataFactoryElement<int>>)PortNumber).Write(writer, options);
             }
             if (Optional.IsDefined(HttpsPortNumber))
             {
                 writer.WritePropertyName("httpsPortNumber"u8);
-                JsonSerializer.Serialize(writer, HttpsPortNumber);
+                ((IJsonModel<DataFactoryElement<int>>)HttpsPortNumber).Write(writer, options);
             }
             if (Optional.IsDefined(UseDataEncryption))
             {
                 writer.WritePropertyName("useDataEncryption"u8);
-                JsonSerializer.Serialize(writer, UseDataEncryption);
+                ((IJsonModel<DataFactoryElement<int>>)UseDataEncryption).Write(writer, options);
             }
             if (Optional.IsDefined(CharacterSet))
             {
                 writer.WritePropertyName("characterSet"u8);
-                JsonSerializer.Serialize(writer, CharacterSet);
+                ((IJsonModel<DataFactoryElement<string>>)CharacterSet).Write(writer, options);
             }
             if (Optional.IsDefined(MaxRespSize))
             {
                 writer.WritePropertyName("maxRespSize"u8);
-                JsonSerializer.Serialize(writer, MaxRespSize);
+                ((IJsonModel<DataFactoryElement<int>>)MaxRespSize).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -265,7 +266,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("sslMode"u8))

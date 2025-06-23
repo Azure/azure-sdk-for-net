@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
-                JsonSerializer.Serialize(writer, RequestMethod);
+                ((IJsonModel<DataFactoryElement<string>>)RequestMethod).Write(writer, options);
             }
             if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
-                JsonSerializer.Serialize(writer, RequestBody);
+                ((IJsonModel<DataFactoryElement<string>>)RequestBody).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
-                JsonSerializer.Serialize(writer, AdditionalHeaders);
+                ((IJsonModel<DataFactoryElement<string>>)AdditionalHeaders).Write(writer, options);
             }
             if (Optional.IsDefined(RequestTimeout))
             {
                 writer.WritePropertyName("requestTimeout"u8);
-                JsonSerializer.Serialize(writer, RequestTimeout);
+                ((IJsonModel<DataFactoryElement<string>>)RequestTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

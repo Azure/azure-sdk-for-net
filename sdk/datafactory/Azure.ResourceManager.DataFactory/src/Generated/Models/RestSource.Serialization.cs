@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
-                JsonSerializer.Serialize(writer, RequestMethod);
+                ((IJsonModel<DataFactoryElement<string>>)RequestMethod).Write(writer, options);
             }
             if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
-                JsonSerializer.Serialize(writer, RequestBody);
+                ((IJsonModel<DataFactoryElement<string>>)RequestBody).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
-                JsonSerializer.Serialize(writer, AdditionalHeaders);
+                ((IJsonModel<DataFactoryElement<string>>)AdditionalHeaders).Write(writer, options);
             }
             if (Optional.IsDefined(PaginationRules))
             {
                 writer.WritePropertyName("paginationRules"u8);
-                JsonSerializer.Serialize(writer, PaginationRules);
+                ((IJsonModel<DataFactoryElement<string>>)PaginationRules).Write(writer, options);
             }
             if (Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
-                JsonSerializer.Serialize(writer, HttpRequestTimeout);
+                ((IJsonModel<DataFactoryElement<string>>)HttpRequestTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(RequestInterval))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
-                JsonSerializer.Serialize(writer, AdditionalColumns);
+                ((IJsonModel<DataFactoryElement<IDictionary<string, string>>>)AdditionalColumns).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

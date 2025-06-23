@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -39,11 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("functionAppUrl"u8);
-            JsonSerializer.Serialize(writer, FunctionAppUri);
+            ((IJsonModel<DataFactoryElement<string>>)FunctionAppUri).Write(writer, options);
             if (Optional.IsDefined(FunctionKey))
             {
                 writer.WritePropertyName("functionKey"u8);
-                JsonSerializer.Serialize(writer, FunctionKey);
+                ((IJsonModel<DataFactorySecret>)FunctionKey).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -58,12 +59,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
-                JsonSerializer.Serialize(writer, ResourceId);
+                ((IJsonModel<DataFactoryElement<string>>)ResourceId).Write(writer, options);
             }
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                JsonSerializer.Serialize(writer, Authentication);
+                ((IJsonModel<DataFactoryElement<string>>)Authentication).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            functionKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            functionKey = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

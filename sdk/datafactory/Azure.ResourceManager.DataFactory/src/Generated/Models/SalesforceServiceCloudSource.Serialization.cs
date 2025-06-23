@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                JsonSerializer.Serialize(writer, Query);
+                ((IJsonModel<DataFactoryElement<string>>)Query).Write(writer, options);
             }
             if (Optional.IsDefined(ReadBehavior))
             {
                 writer.WritePropertyName("readBehavior"u8);
-                JsonSerializer.Serialize(writer, ReadBehavior);
+                ((IJsonModel<DataFactoryElement<string>>)ReadBehavior).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

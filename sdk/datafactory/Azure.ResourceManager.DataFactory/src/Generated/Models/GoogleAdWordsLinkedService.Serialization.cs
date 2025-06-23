@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -53,12 +54,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientCustomerId))
             {
                 writer.WritePropertyName("clientCustomerID"u8);
-                JsonSerializer.Serialize(writer, ClientCustomerId);
+                ((IJsonModel<DataFactoryElement<string>>)ClientCustomerId).Write(writer, options);
             }
             if (Optional.IsDefined(DeveloperToken))
             {
                 writer.WritePropertyName("developerToken"u8);
-                JsonSerializer.Serialize(writer, DeveloperToken);
+                ((IJsonModel<DataFactorySecret>)DeveloperToken).Write(writer, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -68,57 +69,57 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
-                JsonSerializer.Serialize(writer, RefreshToken);
+                ((IJsonModel<DataFactorySecret>)RefreshToken).Write(writer, options);
             }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                JsonSerializer.Serialize(writer, ClientId);
+                ((IJsonModel<DataFactoryElement<string>>)ClientId).Write(writer, options);
             }
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                JsonSerializer.Serialize(writer, ClientSecret);
+                ((IJsonModel<DataFactorySecret>)ClientSecret).Write(writer, options);
             }
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
-                JsonSerializer.Serialize(writer, Email);
+                ((IJsonModel<DataFactoryElement<string>>)Email).Write(writer, options);
             }
             if (Optional.IsDefined(KeyFilePath))
             {
                 writer.WritePropertyName("keyFilePath"u8);
-                JsonSerializer.Serialize(writer, KeyFilePath);
+                ((IJsonModel<DataFactoryElement<string>>)KeyFilePath).Write(writer, options);
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
-                JsonSerializer.Serialize(writer, TrustedCertPath);
+                ((IJsonModel<DataFactoryElement<string>>)TrustedCertPath).Write(writer, options);
             }
             if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
-                JsonSerializer.Serialize(writer, UseSystemTrustStore);
+                ((IJsonModel<DataFactoryElement<bool>>)UseSystemTrustStore).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateKey))
             {
                 writer.WritePropertyName("privateKey"u8);
-                JsonSerializer.Serialize(writer, PrivateKey);
+                ((IJsonModel<DataFactorySecret>)PrivateKey).Write(writer, options);
             }
             if (Optional.IsDefined(LoginCustomerId))
             {
                 writer.WritePropertyName("loginCustomerID"u8);
-                JsonSerializer.Serialize(writer, LoginCustomerId);
+                ((IJsonModel<DataFactoryElement<string>>)LoginCustomerId).Write(writer, options);
             }
             if (Optional.IsDefined(GoogleAdsApiVersion))
             {
                 writer.WritePropertyName("googleAdsApiVersion"u8);
-                JsonSerializer.Serialize(writer, GoogleAdsApiVersion);
+                ((IJsonModel<DataFactoryElement<string>>)GoogleAdsApiVersion).Write(writer, options);
             }
             if (Optional.IsDefined(SupportLegacyDataTypes))
             {
                 writer.WritePropertyName("supportLegacyDataTypes"u8);
-                JsonSerializer.Serialize(writer, SupportLegacyDataTypes);
+                ((IJsonModel<DataFactoryElement<bool>>)SupportLegacyDataTypes).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            developerToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            developerToken = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))
@@ -296,7 +297,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            refreshToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            refreshToken = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            clientSecret = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("email"u8))
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            privateKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            privateKey = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("loginCustomerID"u8))

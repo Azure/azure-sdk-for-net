@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("logPath"u8);
-            JsonSerializer.Serialize(writer, LogPath);
+            ((IJsonModel<DataFactoryElement<string>>)LogPath).Write(writer, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LocationType.ToString());
             writer.WritePropertyName("typeProperties"u8);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LogRefreshInterval))
             {
                 writer.WritePropertyName("logRefreshInterval"u8);
-                JsonSerializer.Serialize(writer, LogRefreshInterval);
+                ((IJsonModel<DataFactoryElement<string>>)LogRefreshInterval).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

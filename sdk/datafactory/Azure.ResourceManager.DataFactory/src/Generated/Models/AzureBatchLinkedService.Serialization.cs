@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -39,18 +40,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("accountName"u8);
-            JsonSerializer.Serialize(writer, AccountName);
+            ((IJsonModel<DataFactoryElement<string>>)AccountName).Write(writer, options);
             if (Optional.IsDefined(AccessKey))
             {
                 writer.WritePropertyName("accessKey"u8);
-                JsonSerializer.Serialize(writer, AccessKey);
+                ((IJsonModel<DataFactorySecret>)AccessKey).Write(writer, options);
             }
             writer.WritePropertyName("batchUri"u8);
-            JsonSerializer.Serialize(writer, BatchUri);
+            ((IJsonModel<DataFactoryElement<string>>)BatchUri).Write(writer, options);
             writer.WritePropertyName("poolName"u8);
-            JsonSerializer.Serialize(writer, PoolName);
+            ((IJsonModel<DataFactoryElement<string>>)PoolName).Write(writer, options);
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName);
+            ((IJsonModel<DataFactoryLinkedServiceReference>)LinkedServiceName).Write(writer, options);
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            accessKey = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("batchUri"u8))
@@ -207,7 +208,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("linkedServiceName"u8))
                         {
-                            linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

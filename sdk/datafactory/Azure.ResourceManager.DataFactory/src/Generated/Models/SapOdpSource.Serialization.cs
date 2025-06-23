@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExtractionMode))
             {
                 writer.WritePropertyName("extractionMode"u8);
-                JsonSerializer.Serialize(writer, ExtractionMode);
+                ((IJsonModel<DataFactoryElement<string>>)ExtractionMode).Write(writer, options);
             }
             if (Optional.IsDefined(SubscriberProcess))
             {
                 writer.WritePropertyName("subscriberProcess"u8);
-                JsonSerializer.Serialize(writer, SubscriberProcess);
+                ((IJsonModel<DataFactoryElement<string>>)SubscriberProcess).Write(writer, options);
             }
             if (Optional.IsDefined(Selection))
             {

@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RejectValue))
             {
                 writer.WritePropertyName("rejectValue"u8);
-                JsonSerializer.Serialize(writer, RejectValue);
+                ((IJsonModel<DataFactoryElement<int>>)RejectValue).Write(writer, options);
             }
             if (Optional.IsDefined(RejectSampleValue))
             {
                 writer.WritePropertyName("rejectSampleValue"u8);
-                JsonSerializer.Serialize(writer, RejectSampleValue);
+                ((IJsonModel<DataFactoryElement<int>>)RejectSampleValue).Write(writer, options);
             }
             if (Optional.IsDefined(UseTypeDefault))
             {
                 writer.WritePropertyName("useTypeDefault"u8);
-                JsonSerializer.Serialize(writer, UseTypeDefault);
+                ((IJsonModel<DataFactoryElement<bool>>)UseTypeDefault).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

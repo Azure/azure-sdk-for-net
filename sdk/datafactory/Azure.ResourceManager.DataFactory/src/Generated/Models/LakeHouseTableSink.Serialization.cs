@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TableActionOption))
             {
                 writer.WritePropertyName("tableActionOption"u8);
-                JsonSerializer.Serialize(writer, TableActionOption);
+                ((IJsonModel<DataFactoryElement<string>>)TableActionOption).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-                JsonSerializer.Serialize(writer, PartitionOption);
+                ((IJsonModel<DataFactoryElement<string>>)PartitionOption).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionNameList))
             {

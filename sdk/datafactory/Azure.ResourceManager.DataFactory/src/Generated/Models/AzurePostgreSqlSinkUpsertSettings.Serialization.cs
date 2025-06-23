@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
-                JsonSerializer.Serialize(writer, Keys);
+                ((IJsonModel<DataFactoryElement<IList<string>>>)Keys).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

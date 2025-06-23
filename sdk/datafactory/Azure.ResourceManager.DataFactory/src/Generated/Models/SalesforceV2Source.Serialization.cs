@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SoqlQuery))
             {
                 writer.WritePropertyName("SOQLQuery"u8);
-                JsonSerializer.Serialize(writer, SoqlQuery);
+                ((IJsonModel<DataFactoryElement<string>>)SoqlQuery).Write(writer, options);
             }
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                JsonSerializer.Serialize(writer, Query);
+                ((IJsonModel<DataFactoryElement<string>>)Query).Write(writer, options);
             }
             if (Optional.IsDefined(IncludeDeletedObjects))
             {
                 writer.WritePropertyName("includeDeletedObjects"u8);
-                JsonSerializer.Serialize(writer, IncludeDeletedObjects);
+                ((IJsonModel<DataFactoryElement<bool>>)IncludeDeletedObjects).Write(writer, options);
             }
             if (Optional.IsDefined(PageSize))
             {
                 writer.WritePropertyName("pageSize"u8);
-                JsonSerializer.Serialize(writer, PageSize);
+                ((IJsonModel<DataFactoryElement<int>>)PageSize).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

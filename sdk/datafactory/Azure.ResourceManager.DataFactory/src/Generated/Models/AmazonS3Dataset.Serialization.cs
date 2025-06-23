@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -39,31 +40,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("bucketName"u8);
-            JsonSerializer.Serialize(writer, BucketName);
+            ((IJsonModel<DataFactoryElement<string>>)BucketName).Write(writer, options);
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                JsonSerializer.Serialize(writer, Key);
+                ((IJsonModel<DataFactoryElement<string>>)Key).Write(writer, options);
             }
             if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
-                JsonSerializer.Serialize(writer, Prefix);
+                ((IJsonModel<DataFactoryElement<string>>)Prefix).Write(writer, options);
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                JsonSerializer.Serialize(writer, Version);
+                ((IJsonModel<DataFactoryElement<string>>)Version).Write(writer, options);
             }
             if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
-                JsonSerializer.Serialize(writer, ModifiedDatetimeStart);
+                ((IJsonModel<DataFactoryElement<string>>)ModifiedDatetimeStart).Write(writer, options);
             }
             if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
-                JsonSerializer.Serialize(writer, ModifiedDatetimeEnd);
+                ((IJsonModel<DataFactoryElement<string>>)ModifiedDatetimeEnd).Write(writer, options);
             }
             if (Optional.IsDefined(Format))
             {
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

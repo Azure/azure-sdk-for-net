@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                JsonSerializer.Serialize(writer, ConnectionString);
+                ((IJsonModel<DataFactoryElement<string>>)ConnectionString).Write(writer, options);
             }
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                JsonSerializer.Serialize(writer, Server);
+                ((IJsonModel<DataFactoryElement<string>>)Server).Write(writer, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -56,67 +57,67 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                JsonSerializer.Serialize(writer, Username);
+                ((IJsonModel<DataFactoryElement<string>>)Username).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                JsonSerializer.Serialize(writer, Password);
+                ((IJsonModel<DataFactorySecret>)Password).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionClient))
             {
                 writer.WritePropertyName("encryptionClient"u8);
-                JsonSerializer.Serialize(writer, EncryptionClient);
+                ((IJsonModel<DataFactoryElement<string>>)EncryptionClient).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionTypesClient))
             {
                 writer.WritePropertyName("encryptionTypesClient"u8);
-                JsonSerializer.Serialize(writer, EncryptionTypesClient);
+                ((IJsonModel<DataFactoryElement<string>>)EncryptionTypesClient).Write(writer, options);
             }
             if (Optional.IsDefined(CryptoChecksumClient))
             {
                 writer.WritePropertyName("cryptoChecksumClient"u8);
-                JsonSerializer.Serialize(writer, CryptoChecksumClient);
+                ((IJsonModel<DataFactoryElement<string>>)CryptoChecksumClient).Write(writer, options);
             }
             if (Optional.IsDefined(CryptoChecksumTypesClient))
             {
                 writer.WritePropertyName("cryptoChecksumTypesClient"u8);
-                JsonSerializer.Serialize(writer, CryptoChecksumTypesClient);
+                ((IJsonModel<DataFactoryElement<string>>)CryptoChecksumTypesClient).Write(writer, options);
             }
             if (Optional.IsDefined(InitialLobFetchSize))
             {
                 writer.WritePropertyName("initialLobFetchSize"u8);
-                JsonSerializer.Serialize(writer, InitialLobFetchSize);
+                ((IJsonModel<DataFactoryElement<int>>)InitialLobFetchSize).Write(writer, options);
             }
             if (Optional.IsDefined(FetchSize))
             {
                 writer.WritePropertyName("fetchSize"u8);
-                JsonSerializer.Serialize(writer, FetchSize);
+                ((IJsonModel<DataFactoryElement<int>>)FetchSize).Write(writer, options);
             }
             if (Optional.IsDefined(StatementCacheSize))
             {
                 writer.WritePropertyName("statementCacheSize"u8);
-                JsonSerializer.Serialize(writer, StatementCacheSize);
+                ((IJsonModel<DataFactoryElement<int>>)StatementCacheSize).Write(writer, options);
             }
             if (Optional.IsDefined(InitializationString))
             {
                 writer.WritePropertyName("initializationString"u8);
-                JsonSerializer.Serialize(writer, InitializationString);
+                ((IJsonModel<DataFactoryElement<string>>)InitializationString).Write(writer, options);
             }
             if (Optional.IsDefined(EnableBulkLoad))
             {
                 writer.WritePropertyName("enableBulkLoad"u8);
-                JsonSerializer.Serialize(writer, EnableBulkLoad);
+                ((IJsonModel<DataFactoryElement<bool>>)EnableBulkLoad).Write(writer, options);
             }
             if (Optional.IsDefined(SupportV1DataTypes))
             {
                 writer.WritePropertyName("supportV1DataTypes"u8);
-                JsonSerializer.Serialize(writer, SupportV1DataTypes);
+                ((IJsonModel<DataFactoryElement<bool>>)SupportV1DataTypes).Write(writer, options);
             }
             if (Optional.IsDefined(FetchTswtzAsTimestamp))
             {
                 writer.WritePropertyName("fetchTswtzAsTimestamp"u8);
-                JsonSerializer.Serialize(writer, FetchTswtzAsTimestamp);
+                ((IJsonModel<DataFactoryElement<bool>>)FetchTswtzAsTimestamp).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -295,7 +296,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("encryptionClient"u8))

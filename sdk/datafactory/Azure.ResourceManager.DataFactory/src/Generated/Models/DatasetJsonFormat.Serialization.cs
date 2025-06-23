@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(NestingSeparator))
             {
                 writer.WritePropertyName("nestingSeparator"u8);
-                JsonSerializer.Serialize(writer, NestingSeparator);
+                ((IJsonModel<DataFactoryElement<string>>)NestingSeparator).Write(writer, options);
             }
             if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
-                JsonSerializer.Serialize(writer, EncodingName);
+                ((IJsonModel<DataFactoryElement<string>>)EncodingName).Write(writer, options);
             }
             if (Optional.IsDefined(JsonNodeReference))
             {
                 writer.WritePropertyName("jsonNodeReference"u8);
-                JsonSerializer.Serialize(writer, JsonNodeReference);
+                ((IJsonModel<DataFactoryElement<string>>)JsonNodeReference).Write(writer, options);
             }
             if (Optional.IsDefined(JsonPathDefinition))
             {

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -41,27 +42,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnvironmentUri))
             {
                 writer.WritePropertyName("environmentUrl"u8);
-                JsonSerializer.Serialize(writer, EnvironmentUri);
+                ((IJsonModel<DataFactoryElement<string>>)EnvironmentUri).Write(writer, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
-                JsonSerializer.Serialize(writer, AuthenticationType);
+                ((IJsonModel<DataFactoryElement<string>>)AuthenticationType).Write(writer, options);
             }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                JsonSerializer.Serialize(writer, ClientId);
+                ((IJsonModel<DataFactoryElement<string>>)ClientId).Write(writer, options);
             }
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                JsonSerializer.Serialize(writer, ClientSecret);
+                ((IJsonModel<DataFactorySecret>)ClientSecret).Write(writer, options);
             }
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
-                JsonSerializer.Serialize(writer, ApiVersion);
+                ((IJsonModel<DataFactoryElement<string>>)ApiVersion).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            clientSecret = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("apiVersion"u8))

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
-                JsonSerializer.Serialize(writer, Container);
+                ((IJsonModel<DataFactoryElement<string>>)Container).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

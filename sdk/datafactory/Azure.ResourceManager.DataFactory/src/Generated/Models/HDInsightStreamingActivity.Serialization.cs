@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageLinkedServices)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<DataFactoryLinkedServiceReference>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,13 +77,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
             writer.WritePropertyName("mapper"u8);
-            JsonSerializer.Serialize(writer, Mapper);
+            ((IJsonModel<DataFactoryElement<string>>)Mapper).Write(writer, options);
             writer.WritePropertyName("reducer"u8);
-            JsonSerializer.Serialize(writer, Reducer);
+            ((IJsonModel<DataFactoryElement<string>>)Reducer).Write(writer, options);
             writer.WritePropertyName("input"u8);
-            JsonSerializer.Serialize(writer, Input);
+            ((IJsonModel<DataFactoryElement<string>>)Input).Write(writer, options);
             writer.WritePropertyName("output"u8);
-            JsonSerializer.Serialize(writer, Output);
+            ((IJsonModel<DataFactoryElement<string>>)Output).Write(writer, options);
             writer.WritePropertyName("filePaths"u8);
             writer.WriteStartArray();
             foreach (var item in FilePaths)
@@ -105,12 +106,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FileLinkedService))
             {
                 writer.WritePropertyName("fileLinkedService"u8);
-                JsonSerializer.Serialize(writer, FileLinkedService);
+                ((IJsonModel<DataFactoryLinkedServiceReference>)FileLinkedService).Write(writer, options);
             }
             if (Optional.IsDefined(Combiner))
             {
                 writer.WritePropertyName("combiner"u8);
-                JsonSerializer.Serialize(writer, Combiner);
+                ((IJsonModel<DataFactoryElement<string>>)Combiner).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CommandEnvironment))
             {
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default));
                             }
                             storageLinkedServices = array;
                             continue;
@@ -392,7 +393,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            fileLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            fileLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("combiner"u8))

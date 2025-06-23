@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
-                JsonSerializer.Serialize(writer, LogLevel);
+                ((IJsonModel<DataFactoryElement<string>>)LogLevel).Write(writer, options);
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
-                JsonSerializer.Serialize(writer, EnableReliableLogging);
+                ((IJsonModel<DataFactoryElement<bool>>)EnableReliableLogging).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

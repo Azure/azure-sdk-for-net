@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExternalIdFieldName))
             {
                 writer.WritePropertyName("externalIdFieldName"u8);
-                JsonSerializer.Serialize(writer, ExternalIdFieldName);
+                ((IJsonModel<DataFactoryElement<string>>)ExternalIdFieldName).Write(writer, options);
             }
             if (Optional.IsDefined(IgnoreNullValues))
             {
                 writer.WritePropertyName("ignoreNullValues"u8);
-                JsonSerializer.Serialize(writer, IgnoreNullValues);
+                ((IJsonModel<DataFactoryElement<bool>>)IgnoreNullValues).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

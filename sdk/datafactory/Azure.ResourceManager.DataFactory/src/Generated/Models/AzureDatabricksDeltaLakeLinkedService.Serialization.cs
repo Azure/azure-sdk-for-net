@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -39,16 +40,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
-            JsonSerializer.Serialize(writer, Domain);
+            ((IJsonModel<DataFactoryElement<string>>)Domain).Write(writer, options);
             if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
-                JsonSerializer.Serialize(writer, AccessToken);
+                ((IJsonModel<DataFactorySecret>)AccessToken).Write(writer, options);
             }
             if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
-                JsonSerializer.Serialize(writer, ClusterId);
+                ((IJsonModel<DataFactoryElement<string>>)ClusterId).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
-                JsonSerializer.Serialize(writer, WorkspaceResourceId);
+                ((IJsonModel<DataFactoryElement<string>>)WorkspaceResourceId).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            accessToken = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("clusterId"u8))

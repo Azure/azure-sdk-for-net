@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(BucketName))
             {
                 writer.WritePropertyName("bucketName"u8);
-                JsonSerializer.Serialize(writer, BucketName);
+                ((IJsonModel<DataFactoryElement<string>>)BucketName).Write(writer, options);
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                JsonSerializer.Serialize(writer, Version);
+                ((IJsonModel<DataFactoryElement<string>>)Version).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

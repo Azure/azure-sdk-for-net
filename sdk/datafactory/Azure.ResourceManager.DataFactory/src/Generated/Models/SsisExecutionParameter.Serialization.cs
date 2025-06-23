@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("value"u8);
-            JsonSerializer.Serialize(writer, Value);
+            ((IJsonModel<DataFactoryElement<string>>)Value).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

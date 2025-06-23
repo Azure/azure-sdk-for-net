@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SchemaColumnName))
             {
                 writer.WritePropertyName("name"u8);
-                JsonSerializer.Serialize(writer, SchemaColumnName);
+                ((IJsonModel<DataFactoryElement<string>>)SchemaColumnName).Write(writer, options);
             }
             if (Optional.IsDefined(SchemaColumnType))
             {
                 writer.WritePropertyName("type"u8);
-                JsonSerializer.Serialize(writer, SchemaColumnType);
+                ((IJsonModel<DataFactoryElement<string>>)SchemaColumnType).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

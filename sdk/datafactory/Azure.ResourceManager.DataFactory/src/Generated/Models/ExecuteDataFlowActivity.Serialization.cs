@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -63,22 +64,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TraceLevel))
             {
                 writer.WritePropertyName("traceLevel"u8);
-                JsonSerializer.Serialize(writer, TraceLevel);
+                ((IJsonModel<DataFactoryElement<string>>)TraceLevel).Write(writer, options);
             }
             if (Optional.IsDefined(ContinueOnError))
             {
                 writer.WritePropertyName("continueOnError"u8);
-                JsonSerializer.Serialize(writer, ContinueOnError);
+                ((IJsonModel<DataFactoryElement<bool>>)ContinueOnError).Write(writer, options);
             }
             if (Optional.IsDefined(RunConcurrently))
             {
                 writer.WritePropertyName("runConcurrently"u8);
-                JsonSerializer.Serialize(writer, RunConcurrently);
+                ((IJsonModel<DataFactoryElement<bool>>)RunConcurrently).Write(writer, options);
             }
             if (Optional.IsDefined(SourceStagingConcurrency))
             {
                 writer.WritePropertyName("sourceStagingConcurrency"u8);
-                JsonSerializer.Serialize(writer, SourceStagingConcurrency);
+                ((IJsonModel<DataFactoryElement<int>>)SourceStagingConcurrency).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))

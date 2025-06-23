@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(BlobWriterOverwriteFiles))
             {
                 writer.WritePropertyName("blobWriterOverwriteFiles"u8);
-                JsonSerializer.Serialize(writer, BlobWriterOverwriteFiles);
+                ((IJsonModel<DataFactoryElement<bool>>)BlobWriterOverwriteFiles).Write(writer, options);
             }
             if (Optional.IsDefined(BlobWriterDateTimeFormat))
             {
                 writer.WritePropertyName("blobWriterDateTimeFormat"u8);
-                JsonSerializer.Serialize(writer, BlobWriterDateTimeFormat);
+                ((IJsonModel<DataFactoryElement<string>>)BlobWriterDateTimeFormat).Write(writer, options);
             }
             if (Optional.IsDefined(BlobWriterAddHeader))
             {
                 writer.WritePropertyName("blobWriterAddHeader"u8);
-                JsonSerializer.Serialize(writer, BlobWriterAddHeader);
+                ((IJsonModel<DataFactoryElement<bool>>)BlobWriterAddHeader).Write(writer, options);
             }
             if (Optional.IsDefined(CopyBehavior))
             {

@@ -39,42 +39,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                JsonSerializer.Serialize(writer, Recursive);
+                ((IJsonModel<DataFactoryElement<bool>>)Recursive).Write(writer, options);
             }
             if (Optional.IsDefined(WildcardFolderPath))
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
-                JsonSerializer.Serialize(writer, WildcardFolderPath);
+                ((IJsonModel<DataFactoryElement<string>>)WildcardFolderPath).Write(writer, options);
             }
             if (Optional.IsDefined(WildcardFileName))
             {
                 writer.WritePropertyName("wildcardFileName"u8);
-                JsonSerializer.Serialize(writer, WildcardFileName);
+                ((IJsonModel<DataFactoryElement<string>>)WildcardFileName).Write(writer, options);
             }
             if (Optional.IsDefined(FileListPath))
             {
                 writer.WritePropertyName("fileListPath"u8);
-                JsonSerializer.Serialize(writer, FileListPath);
+                ((IJsonModel<DataFactoryElement<string>>)FileListPath).Write(writer, options);
             }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
-                JsonSerializer.Serialize(writer, EnablePartitionDiscovery);
+                ((IJsonModel<DataFactoryElement<bool>>)EnablePartitionDiscovery).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
-                JsonSerializer.Serialize(writer, PartitionRootPath);
+                ((IJsonModel<DataFactoryElement<string>>)PartitionRootPath).Write(writer, options);
             }
             if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
-                JsonSerializer.Serialize(writer, ModifiedDatetimeStart);
+                ((IJsonModel<DataFactoryElement<string>>)ModifiedDatetimeStart).Write(writer, options);
             }
             if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
-                JsonSerializer.Serialize(writer, ModifiedDatetimeEnd);
+                ((IJsonModel<DataFactoryElement<string>>)ModifiedDatetimeEnd).Write(writer, options);
             }
             if (Optional.IsDefined(DistcpSettings))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
-                JsonSerializer.Serialize(writer, DeleteFilesAfterCompletion);
+                ((IJsonModel<DataFactoryElement<bool>>)DeleteFilesAfterCompletion).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

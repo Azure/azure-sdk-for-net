@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                JsonSerializer.Serialize(writer, QueryTimeout);
+                ((IJsonModel<DataFactoryElement<string>>)QueryTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

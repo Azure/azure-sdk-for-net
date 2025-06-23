@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AzureTableSourceQuery))
             {
                 writer.WritePropertyName("azureTableSourceQuery"u8);
-                JsonSerializer.Serialize(writer, AzureTableSourceQuery);
+                ((IJsonModel<DataFactoryElement<string>>)AzureTableSourceQuery).Write(writer, options);
             }
             if (Optional.IsDefined(AzureTableSourceIgnoreTableNotFound))
             {
                 writer.WritePropertyName("azureTableSourceIgnoreTableNotFound"u8);
-                JsonSerializer.Serialize(writer, AzureTableSourceIgnoreTableNotFound);
+                ((IJsonModel<DataFactoryElement<bool>>)AzureTableSourceIgnoreTableNotFound).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

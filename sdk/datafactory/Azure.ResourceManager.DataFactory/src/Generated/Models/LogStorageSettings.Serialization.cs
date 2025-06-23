@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -36,21 +37,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName);
+            ((IJsonModel<DataFactoryLinkedServiceReference>)LinkedServiceName).Write(writer, options);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                JsonSerializer.Serialize(writer, Path);
+                ((IJsonModel<DataFactoryElement<string>>)Path).Write(writer, options);
             }
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
-                JsonSerializer.Serialize(writer, LogLevel);
+                ((IJsonModel<DataFactoryElement<string>>)LogLevel).Write(writer, options);
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
-                JsonSerializer.Serialize(writer, EnableReliableLogging);
+                ((IJsonModel<DataFactoryElement<bool>>)EnableReliableLogging).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("path"u8))
