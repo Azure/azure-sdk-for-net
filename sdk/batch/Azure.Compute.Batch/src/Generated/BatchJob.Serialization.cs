@@ -9,14 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchJob : IUtf8JsonSerializable, IJsonModel<BatchJob>
+    /// <summary> An Azure Batch Job. </summary>
+    public partial class BatchJob : IJsonModel<BatchJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJob>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BatchJob"/> for deserialization. </summary>
+        internal BatchJob()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +35,11 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJob>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchJob)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -128,7 +134,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("commonEnvironmentSettings"u8);
                 writer.WriteStartArray();
-                foreach (var item in CommonEnvironmentSettings)
+                foreach (EnvironmentSetting item in CommonEnvironmentSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -155,7 +161,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
-                foreach (var item in Metadata)
+                foreach (BatchMetadataItem item in Metadata)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -171,15 +177,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("stats"u8);
                 writer.WriteObjectValue(JobStatistics, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -188,22 +194,27 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchJob IJsonModel<BatchJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJob IJsonModel<BatchJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJob JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJob>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchJob)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBatchJob(document.RootElement, options);
         }
 
-        internal static BatchJob DeserializeBatchJob(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BatchJob DeserializeBatchJob(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -211,7 +222,7 @@ namespace Azure.Compute.Batch
             string id = default;
             string displayName = default;
             bool? usesTaskDependencies = default;
-            Uri url = default;
+            Uri uri = default;
             ETag? eTag = default;
             DateTimeOffset? lastModified = default;
             DateTimeOffset? creationTime = default;
@@ -228,259 +239,257 @@ namespace Azure.Compute.Batch
             BatchJobReleaseTask jobReleaseTask = default;
             IReadOnlyList<EnvironmentSetting> commonEnvironmentSettings = default;
             BatchPoolInfo poolInfo = default;
-            BatchAllTasksCompleteMode? onAllTasksComplete = default;
-            BatchTaskFailureMode? onTaskFailure = default;
+            BatchAllTasksCompleteMode? allTasksCompleteMode = default;
+            BatchTaskFailureMode? taskFailureMode = default;
             BatchJobNetworkConfiguration networkConfiguration = default;
             IList<BatchMetadataItem> metadata = default;
             BatchJobExecutionInfo executionInfo = default;
-            BatchJobStatistics stats = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            BatchJobStatistics jobStatistics = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("usesTaskDependencies"u8))
+                if (prop.NameEquals("usesTaskDependencies"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    usesTaskDependencies = property.Value.GetBoolean();
+                    usesTaskDependencies = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("url"u8))
+                if (prop.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("eTag"u8))
+                if (prop.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastModified"u8))
+                if (prop.NameEquals("lastModified"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastModified = property.Value.GetDateTimeOffset("O");
+                    lastModified = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("creationTime"u8))
+                if (prop.NameEquals("creationTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    creationTime = property.Value.GetDateTimeOffset("O");
+                    creationTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new BatchJobState(property.Value.GetString());
+                    state = new BatchJobState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("stateTransitionTime"u8))
+                if (prop.NameEquals("stateTransitionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stateTransitionTime = property.Value.GetDateTimeOffset("O");
+                    stateTransitionTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("previousState"u8))
+                if (prop.NameEquals("previousState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    previousState = new BatchJobState(property.Value.GetString());
+                    previousState = new BatchJobState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("previousStateTransitionTime"u8))
+                if (prop.NameEquals("previousStateTransitionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    previousStateTransitionTime = property.Value.GetDateTimeOffset("O");
+                    previousStateTransitionTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("priority"u8))
+                if (prop.NameEquals("priority"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    priority = property.Value.GetInt32();
+                    priority = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allowTaskPreemption"u8))
+                if (prop.NameEquals("allowTaskPreemption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allowTaskPreemption = property.Value.GetBoolean();
+                    allowTaskPreemption = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maxParallelTasks"u8))
+                if (prop.NameEquals("maxParallelTasks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxParallelTasks = property.Value.GetInt32();
+                    maxParallelTasks = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("constraints"u8))
+                if (prop.NameEquals("constraints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    constraints = BatchJobConstraints.DeserializeBatchJobConstraints(property.Value, options);
+                    constraints = BatchJobConstraints.DeserializeBatchJobConstraints(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("jobManagerTask"u8))
+                if (prop.NameEquals("jobManagerTask"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    jobManagerTask = BatchJobManagerTask.DeserializeBatchJobManagerTask(property.Value, options);
+                    jobManagerTask = BatchJobManagerTask.DeserializeBatchJobManagerTask(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("jobPreparationTask"u8))
+                if (prop.NameEquals("jobPreparationTask"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    jobPreparationTask = BatchJobPreparationTask.DeserializeBatchJobPreparationTask(property.Value, options);
+                    jobPreparationTask = BatchJobPreparationTask.DeserializeBatchJobPreparationTask(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("jobReleaseTask"u8))
+                if (prop.NameEquals("jobReleaseTask"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    jobReleaseTask = BatchJobReleaseTask.DeserializeBatchJobReleaseTask(property.Value, options);
+                    jobReleaseTask = BatchJobReleaseTask.DeserializeBatchJobReleaseTask(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("commonEnvironmentSettings"u8))
+                if (prop.NameEquals("commonEnvironmentSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<EnvironmentSetting> array = new List<EnvironmentSetting>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(EnvironmentSetting.DeserializeEnvironmentSetting(item, options));
                     }
                     commonEnvironmentSettings = array;
                     continue;
                 }
-                if (property.NameEquals("poolInfo"u8))
+                if (prop.NameEquals("poolInfo"u8))
                 {
-                    poolInfo = BatchPoolInfo.DeserializeBatchPoolInfo(property.Value, options);
+                    poolInfo = BatchPoolInfo.DeserializeBatchPoolInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("onAllTasksComplete"u8))
+                if (prop.NameEquals("onAllTasksComplete"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    onAllTasksComplete = new BatchAllTasksCompleteMode(property.Value.GetString());
+                    allTasksCompleteMode = new BatchAllTasksCompleteMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("onTaskFailure"u8))
+                if (prop.NameEquals("onTaskFailure"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    onTaskFailure = new BatchTaskFailureMode(property.Value.GetString());
+                    taskFailureMode = new BatchTaskFailureMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("networkConfiguration"u8))
+                if (prop.NameEquals("networkConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkConfiguration = BatchJobNetworkConfiguration.DeserializeBatchJobNetworkConfiguration(property.Value, options);
+                    networkConfiguration = BatchJobNetworkConfiguration.DeserializeBatchJobNetworkConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("metadata"u8))
+                if (prop.NameEquals("metadata"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BatchMetadataItem> array = new List<BatchMetadataItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
                 }
-                if (property.NameEquals("executionInfo"u8))
+                if (prop.NameEquals("executionInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    executionInfo = BatchJobExecutionInfo.DeserializeBatchJobExecutionInfo(property.Value, options);
+                    executionInfo = BatchJobExecutionInfo.DeserializeBatchJobExecutionInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("stats"u8))
+                if (prop.NameEquals("stats"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stats = BatchJobStatistics.DeserializeBatchJobStatistics(property.Value, options);
+                    jobStatistics = BatchJobStatistics.DeserializeBatchJobStatistics(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BatchJob(
                 id,
                 displayName,
                 usesTaskDependencies,
-                url,
+                uri,
                 eTag,
                 lastModified,
                 creationTime,
@@ -497,19 +506,22 @@ namespace Azure.Compute.Batch
                 jobReleaseTask,
                 commonEnvironmentSettings ?? new ChangeTrackingList<EnvironmentSetting>(),
                 poolInfo,
-                onAllTasksComplete,
-                onTaskFailure,
+                allTasksCompleteMode,
+                taskFailureMode,
                 networkConfiguration,
                 metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
                 executionInfo,
-                stats,
-                serializedAdditionalRawData);
+                jobStatistics,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<BatchJob>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJob>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchJob>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJob>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -519,15 +531,20 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchJob IPersistableModel<BatchJob>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJob>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJob IPersistableModel<BatchJob>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJob>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchJob(document.RootElement, options);
                     }
                 default:
@@ -535,22 +552,27 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchJob FromResponse(Response response)
+        /// <param name="batchJob"> The <see cref="BatchJob"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(BatchJob batchJob)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchJob(document.RootElement);
+            if (batchJob == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(batchJob, ModelSerializationExtensions.WireOptions);
+            return content;
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="BatchJob"/> from. </param>
+        public static explicit operator BatchJob(Response result)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeBatchJob(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

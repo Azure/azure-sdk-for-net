@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchJobScheduleStatistics : IUtf8JsonSerializable, IJsonModel<BatchJobScheduleStatistics>
+    /// <summary> Resource usage statistics for a Job Schedule. </summary>
+    public partial class BatchJobScheduleStatistics : IJsonModel<BatchJobScheduleStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobScheduleStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BatchJobScheduleStatistics"/> for deserialization. </summary>
+        internal BatchJobScheduleStatistics()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchJobScheduleStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchJobScheduleStatistics)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("startTime"u8);
@@ -62,15 +66,15 @@ namespace Azure.Compute.Batch
             writer.WriteStringValue(TaskRetriesCount.ToString());
             writer.WritePropertyName("waitTime"u8);
             writer.WriteStringValue(WaitTime, "P");
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -79,142 +83,148 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchJobScheduleStatistics IJsonModel<BatchJobScheduleStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJobScheduleStatistics IJsonModel<BatchJobScheduleStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJobScheduleStatistics JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchJobScheduleStatistics)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBatchJobScheduleStatistics(document.RootElement, options);
         }
 
-        internal static BatchJobScheduleStatistics DeserializeBatchJobScheduleStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BatchJobScheduleStatistics DeserializeBatchJobScheduleStatistics(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri url = default;
+            Uri uri = default;
             DateTimeOffset startTime = default;
             DateTimeOffset lastUpdateTime = default;
-            TimeSpan userCPUTime = default;
-            TimeSpan kernelCPUTime = default;
+            TimeSpan userCpuTime = default;
+            TimeSpan kernelCpuTime = default;
             TimeSpan wallClockTime = default;
-            long readIOps = default;
-            long writeIOps = default;
-            float readIOGiB = default;
-            float writeIOGiB = default;
-            long numSucceededTasks = default;
-            long numFailedTasks = default;
-            long numTaskRetries = default;
+            long readIops = default;
+            long writeIops = default;
+            float readIoGiB = default;
+            float writeIoGiB = default;
+            long succeededTasksCount = default;
+            long failedTasksCount = default;
+            long taskRetriesCount = default;
             TimeSpan waitTime = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("url"u8))
+                if (prop.NameEquals("url"u8))
                 {
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startTime"u8))
+                if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdateTime"u8))
+                if (prop.NameEquals("lastUpdateTime"u8))
                 {
-                    lastUpdateTime = property.Value.GetDateTimeOffset("O");
+                    lastUpdateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("userCPUTime"u8))
+                if (prop.NameEquals("userCPUTime"u8))
                 {
-                    userCPUTime = property.Value.GetTimeSpan("P");
+                    userCpuTime = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("kernelCPUTime"u8))
+                if (prop.NameEquals("kernelCPUTime"u8))
                 {
-                    kernelCPUTime = property.Value.GetTimeSpan("P");
+                    kernelCpuTime = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("wallClockTime"u8))
+                if (prop.NameEquals("wallClockTime"u8))
                 {
-                    wallClockTime = property.Value.GetTimeSpan("P");
+                    wallClockTime = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("readIOps"u8))
+                if (prop.NameEquals("readIOps"u8))
                 {
-                    readIOps = long.Parse(property.Value.GetString());
+                    readIops = long.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("writeIOps"u8))
+                if (prop.NameEquals("writeIOps"u8))
                 {
-                    writeIOps = long.Parse(property.Value.GetString());
+                    writeIops = long.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("readIOGiB"u8))
+                if (prop.NameEquals("readIOGiB"u8))
                 {
-                    readIOGiB = property.Value.GetSingle();
+                    readIoGiB = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("writeIOGiB"u8))
+                if (prop.NameEquals("writeIOGiB"u8))
                 {
-                    writeIOGiB = property.Value.GetSingle();
+                    writeIoGiB = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("numSucceededTasks"u8))
+                if (prop.NameEquals("numSucceededTasks"u8))
                 {
-                    numSucceededTasks = long.Parse(property.Value.GetString());
+                    succeededTasksCount = long.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("numFailedTasks"u8))
+                if (prop.NameEquals("numFailedTasks"u8))
                 {
-                    numFailedTasks = long.Parse(property.Value.GetString());
+                    failedTasksCount = long.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("numTaskRetries"u8))
+                if (prop.NameEquals("numTaskRetries"u8))
                 {
-                    numTaskRetries = long.Parse(property.Value.GetString());
+                    taskRetriesCount = long.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("waitTime"u8))
+                if (prop.NameEquals("waitTime"u8))
                 {
-                    waitTime = property.Value.GetTimeSpan("P");
+                    waitTime = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BatchJobScheduleStatistics(
-                url,
+                uri,
                 startTime,
                 lastUpdateTime,
-                userCPUTime,
-                kernelCPUTime,
+                userCpuTime,
+                kernelCpuTime,
                 wallClockTime,
-                readIOps,
-                writeIOps,
-                readIOGiB,
-                writeIOGiB,
-                numSucceededTasks,
-                numFailedTasks,
-                numTaskRetries,
+                readIops,
+                writeIops,
+                readIoGiB,
+                writeIoGiB,
+                succeededTasksCount,
+                failedTasksCount,
+                taskRetriesCount,
                 waitTime,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<BatchJobScheduleStatistics>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleStatistics>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchJobScheduleStatistics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -224,15 +234,20 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchJobScheduleStatistics IPersistableModel<BatchJobScheduleStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleStatistics>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJobScheduleStatistics IPersistableModel<BatchJobScheduleStatistics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJobScheduleStatistics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobScheduleStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchJobScheduleStatistics(document.RootElement, options);
                     }
                 default:
@@ -240,22 +255,7 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchJobScheduleStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchJobScheduleStatistics FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchJobScheduleStatistics(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

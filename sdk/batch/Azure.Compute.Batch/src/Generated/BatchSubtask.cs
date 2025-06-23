@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> Information about an Azure Batch subtask. </summary>
     public partial class BatchSubtask
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchSubtask"/>. </summary>
         internal BatchSubtask()
@@ -63,8 +34,8 @@ namespace Azure.Compute.Batch
         /// <param name="previousState"> The previous state of the subtask. This property is not set if the subtask is in its initial running state. </param>
         /// <param name="previousStateTransitionTime"> The time at which the subtask entered its previous state. This property is not set if the subtask is in its initial running state. </param>
         /// <param name="result"> The result of the Task execution. If the value is 'failed', then the details of the failure can be found in the failureInfo property. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchSubtask(int? id, BatchNodeInfo nodeInfo, DateTimeOffset? startTime, DateTimeOffset? endTime, int? exitCode, BatchTaskContainerExecutionInfo containerInfo, BatchTaskFailureInfo failureInfo, BatchSubtaskState? state, DateTimeOffset? stateTransitionTime, BatchSubtaskState? previousState, DateTimeOffset? previousStateTransitionTime, BatchTaskExecutionResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchSubtask(int? id, BatchNodeInfo nodeInfo, DateTimeOffset? startTime, DateTimeOffset? endTime, int? exitCode, BatchTaskContainerExecutionInfo containerInfo, BatchTaskFailureInfo failureInfo, BatchSubtaskState? state, DateTimeOffset? stateTransitionTime, BatchSubtaskState? previousState, DateTimeOffset? previousStateTransitionTime, BatchTaskExecutionResult? result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             NodeInfo = nodeInfo;
@@ -78,31 +49,42 @@ namespace Azure.Compute.Batch
             PreviousState = previousState;
             PreviousStateTransitionTime = previousStateTransitionTime;
             Result = result;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the subtask. </summary>
         public int? Id { get; }
+
         /// <summary> Information about the Compute Node on which the subtask ran. </summary>
         public BatchNodeInfo NodeInfo { get; }
+
         /// <summary> The time at which the subtask started running. If the subtask has been restarted or retried, this is the most recent time at which the subtask started running. </summary>
         public DateTimeOffset? StartTime { get; }
+
         /// <summary> The time at which the subtask completed. This property is set only if the subtask is in the Completed state. </summary>
         public DateTimeOffset? EndTime { get; }
+
         /// <summary> The exit code of the program specified on the subtask command line. This property is set only if the subtask is in the completed state. In general, the exit code for a process reflects the specific convention implemented by the application developer for that process. If you use the exit code value to make decisions in your code, be sure that you know the exit code convention used by the application process. However, if the Batch service terminates the subtask (due to timeout, or user termination via the API) you may see an operating system-defined exit code. </summary>
         public int? ExitCode { get; }
+
         /// <summary> Information about the container under which the Task is executing. This property is set only if the Task runs in a container context. </summary>
         public BatchTaskContainerExecutionInfo ContainerInfo { get; }
+
         /// <summary> Information describing the Task failure, if any. This property is set only if the Task is in the completed state and encountered a failure. </summary>
         public BatchTaskFailureInfo FailureInfo { get; }
+
         /// <summary> The current state of the subtask. </summary>
         public BatchSubtaskState? State { get; }
+
         /// <summary> The time at which the subtask entered its current state. </summary>
         public DateTimeOffset? StateTransitionTime { get; }
+
         /// <summary> The previous state of the subtask. This property is not set if the subtask is in its initial running state. </summary>
         public BatchSubtaskState? PreviousState { get; }
+
         /// <summary> The time at which the subtask entered its previous state. This property is not set if the subtask is in its initial running state. </summary>
         public DateTimeOffset? PreviousStateTransitionTime { get; }
+
         /// <summary> The result of the Task execution. If the value is 'failed', then the details of the failure can be found in the failureInfo property. </summary>
         public BatchTaskExecutionResult? Result { get; }
     }

@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct AutoUserScope : IEquatable<AutoUserScope>
     {
         private readonly string _value;
+        /// <summary> Specifies that the service should create a new user for the Task. </summary>
+        private const string TaskValue = "task";
+        /// <summary> Specifies that the Task runs as the common auto user Account which is created on every Compute Node in a Pool. </summary>
+        private const string PoolValue = "pool";
 
         /// <summary> Initializes a new instance of <see cref="AutoUserScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutoUserScope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TaskValue = "task";
-        private const string PoolValue = "pool";
+            _value = value;
+        }
 
         /// <summary> Specifies that the service should create a new user for the Task. </summary>
         public static AutoUserScope Task { get; } = new AutoUserScope(TaskValue);
+
         /// <summary> Specifies that the Task runs as the common auto user Account which is created on every Compute Node in a Pool. </summary>
         public static AutoUserScope Pool { get; } = new AutoUserScope(PoolValue);
+
         /// <summary> Determines if two <see cref="AutoUserScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutoUserScope left, AutoUserScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutoUserScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutoUserScope left, AutoUserScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoUserScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutoUserScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutoUserScope(string value) => new AutoUserScope(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutoUserScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutoUserScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

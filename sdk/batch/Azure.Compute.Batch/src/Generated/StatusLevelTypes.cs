@@ -14,41 +14,58 @@ namespace Azure.Compute.Batch
     public readonly partial struct StatusLevelTypes : IEquatable<StatusLevelTypes>
     {
         private readonly string _value;
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> Info. </summary>
+        private const string InfoValue = "Info";
+        /// <summary> Warning. </summary>
+        private const string WarningValue = "Warning";
 
         /// <summary> Initializes a new instance of <see cref="StatusLevelTypes"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StatusLevelTypes(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ErrorValue = "Error";
-        private const string InfoValue = "Info";
-        private const string WarningValue = "Warning";
+            _value = value;
+        }
 
         /// <summary> Error. </summary>
         public static StatusLevelTypes Error { get; } = new StatusLevelTypes(ErrorValue);
+
         /// <summary> Info. </summary>
         public static StatusLevelTypes Info { get; } = new StatusLevelTypes(InfoValue);
+
         /// <summary> Warning. </summary>
         public static StatusLevelTypes Warning { get; } = new StatusLevelTypes(WarningValue);
+
         /// <summary> Determines if two <see cref="StatusLevelTypes"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StatusLevelTypes left, StatusLevelTypes right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StatusLevelTypes"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StatusLevelTypes left, StatusLevelTypes right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StatusLevelTypes"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StatusLevelTypes"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StatusLevelTypes(string value) => new StatusLevelTypes(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StatusLevelTypes other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StatusLevelTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.Compute.Batch
     /// <summary> Statistics related to Pool usage information. </summary>
     public partial class BatchPoolUsageStatistics
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchPoolUsageStatistics"/>. </summary>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
@@ -60,24 +31,21 @@ namespace Azure.Compute.Batch
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
         /// <param name="dedicatedCoreTime"> The aggregated wall-clock time of the dedicated Compute Node cores being part of the Pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolUsageStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan dedicatedCoreTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchPoolUsageStatistics(DateTimeOffset startTime, DateTimeOffset lastUpdateTime, TimeSpan dedicatedCoreTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
             DedicatedCoreTime = dedicatedCoreTime;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchPoolUsageStatistics"/> for deserialization. </summary>
-        internal BatchPoolUsageStatistics()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The start time of the time range covered by the statistics. </summary>
         public DateTimeOffset StartTime { get; }
+
         /// <summary> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </summary>
         public DateTimeOffset LastUpdateTime { get; }
+
         /// <summary> The aggregated wall-clock time of the dedicated Compute Node cores being part of the Pool. </summary>
         public TimeSpan DedicatedCoreTime { get; }
     }

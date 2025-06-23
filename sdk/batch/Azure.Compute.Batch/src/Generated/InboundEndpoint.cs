@@ -14,37 +14,8 @@ namespace Azure.Compute.Batch
     /// <summary> An inbound endpoint on a Compute Node. </summary>
     public partial class InboundEndpoint
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InboundEndpoint"/>. </summary>
         /// <param name="name"> The name of the endpoint. </param>
@@ -53,13 +24,8 @@ namespace Azure.Compute.Batch
         /// <param name="publicFQDN"> The public fully qualified domain name for the Compute Node. </param>
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publicIpAddress"/> or <paramref name="publicFQDN"/> is null. </exception>
         internal InboundEndpoint(string name, InboundEndpointProtocol protocol, IPAddress publicIpAddress, string publicFQDN, int frontendPort, int backendPort)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(publicIpAddress, nameof(publicIpAddress));
-            Argument.AssertNotNull(publicFQDN, nameof(publicFQDN));
-
             Name = name;
             Protocol = protocol;
             PublicIpAddress = publicIpAddress;
@@ -75,8 +41,8 @@ namespace Azure.Compute.Batch
         /// <param name="publicFQDN"> The public fully qualified domain name for the Compute Node. </param>
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, IPAddress publicIpAddress, string publicFQDN, int frontendPort, int backendPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, IPAddress publicIpAddress, string publicFQDN, int frontendPort, int backendPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Protocol = protocol;
@@ -84,24 +50,24 @@ namespace Azure.Compute.Batch
             PublicFQDN = publicFQDN;
             FrontendPort = frontendPort;
             BackendPort = backendPort;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="InboundEndpoint"/> for deserialization. </summary>
-        internal InboundEndpoint()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the endpoint. </summary>
         public string Name { get; }
+
         /// <summary> The protocol of the endpoint. </summary>
         public InboundEndpointProtocol Protocol { get; }
+
         /// <summary> The public IP address of the Compute Node. </summary>
         public IPAddress PublicIpAddress { get; }
+
         /// <summary> The public fully qualified domain name for the Compute Node. </summary>
         public string PublicFQDN { get; }
+
         /// <summary> The public port number of the endpoint. </summary>
         public int FrontendPort { get; }
+
         /// <summary> The backend port number of the endpoint. </summary>
         public int BackendPort { get; }
     }

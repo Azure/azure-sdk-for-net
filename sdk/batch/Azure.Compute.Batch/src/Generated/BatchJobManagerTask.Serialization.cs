@@ -9,14 +9,43 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchJobManagerTask : IUtf8JsonSerializable, IJsonModel<BatchJobManagerTask>
+    /// <summary>
+    /// Specifies details of a Job Manager Task.
+    /// The Job Manager Task is automatically started when the Job is created. The
+    /// Batch service tries to schedule the Job Manager Task before any other Tasks in
+    /// the Job. When shrinking a Pool, the Batch service tries to preserve Nodes where
+    /// Job Manager Tasks are running for as long as possible (that is, Compute Nodes
+    /// running 'normal' Tasks are removed before Compute Nodes running Job Manager
+    /// Tasks). When a Job Manager Task fails and needs to be restarted, the system
+    /// tries to schedule it at the highest priority. If there are no idle Compute
+    /// Nodes available, the system may terminate one of the running Tasks in the Pool
+    /// and return it to the queue in order to make room for the Job Manager Task to
+    /// restart. Note that a Job Manager Task in one Job does not have priority over
+    /// Tasks in other Jobs. Across Jobs, only Job level priorities are observed. For
+    /// example, if a Job Manager in a priority 0 Job needs to be restarted, it will
+    /// not displace Tasks of a priority 1 Job. Batch will retry Tasks when a recovery
+    /// operation is triggered on a Node. Examples of recovery operations include (but
+    /// are not limited to) when an unhealthy Node is rebooted or a Compute Node
+    /// disappeared due to host failure. Retries due to recovery operations are
+    /// independent of and are not counted against the maxTaskRetryCount. Even if the
+    /// maxTaskRetryCount is 0, an internal retry due to a recovery operation may
+    /// occur. Because of this, all Tasks should be idempotent. This means Tasks need
+    /// to tolerate being interrupted and restarted without causing any corruption or
+    /// duplicate data. The best practice for long running Tasks is to use some form of
+    /// checkpointing.
+    /// </summary>
+    public partial class BatchJobManagerTask : IJsonModel<BatchJobManagerTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobManagerTask>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BatchJobManagerTask"/> for deserialization. </summary>
+        internal BatchJobManagerTask()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchJobManagerTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +57,11 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobManagerTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobManagerTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchJobManagerTask)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             if (Optional.IsDefined(DisplayName))
@@ -52,7 +80,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("resourceFiles"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResourceFiles)
+                foreach (ResourceFile item in ResourceFiles)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -62,7 +90,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("outputFiles"u8);
                 writer.WriteStartArray();
-                foreach (var item in OutputFiles)
+                foreach (OutputFile item in OutputFiles)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -72,7 +100,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("environmentSettings"u8);
                 writer.WriteStartArray();
-                foreach (var item in EnvironmentSettings)
+                foreach (EnvironmentSetting item in EnvironmentSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -107,7 +135,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("applicationPackageReferences"u8);
                 writer.WriteStartArray();
-                foreach (var item in ApplicationPackageReferences)
+                foreach (BatchApplicationPackageReference item in ApplicationPackageReferences)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -123,15 +151,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("allowLowPriorityNode"u8);
                 writer.WriteBooleanValue(AllowLowPriorityNode.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -140,22 +168,27 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchJobManagerTask IJsonModel<BatchJobManagerTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJobManagerTask IJsonModel<BatchJobManagerTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJobManagerTask JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobManagerTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobManagerTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchJobManagerTask)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBatchJobManagerTask(document.RootElement, options);
         }
 
-        internal static BatchJobManagerTask DeserializeBatchJobManagerTask(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BatchJobManagerTask DeserializeBatchJobManagerTask(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -175,159 +208,157 @@ namespace Azure.Compute.Batch
             IList<BatchApplicationPackageReference> applicationPackageReferences = default;
             AuthenticationTokenSettings authenticationTokenSettings = default;
             bool? allowLowPriorityNode = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("commandLine"u8))
+                if (prop.NameEquals("commandLine"u8))
                 {
-                    commandLine = property.Value.GetString();
+                    commandLine = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerSettings"u8))
+                if (prop.NameEquals("containerSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value, options);
+                    containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("resourceFiles"u8))
+                if (prop.NameEquals("resourceFiles"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceFile> array = new List<ResourceFile>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ResourceFile.DeserializeResourceFile(item, options));
                     }
                     resourceFiles = array;
                     continue;
                 }
-                if (property.NameEquals("outputFiles"u8))
+                if (prop.NameEquals("outputFiles"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<OutputFile> array = new List<OutputFile>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(OutputFile.DeserializeOutputFile(item, options));
                     }
                     outputFiles = array;
                     continue;
                 }
-                if (property.NameEquals("environmentSettings"u8))
+                if (prop.NameEquals("environmentSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<EnvironmentSetting> array = new List<EnvironmentSetting>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(EnvironmentSetting.DeserializeEnvironmentSetting(item, options));
                     }
                     environmentSettings = array;
                     continue;
                 }
-                if (property.NameEquals("constraints"u8))
+                if (prop.NameEquals("constraints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    constraints = BatchTaskConstraints.DeserializeBatchTaskConstraints(property.Value, options);
+                    constraints = BatchTaskConstraints.DeserializeBatchTaskConstraints(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("requiredSlots"u8))
+                if (prop.NameEquals("requiredSlots"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requiredSlots = property.Value.GetInt32();
+                    requiredSlots = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("killJobOnCompletion"u8))
+                if (prop.NameEquals("killJobOnCompletion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    killJobOnCompletion = property.Value.GetBoolean();
+                    killJobOnCompletion = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("userIdentity"u8))
+                if (prop.NameEquals("userIdentity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userIdentity = UserIdentity.DeserializeUserIdentity(property.Value, options);
+                    userIdentity = UserIdentity.DeserializeUserIdentity(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("runExclusive"u8))
+                if (prop.NameEquals("runExclusive"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runExclusive = property.Value.GetBoolean();
+                    runExclusive = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("applicationPackageReferences"u8))
+                if (prop.NameEquals("applicationPackageReferences"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BatchApplicationPackageReference> array = new List<BatchApplicationPackageReference>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item, options));
                     }
                     applicationPackageReferences = array;
                     continue;
                 }
-                if (property.NameEquals("authenticationTokenSettings"u8))
+                if (prop.NameEquals("authenticationTokenSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authenticationTokenSettings = AuthenticationTokenSettings.DeserializeAuthenticationTokenSettings(property.Value, options);
+                    authenticationTokenSettings = AuthenticationTokenSettings.DeserializeAuthenticationTokenSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("allowLowPriorityNode"u8))
+                if (prop.NameEquals("allowLowPriorityNode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allowLowPriorityNode = property.Value.GetBoolean();
+                    allowLowPriorityNode = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BatchJobManagerTask(
                 id,
                 displayName,
@@ -344,13 +375,16 @@ namespace Azure.Compute.Batch
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
                 authenticationTokenSettings,
                 allowLowPriorityNode,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<BatchJobManagerTask>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobManagerTask>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchJobManagerTask>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobManagerTask>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -360,15 +394,20 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchJobManagerTask IPersistableModel<BatchJobManagerTask>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchJobManagerTask>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchJobManagerTask IPersistableModel<BatchJobManagerTask>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchJobManagerTask PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchJobManagerTask>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchJobManagerTask(document.RootElement, options);
                     }
                 default:
@@ -376,22 +415,7 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchJobManagerTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchJobManagerTask FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchJobManagerTask(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

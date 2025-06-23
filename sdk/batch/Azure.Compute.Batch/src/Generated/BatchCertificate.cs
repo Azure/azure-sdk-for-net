@@ -16,37 +16,8 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class BatchCertificate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchCertificate"/>. </summary>
         /// <param name="thumbprint"> The X.509 thumbprint of the Certificate. This is a sequence of up to 40 hex digits (it may include spaces but these are removed). </param>
@@ -77,8 +48,8 @@ namespace Azure.Compute.Batch
         /// <param name="data"> The base64-encoded contents of the Certificate. The maximum size is 10KB. </param>
         /// <param name="certificateFormat"> The format of the Certificate data. </param>
         /// <param name="password"> The password to access the Certificate's private key. This must be omitted if the Certificate format is cer. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchCertificate(string thumbprint, string thumbprintAlgorithm, Uri uri, BatchCertificateState? state, DateTimeOffset? stateTransitionTime, BatchCertificateState? previousState, DateTimeOffset? previousStateTransitionTime, string publicData, BatchCertificateDeleteError deleteCertificateError, BinaryData data, BatchCertificateFormat? certificateFormat, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchCertificate(string thumbprint, string thumbprintAlgorithm, Uri uri, BatchCertificateState? state, DateTimeOffset? stateTransitionTime, BatchCertificateState? previousState, DateTimeOffset? previousStateTransitionTime, string publicData, BatchCertificateDeleteError deleteCertificateError, BinaryData data, BatchCertificateFormat? certificateFormat, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Thumbprint = thumbprint;
             ThumbprintAlgorithm = thumbprintAlgorithm;
@@ -92,32 +63,36 @@ namespace Azure.Compute.Batch
             Data = data;
             CertificateFormat = certificateFormat;
             Password = password;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchCertificate"/> for deserialization. </summary>
-        internal BatchCertificate()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The X.509 thumbprint of the Certificate. This is a sequence of up to 40 hex digits (it may include spaces but these are removed). </summary>
         public string Thumbprint { get; set; }
+
         /// <summary> The algorithm used to derive the thumbprint. This must be sha1. </summary>
         public string ThumbprintAlgorithm { get; set; }
+
         /// <summary> The URL of the Certificate. </summary>
         public Uri Uri { get; }
+
         /// <summary> The state of the Certificate. </summary>
         public BatchCertificateState? State { get; }
+
         /// <summary> The time at which the Certificate entered its current state. </summary>
         public DateTimeOffset? StateTransitionTime { get; }
+
         /// <summary> The previous state of the Certificate. This property is not set if the Certificate is in its initial active state. </summary>
         public BatchCertificateState? PreviousState { get; }
+
         /// <summary> The time at which the Certificate entered its previous state. This property is not set if the Certificate is in its initial Active state. </summary>
         public DateTimeOffset? PreviousStateTransitionTime { get; }
+
         /// <summary> The public part of the Certificate as a base-64 encoded .cer file. </summary>
         public string PublicData { get; }
+
         /// <summary> The error that occurred on the last attempt to delete this Certificate. This property is set only if the Certificate is in the DeleteFailed state. </summary>
         public BatchCertificateDeleteError DeleteCertificateError { get; }
+
         /// <summary>
         /// The base64-encoded contents of the Certificate. The maximum size is 10KB.
         /// <para>
@@ -128,15 +103,17 @@ namespace Azure.Compute.Batch
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
-        /// <description>Creates a payload of "AQID".</description>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public BinaryData Data { get; set; }
+
         /// <summary> The format of the Certificate data. </summary>
         public BatchCertificateFormat? CertificateFormat { get; set; }
+
         /// <summary> The password to access the Certificate's private key. This must be omitted if the Certificate format is cer. </summary>
         public string Password { get; set; }
     }

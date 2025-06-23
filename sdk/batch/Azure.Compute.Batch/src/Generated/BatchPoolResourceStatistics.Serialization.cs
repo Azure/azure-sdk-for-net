@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class BatchPoolResourceStatistics : IUtf8JsonSerializable, IJsonModel<BatchPoolResourceStatistics>
+    /// <summary> Statistics related to resource consumption by Compute Nodes in a Pool. </summary>
+    public partial class BatchPoolResourceStatistics : IJsonModel<BatchPoolResourceStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchPoolResourceStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BatchPoolResourceStatistics"/> for deserialization. </summary>
+        internal BatchPoolResourceStatistics()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchPoolResourceStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchPoolResourceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolResourceStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchPoolResourceStatistics)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("lastUpdateTime"u8);
@@ -60,15 +64,15 @@ namespace Azure.Compute.Batch
             writer.WriteNumberValue(NetworkReadGiB);
             writer.WritePropertyName("networkWriteGiB"u8);
             writer.WriteNumberValue(NetworkWriteGiB);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,135 +81,141 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchPoolResourceStatistics IJsonModel<BatchPoolResourceStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchPoolResourceStatistics IJsonModel<BatchPoolResourceStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchPoolResourceStatistics JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchPoolResourceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolResourceStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchPoolResourceStatistics)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBatchPoolResourceStatistics(document.RootElement, options);
         }
 
-        internal static BatchPoolResourceStatistics DeserializeBatchPoolResourceStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BatchPoolResourceStatistics DeserializeBatchPoolResourceStatistics(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset startTime = default;
             DateTimeOffset lastUpdateTime = default;
-            float avgCPUPercentage = default;
+            float avgCpuPercentage = default;
             float avgMemoryGiB = default;
             float peakMemoryGiB = default;
             float avgDiskGiB = default;
             float peakDiskGiB = default;
-            long diskReadIOps = default;
-            long diskWriteIOps = default;
+            long diskReadIops = default;
+            long diskWriteIops = default;
             float diskReadGiB = default;
             float diskWriteGiB = default;
             float networkReadGiB = default;
             float networkWriteGiB = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("startTime"u8))
+                if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdateTime"u8))
+                if (prop.NameEquals("lastUpdateTime"u8))
                 {
-                    lastUpdateTime = property.Value.GetDateTimeOffset("O");
+                    lastUpdateTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("avgCPUPercentage"u8))
+                if (prop.NameEquals("avgCPUPercentage"u8))
                 {
-                    avgCPUPercentage = property.Value.GetSingle();
+                    avgCpuPercentage = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("avgMemoryGiB"u8))
+                if (prop.NameEquals("avgMemoryGiB"u8))
                 {
-                    avgMemoryGiB = property.Value.GetSingle();
+                    avgMemoryGiB = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("peakMemoryGiB"u8))
+                if (prop.NameEquals("peakMemoryGiB"u8))
                 {
-                    peakMemoryGiB = property.Value.GetSingle();
+                    peakMemoryGiB = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("avgDiskGiB"u8))
+                if (prop.NameEquals("avgDiskGiB"u8))
                 {
-                    avgDiskGiB = property.Value.GetSingle();
+                    avgDiskGiB = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("peakDiskGiB"u8))
+                if (prop.NameEquals("peakDiskGiB"u8))
                 {
-                    peakDiskGiB = property.Value.GetSingle();
+                    peakDiskGiB = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("diskReadIOps"u8))
+                if (prop.NameEquals("diskReadIOps"u8))
                 {
-                    diskReadIOps = long.Parse(property.Value.GetString());
+                    diskReadIops = long.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskWriteIOps"u8))
+                if (prop.NameEquals("diskWriteIOps"u8))
                 {
-                    diskWriteIOps = long.Parse(property.Value.GetString());
+                    diskWriteIops = long.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskReadGiB"u8))
+                if (prop.NameEquals("diskReadGiB"u8))
                 {
-                    diskReadGiB = property.Value.GetSingle();
+                    diskReadGiB = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("diskWriteGiB"u8))
+                if (prop.NameEquals("diskWriteGiB"u8))
                 {
-                    diskWriteGiB = property.Value.GetSingle();
+                    diskWriteGiB = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("networkReadGiB"u8))
+                if (prop.NameEquals("networkReadGiB"u8))
                 {
-                    networkReadGiB = property.Value.GetSingle();
+                    networkReadGiB = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("networkWriteGiB"u8))
+                if (prop.NameEquals("networkWriteGiB"u8))
                 {
-                    networkWriteGiB = property.Value.GetSingle();
+                    networkWriteGiB = prop.Value.GetSingle();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BatchPoolResourceStatistics(
                 startTime,
                 lastUpdateTime,
-                avgCPUPercentage,
+                avgCpuPercentage,
                 avgMemoryGiB,
                 peakMemoryGiB,
                 avgDiskGiB,
                 peakDiskGiB,
-                diskReadIOps,
-                diskWriteIOps,
+                diskReadIops,
+                diskWriteIops,
                 diskReadGiB,
                 diskWriteGiB,
                 networkReadGiB,
                 networkWriteGiB,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<BatchPoolResourceStatistics>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchPoolResourceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchPoolResourceStatistics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolResourceStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -215,15 +225,20 @@ namespace Azure.Compute.Batch
             }
         }
 
-        BatchPoolResourceStatistics IPersistableModel<BatchPoolResourceStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchPoolResourceStatistics>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchPoolResourceStatistics IPersistableModel<BatchPoolResourceStatistics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchPoolResourceStatistics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchPoolResourceStatistics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchPoolResourceStatistics(document.RootElement, options);
                     }
                 default:
@@ -231,22 +246,7 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BatchPoolResourceStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchPoolResourceStatistics FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchPoolResourceStatistics(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

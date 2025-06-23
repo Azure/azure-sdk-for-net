@@ -9,14 +9,22 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Compute.Batch
 {
-    public partial class VirtualMachineConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachineConfiguration>
+    /// <summary>
+    /// The configuration for Compute Nodes in a Pool based on the Azure Virtual
+    /// Machines infrastructure.
+    /// </summary>
+    public partial class VirtualMachineConfiguration : IJsonModel<VirtualMachineConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineConfiguration"/> for deserialization. </summary>
+        internal VirtualMachineConfiguration()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualMachineConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +36,11 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineConfiguration)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("imageReference"u8);
             writer.WriteObjectValue(ImageReference, options);
             writer.WritePropertyName("nodeAgentSKUId"u8);
@@ -47,7 +54,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
-                foreach (var item in DataDisks)
+                foreach (DataDisk item in DataDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -77,7 +84,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Extensions)
+                foreach (VMExtension item in Extensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,15 +105,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("serviceArtifactReference"u8);
                 writer.WriteObjectValue(ServiceArtifactReference, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -115,28 +122,33 @@ namespace Azure.Compute.Batch
             }
         }
 
-        VirtualMachineConfiguration IJsonModel<VirtualMachineConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineConfiguration IJsonModel<VirtualMachineConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualMachineConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualMachineConfiguration(document.RootElement, options);
         }
 
-        internal static VirtualMachineConfiguration DeserializeVirtualMachineConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VirtualMachineConfiguration DeserializeVirtualMachineConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             BatchVmImageReference imageReference = default;
-            string nodeAgentSKUId = default;
+            string nodeAgentSkuId = default;
             WindowsConfiguration windowsConfiguration = default;
             IList<DataDisk> dataDisks = default;
             string licenseType = default;
@@ -147,125 +159,123 @@ namespace Azure.Compute.Batch
             BatchOsDisk osDisk = default;
             SecurityProfile securityProfile = default;
             ServiceArtifactReference serviceArtifactReference = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("imageReference"u8))
+                if (prop.NameEquals("imageReference"u8))
                 {
-                    imageReference = BatchVmImageReference.DeserializeBatchVmImageReference(property.Value, options);
+                    imageReference = BatchVmImageReference.DeserializeBatchVmImageReference(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("nodeAgentSKUId"u8))
+                if (prop.NameEquals("nodeAgentSKUId"u8))
                 {
-                    nodeAgentSKUId = property.Value.GetString();
+                    nodeAgentSkuId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("windowsConfiguration"u8))
+                if (prop.NameEquals("windowsConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value, options);
+                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dataDisks"u8))
+                if (prop.NameEquals("dataDisks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataDisk> array = new List<DataDisk>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataDisk.DeserializeDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;
                 }
-                if (property.NameEquals("licenseType"u8))
+                if (prop.NameEquals("licenseType"u8))
                 {
-                    licenseType = property.Value.GetString();
+                    licenseType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerConfiguration"u8))
+                if (prop.NameEquals("containerConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    containerConfiguration = BatchContainerConfiguration.DeserializeBatchContainerConfiguration(property.Value, options);
+                    containerConfiguration = BatchContainerConfiguration.DeserializeBatchContainerConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionConfiguration"u8))
+                if (prop.NameEquals("diskEncryptionConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskEncryptionConfiguration = DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(property.Value, options);
+                    diskEncryptionConfiguration = DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("nodePlacementConfiguration"u8))
+                if (prop.NameEquals("nodePlacementConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nodePlacementConfiguration = BatchNodePlacementConfiguration.DeserializeBatchNodePlacementConfiguration(property.Value, options);
+                    nodePlacementConfiguration = BatchNodePlacementConfiguration.DeserializeBatchNodePlacementConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("extensions"u8))
+                if (prop.NameEquals("extensions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VMExtension> array = new List<VMExtension>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(VMExtension.DeserializeVMExtension(item, options));
                     }
                     extensions = array;
                     continue;
                 }
-                if (property.NameEquals("osDisk"u8))
+                if (prop.NameEquals("osDisk"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osDisk = BatchOsDisk.DeserializeBatchOsDisk(property.Value, options);
+                    osDisk = BatchOsDisk.DeserializeBatchOsDisk(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("securityProfile"u8))
+                if (prop.NameEquals("securityProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value, options);
+                    securityProfile = SecurityProfile.DeserializeSecurityProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("serviceArtifactReference"u8))
+                if (prop.NameEquals("serviceArtifactReference"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    serviceArtifactReference = ServiceArtifactReference.DeserializeServiceArtifactReference(property.Value, options);
+                    serviceArtifactReference = ServiceArtifactReference.DeserializeServiceArtifactReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineConfiguration(
                 imageReference,
-                nodeAgentSKUId,
+                nodeAgentSkuId,
                 windowsConfiguration,
                 dataDisks ?? new ChangeTrackingList<DataDisk>(),
                 licenseType,
@@ -276,13 +286,16 @@ namespace Azure.Compute.Batch
                 osDisk,
                 securityProfile,
                 serviceArtifactReference,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<VirtualMachineConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualMachineConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -292,15 +305,20 @@ namespace Azure.Compute.Batch
             }
         }
 
-        VirtualMachineConfiguration IPersistableModel<VirtualMachineConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineConfiguration IPersistableModel<VirtualMachineConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualMachineConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualMachineConfiguration(document.RootElement, options);
                     }
                 default:
@@ -308,22 +326,7 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VirtualMachineConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static VirtualMachineConfiguration FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVirtualMachineConfiguration(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

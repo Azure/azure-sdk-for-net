@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct ContainerType : IEquatable<ContainerType>
     {
         private readonly string _value;
+        /// <summary> A Docker compatible container technology will be used to launch the containers. </summary>
+        private const string DockerCompatibleValue = "dockerCompatible";
+        /// <summary> A CRI based technology will be used to launch the containers. </summary>
+        private const string CriCompatibleValue = "criCompatible";
 
         /// <summary> Initializes a new instance of <see cref="ContainerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DockerCompatibleValue = "dockerCompatible";
-        private const string CriCompatibleValue = "criCompatible";
+            _value = value;
+        }
 
         /// <summary> A Docker compatible container technology will be used to launch the containers. </summary>
         public static ContainerType DockerCompatible { get; } = new ContainerType(DockerCompatibleValue);
+
         /// <summary> A CRI based technology will be used to launch the containers. </summary>
         public static ContainerType CriCompatible { get; } = new ContainerType(CriCompatibleValue);
+
         /// <summary> Determines if two <see cref="ContainerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerType left, ContainerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerType left, ContainerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerType(string value) => new ContainerType(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

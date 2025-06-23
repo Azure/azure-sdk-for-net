@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct LoginMode : IEquatable<LoginMode>
     {
         private readonly string _value;
+        /// <summary> The LOGON32_LOGON_BATCH Win32 login mode. The batch login mode is recommended for long running parallel processes. </summary>
+        private const string BatchValue = "batch";
+        /// <summary> The LOGON32_LOGON_INTERACTIVE Win32 login mode. UAC is enabled on Windows VirtualMachineConfiguration Pools. If this option is used with an elevated user identity in a Windows VirtualMachineConfiguration Pool, the user session will not be elevated unless the application executed by the Task command line is configured to always require administrative privilege or to always require maximum privilege. </summary>
+        private const string InteractiveValue = "interactive";
 
         /// <summary> Initializes a new instance of <see cref="LoginMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LoginMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BatchValue = "batch";
-        private const string InteractiveValue = "interactive";
+            _value = value;
+        }
 
         /// <summary> The LOGON32_LOGON_BATCH Win32 login mode. The batch login mode is recommended for long running parallel processes. </summary>
         public static LoginMode Batch { get; } = new LoginMode(BatchValue);
+
         /// <summary> The LOGON32_LOGON_INTERACTIVE Win32 login mode. UAC is enabled on Windows VirtualMachineConfiguration Pools. If this option is used with an elevated user identity in a Windows VirtualMachineConfiguration Pool, the user session will not be elevated unless the application executed by the Task command line is configured to always require administrative privilege or to always require maximum privilege. </summary>
         public static LoginMode Interactive { get; } = new LoginMode(InteractiveValue);
+
         /// <summary> Determines if two <see cref="LoginMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LoginMode left, LoginMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LoginMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LoginMode left, LoginMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LoginMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LoginMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LoginMode(string value) => new LoginMode(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LoginMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LoginMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

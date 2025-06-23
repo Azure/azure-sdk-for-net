@@ -14,41 +14,58 @@ namespace Azure.Compute.Batch
     public readonly partial struct OutputFileUploadCondition : IEquatable<OutputFileUploadCondition>
     {
         private readonly string _value;
+        /// <summary> Upload the file(s) only after the Task process exits with an exit code of 0. </summary>
+        private const string TaskSuccessValue = "tasksuccess";
+        /// <summary> Upload the file(s) only after the Task process exits with a nonzero exit code. </summary>
+        private const string TaskFailureValue = "taskfailure";
+        /// <summary> Upload the file(s) after the Task process exits, no matter what the exit code was. </summary>
+        private const string TaskCompletionValue = "taskcompletion";
 
         /// <summary> Initializes a new instance of <see cref="OutputFileUploadCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OutputFileUploadCondition(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TaskSuccessValue = "tasksuccess";
-        private const string TaskFailureValue = "taskfailure";
-        private const string TaskCompletionValue = "taskcompletion";
+            _value = value;
+        }
 
         /// <summary> Upload the file(s) only after the Task process exits with an exit code of 0. </summary>
         public static OutputFileUploadCondition TaskSuccess { get; } = new OutputFileUploadCondition(TaskSuccessValue);
+
         /// <summary> Upload the file(s) only after the Task process exits with a nonzero exit code. </summary>
         public static OutputFileUploadCondition TaskFailure { get; } = new OutputFileUploadCondition(TaskFailureValue);
+
         /// <summary> Upload the file(s) after the Task process exits, no matter what the exit code was. </summary>
         public static OutputFileUploadCondition TaskCompletion { get; } = new OutputFileUploadCondition(TaskCompletionValue);
+
         /// <summary> Determines if two <see cref="OutputFileUploadCondition"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OutputFileUploadCondition left, OutputFileUploadCondition right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OutputFileUploadCondition"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OutputFileUploadCondition left, OutputFileUploadCondition right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OutputFileUploadCondition"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OutputFileUploadCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OutputFileUploadCondition(string value) => new OutputFileUploadCondition(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OutputFileUploadCondition other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OutputFileUploadCondition other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

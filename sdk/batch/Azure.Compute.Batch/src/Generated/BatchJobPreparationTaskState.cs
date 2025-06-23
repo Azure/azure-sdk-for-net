@@ -14,38 +14,53 @@ namespace Azure.Compute.Batch
     public readonly partial struct BatchJobPreparationTaskState : IEquatable<BatchJobPreparationTaskState>
     {
         private readonly string _value;
+        /// <summary> The Task is currently running (including retrying). </summary>
+        private const string RunningValue = "running";
+        /// <summary> The Task has exited with exit code 0, or the Task has exhausted its retry limit, or the Batch service was unable to start the Task due to Task preparation errors (such as resource file download failures). </summary>
+        private const string CompletedValue = "completed";
 
         /// <summary> Initializes a new instance of <see cref="BatchJobPreparationTaskState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchJobPreparationTaskState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RunningValue = "running";
-        private const string CompletedValue = "completed";
+            _value = value;
+        }
 
         /// <summary> The Task is currently running (including retrying). </summary>
         public static BatchJobPreparationTaskState Running { get; } = new BatchJobPreparationTaskState(RunningValue);
+
         /// <summary> The Task has exited with exit code 0, or the Task has exhausted its retry limit, or the Batch service was unable to start the Task due to Task preparation errors (such as resource file download failures). </summary>
         public static BatchJobPreparationTaskState Completed { get; } = new BatchJobPreparationTaskState(CompletedValue);
+
         /// <summary> Determines if two <see cref="BatchJobPreparationTaskState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchJobPreparationTaskState left, BatchJobPreparationTaskState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchJobPreparationTaskState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchJobPreparationTaskState left, BatchJobPreparationTaskState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchJobPreparationTaskState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchJobPreparationTaskState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchJobPreparationTaskState(string value) => new BatchJobPreparationTaskState(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchJobPreparationTaskState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchJobPreparationTaskState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

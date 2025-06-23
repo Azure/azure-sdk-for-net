@@ -6,6 +6,8 @@
     <PackageTags>Azure.Compute.Batch</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,5 +17,4 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
-
 </Project>
