@@ -453,7 +453,7 @@ namespace Azure.Identity.Tests
                 }
                 var chain = factory.CreateCredentialChain();
 
-                //check the factory created the correct credentials
+                // check the factory created the correct credentials
                 if (credSelection == "dev")
                 {
                     Assert.IsFalse(chain.Any(cred => cred is EnvironmentCredential));
