@@ -5,23 +5,23 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace System.ClientModel.TestFramework;
+namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// TODO.
+/// Represents the mode of a recorded test.
 /// </summary>
 public enum RecordedTestMode
 {
     /// <summary>
-    /// TODO.
+    /// Live mode.
     /// </summary>
     Live,
     /// <summary>
-    /// TODO.
+    /// Record mode.
     /// </summary>
     Record,
     /// <summary>
-    /// TODO.
+    /// Playback mode.
     /// </summary>
     Playback
 }

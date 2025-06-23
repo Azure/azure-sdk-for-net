@@ -12,8 +12,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.ClientModel" />
+    <!-- <PackageReference Include="System.ClientModel" /> -->
     <PackageReference Include="NUnit" />
     <PackageReference Include="Moq" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../System.ClientModel/src/System.ClientModel.csproj" />
   </ItemGroup>
 </Project>
