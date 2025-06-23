@@ -28,6 +28,8 @@ namespace Azure.Storage.Sas
             DataLakeSasQueryParameters
 #elif QueueSDK
             QueueSasQueryParameters
+#elif FileSDK
+            ShareSasQueryParameters
 #endif
             parameters,
             IDictionary<string, string> values)
