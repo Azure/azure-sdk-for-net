@@ -30,16 +30,16 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="operationContext"> Used by customers to correlate the request to the response event. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        /// <param name="mediaStreamingOptions"> Media Streaming Options. </param>
-        /// <param name="transcriptionOptions"> Transcription Options. </param>
-        internal ConnectRequestInternal(CallLocatorInternal callLocator, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions)
+        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
+        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
+        internal ConnectRequestInternal(CallLocatorInternal callLocator, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration)
         {
             CallLocator = callLocator;
             CallbackUri = callbackUri;
             OperationContext = operationContext;
             CallIntelligenceOptions = callIntelligenceOptions;
-            MediaStreamingOptions = mediaStreamingOptions;
-            TranscriptionOptions = transcriptionOptions;
+            MediaStreamingConfiguration = mediaStreamingConfiguration;
+            TranscriptionConfiguration = transcriptionConfiguration;
         }
 
         /// <summary> The call locator. </summary>
@@ -50,9 +50,9 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
-        /// <summary> Media Streaming Options. </summary>
-        public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
-        /// <summary> Transcription Options. </summary>
-        public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
+        /// <summary> Media Streaming Configuration. </summary>
+        public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
+        /// <summary> Live Transcription Configuration. </summary>
+        public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
     }
 }

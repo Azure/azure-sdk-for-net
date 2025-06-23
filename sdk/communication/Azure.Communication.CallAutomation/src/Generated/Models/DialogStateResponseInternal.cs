@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="dialog">
         /// Defines dialog.
         /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureOpenAIDialog"/> and <see cref="PowerVirtualAgentsDialog"/>.
+        /// The available derived classes include <see cref="PowerVirtualAgentsDialog"/>.
         /// </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         internal DialogStateResponseInternal(string dialogId, BaseDialog dialog, string operationContext)
@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Defines dialog.
         /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureOpenAIDialog"/> and <see cref="PowerVirtualAgentsDialog"/>.
+        /// The available derived classes include <see cref="PowerVirtualAgentsDialog"/>.
         /// </summary>
         public BaseDialog Dialog { get; }
         /// <summary> The value to identify context of the operation. </summary>

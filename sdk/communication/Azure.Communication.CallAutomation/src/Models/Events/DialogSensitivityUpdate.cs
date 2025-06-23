@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Dialog Id</summary>
         public string DialogId { get; }
 
-        /// <summary> SensitiveMask </summary>
+        /// <summary> SensitiveMask</summary>
         public bool? SensitiveMask { get; }
 
         /// <summary>
