@@ -12,7 +12,7 @@ using Azure.Security.KeyVault.Administration;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> The role type. </summary>
-    internal readonly partial struct KeyVaultRoleType : IEquatable<KeyVaultRoleType>
+    internal internal readonly partial struct KeyVaultRoleType : IEquatable<KeyVaultRoleType>
     {
         private readonly string _value;
         /// <summary> Built in role. </summary>

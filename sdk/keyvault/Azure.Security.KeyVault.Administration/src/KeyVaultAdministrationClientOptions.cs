@@ -66,7 +66,7 @@ namespace Azure.Security.KeyVault.Administration
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
-        internal const ServiceVersion LatestVersion = ServiceVersion.V7_6_Preview_2;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V7_6;
 
         /// <summary>
         /// Gets or sets whether to disable verification that the authentication challenge resource matches the Key Vault or Managed HSM domain.

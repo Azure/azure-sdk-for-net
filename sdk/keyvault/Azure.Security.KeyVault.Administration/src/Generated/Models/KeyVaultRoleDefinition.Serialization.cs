@@ -15,7 +15,7 @@ using Azure.Security.KeyVault.Administration;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Role definition. </summary>
-    internal partial class KeyVaultRoleDefinition : IJsonModel<KeyVaultRoleDefinition>
+    public partial class KeyVaultRoleDefinition : IJsonModel<KeyVaultRoleDefinition>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

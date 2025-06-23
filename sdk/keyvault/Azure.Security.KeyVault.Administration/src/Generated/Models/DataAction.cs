@@ -9,10 +9,9 @@ using System;
 using System.ComponentModel;
 using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration
+namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> Supported permissions for data actions. </summary>
-    public readonly partial struct KeyVaultDataAction : IEquatable<KeyVaultDataAction>
+    internal readonly partial struct DataAction : IEquatable<DataAction>
     {
         private readonly string _value;
         /// <summary> Read HSM key metadata. </summary>
@@ -84,10 +83,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Generate random numbers. </summary>
         private const string RandomNumbersGenerateValue = "Microsoft.KeyVault/managedHsm/rng/action";
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultDataAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataAction"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public KeyVaultDataAction(string value)
+        public DataAction(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -95,127 +94,127 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary> Read HSM key metadata. </summary>
-        public static KeyVaultDataAction ReadHsmKey { get; } = new KeyVaultDataAction(ReadHsmKeyValue);
+        public static DataAction ReadHsmKey { get; } = new DataAction(ReadHsmKeyValue);
 
         /// <summary> Update an HSM key. </summary>
-        public static KeyVaultDataAction WriteHsmKey { get; } = new KeyVaultDataAction(WriteHsmKeyValue);
+        public static DataAction WriteHsmKey { get; } = new DataAction(WriteHsmKeyValue);
 
         /// <summary> Read deleted HSM key. </summary>
-        public static KeyVaultDataAction ReadDeletedHsmKey { get; } = new KeyVaultDataAction(ReadDeletedHsmKeyValue);
+        public static DataAction ReadDeletedHsmKey { get; } = new DataAction(ReadDeletedHsmKeyValue);
 
         /// <summary> Recover deleted HSM key. </summary>
-        public static KeyVaultDataAction RecoverDeletedHsmKey { get; } = new KeyVaultDataAction(RecoverDeletedHsmKeyValue);
+        public static DataAction RecoverDeletedHsmKey { get; } = new DataAction(RecoverDeletedHsmKeyValue);
 
         /// <summary> Backup HSM keys. </summary>
-        public static KeyVaultDataAction BackupHsmKeys { get; } = new KeyVaultDataAction(BackupHsmKeysValue);
+        public static DataAction BackupHsmKeys { get; } = new DataAction(BackupHsmKeysValue);
 
         /// <summary> Restore HSM keys. </summary>
-        public static KeyVaultDataAction RestoreHsmKeys { get; } = new KeyVaultDataAction(RestoreHsmKeysValue);
+        public static DataAction RestoreHsmKeys { get; } = new DataAction(RestoreHsmKeysValue);
 
         /// <summary> Delete role assignment. </summary>
-        public static KeyVaultDataAction DeleteRoleAssignment { get; } = new KeyVaultDataAction(DeleteRoleAssignmentValue);
+        public static DataAction DeleteRoleAssignment { get; } = new DataAction(DeleteRoleAssignmentValue);
 
         /// <summary> Get role assignment. </summary>
-        public static KeyVaultDataAction GetRoleAssignment { get; } = new KeyVaultDataAction(GetRoleAssignmentValue);
+        public static DataAction GetRoleAssignment { get; } = new DataAction(GetRoleAssignmentValue);
 
         /// <summary> Create or update role assignment. </summary>
-        public static KeyVaultDataAction WriteRoleAssignment { get; } = new KeyVaultDataAction(WriteRoleAssignmentValue);
+        public static DataAction WriteRoleAssignment { get; } = new DataAction(WriteRoleAssignmentValue);
 
         /// <summary> Get role definition. </summary>
-        public static KeyVaultDataAction ReadRoleDefinition { get; } = new KeyVaultDataAction(ReadRoleDefinitionValue);
+        public static DataAction ReadRoleDefinition { get; } = new DataAction(ReadRoleDefinitionValue);
 
         /// <summary> Create or update role definition. </summary>
-        public static KeyVaultDataAction WriteRoleDefinition { get; } = new KeyVaultDataAction(WriteRoleDefinitionValue);
+        public static DataAction WriteRoleDefinition { get; } = new DataAction(WriteRoleDefinitionValue);
 
         /// <summary> Delete role definition. </summary>
-        public static KeyVaultDataAction DeleteRoleDefinition { get; } = new KeyVaultDataAction(DeleteRoleDefinitionValue);
+        public static DataAction DeleteRoleDefinition { get; } = new DataAction(DeleteRoleDefinitionValue);
 
         /// <summary> Encrypt using an HSM key. </summary>
-        public static KeyVaultDataAction EncryptHsmKey { get; } = new KeyVaultDataAction(EncryptHsmKeyValue);
+        public static DataAction EncryptHsmKey { get; } = new DataAction(EncryptHsmKeyValue);
 
         /// <summary> Decrypt using an HSM key. </summary>
-        public static KeyVaultDataAction DecryptHsmKey { get; } = new KeyVaultDataAction(DecryptHsmKeyValue);
+        public static DataAction DecryptHsmKey { get; } = new DataAction(DecryptHsmKeyValue);
 
         /// <summary> Wrap using an HSM key. </summary>
-        public static KeyVaultDataAction WrapHsmKey { get; } = new KeyVaultDataAction(WrapHsmKeyValue);
+        public static DataAction WrapHsmKey { get; } = new DataAction(WrapHsmKeyValue);
 
         /// <summary> Unwrap using an HSM key. </summary>
-        public static KeyVaultDataAction UnwrapHsmKey { get; } = new KeyVaultDataAction(UnwrapHsmKeyValue);
+        public static DataAction UnwrapHsmKey { get; } = new DataAction(UnwrapHsmKeyValue);
 
         /// <summary> Sign using an HSM key. </summary>
-        public static KeyVaultDataAction SignHsmKey { get; } = new KeyVaultDataAction(SignHsmKeyValue);
+        public static DataAction SignHsmKey { get; } = new DataAction(SignHsmKeyValue);
 
         /// <summary> Verify using an HSM key. </summary>
-        public static KeyVaultDataAction VerifyHsmKey { get; } = new KeyVaultDataAction(VerifyHsmKeyValue);
+        public static DataAction VerifyHsmKey { get; } = new DataAction(VerifyHsmKeyValue);
 
         /// <summary> Create an HSM key. </summary>
-        public static KeyVaultDataAction CreateHsmKey { get; } = new KeyVaultDataAction(CreateHsmKeyValue);
+        public static DataAction CreateHsmKey { get; } = new DataAction(CreateHsmKeyValue);
 
         /// <summary> Delete an HSM key. </summary>
-        public static KeyVaultDataAction DeleteHsmKey { get; } = new KeyVaultDataAction(DeleteHsmKeyValue);
+        public static DataAction DeleteHsmKey { get; } = new DataAction(DeleteHsmKeyValue);
 
         /// <summary> Export an HSM key. </summary>
-        public static KeyVaultDataAction ExportHsmKey { get; } = new KeyVaultDataAction(ExportHsmKeyValue);
+        public static DataAction ExportHsmKey { get; } = new DataAction(ExportHsmKeyValue);
 
         /// <summary> Release an HSM key using Secure Key Release. </summary>
-        public static KeyVaultDataAction ReleaseKey { get; } = new KeyVaultDataAction(ReleaseKeyValue);
+        public static DataAction ReleaseKey { get; } = new DataAction(ReleaseKeyValue);
 
         /// <summary> Import an HSM key. </summary>
-        public static KeyVaultDataAction ImportHsmKey { get; } = new KeyVaultDataAction(ImportHsmKeyValue);
+        public static DataAction ImportHsmKey { get; } = new DataAction(ImportHsmKeyValue);
 
         /// <summary> Purge a deleted HSM key. </summary>
-        public static KeyVaultDataAction PurgeDeletedHsmKey { get; } = new KeyVaultDataAction(PurgeDeletedHsmKeyValue);
+        public static DataAction PurgeDeletedHsmKey { get; } = new DataAction(PurgeDeletedHsmKeyValue);
 
         /// <summary> Download an HSM security domain. </summary>
-        public static KeyVaultDataAction DownloadHsmSecurityDomain { get; } = new KeyVaultDataAction(DownloadHsmSecurityDomainValue);
+        public static DataAction DownloadHsmSecurityDomain { get; } = new DataAction(DownloadHsmSecurityDomainValue);
 
         /// <summary> Check status of HSM security domain download. </summary>
-        public static KeyVaultDataAction DownloadHsmSecurityDomainStatus { get; } = new KeyVaultDataAction(DownloadHsmSecurityDomainStatusValue);
+        public static DataAction DownloadHsmSecurityDomainStatus { get; } = new DataAction(DownloadHsmSecurityDomainStatusValue);
 
         /// <summary> Upload an HSM security domain. </summary>
-        public static KeyVaultDataAction UploadHsmSecurityDomain { get; } = new KeyVaultDataAction(UploadHsmSecurityDomainValue);
+        public static DataAction UploadHsmSecurityDomain { get; } = new DataAction(UploadHsmSecurityDomainValue);
 
         /// <summary> Check the status of the HSM security domain exchange file. </summary>
-        public static KeyVaultDataAction ReadHsmSecurityDomainStatus { get; } = new KeyVaultDataAction(ReadHsmSecurityDomainStatusValue);
+        public static DataAction ReadHsmSecurityDomainStatus { get; } = new DataAction(ReadHsmSecurityDomainStatusValue);
 
         /// <summary> Download an HSM security domain transfer key. </summary>
-        public static KeyVaultDataAction ReadHsmSecurityDomainTransferKey { get; } = new KeyVaultDataAction(ReadHsmSecurityDomainTransferKeyValue);
+        public static DataAction ReadHsmSecurityDomainTransferKey { get; } = new DataAction(ReadHsmSecurityDomainTransferKeyValue);
 
         /// <summary> Start an HSM backup. </summary>
-        public static KeyVaultDataAction StartHsmBackup { get; } = new KeyVaultDataAction(StartHsmBackupValue);
+        public static DataAction StartHsmBackup { get; } = new DataAction(StartHsmBackupValue);
 
         /// <summary> Start an HSM restore. </summary>
-        public static KeyVaultDataAction StartHsmRestore { get; } = new KeyVaultDataAction(StartHsmRestoreValue);
+        public static DataAction StartHsmRestore { get; } = new DataAction(StartHsmRestoreValue);
 
         /// <summary> Read an HSM backup status. </summary>
-        public static KeyVaultDataAction ReadHsmBackupStatus { get; } = new KeyVaultDataAction(ReadHsmBackupStatusValue);
+        public static DataAction ReadHsmBackupStatus { get; } = new DataAction(ReadHsmBackupStatusValue);
 
         /// <summary> Read an HSM restore status. </summary>
-        public static KeyVaultDataAction ReadHsmRestoreStatus { get; } = new KeyVaultDataAction(ReadHsmRestoreStatusValue);
+        public static DataAction ReadHsmRestoreStatus { get; } = new DataAction(ReadHsmRestoreStatusValue);
 
         /// <summary> Generate random numbers. </summary>
-        public static KeyVaultDataAction RandomNumbersGenerate { get; } = new KeyVaultDataAction(RandomNumbersGenerateValue);
+        public static DataAction RandomNumbersGenerate { get; } = new DataAction(RandomNumbersGenerateValue);
 
-        /// <summary> Determines if two <see cref="KeyVaultDataAction"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DataAction"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(KeyVaultDataAction left, KeyVaultDataAction right) => left.Equals(right);
+        public static bool operator ==(DataAction left, DataAction right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="KeyVaultDataAction"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DataAction"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(KeyVaultDataAction left, KeyVaultDataAction right) => !left.Equals(right);
+        public static bool operator !=(DataAction left, DataAction right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="KeyVaultDataAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DataAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultDataAction(string value) => new KeyVaultDataAction(value);
+        public static implicit operator DataAction(string value) => new DataAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is KeyVaultDataAction other && Equals(other);
+        public override bool Equals(object obj) => obj is DataAction other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(KeyVaultDataAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DataAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
