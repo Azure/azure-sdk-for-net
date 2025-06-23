@@ -10,52 +10,43 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class ThreadCreationDateRetentionPolicy : IUtf8JsonSerializable
+    internal partial class ChatRetentionPolicyInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("deleteThreadAfterDays"u8);
-            writer.WriteNumberValue(DeleteThreadAfterDays);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
-        internal static ThreadCreationDateRetentionPolicy DeserializeThreadCreationDateRetentionPolicy(JsonElement element)
+        internal static ChatRetentionPolicyInternal DeserializeChatRetentionPolicyInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int deleteThreadAfterDays = default;
-            RetentionPolicyKind kind = default;
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
-                if (property.NameEquals("deleteThreadAfterDays"u8))
+                switch (discriminator.GetString())
                 {
-                    deleteThreadAfterDays = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new RetentionPolicyKind(property.Value.GetString());
-                    continue;
+                    case "none": return NoneRetentionPolicyInternal.DeserializeNoneRetentionPolicyInternal(element);
+                    case "threadCreationDate": return ThreadCreationDateRetentionPolicyInternal.DeserializeThreadCreationDateRetentionPolicyInternal(element);
                 }
             }
-            return new ThreadCreationDateRetentionPolicy(kind, deleteThreadAfterDays);
+            return UnknownChatRetentionPolicy.DeserializeUnknownChatRetentionPolicy(element);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ThreadCreationDateRetentionPolicy FromResponse(Response response)
+        internal static ChatRetentionPolicyInternal FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeThreadCreationDateRetentionPolicy(document.RootElement);
+            return DeserializeChatRetentionPolicyInternal(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
+        internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);
