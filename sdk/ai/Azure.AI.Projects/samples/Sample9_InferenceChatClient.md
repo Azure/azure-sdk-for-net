@@ -39,7 +39,7 @@ Console.WriteLine(response.Value.Content);
 ## Asynchronous Sample
 
 ```C# Snippet:AI_Projects_ChatClientAsync
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 

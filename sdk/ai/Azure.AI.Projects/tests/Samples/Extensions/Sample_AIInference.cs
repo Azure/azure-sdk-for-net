@@ -58,7 +58,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_ChatClientAsync
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
@@ -94,7 +94,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_EmbeddingSync
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
@@ -131,7 +131,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_EmbeddingAsync
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
@@ -168,7 +168,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_ImageEmbeddingSync
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
@@ -225,7 +225,7 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_ImageEmbeddingAsync
 #if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
         var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);

@@ -12,7 +12,7 @@ This sample demonstrates how to use the synchronous and asynchronous `GetEmbeddi
 ## Synchronous Sample
 
 ```C# Snippet:AI_Projects_EmbeddingSync
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
@@ -40,7 +40,7 @@ foreach (EmbeddingItem item in response.Value.Data)
 ## Asynchronous Sample
 
 ```C# Snippet:AI_Projects_EmbeddingAsync
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
 
