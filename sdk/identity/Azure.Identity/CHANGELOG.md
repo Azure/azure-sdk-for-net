@@ -9,6 +9,7 @@
 
 ### Bugs Fixed
 
+- `ManagedIdentityCredential` now retries 410 status responses for at least 70 seconds total duration as required by [Azure IMDS documentation](https://learn.microsoft.com/azure/virtual-machines/instance-metadata-service?tabs=windows#errors-and-debugging). Previously, 410 responses were retried with the same short exponential backoff as other status codes, resulting in insufficient retry duration ([#50724](https://github.com/Azure/azure-sdk-for-net/issues/50724)).
 - `ManagedIdentityCredential` throws `CredentialUnavailableException` when the IMDS endpoint is unavailable. This addresses a regression in how it behaves in the `ChainedTokenCredential` ([47057](https://github.com/Azure/azure-sdk-for-net/issues/47057)).
 
 ### Other Changes
