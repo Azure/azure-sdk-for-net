@@ -333,7 +333,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task AuthenticateWithAzurePowerShellCredential_Az14_SecureToken()
+        public async Task AuthenticateWithAzurePowerShellCredential_HandlesSecureStringToken()
         {
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShellSecureString(TimeSpan.FromSeconds(30));
             var testProcess = new TestProcess { Output = processOutput };
@@ -358,8 +358,8 @@ namespace Azure.Identity.Tests
             var b = Convert.FromBase64String(commandString);
             commandString = Encoding.Unicode.GetString(b);
 
-            Assert.That(commandString, Does.Contain("$isAz14NewFormat = $m.Version -ge [version]'5.0.0'"));
-            Assert.That(commandString, Does.Contain("ConvertFrom-SecureString -SecureString $token.Token"));
+            Assert.That(commandString, Does.Contain("if ($token.Token -is [System.Security.SecureString])"));
+            Assert.That(commandString, Does.Contain("[System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.Token)"));
         }
     }
 }
