@@ -6,7 +6,7 @@ It supports full **CRUD operations**, as well as **recorded** and **playback tes
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 sdk/
@@ -25,9 +25,9 @@ sdk/
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
-### 📦 Install the Package
+###  Install the Package
 
 Install the package via [NuGet](https://www.nuget.org/):
 
@@ -37,7 +37,7 @@ dotnet add package Azure.ResourceManager.PlanetaryComputer --prerelease
 
 ---
 
-### 🛠️ Prerequisites
+###  Prerequisites
 
 - [.NET SDK 8.0+](https://dotnet.microsoft.com/download)
 - [Azure SDK Test Proxy](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md)
@@ -57,9 +57,13 @@ $env:AZURE_AUTHORITY_HOST = "https://login.microsoftonline.com"
 $env:AZURE_IDENTITY_NAME = "<Your-Identity-Name>"
 ```
 
+### Authenticate the Client
+Not required
+
+
 ---
 
-## ✅ Supported Tests
+##  Supported Tests
 
 | Test Name                        | Description                                 |
 |----------------------------------|---------------------------------------------|
@@ -73,9 +77,9 @@ $env:AZURE_IDENTITY_NAME = "<Your-Identity-Name>"
 
 ---
 
-## 🧪 Running Tests
+##  Running Tests
 
-### ▶️ Record Mode (Live with Azure)
+### Record Mode (Live with Azure)
 
 1. Start the test proxy:
    ```bash
@@ -96,7 +100,7 @@ $env:AZURE_IDENTITY_NAME = "<Your-Identity-Name>"
 
 ---
 
-### ⏯️ Playback Mode (Offline Testing)
+### Playback Mode (Offline Testing)
 
 1. Set mode:
    ```bash
