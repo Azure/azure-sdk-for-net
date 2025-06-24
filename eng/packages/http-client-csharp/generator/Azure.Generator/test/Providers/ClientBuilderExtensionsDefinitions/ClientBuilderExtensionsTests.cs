@@ -90,7 +90,7 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
         public void DoesNotAddExtensionMethodsClassIfOnlyInternalClients()
         {
             var client = InputFactory.Client("TestClient", "Samples", "");
-            var plugin = MockHelpers.LoadMockPlugin(
+            var plugin = MockHelpers.LoadMockGenerator(
                 apiKeyAuth: () => new InputApiKeyAuth("mock", null),
                 oauth2Auth: ()=> new InputOAuth2Auth(["mock"]),
                 clients: () => [client],
@@ -112,7 +112,7 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
         {
             var client1 = InputFactory.Client("TestClient1", "Samples", "");
             var client2 = InputFactory.Client("TestClient2", "Samples", "");
-            var plugin = MockHelpers.LoadMockPlugin(
+            var plugin = MockHelpers.LoadMockGenerator(
                 apiKeyAuth: () => new InputApiKeyAuth("mock", null),
                 oauth2Auth: ()=> new InputOAuth2Auth(["mock"]),
                 clients: () => [client1, client2],

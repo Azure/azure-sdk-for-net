@@ -41,7 +41,7 @@ namespace Azure.Generator.Tests.Visitors
         [Test]
         public void DoesNotChangeNamespaceOfCustomizedModel()
         {
-            MockHelpers.LoadMockPlugin(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": true }");
+            MockHelpers.LoadMockGenerator(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": true }");
             var visitor = new TestNamespaceVisitor();
             var inputType = InputFactory.Model("TestModel", "Samples");
             var model = new ModelProvider(inputType);

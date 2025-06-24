@@ -16,7 +16,7 @@ namespace Azure.Generator.Tests
             var visitors = generator.Object.Visitors;
             Assert.IsNotNull(visitors);
 
-            Assert.IsInstanceOf<ModelFactoryRenamerVisitor>(visitors[1]);
+            Assert.IsInstanceOf<ModelFactoryRenamerVisitor>(visitors[0]);
         }
     }
 }
