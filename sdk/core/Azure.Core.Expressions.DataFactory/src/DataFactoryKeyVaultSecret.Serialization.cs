@@ -9,9 +9,7 @@ using System.Text.Json.Serialization;
 namespace Azure.Core.Expressions.DataFactory
 {
     [JsonConverter(typeof(DataFactoryKeyVaultSecretConverter))]
-#pragma warning disable SCM0005 // Type must have a parameterless constructor
     public partial class DataFactoryKeyVaultSecret : IUtf8JsonSerializable, IJsonModel<DataFactoryKeyVaultSecret>
-#pragma warning restore SCM0005 // Type must have a parameterless constructor
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

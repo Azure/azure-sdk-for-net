@@ -10,9 +10,7 @@ using System.Text.Json.Serialization;
 namespace Azure.Core.Expressions.DataFactory
 {
     [JsonConverter(typeof(DataFactoryLinkedServiceReferenceConverter))]
-#pragma warning disable SCM0005 // Type must have a parameterless constructor
     public partial class DataFactoryLinkedServiceReference : IUtf8JsonSerializable, IJsonModel<DataFactoryLinkedServiceReference>
-#pragma warning restore SCM0005 // Type must have a parameterless constructor
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

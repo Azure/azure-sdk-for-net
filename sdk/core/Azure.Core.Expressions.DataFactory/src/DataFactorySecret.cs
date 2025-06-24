@@ -9,9 +9,7 @@ namespace Azure.Core.Expressions.DataFactory
     /// The available derived classes include <see cref="DataFactorySecretString"/> and <see cref="DataFactoryKeyVaultSecret"/>.
     /// </summary>
     [PropertyReferenceType(new string[0], new[]{ nameof(SecretBaseType)})]
-#pragma warning disable SCM0004 // Abstract type must have a PersistableModelProxy defined
     public abstract partial class DataFactorySecret
-#pragma warning restore SCM0004 // Abstract type must have a PersistableModelProxy defined
     {
         /// <summary> Initializes a new instance of DataFactorySecretBaseDefinition. </summary>
         [InitializationConstructor]
