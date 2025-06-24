@@ -6070,6 +6070,10 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await BlobRestClient.GetTagsAsync(
                             ifTags: conditions?.TagConditions,
                             leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -6078,6 +6082,10 @@ namespace Azure.Storage.Blobs.Specialized
                         response = BlobRestClient.GetTags(
                             ifTags: conditions?.TagConditions,
                             leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 
