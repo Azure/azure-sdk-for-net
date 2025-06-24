@@ -85,3 +85,95 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");
 ```
+
+## Import a New Project with Metadata and Assets
+
+To import a project, construct a `ConversationAuthoringExportedProject` that includes the metadata and assets. Then call `Import` on the `ConversationAuthoringProject` client.
+
+```C# Snippet:Sample2_ConversationsAuthoring_ImportProjectWithMetadataAndResources
+string projectName = "ImportedApp";
+
+// Create metadata
+ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
+    projectKind: "Conversation",
+    language: "en-us")
+{
+    Settings = new ConversationAuthoringProjectSettings(0.7F),
+    Multilingual = true,
+    Description = "Trying out CLU",
+    ProjectName = projectName
+};
+
+// Define intents and entities
+ConversationExportedProjectAsset projectAssets = new ConversationExportedProjectAsset();
+
+projectAssets.Intents.Add(new ConversationExportedIntent("Read")
+{
+    Description = "The read intent",
+    AssociatedEntities = { new ConversationExportedAssociatedEntityLabel("Sender") }
+});
+projectAssets.Intents.Add(new ConversationExportedIntent("Delete")
+{
+    Description = "The delete intent"
+});
+
+projectAssets.Entities.Add(new ConversationExportedEntity("Sender")
+{
+    Description = "The description of Sender"
+});
+
+projectAssets.Entities.Add(new ConversationExportedEntity("Number")
+{
+    Description = "The description of Number",
+    Regex = new ExportedEntityRegex
+    {
+        Expressions =
+        {
+            new ExportedEntityRegexExpression
+            {
+                RegexKey = "UK Phone numbers",
+                Language = "en-us",
+                RegexPattern = @"^\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$"
+            }
+        }
+    }
+});
+
+// Add utterances
+projectAssets.Utterances.Add(new ConversationExportedUtterance("Open Blake's email", "Read")
+{
+    Dataset = "Train",
+    Entities = { new ExportedUtteranceEntityLabel("Sender", offset: 5, length: 5) }
+});
+
+projectAssets.Utterances.Add(new ConversationExportedUtterance("Delete last email", "Delete")
+{
+    Language = "en-gb",
+    Dataset = "Test"
+});
+
+// Build the exported project
+ConversationAuthoringExportedProject exportedProject = new ConversationAuthoringExportedProject(
+    projectFileVersion: "2025-05-15-preview",
+    stringIndexType: StringIndexType.Utf16CodeUnit,
+    metadata: projectMetadata)
+{
+    Assets = projectAssets
+};
+
+// Get project authoring client
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+// Start import operation
+Operation operation = projectClient.Import(
+    WaitUntil.Started,
+    exportedProject,
+    ConversationAuthoringExportedProjectFormat.Conversation
+);
+
+Console.WriteLine($"Project import request submitted with status: {operation.GetRawResponse().Status}");
+
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location)
+    ? location : "Not found";
+Console.WriteLine($"Operation Location: {operationLocation}");
+```
