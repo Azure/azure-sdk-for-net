@@ -159,7 +159,6 @@ namespace Azure.Identity.Tests
             {
                 Assert.True(ex.Message.Contains("DeveloperCliCredential Unavailable"));
             }
-            // SharedTokenCacheCredential is deprecated and no longer part of the auth flow
             if (!excludeCliCredential)
             {
                 Assert.True(ex.Message.Contains("CliCredential Unavailable"));
