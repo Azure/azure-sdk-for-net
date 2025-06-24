@@ -28,12 +28,6 @@ Nodetype features
 - New actions Deallocate, Start, Redeploy
 - ZoneBalance
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.3.0-beta.2 (2024-11-21)
 
 ### Features Added
