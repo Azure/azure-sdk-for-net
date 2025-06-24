@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
     [TestFixture(true)]
     public class GeoCatalogCollectionTests : PlanetaryComputerManagementTestBase
     {
-        // Add an exsiting geocatalo
+        // Add an existing GeoCatalog
         private const string ExistingGeoCatalogName = "";
         private const string ResourceGroupName = "shakrao-test";
         private const string Region = "uksouth";
