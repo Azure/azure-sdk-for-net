@@ -54,15 +54,12 @@ namespace Azure.AI.Projects
         /// <param name="sasUri"> SAS uri. </param>
         /// <param name="type"> Type of credential. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SasCredential(string sasUri, SasCredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SasCredential(Uri sasUri, SasCredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SasUri = sasUri;
             Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> SAS uri. </summary>
-        public string SasUri { get; }
         /// <summary> Type of credential. </summary>
         public SasCredentialType Type { get; } = SasCredentialType.SAS;
     }

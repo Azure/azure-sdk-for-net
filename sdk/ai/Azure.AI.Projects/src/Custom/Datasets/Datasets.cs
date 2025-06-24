@@ -45,12 +45,12 @@ namespace Azure.AI.Projects
             {
                 throw new InvalidOperationException("SAS credential is not present.");
             }
-            if (string.IsNullOrEmpty(pendingUploadResponse.BlobReference.Credential.SasUri))
+            if (pendingUploadResponse.BlobReference.Credential.SasUri == null)
             {
                 throw new InvalidOperationException("SAS URI is missing or empty.");
             }
 
-            var containerClient = new BlobContainerClient(new Uri(pendingUploadResponse.BlobReference.Credential.SasUri));
+            var containerClient = new BlobContainerClient(pendingUploadResponse.BlobReference.Credential.SasUri);
             return (containerClient, outputVersion);
         }
 
@@ -74,7 +74,7 @@ namespace Azure.AI.Projects
                 blobClient.Upload(fileStream);
 
                 var uriBuilder = new UriBuilder(blobClient.Uri) { Query = "" };
-                var dataUri = uriBuilder.Uri.AbsoluteUri;
+                Uri dataUri = uriBuilder.Uri;
 
                 RequestContent content = new FileDatasetVersion(dataUri: dataUri).ToRequestContent();
 
@@ -120,7 +120,7 @@ namespace Azure.AI.Projects
             }
 
             var uriBuilder = new UriBuilder(blobClient!.Uri) { Query = "" };
-            var dataUri = uriBuilder.Uri.AbsoluteUri;
+            Uri dataUri = uriBuilder.Uri;
 
             RequestContent content = new FolderDatasetVersion(dataUri: dataUri).ToRequestContent();
             CreateOrUpdate(name, outputVersion, content);
@@ -155,12 +155,12 @@ namespace Azure.AI.Projects
             {
                 throw new InvalidOperationException("SAS credential is not present.");
             }
-            if (string.IsNullOrEmpty(pendingUploadResponse.BlobReference.Credential.SasUri))
+            if (pendingUploadResponse.BlobReference.Credential.SasUri == null)
             {
                 throw new InvalidOperationException("SAS URI is missing or empty.");
             }
 
-            var containerClient = new BlobContainerClient(new Uri(pendingUploadResponse.BlobReference.Credential.SasUri));
+            var containerClient = new BlobContainerClient(pendingUploadResponse.BlobReference.Credential.SasUri);
             return (containerClient, outputVersion);
         }
 
@@ -183,7 +183,7 @@ namespace Azure.AI.Projects
                 await blobClient.UploadAsync(fileStream).ConfigureAwait(false);
 
                 var uriBuilder = new UriBuilder(blobClient.Uri) { Query = "" };
-                var dataUri = uriBuilder.Uri.AbsoluteUri;
+                Uri dataUri = uriBuilder.Uri;
 
                 RequestContent content = new FileDatasetVersion(dataUri: dataUri).ToRequestContent();
 
@@ -229,7 +229,7 @@ namespace Azure.AI.Projects
             }
 
             var uriBuilder = new UriBuilder(blobClient!.Uri) { Query = "" };
-            var dataUri = uriBuilder.Uri.AbsoluteUri;
+            Uri dataUri = uriBuilder.Uri;
 
             RequestContent content = new FolderDatasetVersion(dataUri: dataUri).ToRequestContent();
             await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);

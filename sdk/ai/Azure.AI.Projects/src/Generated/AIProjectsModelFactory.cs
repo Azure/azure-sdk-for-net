@@ -176,7 +176,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Projects.DatasetVersion"/> instance for mocking. </returns>
-        public static DatasetVersion DatasetVersion(string dataUri = null, string type = null, bool? isReference = null, string connectionName = null, string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null)
+        public static DatasetVersion DatasetVersion(Uri dataUri = null, string type = null, bool? isReference = null, string connectionName = null, string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -203,7 +203,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Projects.FileDatasetVersion"/> instance for mocking. </returns>
-        public static FileDatasetVersion FileDatasetVersion(string dataUri = null, bool? isReference = null, string connectionName = null, string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null)
+        public static FileDatasetVersion FileDatasetVersion(Uri dataUri = null, bool? isReference = null, string connectionName = null, string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -230,7 +230,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Projects.FolderDatasetVersion"/> instance for mocking. </returns>
-        public static FolderDatasetVersion FolderDatasetVersion(string dataUri = null, bool? isReference = null, string connectionName = null, string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null)
+        public static FolderDatasetVersion FolderDatasetVersion(Uri dataUri = null, bool? isReference = null, string connectionName = null, string id = null, string name = null, string version = null, string description = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -273,7 +273,7 @@ namespace Azure.AI.Projects
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
         /// <returns> A new <see cref="Projects.BlobReference"/> instance for mocking. </returns>
-        public static BlobReference BlobReference(string blobUri = null, string storageAccountArmId = null, SasCredential credential = null)
+        public static BlobReference BlobReference(Uri blobUri = null, string storageAccountArmId = null, SasCredential credential = null)
         {
             return new BlobReference(blobUri, storageAccountArmId, credential, serializedAdditionalRawData: null);
         }
@@ -282,7 +282,7 @@ namespace Azure.AI.Projects
         /// <param name="sasUri"> SAS uri. </param>
         /// <param name="type"> Type of credential. </param>
         /// <returns> A new <see cref="Projects.SasCredential"/> instance for mocking. </returns>
-        public static SasCredential SasCredential(string sasUri = null, SasCredentialType type = default)
+        public static SasCredential SasCredential(Uri sasUri = null, SasCredentialType type = default)
         {
             return new SasCredential(sasUri, type, serializedAdditionalRawData: null);
         }

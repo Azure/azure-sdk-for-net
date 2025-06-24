@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
             }
 
             writer.WritePropertyName("blobUri"u8);
-            writer.WriteStringValue(BlobUri);
+            writer.WriteStringValue(BlobUri.AbsoluteUri);
             writer.WritePropertyName("storageAccountArmId"u8);
             writer.WriteStringValue(StorageAccountArmId);
             writer.WritePropertyName("credential"u8);
@@ -77,7 +77,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string blobUri = default;
+            Uri blobUri = default;
             string storageAccountArmId = default;
             SasCredential credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -86,7 +86,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("blobUri"u8))
                 {
-                    blobUri = property.Value.GetString();
+                    blobUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageAccountArmId"u8))

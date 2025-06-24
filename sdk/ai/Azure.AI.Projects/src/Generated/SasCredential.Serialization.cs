@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("sasUri"u8);
-                writer.WriteStringValue(SasUri);
+                writer.WriteStringValue(SasUri.AbsoluteUri);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -78,7 +78,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string sasUri = default;
+            Uri sasUri = default;
             SasCredentialType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,7 +86,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("sasUri"u8))
                 {
-                    sasUri = property.Value.GetString();
+                    sasUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
