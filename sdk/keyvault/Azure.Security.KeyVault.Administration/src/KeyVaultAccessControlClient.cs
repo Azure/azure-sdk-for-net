@@ -64,6 +64,11 @@ namespace Azure.Security.KeyVault.Administration
                     new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
 
             _diagnostics = new ClientDiagnostics(options, true);
+            ClientDiagnostics = _diagnostics;
+            Pipeline = pipeline;
+            _tokenCredential = credential;
+            _endpoint = vaultUri;
+            _apiVersion = apiVersion;
         }
 
         /// <summary>

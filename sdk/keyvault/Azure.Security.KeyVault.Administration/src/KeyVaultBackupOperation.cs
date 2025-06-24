@@ -21,7 +21,7 @@ namespace Azure.Security.KeyVault.Administration
         internal int? _retryAfterSeconds;
         private readonly KeyVaultBackupClient _client;
         private Response _response;
-        private FullBackupOperation _value;
+        private FullBackupDetailsInternal _value;
         private readonly string _id;
         private RequestFailedException _requestFailedException;
 
@@ -58,10 +58,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Initializes a new instance of a KeyVaultBackupOperation for mocking purposes.
         /// </summary>
-        /// <param name="value">The <see cref="FullBackupOperation" /> that will be returned from <see cref="Value" />.</param>
+        /// <param name="value">The <see cref="FullBackupDetailsInternal" /> that will be returned from <see cref="Value" />.</param>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        internal KeyVaultBackupOperation(FullBackupOperation value, Response response, KeyVaultBackupClient client)
+        internal KeyVaultBackupOperation(FullBackupDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
             Argument.AssertNotNull(value, nameof(value));
             Argument.AssertNotNull(response, nameof(response));
@@ -90,7 +90,7 @@ namespace Azure.Security.KeyVault.Administration
         public override string Id => _id;
 
         /// <summary>
-        /// Gets the <see cref="FullBackupOperation"/> of the backup operation.
+        /// Gets the <see cref="FullBackupDetailsInternal"/> of the backup operation.
         /// You should await <see cref="WaitForCompletionAsync(CancellationToken)"/> before attempting to use a key in this pending state.
         /// </summary>
         public override KeyVaultBackupResult Value
@@ -140,7 +140,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 try
                 {
-                    Response<FullBackupOperation> response = async ?
+                    Response<FullBackupDetailsInternal> response = async ?
                         await _client.GetBackupDetailsAsync(Id, cancellationToken).ConfigureAwait(false)
                         : _client.GetBackupDetails(Id, cancellationToken);
 

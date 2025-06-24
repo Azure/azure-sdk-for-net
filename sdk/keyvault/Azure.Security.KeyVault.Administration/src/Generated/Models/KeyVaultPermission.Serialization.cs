@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -68,7 +67,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 writer.WritePropertyName("dataActions"u8);
                 writer.WriteStartArray();
-                foreach (DataAction item in DataActions)
+                foreach (KeyVaultDataAction item in DataActions)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -78,7 +77,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 writer.WritePropertyName("notDataActions"u8);
                 writer.WriteStartArray();
-                foreach (DataAction item in NotDataActions)
+                foreach (KeyVaultDataAction item in NotDataActions)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -128,8 +127,8 @@ namespace Azure.Security.KeyVault.Administration
             }
             IList<string> actions = default;
             IList<string> notActions = default;
-            IList<DataAction> dataActions = default;
-            IList<DataAction> notDataActions = default;
+            IList<KeyVaultDataAction> dataActions = default;
+            IList<KeyVaultDataAction> notDataActions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,10 +180,10 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         continue;
                     }
-                    List<DataAction> array = new List<DataAction>();
+                    List<KeyVaultDataAction> array = new List<KeyVaultDataAction>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new DataAction(item.GetString()));
+                        array.Add(new KeyVaultDataAction(item.GetString()));
                     }
                     dataActions = array;
                     continue;
@@ -195,10 +194,10 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         continue;
                     }
-                    List<DataAction> array = new List<DataAction>();
+                    List<KeyVaultDataAction> array = new List<KeyVaultDataAction>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new DataAction(item.GetString()));
+                        array.Add(new KeyVaultDataAction(item.GetString()));
                     }
                     notDataActions = array;
                     continue;
@@ -208,7 +207,7 @@ namespace Azure.Security.KeyVault.Administration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KeyVaultPermission(actions ?? new ChangeTrackingList<string>(), notActions ?? new ChangeTrackingList<string>(), dataActions ?? new ChangeTrackingList<DataAction>(), notDataActions ?? new ChangeTrackingList<DataAction>(), additionalBinaryDataProperties);
+            return new KeyVaultPermission(actions ?? new ChangeTrackingList<string>(), notActions ?? new ChangeTrackingList<string>(), dataActions ?? new ChangeTrackingList<KeyVaultDataAction>(), notDataActions ?? new ChangeTrackingList<KeyVaultDataAction>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

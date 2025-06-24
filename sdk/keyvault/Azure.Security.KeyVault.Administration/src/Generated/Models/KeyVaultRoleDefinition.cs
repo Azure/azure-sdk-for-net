@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Security.KeyVault.Administration;
+using Azure.Security.KeyVault.Administration.Models;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role definition. </summary>
     public partial class KeyVaultRoleDefinition
@@ -45,8 +45,5 @@ namespace Azure.Security.KeyVault.Administration.Models
 
         /// <summary> The role definition type. </summary>
         public KeyVaultRoleDefinitionType? Type { get; }
-
-        /// <summary> Role definition properties. </summary>
-        public RoleDefinitionProperties Properties { get; }
     }
 }

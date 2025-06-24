@@ -99,20 +99,20 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        internal virtual Operation<FullBackupOperation> FullBackup(WaitUntil waitUntil, SASTokenParameter azureStorageBlobContainerUri, CancellationToken cancellationToken = default)
+        internal virtual Operation<FullBackupDetailsInternal> FullBackup(WaitUntil waitUntil, SASTokenParameter azureStorageBlobContainerUri, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = FullBackup(waitUntil, azureStorageBlobContainerUri, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return ProtocolOperationHelpers.Convert(result, response => (FullBackupOperation)response, ClientDiagnostics, "KeyVaultRestClient.FullBackup");
+            return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullBackup");
         }
 
         /// <summary> Creates a full backup using a user-provided SAS token to an Azure blob storage container. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        internal virtual async Task<Operation<FullBackupOperation>> FullBackupAsync(WaitUntil waitUntil, SASTokenParameter azureStorageBlobContainerUri, CancellationToken cancellationToken = default)
+        internal virtual async Task<Operation<FullBackupDetailsInternal>> FullBackupAsync(WaitUntil waitUntil, SASTokenParameter azureStorageBlobContainerUri, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = await FullBackupAsync(waitUntil, azureStorageBlobContainerUri, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (FullBackupOperation)response, ClientDiagnostics, "KeyVaultRestClient.FullBackupAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullBackupAsync");
         }
 
         /// <summary> Pre-backup operation for checking whether the customer can perform a full backup operation. </summary>
@@ -161,20 +161,20 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="preBackupOperationParameters"> Optional parameters to validate prior to performing a full backup operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        internal virtual Operation<FullBackupOperation> PreFullBackup(WaitUntil waitUntil, PreBackupOperationParameters preBackupOperationParameters, CancellationToken cancellationToken = default)
+        internal virtual Operation<FullBackupDetailsInternal> PreFullBackup(WaitUntil waitUntil, PreBackupOperationParameters preBackupOperationParameters, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = PreFullBackup(waitUntil, preBackupOperationParameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return ProtocolOperationHelpers.Convert(result, response => (FullBackupOperation)response, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup");
+            return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup");
         }
 
         /// <summary> Pre-backup operation for checking whether the customer can perform a full backup operation. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="preBackupOperationParameters"> Optional parameters to validate prior to performing a full backup operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        internal virtual async Task<Operation<FullBackupOperation>> PreFullBackupAsync(WaitUntil waitUntil, PreBackupOperationParameters preBackupOperationParameters, CancellationToken cancellationToken = default)
+        internal virtual async Task<Operation<FullBackupDetailsInternal>> PreFullBackupAsync(WaitUntil waitUntil, PreBackupOperationParameters preBackupOperationParameters, CancellationToken cancellationToken = default)
         {
             Operation<BinaryData> result = await PreFullBackupAsync(waitUntil, preBackupOperationParameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (FullBackupOperation)response, ClientDiagnostics, "KeyVaultRestClient.PreFullBackupAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullBackupAsync");
         }
 
         /// <summary> Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
@@ -361,20 +361,20 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="jobId"> The id returned as part of the backup request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<FullBackupOperation> FullBackupStatus(string jobId, CancellationToken cancellationToken = default)
+        internal virtual Response<FullBackupDetailsInternal> FullBackupStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Response result = FullBackupStatus(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((FullBackupOperation)result, result);
+            return Response.FromValue((FullBackupDetailsInternal)result, result);
         }
 
         /// <summary> Returns the status of full backup operation. </summary>
         /// <param name="jobId"> The id returned as part of the backup request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<FullBackupOperation>> FullBackupStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<FullBackupDetailsInternal>> FullBackupStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Response result = await FullBackupStatusAsync(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((FullBackupOperation)result, result);
+            return Response.FromValue((FullBackupDetailsInternal)result, result);
         }
 
         /// <summary>

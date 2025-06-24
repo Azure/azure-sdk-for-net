@@ -8,7 +8,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary>
     /// The full backup details containing information about a specific full backup operation.
     /// </summary>
-    [CodeGenType("FullBackupDetails")]
+    [CodeGenType("FullBackupOperation")]
     internal partial class FullBackupDetailsInternal
     { }
 }

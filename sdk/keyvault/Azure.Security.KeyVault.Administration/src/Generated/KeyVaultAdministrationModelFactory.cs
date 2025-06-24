@@ -9,11 +9,27 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Security.KeyVault.Administration;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class KeyVaultAdministrationModelFactory
     {
+        /// <summary> Role definition permissions. </summary>
+        /// <param name="actions"> Action permissions that are granted. </param>
+        /// <param name="notActions"> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
+        /// <param name="dataActions"> Data action permissions that are granted. </param>
+        /// <param name="notDataActions"> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultPermission"/> instance for mocking. </returns>
+        public static KeyVaultPermission KeyVaultPermission(IEnumerable<string> actions = default, IEnumerable<string> notActions = default, IEnumerable<KeyVaultDataAction> dataActions = default, IEnumerable<KeyVaultDataAction> notDataActions = default)
+        {
+            actions ??= new ChangeTrackingList<string>();
+            notActions ??= new ChangeTrackingList<string>();
+            dataActions ??= new ChangeTrackingList<KeyVaultDataAction>();
+            notDataActions ??= new ChangeTrackingList<KeyVaultDataAction>();
+
+            return new KeyVaultPermission(actions?.ToList(), notActions?.ToList(), dataActions?.ToList(), notDataActions?.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Role Assignments. </summary>
         /// <param name="id"> The role assignment ID. </param>
         /// <param name="name"> The role assignment name. </param>

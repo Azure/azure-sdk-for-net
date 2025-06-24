@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Security.KeyVault.Administration.Models;
 
@@ -11,10 +12,10 @@ namespace Azure.Security.KeyVault.Administration
     /// An account setting.
     /// </summary>
 
-    [CodeGenSuppress(nameof(KeyVaultSetting), typeof(string), typeof(string))]
-    [CodeGenSuppress("Content")]
-    [CodeGenSuppress("Type")]
     [CodeGenType("Setting")]
+    [CodeGenSuppress(nameof(KeyVaultSetting), typeof(string), typeof(string))]
+    // [CodeGenSuppress(nameof(KeyVaultSetting), typeof(string), typeof(KeyVaultSettingType?), typeof(IDictionary<string, BinaryData>))]
+    [CodeGenSuppress("Content")]
     public partial class KeyVaultSetting
     {
         /// <summary>
@@ -40,19 +41,22 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="name">The name of the account setting.</param>
         /// <param name="value">The string value of the account setting.</param>
         /// <param name="settingType">The type specifier of the value.</param>
-        internal KeyVaultSetting(string name, string value, KeyVaultSettingType? settingType)
+        /// <param name="additionalBinaryDataProperties">Additional properties.</param>
+        internal KeyVaultSetting(string name, string value, KeyVaultSettingType? settingType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(value, nameof(value));
 
             Name = name;
             Value = new KeyVaultSettingValue(value, settingType);
+            SettingType = Value.SettingType;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties ?? new Dictionary<string, BinaryData>();
         }
 
         /// <summary>
         /// Gets the type specifier of the value.
         /// </summary>
-        public KeyVaultSettingType? SettingType => Value.SettingType;
+        [CodeGenMember("Type")]
+        public KeyVaultSettingType? SettingType { get; }
 
         /// <summary>
         /// Gets the value of the account setting.
