@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Added AI Conversation Analyze feature
+- Added support for analyze-conversation API Versions
+  - 2025-05-15-preview
+
 ### Breaking Changes
 
 ### Bugs Fixed

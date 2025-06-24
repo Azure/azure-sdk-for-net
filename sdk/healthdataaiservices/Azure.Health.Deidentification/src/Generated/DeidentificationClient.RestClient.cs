@@ -56,7 +56,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateListJobsInternalRequest(int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetJobsInternalRequest(int? maxpagesize, string continuationToken, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -78,7 +78,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateNextListJobsInternalRequest(Uri nextPage, int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateNextGetJobsInternalRequest(Uri nextPage, int? maxpagesize, string continuationToken, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -90,7 +90,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateListJobDocumentsInternalRequest(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetJobDocumentsInternalRequest(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -114,7 +114,7 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateNextListJobDocumentsInternalRequest(Uri nextPage, string jobName, int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateNextGetJobDocumentsInternalRequest(Uri nextPage, string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
