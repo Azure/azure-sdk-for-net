@@ -1,72 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Diagnostics.Tracing;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Xml.Linq;
-using Azure.Core.Diagnostics;
-using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Jobs;
 
 namespace Benchmarks.Local
 {
-    public class EventSourceScenario
+    /// <summary>
+    /// Custom event source for Azure Core logging.
+    /// </summary>
+    public class CustomEventSource : EventSource
     {
-        private AzureEventSourceListener _sourceListener;
-        private EventSource _eventSource; 
-        private string _sanitizedUri;
-        private byte[] _headersBytes;
-        private int _iteration;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomEventSource"/> class.
+        /// </summary>
+        public CustomEventSource() : base("Azure-Core") { }
 
-        public EventSourceScenario(string sanitizedUri, byte[] headersBytes)
-        {
-            _sourceListener = new AzureEventSourceListener(_ => { }, EventLevel.LogAlways);
-            _eventSource = new EventSource();
-            _sourceListener.EnableEvents(_eventSource, EventLevel.LogAlways);
-            _sanitizedUri = sanitizedUri;
-            _headersBytes = headersBytes;
-        }
-
-
-        public void RunOld(string uri, byte[] headers)
-        {
-            _eventSource.RequestOld(uri, _iteration++, _iteration, headers);
-        }
-
-        public void RunNew(string uri, byte[] headers)
-        {
-            _eventSource.RequestNew(uri, _iteration++, _iteration, headers);
-        }
-
-        public void RunNewPreformatted()
-        {
-            _eventSource.RequestNew(_sanitizedUri, _iteration++, _iteration, _headersBytes);
-        }
-
-        public void Dispose()
-        {
-            _sourceListener.Dispose();
-            _eventSource.Dispose();
-        }
-    }
-
-    internal class EventSource : System.Diagnostics.Tracing.EventSource
-    {
-        public EventSource() : base("Azure-Core") { }
-
+        /// <summary>
+        /// Logs a request with the old method.
+        /// </summary>
+        /// <param name="strParam">The string parameter.</param>
+        /// <param name="intParam">The integer parameter.</param>
+        /// <param name="doubleParam">The double parameter.</param>
+        /// <param name="bytesParam">The byte array parameter.</param>
         [Event(1, Level = EventLevel.Informational)]
         public void RequestOld(string strParam, int intParam, double doubleParam, byte[] bytesParam)
         {
             WriteEvent(1, strParam, intParam, doubleParam, bytesParam);
         }
 
+        /// <summary>
+        /// Logs a request with the new method.
+        /// </summary>
+        /// <param name="strParam">The string parameter.</param>
+        /// <param name="intParam">The integer parameter.</param>
+        /// <param name="doubleParam">The double parameter.</param>
+        /// <param name="bytesParam">The byte array parameter.</param>
         [Event(2, Level = EventLevel.Informational)]
         public void RequestNew(string strParam, int intParam, double doubleParam, byte[] bytesParam)
         {
             WriteEventNew(2, strParam, intParam, doubleParam, bytesParam);
         }
 
+        /// <summary>
+        /// Writes an event with the new method.
+        /// </summary>
+        /// <param name="eventId">The event ID.</param>
+        /// <param name="arg0">The string argument.</param>
+        /// <param name="intParam">The integer parameter.</param>
+        /// <param name="doubleParam">The double parameter.</param>
+        /// <param name="bytesParam">The byte array parameter.</param>
         [NonEvent]
         private unsafe void WriteEventNew(int eventId, string arg0, int intParam, double doubleParam, byte[] bytesParam)
         {

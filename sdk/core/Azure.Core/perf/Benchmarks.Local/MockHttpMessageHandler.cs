@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -6,29 +9,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Benchmarks.Nuget
+namespace Benchmarks.Local
 {
-    public class PipelineScenario
-    {
-        public readonly HttpPipeline _pipeline;
-
-        public PipelineScenario()
-        {
-            var options = new BenchmarkClientOptions
-            {
-                Transport = new HttpClientTransport(new HttpClient(new MockHttpMessageHandler()))
-            };
-            _pipeline = HttpPipelineBuilder.Build(options);
-        }
-
-        public async Task<Azure.Response> SendAsync()
-        {
-            var message = _pipeline.CreateMessage();
-            message.Request.Uri.Reset(new Uri("https://www.example.com"));
-            await _pipeline.SendAsync(message, CancellationToken.None);
-            return message.Response;
-        }
-    }
     /// <summary>
     /// Mock out the network to isolate the performance test to only
     /// Core library pipeline code.
@@ -49,5 +31,4 @@ namespace Benchmarks.Nuget
             return Task.FromResult(httpResponse);
         }
     }
-    public class BenchmarkClientOptions : ClientOptions { }
 }
