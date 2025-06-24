@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Gets a 256-bit CKM AES Key Wrap <see cref="KeyWrapAlgorithm"/>.
         /// </summary>
-        internal static KeyWrapAlgorithm CkmAesKeyWrap { get; } = new KeyWrapAlgorithm(CkmAesKeyWrapValue);
+        public static KeyWrapAlgorithm CkmAesKeyWrap { get; } = new KeyWrapAlgorithm(CkmAesKeyWrapValue);
 
         /// <summary>
         /// Gets a 256-bit CKM AES Key Wrap with padding <see cref="KeyWrapAlgorithm"/>.
