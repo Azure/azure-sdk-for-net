@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
                 {
                     UserAssignedIdentities =
                     {
-                        [new ResourceIdentifier($"/subscriptions/{Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID")}/resourceGroups/{Environment.GetEnvironmentVariable("AZURE_RESOURCE_GROUP")}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{Environment.GetEnvironmentVariable("AZURE_IDENTITY_NAME")}")] = new UserAssignedIdentity()
+                        [new ResourceIdentifier($"/subscriptions/ac9a1867-7476-4346-bf8b-968370fe212c/resourceGroups/msi-test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/msi-test-uk-1")] = new UserAssignedIdentity()
                     }
                 },
                 Properties = new GeoCatalogProperties
