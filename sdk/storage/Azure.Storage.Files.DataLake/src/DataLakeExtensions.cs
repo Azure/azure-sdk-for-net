@@ -990,18 +990,6 @@ namespace Azure.Storage.Files.DataLake
             return new Blobs.Models.CustomerProvidedKey(dataLakeCustomerProvidedKey.Value.EncryptionKey);
         }
 
-        internal static GetPathTagResult ToGetPathTagResult(this GetBlobTagResult blobTagResult)
-        {
-            if (blobTagResult == null)
-            {
-                return null;
-            }
-            return new GetPathTagResult
-            {
-                Tags = blobTagResult.Tags
-            };
-        }
-
         #region ValidateConditionsNotPresent
         internal static void ValidateConditionsNotPresent(
             this RequestConditions requestConditions,

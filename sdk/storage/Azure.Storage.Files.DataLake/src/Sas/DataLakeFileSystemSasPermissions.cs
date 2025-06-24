@@ -69,11 +69,6 @@ namespace Azure.Storage.Sas
         ManageAccessControl = 512,
 
         /// <summary>
-        /// Indicates that reading and writing Tags are permitted.
-        /// </summary>
-        Tag = 1024,
-
-        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -118,10 +113,6 @@ namespace Azure.Storage.Files.DataLake
             if ((permissions & DataLakeFileSystemSasPermissions.List) == DataLakeFileSystemSasPermissions.List)
             {
                 sb.Append(Constants.Sas.Permissions.List);
-            }
-            if ((permissions & DataLakeFileSystemSasPermissions.Tag) == DataLakeFileSystemSasPermissions.Tag)
-            {
-                sb.Append(Constants.Sas.Permissions.Tag);
             }
             if ((permissions & DataLakeFileSystemSasPermissions.Move) == DataLakeFileSystemSasPermissions.Move)
             {
