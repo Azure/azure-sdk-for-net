@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="pureStorageVolume"> A Pure Storage volume. </param>
         /// <param name="status"> The operational status of the datastore. </param>
         /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
-        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsPrivateCloudDatastoreProvisioningState? provisioningState = null, ResourceIdentifier netAppVolumeId = null, DiskPoolVolume diskPoolVolume = null, ResourceIdentifier elasticSanVolumeTargetId = null, PureStorageVolume pureStorageVolume = null, DatastoreStatus? status = null)
+        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsPrivateCloudDatastoreProvisioningState? provisioningState = null, ResourceIdentifier netAppVolumeId = null, DiskPoolVolume diskPoolVolume = null, ResourceIdentifier elasticSanVolumeTargetId = null, AvsPureStorageVolume pureStorageVolume = null, DatastoreStatus? status = null)
         {
             return new AvsPrivateCloudDatastoreData(
                 id,
@@ -1103,13 +1103,13 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// The resource-specific properties for this resource.
-        /// Please note <see cref="Models.HostProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.GeneralHostProperties"/> and <see cref="Models.SpecializedHostProperties"/>.
+        /// Please note <see cref="Models.AvsHostProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.GeneralAvsHostProperties"/> and <see cref="Models.SpecializedAvsHostProperties"/>.
         /// </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="Avs.AvsHostData"/> instance for mocking. </returns>
-        public static AvsHostData AvsHostData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HostProperties properties = null, IEnumerable<string> zones = null, AvsSku sku = null)
+        public static AvsHostData AvsHostData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsHostProperties properties = null, IEnumerable<string> zones = null, AvsSku sku = null)
         {
             zones ??= new List<string>();
 
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.Avs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HostProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvsHostProperties"/>. </summary>
         /// <param name="kind"> The kind of host. </param>
         /// <param name="provisioningState"> The state of the host provisioning. </param>
         /// <param name="displayName"> Display name of the host in VMware vCenter. </param>
@@ -1132,10 +1132,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="fqdn"> Fully qualified domain name of the host. </param>
         /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
         /// <param name="faultDomain"></param>
-        /// <returns> A new <see cref="Models.HostProperties"/> instance for mocking. </returns>
-        public static HostProperties HostProperties(string kind = null, HostProvisioningState? provisioningState = null, string displayName = null, string moRefId = null, string fqdn = null, HostMaintenance? maintenance = null, string faultDomain = null)
+        /// <returns> A new <see cref="Models.AvsHostProperties"/> instance for mocking. </returns>
+        public static AvsHostProperties AvsHostProperties(string kind = null, AvsHostProvisioningState? provisioningState = null, string displayName = null, string moRefId = null, string fqdn = null, AvsHostMaintenance? maintenance = null, string faultDomain = null)
         {
-            return new UnknownHostProperties(
+            return new UnknownAvsHostProperties(
                 kind == null ? default : new HostKind(kind),
                 provisioningState,
                 displayName,
@@ -1146,17 +1146,17 @@ namespace Azure.ResourceManager.Avs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GeneralHostProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GeneralAvsHostProperties"/>. </summary>
         /// <param name="provisioningState"> The state of the host provisioning. </param>
         /// <param name="displayName"> Display name of the host in VMware vCenter. </param>
         /// <param name="moRefId"> vCenter managed object reference ID of the host. </param>
         /// <param name="fqdn"> Fully qualified domain name of the host. </param>
         /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
         /// <param name="faultDomain"></param>
-        /// <returns> A new <see cref="Models.GeneralHostProperties"/> instance for mocking. </returns>
-        public static GeneralHostProperties GeneralHostProperties(HostProvisioningState? provisioningState = null, string displayName = null, string moRefId = null, string fqdn = null, HostMaintenance? maintenance = null, string faultDomain = null)
+        /// <returns> A new <see cref="Models.GeneralAvsHostProperties"/> instance for mocking. </returns>
+        public static GeneralAvsHostProperties GeneralAvsHostProperties(AvsHostProvisioningState? provisioningState = null, string displayName = null, string moRefId = null, string fqdn = null, AvsHostMaintenance? maintenance = null, string faultDomain = null)
         {
-            return new GeneralHostProperties(
+            return new GeneralAvsHostProperties(
                 HostKind.General,
                 provisioningState,
                 displayName,
@@ -1167,17 +1167,17 @@ namespace Azure.ResourceManager.Avs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SpecializedHostProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SpecializedAvsHostProperties"/>. </summary>
         /// <param name="provisioningState"> The state of the host provisioning. </param>
         /// <param name="displayName"> Display name of the host in VMware vCenter. </param>
         /// <param name="moRefId"> vCenter managed object reference ID of the host. </param>
         /// <param name="fqdn"> Fully qualified domain name of the host. </param>
         /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
         /// <param name="faultDomain"></param>
-        /// <returns> A new <see cref="Models.SpecializedHostProperties"/> instance for mocking. </returns>
-        public static SpecializedHostProperties SpecializedHostProperties(HostProvisioningState? provisioningState = null, string displayName = null, string moRefId = null, string fqdn = null, HostMaintenance? maintenance = null, string faultDomain = null)
+        /// <returns> A new <see cref="Models.SpecializedAvsHostProperties"/> instance for mocking. </returns>
+        public static SpecializedAvsHostProperties SpecializedAvsHostProperties(AvsHostProvisioningState? provisioningState = null, string displayName = null, string moRefId = null, string fqdn = null, AvsHostMaintenance? maintenance = null, string faultDomain = null)
         {
-            return new SpecializedHostProperties(
+            return new SpecializedAvsHostProperties(
                 HostKind.Specialized,
                 provisioningState,
                 displayName,
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Avs.AvsProvisionedNetworkData"/> instance for mocking. </returns>
-        public static AvsProvisionedNetworkData AvsProvisionedNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisionedNetworkProperties properties = null)
+        public static AvsProvisionedNetworkData AvsProvisionedNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsProvisionedNetworkProperties properties = null)
         {
             return new AvsProvisionedNetworkData(
                 id,
@@ -1206,14 +1206,14 @@ namespace Azure.ResourceManager.Avs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisionedNetworkProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvsProvisionedNetworkProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="addressPrefix"> The address prefixes of the provisioned network in CIDR notation. </param>
         /// <param name="networkType"> The type of network provisioned. </param>
-        /// <returns> A new <see cref="Models.ProvisionedNetworkProperties"/> instance for mocking. </returns>
-        public static ProvisionedNetworkProperties ProvisionedNetworkProperties(ProvisionedNetworkProvisioningState? provisioningState = null, string addressPrefix = null, ProvisionedNetworkType? networkType = null)
+        /// <returns> A new <see cref="Models.AvsProvisionedNetworkProperties"/> instance for mocking. </returns>
+        public static AvsProvisionedNetworkProperties AvsProvisionedNetworkProperties(AvsProvisionedNetworkProvisioningState? provisioningState = null, string addressPrefix = null, AvsProvisionedNetworkType? networkType = null)
         {
-            return new ProvisionedNetworkProperties(provisioningState, addressPrefix, networkType, serializedAdditionalRawData: null);
+            return new AvsProvisionedNetworkProperties(provisioningState, addressPrefix, networkType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvsResourceSku"/>. </summary>
@@ -1227,12 +1227,12 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="capabilities"> Name value pairs to describe the capability. </param>
         /// <param name="restrictions"> The restrictions of the SKU. </param>
         /// <returns> A new <see cref="Models.AvsResourceSku"/> instance for mocking. </returns>
-        public static AvsResourceSku AvsResourceSku(ResourceSkuResourceType resourceType = default, string name = null, string tier = null, string size = null, string family = null, IEnumerable<AzureLocation> locations = null, IEnumerable<ResourceSkuLocationInfo> locationInfo = null, IEnumerable<ResourceSkuCapabilities> capabilities = null, IEnumerable<ResourceSkuRestrictions> restrictions = null)
+        public static AvsResourceSku AvsResourceSku(AvsResourceSkuResourceType resourceType = default, string name = null, string tier = null, string size = null, string family = null, IEnumerable<AzureLocation> locations = null, IEnumerable<AvsResourceSkuLocationInfo> locationInfo = null, IEnumerable<AvsResourceSkuCapabilities> capabilities = null, IEnumerable<AvsResourceSkuRestrictions> restrictions = null)
         {
             locations ??= new List<AzureLocation>();
-            locationInfo ??= new List<ResourceSkuLocationInfo>();
-            capabilities ??= new List<ResourceSkuCapabilities>();
-            restrictions ??= new List<ResourceSkuRestrictions>();
+            locationInfo ??= new List<AvsResourceSkuLocationInfo>();
+            capabilities ??= new List<AvsResourceSkuCapabilities>();
+            restrictions ??= new List<AvsResourceSkuRestrictions>();
 
             return new AvsResourceSku(
                 resourceType,
@@ -1247,63 +1247,63 @@ namespace Azure.ResourceManager.Avs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuLocationInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvsResourceSkuLocationInfo"/>. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
-        /// <returns> A new <see cref="Models.ResourceSkuLocationInfo"/> instance for mocking. </returns>
-        public static ResourceSkuLocationInfo ResourceSkuLocationInfo(AzureLocation location = default, IEnumerable<string> zones = null, IEnumerable<ResourceSkuZoneDetails> zoneDetails = null)
+        /// <returns> A new <see cref="Models.AvsResourceSkuLocationInfo"/> instance for mocking. </returns>
+        public static AvsResourceSkuLocationInfo AvsResourceSkuLocationInfo(AzureLocation location = default, IEnumerable<string> zones = null, IEnumerable<AvsResourceSkuZoneDetails> zoneDetails = null)
         {
             zones ??= new List<string>();
-            zoneDetails ??= new List<ResourceSkuZoneDetails>();
+            zoneDetails ??= new List<AvsResourceSkuZoneDetails>();
 
-            return new ResourceSkuLocationInfo(location, zones?.ToList(), zoneDetails?.ToList(), serializedAdditionalRawData: null);
+            return new AvsResourceSkuLocationInfo(location, zones?.ToList(), zoneDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuZoneDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvsResourceSkuZoneDetails"/>. </summary>
         /// <param name="name"> Gets the set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
-        /// <returns> A new <see cref="Models.ResourceSkuZoneDetails"/> instance for mocking. </returns>
-        public static ResourceSkuZoneDetails ResourceSkuZoneDetails(IEnumerable<string> name = null, IEnumerable<ResourceSkuCapabilities> capabilities = null)
+        /// <returns> A new <see cref="Models.AvsResourceSkuZoneDetails"/> instance for mocking. </returns>
+        public static AvsResourceSkuZoneDetails AvsResourceSkuZoneDetails(IEnumerable<string> name = null, IEnumerable<AvsResourceSkuCapabilities> capabilities = null)
         {
             name ??= new List<string>();
-            capabilities ??= new List<ResourceSkuCapabilities>();
+            capabilities ??= new List<AvsResourceSkuCapabilities>();
 
-            return new ResourceSkuZoneDetails(name?.ToList(), capabilities?.ToList(), serializedAdditionalRawData: null);
+            return new AvsResourceSkuZoneDetails(name?.ToList(), capabilities?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuCapabilities"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvsResourceSkuCapabilities"/>. </summary>
         /// <param name="name"> The name of the SKU capability. </param>
         /// <param name="value"> The value of the SKU capability. </param>
-        /// <returns> A new <see cref="Models.ResourceSkuCapabilities"/> instance for mocking. </returns>
-        public static ResourceSkuCapabilities ResourceSkuCapabilities(string name = null, string value = null)
+        /// <returns> A new <see cref="Models.AvsResourceSkuCapabilities"/> instance for mocking. </returns>
+        public static AvsResourceSkuCapabilities AvsResourceSkuCapabilities(string name = null, string value = null)
         {
-            return new ResourceSkuCapabilities(name, value, serializedAdditionalRawData: null);
+            return new AvsResourceSkuCapabilities(name, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuRestrictions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvsResourceSkuRestrictions"/>. </summary>
         /// <param name="type"> the type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> the reason for restriction. </param>
-        /// <returns> A new <see cref="Models.ResourceSkuRestrictions"/> instance for mocking. </returns>
-        public static ResourceSkuRestrictions ResourceSkuRestrictions(ResourceSkuRestrictionsType? type = null, IEnumerable<string> values = null, ResourceSkuRestrictionInfo restrictionInfo = null, ResourceSkuRestrictionsReasonCode? reasonCode = null)
+        /// <returns> A new <see cref="Models.AvsResourceSkuRestrictions"/> instance for mocking. </returns>
+        public static AvsResourceSkuRestrictions AvsResourceSkuRestrictions(AvsResourceSkuRestrictionsType? type = null, IEnumerable<string> values = null, AvsResourceSkuRestrictionInfo restrictionInfo = null, AvsResourceSkuRestrictionsReasonCode? reasonCode = null)
         {
             values ??= new List<string>();
 
-            return new ResourceSkuRestrictions(type, values?.ToList(), restrictionInfo, reasonCode, serializedAdditionalRawData: null);
+            return new AvsResourceSkuRestrictions(type, values?.ToList(), restrictionInfo, reasonCode, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceSkuRestrictionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvsResourceSkuRestrictionInfo"/>. </summary>
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
-        /// <returns> A new <see cref="Models.ResourceSkuRestrictionInfo"/> instance for mocking. </returns>
-        public static ResourceSkuRestrictionInfo ResourceSkuRestrictionInfo(IEnumerable<AzureLocation> locations = null, IEnumerable<string> zones = null)
+        /// <returns> A new <see cref="Models.AvsResourceSkuRestrictionInfo"/> instance for mocking. </returns>
+        public static AvsResourceSkuRestrictionInfo AvsResourceSkuRestrictionInfo(IEnumerable<AzureLocation> locations = null, IEnumerable<string> zones = null)
         {
             locations ??= new List<AzureLocation>();
             zones ??= new List<string>();
 
-            return new ResourceSkuRestrictionInfo(locations?.ToList(), zones?.ToList(), serializedAdditionalRawData: null);
+            return new AvsResourceSkuRestrictionInfo(locations?.ToList(), zones?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPureStoragePolicyData"/>. </summary>
@@ -1313,7 +1313,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Avs.AvsPureStoragePolicyData"/> instance for mocking. </returns>
-        public static AvsPureStoragePolicyData AvsPureStoragePolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PureStoragePolicyProperties properties = null)
+        public static AvsPureStoragePolicyData AvsPureStoragePolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsPureStoragePolicyProperties properties = null)
         {
             return new AvsPureStoragePolicyData(
                 id,
@@ -1324,14 +1324,14 @@ namespace Azure.ResourceManager.Avs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PureStoragePolicyProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvsPureStoragePolicyProperties"/>. </summary>
         /// <param name="storagePolicyDefinition"> Definition of a Pure Storage Policy Based Management policy. </param>
         /// <param name="storagePoolId"> Azure resource ID of the Pure Storage Pool associated with the storage policy. </param>
         /// <param name="provisioningState"> The state of the Pure Storage Policy Based Management policy provisioning. </param>
-        /// <returns> A new <see cref="Models.PureStoragePolicyProperties"/> instance for mocking. </returns>
-        public static PureStoragePolicyProperties PureStoragePolicyProperties(string storagePolicyDefinition = null, string storagePoolId = null, PureStoragePolicyProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.AvsPureStoragePolicyProperties"/> instance for mocking. </returns>
+        public static AvsPureStoragePolicyProperties AvsPureStoragePolicyProperties(string storagePolicyDefinition = null, string storagePoolId = null, AvsPureStoragePolicyProvisioningState? provisioningState = null)
         {
-            return new PureStoragePolicyProperties(storagePolicyDefinition, storagePoolId, provisioningState, serializedAdditionalRawData: null);
+            return new AvsPureStoragePolicyProperties(storagePolicyDefinition, storagePoolId, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Avs.AvsPrivateCloudData" />. </summary>
