@@ -676,7 +676,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             Console.WriteLine($"Deployment created with status: {operation.GetRawResponse().Status}");
 
-            // Optionally, verify the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
             Assert.IsNotNull(operationLocation, "Expected operation-location header to be present.");
         }
