@@ -416,8 +416,8 @@ namespace Azure.Identity.Tests
 
         public static IEnumerable<object[]> CredSelection()
         {
-            yield return new object[] { "dev" };
-            yield return new object[] { "prod" };
+            yield return new object[] { Constants.DevCredentials };
+            yield return new object[] { Constants.ProdCredentials };
             yield return new object[] { Constants.VisualStudioCredential };
             yield return new object[] { Constants.VisualStudioCodeCredential };
             yield return new object[] { Constants.AzureCliCredential };
@@ -454,7 +454,7 @@ namespace Azure.Identity.Tests
                 var chain = factory.CreateCredentialChain();
 
                 // check the factory created the correct credentials
-                if (credSelection == "dev")
+                if (credSelection == Constants.DevCredentials)
                 {
                     Assert.IsFalse(chain.Any(cred => cred is EnvironmentCredential));
                     Assert.IsFalse(chain.Any(cred => cred is WorkloadIdentityCredential));
@@ -468,7 +468,7 @@ namespace Azure.Identity.Tests
                     Assert.IsFalse(chain.Any(cred => cred is VisualStudioCodeCredential));
                     Assert.IsFalse(chain.Any(cred => cred is InteractiveBrowserCredential));
                 }
-                else if (credSelection == "prod")
+                else if (credSelection == Constants.ProdCredentials)
                 {
                     //check the factory created the credentials
                     Assert.IsTrue(chain.Any(cred => cred is EnvironmentCredential));
