@@ -43,6 +43,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             CreateOrUpdateRoleDefinitionOptions options = new(KeyVaultRoleScope.Global, name)
             {
+                RoleName = name.ToString(),
                 Description = description,
                 Permissions =
                 {
@@ -77,6 +78,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             CreateOrUpdateRoleDefinitionOptions options = new(KeyVaultRoleScope.Global, name)
             {
+                RoleName = name.ToString(),
                 Description = description,
                 Permissions =
                 {
@@ -121,6 +123,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             CreateOrUpdateRoleDefinitionOptions options = new(KeyVaultRoleScope.Global, name)
             {
+                RoleName = name.ToString(),
                 Description = description,
                 Permissions =
                 {

@@ -36,10 +36,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(WebAppServicePlanUpdatedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("appServicePlanEventTypeDetail"u8);
-            writer.WriteObjectValue(AppServicePlanEventTypeDetail, options);
-            writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku, options);
+            if (Optional.IsDefined(AppServicePlanEventTypeDetail))
+            {
+                writer.WritePropertyName("appServicePlanEventTypeDetail"u8);
+                writer.WriteObjectValue(AppServicePlanEventTypeDetail, options);
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -121,11 +127,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("appServicePlanEventTypeDetail"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     appServicePlanEventTypeDetail = AppServicePlanEventTypeDetail.DeserializeAppServicePlanEventTypeDetail(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     sku = WebAppServicePlanUpdatedEventDataSku.DeserializeWebAppServicePlanUpdatedEventDataSku(property.Value, options);
                     continue;
                 }

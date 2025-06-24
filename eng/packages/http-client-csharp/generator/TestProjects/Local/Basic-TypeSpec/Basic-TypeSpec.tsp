@@ -389,6 +389,28 @@ op ListWithNextLink(): {
   @nextLink next?: url;
 };
 
+@route("/linkString")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithStringNextLink(): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink next?: string;
+};
+
+@route("/linkHeader")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithHeaderNextLink(): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink @header next?: string;
+};
+
 @route("/continuation")
 @doc("List things with continuation token")
 @convenientAPI(true)

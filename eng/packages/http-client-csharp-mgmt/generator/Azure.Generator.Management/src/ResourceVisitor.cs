@@ -19,28 +19,29 @@ namespace Azure.Generator.Management
             return type;
         }
 
-        protected override MethodProvider? VisitMethod(MethodProvider method)
-        {
-            foreach (var parameter in method.Signature.Parameters)
-            {
-                if (ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(parameter.Type))
-                {
-                    parameter.Update("data");
-                }
-            }
-            return base.VisitMethod(method);
-        }
+        // TODO: Go back and enable this when we have a way to handle the resource model parameters renaming via VisitMethod.
+        // protected override MethodProvider? VisitMethod(MethodProvider method)
+        // {
+        //     foreach (var parameter in method.Signature.Parameters)
+        //     {
+        //         if (ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(parameter.Type))
+        //         {
+        //             parameter.Update("data");
+        //         }
+        //     }
+        //     return base.VisitMethod(method);
+        // }
 
         private void TransformResource(InputModelType model, TypeProvider type)
         {
             if (type is ModelProvider && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
             {
                 type.Update(relativeFilePath: TransformRelativeFilePath(type));
-                type.Type.Update(TransformName(type));
+                type.Update(name: TransformName(type));
                 foreach (var serialization in type.SerializationProviders)
                 {
                     serialization.Update(relativeFilePath: TransformRelativeFilePathForSerialization(serialization));
-                    serialization.Type.Update(TransformName(serialization));
+                    serialization.Update(name: TransformName(serialization));
                 }
             }
         }
