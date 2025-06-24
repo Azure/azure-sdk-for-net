@@ -156,8 +156,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             var statements = new List<MethodBodyStatement>();
 
-            var finalStateVia = _serviceMethod.GetOperationFinalStateVia();
-
             var armOperationType = _isGeneric
                 ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type
                     .MakeGenericType([_resourceClientProvider.ResourceClientCSharpType])
@@ -176,7 +174,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 responseVariable.Invoke("GetRawResponse"));
 
             ValueExpression[] armOperationArguments = _isGeneric ? [responseFromValueExpression, rehydrationTokenVariable] : [responseVariable, rehydrationTokenVariable];
-
             var operationDeclaration = Declare(
                 "operation",
                 armOperationType,
@@ -184,22 +181,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 out var operationVariable);
             statements.Add(operationDeclaration);
 
-            var waitMethod = _isGeneric
-                ? (_isAsync ? "WaitForCompletionAsync" : "WaitForCompletion")
-                : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
-
-            var waitInvocation = _isAsync
-                           ? operationVariable.Invoke(waitMethod, [cancellationTokenParameter], null, _isAsync).Terminate()
-                           : operationVariable.Invoke(waitMethod, cancellationTokenParameter).Terminate();
-
-            var waitIfCompletedStatement = new IfStatement(
-                KnownAzureParameters.WaitUntil.Equal(
-                    Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
-            {
-                waitInvocation
-            };
-            statements.Add(waitIfCompletedStatement);
-            statements.Add(Return(operationVariable));
+            AddWaitCompletionLogic(statements, operationVariable, cancellationTokenParameter);
             return statements;
         }
 
@@ -239,6 +221,16 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 out var operationVariable);
             statements.Add(operationDeclaration);
 
+            AddWaitCompletionLogic(statements, operationVariable, cancellationTokenParameter);
+
+            return statements;
+        }
+
+        private void AddWaitCompletionLogic(
+            List<MethodBodyStatement> statements,
+            VariableExpression operationVariable,
+            ParameterProvider cancellationTokenParameter)
+        {
             var waitMethod = _isGeneric
                 ? (_isAsync ? "WaitForCompletionAsync" : "WaitForCompletion")
                 : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
@@ -255,7 +247,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
             statements.Add(waitIfCompletedStatement);
             statements.Add(Return(operationVariable));
-            return statements;
         }
 
         // TODO: re-examine if this method need to be virtual or not after tags related method providers are implmented.
