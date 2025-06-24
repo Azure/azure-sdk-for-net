@@ -10,9 +10,8 @@ using Azure.Core;
 namespace Azure.Core.Expressions.DataFactory
 {
     [JsonConverter(typeof(DataFactorySecretBaseDefinitionConverter))]
-#pragma warning disable SCM0004 // Abstract type must have a PersistableModelProxy defined
+    [PersistableModelProxy(typeof(UnknownSecret))]
     public partial class DataFactorySecret : IUtf8JsonSerializable, IJsonModel<DataFactorySecret>
-#pragma warning restore SCM0004 // Abstract type must have a PersistableModelProxy defined
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

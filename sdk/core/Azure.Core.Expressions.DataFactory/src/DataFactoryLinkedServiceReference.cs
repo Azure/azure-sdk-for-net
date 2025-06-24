@@ -9,10 +9,13 @@ namespace Azure.Core.Expressions.DataFactory
 {
     /// <summary> Linked service reference type. </summary>
     [PropertyReferenceType]
-#pragma warning disable SCM0005 // Type must have a parameterless constructor
     public partial class DataFactoryLinkedServiceReference
-#pragma warning restore SCM0005 // Type must have a parameterless constructor
     {
+        /// <summary> Initializes a new instance of DataFactoryLinkedServiceReference. </summary>
+        internal DataFactoryLinkedServiceReference()
+        {
+            Parameters = new ChangeTrackingDictionary<string, BinaryData?>();
+        }
         /// <summary> Initializes a new instance of DataFactoryLinkedServiceReference. </summary>
         /// <param name="referenceKind"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>

@@ -28,7 +28,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.IsNotNull(binaryData);
 
             // Test deserialization
-            var deserializedSecret = ((IPersistableModel<DataFactoryKeyVaultSecret>)keyVaultSecret).Create(binaryData, options);
+            var deserializedSecret = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(binaryData, options);
             Assert.IsNotNull(deserializedSecret);
             Assert.AreEqual(keyVaultSecret.Store.ReferenceName, deserializedSecret.Store.ReferenceName);
         }
@@ -49,7 +49,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.IsNotNull(binaryData);
 
             // Test deserialization
-            var deserializedRef = ((IPersistableModel<DataFactoryLinkedServiceReference>)linkedServiceRef).Create(binaryData, options);
+            var deserializedRef = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(binaryData, options);
             Assert.IsNotNull(deserializedRef);
             Assert.AreEqual(linkedServiceRef.ReferenceName, deserializedRef.ReferenceName);
             Assert.AreEqual(linkedServiceRef.ReferenceKind, deserializedRef.ReferenceKind);
@@ -71,7 +71,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.IsNotNull(binaryData);
 
             // Test deserialization
-            var deserializedSecret = ((IPersistableModel<DataFactorySecretString>)secretString).Create(binaryData, options);
+            var deserializedSecret = ModelReaderWriter.Read<DataFactorySecretString>(binaryData, options);
             Assert.IsNotNull(deserializedSecret);
             Assert.AreEqual(secretString.Value, deserializedSecret.Value);
         }
@@ -92,7 +92,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.IsNotNull(binaryData);
 
             // Test deserialization
-            var deserializedSecret = ((IPersistableModel<DataFactorySecret>)secret).Create(binaryData, options);
+            var deserializedSecret = ModelReaderWriter.Read<DataFactorySecret>(binaryData, options);
             Assert.IsNotNull(deserializedSecret);
             Assert.IsInstanceOf<DataFactorySecretString>(deserializedSecret);
             Assert.AreEqual(((DataFactorySecretString)secret).Value, ((DataFactorySecretString)deserializedSecret).Value);

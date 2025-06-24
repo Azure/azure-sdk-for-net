@@ -11,10 +11,12 @@ namespace Azure.Core.Expressions.DataFactory
 {
     /// <summary> Azure Key Vault secret reference. </summary>
     [PropertyReferenceType(new string[0], new[]{ nameof(SecretBaseType)})]
-#pragma warning disable SCM0005 // Type must have a parameterless constructor
     public partial class DataFactoryKeyVaultSecret : DataFactorySecret
-#pragma warning restore SCM0005 // Type must have a parameterless constructor
     {
+        /// <summary> Initializes a new instance of DataFactoryKeyVaultSecret. </summary>
+        internal DataFactoryKeyVaultSecret()
+        {
+        }
         /// <summary> Initializes a new instance of AzureKeyVaultSecretReference. </summary>
         /// <param name="store"> The Azure Key Vault linked service reference. </param>
         /// <param name="secretName"> The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string). </param>
