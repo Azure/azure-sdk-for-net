@@ -316,6 +316,17 @@ value = "<value>",
                             {
                                 provideFocusedSentenceEvidence = true,
                             },
+                            guidanceOptions = new
+                            {
+                                showGuidanceInHistory = true,
+                            },
+                            qualityMeasureOptions = new
+                            {
+                                measureTypes = new object[]
+            {
+"mips76"
+            },
+                            },
                         },
                         locale = "<locale>",
                     },
@@ -647,6 +658,17 @@ value = "<value>",
                             {
                                 provideFocusedSentenceEvidence = true,
                             },
+                            guidanceOptions = new
+                            {
+                                showGuidanceInHistory = true,
+                            },
+                            qualityMeasureOptions = new
+                            {
+                                measureTypes = new object[]
+            {
+"mips76"
+            },
+                            },
                         },
                         locale = "<locale>",
                     },
@@ -909,6 +931,8 @@ EncounterId = "<encounterId>",
                             {
                                 ProvideFocusedSentenceEvidence = true,
                             },
+                            GuidanceOptions = new GuidanceOptions(true),
+                            QualityMeasureOptions = new QualityMeasureOptions(new QualityMeasureType[] { QualityMeasureType.Mips76 }),
                         },
                         Locale = "<locale>",
                     },
@@ -1086,6 +1110,8 @@ EncounterId = "<encounterId>",
                             {
                                 ProvideFocusedSentenceEvidence = true,
                             },
+                            GuidanceOptions = new GuidanceOptions(true),
+                            QualityMeasureOptions = new QualityMeasureOptions(new QualityMeasureType[] { QualityMeasureType.Mips76 }),
                         },
                         Locale = "<locale>",
                     },

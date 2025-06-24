@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPureStoragePools_StoragePoolsListBySubscription()
         {
-            // Generated from example definition: 2024-11-01-preview/StoragePools_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: 2024-11-01/StoragePools_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "StoragePool_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
