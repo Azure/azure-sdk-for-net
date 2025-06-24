@@ -68,6 +68,8 @@ namespace Azure.Generator.Management.Providers
             _resourceServiceMethods = inputClient.Methods;
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(resourceModel)!;
             _restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+
+            //TODO: Remove this when we have a way to handle renaming directly in ResourceVisitor.
             foreach (var method in _restClientProvider.Methods)
             {
                 foreach (var parameter in method.Signature.Parameters)
