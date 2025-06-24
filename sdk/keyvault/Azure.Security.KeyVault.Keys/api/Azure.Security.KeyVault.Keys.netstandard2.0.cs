@@ -560,6 +560,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm A128KW { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm A192KW { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm A256KW { get { throw null; } }
+        public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm CkmAesKeyWrap { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm CkmAesKeyWrapPad { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm Rsa15 { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm RsaOaep { get { throw null; } }
