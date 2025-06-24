@@ -1,0 +1,53 @@
+# Retrieving Deployment Information Asynchronously in Azure AI Language
+
+This sample demonstrates how to retrieve details of an existing deployment using the `Azure.AI.Language.Conversations.Authoring` SDK.
+
+## Create a `ConversationAnalysisAuthoringClient`
+
+To create a `ConversationAnalysisAuthoringClient`, you will need the service endpoint and credentials of your Language resource.
+
+```C# Snippet:CreateAuthoringClientForSpecificApiVersion
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+AzureKeyCredential credential = new("your apikey");
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+```
+
+## Get Deployment Information Asynchronously
+
+To retrieve deployment details asynchronously, call `GetDeploymentAsync` on the `ConversationAuthoringDeployment` client. This allows you to view metadata such as model ID, timestamps, and assigned resource configuration.
+
+```C# Snippet:Sample15_ConversationsAuthoring_GetDeploymentAsync
+string projectName = "EmailAppEnglish";
+string deploymentName = "assignedDeployment";
+
+ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+Response<ConversationAuthoringProjectDeployment> response = await deploymentClient.GetDeploymentAsync();
+
+ConversationAuthoringProjectDeployment deployment = response.Value;
+
+Console.WriteLine($"Deployment Name: {deployment.DeploymentName}");
+Console.WriteLine($"Model Id: {deployment.ModelId}");
+Console.WriteLine($"Last Trained On: {deployment.LastTrainedOn}");
+Console.WriteLine($"Last Deployed On: {deployment.LastDeployedOn}");
+Console.WriteLine($"Deployment Expired On: {deployment.DeploymentExpiredOn}");
+Console.WriteLine($"Model Training Config Version: {deployment.ModelTrainingConfigVersion}");
+
+// Print assigned resources info
+if (deployment.AssignedResources != null)
+{
+    foreach (var assignedResource in deployment.AssignedResources)
+    {
+        Console.WriteLine($"Resource ID: {assignedResource.ResourceId}");
+        Console.WriteLine($"Region: {assignedResource.Region}");
+
+        if (assignedResource.AssignedAoaiResource != null)
+        {
+            Console.WriteLine($"AOAI Kind: {assignedResource.AssignedAoaiResource.Kind}");
+            Console.WriteLine($"AOAI Resource ID: {assignedResource.AssignedAoaiResource.ResourceId}");
+            Console.WriteLine($"AOAI Deployment Name: {assignedResource.AssignedAoaiResource.DeploymentName}");
+        }
+    }
+}
+```

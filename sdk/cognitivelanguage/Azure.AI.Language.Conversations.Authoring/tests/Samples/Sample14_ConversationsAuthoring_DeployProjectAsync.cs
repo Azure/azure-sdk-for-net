@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
-    public partial class Sample13_ConversationsAuthoring_DeleteDeploymentAsync : SamplesBase<AuthoringClientTestEnvironment>
+    public partial class Sample14_ConversationsAuthoring_DeployProjectAsync : SamplesBase<AuthoringClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]
