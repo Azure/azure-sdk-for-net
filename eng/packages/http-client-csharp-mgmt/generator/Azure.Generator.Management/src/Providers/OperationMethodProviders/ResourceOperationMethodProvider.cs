@@ -37,6 +37,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly CSharpType? _responseGenericType;
         private readonly bool _isGeneric;
         private readonly bool _isLongRunningOperation;
+        private readonly bool _isFakeLongRunningOperation;
 
         public ResourceOperationMethodProvider(
             ResourceClientProvider resourceClientProvider,
@@ -50,7 +51,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _isAsync = isAsync;
             _responseGenericType = _serviceMethod.GetResponseBodyType();
             _isGeneric = _responseGenericType != null;
-            _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
+            _isLongRunningOperation = _serviceMethod.IsLongRunningOperation() || _serviceMethod.IsFakeLongRunningOperation();
+            _isFakeLongRunningOperation = _serviceMethod.IsFakeLongRunningOperation();
             _clientDiagnosticsField = resourceClientProvider.GetClientDiagnosticsField();
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
@@ -236,7 +238,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
             var result = new List<ParameterProvider>();
-            if (_serviceMethod.IsLongRunningOperation())
+            if (_serviceMethod.IsLongRunningOperation() || _serviceMethod.IsFakeLongRunningOperation())
             {
                 result.Add(KnownAzureParameters.WaitUntil);
             }
