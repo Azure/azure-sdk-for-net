@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added support for the `2024-02-01` service version to `MetricsQueryClient`.
+- Added support for the `2024-02-01` metric namespaces service version to `MetricsQueryClient`.
 
 ## 1.6.0 (2024-12-03)
 
