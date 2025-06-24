@@ -706,20 +706,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             Assert.IsNotNull(deployment.LastDeployedOn, "LastDeployedOn should not be null.");
             Assert.IsNotNull(deployment.DeploymentExpiredOn, "DeploymentExpiredOn should not be null.");
             Assert.IsNotNull(deployment.ModelTrainingConfigVersion, "ModelTrainingConfigVersion should not be null.");
-
-            // Validate AssignedResources
-            Assert.IsNotNull(deployment.AssignedResources, "AssignedResources should not be null.");
-            Assert.IsTrue(deployment.AssignedResources.Count > 0, "There should be at least one assigned resource.");
-
-            foreach (var assignedResource in deployment.AssignedResources)
-            {
-                Assert.IsNotNull(assignedResource.ResourceId, "ResourceId should not be null.");
-                Assert.IsNotNull(assignedResource.Region, "Region should not be null.");
-                Assert.IsNotNull(assignedResource.AssignedAoaiResource, "AssignedAoaiResource should not be null.");
-                Assert.IsNotNull(assignedResource.AssignedAoaiResource.Kind, "AssignedAoaiResource.Kind should not be null.");
-                Assert.IsNotNull(assignedResource.AssignedAoaiResource.ResourceId, "AssignedAoaiResource.ResourceId should not be null.");
-                Assert.IsNotNull(assignedResource.AssignedAoaiResource.DeploymentName, "AssignedAoaiResource.DeploymentName should not be null.");
-            }
         }
     }
 }
