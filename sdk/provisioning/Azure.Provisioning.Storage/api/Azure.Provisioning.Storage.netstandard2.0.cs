@@ -80,6 +80,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class BlobContainerImmutabilityPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -130,6 +131,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class BlobInventoryPolicyDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -262,6 +264,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class BlobServiceChangeFeed : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -368,6 +371,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class EncryptionScopeKeyVaultProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -464,6 +468,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class FileShare : Azure.Provisioning.Primitives.ProvisionableResource
@@ -528,6 +533,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public enum FileShareAccessTier
@@ -615,6 +621,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public enum ImmutabilityPolicyState
@@ -810,6 +817,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class ObjectReplicationPolicyFilter : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -887,6 +895,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class RestorePolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1001,6 +1010,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public enum StorageAccountAccessTier
@@ -1152,6 +1162,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class StorageAccountManagementPolicy : Azure.Provisioning.Primitives.ProvisionableResource
@@ -1190,6 +1201,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class StorageAccountMicrosoftEndpoints : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1457,6 +1469,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class StoragePrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1552,6 +1565,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public enum StorageRoutingChoice
@@ -1669,6 +1683,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class StorageTableAccessPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1720,6 +1735,7 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageTaskAssignmentExecutionContext ExecutionContext { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ReportPrefix { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageTaskReportProperties RunStatus { get { throw null; } set { } }
@@ -1801,6 +1817,7 @@ namespace Azure.Provisioning.Storage
             public static readonly string V2023_04_01;
             public static readonly string V2023_05_01;
             public static readonly string V2024_01_01;
+            public static readonly string V2025_01_01;
         }
     }
     public partial class UpdateHistoryEntry : Azure.Provisioning.Primitives.ProvisionableConstruct

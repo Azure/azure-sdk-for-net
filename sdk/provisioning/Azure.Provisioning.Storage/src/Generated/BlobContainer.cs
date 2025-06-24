@@ -271,7 +271,7 @@ public partial class BlobContainer : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the BlobContainer.</param>
     public BlobContainer(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/blobServices/containers", resourceVersion ?? "2024-01-01")
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/blobServices/containers", resourceVersion ?? "2025-01-01")
     {
     }
 
@@ -311,6 +311,11 @@ public partial class BlobContainer : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-01-01.
+        /// </summary>
+        public static readonly string V2025_01_01 = "2025-01-01";
+
         /// <summary>
         /// 2024-01-01.
         /// </summary>
