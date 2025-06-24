@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Azure.AI.OpenAI.Samples;
 
@@ -100,6 +101,51 @@ public partial class AzureOpenAISamples
                 Console.Write(contentPart.Text);
             }
         }
+        #endregion
+    }
+
+    public async Task StructuredOutputs()
+    {
+        #region Snippet:StructuredOutputs
+        AzureOpenAIClient azureClient = new(
+            new Uri("https://your-azure-openai-resource.com"),
+            new DefaultAzureCredential());
+        ChatClient client = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
+
+        IEnumerable<ChatMessage> messages =
+        [
+            new UserChatMessage("What's heavier, a pound of feathers or sixteen ounces of steel?")
+        ];
+        ChatCompletionOptions options = new ChatCompletionOptions()
+        {
+            ResponseFormat = ChatResponseFormat.CreateJsonSchemaFormat(
+                "test_schema",
+                BinaryData.FromString("""
+                    {
+                      "type": "object",
+                      "properties": {
+                        "answer": {
+                          "type": "string"
+                        },
+                        "steps": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "answer",
+                        "steps"
+                      ],
+                      "additionalProperties": false
+                    }
+                    """),
+                "a single final answer with a supporting collection of steps",
+                jsonSchemaIsStrict: true)
+        };
+        ChatCompletion completion = await client.CompleteChatAsync(messages, options)!;
+        Console.WriteLine(completion!.Content![0].Text);
         #endregion
     }
 
