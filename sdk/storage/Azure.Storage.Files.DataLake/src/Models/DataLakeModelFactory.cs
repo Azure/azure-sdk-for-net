@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -949,5 +950,17 @@ namespace Azure.Storage.Files.DataLake.Models
                 Position = position
             };
         #endregion DataLakeQueryError
+
+        #region GetPathTagResult
+        /// <summary>
+        /// Creates a new GetPathTagResult for mocking.
+        /// </summary>
+        public static GetPathTagResult GetPathTagResult(
+            Tags tags)
+            => new GetPathTagResult()
+            {
+                Tags = tags
+            };
+        #endregion GetPathTagResult
     }
 }

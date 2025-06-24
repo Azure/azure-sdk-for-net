@@ -6042,6 +6042,258 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.NotNull(paths[2].CreatedOn);
         }
 
+        [RecordedTest]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetSetTags()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await directory.SetTagsAsync(tags);
+            Response<GetPathTagResult> getTagsResponse = await directory.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
+        }
+
+        [RecordedTest]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetSetTagsOAuth()
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(oauthService);
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await directory.SetTagsAsync(tags);
+            Response<GetPathTagResult> getTagsResponse = await directory.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
+        }
+
+        [RecordedTest]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetSetTags_Lease()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            Dictionary<string, string> tags = BuildTags();
+
+            string leaseId = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+            await InstrumentClient(directory.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration);
+
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await directory.SetTagsAsync(tags, conditions);
+            Response<GetPathTagResult> getTagsResponse = await directory.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
+        }
+
+        [RecordedTest]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetTags_LeaseFailed()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            string leaseId = Recording.Random.NewGuid().ToString();
+
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                directory.GetTagsAsync(conditions),
+                e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task SetTags_LeaseFailed()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            Dictionary<string, string> tags = BuildTags();
+
+            string leaseId = Recording.Random.NewGuid().ToString();
+
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                directory.SetTagsAsync(tags, conditions),
+                e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetSetTags_DirectorySas()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            Uri sasUri = directory.GenerateSasUri(DataLakeSasPermissions.All, Recording.UtcNow.AddHours(1));
+            directory = InstrumentClient(new DataLakeDirectoryClient(sasUri, GetOptions()));
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await directory.SetTagsAsync(tags);
+            Response<GetPathTagResult> getTagsResponse = await directory.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
+        }
+
+        [RecordedTest]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetSetTags_FileSystemSas()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            Uri fileSystemSasUri = test.FileSystem.GenerateSasUri(DataLakeFileSystemSasPermissions.All, Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemSasUri);
+            uriBuilder.DirectoryOrFilePath = directory.Name;
+            Uri fileSasUri = uriBuilder.ToUri();
+            directory = InstrumentClient(new DataLakeDirectoryClient(fileSasUri, GetOptions()));
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await directory.SetTagsAsync(tags);
+            Response<GetPathTagResult> getTagsResponse = await directory.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
+        }
+
+        [RecordedTest]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetSetTags_AccountSas()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            SasQueryParameters sasQueryParameters = DataLakeClientBuilder.GetNewAccountSas(AccountSasResourceTypes.All, AccountSasPermissions.All, sharedKeyCredential);
+            directory = InstrumentClient(new DataLakeDirectoryClient(new Uri($"{directory.Uri}?{sasQueryParameters}"), GetOptions()));
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await directory.SetTagsAsync(tags);
+            Response<GetPathTagResult> getTagsResponse = await directory.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
+        }
+
+        [RecordedTest]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetSetTags_DirectoryIdentitySas()
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(oauthService);
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            Uri sasUri = directory.GenerateUserDelegationSasUri(DataLakeSasPermissions.All, Recording.UtcNow.AddHours(1), userDelegationKey);
+            directory = InstrumentClient(new DataLakeDirectoryClient(sasUri, GetOptions()));
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await directory.SetTagsAsync(tags);
+            Response<GetPathTagResult> getTagsResponse = await directory.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
+        }
+
+        [RecordedTest]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetSetTags_FileSystemIdentitySas()
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(oauthService);
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            Uri fileSystemSasUri = test.FileSystem.GenerateSasUri(DataLakeFileSystemSasPermissions.All, Recording.UtcNow.AddHours(1));
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemSasUri);
+            uriBuilder.DirectoryOrFilePath = directory.Name;
+            Uri directorySasUri = uriBuilder.ToUri();
+            directory = InstrumentClient(new DataLakeDirectoryClient(directorySasUri, GetOptions()));
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await directory.SetTagsAsync(tags);
+            Response<GetPathTagResult> getTagsResponse = await directory.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
+        }
+
+        [RecordedTest]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetTags_Error()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                directory.GetTagsAsync(),
+                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task SetTags_Error()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                directory.SetTagsAsync(tags),
+                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
         private async Task SetUpDirectoryForListing(DataLakeDirectoryClient directoryClient)
         {
             string[] pathNames = PathNames;
