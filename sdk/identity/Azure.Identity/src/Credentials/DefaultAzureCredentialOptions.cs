@@ -250,6 +250,8 @@ namespace Azure.Identity
         /// Setting to <c>true</c> disables single sign-on authentication with development tools which write to the shared token cache.
         /// The default is <c>true</c>.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("SharedTokenCacheCredential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
         public bool ExcludeSharedTokenCacheCredential { get; set; } = true;
 
         /// <summary>
@@ -316,7 +318,9 @@ namespace Azure.Identity
                 dacClone.ExcludeWorkloadIdentityCredential = ExcludeWorkloadIdentityCredential;
                 dacClone.ExcludeManagedIdentityCredential = ExcludeManagedIdentityCredential;
                 dacClone.ExcludeAzureDeveloperCliCredential = ExcludeAzureDeveloperCliCredential;
+#pragma warning disable CS0618 // Type or member is obsolete
                 dacClone.ExcludeSharedTokenCacheCredential = ExcludeSharedTokenCacheCredential;
+#pragma warning restore CS0618 // Type or member is obsolete
                 dacClone.ExcludeInteractiveBrowserCredential = ExcludeInteractiveBrowserCredential;
                 dacClone.ExcludeAzureCliCredential = ExcludeAzureCliCredential;
                 dacClone.ExcludeVisualStudioCredential = ExcludeVisualStudioCredential;

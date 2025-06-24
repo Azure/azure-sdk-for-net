@@ -100,10 +100,7 @@ namespace Azure.Identity
 
             if (!_useProdCredentials)
             {
-                if (!Options.ExcludeSharedTokenCacheCredential)
-                {
-                    chain.Add(CreateSharedTokenCacheCredential());
-                }
+                // SharedTokenCacheCredential is deprecated and no longer part of the auth flow
 
                 if (!Options.ExcludeVisualStudioCredential)
                 {
@@ -212,6 +209,7 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateSharedTokenCacheCredential()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             var options = Options.Clone<SharedTokenCacheCredentialOptions>();
 
             options.TenantId = Options.SharedTokenCacheTenantId;
@@ -219,6 +217,7 @@ namespace Azure.Identity
             options.Username = Options.SharedTokenCacheUsername;
 
             return new SharedTokenCacheCredential(Options.SharedTokenCacheTenantId, Options.SharedTokenCacheUsername, options, Pipeline);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         public virtual TokenCredential CreateInteractiveBrowserCredential()

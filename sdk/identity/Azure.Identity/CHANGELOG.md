@@ -9,6 +9,10 @@
 
 ### Breaking Changes
 
+#### Behavioral Breaking Changes
+
+- `SharedTokenCacheCredential` has been deprecated and removed from the `DefaultAzureCredential` authentication flow. The `SharedTokenCacheCredential` type and related APIs are marked as obsolete. Users should migrate to other dev tool credentials such as `VisualStudioCredential`. See [#50694](https://github.com/Azure/azure-sdk-for-net/issues/50694).
+
 ### Bugs Fixed
 
 - `ManagedIdentityCredential` now retries 410 status responses for at least 70 seconds total duration as required by [Azure IMDS documentation](https://learn.microsoft.com/azure/virtual-machines/instance-metadata-service?tabs=windows#errors-and-debugging). Previously, 410 responses were retried with the same short exponential backoff as other status codes, resulting in insufficient retry duration ([#50724](https://github.com/Azure/azure-sdk-for-net/issues/50724)).

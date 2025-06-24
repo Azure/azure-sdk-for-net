@@ -159,10 +159,7 @@ namespace Azure.Identity.Tests
             {
                 Assert.True(ex.Message.Contains("DeveloperCliCredential Unavailable"));
             }
-            if (!excludeSharedTokenCacheCredential)
-            {
-                Assert.True(ex.Message.Contains("SharedTokenCacheCredential Unavailable"));
-            }
+            // SharedTokenCacheCredential is deprecated and no longer part of the auth flow
             if (!excludeCliCredential)
             {
                 Assert.True(ex.Message.Contains("CliCredential Unavailable"));
@@ -256,7 +253,6 @@ namespace Azure.Identity.Tests
         public static IEnumerable<object[]> AllCredentialTypes()
         {
             yield return new object[] { typeof(EnvironmentCredential) };
-            yield return new object[] { typeof(SharedTokenCacheCredential) };
             yield return new object[] { typeof(VisualStudioCredential) };
             yield return new object[] { typeof(VisualStudioCodeCredential) };
             yield return new object[] { typeof(AzureCliCredential) };
