@@ -54,6 +54,7 @@ dotnet add package Azure.ResourceManager.PlanetaryComputer --prerelease
 $env:AZURE_SUBSCRIPTION_ID = "<your-subscription-id>"
 $env:AZURE_TEST_MODE = "Record"   # or "Playback"
 $env:AZURE_AUTHORITY_HOST = "https://login.microsoftonline.com"
+$env:AZURE_IDENTITY_NAME = "<Your-Identity-Name>"
 ```
 
 ---
