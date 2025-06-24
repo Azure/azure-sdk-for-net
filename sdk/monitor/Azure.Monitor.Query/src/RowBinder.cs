@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Monitor.Query.Models;
 
@@ -11,6 +12,9 @@ namespace Azure.Monitor.Query
     internal class RowBinder: TypeBinder<LogsTableRow>
     {
         internal static RowBinder Shared = new();
+
+        [RequiresUnreferencedCode("TypeBinder uses reflection to access type members which may be trimmed")]
+        [RequiresDynamicCode("TypeBinder creates generic types at runtime which requires dynamic code generation")]
         internal IReadOnlyList<T> BindResults<T>(IReadOnlyList<LogsTable> tables)
         {
             List<T> results = new List<T>();
