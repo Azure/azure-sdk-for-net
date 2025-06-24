@@ -1,15 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using NUnit.Framework;
-using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.AI.Language.Conversations.Authoring.Tests;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using System.Collections.Generic;
-using System.Threading;
+using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests
 {
@@ -647,8 +648,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 
             // Create the assignedResource
             var assignedResource = new ConversationAuthoringDeploymentResource(
-                resourceId: "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/bidishac-dev/providers/Microsoft.CognitiveServices/accounts/bidishac-scus",
-                region: "South Central US"
+                resourceId: "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/language-sdk-rg/providers/Microsoft.CognitiveServices/accounts/sdk-test-01",
+                region: "East US"
             )
             {
                 AssignedAoaiResource = assignedAoaiResource
@@ -681,11 +682,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         }
 
         [RecordedTest]
-        public async Task GetDeploymentAsync_ReturnDeploymentDetailsWithAssignedResources()
+        public async Task GetDeploymentAsync()
         {
             // Arrange
-            string projectName = "Test-data-labels";
-            string deploymentName = "deployment2";
+            string projectName = "EmailAppEnglish";
+            string deploymentName = "assignedDeployment";
 
             ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
 

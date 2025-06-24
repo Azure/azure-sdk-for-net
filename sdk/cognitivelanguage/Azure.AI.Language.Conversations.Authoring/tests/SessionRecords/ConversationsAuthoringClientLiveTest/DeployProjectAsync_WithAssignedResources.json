@@ -1,23 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment2?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailAppEnglish/deployments/assignedDeployment?api-version=2025-05-15-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "460",
+        "Content-Length": "465",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250602.1 (.NET 9.0.5; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "trainedModelLabel": "MyModel",
+        "trainedModelLabel": "ModelWithDG",
         "assignedResources": [
           {
             "resourceId": "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/language-sdk-rg/providers/Microsoft.CognitiveServices/accounts/sdk-test-01",
-            "region": "eastus",
+            "region": "East US",
             "assignedAoaiResource": {
               "kind": "AzureOpenAI",
               "deploymentName": "gpt-4o",
@@ -29,14 +29,14 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "2d75e156-027d-4b23-b8ce-a52ba5b7aa1e",
+        "apim-request-id": "ee0c8c87-d0c4-4e5e-b0ae-d48e71d38419",
         "Content-Length": "0",
-        "Date": "Mon, 02 Jun 2025 19:55:27 GMT",
-        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/deployments/deployment2/jobs/967f1dc5-749a-4c08-a574-5c0349934735_638844192000000000?api-version=2025-05-15-preview",
-        "request-id": "2d75e156-027d-4b23-b8ce-a52ba5b7aa1e",
+        "Date": "Tue, 24 Jun 2025 19:40:41 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailAppEnglish/deployments/assignedDeployment/jobs/7250f4d0-178e-48d7-bf12-159acbea695f_638863200000000000?api-version=2025-05-15-preview",
+        "request-id": "ee0c8c87-d0c4-4e5e-b0ae-d48e71d38419",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "187",
+        "x-envoy-upstream-service-time": "174",
         "x-ms-region": "East US"
       },
       "ResponseBody": null
@@ -45,6 +45,6 @@
   "Variables": {
     "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "1210695566"
+    "RandomSeed": "629678659"
   }
 }
