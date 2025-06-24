@@ -14,7 +14,10 @@
 
 ### Sample updates
 - The Azure function sample was simplified.
-- Added samples for file search citation with streaming. 
+- Added samples for file search citation with streaming.
+- Fabric tool sample added
+- Connected Agent tool sample added
+- Multiple Connected Agent sample added.
 
 ## 1.1.0-beta.2 (2025-06-04)
 
