@@ -100,8 +100,6 @@ namespace Azure.Identity
 
             if (!_useProdCredentials)
             {
-                // SharedTokenCacheCredential is deprecated and no longer part of the auth flow
-
                 if (!Options.ExcludeVisualStudioCredential)
                 {
                     chain.Add(CreateVisualStudioCredential());
