@@ -278,17 +278,54 @@ namespace Azure.Generator.Management.Providers
                 }
             }
 
-            return [
-                BuildValidateResourceIdMethod(),
-                .. operationMethods,
-                new AddTagMethodProvider(this, true),
-                new AddTagMethodProvider(this, false),
-                // Disabled SetTag methods generation temporarily: The extension method ReplaceWith for IDictionary<string, string> is defined in SharedExtensions.cs, which is not included in the project yet.
-                // new SetTagsMethodProvider(this, true),
-                // new SetTagsMethodProvider(this, false),
-                new RemoveTagMethodProvider(this, true),
-                new RemoveTagMethodProvider(this, false)
-            ];
+            var methods = new List<MethodProvider>
+            {
+                BuildValidateResourceIdMethod()
+            };
+            methods.AddRange(operationMethods);
+
+            // Only generate tag methods if the resource model has tag properties
+            if (ShouldGenerateTagMethods())
+            {
+                methods.AddRange([
+                    new AddTagMethodProvider(this, true),
+                    new AddTagMethodProvider(this, false),
+                    // Disabled SetTag methods generation temporarily: The extension method ReplaceWith for IDictionary<string, string> is defined in SharedExtensions.cs, which is not included in the project yet.
+                    // new SetTagsMethodProvider(this, true),
+                    // new SetTagsMethodProvider(this, false),
+                    new RemoveTagMethodProvider(this, true),
+                    new RemoveTagMethodProvider(this, false)
+                ]);
+            }
+
+            return [.. methods];
+        }
+
+        private bool ShouldGenerateTagMethods()
+        {
+            // Enumerate all properties from the resource data model, including inherited ones
+            ModelProvider? currentModel = ResourceData;
+            while (currentModel != null)
+            {
+                foreach (var property in currentModel.Properties)
+                {
+                    // Check if the property type is IDictionary<string, string>, Does Tag property's name has any pattern?
+                    if (property.Type.IsFrameworkType &&
+                        property.Type.IsGenericType &&
+                        property.Type.FrameworkType.GetGenericTypeDefinition() == typeof(IDictionary<,>))
+                    {
+                        var genericArgs = property.Type.Arguments;
+                        if (genericArgs.Count == 2 &&
+                            genericArgs[0].Equals(typeof(string)) &&
+                            genericArgs[1].Equals(typeof(string)))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                currentModel = currentModel.BaseModelProvider;
+            }
+            return false;
         }
 
         public ScopedApi<bool> TryGetApiVersion(out ScopedApi<string> apiVersion)
