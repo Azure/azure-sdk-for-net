@@ -782,35 +782,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LongRunningOperationResult"/>. </summary>
-        /// <param name="name"> The name of the operation. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="percentComplete"> The completion percentage of the operation. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="error"> The operation error. </param>
-        /// <returns> A new <see cref="Models.LongRunningOperationResult"/> instance for mocking. </returns>
-        public static LongRunningOperationResult LongRunningOperationResult(string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string status = null, ErrorModelError error = null)
-        {
-            return new LongRunningOperationResult(
-                name,
-                startOn,
-                endOn,
-                percentComplete,
-                status,
-                error,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ErrorModelError"/>. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        /// <returns> A new <see cref="Models.ErrorModelError"/> instance for mocking. </returns>
-        public static ErrorModelError ErrorModelError(string code = null, string message = null)
-        {
-            return new ErrorModelError(code, message, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
