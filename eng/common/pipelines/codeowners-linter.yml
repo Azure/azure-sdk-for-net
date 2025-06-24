@@ -38,6 +38,12 @@ stages:
       UserOrgUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/user-org-visibility-blob"
 
     steps:
+      - task: UseDotNet@2 # About UseDotNet@2 task: https://learn.microsoft.com/azure/devops/pipelines/tasks/reference/use-dotnet-v2?view=azure-pipelines
+        displayName: "Use .NET SDK from global.json"
+        retryCountOnTaskFailure: 3
+        inputs:
+          useGlobalJson: true
+          
       - pwsh: |
           dotnet install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"
         displayName: Install CodeownersLinter
