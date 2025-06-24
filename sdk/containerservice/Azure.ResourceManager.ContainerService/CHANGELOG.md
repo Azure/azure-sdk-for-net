@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.4 (2025-06-25)
 
 ### Bugs Fixed
 
-### Other Changes
+- Removed `[EditorBrowsable]` and `[Obsolete]` attributes on some properties that are incorrectly hidden/deprecated in previous versions.
 
 ## 1.2.3 (2025-03-05)
 
