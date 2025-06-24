@@ -448,6 +448,18 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             Assert.AreEqual(0, ids.Count);
             Assert.AreEqual(2, (await msgResp.ToListAsync()).Count);
+            // Delete message.
+            bool wasDeleted = await client.Messages.DeleteMessageAsync(threadId: thread.Id, messageId: msg1.Id);
+            Assert.IsTrue(wasDeleted);
+            ids.Add(msg1.Id);
+            ids.Add(msg2.Id);
+            msgResp = client.Messages.GetMessagesAsync(thread.Id);
+            await foreach (PersistentThreadMessage msg in msgResp)
+            {
+                ids.Remove(msg.Id);
+            }
+            Assert.AreEqual(1, ids.Count);
+            Assert.That(ids.Contains(msg1.Id));
         }
 
         [RecordedTest]

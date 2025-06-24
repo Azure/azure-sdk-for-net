@@ -32,5 +32,6 @@ description: Samples for the Azure.AI.Agents.Persistent client library.
 | [Sample17_PersistentAgents_ImageUrlInputs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/samples/Sample17_PersistentAgents_ImageUrlInputs.md) | Sample using agents with Image URL as an input. |
 | [Sample18_PersistentAgents_ImageFileInputs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/samples/Sample18_PersistentAgents_ImageFileInputs.md) | Sample using agents with Image Fileas an input. |
 | [Sample19_PersistentAgents_VectorStoreFile_WithSteps](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/samples/Sample19_PersistentAgents_VectorStoreFile_WithSteps.md) | Sample file search using `VectorStoreFile` and agents. |
+| [Sample20_PersistentAgents_FileSearch_Steaming](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/samples/Sample20_PersistentAgents_FileSearch_Steaming.md) | Sample file search with agent and streaming. |
 
 
