@@ -143,7 +143,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation, pagingMetadata: pagingMetadata);
             var catClient = InputFactory.Client("catClient", methods: [inputServiceMethod], clientNamespace: "Cats");
             var felineClient = InputFactory.Client("felineClient", methods: [inputServiceMethod], clientNamespace: "Felines");
-            MockHelpers.LoadMockPlugin(inputModels: () => [inputModel], clients: () => [catClient, felineClient]);
+            MockHelpers.LoadMockGenerator(inputModels: () => [inputModel], clients: () => [catClient, felineClient]);
 
             var catClientCollectionResult = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
                 t => t is CollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
@@ -185,7 +185,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
         [Test]
         public void UsesValidFieldIdentifierNames()
         {
-            MockHelpers.LoadMockPlugin();
+            MockHelpers.LoadMockGenerator();
             var inputModel = InputFactory.Model("cat", properties:
             [
                 InputFactory.Property("color", InputPrimitiveType.String, isRequired: true),
@@ -237,7 +237,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation, pagingMetadata: pagingMetadata);
             var client = InputFactory.Client("catClient", methods: [inputServiceMethod]);
 
-            MockHelpers.LoadMockPlugin(inputModels: () => [inputModel], clients: () => [client]);
+            MockHelpers.LoadMockGenerator(inputModels: () => [inputModel], clients: () => [client]);
         }
     }
 }
