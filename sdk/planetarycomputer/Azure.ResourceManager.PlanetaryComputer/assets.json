@@ -2,7 +2,7 @@
     "AssetsRepo": "Azure/azure-sdk-assets",
     "AssetsRepoPrefixPath": "net",
     "TagPrefix": "net/planetarycomputer/Azure.ResourceManager.PlanetaryComputer",
-    "Tag": "net/planetarycomputer/Azure.ResourceManager.PlanetaryComputer_0827ee99b3",
+    "Tag": "net/planetarycomputer/Azure.ResourceManager.PlanetaryComputer_04278b495e",
     "ServiceDirectory": "planetarycomputer",
     "SessionRecordsDirectory": "SessionRecords"
   }
