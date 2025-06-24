@@ -52,7 +52,7 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientGenerator).Assembly.Location)!, "Shared", "Core");
         AddSharedSourceDirectory(sharedSourceDirectory);
 
-        // Visitors that due any renaming must be added first so that any visitors relying on custom code view will have the CustomCodeView set.
+        // Visitors that do any renaming must be added first so that any visitors relying on custom code view will have the CustomCodeView set.
         AddVisitor(new ModelFactoryRenamerVisitor());
 
         // Rest of the visitors can be added in any order.
