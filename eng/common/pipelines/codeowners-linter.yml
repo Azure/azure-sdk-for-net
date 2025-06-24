@@ -45,7 +45,7 @@ stages:
           useGlobalJson: true
           
       - pwsh: |
-          dotnet install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"
+          dotnet tool install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"
         displayName: Install CodeownersLinter
         workingDirectory: '$(Build.SourcesDirectory)/eng/common'
 
