@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                JsonSerializer.Serialize(writer, Name);
+                ((IJsonModel<DataFactoryElement<string>>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                JsonSerializer.Serialize(writer, Value);
+                ((IJsonModel<DataFactoryElement<string>>)Value).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

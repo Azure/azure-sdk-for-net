@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -65,17 +66,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
-                JsonSerializer.Serialize(writer, File);
+                ((IJsonModel<DataFactoryElement<string>>)File).Write(writer, options);
             }
             if (Optional.IsDefined(ScanFolder))
             {
                 writer.WritePropertyName("scanFolder"u8);
-                JsonSerializer.Serialize(writer, ScanFolder);
+                ((IJsonModel<DataFactoryElement<bool>>)ScanFolder).Write(writer, options);
             }
             if (Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className"u8);
-                JsonSerializer.Serialize(writer, ClassName);
+                ((IJsonModel<DataFactoryElement<string>>)ClassName).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Files))
             {
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExecutorSize))
             {
                 writer.WritePropertyName("executorSize"u8);
-                JsonSerializer.Serialize(writer, ExecutorSize);
+                ((IJsonModel<DataFactoryElement<string>>)ExecutorSize).Write(writer, options);
             }
             if (Optional.IsDefined(Conf))
             {
@@ -168,12 +169,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize"u8);
-                JsonSerializer.Serialize(writer, DriverSize);
+                ((IJsonModel<DataFactoryElement<string>>)DriverSize).Write(writer, options);
             }
             if (Optional.IsDefined(NumExecutors))
             {
                 writer.WritePropertyName("numExecutors"u8);
-                JsonSerializer.Serialize(writer, NumExecutors);
+                ((IJsonModel<DataFactoryElement<int>>)NumExecutors).Write(writer, options);
             }
             if (Optional.IsDefined(ConfigurationType))
             {
@@ -278,7 +279,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))

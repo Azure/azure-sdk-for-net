@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("baseUrl"u8);
-            JsonSerializer.Serialize(writer, BaseUri);
+            ((IJsonModel<DataFactoryElement<string>>)BaseUri).Write(writer, options);
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);

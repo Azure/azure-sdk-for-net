@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(OracleReaderQuery))
             {
                 writer.WritePropertyName("oracleReaderQuery"u8);
-                JsonSerializer.Serialize(writer, OracleReaderQuery);
+                ((IJsonModel<DataFactoryElement<string>>)OracleReaderQuery).Write(writer, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                JsonSerializer.Serialize(writer, QueryTimeout);
+                ((IJsonModel<DataFactoryElement<string>>)QueryTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-                JsonSerializer.Serialize(writer, PartitionOption);
+                ((IJsonModel<DataFactoryElement<string>>)PartitionOption).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionSettings))
             {

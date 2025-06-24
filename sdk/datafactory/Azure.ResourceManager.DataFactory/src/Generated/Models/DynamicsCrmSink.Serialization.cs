@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IgnoreNullValues))
             {
                 writer.WritePropertyName("ignoreNullValues"u8);
-                JsonSerializer.Serialize(writer, IgnoreNullValues);
+                ((IJsonModel<DataFactoryElement<bool>>)IgnoreNullValues).Write(writer, options);
             }
             if (Optional.IsDefined(AlternateKeyName))
             {
                 writer.WritePropertyName("alternateKeyName"u8);
-                JsonSerializer.Serialize(writer, AlternateKeyName);
+                ((IJsonModel<DataFactoryElement<string>>)AlternateKeyName).Write(writer, options);
             }
             if (Optional.IsDefined(BypassBusinessLogicExecution))
             {
                 writer.WritePropertyName("bypassBusinessLogicExecution"u8);
-                JsonSerializer.Serialize(writer, BypassBusinessLogicExecution);
+                ((IJsonModel<DataFactoryElement<string>>)BypassBusinessLogicExecution).Write(writer, options);
             }
             if (Optional.IsDefined(BypassPowerAutomateFlows))
             {
                 writer.WritePropertyName("bypassPowerAutomateFlows"u8);
-                JsonSerializer.Serialize(writer, BypassPowerAutomateFlows);
+                ((IJsonModel<DataFactoryElement<bool>>)BypassPowerAutomateFlows).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

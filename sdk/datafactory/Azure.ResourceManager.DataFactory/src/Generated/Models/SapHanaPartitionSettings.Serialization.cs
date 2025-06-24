@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
-                JsonSerializer.Serialize(writer, PartitionColumnName);
+                ((IJsonModel<DataFactoryElement<string>>)PartitionColumnName).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

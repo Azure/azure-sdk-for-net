@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
-                JsonSerializer.Serialize(writer, Count);
+                ((IJsonModel<DataFactoryElement<int>>)Count).Write(writer, options);
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url"u8);
-            JsonSerializer.Serialize(writer, Uri);
+            ((IJsonModel<DataFactoryElement<string>>)Uri).Write(writer, options);
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-                JsonSerializer.Serialize(writer, Body);
+                ((IJsonModel<DataFactoryElement<string>>)Body).Write(writer, options);
             }
             if (Optional.IsDefined(Authentication))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ReportStatusOnCallBack))
             {
                 writer.WritePropertyName("reportStatusOnCallBack"u8);
-                JsonSerializer.Serialize(writer, ReportStatusOnCallBack);
+                ((IJsonModel<DataFactoryElement<bool>>)ReportStatusOnCallBack).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)

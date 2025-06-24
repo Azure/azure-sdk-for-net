@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -41,102 +42,102 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                JsonSerializer.Serialize(writer, Server);
+                ((IJsonModel<DataFactoryElement<string>>)Server).Write(writer, options);
             }
             if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
-                JsonSerializer.Serialize(writer, Database);
+                ((IJsonModel<DataFactoryElement<string>>)Database).Write(writer, options);
             }
             if (Optional.IsDefined(Encrypt))
             {
                 writer.WritePropertyName("encrypt"u8);
-                JsonSerializer.Serialize(writer, Encrypt);
+                ((IJsonModel<DataFactoryElement<string>>)Encrypt).Write(writer, options);
             }
             if (Optional.IsDefined(TrustServerCertificate))
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
-                JsonSerializer.Serialize(writer, TrustServerCertificate);
+                ((IJsonModel<DataFactoryElement<bool>>)TrustServerCertificate).Write(writer, options);
             }
             if (Optional.IsDefined(HostNameInCertificate))
             {
                 writer.WritePropertyName("hostNameInCertificate"u8);
-                JsonSerializer.Serialize(writer, HostNameInCertificate);
+                ((IJsonModel<DataFactoryElement<string>>)HostNameInCertificate).Write(writer, options);
             }
             if (Optional.IsDefined(ApplicationIntent))
             {
                 writer.WritePropertyName("applicationIntent"u8);
-                JsonSerializer.Serialize(writer, ApplicationIntent);
+                ((IJsonModel<DataFactoryElement<string>>)ApplicationIntent).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectTimeout))
             {
                 writer.WritePropertyName("connectTimeout"u8);
-                JsonSerializer.Serialize(writer, ConnectTimeout);
+                ((IJsonModel<DataFactoryElement<int>>)ConnectTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectRetryCount))
             {
                 writer.WritePropertyName("connectRetryCount"u8);
-                JsonSerializer.Serialize(writer, ConnectRetryCount);
+                ((IJsonModel<DataFactoryElement<int>>)ConnectRetryCount).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectRetryInterval))
             {
                 writer.WritePropertyName("connectRetryInterval"u8);
-                JsonSerializer.Serialize(writer, ConnectRetryInterval);
+                ((IJsonModel<DataFactoryElement<int>>)ConnectRetryInterval).Write(writer, options);
             }
             if (Optional.IsDefined(LoadBalanceTimeout))
             {
                 writer.WritePropertyName("loadBalanceTimeout"u8);
-                JsonSerializer.Serialize(writer, LoadBalanceTimeout);
+                ((IJsonModel<DataFactoryElement<int>>)LoadBalanceTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(CommandTimeout))
             {
                 writer.WritePropertyName("commandTimeout"u8);
-                JsonSerializer.Serialize(writer, CommandTimeout);
+                ((IJsonModel<DataFactoryElement<int>>)CommandTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(IntegratedSecurity))
             {
                 writer.WritePropertyName("integratedSecurity"u8);
-                JsonSerializer.Serialize(writer, IntegratedSecurity);
+                ((IJsonModel<DataFactoryElement<bool>>)IntegratedSecurity).Write(writer, options);
             }
             if (Optional.IsDefined(FailoverPartner))
             {
                 writer.WritePropertyName("failoverPartner"u8);
-                JsonSerializer.Serialize(writer, FailoverPartner);
+                ((IJsonModel<DataFactoryElement<string>>)FailoverPartner).Write(writer, options);
             }
             if (Optional.IsDefined(MaxPoolSize))
             {
                 writer.WritePropertyName("maxPoolSize"u8);
-                JsonSerializer.Serialize(writer, MaxPoolSize);
+                ((IJsonModel<DataFactoryElement<int>>)MaxPoolSize).Write(writer, options);
             }
             if (Optional.IsDefined(MinPoolSize))
             {
                 writer.WritePropertyName("minPoolSize"u8);
-                JsonSerializer.Serialize(writer, MinPoolSize);
+                ((IJsonModel<DataFactoryElement<int>>)MinPoolSize).Write(writer, options);
             }
             if (Optional.IsDefined(MultipleActiveResultSets))
             {
                 writer.WritePropertyName("multipleActiveResultSets"u8);
-                JsonSerializer.Serialize(writer, MultipleActiveResultSets);
+                ((IJsonModel<DataFactoryElement<bool>>)MultipleActiveResultSets).Write(writer, options);
             }
             if (Optional.IsDefined(MultiSubnetFailover))
             {
                 writer.WritePropertyName("multiSubnetFailover"u8);
-                JsonSerializer.Serialize(writer, MultiSubnetFailover);
+                ((IJsonModel<DataFactoryElement<bool>>)MultiSubnetFailover).Write(writer, options);
             }
             if (Optional.IsDefined(PacketSize))
             {
                 writer.WritePropertyName("packetSize"u8);
-                JsonSerializer.Serialize(writer, PacketSize);
+                ((IJsonModel<DataFactoryElement<int>>)PacketSize).Write(writer, options);
             }
             if (Optional.IsDefined(Pooling))
             {
                 writer.WritePropertyName("pooling"u8);
-                JsonSerializer.Serialize(writer, Pooling);
+                ((IJsonModel<DataFactoryElement<bool>>)Pooling).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                JsonSerializer.Serialize(writer, ConnectionString);
+                ((IJsonModel<DataFactoryElement<string>>)ConnectionString).Write(writer, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -146,12 +147,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                JsonSerializer.Serialize(writer, UserName);
+                ((IJsonModel<DataFactoryElement<string>>)UserName).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                JsonSerializer.Serialize(writer, Password);
+                ((IJsonModel<DataFactorySecret>)Password).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -505,7 +506,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

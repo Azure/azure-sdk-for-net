@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("message"u8);
-            JsonSerializer.Serialize(writer, Message);
+            ((IJsonModel<DataFactoryElement<string>>)Message).Write(writer, options);
             writer.WritePropertyName("errorCode"u8);
-            JsonSerializer.Serialize(writer, ErrorCode);
+            ((IJsonModel<DataFactoryElement<string>>)ErrorCode).Write(writer, options);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {

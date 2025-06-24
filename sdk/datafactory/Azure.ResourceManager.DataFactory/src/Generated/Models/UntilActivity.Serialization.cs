@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                JsonSerializer.Serialize(writer, Timeout);
+                ((IJsonModel<DataFactoryElement<string>>)Timeout).Write(writer, options);
             }
             writer.WritePropertyName("activities"u8);
             writer.WriteStartArray();

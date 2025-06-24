@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                JsonSerializer.Serialize(writer, Query);
+                ((IJsonModel<DataFactoryElement<string>>)Query).Write(writer, options);
             }
             if (Optional.IsDefined(PageSize))
             {
                 writer.WritePropertyName("pageSize"u8);
-                JsonSerializer.Serialize(writer, PageSize);
+                ((IJsonModel<DataFactoryElement<int>>)PageSize).Write(writer, options);
             }
             if (Optional.IsDefined(PreferredRegions))
             {
                 writer.WritePropertyName("preferredRegions"u8);
-                JsonSerializer.Serialize(writer, PreferredRegions);
+                ((IJsonModel<DataFactoryElement<IList<string>>>)PreferredRegions).Write(writer, options);
             }
             if (Optional.IsDefined(DetectDatetime))
             {
                 writer.WritePropertyName("detectDatetime"u8);
-                JsonSerializer.Serialize(writer, DetectDatetime);
+                ((IJsonModel<DataFactoryElement<bool>>)DetectDatetime).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

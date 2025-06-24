@@ -68,22 +68,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TraceLevel))
             {
                 writer.WritePropertyName("traceLevel"u8);
-                JsonSerializer.Serialize(writer, TraceLevel);
+                ((IJsonModel<DataFactoryElement<string>>)TraceLevel).Write(writer, options);
             }
             if (Optional.IsDefined(ContinueOnError))
             {
                 writer.WritePropertyName("continueOnError"u8);
-                JsonSerializer.Serialize(writer, ContinueOnError);
+                ((IJsonModel<DataFactoryElement<bool>>)ContinueOnError).Write(writer, options);
             }
             if (Optional.IsDefined(RunConcurrently))
             {
                 writer.WritePropertyName("runConcurrently"u8);
-                JsonSerializer.Serialize(writer, RunConcurrently);
+                ((IJsonModel<DataFactoryElement<bool>>)RunConcurrently).Write(writer, options);
             }
             if (Optional.IsDefined(SourceStagingConcurrency))
             {
                 writer.WritePropertyName("sourceStagingConcurrency"u8);
-                JsonSerializer.Serialize(writer, SourceStagingConcurrency);
+                ((IJsonModel<DataFactoryElement<int>>)SourceStagingConcurrency).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Sinks))
             {

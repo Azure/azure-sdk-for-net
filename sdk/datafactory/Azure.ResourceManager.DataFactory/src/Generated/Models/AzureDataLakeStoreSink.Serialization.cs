@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
-                JsonSerializer.Serialize(writer, CopyBehavior);
+                ((IJsonModel<DataFactoryElement<string>>)CopyBehavior).Write(writer, options);
             }
             if (Optional.IsDefined(EnableAdlsSingleFileParallel))
             {
                 writer.WritePropertyName("enableAdlsSingleFileParallel"u8);
-                JsonSerializer.Serialize(writer, EnableAdlsSingleFileParallel);
+                ((IJsonModel<DataFactoryElement<bool>>)EnableAdlsSingleFileParallel).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

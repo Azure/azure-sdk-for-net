@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -41,87 +42,87 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                JsonSerializer.Serialize(writer, Server);
+                ((IJsonModel<DataFactoryElement<string>>)Server).Write(writer, options);
             }
             if (Optional.IsDefined(SystemNumber))
             {
                 writer.WritePropertyName("systemNumber"u8);
-                JsonSerializer.Serialize(writer, SystemNumber);
+                ((IJsonModel<DataFactoryElement<string>>)SystemNumber).Write(writer, options);
             }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                JsonSerializer.Serialize(writer, ClientId);
+                ((IJsonModel<DataFactoryElement<string>>)ClientId).Write(writer, options);
             }
             if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
-                JsonSerializer.Serialize(writer, Language);
+                ((IJsonModel<DataFactoryElement<string>>)Language).Write(writer, options);
             }
             if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
-                JsonSerializer.Serialize(writer, SystemId);
+                ((IJsonModel<DataFactoryElement<string>>)SystemId).Write(writer, options);
             }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                JsonSerializer.Serialize(writer, UserName);
+                ((IJsonModel<DataFactoryElement<string>>)UserName).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                JsonSerializer.Serialize(writer, Password);
+                ((IJsonModel<DataFactorySecret>)Password).Write(writer, options);
             }
             if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
-                JsonSerializer.Serialize(writer, MessageServer);
+                ((IJsonModel<DataFactoryElement<string>>)MessageServer).Write(writer, options);
             }
             if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
-                JsonSerializer.Serialize(writer, MessageServerService);
+                ((IJsonModel<DataFactoryElement<string>>)MessageServerService).Write(writer, options);
             }
             if (Optional.IsDefined(SncFlag))
             {
                 writer.WritePropertyName("sncMode"u8);
-                JsonSerializer.Serialize(writer, SncFlag);
+                ((IJsonModel<DataFactoryElement<bool>>)SncFlag).Write(writer, options);
             }
             if (Optional.IsDefined(SncMyName))
             {
                 writer.WritePropertyName("sncMyName"u8);
-                JsonSerializer.Serialize(writer, SncMyName);
+                ((IJsonModel<DataFactoryElement<string>>)SncMyName).Write(writer, options);
             }
             if (Optional.IsDefined(SncPartnerName))
             {
                 writer.WritePropertyName("sncPartnerName"u8);
-                JsonSerializer.Serialize(writer, SncPartnerName);
+                ((IJsonModel<DataFactoryElement<string>>)SncPartnerName).Write(writer, options);
             }
             if (Optional.IsDefined(SncLibraryPath))
             {
                 writer.WritePropertyName("sncLibraryPath"u8);
-                JsonSerializer.Serialize(writer, SncLibraryPath);
+                ((IJsonModel<DataFactoryElement<string>>)SncLibraryPath).Write(writer, options);
             }
             if (Optional.IsDefined(SncQop))
             {
                 writer.WritePropertyName("sncQop"u8);
-                JsonSerializer.Serialize(writer, SncQop);
+                ((IJsonModel<DataFactoryElement<string>>)SncQop).Write(writer, options);
             }
             if (Optional.IsDefined(X509CertificatePath))
             {
                 writer.WritePropertyName("x509CertificatePath"u8);
-                JsonSerializer.Serialize(writer, X509CertificatePath);
+                ((IJsonModel<DataFactoryElement<string>>)X509CertificatePath).Write(writer, options);
             }
             if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
-                JsonSerializer.Serialize(writer, LogonGroup);
+                ((IJsonModel<DataFactoryElement<string>>)LogonGroup).Write(writer, options);
             }
             if (Optional.IsDefined(SubscriberName))
             {
                 writer.WritePropertyName("subscriberName"u8);
-                JsonSerializer.Serialize(writer, SubscriberName);
+                ((IJsonModel<DataFactoryElement<string>>)SubscriberName).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -319,7 +320,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            password = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("messageServer"u8))

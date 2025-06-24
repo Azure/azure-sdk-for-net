@@ -39,37 +39,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RowCount))
             {
                 writer.WritePropertyName("rowCount"u8);
-                JsonSerializer.Serialize(writer, RowCount);
+                ((IJsonModel<DataFactoryElement<int>>)RowCount).Write(writer, options);
             }
             if (Optional.IsDefined(RowSkips))
             {
                 writer.WritePropertyName("rowSkips"u8);
-                JsonSerializer.Serialize(writer, RowSkips);
+                ((IJsonModel<DataFactoryElement<int>>)RowSkips).Write(writer, options);
             }
             if (Optional.IsDefined(RfcTableFields))
             {
                 writer.WritePropertyName("rfcTableFields"u8);
-                JsonSerializer.Serialize(writer, RfcTableFields);
+                ((IJsonModel<DataFactoryElement<string>>)RfcTableFields).Write(writer, options);
             }
             if (Optional.IsDefined(RfcTableOptions))
             {
                 writer.WritePropertyName("rfcTableOptions"u8);
-                JsonSerializer.Serialize(writer, RfcTableOptions);
+                ((IJsonModel<DataFactoryElement<string>>)RfcTableOptions).Write(writer, options);
             }
             if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
-                JsonSerializer.Serialize(writer, BatchSize);
+                ((IJsonModel<DataFactoryElement<int>>)BatchSize).Write(writer, options);
             }
             if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
-                JsonSerializer.Serialize(writer, CustomRfcReadTableFunctionModule);
+                ((IJsonModel<DataFactoryElement<string>>)CustomRfcReadTableFunctionModule).Write(writer, options);
             }
             if (Optional.IsDefined(SapDataColumnDelimiter))
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
-                JsonSerializer.Serialize(writer, SapDataColumnDelimiter);
+                ((IJsonModel<DataFactoryElement<string>>)SapDataColumnDelimiter).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionOption))
             {

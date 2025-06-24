@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FileMissing))
             {
                 writer.WritePropertyName("fileMissing"u8);
-                JsonSerializer.Serialize(writer, FileMissing);
+                ((IJsonModel<DataFactoryElement<bool>>)FileMissing).Write(writer, options);
             }
             if (Optional.IsDefined(DataInconsistency))
             {
                 writer.WritePropertyName("dataInconsistency"u8);
-                JsonSerializer.Serialize(writer, DataInconsistency);
+                ((IJsonModel<DataFactoryElement<bool>>)DataInconsistency).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

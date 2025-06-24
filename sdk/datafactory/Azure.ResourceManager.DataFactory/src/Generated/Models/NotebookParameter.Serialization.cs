@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (Value != null)
                 {
                     writer.WritePropertyName("value"u8);
-                    JsonSerializer.Serialize(writer, Value);
+                    ((IJsonModel<DataFactoryElement<string>>)Value).Write(writer, options);
                 }
                 else
                 {

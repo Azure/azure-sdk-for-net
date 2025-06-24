@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                JsonSerializer.Serialize(writer, Recursive);
+                ((IJsonModel<DataFactoryElement<bool>>)Recursive).Write(writer, options);
             }
             if (Optional.IsDefined(WildcardFolderPath))
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
-                JsonSerializer.Serialize(writer, WildcardFolderPath);
+                ((IJsonModel<DataFactoryElement<string>>)WildcardFolderPath).Write(writer, options);
             }
             if (Optional.IsDefined(WildcardFileName))
             {
                 writer.WritePropertyName("wildcardFileName"u8);
-                JsonSerializer.Serialize(writer, WildcardFileName);
+                ((IJsonModel<DataFactoryElement<string>>)WildcardFileName).Write(writer, options);
             }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
-                JsonSerializer.Serialize(writer, EnablePartitionDiscovery);
+                ((IJsonModel<DataFactoryElement<bool>>)EnablePartitionDiscovery).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
-                JsonSerializer.Serialize(writer, PartitionRootPath);
+                ((IJsonModel<DataFactoryElement<string>>)PartitionRootPath).Write(writer, options);
             }
             if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
-                JsonSerializer.Serialize(writer, DeleteFilesAfterCompletion);
+                ((IJsonModel<DataFactoryElement<bool>>)DeleteFilesAfterCompletion).Write(writer, options);
             }
             if (Optional.IsDefined(FileListPath))
             {
                 writer.WritePropertyName("fileListPath"u8);
-                JsonSerializer.Serialize(writer, FileListPath);
+                ((IJsonModel<DataFactoryElement<string>>)FileListPath).Write(writer, options);
             }
             if (Optional.IsDefined(UseBinaryTransfer))
             {
                 writer.WritePropertyName("useBinaryTransfer"u8);
-                JsonSerializer.Serialize(writer, UseBinaryTransfer);
+                ((IJsonModel<DataFactoryElement<bool>>)UseBinaryTransfer).Write(writer, options);
             }
             if (Optional.IsDefined(DisableChunking))
             {
                 writer.WritePropertyName("disableChunking"u8);
-                JsonSerializer.Serialize(writer, DisableChunking);
+                ((IJsonModel<DataFactoryElement<bool>>)DisableChunking).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

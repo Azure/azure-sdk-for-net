@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(OperationTimeout))
             {
                 writer.WritePropertyName("operationTimeout"u8);
-                JsonSerializer.Serialize(writer, OperationTimeout);
+                ((IJsonModel<DataFactoryElement<string>>)OperationTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(UseTempFileRename))
             {
                 writer.WritePropertyName("useTempFileRename"u8);
-                JsonSerializer.Serialize(writer, UseTempFileRename);
+                ((IJsonModel<DataFactoryElement<bool>>)UseTempFileRename).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

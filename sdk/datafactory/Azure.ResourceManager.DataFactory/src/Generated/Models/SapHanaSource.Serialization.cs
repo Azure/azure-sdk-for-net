@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                JsonSerializer.Serialize(writer, Query);
+                ((IJsonModel<DataFactoryElement<string>>)Query).Write(writer, options);
             }
             if (Optional.IsDefined(PacketSize))
             {
                 writer.WritePropertyName("packetSize"u8);
-                JsonSerializer.Serialize(writer, PacketSize);
+                ((IJsonModel<DataFactoryElement<int>>)PacketSize).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-                JsonSerializer.Serialize(writer, PartitionOption);
+                ((IJsonModel<DataFactoryElement<string>>)PartitionOption).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionSettings))
             {

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                JsonSerializer.Serialize(writer, Value);
+                ((IJsonModel<DataFactoryElement<BinaryData>>)Value).Write(writer, options);
             }
             if (Optional.IsDefined(SetSystemVariable))
             {

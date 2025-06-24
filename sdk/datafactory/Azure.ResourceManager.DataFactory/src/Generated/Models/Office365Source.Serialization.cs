@@ -39,32 +39,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AllowedGroups))
             {
                 writer.WritePropertyName("allowedGroups"u8);
-                JsonSerializer.Serialize(writer, AllowedGroups);
+                ((IJsonModel<DataFactoryElement<IList<string>>>)AllowedGroups).Write(writer, options);
             }
             if (Optional.IsDefined(UserScopeFilterUri))
             {
                 writer.WritePropertyName("userScopeFilterUri"u8);
-                JsonSerializer.Serialize(writer, UserScopeFilterUri);
+                ((IJsonModel<DataFactoryElement<string>>)UserScopeFilterUri).Write(writer, options);
             }
             if (Optional.IsDefined(DateFilterColumn))
             {
                 writer.WritePropertyName("dateFilterColumn"u8);
-                JsonSerializer.Serialize(writer, DateFilterColumn);
+                ((IJsonModel<DataFactoryElement<string>>)DateFilterColumn).Write(writer, options);
             }
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                JsonSerializer.Serialize(writer, StartOn);
+                ((IJsonModel<DataFactoryElement<string>>)StartOn).Write(writer, options);
             }
             if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                JsonSerializer.Serialize(writer, EndOn);
+                ((IJsonModel<DataFactoryElement<string>>)EndOn).Write(writer, options);
             }
             if (Optional.IsDefined(OutputColumns))
             {
                 writer.WritePropertyName("outputColumns"u8);
-                JsonSerializer.Serialize(writer, OutputColumns);
+                ((IJsonModel<DataFactoryElement<IList<Office365TableOutputColumn>>>)OutputColumns).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

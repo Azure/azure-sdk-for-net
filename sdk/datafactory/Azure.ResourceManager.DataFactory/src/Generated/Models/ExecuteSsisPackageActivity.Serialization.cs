@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -43,17 +44,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
-                JsonSerializer.Serialize(writer, Runtime);
+                ((IJsonModel<DataFactoryElement<string>>)Runtime).Write(writer, options);
             }
             if (Optional.IsDefined(LoggingLevel))
             {
                 writer.WritePropertyName("loggingLevel"u8);
-                JsonSerializer.Serialize(writer, LoggingLevel);
+                ((IJsonModel<DataFactoryElement<string>>)LoggingLevel).Write(writer, options);
             }
             if (Optional.IsDefined(EnvironmentPath))
             {
                 writer.WritePropertyName("environmentPath"u8);
-                JsonSerializer.Serialize(writer, EnvironmentPath);
+                ((IJsonModel<DataFactoryElement<string>>)EnvironmentPath).Write(writer, options);
             }
             if (Optional.IsDefined(ExecutionCredential))
             {
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableStaging))
             {
                 writer.WritePropertyName("enableStaging"u8);
-                JsonSerializer.Serialize(writer, EnableStaging);
+                ((IJsonModel<DataFactoryElement<bool>>)EnableStaging).Write(writer, options);
             }
             if (Optional.IsDefined(StagingSettings))
             {
@@ -87,17 +88,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ParallelCopies))
             {
                 writer.WritePropertyName("parallelCopies"u8);
-                JsonSerializer.Serialize(writer, ParallelCopies);
+                ((IJsonModel<DataFactoryElement<int>>)ParallelCopies).Write(writer, options);
             }
             if (Optional.IsDefined(DataIntegrationUnits))
             {
                 writer.WritePropertyName("dataIntegrationUnits"u8);
-                JsonSerializer.Serialize(writer, DataIntegrationUnits);
+                ((IJsonModel<DataFactoryElement<int>>)DataIntegrationUnits).Write(writer, options);
             }
             if (Optional.IsDefined(EnableSkipIncompatibleRow))
             {
                 writer.WritePropertyName("enableSkipIncompatibleRow"u8);
-                JsonSerializer.Serialize(writer, EnableSkipIncompatibleRow);
+                ((IJsonModel<DataFactoryElement<bool>>)EnableSkipIncompatibleRow).Write(writer, options);
             }
             if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ValidateDataConsistency))
             {
                 writer.WritePropertyName("validateDataConsistency"u8);
-                JsonSerializer.Serialize(writer, ValidateDataConsistency);
+                ((IJsonModel<DataFactoryElement<bool>>)ValidateDataConsistency).Write(writer, options);
             }
             if (Optional.IsDefined(SkipErrorFile))
             {
@@ -267,7 +268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))

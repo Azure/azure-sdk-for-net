@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("connectionString"u8);
-            JsonSerializer.Serialize(writer, ConnectionString);
+            ((IJsonModel<DataFactoryElement<string>>)ConnectionString).Write(writer, options);
             writer.WritePropertyName("database"u8);
-            JsonSerializer.Serialize(writer, Database);
+            ((IJsonModel<DataFactoryElement<string>>)Database).Write(writer, options);
             if (Optional.IsDefined(DriverVersion))
             {
                 writer.WritePropertyName("driverVersion"u8);
-                JsonSerializer.Serialize(writer, DriverVersion);
+                ((IJsonModel<DataFactoryElement<string>>)DriverVersion).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)

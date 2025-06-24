@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("packagePath"u8);
-            JsonSerializer.Serialize(writer, PackagePath);
+            ((IJsonModel<DataFactoryElement<string>>)PackagePath).Write(writer, options);
             if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent"u8);
-            JsonSerializer.Serialize(writer, PackageContent);
+            ((IJsonModel<DataFactoryElement<string>>)PackageContent).Write(writer, options);
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);

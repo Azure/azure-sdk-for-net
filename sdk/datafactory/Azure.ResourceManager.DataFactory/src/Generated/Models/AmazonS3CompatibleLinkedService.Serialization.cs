@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -41,22 +42,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessKeyId))
             {
                 writer.WritePropertyName("accessKeyId"u8);
-                JsonSerializer.Serialize(writer, AccessKeyId);
+                ((IJsonModel<DataFactoryElement<string>>)AccessKeyId).Write(writer, options);
             }
             if (Optional.IsDefined(SecretAccessKey))
             {
                 writer.WritePropertyName("secretAccessKey"u8);
-                JsonSerializer.Serialize(writer, SecretAccessKey);
+                ((IJsonModel<DataFactorySecret>)SecretAccessKey).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-                JsonSerializer.Serialize(writer, ServiceUri);
+                ((IJsonModel<DataFactoryElement<string>>)ServiceUri).Write(writer, options);
             }
             if (Optional.IsDefined(ForcePathStyle))
             {
                 writer.WritePropertyName("forcePathStyle"u8);
-                JsonSerializer.Serialize(writer, ForcePathStyle);
+                ((IJsonModel<DataFactoryElement<bool>>)ForcePathStyle).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            secretAccessKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            secretAccessKey = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"u8))

@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("text"u8);
-            JsonSerializer.Serialize(writer, Text);
+            ((IJsonModel<DataFactoryElement<string>>)Text).Write(writer, options);
             writer.WritePropertyName("type"u8);
-            JsonSerializer.Serialize(writer, QueryType);
+            ((IJsonModel<DataFactoryElement<string>>)QueryType).Write(writer, options);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);

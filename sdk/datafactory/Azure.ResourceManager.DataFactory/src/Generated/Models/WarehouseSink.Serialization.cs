@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
-                JsonSerializer.Serialize(writer, PreCopyScript);
+                ((IJsonModel<DataFactoryElement<string>>)PreCopyScript).Write(writer, options);
             }
             if (Optional.IsDefined(AllowCopyCommand))
             {
                 writer.WritePropertyName("allowCopyCommand"u8);
-                JsonSerializer.Serialize(writer, AllowCopyCommand);
+                ((IJsonModel<DataFactoryElement<bool>>)AllowCopyCommand).Write(writer, options);
             }
             if (Optional.IsDefined(CopyCommandSettings))
             {
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
-                JsonSerializer.Serialize(writer, TableOption);
+                ((IJsonModel<DataFactoryElement<string>>)TableOption).Write(writer, options);
             }
             if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
-                JsonSerializer.Serialize(writer, WriteBehavior);
+                ((IJsonModel<DataFactoryElement<string>>)WriteBehavior).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

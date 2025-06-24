@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                JsonSerializer.Serialize(writer, Query);
+                ((IJsonModel<DataFactoryElement<string>>)Query).Write(writer, options);
             }
             if (Optional.IsDefined(NestingSeparator))
             {
                 writer.WritePropertyName("nestingSeparator"u8);
-                JsonSerializer.Serialize(writer, NestingSeparator);
+                ((IJsonModel<DataFactoryElement<string>>)NestingSeparator).Write(writer, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                JsonSerializer.Serialize(writer, QueryTimeout);
+                ((IJsonModel<DataFactoryElement<string>>)QueryTimeout).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

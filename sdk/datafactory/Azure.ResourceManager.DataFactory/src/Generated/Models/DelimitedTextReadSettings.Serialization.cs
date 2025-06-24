@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
-                JsonSerializer.Serialize(writer, SkipLineCount);
+                ((IJsonModel<DataFactoryElement<int>>)SkipLineCount).Write(writer, options);
             }
             if (Optional.IsDefined(CompressionProperties))
             {

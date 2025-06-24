@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -39,18 +40,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("scriptPath"u8);
-            JsonSerializer.Serialize(writer, ScriptPath);
+            ((IJsonModel<DataFactoryElement<string>>)ScriptPath).Write(writer, options);
             writer.WritePropertyName("scriptLinkedService"u8);
-            JsonSerializer.Serialize(writer, ScriptLinkedService);
+            ((IJsonModel<DataFactoryLinkedServiceReference>)ScriptLinkedService).Write(writer, options);
             if (Optional.IsDefined(DegreeOfParallelism))
             {
                 writer.WritePropertyName("degreeOfParallelism"u8);
-                JsonSerializer.Serialize(writer, DegreeOfParallelism);
+                ((IJsonModel<DataFactoryElement<int>>)DegreeOfParallelism).Write(writer, options);
             }
             if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
-                JsonSerializer.Serialize(writer, Priority);
+                ((IJsonModel<DataFactoryElement<int>>)Priority).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -78,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
-                JsonSerializer.Serialize(writer, RuntimeVersion);
+                ((IJsonModel<DataFactoryElement<string>>)RuntimeVersion).Write(writer, options);
             }
             if (Optional.IsDefined(CompilationMode))
             {
                 writer.WritePropertyName("compilationMode"u8);
-                JsonSerializer.Serialize(writer, CompilationMode);
+                ((IJsonModel<DataFactoryElement<string>>)CompilationMode).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -235,7 +236,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("scriptLinkedService"u8))
                         {
-                            scriptLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property0.Value.GetRawText());
+                            scriptLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("degreeOfParallelism"u8))

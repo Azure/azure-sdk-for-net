@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableCopyActivityLog))
             {
                 writer.WritePropertyName("enableCopyActivityLog"u8);
-                JsonSerializer.Serialize(writer, EnableCopyActivityLog);
+                ((IJsonModel<DataFactoryElement<bool>>)EnableCopyActivityLog).Write(writer, options);
             }
             if (Optional.IsDefined(CopyActivityLogSettings))
             {

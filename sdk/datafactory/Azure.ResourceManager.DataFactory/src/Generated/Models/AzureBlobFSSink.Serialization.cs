@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
-                JsonSerializer.Serialize(writer, CopyBehavior);
+                ((IJsonModel<DataFactoryElement<string>>)CopyBehavior).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Metadata))
             {

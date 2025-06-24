@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -39,37 +40,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            JsonSerializer.Serialize(writer, Endpoint);
+            ((IJsonModel<DataFactoryElement<string>>)Endpoint).Write(writer, options);
             writer.WritePropertyName("marketplaceID"u8);
-            JsonSerializer.Serialize(writer, MarketplaceId);
+            ((IJsonModel<DataFactoryElement<string>>)MarketplaceId).Write(writer, options);
             writer.WritePropertyName("sellerID"u8);
-            JsonSerializer.Serialize(writer, SellerId);
+            ((IJsonModel<DataFactoryElement<string>>)SellerId).Write(writer, options);
             if (Optional.IsDefined(MwsAuthToken))
             {
                 writer.WritePropertyName("mwsAuthToken"u8);
-                JsonSerializer.Serialize(writer, MwsAuthToken);
+                ((IJsonModel<DataFactorySecret>)MwsAuthToken).Write(writer, options);
             }
             writer.WritePropertyName("accessKeyId"u8);
-            JsonSerializer.Serialize(writer, AccessKeyId);
+            ((IJsonModel<DataFactoryElement<string>>)AccessKeyId).Write(writer, options);
             if (Optional.IsDefined(SecretKey))
             {
                 writer.WritePropertyName("secretKey"u8);
-                JsonSerializer.Serialize(writer, SecretKey);
+                ((IJsonModel<DataFactorySecret>)SecretKey).Write(writer, options);
             }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
-                JsonSerializer.Serialize(writer, UseEncryptedEndpoints);
+                ((IJsonModel<DataFactoryElement<bool>>)UseEncryptedEndpoints).Write(writer, options);
             }
             if (Optional.IsDefined(UseHostVerification))
             {
                 writer.WritePropertyName("useHostVerification"u8);
-                JsonSerializer.Serialize(writer, UseHostVerification);
+                ((IJsonModel<DataFactoryElement<bool>>)UseHostVerification).Write(writer, options);
             }
             if (Optional.IsDefined(UsePeerVerification))
             {
                 writer.WritePropertyName("usePeerVerification"u8);
-                JsonSerializer.Serialize(writer, UsePeerVerification);
+                ((IJsonModel<DataFactoryElement<bool>>)UsePeerVerification).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            mwsAuthToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            mwsAuthToken = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("accessKeyId"u8))
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            secretKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            secretKey = ModelReaderWriter.Read<DataFactorySecret>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDataFactoryContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))

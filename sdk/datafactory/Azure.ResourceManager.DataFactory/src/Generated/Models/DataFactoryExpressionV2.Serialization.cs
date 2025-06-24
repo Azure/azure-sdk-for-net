@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(V2Value))
             {
                 writer.WritePropertyName("value"u8);
-                JsonSerializer.Serialize(writer, V2Value);
+                ((IJsonModel<DataFactoryElement<string>>)V2Value).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Operators))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    JsonSerializer.Serialize(writer, item);
+                ((IJsonModel<DataFactoryElement<string>>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }

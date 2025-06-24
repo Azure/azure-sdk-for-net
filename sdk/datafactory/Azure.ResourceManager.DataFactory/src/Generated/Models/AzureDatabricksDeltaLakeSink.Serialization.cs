@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
-                JsonSerializer.Serialize(writer, PreCopyScript);
+                ((IJsonModel<DataFactoryElement<string>>)PreCopyScript).Write(writer, options);
             }
             if (Optional.IsDefined(ImportSettings))
             {

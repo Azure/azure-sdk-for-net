@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                JsonSerializer.Serialize(writer, Timeout);
+                ((IJsonModel<DataFactoryElement<string>>)Timeout).Write(writer, options);
             }
             if (Optional.IsDefined(Sleep))
             {
                 writer.WritePropertyName("sleep"u8);
-                JsonSerializer.Serialize(writer, Sleep);
+                ((IJsonModel<DataFactoryElement<int>>)Sleep).Write(writer, options);
             }
             if (Optional.IsDefined(MinimumSize))
             {
                 writer.WritePropertyName("minimumSize"u8);
-                JsonSerializer.Serialize(writer, MinimumSize);
+                ((IJsonModel<DataFactoryElement<int>>)MinimumSize).Write(writer, options);
             }
             if (Optional.IsDefined(ChildItems))
             {
                 writer.WritePropertyName("childItems"u8);
-                JsonSerializer.Serialize(writer, ChildItems);
+                ((IJsonModel<DataFactoryElement<bool>>)ChildItems).Write(writer, options);
             }
             writer.WritePropertyName("dataset"u8);
             writer.WriteObjectValue(Dataset, options);

@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
-                JsonSerializer.Serialize(writer, MaxRowsPerFile);
+                ((IJsonModel<DataFactoryElement<int>>)MaxRowsPerFile).Write(writer, options);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
-                JsonSerializer.Serialize(writer, FileNamePrefix);
+                ((IJsonModel<DataFactoryElement<string>>)FileNamePrefix).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

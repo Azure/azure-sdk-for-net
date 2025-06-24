@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SqlWriterStoredProcedureName))
             {
                 writer.WritePropertyName("sqlWriterStoredProcedureName"u8);
-                JsonSerializer.Serialize(writer, SqlWriterStoredProcedureName);
+                ((IJsonModel<DataFactoryElement<string>>)SqlWriterStoredProcedureName).Write(writer, options);
             }
             if (Optional.IsDefined(SqlWriterTableType))
             {
                 writer.WritePropertyName("sqlWriterTableType"u8);
-                JsonSerializer.Serialize(writer, SqlWriterTableType);
+                ((IJsonModel<DataFactoryElement<string>>)SqlWriterTableType).Write(writer, options);
             }
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
-                JsonSerializer.Serialize(writer, PreCopyScript);
+                ((IJsonModel<DataFactoryElement<string>>)PreCopyScript).Write(writer, options);
             }
             if (Optional.IsDefined(StoredProcedureParameters))
             {
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(StoredProcedureTableTypeParameterName))
             {
                 writer.WritePropertyName("storedProcedureTableTypeParameterName"u8);
-                JsonSerializer.Serialize(writer, StoredProcedureTableTypeParameterName);
+                ((IJsonModel<DataFactoryElement<string>>)StoredProcedureTableTypeParameterName).Write(writer, options);
             }
             if (Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
-                JsonSerializer.Serialize(writer, TableOption);
+                ((IJsonModel<DataFactoryElement<string>>)TableOption).Write(writer, options);
             }
             if (Optional.IsDefined(SqlWriterUseTableLock))
             {
                 writer.WritePropertyName("sqlWriterUseTableLock"u8);
-                JsonSerializer.Serialize(writer, SqlWriterUseTableLock);
+                ((IJsonModel<DataFactoryElement<bool>>)SqlWriterUseTableLock).Write(writer, options);
             }
             if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
-                JsonSerializer.Serialize(writer, WriteBehavior);
+                ((IJsonModel<DataFactoryElement<string>>)WriteBehavior).Write(writer, options);
             }
             if (Optional.IsDefined(UpsertSettings))
             {

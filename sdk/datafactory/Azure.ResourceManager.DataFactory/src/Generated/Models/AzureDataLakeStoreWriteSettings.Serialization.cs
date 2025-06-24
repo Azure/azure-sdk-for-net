@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExpiryDateTime))
             {
                 writer.WritePropertyName("expiryDateTime"u8);
-                JsonSerializer.Serialize(writer, ExpiryDateTime);
+                ((IJsonModel<DataFactoryElement<string>>)ExpiryDateTime).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

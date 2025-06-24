@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
-                JsonSerializer.Serialize(writer, ComputeType);
+                ((IJsonModel<DataFactoryElement<string>>)ComputeType).Write(writer, options);
             }
             if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
-                JsonSerializer.Serialize(writer, CoreCount);
+                ((IJsonModel<DataFactoryElement<int>>)CoreCount).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName);
+            ((IJsonModel<DataFactoryElement<string>>)LinkedServiceName).Write(writer, options);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                JsonSerializer.Serialize(writer, Path);
+                ((IJsonModel<DataFactoryElement<string>>)Path).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

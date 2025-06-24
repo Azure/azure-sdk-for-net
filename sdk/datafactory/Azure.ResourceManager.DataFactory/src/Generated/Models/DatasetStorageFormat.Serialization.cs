@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
-                JsonSerializer.Serialize(writer, Serializer);
+                ((IJsonModel<DataFactoryElement<string>>)Serializer).Write(writer, options);
             }
             if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
-                JsonSerializer.Serialize(writer, Deserializer);
+                ((IJsonModel<DataFactoryElement<string>>)Deserializer).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("resourceManagerEndpoint"u8);
-            JsonSerializer.Serialize(writer, ResourceManagerEndpoint);
+            ((IJsonModel<DataFactoryElement<string>>)ResourceManagerEndpoint).Write(writer, options);
             writer.WritePropertyName("tempScriptPath"u8);
-            JsonSerializer.Serialize(writer, TempScriptPath);
+            ((IJsonModel<DataFactoryElement<string>>)TempScriptPath).Write(writer, options);
             if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);
-                JsonSerializer.Serialize(writer, DistcpOptions);
+                ((IJsonModel<DataFactoryElement<string>>)DistcpOptions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

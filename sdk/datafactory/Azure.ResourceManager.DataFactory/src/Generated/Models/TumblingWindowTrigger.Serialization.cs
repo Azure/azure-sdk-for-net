@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Delay))
             {
                 writer.WritePropertyName("delay"u8);
-                JsonSerializer.Serialize(writer, Delay);
+                ((IJsonModel<DataFactoryElement<string>>)Delay).Write(writer, options);
             }
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);

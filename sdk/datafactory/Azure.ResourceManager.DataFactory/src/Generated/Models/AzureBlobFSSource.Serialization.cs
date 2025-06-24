@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TreatEmptyAsNull))
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
-                JsonSerializer.Serialize(writer, TreatEmptyAsNull);
+                ((IJsonModel<DataFactoryElement<bool>>)TreatEmptyAsNull).Write(writer, options);
             }
             if (Optional.IsDefined(SkipHeaderLineCount))
             {
                 writer.WritePropertyName("skipHeaderLineCount"u8);
-                JsonSerializer.Serialize(writer, SkipHeaderLineCount);
+                ((IJsonModel<DataFactoryElement<int>>)SkipHeaderLineCount).Write(writer, options);
             }
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                JsonSerializer.Serialize(writer, Recursive);
+                ((IJsonModel<DataFactoryElement<bool>>)Recursive).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

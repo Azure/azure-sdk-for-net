@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IngestionMappingName))
             {
                 writer.WritePropertyName("ingestionMappingName"u8);
-                JsonSerializer.Serialize(writer, IngestionMappingName);
+                ((IJsonModel<DataFactoryElement<string>>)IngestionMappingName).Write(writer, options);
             }
             if (Optional.IsDefined(IngestionMappingAsJson))
             {
                 writer.WritePropertyName("ingestionMappingAsJson"u8);
-                JsonSerializer.Serialize(writer, IngestionMappingAsJson);
+                ((IJsonModel<DataFactoryElement<string>>)IngestionMappingAsJson).Write(writer, options);
             }
             if (Optional.IsDefined(FlushImmediately))
             {
                 writer.WritePropertyName("flushImmediately"u8);
-                JsonSerializer.Serialize(writer, FlushImmediately);
+                ((IJsonModel<DataFactoryElement<bool>>)FlushImmediately).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

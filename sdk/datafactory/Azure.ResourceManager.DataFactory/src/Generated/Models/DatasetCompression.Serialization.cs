@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WritePropertyName("type"u8);
-            JsonSerializer.Serialize(writer, DatasetCompressionType);
+            ((IJsonModel<DataFactoryElement<string>>)DatasetCompressionType).Write(writer, options);
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
-                JsonSerializer.Serialize(writer, Level);
+                ((IJsonModel<DataFactoryElement<string>>)Level).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

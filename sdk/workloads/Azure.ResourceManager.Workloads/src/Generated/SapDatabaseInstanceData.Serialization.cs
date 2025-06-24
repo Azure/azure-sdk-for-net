@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W" && Optional.IsDefined(LoadBalancerDetails))
             {
                 writer.WritePropertyName("loadBalancerDetails"u8);
-                JsonSerializer.Serialize(writer, LoadBalancerDetails);
+                ((IJsonModel<SubResource>)LoadBalancerDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(VmDetails))
             {
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.Workloads
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerWorkloadsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            loadBalancerDetails = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            loadBalancerDetails = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerWorkloadsContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("vmDetails"u8))

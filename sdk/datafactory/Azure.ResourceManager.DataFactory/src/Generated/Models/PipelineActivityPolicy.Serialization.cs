@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                JsonSerializer.Serialize(writer, Timeout);
+                ((IJsonModel<DataFactoryElement<string>>)Timeout).Write(writer, options);
             }
             if (Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry"u8);
-                JsonSerializer.Serialize(writer, Retry);
+                ((IJsonModel<DataFactoryElement<int>>)Retry).Write(writer, options);
             }
             if (Optional.IsDefined(RetryIntervalInSeconds))
             {

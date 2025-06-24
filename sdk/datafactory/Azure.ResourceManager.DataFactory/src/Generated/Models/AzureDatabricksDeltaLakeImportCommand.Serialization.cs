@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
-                JsonSerializer.Serialize(writer, DateFormat);
+                ((IJsonModel<DataFactoryElement<string>>)DateFormat).Write(writer, options);
             }
             if (Optional.IsDefined(TimestampFormat))
             {
                 writer.WritePropertyName("timestampFormat"u8);
-                JsonSerializer.Serialize(writer, TimestampFormat);
+                ((IJsonModel<DataFactoryElement<string>>)TimestampFormat).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
