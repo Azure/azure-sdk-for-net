@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration
 {

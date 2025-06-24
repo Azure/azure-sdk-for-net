@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
@@ -11,7 +12,6 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// A factory class which constructs model classes for mocking purposes.
     /// </summary>
-    [CodeGenType("KeyVaultAdministrationModelFactory")]
     public static partial class KeyVaultAdministrationModelFactory
     {
         /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
@@ -121,5 +121,44 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns>A new <see cref="KeyVaultRestoreResult"/> instance.</returns>
         public static KeyVaultRestoreResult SelectiveKeyRestoreResult(DateTimeOffset startTime, DateTimeOffset endTime) =>
             new KeyVaultRestoreResult(startTime, endTime);
+
+        /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultSetting"/>. </summary>
+        /// <param name="name"> The account setting to be updated. </param>
+        /// <param name="content"> The value of the pool setting. </param>
+        /// <param name="settingType"> The type specifier of the value. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultSetting"/> instance for mocking. </returns>
+        public static KeyVaultSetting KeyVaultSetting(string name = null, string content = null, KeyVaultSettingType? settingType = null)
+        {
+            return new KeyVaultSetting(name, content, settingType, new Dictionary<string, BinaryData>());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultRoleDefinition"/>. </summary>
+        /// <param name="id"> The role definition ID. </param>
+        /// <param name="name"> The role definition name. </param>
+        /// <param name="type"> The role definition type. </param>
+        /// <param name="roleName"> The role name. </param>
+        /// <param name="description"> The role definition description. </param>
+        /// <param name="roleType"> The role type. </param>
+        /// <param name="permissions"> Role definition permissions. </param>
+        /// <param name="assignableScopes"> Role definition assignable scopes. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultRoleDefinition"/> instance for mocking. </returns>
+        public static KeyVaultRoleDefinition KeyVaultRoleDefinition(string id = null, string name = null, KeyVaultRoleDefinitionType? type = null, string roleName = null, string description = null, KeyVaultRoleType? roleType = null, IEnumerable<KeyVaultPermission> permissions = null, IEnumerable<KeyVaultRoleScope> assignableScopes = null)
+        {
+            permissions ??= new List<KeyVaultPermission>();
+            assignableScopes ??= new List<KeyVaultRoleScope>();
+
+            return new KeyVaultRoleDefinition(
+                id,
+                name,
+                type,
+                new RoleDefinitionProperties(
+                    roleName,
+                    description,
+                    roleType,
+                    permissions.ToList(),
+                    assignableScopes.ToList(),
+                    new Dictionary<string, BinaryData>()),
+                new Dictionary<string, BinaryData>());
+        }
     }
 }
