@@ -2574,19 +2574,19 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("x-ms-blob-if-modified-since", ifModifiedSince.Value, "R");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("x-ms-blob-if-unmodified-since", ifUnmodifiedSince.Value, "R");
             }
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch);
+                request.Headers.Add("x-ms-blob-if-match", ifMatch);
             }
             if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", ifNoneMatch);
+                request.Headers.Add("x-ms-blob-if-none-match", ifNoneMatch);
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -2690,19 +2690,19 @@ namespace Azure.Storage.Blobs
             }
             if (ifModifiedSince != null)
             {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+                request.Headers.Add("x-ms-blob-if-modified-since", ifModifiedSince.Value, "R");
             }
             if (ifUnmodifiedSince != null)
             {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("x-ms-blob-if-unmodified-since", ifUnmodifiedSince.Value, "R");
             }
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch);
+                request.Headers.Add("x-ms-blob-if-match", ifMatch);
             }
             if (ifNoneMatch != null)
             {
-                request.Headers.Add("If-None-Match", ifNoneMatch);
+                request.Headers.Add("x-ms-blob-if-none-match", ifNoneMatch);
             }
             request.Headers.Add("Accept", "application/xml");
             if (tags != null)
