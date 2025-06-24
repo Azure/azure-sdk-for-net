@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
-            PureStoragePolicyProperties properties = default;
+            AvsPureStoragePolicyProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         continue;
                     }
-                    properties = PureStoragePolicyProperties.DeserializePureStoragePolicyProperties(property.Value, options);
+                    properties = AvsPureStoragePolicyProperties.DeserializeAvsPureStoragePolicyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

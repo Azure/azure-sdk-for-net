@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
-            HostProperties properties = default;
+            AvsHostProperties properties = default;
             IReadOnlyList<string> zones = default;
             AvsSku sku = default;
             ResourceIdentifier id = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         continue;
                     }
-                    properties = HostProperties.DeserializeHostProperties(property.Value, options);
+                    properties = AvsHostProperties.DeserializeAvsHostProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))

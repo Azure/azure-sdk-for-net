@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
-            ProvisionedNetworkProperties properties = default;
+            AvsProvisionedNetworkProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         continue;
                     }
-                    properties = ProvisionedNetworkProperties.DeserializeProvisionedNetworkProperties(property.Value, options);
+                    properties = AvsProvisionedNetworkProperties.DeserializeAvsProvisionedNetworkProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Avs.Samples
             string storagePolicyName = "storagePolicy1";
             AvsPureStoragePolicyData data = new AvsPureStoragePolicyData
             {
-                Properties = new PureStoragePolicyProperties("storagePolicyDefinition1", "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/PureStorage.Block/storagePools/storagePool1"),
+                Properties = new AvsPureStoragePolicyProperties("storagePolicyDefinition1", "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/PureStorage.Block/storagePools/storagePool1"),
             };
             ArmOperation<AvsPureStoragePolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, storagePolicyName, data);
             AvsPureStoragePolicyResource result = lro.Value;

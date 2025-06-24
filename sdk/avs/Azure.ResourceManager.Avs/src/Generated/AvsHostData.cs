@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.Avs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// The resource-specific properties for this resource.
-        /// Please note <see cref="HostProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeneralHostProperties"/> and <see cref="SpecializedHostProperties"/>.
+        /// Please note <see cref="AvsHostProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="GeneralAvsHostProperties"/> and <see cref="SpecializedAvsHostProperties"/>.
         /// </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HostProperties properties, IReadOnlyList<string> zones, AvsSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AvsHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsHostProperties properties, IReadOnlyList<string> zones, AvsSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Zones = zones;
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary>
         /// The resource-specific properties for this resource.
-        /// Please note <see cref="HostProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeneralHostProperties"/> and <see cref="SpecializedHostProperties"/>.
+        /// Please note <see cref="AvsHostProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="GeneralAvsHostProperties"/> and <see cref="SpecializedAvsHostProperties"/>.
         /// </summary>
-        public HostProperties Properties { get; }
+        public AvsHostProperties Properties { get; }
         /// <summary> The availability zones. </summary>
         public IReadOnlyList<string> Zones { get; }
         /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>

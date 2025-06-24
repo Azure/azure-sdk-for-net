@@ -8,16 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Avs.Models;
-using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Avs
+namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary>
-    /// A class representing the AvsProvisionedNetwork data model.
-    /// A provisioned network resource
-    /// </summary>
-    public partial class AvsProvisionedNetworkData : ResourceData
+    /// <summary> A Pure Storage volume from PureStorage.Block provider. </summary>
+    public partial class AvsPureStorageVolume
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +46,37 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkData"/>. </summary>
-        internal AvsProvisionedNetworkData()
+        /// <summary> Initializes a new instance of <see cref="AvsPureStorageVolume"/>. </summary>
+        /// <param name="storagePoolId"> Azure resource ID of the Pure Storage Pool. </param>
+        /// <param name="sizeGb"> Volume size to be used to create a Virtual Volumes (vVols) datastore. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePoolId"/> is null. </exception>
+        public AvsPureStorageVolume(ResourceIdentifier storagePoolId, int sizeGb)
         {
+            Argument.AssertNotNull(storagePoolId, nameof(storagePoolId));
+
+            StoragePoolId = storagePoolId;
+            SizeGb = sizeGb;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="AvsPureStorageVolume"/>. </summary>
+        /// <param name="storagePoolId"> Azure resource ID of the Pure Storage Pool. </param>
+        /// <param name="sizeGb"> Volume size to be used to create a Virtual Volumes (vVols) datastore. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsProvisionedNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsProvisionedNetworkProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AvsPureStorageVolume(ResourceIdentifier storagePoolId, int sizeGb, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            StoragePoolId = storagePoolId;
+            SizeGb = sizeGb;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public AvsProvisionedNetworkProperties Properties { get; }
+        /// <summary> Initializes a new instance of <see cref="AvsPureStorageVolume"/> for deserialization. </summary>
+        internal AvsPureStorageVolume()
+        {
+        }
+
+        /// <summary> Azure resource ID of the Pure Storage Pool. </summary>
+        public ResourceIdentifier StoragePoolId { get; set; }
+        /// <summary> Volume size to be used to create a Virtual Volumes (vVols) datastore. </summary>
+        public int SizeGb { get; set; }
     }
 }

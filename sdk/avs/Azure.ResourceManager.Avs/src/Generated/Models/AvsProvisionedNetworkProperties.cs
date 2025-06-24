@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Avs.Models;
-using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Avs
+namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary>
-    /// A class representing the AvsProvisionedNetwork data model.
-    /// A provisioned network resource
-    /// </summary>
-    public partial class AvsProvisionedNetworkData : ResourceData
+    /// <summary> The properties of a provisioned network. </summary>
+    public partial class AvsProvisionedNetworkProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +45,29 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkData"/>. </summary>
-        internal AvsProvisionedNetworkData()
+        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkProperties"/>. </summary>
+        internal AvsProvisionedNetworkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkProperties"/>. </summary>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="addressPrefix"> The address prefixes of the provisioned network in CIDR notation. </param>
+        /// <param name="networkType"> The type of network provisioned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsProvisionedNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsProvisionedNetworkProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AvsProvisionedNetworkProperties(AvsProvisionedNetworkProvisioningState? provisioningState, string addressPrefix, AvsProvisionedNetworkType? networkType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            ProvisioningState = provisioningState;
+            AddressPrefix = addressPrefix;
+            NetworkType = networkType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public AvsProvisionedNetworkProperties Properties { get; }
+        /// <summary> The provisioning state of the resource. </summary>
+        public AvsProvisionedNetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> The address prefixes of the provisioned network in CIDR notation. </summary>
+        public string AddressPrefix { get; }
+        /// <summary> The type of network provisioned. </summary>
+        public AvsProvisionedNetworkType? NetworkType { get; }
     }
 }

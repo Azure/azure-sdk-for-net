@@ -8,16 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Avs.Models;
-using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Avs
+namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary>
-    /// A class representing the AvsProvisionedNetwork data model.
-    /// A provisioned network resource
-    /// </summary>
-    public partial class AvsProvisionedNetworkData : ResourceData
+    /// <summary> Describes an available Compute SKU Restriction Information. </summary>
+    public partial class AvsResourceSkuRestrictionInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +46,27 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkData"/>. </summary>
-        internal AvsProvisionedNetworkData()
+        /// <summary> Initializes a new instance of <see cref="AvsResourceSkuRestrictionInfo"/>. </summary>
+        internal AvsResourceSkuRestrictionInfo()
         {
+            Locations = new ChangeTrackingList<AzureLocation>();
+            Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="AvsResourceSkuRestrictionInfo"/>. </summary>
+        /// <param name="locations"> Locations where the SKU is restricted. </param>
+        /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsProvisionedNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsProvisionedNetworkProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AvsResourceSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            Locations = locations;
+            Zones = zones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public AvsProvisionedNetworkProperties Properties { get; }
+        /// <summary> Locations where the SKU is restricted. </summary>
+        public IReadOnlyList<AzureLocation> Locations { get; }
+        /// <summary> List of availability zones where the SKU is restricted. </summary>
+        public IReadOnlyList<string> Zones { get; }
     }
 }

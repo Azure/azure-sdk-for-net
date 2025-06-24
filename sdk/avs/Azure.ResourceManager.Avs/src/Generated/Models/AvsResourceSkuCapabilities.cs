@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Avs.Models;
-using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Avs
+namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary>
-    /// A class representing the AvsProvisionedNetwork data model.
-    /// A provisioned network resource
-    /// </summary>
-    public partial class AvsProvisionedNetworkData : ResourceData
+    /// <summary> Describes The SKU capabilities object. </summary>
+    public partial class AvsResourceSkuCapabilities
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +45,38 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkData"/>. </summary>
-        internal AvsProvisionedNetworkData()
+        /// <summary> Initializes a new instance of <see cref="AvsResourceSkuCapabilities"/>. </summary>
+        /// <param name="name"> The name of the SKU capability. </param>
+        /// <param name="value"> The value of the SKU capability. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
+        internal AvsResourceSkuCapabilities(string name, string value)
         {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(value, nameof(value));
+
+            Name = name;
+            Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="AvsResourceSkuCapabilities"/>. </summary>
+        /// <param name="name"> The name of the SKU capability. </param>
+        /// <param name="value"> The value of the SKU capability. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsProvisionedNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsProvisionedNetworkProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AvsResourceSkuCapabilities(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            Name = name;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public AvsProvisionedNetworkProperties Properties { get; }
+        /// <summary> Initializes a new instance of <see cref="AvsResourceSkuCapabilities"/> for deserialization. </summary>
+        internal AvsResourceSkuCapabilities()
+        {
+        }
+
+        /// <summary> The name of the SKU capability. </summary>
+        public string Name { get; }
+        /// <summary> The value of the SKU capability. </summary>
+        public string Value { get; }
     }
 }

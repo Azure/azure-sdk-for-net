@@ -121,22 +121,22 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            ResourceSkuResourceType resourceType = default;
+            AvsResourceSkuResourceType resourceType = default;
             string name = default;
             string tier = default;
             string size = default;
             string family = default;
             IReadOnlyList<AzureLocation> locations = default;
-            IReadOnlyList<ResourceSkuLocationInfo> locationInfo = default;
-            IReadOnlyList<ResourceSkuCapabilities> capabilities = default;
-            IReadOnlyList<ResourceSkuRestrictions> restrictions = default;
+            IReadOnlyList<AvsResourceSkuLocationInfo> locationInfo = default;
+            IReadOnlyList<AvsResourceSkuCapabilities> capabilities = default;
+            IReadOnlyList<AvsResourceSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
                 {
-                    resourceType = new ResourceSkuResourceType(property.Value.GetString());
+                    resourceType = new AvsResourceSkuResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("locationInfo"u8))
                 {
-                    List<ResourceSkuLocationInfo> array = new List<ResourceSkuLocationInfo>();
+                    List<AvsResourceSkuLocationInfo> array = new List<AvsResourceSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuLocationInfo.DeserializeResourceSkuLocationInfo(item, options));
+                        array.Add(AvsResourceSkuLocationInfo.DeserializeAvsResourceSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
@@ -185,20 +185,20 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
+                    List<AvsResourceSkuCapabilities> array = new List<AvsResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item, options));
+                        array.Add(AvsResourceSkuCapabilities.DeserializeAvsResourceSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
                 }
                 if (property.NameEquals("restrictions"u8))
                 {
-                    List<ResourceSkuRestrictions> array = new List<ResourceSkuRestrictions>();
+                    List<AvsResourceSkuRestrictions> array = new List<AvsResourceSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item, options));
+                        array.Add(AvsResourceSkuRestrictions.DeserializeAvsResourceSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Avs.Models
                 family,
                 locations,
                 locationInfo,
-                capabilities ?? new ChangeTrackingList<ResourceSkuCapabilities>(),
+                capabilities ?? new ChangeTrackingList<AvsResourceSkuCapabilities>(),
                 restrictions,
                 serializedAdditionalRawData);
         }

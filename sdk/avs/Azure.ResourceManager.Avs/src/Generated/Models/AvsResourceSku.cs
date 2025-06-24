@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="locationInfo"> A list of locations and availability zones in those locations where the SKU is available. </param>
         /// <param name="restrictions"> The restrictions of the SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="locations"/>, <paramref name="locationInfo"/> or <paramref name="restrictions"/> is null. </exception>
-        internal AvsResourceSku(ResourceSkuResourceType resourceType, string name, IEnumerable<AzureLocation> locations, IEnumerable<ResourceSkuLocationInfo> locationInfo, IEnumerable<ResourceSkuRestrictions> restrictions)
+        internal AvsResourceSku(AvsResourceSkuResourceType resourceType, string name, IEnumerable<AzureLocation> locations, IEnumerable<AvsResourceSkuLocationInfo> locationInfo, IEnumerable<AvsResourceSkuRestrictions> restrictions)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(locations, nameof(locations));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Avs.Models
             Name = name;
             Locations = locations.ToList();
             LocationInfo = locationInfo.ToList();
-            Capabilities = new ChangeTrackingList<ResourceSkuCapabilities>();
+            Capabilities = new ChangeTrackingList<AvsResourceSkuCapabilities>();
             Restrictions = restrictions.ToList();
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="capabilities"> Name value pairs to describe the capability. </param>
         /// <param name="restrictions"> The restrictions of the SKU. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsResourceSku(ResourceSkuResourceType resourceType, string name, string tier, string size, string family, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ResourceSkuLocationInfo> locationInfo, IReadOnlyList<ResourceSkuCapabilities> capabilities, IReadOnlyList<ResourceSkuRestrictions> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvsResourceSku(AvsResourceSkuResourceType resourceType, string name, string tier, string size, string family, IReadOnlyList<AzureLocation> locations, IReadOnlyList<AvsResourceSkuLocationInfo> locationInfo, IReadOnlyList<AvsResourceSkuCapabilities> capabilities, IReadOnlyList<AvsResourceSkuRestrictions> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Name = name;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
-        public ResourceSkuResourceType ResourceType { get; }
+        public AvsResourceSkuResourceType ResourceType { get; }
         /// <summary> The name of the SKU. </summary>
         public string Name { get; }
         /// <summary> The tier of virtual machines in a scale set. </summary>
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> The set of locations that the SKU is available. </summary>
         public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> A list of locations and availability zones in those locations where the SKU is available. </summary>
-        public IReadOnlyList<ResourceSkuLocationInfo> LocationInfo { get; }
+        public IReadOnlyList<AvsResourceSkuLocationInfo> LocationInfo { get; }
         /// <summary> Name value pairs to describe the capability. </summary>
-        public IReadOnlyList<ResourceSkuCapabilities> Capabilities { get; }
+        public IReadOnlyList<AvsResourceSkuCapabilities> Capabilities { get; }
         /// <summary> The restrictions of the SKU. </summary>
-        public IReadOnlyList<ResourceSkuRestrictions> Restrictions { get; }
+        public IReadOnlyList<AvsResourceSkuRestrictions> Restrictions { get; }
     }
 }
