@@ -11,15 +11,15 @@ using NUnit.Framework;
 
 namespace Azure.Generator.Tests.Visitors
 {
-    public class ModelFactoryVisitorTests
+    public class ModelFactoryRenamerVisitorTests
     {
         [Test]
         public void DataPlaneModelFactoryIsNamedCorrectly()
         {
             var model = InputFactory.Model("SomeModel");
-            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => [model], configurationJson: "{ \"package-name\": \"Azure.Messaging.SomeService\" }");
+            var plugin = MockHelpers.LoadMockGenerator(inputModels: () => [model], configurationJson: "{ \"package-name\": \"Azure.Messaging.SomeService\" }");
 
-            var visitor = new TestModelFactoryVisitor();
+            var visitor = new TestModelFactoryRenamerVisitor();
             visitor.InvokeVisitLibrary(plugin.Object.OutputLibrary);
 
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
@@ -32,9 +32,9 @@ namespace Azure.Generator.Tests.Visitors
         public void MgmtPlaneModelFactoryIsNamedCorrectly()
         {
             var model = InputFactory.Model("SomeModel");
-            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => [model], configurationJson: "{ \"package-name\": \"Azure.ResourceManager.SomeService\" }");
+            var plugin = MockHelpers.LoadMockGenerator(inputModels: () => [model], configurationJson: "{ \"package-name\": \"Azure.ResourceManager.SomeService\" }");
 
-            var visitor = new TestModelFactoryVisitor();
+            var visitor = new TestModelFactoryRenamerVisitor();
             visitor.InvokeVisitLibrary(plugin.Object.OutputLibrary);
 
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
@@ -47,9 +47,9 @@ namespace Azure.Generator.Tests.Visitors
         public void GenericModelFactoryIsNamedCorrectly()
         {
             var model = InputFactory.Model("SomeModel");
-            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => [model], configurationJson: "{ \"package-name\": \"Samples\" }");
+            var plugin = MockHelpers.LoadMockGenerator(inputModels: () => [model], configurationJson: "{ \"package-name\": \"Samples\" }");
 
-            var visitor = new TestModelFactoryVisitor();
+            var visitor = new TestModelFactoryRenamerVisitor();
             visitor.InvokeVisitLibrary(plugin.Object.OutputLibrary);
 
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
@@ -58,7 +58,7 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual("SamplesModelFactory", modelFactory!.Type.Name);
         }
 
-        private class TestModelFactoryVisitor : ModelFactoryVisitor
+        private class TestModelFactoryRenamerVisitor : ModelFactoryRenamerVisitor
         {
             public void InvokeVisitLibrary(OutputLibrary library)
             {
