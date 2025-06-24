@@ -8,7 +8,8 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
-using Microsoft.ClientModel.TestFramework;
+using Microsoft.ClientModel.TestFramework.TestProxy;
+using System.ClientModel;
 
 namespace Microsoft.ClientModel.TestFramework;
 
@@ -25,12 +26,12 @@ public class TestRecording : IAsyncDisposable
     internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
     /// <summary>
-    /// TODO.
+    /// A collection of key-value pairs representing recording variables.
     /// </summary>
     public SortedDictionary<string, string> Variables => _variables;
     private SortedDictionary<string, string> _variables = new();
 
-    private TestRecording(RecordedTestMode mode, string sessionFile, TestProxy proxy, RecordedTestBase recordedTestBase)
+    private TestRecording(RecordedTestMode mode, string sessionFile, TestProxyProcess proxy, RecordedTestBase recordedTestBase)
     {
         Mode = mode;
         _sessionFile = sessionFile;
@@ -38,7 +39,15 @@ public class TestRecording : IAsyncDisposable
         _recordedTestBase = recordedTestBase;
     }
 
-    public static async Task<TestRecording> CreateAsync(RecordedTestMode mode, string sessionFile, TestProxy proxy, RecordedTestBase recordedTestBase)
+    /// <summary>
+    /// TODO
+    /// </summary>
+    /// <param name="mode"></param>
+    /// <param name="sessionFile"></param>
+    /// <param name="proxy"></param>
+    /// <param name="recordedTestBase"></param>
+    /// <returns></returns>
+    public static async Task<TestRecording> CreateAsync(RecordedTestMode mode, string sessionFile, TestProxyProcess proxy, RecordedTestBase recordedTestBase)
     {
         var recording = new TestRecording(mode, sessionFile, proxy, recordedTestBase);
         await recording.InitializeProxySettingsAsync().ConfigureAwait(false);
@@ -52,18 +61,19 @@ public class TestRecording : IAsyncDisposable
         switch (Mode)
         {
             case RecordedTestMode.Record:
-                var recordResponse = await _proxy.Client.StartRecordAsync(new StartInformation(_sessionFile) { XRecordingAssetsFile = assetsJson });
-                RecordingId = recordResponse.Headers.XRecordingId;
-                await ApplySanitizersAsync();
+                var recordResponse = await _proxy.Client.StartRecordAsync(new StartInformation(_sessionFile, assetsJson)).ConfigureAwait(false);
+                RecordingId = ""; // TODO recordResponse.Headers.XRecordingId;
+                await ApplySanitizersAsync().ConfigureAwait(false);
 
                 break;
             case RecordedTestMode.Playback:
-                ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> playbackResponse = null;
+                ClientResult<IReadOnlyDictionary<string, string>>? playbackResponse = null;
                 try
                 {
-                    playbackResponse = await _proxy.Client.StartPlaybackAsync(new StartInformation(_sessionFile) { XRecordingAssetsFile = assetsJson });
+                    // TODO
+                    //playbackResponse = await _proxy.Client.StartPlaybackAsync(new StartInformation(_sessionFile, assetsJson)).ConfigureAwait(false);
                 }
-                catch (RequestFailedException ex)
+                catch (ClientResultException ex)
                     when (ex.Status == 404)
                 {
                     // We don't throw the exception here because Playback only tests that are testing the
@@ -72,9 +82,14 @@ public class TestRecording : IAsyncDisposable
                     return;
                 }
 
-                _variables = new SortedDictionary<string, string>((Dictionary<string, string>)playbackResponse.Value);
-                RecordingId = playbackResponse.Headers.XRecordingId;
-                await ApplySanitizersAsync();
+                //TODO
+                if (playbackResponse != null)
+                {
+                    _variables = new SortedDictionary<string, string>((Dictionary<string, string>)playbackResponse.Value);
+                    playbackResponse.GetRawResponse().Headers.TryGetValue("x-recording-id", out string? recordingId); // TODO
+                    RecordingId = recordingId;
+                }
+                await ApplySanitizersAsync().ConfigureAwait(false);
 
                 // temporary until Azure.Core fix is shipped that makes HttpWebRequestTransport consistent with HttpClientTransport
                 var excludedHeaders = new List<string>(_recordedTestBase.LegacyExcludedHeaders)
@@ -84,17 +99,14 @@ public class TestRecording : IAsyncDisposable
                     "Connection"
                 };
 
-                await _proxy.Client.AddCustomMatcherAsync(new CustomDefaultMatcher
-                {
-                    ExcludedHeaders = string.Join(",", excludedHeaders),
-                    IgnoredHeaders = _recordedTestBase.IgnoredHeaders.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredHeaders) : null,
-                    IgnoredQueryParameters = _recordedTestBase.IgnoredQueryParameters.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredQueryParameters) : null,
-                    CompareBodies = _recordedTestBase.CompareBodies
-                });
+                // TODO
+                //await _proxy.Client.AddCustomMatcherAsync(new CustomDefaultMatcher(string.Join(",", excludedHeaders),
+                //    _recordedTestBase.CompareBodies, _recordedTestBase.IgnoredHeaders.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredHeaders) : null,
+                //    _recordedTestBase.IgnoredQueryParameters.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredQueryParameters) : null));
 
                 foreach (HeaderTransform transform in _recordedTestBase.HeaderTransforms)
                 {
-                    await _proxy.Client.AddHeaderTransformAsync(transform, RecordingId);
+                    //await _proxy.Client.AddHeaderTransformAsync(transform, RecordingId).ConfigureAwait(false);
                 }
                 break;
         }
@@ -104,69 +116,86 @@ public class TestRecording : IAsyncDisposable
     {
         foreach (string header in _recordedTestBase.SanitizedHeaders)
         {
-            await _proxy.Client.AddHeaderSanitizerAsync(new HeaderRegexSanitizer(header), RecordingId);
+            // TODO
+            // await _proxy.Client.AddHeaderSanitizerAsync(new HeaderRegexSanitizer(header, RecordingId, null, null)).ConfigureAwait(false); // TODO
         }
 
         foreach (var header in _recordedTestBase.HeaderRegexSanitizers)
         {
-            await _proxy.Client.AddHeaderSanitizerAsync(header, RecordingId);
+            // TODO
+            //await _proxy.Client.AddHeaderSanitizerAsync(header, RecordingId).ConfigureAwait(false);
         }
 
         foreach (var (header, queryParameter) in _recordedTestBase.SanitizedQueryParametersInHeaders)
         {
-            await _proxy.Client.AddHeaderSanitizerAsync(
-                HeaderRegexSanitizer.CreateWithQueryParameter(header, queryParameter, Sanitized),
-                RecordingId);
+            // TODO
+            //await _proxy.Client.AddHeaderSanitizerAsync(
+            //    HeaderRegexSanitizer.CreateWithQueryParameter(header, queryParameter, Sanitized),
+            //    RecordingId).ConfigureAwait(false);
         }
 
         foreach (UriRegexSanitizer sanitizer in _recordedTestBase.UriRegexSanitizers)
         {
-            await _proxy.Client.AddUriSanitizerAsync(sanitizer, RecordingId);
+            // TODO
+            // await _proxy.Client.AddUriSanitizerAsync(sanitizer, RecordingId).ConfigureAwait(false);
         }
 
         foreach (string queryParameter in _recordedTestBase.SanitizedQueryParameters)
         {
-            await _proxy.Client.AddUriSanitizerAsync(
-                UriRegexSanitizer.CreateWithQueryParameter(queryParameter, Sanitized),
-                RecordingId);
+            // TODO
+            //await _proxy.Client.AddUriSanitizerAsync(
+            //    UriRegexSanitizer.CreateWithQueryParameter(queryParameter, Sanitized),
+            //    RecordingId).ConfigureAwait(false);
         }
 
         foreach (string path in _recordedTestBase.JsonPathSanitizers)
         {
-            await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(path), RecordingId);
+            // TODO
+            // await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(path, null, null, null), RecordingId).ConfigureAwait(false); // TODO
         }
 
         foreach (BodyKeySanitizer sanitizer in _recordedTestBase.BodyKeySanitizers)
         {
-            await _proxy.Client.AddBodyKeySanitizerAsync(sanitizer, RecordingId);
+            // TODO
+            //await _proxy.Client.AddBodyKeySanitizerAsync(sanitizer, RecordingId).ConfigureAwait(false);
         }
 
         foreach (BodyRegexSanitizer sanitizer in _recordedTestBase.BodyRegexSanitizers)
         {
-            await _proxy.Client.AddBodyRegexSanitizerAsync(sanitizer, RecordingId);
+            // TODO
+            //await _proxy.Client.AddBodyRegexSanitizerAsync(sanitizer, RecordingId).ConfigureAwait(false);
         }
 
         if (_recordedTestBase.SanitizersToRemove.Count > 0)
         {
-            var toRemove = new SanitizersToRemove();
-            foreach (var sanitizer in _recordedTestBase.SanitizersToRemove)
-            {
-                toRemove.Sanitizers.Add(sanitizer);
-            }
-            await _proxy.Client.RemoveSanitizersAsync(toRemove, RecordingId);
+            // TODO
+            //var toRemove = new SanitizersToRemove();
+            //foreach (var sanitizer in _recordedTestBase.SanitizersToRemove)
+            //{
+            //    toRemove.Sanitizers.Add(sanitizer);
+            //}
+            //await _proxy.Client.RemoveSanitizersAsync(toRemove, RecordingId).ConfigureAwait(false);
         }
+
+        await Task.Yield();
     }
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
     public RecordedTestMode Mode { get; }
 
     private readonly AsyncLocal<EntryRecordModel> _disableRecording = new AsyncLocal<EntryRecordModel>();
 
     private readonly string _sessionFile;
 
-    internal TestRecordingMismatchException MismatchException;
+    internal TestRecordingMismatchException? MismatchException;
 
-    private TestRandom _random;
+    private TestRandom? _random;
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
     public TestRandom Random
     {
         get
@@ -209,10 +238,13 @@ public class TestRecording : IAsyncDisposable
     /// </summary>
     private DateTimeOffset? _now;
 
-    private readonly TestProxy _proxy;
+    private readonly TestProxyProcess _proxy;
     private readonly RecordedTestBase _recordedTestBase;
 
-    public string RecordingId { get; private set; }
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public string? RecordingId { get; private set; }
 
     /// <summary>
     /// Determines if the ClientRequestId that is sent as part of a request while in Record mode
@@ -227,7 +259,7 @@ public class TestRecording : IAsyncDisposable
     }
 
     /// <summary>
-    /// Gets the moment in time that this test is being run.  This is useful
+    /// Gets the moment in time that this test is being run. This is useful
     /// for any test recordings that capture the current time.
     /// </summary>
     public DateTimeOffset Now
@@ -265,24 +297,40 @@ public class TestRecording : IAsyncDisposable
     /// </summary>
     public DateTimeOffset UtcNow => Now.ToUniversalTime();
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="save"></param>
+    /// <returns></returns>
     public async ValueTask DisposeAsync(bool save)
     {
         if (Mode == RecordedTestMode.Record)
         {
-            await _proxy.Client.StopRecordAsync(RecordingId, Variables, save ? null : "request-response");
+            // TODO - variables
+            await _proxy.Client.StopRecordAsync(RecordingId, Variables.ToString(), BinaryContent.Create(new BinaryData(save ? "" : "request-response"))).ConfigureAwait(false);
         }
         else if (Mode == RecordedTestMode.Playback && HasRequests)
         {
-            await _proxy.Client.StopPlaybackAsync(RecordingId);
+            await _proxy.Client.StopPlaybackAsync(RecordingId).ConfigureAwait(false);
         }
     }
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <returns></returns>
     public async ValueTask DisposeAsync()
     {
-        await DisposeAsync(true);
+        await DisposeAsync(true).ConfigureAwait(false);
     }
 
-    public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="currentTransport"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public PipelineTransport CreateTransport(PipelineTransport currentTransport)
     {
         if (Mode != RecordedTestMode.Live)
         {
@@ -292,17 +340,28 @@ public class TestRecording : IAsyncDisposable
                     "The supplied options have already been instrumented. Each test must pass a unique options instance to " +
                     "InstrumentClientOptions.");
             }
-            return new ProxyTransport(_proxy, currentTransport, this, () => _disableRecording.Value);
+            return new ProxyTransport(); // TODO: _proxy, currentTransport, this, () => _disableRecording.Value);
         }
 
         return currentTransport;
     }
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <returns></returns>
     public string GenerateId()
     {
         return Random.Next().ToString();
     }
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="prefix"></param>
+    /// <param name="maxLength"></param>
+    /// <param name="useOnlyLowercase"></param>
+    /// <returns></returns>
     public string GenerateAlphaNumericId(string prefix, int? maxLength = null, bool useOnlyLowercase = false)
     {
         var stringChars = new char[8];
@@ -330,18 +389,38 @@ public class TestRecording : IAsyncDisposable
         }
     }
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="prefix"></param>
+    /// <param name="maxLength"></param>
+    /// <returns></returns>
     public string GenerateId(string prefix, int maxLength)
     {
         var id = $"{prefix}{Random.Next()}";
         return id.Length > maxLength ? id.Substring(0, maxLength) : id;
     }
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="prefix"></param>
+    /// <param name="callerMethodName"></param>
+    /// <returns></returns>
     public string GenerateAssetName(string prefix, [CallerMemberName] string callerMethodName = "testframework_failed")
     {
         return prefix + Random.Next(9999);
     }
 
-    public string GetVariable(string variableName, string defaultValue, Func<string, string> sanitizer = default)
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="variableName"></param>
+    /// <param name="defaultValue"></param>
+    /// <param name="sanitizer"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public string? GetVariable(string variableName, string defaultValue, Func<string, string>? sanitizer = default)
     {
         switch (Mode)
         {
@@ -352,7 +431,7 @@ public class TestRecording : IAsyncDisposable
                 return defaultValue;
             case RecordedTestMode.Playback:
                 ValidateVariables();
-                Variables.TryGetValue(variableName, out string value);
+                Variables.TryGetValue(variableName, out string? value);
                 return value;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -370,7 +449,13 @@ public class TestRecording : IAsyncDisposable
         }
     }
 
-    public void SetVariable(string variableName, string value, Func<string, string> sanitizer = default)
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="variableName"></param>
+    /// <param name="value"></param>
+    /// <param name="sanitizer"></param>
+    public void SetVariable(string variableName, string value, Func<string, string>? sanitizer = default)
     {
         switch (Mode)
         {
@@ -382,28 +467,50 @@ public class TestRecording : IAsyncDisposable
         }
     }
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
     public bool HasRequests { get; internal set; }
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <returns></returns>
     public DisableRecordingScope DisableRecording()
     {
         return new DisableRecordingScope(this, EntryRecordModel.DoNotRecord);
     }
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <returns></returns>
     public DisableRecordingScope DisableRequestBodyRecording()
     {
         return new DisableRecordingScope(this, EntryRecordModel.RecordWithoutRequestBody);
     }
 
+    /// <summary>
+    /// TODO.
+    /// </summary>
     public struct DisableRecordingScope : IDisposable
     {
         private readonly TestRecording _testRecording;
 
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <param name="testRecording"></param>
+        /// <param name="entryRecordModel"></param>
         public DisableRecordingScope(TestRecording testRecording, EntryRecordModel entryRecordModel)
         {
             _testRecording = testRecording;
             _testRecording._disableRecording.Value = entryRecordModel;
         }
 
+        /// <summary>
+        /// TODO.
+        /// </summary>
         public void Dispose()
         {
             _testRecording._disableRecording.Value = EntryRecordModel.Record;
