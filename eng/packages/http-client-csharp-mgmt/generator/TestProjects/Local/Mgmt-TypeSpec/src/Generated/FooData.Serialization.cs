@@ -17,7 +17,7 @@ using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
-    /// <summary></summary>
+    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class FooData : IJsonModel<FooData>
     {
         /// <summary> Initializes a new instance of <see cref="FooData"/> for deserialization. </summary>
@@ -216,15 +216,15 @@ namespace MgmtTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FooData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="data"> The <see cref="FooData"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(FooData data)
+        /// <param name="fooData"> The <see cref="FooData"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(FooData fooData)
         {
-            if (data == null)
+            if (fooData == null)
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(fooData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 

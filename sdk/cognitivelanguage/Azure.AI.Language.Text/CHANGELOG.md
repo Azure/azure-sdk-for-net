@@ -1,14 +1,12 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2025-06-23)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added Value Exclusion, synonyms, and new entity types to the detection of Personally Identifiable Information (PII).
+- Added support for analyze-text API Versions
+  - 2025-05-15-preview
 
 ## 1.0.0-beta.2 (2024-12-15)
 
