@@ -2,13 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Azure.Core.Expressions.DataFactory
 {
     [JsonConverter(typeof(DataFactorySecretStringConverter))]
-    public partial class DataFactorySecretString : IUtf8JsonSerializable
+#pragma warning disable SCM0005 // Type must have a parameterless constructor
+    public partial class DataFactorySecretString : IUtf8JsonSerializable, IJsonModel<DataFactorySecretString>
+#pragma warning restore SCM0005 // Type must have a parameterless constructor
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,6 +22,54 @@ namespace Azure.Core.Expressions.DataFactory
             writer.WriteStringValue(SecretBaseType);
             writer.WriteEndObject();
         }
+
+        void IJsonModel<DataFactorySecretString>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactorySecretString>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactorySecretString)} does not support writing '{format}' format.");
+            }
+
+            ((IUtf8JsonSerializable)this).Write(writer);
+        }
+
+        DataFactorySecretString IJsonModel<DataFactorySecretString>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactorySecretString>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactorySecretString)} does not support reading '{format}' format.");
+            }
+
+            using var document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactorySecretString(document.RootElement) ?? throw new InvalidOperationException("Failed to deserialize DataFactorySecretString.");
+        }
+
+        BinaryData IPersistableModel<DataFactorySecretString>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactorySecretString>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactorySecretString)} does not support writing '{format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options, DataFactoryContext.Default);
+        }
+
+        DataFactorySecretString IPersistableModel<DataFactorySecretString>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactorySecretString>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactorySecretString)} does not support reading '{format}' format.");
+            }
+
+            using var document = JsonDocument.Parse(data);
+            return DeserializeDataFactorySecretString(document.RootElement) ?? throw new InvalidOperationException("Failed to deserialize DataFactorySecretString.");
+        }
+
+        string IPersistableModel<DataFactorySecretString>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal static DataFactorySecretString? DeserializeDataFactorySecretString(JsonElement element)
         {

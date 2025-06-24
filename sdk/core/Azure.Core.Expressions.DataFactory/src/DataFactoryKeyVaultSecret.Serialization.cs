@@ -9,7 +9,9 @@ using System.Text.Json.Serialization;
 namespace Azure.Core.Expressions.DataFactory
 {
     [JsonConverter(typeof(DataFactoryKeyVaultSecretConverter))]
-    public partial class DataFactoryKeyVaultSecret : IUtf8JsonSerializable
+#pragma warning disable SCM0005 // Type must have a parameterless constructor
+    public partial class DataFactoryKeyVaultSecret : IUtf8JsonSerializable, IJsonModel<DataFactoryKeyVaultSecret>
+#pragma warning restore SCM0005 // Type must have a parameterless constructor
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,6 +30,54 @@ namespace Azure.Core.Expressions.DataFactory
             writer.WriteStringValue(SecretBaseType);
             writer.WriteEndObject();
         }
+
+        void IJsonModel<DataFactoryKeyVaultSecret>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryKeyVaultSecret>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryKeyVaultSecret)} does not support writing '{format}' format.");
+            }
+
+            ((IUtf8JsonSerializable)this).Write(writer);
+        }
+
+        DataFactoryKeyVaultSecret IJsonModel<DataFactoryKeyVaultSecret>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryKeyVaultSecret>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryKeyVaultSecret)} does not support reading '{format}' format.");
+            }
+
+            using var document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureKeyVaultSecretReference(document.RootElement) ?? throw new InvalidOperationException("Failed to deserialize DataFactoryKeyVaultSecret.");
+        }
+
+        BinaryData IPersistableModel<DataFactoryKeyVaultSecret>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryKeyVaultSecret>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryKeyVaultSecret)} does not support writing '{format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options, DataFactoryContext.Default);
+        }
+
+        DataFactoryKeyVaultSecret IPersistableModel<DataFactoryKeyVaultSecret>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryKeyVaultSecret>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryKeyVaultSecret)} does not support reading '{format}' format.");
+            }
+
+            using var document = JsonDocument.Parse(data);
+            return DeserializeAzureKeyVaultSecretReference(document.RootElement) ?? throw new InvalidOperationException("Failed to deserialize DataFactoryKeyVaultSecret.");
+        }
+
+        string IPersistableModel<DataFactoryKeyVaultSecret>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal static DataFactoryKeyVaultSecret? DeserializeAzureKeyVaultSecretReference(JsonElement element)
         {
