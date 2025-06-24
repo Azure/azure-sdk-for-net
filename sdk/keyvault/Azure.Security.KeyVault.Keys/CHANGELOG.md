@@ -10,12 +10,12 @@ Thank you to our developer community members who helped to make the Key Vault cl
 
 ### Features Added
 
+- Added Hmac algorithms in `SignatureAlgorithm`
+- Added CkmAesKeyWrap algorithm in `KeyWrapAlgorithm`
+- Added Attestation property for Keys in Managed HSM Key Vaults.
+- Adde new `GetKeyAttestation` operation to get the public part of a stored key along with its attestation blob.
+
 ### Breaking Changes
-
-> [!NOTE]  
-> These changes will not cause issues when upgrading from the last stable version 4.7.0; they only affect the preview version 4.8.0-beta.1.
-
-- CkmAesKeyWrap algorithm moved from `EncryptionAlgorithm` to `KeyWrapAlgorithm`
 
 ### Bugs Fixed
 
