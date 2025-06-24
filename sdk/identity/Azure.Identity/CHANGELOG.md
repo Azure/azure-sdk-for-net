@@ -11,7 +11,7 @@
 
 #### Behavioral Breaking Changes
 
-- Removed `SharedTokenCacheCredential` from the `DefaultAzureCredential` authentication flow.
+- Removed `SharedTokenCacheCredential` from the `DefaultAzureCredential` authentication flow. ([#50839](https://github.com/Azure/azure-sdk-for-net/pull/50839))
 
 ### Bugs Fixed
 
@@ -22,7 +22,7 @@
 
 - `VisualStudioCredential` throws `CredentialUnavailableException` for all failures except for OperationCancelledException due to cancellation being requested for a `CancellationToken`. This ensures that it falls through for most failures when part of a chained credential.
 - Removed `AzureApplicationCredential`. For context, see issue [49781](https://github.com/Azure/azure-sdk-for-net/issues/49781).
-- Deprecated `SharedTokenCacheCredential` and related APIs.
+- Deprecated `SharedTokenCacheCredential` and related APIs. ([#50839](https://github.com/Azure/azure-sdk-for-net/pull/50839))
 
 ## 1.14.0 (2025-05-13)
 
