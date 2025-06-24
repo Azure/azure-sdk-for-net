@@ -19,6 +19,7 @@ namespace Azure.Generator.Management
             return type;
         }
 
+        // TODO: Go back and enable this when we have a way to handle the resource model parameters renaming via VisitMethod.
         // protected override MethodProvider? VisitMethod(MethodProvider method)
         // {
         //     foreach (var parameter in method.Signature.Parameters)
