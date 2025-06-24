@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
             }
 
             writer.WritePropertyName("dataUri"u8);
-            writer.WriteStringValue(DataUri);
+            writer.WriteStringValue(DataUri.AbsoluteUri);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && Optional.IsDefined(IsReference))

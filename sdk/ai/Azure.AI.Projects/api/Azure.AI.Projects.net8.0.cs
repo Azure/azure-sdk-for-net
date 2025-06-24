@@ -109,22 +109,22 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.ApiKeyCredentials ApiKeyCredentials(string apiKey = null) { throw null; }
         public static Azure.AI.Projects.AssetCredentialResponse AssetCredentialResponse(Azure.AI.Projects.BlobReference blobReference = null) { throw null; }
         public static Azure.AI.Projects.AzureAISearchIndex AzureAISearchIndex(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string connectionName = null, string indexName = null, Azure.AI.Projects.FieldMapping fieldMapping = null) { throw null; }
-        public static Azure.AI.Projects.BlobReference BlobReference(string blobUri = null, string storageAccountArmId = null, Azure.AI.Projects.SasCredential credential = null) { throw null; }
+        public static Azure.AI.Projects.BlobReference BlobReference(System.Uri blobUri = null, string storageAccountArmId = null, Azure.AI.Projects.SasCredential credential = null) { throw null; }
         public static Azure.AI.Projects.Connection Connection(string name = null, string id = null, Azure.AI.Projects.ConnectionType type = default(Azure.AI.Projects.ConnectionType), string target = null, bool isDefault = false, Azure.AI.Projects.BaseCredentials credentials = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
         public static Azure.AI.Projects.CosmosDBIndex CosmosDBIndex(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string connectionName = null, string databaseName = null, string containerName = null, Azure.AI.Projects.EmbeddingConfiguration embeddingConfiguration = null, Azure.AI.Projects.FieldMapping fieldMapping = null) { throw null; }
         public static Azure.AI.Projects.CustomCredential CustomCredential(System.Collections.Generic.IReadOnlyDictionary<string, string> keys = null) { throw null; }
-        public static Azure.AI.Projects.DatasetVersion DatasetVersion(string dataUri = null, string type = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.AI.Projects.DatasetVersion DatasetVersion(System.Uri dataUri = null, string type = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.AI.Projects.Deployment Deployment(string type = null, string name = null) { throw null; }
         public static Azure.AI.Projects.Evaluation Evaluation(string name = null, Azure.AI.Projects.InputData data = null, string displayName = null, string description = null, string status = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorConfiguration> evaluators = null) { throw null; }
-        public static Azure.AI.Projects.FileDatasetVersion FileDatasetVersion(string dataUri = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.AI.Projects.FolderDatasetVersion FolderDatasetVersion(string dataUri = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.AI.Projects.FileDatasetVersion FileDatasetVersion(System.Uri dataUri = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.AI.Projects.FolderDatasetVersion FolderDatasetVersion(System.Uri dataUri = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.AI.Projects.Index Index(string type = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.AI.Projects.ManagedAzureAISearchIndex ManagedAzureAISearchIndex(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string vectorStoreId = null) { throw null; }
         public static Azure.AI.Projects.ModelDeployment ModelDeployment(string name = null, string modelName = null, string modelVersion = null, string modelPublisher = null, System.Collections.Generic.IReadOnlyDictionary<string, string> capabilities = null, Azure.AI.Projects.Sku sku = null, string connectionName = null) { throw null; }
         public static Azure.AI.Projects.PendingUploadRequest PendingUploadRequest(string pendingUploadId = null, string connectionName = null, Azure.AI.Projects.PendingUploadType pendingUploadType = default(Azure.AI.Projects.PendingUploadType)) { throw null; }
         public static Azure.AI.Projects.PendingUploadResponse PendingUploadResponse(Azure.AI.Projects.BlobReference blobReference = null, string pendingUploadId = null, string version = null, Azure.AI.Projects.PendingUploadType pendingUploadType = default(Azure.AI.Projects.PendingUploadType)) { throw null; }
         public static Azure.AI.Projects.RedTeam RedTeam(string name = null, string displayName = null, int? numTurns = default(int?), System.Collections.Generic.IEnumerable<Azure.AI.Projects.AttackStrategy> attackStrategies = null, bool? simulationOnly = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.Projects.RiskCategory> riskCategories = null, string applicationScenario = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, string status = null, Azure.AI.Projects.TargetConfig target = null) { throw null; }
-        public static Azure.AI.Projects.SasCredential SasCredential(string sasUri = null, Azure.AI.Projects.SasCredentialType type = default(Azure.AI.Projects.SasCredentialType)) { throw null; }
+        public static Azure.AI.Projects.SasCredential SasCredential(System.Uri sasUri = null, Azure.AI.Projects.SasCredentialType type = default(Azure.AI.Projects.SasCredentialType)) { throw null; }
         public static Azure.AI.Projects.SASCredentials SASCredentials(string sasToken = null) { throw null; }
         public static Azure.AI.Projects.Sku Sku(long capacity = (long)0, string family = null, string name = null, string size = null, string tier = null) { throw null; }
     }
@@ -241,7 +241,7 @@ namespace Azure.AI.Projects
     public partial class BlobReference : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.BlobReference>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.BlobReference>
     {
         internal BlobReference() { }
-        public string BlobUri { get { throw null; } }
+        public System.Uri BlobUri { get { throw null; } }
         public Azure.AI.Projects.SasCredential Credential { get { throw null; } }
         public string StorageAccountArmId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -367,9 +367,9 @@ namespace Azure.AI.Projects
     }
     public abstract partial class DatasetVersion : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DatasetVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetVersion>
     {
-        protected DatasetVersion(string dataUri) { }
+        protected DatasetVersion(System.Uri dataUri) { }
         public string ConnectionName { get { throw null; } set { } }
-        public string DataUri { get { throw null; } set { } }
+        public System.Uri DataUri { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public bool? IsReference { get { throw null; } }
@@ -549,7 +549,7 @@ namespace Azure.AI.Projects
     }
     public partial class FileDatasetVersion : Azure.AI.Projects.DatasetVersion, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.FileDatasetVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FileDatasetVersion>
     {
-        public FileDatasetVersion(string dataUri) : base (default(string)) { }
+        public FileDatasetVersion(System.Uri dataUri) : base (default(System.Uri)) { }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Projects.FileDatasetVersion System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.FileDatasetVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.FileDatasetVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -559,7 +559,7 @@ namespace Azure.AI.Projects
     }
     public partial class FolderDatasetVersion : Azure.AI.Projects.DatasetVersion, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.FolderDatasetVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FolderDatasetVersion>
     {
-        public FolderDatasetVersion(string dataUri) : base (default(string)) { }
+        public FolderDatasetVersion(System.Uri dataUri) : base (default(System.Uri)) { }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Projects.FolderDatasetVersion System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.FolderDatasetVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.FolderDatasetVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -767,7 +767,7 @@ namespace Azure.AI.Projects
     public partial class SasCredential : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SasCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SasCredential>
     {
         internal SasCredential() { }
-        public string SasUri { get { throw null; } }
+        public System.Uri SasUri { get { throw null; } }
         public Azure.AI.Projects.SasCredentialType Type { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Projects.SasCredential System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SasCredential>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
