@@ -7,7 +7,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator.Visitors
 {
-    internal class ModelFactoryVisitor : ScmLibraryVisitor
+    internal class ModelFactoryRenamerVisitor : ScmLibraryVisitor
     {
         protected override TypeProvider? VisitType(TypeProvider type)
         {
