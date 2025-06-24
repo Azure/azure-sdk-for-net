@@ -72,6 +72,39 @@ namespace Azure.Generator.Management.Snippets
             return Declare("context", typeof(RequestContext), New.Instance(typeof(RequestContext), requestContextParams), out contextVariable);
         }
 
+        public static MethodBodyStatement CreateUriFromMessage(VariableExpression messageVariable, out VariableExpression uriVariable)
+        {
+            // Uri uri = message.Request.Uri;
+            return Declare(
+                "uri",
+                typeof(RequestUriBuilder),
+                messageVariable.Property("Request").Property("Uri"),
+                out uriVariable);
+        }
+
+        public static MethodBodyStatement CreateRehydrationToken(
+            VariableExpression uriVariable,
+            RequestMethod requestMethod,
+            out VariableExpression rehydrationTokenVariable)
+        {
+            // RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(
+            //     RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+            return Declare(
+                "rehydrationToken",
+                typeof(RehydrationToken),
+                Static(typeof(NextLinkOperationImplementation)).Invoke(
+                    nameof(NextLinkOperationImplementation.GetRehydrationToken),
+                    [
+                        Static(typeof(RequestMethod)).Property(nameof(RequestMethod.Delete)),
+                        uriVariable.Invoke("ToUri"),
+                        uriVariable.Invoke("ToString"),
+                        Literal("None"),
+                        Literal("null"),
+                        Static(typeof(OperationFinalStateVia)).Property(nameof(OperationFinalStateVia.OriginalUri)).Invoke("ToString")
+                    ]),
+                out rehydrationTokenVariable);
+        }
+
         public static MethodBodyStatement CreateHttpMessage(
             ResourceClientProvider resourceClientProvider,
             string methodName,

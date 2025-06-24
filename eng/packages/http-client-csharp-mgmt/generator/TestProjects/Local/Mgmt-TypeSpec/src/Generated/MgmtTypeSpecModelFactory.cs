@@ -62,5 +62,32 @@ namespace MgmtTypeSpec.Models
                 doubleValue,
                 additionalBinaryDataProperties: null);
         }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name"> The default Foo settings. </param>
+        /// <returns> A new <see cref="Models.FooSettingsData"/> instance for mocking. </returns>
+        public static FooSettingsData FooSettingsData(ResourceIdentifier id = default, string @type = default, SystemData systemData = default, FooSettingsProperties properties = default, string name = default)
+        {
+            return new FooSettingsData(
+                id,
+                @type,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                name);
+        }
+
+        /// <summary> The FooSettingsProperties. </summary>
+        /// <param name="accessControlEnabled"></param>
+        /// <param name="provisioningState"></param>
+        /// <returns> A new <see cref="Models.FooSettingsProperties"/> instance for mocking. </returns>
+        public static FooSettingsProperties FooSettingsProperties(bool accessControlEnabled = default, ResourceProvisioningState? provisioningState = default)
+        {
+            return new FooSettingsProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties: null);
+        }
     }
 }

@@ -51,8 +51,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _isAsync = isAsync;
             _responseGenericType = _serviceMethod.GetResponseBodyType();
             _isGeneric = _responseGenericType != null;
-            _isLongRunningOperation = _serviceMethod.IsLongRunningOperation() || _serviceMethod.IsFakeLongRunningOperation();
-            _isFakeLongRunningOperation = _serviceMethod.IsFakeLongRunningOperation();
+            _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
+            _isFakeLongRunningOperation = !_isLongRunningOperation && _serviceMethod.IsFakeLongRunningOperation();
             _clientDiagnosticsField = resourceClientProvider.GetClientDiagnosticsField();
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
@@ -111,13 +111,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (_isLongRunningOperation)
+            if (_isLongRunningOperation || _isFakeLongRunningOperation)
             {
                 tryStatements.AddRange(
-                BuildLroHandling(
-                    messageVariable,
-                    responseVariable,
-                    cancellationTokenParameter));
+                    _isFakeLongRunningOperation ?
+                    BuildFakeLroHandling(messageVariable,responseVariable,cancellationTokenParameter) :
+                    BuildLroHandling(messageVariable,responseVariable,cancellationTokenParameter));
             }
             else
             {
@@ -148,6 +147,60 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                     _isAsync,
                     out responseVariable);
             }
+        }
+
+        private IReadOnlyList<MethodBodyStatement> BuildFakeLroHandling(
+            VariableExpression messageVariable,
+            VariableExpression responseVariable,
+            ParameterProvider cancellationTokenParameter)
+        {
+            var statements = new List<MethodBodyStatement>();
+
+            var finalStateVia = _serviceMethod.GetOperationFinalStateVia();
+
+            var armOperationType = _isGeneric
+                ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type
+                    .MakeGenericType([_resourceClientProvider.ResourceClientCSharpType])
+                : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
+
+            var uriDeclaration = ResourceMethodSnippets.CreateUriFromMessage(messageVariable, out var uriVariable);
+            statements.Add(uriDeclaration);            var rehydrationTokenDeclaration = ResourceMethodSnippets.CreateRehydrationToken(uriVariable, RequestMethod.Delete, out var rehydrationTokenVariable);
+            statements.Add(rehydrationTokenDeclaration);
+
+            var responseFromValueExpression = Static(typeof(Response)).Invoke(
+                nameof(Response.FromValue),
+                New.Instance(
+                    _resourceClientProvider.ResourceClientCSharpType,
+                    This.Property("Client"),
+                    responseVariable.Property("Value")),
+                responseVariable.Invoke("GetRawResponse"));
+
+            ValueExpression[] armOperationArguments = _isGeneric ? [responseFromValueExpression, rehydrationTokenVariable] : [responseVariable, rehydrationTokenVariable];
+
+            var operationDeclaration = Declare(
+                "operation",
+                armOperationType,
+                New.Instance(armOperationType, armOperationArguments),
+                out var operationVariable);
+            statements.Add(operationDeclaration);
+
+            var waitMethod = _isGeneric
+                ? (_isAsync ? "WaitForCompletionAsync" : "WaitForCompletion")
+                : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
+
+            var waitInvocation = _isAsync
+                           ? operationVariable.Invoke(waitMethod, [cancellationTokenParameter], null, _isAsync).Terminate()
+                           : operationVariable.Invoke(waitMethod, cancellationTokenParameter).Terminate();
+
+            var waitIfCompletedStatement = new IfStatement(
+                KnownAzureParameters.WaitUntil.Equal(
+                    Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
+            {
+                waitInvocation
+            };
+            statements.Add(waitIfCompletedStatement);
+            statements.Add(Return(operationVariable));
+            return statements;
         }
 
         private IReadOnlyList<MethodBodyStatement> BuildLroHandling(
