@@ -5603,7 +5603,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags()
         {
             // Arrange
@@ -5620,7 +5620,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTagsOAuth()
         {
             // Arrange
@@ -5638,7 +5638,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_Lease()
         {
             // Arrange
@@ -5664,7 +5664,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetTags_LeaseFailed()
         {
             // Arrange
@@ -5686,7 +5686,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task SetTags_LeaseFailed()
         {
             // Arrange
@@ -5708,7 +5708,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetTags_Error()
         {
             // Arrange
@@ -5722,7 +5722,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_FileSas()
         {
             // Arrange
@@ -5742,7 +5742,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_FileSystemSas()
         {
             // Arrange
@@ -5765,7 +5765,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_AccountSas()
         {
             // Arrange
@@ -5786,7 +5786,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_FileIdentitySas()
         {
             // Arrange
@@ -5812,7 +5812,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_FileSystemIdentitySas()
         {
             // Arrange
@@ -5841,7 +5841,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task SetTags_Error()
         {
             // Arrange
@@ -5853,6 +5853,86 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.SetTagsAsync(tags),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetSetTags_AccessConditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in Conditions_Data)
+            {
+                // Arrange
+                await using DisposingFileSystem test = await GetNewFileSystem();
+                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+                // Arrange
+                parameters.Match = await SetupPathMatchCondition(directory, parameters.Match);
+                parameters.LeaseId = await SetupPathLeaseCondition(directory, parameters.LeaseId, garbageLeaseId);
+                DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                Dictionary<string, string> tags = BuildTags();
+
+                // Act
+                await directory.SetTagsAsync(
+                   tags: tags,
+                   conditions: conditions);
+
+                Response<GetPathTagResult> response = await directory.GetTagsAsync(
+                    conditions: conditions);
+
+                // Assert
+                AssertDictionaryEquality(tags, response.Value.Tags);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetTags_AccessConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
+            {
+                // Arrange
+                await using DisposingFileSystem test = await GetNewFileSystem();
+                DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+                parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
+                DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    file.GetTagsAsync(
+                        conditions: conditions),
+                    e => { });
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task SetTags_AccessConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
+            {
+                // Arrange
+                await using DisposingFileSystem test = await GetNewFileSystem();
+                DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+                parameters.NoneMatch = await SetupPathMatchCondition(file, parameters.NoneMatch);
+                DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
+
+                Dictionary<string, string> tags = BuildTags();
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    file.SetTagsAsync(
+                        tags: tags,
+                        conditions: conditions),
+                    e => { });
+            }
         }
 
         private Stream CreateDataStream(long size)
