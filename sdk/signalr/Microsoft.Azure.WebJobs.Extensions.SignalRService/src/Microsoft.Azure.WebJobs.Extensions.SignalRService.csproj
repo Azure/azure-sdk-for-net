@@ -1,28 +1,28 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.SignalRService</PackageId>
-    <Version>2.1.0-beta.1</Version>
-    <ApiCompatVersion>2.0.1</ApiCompatVersion>
-    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <Version>1.14.1</Version>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <NoWarn>$(NoWarn);CS1591;AZC0107;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
+    <!--The version overrides here only apply to hotfix branch. Won't be committed to main branch.-->
     <PackageReference Include="MessagePack" />
-    <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <!--Use dependency version of SignalR extensions v1.14.0. -->
+    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.7.3" />
+    <PackageReference Include="Microsoft.Azure.Functions.Extensions" />
     <PackageReference Include="Microsoft.Azure.SignalR.Management" />
     <PackageReference Include="Microsoft.Azure.SignalR" />
     <PackageReference Include="Microsoft.Azure.SignalR.Protocols" />
     <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
-    <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Http.Connections" />
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0')) == false">  
+   <PackageReference Include="Microsoft.AspNetCore.Http.Connections" />  
   </ItemGroup>
 </Project>

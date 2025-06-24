@@ -17,7 +17,6 @@ using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
@@ -202,11 +201,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 {
                     return Task.FromResult<object>(JObject.FromObject(_value));
                 }
-                // Isolated worker model
-                else if (_parameter.ParameterType == typeof(string))
-                {
-                    return Task.FromResult(JsonConvert.SerializeObject(_value) as object);
-                }
 
                 return Task.FromResult<object>(null);
             }
@@ -216,7 +210,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 return _value.ToString();
             }
 
-            public Type Type => _parameter.ParameterType;
+            public Type Type => _parameter.GetType();
 
             // No use here
             public Task SetValueAsync(object value, CancellationToken cancellationToken)

@@ -185,7 +185,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     }
     public static partial class SignalRFunctionsHostBuilderExtensions
     {
-        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddDefaultAuth(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Microsoft.IdentityModel.Tokens.TokenValidationParameters> configureTokenValidationParameters, System.Func<Microsoft.Azure.WebJobs.Extensions.SignalRService.SecurityTokenResult, Microsoft.AspNetCore.Http.HttpRequest, Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRConnectionDetail, Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRConnectionDetail> configurer = null) { throw null; }
+        public static Microsoft.Azure.Functions.Extensions.DependencyInjection.IFunctionsHostBuilder AddDefaultAuth(this Microsoft.Azure.Functions.Extensions.DependencyInjection.IFunctionsHostBuilder builder, System.Action<Microsoft.IdentityModel.Tokens.TokenValidationParameters> configureTokenValidationParameters, System.Func<Microsoft.Azure.WebJobs.Extensions.SignalRService.SecurityTokenResult, Microsoft.AspNetCore.Http.HttpRequest, Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRConnectionDetail, Microsoft.Azure.WebJobs.Extensions.SignalRService.SignalRConnectionDetail> configurer = null) { throw null; }
     }
     [Newtonsoft.Json.JsonObjectAttribute]
     public partial class SignalRGroupAction
@@ -254,8 +254,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         public SignalRParameterAttribute() { }
     }
-    [Microsoft.Azure.WebJobs.Description.BindingAttribute(TriggerHandlesReturnValue=true)]
-    [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]
+    [Microsoft.Azure.WebJobs.Description.BindingAttribute]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Parameter | System.AttributeTargets.ReturnValue)]
     public partial class SignalRTriggerAttribute : System.Attribute
     {
         public SignalRTriggerAttribute() { }
