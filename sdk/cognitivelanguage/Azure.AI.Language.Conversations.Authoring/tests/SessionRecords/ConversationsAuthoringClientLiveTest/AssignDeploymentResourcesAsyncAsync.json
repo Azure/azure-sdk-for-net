@@ -1,0 +1,7 @@
+{
+  "Entries": [],
+  "Variables": {
+    "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_KEY": "Sanitized"
+  }
+}
