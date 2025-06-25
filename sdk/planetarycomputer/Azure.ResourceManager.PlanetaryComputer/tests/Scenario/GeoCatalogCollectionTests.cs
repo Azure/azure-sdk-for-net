@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
         private const string ExistingGeoCatalogName = "";
         // Set the ResourceGroupName and Region to match your Azure environment.
         // Ensure the resource group exists in your subscription.
-        private const string ResourceGroupName = "test";
+        private const string ResourceGroupName = "shakrao-test";
         private const string Region = "uksouth";
 
         public GeoCatalogCollectionTests(bool isAsync)
