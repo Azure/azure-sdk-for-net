@@ -107,9 +107,5 @@ namespace Azure.ResourceManager.Avs.Tests
             AvsHostCollection collection = avsPrivateCloudCluster.GetAvsHosts();
             return collection;
         }
-        protected AvsProvisionedNetworkResource getAvsProvisionedNetworkResource()
-        { 
-
-        }
     }
 }

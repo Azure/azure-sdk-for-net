@@ -21,17 +21,24 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
 
         [TestCase, Order(1)]
         [RecordedTest]
-        public async Task Get_AvsHost()
+        public async Task Get_AvsHostsResource()
         {
             AvsHostResource avsHost = await getAvsHostResource().GetAsync();
-            Assert.AreEqual(avsHost.Data.Name, HOST_ID);
+            Assert.AreEqual(avsHost.Data.Id, HOST_ID);
+        }
+        [TestCase, Order(3)]
+        [RecordedTest]
+        public async Task Get_AvsHostsCollection()
+        {
+            AvsHostResource result = await getAvsHostCollection().GetAsync(HOST_ID);
+            Assert.AreEqual(result.Data.Id, HOST_ID);
         }
 
-        [TestCase, Order(2)]
+        [TestCase, Order(3)]
         [RecordedTest]
-        public async Task Get_List()
+        public async Task Get_All()
         {
-            AvsHostCollection avsHostCollection = await getAvsHostCollection().GetAsync();
+            AvsHostCollection avsHostCollection = getAvsHostCollection();
             var hosts = new List<AvsHostResource>();
 
             await foreach (AvsHostResource item in avsHostCollection.GetAllAsync())
@@ -40,16 +47,16 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
                 hosts.Add(item);
             }
             Assert.IsTrue(hosts.Any());
-            Assert.IsTrue(hosts.Any(h => h.Data.Name == HOST_ID));
+            Assert.IsTrue(hosts.Any(h => h.Data.Id == HOST_ID));
             Assert.AreEqual(hosts.Count, 3);
         }
 
-        [TestCase, Order(3)]
+        [TestCase, Order(4)]
         [RecordedTest]
         public async Task GetIfExists_HostsGet()
         {
-            AvsHostCollection avsHostCollection = await getAvsHostCollection().ExistsAsync(HOST_ID);
-            Assert.IsTrue(avsHostCollection);
+            bool exists = await getAvsHostCollection().ExistsAsync(HOST_ID);
+            Assert.True(exists);
         }
     }
 }
