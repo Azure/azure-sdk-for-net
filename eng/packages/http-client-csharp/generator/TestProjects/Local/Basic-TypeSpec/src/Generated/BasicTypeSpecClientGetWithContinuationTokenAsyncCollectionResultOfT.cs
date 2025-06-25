@@ -47,10 +47,6 @@ namespace BasicTypeSpec
                 }
                 ListWithContinuationTokenResponse responseWithType = (ListWithContinuationTokenResponse)response;
                 nextPage = responseWithType.NextToken;
-                if (nextPage == null)
-                {
-                    yield break;
-                }
                 yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Things, nextPage, response);
             }
             while (!string.IsNullOrEmpty(nextPage));

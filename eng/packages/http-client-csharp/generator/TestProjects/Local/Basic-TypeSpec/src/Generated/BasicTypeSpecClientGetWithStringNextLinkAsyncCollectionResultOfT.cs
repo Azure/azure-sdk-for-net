@@ -44,10 +44,6 @@ namespace BasicTypeSpec
                 }
                 ListWithStringNextLinkResponse responseWithType = (ListWithStringNextLinkResponse)response;
                 nextPage = responseWithType.Next != null ? new Uri(responseWithType.Next) : null;
-                if (nextPage == null)
-                {
-                    yield break;
-                }
                 yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Things, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);
