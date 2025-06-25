@@ -17,16 +17,12 @@ namespace Azure.Core
         private readonly ConcurrentDictionary<Type, BoundTypeInfo> _cache = new();
         private readonly Func<Type, BoundTypeInfo> _valueFactory;
 
-        [RequiresUnreferencedCode("TypeBinder uses reflection to access type members which may be trimmed")]
-        [RequiresDynamicCode("TypeBinder creates generic types at runtime which requires dynamic code generation")]
         protected TypeBinder()
         {
             _valueFactory = t => new(t, this);
         }
 
-        [RequiresUnreferencedCode("TypeBinder uses reflection to access type members which may be trimmed")]
-        [RequiresDynamicCode("TypeBinder creates generic types at runtime which requires dynamic code generation")]
-        public T Deserialize<T>(TExchange source)
+        public T Deserialize<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(TExchange source)
         {
             var info = GetBinderInfo(typeof(T));
             return info.Deserialize<T>(source);
@@ -49,8 +45,6 @@ namespace Azure.Core
             return _cache.GetOrAdd(type, _valueFactory);
         }
 
-        [RequiresUnreferencedCode("TypeBinder uses reflection to access type members which may be trimmed")]
-        [RequiresDynamicCode("TypeBinder creates generic types at runtime which requires dynamic code generation")]
         public BoundTypeInfo GetBinderInfo(Type type, Type interfaceType)
         {
             return _cache.GetOrAdd(type, t => new BoundTypeInfo(type, interfaceType, this));
@@ -63,16 +57,14 @@ namespace Azure.Core
         {
             private readonly TypeBinder<TExchange> _binderImplementation;
             private bool _isPrimitive;
-            private readonly BoundMemberInfo[] _members;            [RequiresUnreferencedCode("TypeBinder uses reflection to access type members which may be trimmed")]
-            [RequiresDynamicCode("TypeBinder creates generic types at runtime which requires dynamic code generation")]
+            private readonly BoundMemberInfo[] _members;
+
             public BoundTypeInfo(Type type, TypeBinder<TExchange> binderImplementation)
             {
                 _binderImplementation = binderImplementation;
                 _members = GetMembers(type).ToArray();
             }
 
-            [RequiresUnreferencedCode("TypeBinder uses reflection to access type members which may be trimmed")]
-            [RequiresDynamicCode("TypeBinder creates generic types at runtime which requires dynamic code generation")]
             public BoundTypeInfo(Type type, Type interfaceType, TypeBinder<TExchange> binderImplementation)
             {
                 if (!interfaceType.IsInterface || !interfaceType.IsAssignableFrom(type))
@@ -83,8 +75,6 @@ namespace Azure.Core
                 _members = GetMembers(type).Union(GetMembers(interfaceType)).ToArray();
             }
 
-            [RequiresUnreferencedCode("TypeBinder uses reflection to access type members which may be trimmed")]
-            [RequiresDynamicCode("TypeBinder creates generic types at runtime which requires dynamic code generation")]
             private List<BoundMemberInfo> GetMembers(Type type)
             {
                 List<BoundMemberInfo> members = new List<BoundMemberInfo>();
@@ -139,9 +129,7 @@ namespace Azure.Core
                 }
             }
 
-            [RequiresUnreferencedCode("TypeBinder uses reflection to access type members which may be trimmed")]
-            [RequiresDynamicCode("TypeBinder creates generic types at runtime which requires dynamic code generation")]
-            public T Deserialize<T>(TExchange source)
+            public T Deserialize<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(TExchange source)
             {
                 if (_isPrimitive)
                 {
