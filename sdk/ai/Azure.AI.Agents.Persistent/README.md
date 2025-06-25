@@ -683,7 +683,7 @@ AutoFunctionCallOptions autoFunctionCallOptions = new(toolDelegates, 10);
 
 With autoFunctionCallOptions as parameter for `CreateRunStreamingAsync`, the agent will then call the function automatically when it is needed:
 ```C# Snippet:StreamingWithAutoFunctionCallAsync
-await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, include: null, autoFunctionCallOptions: autoFunctionCallOptions))
+await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions))
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
     {
