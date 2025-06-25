@@ -13,7 +13,6 @@ namespace Azure.Security.KeyVault.Administration
     /// A factory class which constructs model classes for mocking purposes.
     /// </summary>
     [CodeGenSuppress("KeyVaultSetting", typeof(string), typeof(KeyVaultSettingType?), typeof(string))]
-    [CodeGenType("AzureSecurityKeyVaultAdministrationModelFactory")]
     public static partial class KeyVaultAdministrationModelFactory
     {
         /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>

@@ -50,6 +50,16 @@ namespace Azure.Security.KeyVault.Administration
             return new KeyVaultRoleAssignmentProperties(scope, roleDefinitionId, principalId, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A Key Vault account setting. </summary>
+        /// <param name="name"> The name of the account setting. </param>
+        /// <param name="settingType"> The type specifier of the value. </param>
+        /// <param name="content"> The string content of the account setting. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultSetting"/> instance for mocking. </returns>
+        public static KeyVaultSetting KeyVaultSetting(string name = default, KeyVaultSettingType? settingType = default, string content = default)
+        {
+            return new KeyVaultSetting(name, settingType, content, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The settings list result. </summary>
         /// <param name="settings"> A response message containing a list of account settings with their associated value. </param>
         /// <returns> A new <see cref="Administration.GetSettingsResult"/> instance for mocking. </returns>
