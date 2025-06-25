@@ -103,6 +103,7 @@
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Update="Microsoft.Extensions.AI.Abstractions" Version="9.6.0"/>
 		<PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3"/>
 
     <!-- Azure SDK packages -->
