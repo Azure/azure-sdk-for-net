@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Azure.AI.Agents
+namespace Azure.AI.Agents.Persistent
 {
     public class AutoFunctionCallOptions
     {
