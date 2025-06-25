@@ -12,7 +12,6 @@ namespace Azure.Security.KeyVault.Administration
     /// An account setting.
     /// </summary>
     [CodeGenType("Setting")]
-    [CodeGenSuppress(nameof(KeyVaultSetting), typeof(string), typeof(KeyVaultSettingType?), typeof(string), typeof(IDictionary<string, BinaryData>))]
     [CodeGenSuppress(nameof(KeyVaultSetting), typeof(string), typeof(string))]
     public partial class KeyVaultSetting
     {
