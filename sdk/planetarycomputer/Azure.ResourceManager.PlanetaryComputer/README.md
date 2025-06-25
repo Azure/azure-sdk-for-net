@@ -6,7 +6,7 @@ It supports full **CRUD operations**, as well as **recorded** and **playback tes
 
 ---
 
-##  Project Structure
+## Project Structure
 
 ```
 sdk/
@@ -54,12 +54,7 @@ dotnet add package Azure.ResourceManager.PlanetaryComputer --prerelease
 $env:AZURE_SUBSCRIPTION_ID = "<your-subscription-id>"
 $env:AZURE_TEST_MODE = "Record"   # or "Playback"
 $env:AZURE_AUTHORITY_HOST = "https://login.microsoftonline.com"
-$env:AZURE_IDENTITY_NAME = "<Your-Identity-Name>"
 ```
-
-### Authenticate the Client
-Not required
-
 
 ---
 
@@ -114,3 +109,67 @@ Not required
    ```bash
    dotnet test -f net8.0 --filter "Name=CreateUpdateDeleteGeoCatalog"
    ```
+
+---
+
+## Authenticate the Client
+
+To authenticate the client, use the `DefaultAzureCredential` from the Azure.Identity library. Ensure your environment is set up with the necessary Azure credentials.
+
+```csharp
+using Azure.Identity;
+using Azure.ResourceManager.PlanetaryComputer;
+
+var credential = new DefaultAzureCredential();
+var client = new PlanetaryComputerManagementClient(credential);
+```
+
+## Key Concepts
+
+The PlanetaryComputer SDK provides management capabilities for GeoCatalog resources. Key concepts include:
+- **GeoCatalog**: Represents a catalog of geospatial data.
+- **CRUD Operations**: Create, Read, Update, and Delete operations for GeoCatalog resources.
+- **Authentication**: Uses Azure Active Directory for secure access.
+
+## Examples
+
+### Create a GeoCatalog
+
+```csharp
+var geoCatalogData = new GeoCatalogData(new AzureLocation("uksouth"))
+{
+    Properties = new GeoCatalogProperties
+    {
+        Tier = CatalogTier.Basic
+    }
+};
+
+var geoCatalog = await client.GeoCatalogs.CreateOrUpdateAsync("resourceGroupName", "geoCatalogName", geoCatalogData);
+```
+
+### List GeoCatalogs
+
+```csharp
+var geoCatalogs = await client.GeoCatalogs.ListAsync("resourceGroupName");
+foreach (var catalog in geoCatalogs)
+{
+    Console.WriteLine(catalog.Name);
+}
+```
+
+## Troubleshooting
+
+If you encounter issues, check the following:
+- Ensure Azure CLI is logged in (`az login`).
+- Verify the subscription and resource group names.
+- Check for network connectivity issues.
+
+## Next Steps
+
+Explore additional features of the PlanetaryComputer SDK:
+- [Azure SDK Documentation](https://learn.microsoft.com/en-us/azure/)
+- [Samples Repository](https://github.com/Azure/azure-sdk-for-net)
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) for details on how to get started.
