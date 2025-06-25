@@ -15,8 +15,7 @@ namespace Azure.Generator.Visitors
             {
                 // Reset the type provider so that all the methods will be recomputed after the name change.
                 // This is necessary because the name change will impact the custom code view calculation.
-                type.Reset();
-                type.Update(name: $"{TypeNameUtilities.GetResourceProviderName()}ModelFactory");
+                type.Update(name: $"{TypeNameUtilities.GetResourceProviderName()}ModelFactory", reset: true);
             }
 
             return type;
