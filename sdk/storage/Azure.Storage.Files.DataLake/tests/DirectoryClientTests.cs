@@ -6249,7 +6249,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 startsOn: null,
                 expiresOn: Recording.UtcNow.AddHours(1));
 
-            Uri fileSystemSasUri = test.FileSystem.GenerateSasUri(DataLakeFileSystemSasPermissions.All, Recording.UtcNow.AddHours(1));
+            Uri fileSystemSasUri = test.FileSystem.GenerateUserDelegationSasUri(DataLakeFileSystemSasPermissions.All, Recording.UtcNow.AddHours(1), userDelegationKey);
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemSasUri);
             uriBuilder.DirectoryOrFilePath = directory.Name;
             Uri directorySasUri = uriBuilder.ToUri();
