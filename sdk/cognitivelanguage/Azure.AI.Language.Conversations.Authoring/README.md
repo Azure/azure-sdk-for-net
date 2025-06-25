@@ -27,8 +27,9 @@ dotnet add package Azure.AI.Language.Conversations.Authoring --prerelease
 ```
 
 |SDK version  |Supported API version of service
-|-------------|-------------------------------------------------------------
+|-------------|----------------------------------------------------------------------
 |1.0.0-beta.1 | 2022-05-01, 2023-04-01, 2023-11-15-preview, 2024-11-15-preview (default)
+|1.0.0-beta.2 | 2022-05-01, 2023-04-01, 2023-11-15-preview, 2024-11-15-preview, 2025-05-15-preview (default)
 
 ### Prerequisites
 
