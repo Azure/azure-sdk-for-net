@@ -1,4 +1,4 @@
-# Microsoft Azure PlanetaryComputer Management Client Library for .NET
+## Azure PlanetaryComputer Management Client Library for .NET
 
 The `Azure.ResourceManager.PlanetaryComputer` SDK is the **.NET Management Plane SDK** for working with `GeoCatalog` resources under the **PlanetaryComputer** service.
 
@@ -25,7 +25,7 @@ sdk/
 
 ---
 
-## Getting Started
+## Getting started
 
 ### Install the Package
 
@@ -124,7 +124,7 @@ var credential = new DefaultAzureCredential();
 var client = new PlanetaryComputerManagementClient(credential);
 ```
 
-## Key Concepts
+## Key concepts
 
 The PlanetaryComputer SDK provides management capabilities for GeoCatalog resources. Key concepts include:
 - **GeoCatalog**: Represents a catalog of geospatial data.
@@ -164,9 +164,10 @@ If you encounter issues, check the following:
 - Verify the subscription and resource group names.
 - Check for network connectivity issues.
 
-## Next Steps
+## Next steps
 
 Explore additional features of the PlanetaryComputer SDK:
+- [Azure SDK Documentation](https://learn.microsoft.com/en-us/azure/)
 - [Samples Repository](https://github.com/Azure/azure-sdk-for-net)
 
 ## Contributing
