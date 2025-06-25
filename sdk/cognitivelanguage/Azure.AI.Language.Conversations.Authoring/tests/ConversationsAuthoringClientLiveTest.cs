@@ -419,8 +419,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         public async Task GetModelEvaluationSummaryAsync()
         {
             // Arrange
-            string projectName = "Aurora-CLU-Prod";
-            string trainedModelLabel = "m1";
+            string projectName = "EmailApp";
+            string trainedModelLabel = "Model1";
 
             ConversationAuthoringTrainedModel trainedModelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
             // Act
@@ -482,8 +482,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         public async Task GetModelEvaluationResultsAsync()
         {
             // Arrange
-            string projectName = "Aurora-CLU-Prod";
-            string trainedModelLabel = "m1";
+            string projectName = "EmailApp";
+            string trainedModelLabel = "Model1";
             StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 
             ConversationAuthoringTrainedModel trainedModelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
@@ -531,8 +531,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         public async Task LoadSnapshotAsync()
         {
             // Arrange
-            string projectName = "Aurora-CLU-Prod";
-            string trainedModelLabel = "m1";
+            string projectName = "EmailApp";
+            string trainedModelLabel = "Model1";
 
             ConversationAuthoringTrainedModel trainedodelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
             // Act
@@ -567,9 +567,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         public async Task SwapDeploymentsAsync()
         {
             // Arrange
-            string projectName = "Test-data-labels";
-            var deploymentName1 = "deployment1";
-            var deploymentName2 = "deployment2";
+            string projectName = "EmailApp";
+            var deploymentName1 = "staging";
+            var deploymentName2 = "production";
 
             var swapDetails = new ConversationAuthoringSwapDeploymentsDetails(deploymentName1, deploymentName2);
 
@@ -612,12 +612,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         [RecordedTest]
         public async Task DeployProjectAsync(){
             // Arrange
-            string projectName = "Test-data-labels";
+            string projectName = "EmailApp";
             var deploymentName = "staging";
 
             ConversationAuthoringDeployment deploymentAuthoringClient = client.GetDeployment(projectName, deploymentName);
 
-            ConversationAuthoringCreateDeploymentDetails trainedModeDetails = new ConversationAuthoringCreateDeploymentDetails("m1");
+            ConversationAuthoringCreateDeploymentDetails trainedModeDetails = new ConversationAuthoringCreateDeploymentDetails("Model1");
             // Act
             Operation operation = await deploymentAuthoringClient.DeployProjectAsync(
                 waitUntil: WaitUntil.Completed,

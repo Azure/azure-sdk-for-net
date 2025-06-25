@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/:train?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailAppEnglish/:train?api-version=2025-05-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "497",
+        "Content-Length": "501",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250530.1 (.NET 9.0.5; Microsoft Windows 10.0.26100)",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "modelLabel": "MyModel",
+        "modelLabel": "ModelWithDG",
         "trainingConfigVersion": "2025-05-15-preview-ConvLevel",
         "trainingMode": "standard",
         "evaluationOptions": {
@@ -33,14 +33,14 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "b58672d5-b146-488b-bb8f-b1e40bdc7b88",
+        "apim-request-id": "02002f9e-6243-437c-8a5d-0aa960df6cb9",
         "Content-Length": "0",
-        "Date": "Fri, 30 May 2025 21:16:45 GMT",
-        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/train/jobs/c659e3c6-69a3-43d5-b35a-61c88b1a9866_638841600000000000?api-version=2025-05-15-preview",
-        "request-id": "b58672d5-b146-488b-bb8f-b1e40bdc7b88",
+        "Date": "Wed, 25 Jun 2025 00:00:15 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailAppEnglish/train/jobs/c89310a2-faa7-46fa-9a0a-08b5e94b5bc9_638864064000000000?api-version=2025-05-15-preview",
+        "request-id": "02002f9e-6243-437c-8a5d-0aa960df6cb9",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "335",
+        "x-envoy-upstream-service-time": "97",
         "x-ms-region": "East US"
       },
       "ResponseBody": null
@@ -49,6 +49,6 @@
   "Variables": {
     "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "847235075"
+    "RandomSeed": "1604420470"
   }
 }
