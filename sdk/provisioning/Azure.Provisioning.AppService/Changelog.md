@@ -5,13 +5,7 @@
 ### Features Added
 
 - Bump api-version to latest.
-- Added `SiteAuthSettingsV2` resource and its related models. 
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `SiteAuthSettingsV2` resource and its related models.
 
 ## 1.1.1 (2025-06-25)
 
