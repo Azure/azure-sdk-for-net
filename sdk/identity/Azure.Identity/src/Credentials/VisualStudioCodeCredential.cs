@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -15,6 +16,8 @@ namespace Azure.Identity
     /// Enables authentication to Microsoft Entra ID as the user signed in to Visual Studio Code via
     /// the broker. Note that this credential relies on a reference to the Azure.Identity.Broker package.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This credential is deprecated because the VS Code Azure Account extension on which this credential relies has been deprecated. Consider using other dev-time credentials, such as VisualStudioCredential, AzureCliCredential, AzureDeveloperCliCredential, AzurePowerShellCredential. See the Azure Account extension deprecation notice here: https://github.com/microsoft/vscode-azure-account/issues/964.")]
     public class VisualStudioCodeCredential : InteractiveBrowserCredential
     {
         private const string CredentialsSection = "VS Code Azure";
