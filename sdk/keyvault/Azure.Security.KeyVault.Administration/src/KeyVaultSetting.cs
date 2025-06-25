@@ -11,10 +11,9 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// An account setting.
     /// </summary>
-
     [CodeGenType("Setting")]
+    [CodeGenSuppress(nameof(KeyVaultSetting), typeof(string), typeof(KeyVaultSettingType?), typeof(string), typeof(IDictionary<string, BinaryData>))]
     [CodeGenSuppress(nameof(KeyVaultSetting), typeof(string), typeof(string))]
-    [CodeGenSuppress("Content")]
     public partial class KeyVaultSetting
     {
         /// <summary>
@@ -30,6 +29,7 @@ namespace Azure.Security.KeyVault.Administration
 
             Name = name;
             Value = new KeyVaultSettingValue(value);
+            SettingType = KeyVaultSettingType.Boolean;
         }
 
         // TODO: Move construction to KeyVaultSettingValue and hide constructors here when the number of supported value types warrants it e.g., more than 3 intrinsic types.
@@ -38,17 +38,19 @@ namespace Azure.Security.KeyVault.Administration
         /// Creates a new instance of the <see cref="KeyVaultSetting"/> class.
         /// </summary>
         /// <param name="name">The name of the account setting.</param>
-        /// <param name="value">The string value of the account setting.</param>
         /// <param name="settingType">The type specifier of the value.</param>
+        /// <param name="content">The string content of the account setting.</param>
         /// <param name="additionalBinaryDataProperties">Additional properties.</param>
-        internal KeyVaultSetting(string name, string value, KeyVaultSettingType? settingType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultSetting(string name, KeyVaultSettingType? settingType, string content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             Name = name;
-            Value = new KeyVaultSettingValue(value, settingType);
-            SettingType = Value.SettingType;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties ?? new Dictionary<string, BinaryData>();
+            SettingType = settingType;
+            Value = new KeyVaultSettingValue(content, settingType);
+            Content = content;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -61,6 +63,8 @@ namespace Azure.Security.KeyVault.Administration
         /// Gets the value of the account setting.
         /// </summary>
         public KeyVaultSettingValue Value { get; }
+
+        internal string Content { get; }
 
         /// <summary>
         /// Returns the setting name, value, and type.

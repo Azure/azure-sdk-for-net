@@ -53,10 +53,11 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> A Key Vault account setting. </summary>
         /// <param name="name"> The account setting to be updated. </param>
         /// <param name="settingType"> Gets the type specifier of the value. </param>
+        /// <param name="content"></param>
         /// <returns> A new <see cref="Administration.KeyVaultSetting"/> instance for mocking. </returns>
-        public static KeyVaultSetting KeyVaultSetting(string name = default, KeyVaultSettingType? settingType = default)
+        public static KeyVaultSetting KeyVaultSetting(string name = default, KeyVaultSettingType? settingType = default, string content = default)
         {
-            return new KeyVaultSetting(name, settingType, additionalBinaryDataProperties: null);
+            return new KeyVaultSetting(name, settingType, content, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The settings list result. </summary>

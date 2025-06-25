@@ -46,6 +46,8 @@ namespace Azure.Security.KeyVault.Administration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SettingType.Value.ToString());
             }
+            writer.WritePropertyName("value"u8);
+            writer.WriteStringValue(Content);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -90,6 +92,7 @@ namespace Azure.Security.KeyVault.Administration
             }
             string name = default;
             KeyVaultSettingType? settingType = default;
+            string content = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -107,12 +110,17 @@ namespace Azure.Security.KeyVault.Administration
                     settingType = new KeyVaultSettingType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("value"u8))
+                {
+                    content = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KeyVaultSetting(name, settingType, additionalBinaryDataProperties);
+            return new KeyVaultSetting(name, settingType, content, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
