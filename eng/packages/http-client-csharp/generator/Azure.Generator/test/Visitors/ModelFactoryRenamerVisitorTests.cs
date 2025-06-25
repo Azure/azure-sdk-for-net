@@ -40,7 +40,7 @@ namespace Azure.Generator.Tests.Visitors
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
 
             Assert.IsNotNull(modelFactory);
-            Assert.AreEqual("SomeServiceModelFactory", modelFactory!.Type.Name);
+            Assert.AreEqual("ArmSomeServiceModelFactory", modelFactory!.Type.Name);
         }
 
         [Test]
