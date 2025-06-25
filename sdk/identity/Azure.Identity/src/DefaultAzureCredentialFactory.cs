@@ -292,7 +292,7 @@ namespace Azure.Identity
             options.TenantId = Options.VisualStudioCodeTenantId;
             options.IsChainedCredential = true;
 
-            return new VisualStudioCodeCredential(options, Pipeline, default, default, default);
+            return new VisualStudioCodeCredential();
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
