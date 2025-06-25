@@ -8,6 +8,7 @@
 - Added Host, Provisioned Network, Pure Storage Policy Resource and Collection classes
 
 ### Other Changes
+
 - Generated using typespec
 
 ## 1.4.0 (2024-10-28)
