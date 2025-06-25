@@ -32,7 +32,8 @@ managing search indexes, evaluating generative AI performance, and enabling Open
     - [Code interpreter attachment](#create-message-with-code-interpreter-attachment)
     - [Create Agent with Bing Grounding](#create-agent-with-bing-grounding)
     - [Azure AI Search](#create-agent-with-azure-ai-search)
-    - [Function call](#function-call)
+    - [Function call Executed Manually](#function-call-executed-manually)
+    - [Function call Executed Automatically](#function-call-executed-automatically)
     - [Azure function Call](#azure-function-call)
     - [OpenAPI](#create-agent-with-openapi)
     - [Tracing](#tracing)
@@ -419,7 +420,7 @@ await foreach (PersistentThreadMessage threadMessage in messages)
 }
 ```
 
-#### Function call
+#### Function call executed manually
 
 Tools that reference caller-defined capabilities as functions can be provided to an agent to allow it to
 dynamically resolve and disambiguate during a run.
@@ -643,6 +644,63 @@ do
 }
 while (toolOutputs.Count > 0);
 ```
+
+#### Function call executed automatically
+
+In addition to the manual function calls, SDK supports automatic function calling.  After creating functions and`FunctionToolDefinition` according to the last section, here is the steps:
+
+When you create an agent, you can specify the function call by tools argument similar to the example of manual function calls:
+```C# Snippet:StreamingWithAutoFunctionCall_CreateAgent
+PersistentAgent agent = client.Administration.CreateAgent(
+    model: modelDeploymentName,
+    name: "SDK Test Agent - Functions",
+        instructions: "You are a weather bot. Use the provided functions to help answer questions. "
+            + "Customize your responses to the user's preferences as much as possible and use friendly "
+            + "nicknames for cities whenever possible.",
+    tools: [getCityNicknameTool, getCurrentWeatherAtLocationTool, getUserFavoriteCityTool]
+);
+```
+
+We create a thread and message similar to the example of manual function tool calls:
+```C# Snippet:StreamingWithAutoFunctionCall_CreateThreadMessage
+PersistentAgentThread thread = client.Threads.CreateThread();
+
+PersistentThreadMessage message = client.Messages.CreateMessage(
+    thread.Id,
+    MessageRole.User,
+    "What's the weather like in my favorite city?");
+```
+
+Setup `AutoFunctionCallOptions`:
+```C# Snippet:StreamingWithAutoFunctionCall_EnableAutoFunctionCalls
+List<ToolOutput> toolOutputs = new();
+Dictionary<string, Delegate> toolDelegates = new();
+toolDelegates.Add(nameof(GetWeatherAtLocation), GetWeatherAtLocation);
+toolDelegates.Add(nameof(GetCityNickname), GetCityNickname);
+toolDelegates.Add(nameof(GetUserFavoriteCity), GetUserFavoriteCity);
+AutoFunctionCallOptions autoFunctionCallOptions = new(toolDelegates, 10);
+```
+
+With autoFunctionCallOptions as parameter for `CreateRunStreamingAsync`, the agent will then call the function automatically when it is needed:
+```C# Snippet:StreamingWithAutoFunctionCallAsync
+await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, include: null, autoFunctionCallOptions: autoFunctionCallOptions))
+{
+    if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+    {
+        Console.WriteLine("--- Run started! ---");
+    }
+    else if (streamingUpdate is MessageContentUpdate contentUpdate)
+    {
+        Console.Write(contentUpdate.Text);
+    }
+    else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+    {
+        Console.WriteLine();
+        Console.WriteLine("--- Run completed! ---");
+    }
+}
+```
+To allow the agent cast the parameters to the function call, you must use the supported argument types.  They are `string`, `int`, `ushort`, `float`, `uint`, `decimal`, `double`, `long`, and `bool`.   Other tpes such as array, dictionary, or classes are not supported.   
 
 #### Azure function call
 
