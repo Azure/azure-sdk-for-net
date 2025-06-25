@@ -123,7 +123,7 @@ foreach (PersistentThreadMessage threadMessage in messages)
         }
         else if (contentItem is MessageImageFileContent imageFileItem)
         {
-            Console.Write($"<image from ID: {imageFileItem.FileId}");
+            Console.Write($"<image from ID: {imageFileItem.FileId}>");
         }
         Console.WriteLine();
     }
@@ -159,7 +159,7 @@ await foreach (PersistentThreadMessage threadMessage in messages)
         }
         else if (contentItem is MessageImageFileContent imageFileItem)
         {
-            Console.Write($"<image from ID: {imageFileItem.FileId}");
+            Console.Write($"<image from ID: {imageFileItem.FileId}>");
         }
         Console.WriteLine();
     }
