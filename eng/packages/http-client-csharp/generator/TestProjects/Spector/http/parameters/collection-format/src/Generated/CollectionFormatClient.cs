@@ -7,6 +7,8 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Parameters.CollectionFormat._Header;
+using Parameters.CollectionFormat._Query;
 
 namespace Parameters.CollectionFormat
 {
@@ -16,7 +18,7 @@ namespace Parameters.CollectionFormat
 
         public CollectionFormatClient(Uri endpoint, CollectionFormatClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Query GetQueryClient() => throw null;
 

@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
-require: https://github.com/Azure/azure-rest-api-specs/blob/87643ba491d34656ed9d08ddce7544d033c349eb/specification/datafactory/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/02bfa79faeb81e07b80a6d23125a6ed747775bae/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -136,6 +136,7 @@ rename-mapping:
   ExposureControlBatchResponse.exposureControlResponses: ExposureControlResults
   ExposureControlRequest: ExposureControlContent
   ExposureControlResponse: ExposureControlResult
+  ExpressionV2.value: V2Value;
   Factory: DataFactory
   FactoryListResponse: DataFactoryListResult
   FactoryRepoUpdate: FactoryRepoContent

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.GraphServices
 {
     public partial class GraphServicesAccountResource : IJsonModel<GraphServicesAccountResourceData>
     {
+        private static GraphServicesAccountResourceData s_dataDeserializationInstance;
+        private static GraphServicesAccountResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GraphServicesAccountResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GraphServicesAccountResourceData>)Data).Write(writer, options);
 
-        GraphServicesAccountResourceData IJsonModel<GraphServicesAccountResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GraphServicesAccountResourceData>)Data).Create(ref reader, options);
+        GraphServicesAccountResourceData IJsonModel<GraphServicesAccountResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GraphServicesAccountResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GraphServicesAccountResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GraphServicesAccountResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GraphServicesAccountResourceData>(Data, options, AzureResourceManagerGraphServicesContext.Default);
 
-        GraphServicesAccountResourceData IPersistableModel<GraphServicesAccountResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GraphServicesAccountResourceData>(data, options);
+        GraphServicesAccountResourceData IPersistableModel<GraphServicesAccountResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GraphServicesAccountResourceData>(data, options, AzureResourceManagerGraphServicesContext.Default);
 
-        string IPersistableModel<GraphServicesAccountResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GraphServicesAccountResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GraphServicesAccountResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GraphServicesAccountResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

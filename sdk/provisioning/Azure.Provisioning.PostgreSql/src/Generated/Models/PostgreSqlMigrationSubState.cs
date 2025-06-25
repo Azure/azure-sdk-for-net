@@ -59,4 +59,14 @@ public enum PostgreSqlMigrationSubState
     /// Completed.
     /// </summary>
     Completed,
+
+    /// <summary>
+    /// CancelingRequestedDBMigrations.
+    /// </summary>
+    CancelingRequestedDBMigrations,
+
+    /// <summary>
+    /// ValidationInProgress.
+    /// </summary>
+    ValidationInProgress,
 }

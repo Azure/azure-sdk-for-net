@@ -105,6 +105,8 @@ namespace Azure.Developer.LoadTesting.Tests
         [Category(REQUIRES_TEST_RUN)]
         public async Task GetTestRun()
         {
+            await _testRunOperation.WaitForCompletionAsync();
+
             var testRunResponse = await _loadTestRunClient.GetTestRunAsync(_testRunId);
             var testRun = testRunResponse.Value;
             Assert.NotNull(testRun);
@@ -116,6 +118,8 @@ namespace Azure.Developer.LoadTesting.Tests
         [Category(REQUIRES_TEST_RUN)]
         public async Task GetTestRunFile()
         {
+            await _testRunOperation.WaitForCompletionAsync();
+
             var testRunFileResponse = await _loadTestRunClient.GetTestRunFileAsync(_testRunId, _fileName);
             Assert.NotNull(testRunFileResponse.Value);
             Assert.AreEqual(_fileName, testRunFileResponse.Value.FileName);
@@ -126,6 +130,8 @@ namespace Azure.Developer.LoadTesting.Tests
         [Category(REQUIRES_TEST_RUN)]
         public async Task ListTestRuns()
         {
+            await _testRunOperation.WaitForCompletionAsync();
+
             int pageSizeHint = 2;
             var pagedResponse = _loadTestRunClient.GetTestRunsAsync();
 
@@ -163,6 +169,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Category(SKIP_DELETE_TEST_RUN)]
         public async Task DeleteTestRun()
         {
+            await _testRunOperation.WaitForCompletionAsync();
             Response response = await _loadTestRunClient.DeleteTestRunAsync(_testRunId);
         }
 
@@ -180,6 +187,8 @@ namespace Azure.Developer.LoadTesting.Tests
         [Category(REQUIRES_TEST_RUN)]
         public async Task CreateOrUpdateAppComponents()
         {
+            await _testRunOperation.WaitForCompletionAsync();
+
             _resourceId = TestEnvironment.ResourceId;
 
             Response response = await _loadTestRunClient.CreateOrUpdateAppComponentsAsync(
@@ -211,6 +220,8 @@ namespace Azure.Developer.LoadTesting.Tests
         [Category(REQUIRES_TEST_RUN)]
         public async Task GetAppComponents()
         {
+            await _testRunOperation.WaitForCompletionAsync();
+
             _resourceId = TestEnvironment.ResourceId;
 
             await _loadTestRunClient.CreateOrUpdateAppComponentsAsync(
@@ -274,12 +285,16 @@ namespace Azure.Developer.LoadTesting.Tests
                 );
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
             Assert.AreEqual(_resourceId, jsonDocument.RootElement.GetProperty("metrics").GetProperty(_resourceId).GetProperty("resourceId").ToString());
+
+            await _testRunOperation.WaitForCompletionAsync();
         }
 
         [Test]
         [Category(REQUIRES_TEST_RUN)]
         public async Task GetServerMetricsConfig()
         {
+            await _testRunOperation.WaitForCompletionAsync();
+
             _resourceId = TestEnvironment.ResourceId;
             await _loadTestRunClient.CreateOrUpdateServerMetricsConfigAsync(
                     _testRunId,

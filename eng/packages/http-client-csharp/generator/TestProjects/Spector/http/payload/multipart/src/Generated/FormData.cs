@@ -9,14 +9,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Payload.MultiPart._FormData.HttpParts;
 
-namespace Payload.MultiPart
+namespace Payload.MultiPart._FormData
 {
     public partial class FormData
     {
         protected FormData() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Basic(RequestContent content, string contentType, RequestContext context = null) => throw null;
 

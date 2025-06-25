@@ -1,5 +1,27 @@
 # Release History
 
+## 1.47.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.46.2 (2025-06-05)
+
+### Features Added
+
+- Adopt System.ClientModel 1.4.2
+
+## 1.46.1 (2025-05-09)
+
+### Features Added
+
+- Adopt System.ClientModel 1.4.1
+
 ## 1.46.0 (2025-05-06)
 
 ### Features Added

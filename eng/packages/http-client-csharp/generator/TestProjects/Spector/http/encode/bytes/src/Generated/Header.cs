@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Encode.Bytes
+namespace Encode.Bytes._Header
 {
     public partial class Header
     {
         protected Header() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(BinaryData value, RequestContext context) => throw null;
 

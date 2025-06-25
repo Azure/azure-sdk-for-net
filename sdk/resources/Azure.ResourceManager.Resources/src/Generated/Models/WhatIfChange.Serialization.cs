@@ -36,8 +36,11 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new FormatException($"The model {nameof(WhatIfChange)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("resourceId"u8);
-            writer.WriteStringValue(ResourceId);
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
             if (Optional.IsDefined(DeploymentId))
             {
                 writer.WritePropertyName("deploymentId"u8);
@@ -59,6 +62,11 @@ namespace Azure.ResourceManager.Resources.Models
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
+            }
+            if (Optional.IsDefined(Extension))
+            {
+                writer.WritePropertyName("extension"u8);
+                writer.WriteObjectValue(Extension, options);
             }
             writer.WritePropertyName("changeType"u8);
             writer.WriteStringValue(ChangeType.ToSerialString());
@@ -142,6 +150,7 @@ namespace Azure.ResourceManager.Resources.Models
             string deploymentId = default;
             string symbolicName = default;
             BinaryData identifiers = default;
+            ArmDeploymentExtensionDefinition extension = default;
             WhatIfChangeType changeType = default;
             string unsupportedReason = default;
             BinaryData before = default;
@@ -173,6 +182,15 @@ namespace Azure.ResourceManager.Resources.Models
                         continue;
                     }
                     identifiers = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("extension"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extension = ArmDeploymentExtensionDefinition.DeserializeArmDeploymentExtensionDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("changeType"u8))
@@ -228,6 +246,7 @@ namespace Azure.ResourceManager.Resources.Models
                 deploymentId,
                 symbolicName,
                 identifiers,
+                extension,
                 changeType,
                 unsupportedReason,
                 before,
@@ -331,6 +350,21 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Extension), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  extension: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Extension))
+                {
+                    builder.Append("  extension: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Extension, options, 2, false, "  extension: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeType), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -430,7 +464,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

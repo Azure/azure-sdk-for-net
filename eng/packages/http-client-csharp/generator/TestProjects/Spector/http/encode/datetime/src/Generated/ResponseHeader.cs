@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Encode.Datetime
+namespace Encode.Datetime._ResponseHeader
 {
     public partial class ResponseHeader
     {
         protected ResponseHeader() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(RequestContext context) => throw null;
 

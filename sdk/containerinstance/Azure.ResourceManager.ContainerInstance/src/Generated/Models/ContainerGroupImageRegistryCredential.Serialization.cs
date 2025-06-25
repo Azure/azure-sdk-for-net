@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
+            if (Optional.IsDefined(PasswordReference))
+            {
+                writer.WritePropertyName("passwordReference"u8);
+                writer.WriteStringValue(PasswordReference);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -96,6 +101,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string server = default;
             string username = default;
             string password = default;
+            string passwordReference = default;
             string identity = default;
             Uri identityUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -115,6 +121,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("passwordReference"u8))
+                {
+                    passwordReference = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -141,6 +152,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 server,
                 username,
                 password,
+                passwordReference,
                 identity,
                 identityUrl,
                 serializedAdditionalRawData);
@@ -153,7 +165,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerGroupImageRegistryCredential)} does not support writing '{options.Format}' format.");
             }

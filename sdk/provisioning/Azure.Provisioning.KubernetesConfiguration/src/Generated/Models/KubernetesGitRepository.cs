@@ -115,13 +115,13 @@ public partial class KubernetesGitRepository : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _uri = DefineProperty<Uri>("Uri", ["url"]);
-        _timeoutInSeconds = DefineProperty<long>("TimeoutInSeconds", ["timeoutInSeconds"]);
-        _syncIntervalInSeconds = DefineProperty<long>("SyncIntervalInSeconds", ["syncIntervalInSeconds"]);
-        _repositoryRef = DefineModelProperty<KubernetesGitRepositoryRef>("RepositoryRef", ["repositoryRef"]);
-        _sshKnownHosts = DefineProperty<string>("SshKnownHosts", ["sshKnownHosts"]);
-        _httpsUser = DefineProperty<string>("HttpsUser", ["httpsUser"]);
-        _httpsCACert = DefineProperty<string>("HttpsCACert", ["httpsCACert"]);
-        _localAuthRef = DefineProperty<string>("LocalAuthRef", ["localAuthRef"]);
+        _uri = DefineProperty<Uri>("Uri", ["Uri"]);
+        _timeoutInSeconds = DefineProperty<long>("TimeoutInSeconds", ["TimeoutInSeconds"]);
+        _syncIntervalInSeconds = DefineProperty<long>("SyncIntervalInSeconds", ["SyncIntervalInSeconds"]);
+        _repositoryRef = DefineModelProperty<KubernetesGitRepositoryRef>("RepositoryRef", ["RepositoryRef"]);
+        _sshKnownHosts = DefineProperty<string>("SshKnownHosts", ["SshKnownHosts"]);
+        _httpsUser = DefineProperty<string>("HttpsUser", ["HttpsUser"]);
+        _httpsCACert = DefineProperty<string>("HttpsCACert", ["HttpsCACert"]);
+        _localAuthRef = DefineProperty<string>("LocalAuthRef", ["LocalAuthRef"]);
     }
 }

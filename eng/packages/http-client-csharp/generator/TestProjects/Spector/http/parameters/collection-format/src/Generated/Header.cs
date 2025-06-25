@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Parameters.CollectionFormat
+namespace Parameters.CollectionFormat._Header
 {
     public partial class Header
     {
         protected Header() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Csv(IEnumerable<string> colors, RequestContext context) => throw null;
 

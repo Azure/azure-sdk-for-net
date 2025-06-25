@@ -45,7 +45,7 @@ namespace Azure.Monitor.Query
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/microsoft.insights/metricNamespaces", false);
-            uri.AppendQuery("api-version", "2017-12-01-preview", true);
+            uri.AppendQuery("api-version", "2024-02-01", true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime, true);

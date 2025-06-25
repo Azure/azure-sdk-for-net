@@ -37,11 +37,6 @@ namespace Azure.ResourceManager.Network
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -137,13 +132,12 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
             NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default;
-            string remotePerimeterResourceId = default;
+            ResourceIdentifier remotePerimeterResourceId = default;
             Guid? remotePerimeterGuid = default;
             string remotePerimeterLocation = default;
             IList<string> localInboundProfiles = default;
@@ -156,15 +150,6 @@ namespace Azure.ResourceManager.Network
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -209,7 +194,11 @@ namespace Azure.ResourceManager.Network
                         }
                         if (property0.NameEquals("remotePerimeterResourceId"u8))
                         {
-                            remotePerimeterResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            remotePerimeterResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("remotePerimeterGuid"u8))
@@ -320,7 +309,6 @@ namespace Azure.ResourceManager.Network
                 remoteOutboundProfiles ?? new ChangeTrackingList<string>(),
                 description,
                 status,
-                etag,
                 serializedAdditionalRawData);
         }
 
@@ -331,7 +319,7 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkSecurityPerimeterLinkReferenceData)} does not support writing '{options.Format}' format.");
             }

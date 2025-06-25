@@ -54,6 +54,12 @@ namespace Azure.Developer.LoadTesting
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.AutoStopCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.AutoStopCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureDeveloperLoadTestingContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureDeveloperLoadTestingContext() { }
+        public static Azure.Developer.LoadTesting.AzureDeveloperLoadTestingContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CertificateType : System.IEquatable<Azure.Developer.LoadTesting.CertificateType>
     {
@@ -1310,8 +1316,10 @@ namespace Microsoft.Extensions.Azure
     public static partial class AzureLoadTestingClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Developer.LoadTesting.LoadTestAdministrationClient, Azure.Developer.LoadTesting.LoadTestingClientOptions> AddLoadTestAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Developer.LoadTesting.LoadTestAdministrationClient, Azure.Developer.LoadTesting.LoadTestingClientOptions> AddLoadTestAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Developer.LoadTesting.LoadTestRunClient, Azure.Developer.LoadTesting.LoadTestingClientOptions> AddLoadTestRunClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Developer.LoadTesting.LoadTestRunClient, Azure.Developer.LoadTesting.LoadTestingClientOptions> AddLoadTestRunClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

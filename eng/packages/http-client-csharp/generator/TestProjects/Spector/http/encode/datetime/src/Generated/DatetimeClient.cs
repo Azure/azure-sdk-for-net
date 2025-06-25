@@ -7,6 +7,10 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Encode.Datetime._Header;
+using Encode.Datetime._Property;
+using Encode.Datetime._Query;
+using Encode.Datetime._ResponseHeader;
 
 namespace Encode.Datetime
 {
@@ -16,7 +20,7 @@ namespace Encode.Datetime
 
         public DatetimeClient(Uri endpoint, DatetimeClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Query GetQueryClient() => throw null;
 

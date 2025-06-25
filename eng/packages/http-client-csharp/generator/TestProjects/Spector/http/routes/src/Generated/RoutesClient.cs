@@ -10,6 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Routes._PathParameters;
+using Routes._QueryParameters;
 
 namespace Routes
 {
@@ -19,7 +21,7 @@ namespace Routes
 
         public RoutesClient(Uri endpoint, RoutesClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Fixed(RequestContext context) => throw null;
 

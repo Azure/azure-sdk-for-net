@@ -11,7 +11,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/a55917cb512540bc3d0a
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:

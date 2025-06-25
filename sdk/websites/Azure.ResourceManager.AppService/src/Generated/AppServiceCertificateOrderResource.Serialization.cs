@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class AppServiceCertificateOrderResource : IJsonModel<AppServiceCertificateOrderData>
     {
+        private static AppServiceCertificateOrderData s_dataDeserializationInstance;
+        private static AppServiceCertificateOrderData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppServiceCertificateOrderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceCertificateOrderData>)Data).Write(writer, options);
 
-        AppServiceCertificateOrderData IJsonModel<AppServiceCertificateOrderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceCertificateOrderData>)Data).Create(ref reader, options);
+        AppServiceCertificateOrderData IJsonModel<AppServiceCertificateOrderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceCertificateOrderData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppServiceCertificateOrderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppServiceCertificateOrderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppServiceCertificateOrderData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        AppServiceCertificateOrderData IPersistableModel<AppServiceCertificateOrderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceCertificateOrderData>(data, options);
+        AppServiceCertificateOrderData IPersistableModel<AppServiceCertificateOrderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceCertificateOrderData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<AppServiceCertificateOrderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceCertificateOrderData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppServiceCertificateOrderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceCertificateOrderData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

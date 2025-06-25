@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Encode.Duration
+namespace Encode.Duration._Query
 {
     public partial class Query
     {
         protected Query() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(TimeSpan input, RequestContext context) => throw null;
 

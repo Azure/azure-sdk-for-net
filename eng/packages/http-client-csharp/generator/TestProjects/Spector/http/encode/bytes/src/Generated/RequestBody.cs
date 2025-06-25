@@ -12,13 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Encode.Bytes
+namespace Encode.Bytes._RequestBody
 {
     public partial class RequestBody
     {
         protected RequestBody() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(RequestContent content, RequestContext context = null) => throw null;
 

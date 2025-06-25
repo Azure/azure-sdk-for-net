@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Routes
+namespace Routes._PathParameters.ReservedExpansion
 {
     public partial class PathParametersReservedExpansion
     {
         protected PathParametersReservedExpansion() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Template(string @param, RequestContext context) => throw null;
 

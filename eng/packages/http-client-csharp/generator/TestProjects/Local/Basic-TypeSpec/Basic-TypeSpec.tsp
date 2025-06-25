@@ -12,7 +12,7 @@ import "@azure-tools/typespec-azure-core";
   "{basicTypeSpecUrl}",
   "Endpoint Service",
   {
-    basicTypeSpecUrl: string,
+    basicTypeSpecUrl: url,
   }
 )
 @useAuth(ApiKeyAuth<ApiKeyLocation.header, "my-api-key"> | AadToken)
@@ -377,3 +377,68 @@ op stillConvenient(): void;
 @head
 @convenientAPI(true)
 op headAsBoolean(@path id: string): void;
+
+@route("/link")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithNextLink(): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink next?: url;
+};
+
+@route("/linkString")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithStringNextLink(): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink next?: string;
+};
+
+@route("/linkHeader")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithHeaderNextLink(): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink @header next?: string;
+};
+
+@route("/continuation")
+@doc("List things with continuation token")
+@convenientAPI(true)
+@list
+op ListWithContinuationToken(@query @continuationToken token?: string): {
+  @pageItems
+  things: ThingModel[];
+
+  @continuationToken nextToken?: string;
+};
+
+@route("/continuation/header")
+@doc("List things with continuation token header response")
+@convenientAPI(true)
+@list
+op ListWithContinuationTokenHeaderResponse(@query @continuationToken token?: string): {
+  @pageItems
+  things: ThingModel[];
+
+  @header @continuationToken nextToken?: string;
+};
+
+model Page<T> {
+  @pageItems items: T[];
+}
+
+@route("list/paging")
+@doc("List things with paging")
+@convenientAPI(true)
+@list
+op ListWithPaging(): Page<ThingModel>;

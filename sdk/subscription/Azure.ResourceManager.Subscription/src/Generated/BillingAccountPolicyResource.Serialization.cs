@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Subscription
 {
     public partial class BillingAccountPolicyResource : IJsonModel<BillingAccountPolicyData>
     {
+        private static BillingAccountPolicyData s_dataDeserializationInstance;
+        private static BillingAccountPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BillingAccountPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingAccountPolicyData>)Data).Write(writer, options);
 
-        BillingAccountPolicyData IJsonModel<BillingAccountPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingAccountPolicyData>)Data).Create(ref reader, options);
+        BillingAccountPolicyData IJsonModel<BillingAccountPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingAccountPolicyData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingAccountPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<BillingAccountPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingAccountPolicyData>(Data, options, AzureResourceManagerSubscriptionContext.Default);
 
-        BillingAccountPolicyData IPersistableModel<BillingAccountPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingAccountPolicyData>(data, options);
+        BillingAccountPolicyData IPersistableModel<BillingAccountPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingAccountPolicyData>(data, options, AzureResourceManagerSubscriptionContext.Default);
 
-        string IPersistableModel<BillingAccountPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingAccountPolicyData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BillingAccountPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingAccountPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

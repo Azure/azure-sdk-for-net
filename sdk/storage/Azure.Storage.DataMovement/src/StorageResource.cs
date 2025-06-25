@@ -3,6 +3,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement
 {
@@ -49,5 +51,13 @@ namespace Azure.Storage.DataMovement
         /// <returns>A <see cref="StorageResourceCheckpointDetails"/> containing the checkpoint information for this resource.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal abstract StorageResourceCheckpointDetails GetDestinationCheckpointDetails();
+
+        /// <summary>
+        /// Ensures the transfer is valid. Intended to be called on destination resource with the source resource passed-in.
+        /// An exception can be thrown if the transfer is not valid.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal virtual Task ValidateTransferAsync(string transferId, StorageResource sourceResource, CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
     }
 }

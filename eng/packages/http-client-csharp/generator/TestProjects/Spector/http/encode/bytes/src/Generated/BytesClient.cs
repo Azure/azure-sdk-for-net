@@ -7,6 +7,11 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Encode.Bytes._Header;
+using Encode.Bytes._Property;
+using Encode.Bytes._Query;
+using Encode.Bytes._RequestBody;
+using Encode.Bytes._ResponseBody;
 
 namespace Encode.Bytes
 {
@@ -16,7 +21,7 @@ namespace Encode.Bytes
 
         public BytesClient(Uri endpoint, BytesClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Query GetQueryClient() => throw null;
 

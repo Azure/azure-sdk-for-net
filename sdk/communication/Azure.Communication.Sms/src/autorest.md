@@ -6,10 +6,10 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-tag: package-sms-2024-12-10-preview
+tag: package-sms-2025-05-29-preview
 model-namespace: true
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b538b6ec5e8ea500a60a5708e2cb046705a62114/specification/communication/data-plane/Sms/readme.md
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a7b95987ab546f6e1022c8bbc3ed7572789650dd/specification/communication/data-plane/Sms/readme.md
 payload-flattening-threshold: 10
 generation1-convenience-client: true
 ```
@@ -27,6 +27,14 @@ directive:
 directive:
   from: swagger-document
   where: "$.definitions.SmsSendOptions"
+  transform: >
+    $["x-namespace"] = "Azure.Communication.Sms";
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: "$.definitions.MessagingConnectOptions"
   transform: >
     $["x-namespace"] = "Azure.Communication.Sms";
 ```

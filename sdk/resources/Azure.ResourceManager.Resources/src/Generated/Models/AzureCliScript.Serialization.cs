@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Resources.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ContainerConfiguration containerSettings = default;
+            ScriptContainerConfiguration containerSettings = default;
             ScriptStorageConfiguration storageAccountSettings = default;
             ScriptCleanupOptions? cleanupPreference = default;
             ScriptProvisioningState? provisioningState = default;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property0.Value, options);
+                            containerSettings = ScriptContainerConfiguration.DeserializeScriptContainerConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageAccountSettings"u8))
@@ -557,16 +557,11 @@ namespace Azure.ResourceManager.Resources.Models
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ContainerGroupName", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerSettings), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    containerSettings: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      containerSettings: {");
-                builder.Append("        containerGroupName: ");
                 builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
             }
             else
             {
@@ -851,7 +846,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

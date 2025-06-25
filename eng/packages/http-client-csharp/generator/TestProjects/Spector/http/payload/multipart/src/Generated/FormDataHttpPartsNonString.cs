@@ -10,13 +10,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Payload.MultiPart
+namespace Payload.MultiPart._FormData.HttpParts.NonString
 {
     public partial class FormDataHttpPartsNonString
     {
         protected FormDataHttpPartsNonString() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Float(RequestContent content, string contentType, RequestContext context = null) => throw null;
 

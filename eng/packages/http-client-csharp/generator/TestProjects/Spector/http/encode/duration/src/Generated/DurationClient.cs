@@ -7,6 +7,9 @@
 
 using System;
 using Azure.Core.Pipeline;
+using Encode.Duration._Header;
+using Encode.Duration._Property;
+using Encode.Duration._Query;
 
 namespace Encode.Duration
 {
@@ -16,7 +19,7 @@ namespace Encode.Duration
 
         public DurationClient(Uri endpoint, DurationClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Query GetQueryClient() => throw null;
 

@@ -6,14 +6,16 @@
 #nullable disable
 
 using Azure.Core.Pipeline;
+using Routes._QueryParameters.QueryExpansion.Explode;
+using Routes._QueryParameters.QueryExpansion.Standard;
 
-namespace Routes
+namespace Routes._QueryParameters.QueryExpansion
 {
     public partial class QueryParametersQueryExpansion
     {
         protected QueryParametersQueryExpansion() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual QueryParametersQueryExpansionStandard GetQueryParametersQueryExpansionStandardClient() => throw null;
 

@@ -10,14 +10,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Encode.Datetime;
 
-namespace Encode.Datetime
+namespace Encode.Datetime._Property
 {
     public partial class Property
     {
         protected Property() => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Default(RequestContent content, RequestContext context = null) => throw null;
 

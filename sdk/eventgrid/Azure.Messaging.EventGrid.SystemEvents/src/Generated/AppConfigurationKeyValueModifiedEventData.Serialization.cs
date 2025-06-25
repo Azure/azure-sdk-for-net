@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AppConfigurationKeyValueModifiedEventDataConverter))]
     public partial class AppConfigurationKeyValueModifiedEventData : IUtf8JsonSerializable, IJsonModel<AppConfigurationKeyValueModifiedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationKeyValueModifiedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -34,26 +36,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AppConfigurationKeyValueModifiedEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Key))
-            {
-                writer.WritePropertyName("key"u8);
-                writer.WriteStringValue(Key);
-            }
-            if (Optional.IsDefined(Label))
+            writer.WritePropertyName("key"u8);
+            writer.WriteStringValue(Key);
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsDefined(Etag))
+            else
             {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(Etag);
+                writer.WriteNull("label");
             }
-            if (Optional.IsDefined(SyncToken))
-            {
-                writer.WritePropertyName("syncToken"u8);
-                writer.WriteStringValue(SyncToken);
-            }
+            writer.WritePropertyName("etag"u8);
+            writer.WriteStringValue(Etag);
+            writer.WritePropertyName("syncToken"u8);
+            writer.WriteStringValue(SyncToken);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -106,6 +103,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("label"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        label = null;
+                        continue;
+                    }
                     label = property.Value.GetString();
                     continue;
                 }
@@ -135,7 +137,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AppConfigurationKeyValueModifiedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -173,6 +175,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AppConfigurationKeyValueModifiedEventDataConverter : JsonConverter<AppConfigurationKeyValueModifiedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AppConfigurationKeyValueModifiedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AppConfigurationKeyValueModifiedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAppConfigurationKeyValueModifiedEventData(document.RootElement);
+            }
         }
     }
 }

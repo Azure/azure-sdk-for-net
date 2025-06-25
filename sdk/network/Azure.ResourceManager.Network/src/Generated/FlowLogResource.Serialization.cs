@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class FlowLogResource : IJsonModel<FlowLogData>
     {
+        private static FlowLogData s_dataDeserializationInstance;
+        private static FlowLogData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FlowLogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FlowLogData>)Data).Write(writer, options);
 
-        FlowLogData IJsonModel<FlowLogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FlowLogData>)Data).Create(ref reader, options);
+        FlowLogData IJsonModel<FlowLogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FlowLogData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FlowLogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FlowLogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FlowLogData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        FlowLogData IPersistableModel<FlowLogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FlowLogData>(data, options);
+        FlowLogData IPersistableModel<FlowLogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FlowLogData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<FlowLogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FlowLogData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FlowLogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FlowLogData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

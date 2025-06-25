@@ -73,6 +73,15 @@ namespace Azure.Generator
                     return knownType;
                 }
             }
+            else if (inputType is InputArrayType inputArrayType)
+            {
+                // Handle special collection types
+                if (KnownAzureTypes.TryGetKnownType(inputArrayType.CrossLanguageDefinitionId, out var knownType))
+                {
+                    var elementType = CreateCSharpType(inputArrayType.ValueType);
+                    return new CSharpType(knownType, elementType!);
+                }
+            }
 
             return base.CreateCSharpTypeCore(inputType);
         }
@@ -91,17 +100,6 @@ namespace Azure.Generator
             }
 
             return null;
-        }
-
-        /// <inheritdoc/>
-        protected override IReadOnlyList<TypeProvider> CreateSerializationsCore(InputType inputType, TypeProvider typeProvider)
-        {
-            if (KnownAzureTypes.IsModelTypeWithoutSerialization(typeProvider.Type))
-            {
-                return [];
-            }
-
-            return base.CreateSerializationsCore(inputType, typeProvider);
         }
 
         /// <inheritdoc/>

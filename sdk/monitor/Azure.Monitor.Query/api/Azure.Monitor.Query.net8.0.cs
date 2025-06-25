@@ -1,5 +1,11 @@
 namespace Azure.Monitor.Query
 {
+    public partial class AzureMonitorQueryContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureMonitorQueryContext() { }
+        public static Azure.Monitor.Query.AzureMonitorQueryContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class LogsBatchQuery
     {
         public LogsBatchQuery() { }
@@ -135,11 +141,12 @@ namespace Azure.Monitor.Query
     }
     public partial class MetricsQueryClientOptions : Azure.Core.ClientOptions
     {
-        public MetricsQueryClientOptions(Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion.V2018_01_01) { }
+        public MetricsQueryClientOptions(Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion.V2024_02_01) { }
         public Azure.Monitor.Query.MetricsQueryAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2018_01_01 = 1,
+            V2024_02_01 = 2,
         }
     }
     public partial class MetricsQueryOptions

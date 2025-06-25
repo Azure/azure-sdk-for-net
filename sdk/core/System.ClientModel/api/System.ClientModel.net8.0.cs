@@ -12,6 +12,13 @@ namespace System.ClientModel
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
+    public abstract partial class AuthenticationTokenProvider
+    {
+        protected AuthenticationTokenProvider() { }
+        public abstract System.ClientModel.Primitives.GetTokenOptions? CreateTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
+        public abstract System.ClientModel.Primitives.AuthenticationToken GetToken(System.ClientModel.Primitives.GetTokenOptions options, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.AuthenticationToken> GetTokenAsync(System.ClientModel.Primitives.GetTokenOptions options, System.Threading.CancellationToken cancellationToken);
+    }
     public abstract partial class BinaryContent : System.IDisposable
     {
         protected BinaryContent() { }
@@ -67,7 +74,7 @@ namespace System.ClientModel.Primitives
         public static System.Diagnostics.Activity MarkClientActivityFailed(this System.Diagnostics.Activity activity, System.Exception? exception) { throw null; }
         public static System.Diagnostics.Activity? StartClientActivity(this System.Diagnostics.ActivitySource activitySource, System.ClientModel.Primitives.ClientPipelineOptions options, string name, System.Diagnostics.ActivityKind kind = System.Diagnostics.ActivityKind.Internal, System.Diagnostics.ActivityContext parentContext = default(System.Diagnostics.ActivityContext), System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object?>>? tags = null) { throw null; }
     }
-    public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
+    public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.AuthenticationPolicy
     {
         internal ApiKeyAuthenticationPolicy() { }
         public static System.ClientModel.Primitives.ApiKeyAuthenticationPolicy CreateBasicAuthorizationPolicy(System.ClientModel.ApiKeyCredential credential) { throw null; }
@@ -81,6 +88,25 @@ namespace System.ClientModel.Primitives
         protected AsyncCollectionResult() { }
         public abstract System.ClientModel.ContinuationToken? GetContinuationToken(System.ClientModel.ClientResult page);
         public abstract System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult> GetRawPagesAsync();
+    }
+    public abstract partial class AuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        protected AuthenticationPolicy() { }
+    }
+    public partial class AuthenticationToken
+    {
+        public AuthenticationToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public System.DateTimeOffset? RefreshOn { get { throw null; } }
+        public string TokenType { get { throw null; } }
+        public string TokenValue { get { throw null; } }
+    }
+    public partial class BearerTokenPolicy : System.ClientModel.Primitives.AuthenticationPolicy
+    {
+        public BearerTokenPolicy(System.ClientModel.AuthenticationTokenProvider tokenProvider, System.Collections.Generic.IEnumerable<System.Collections.Generic.IReadOnlyDictionary<string, object>> contexts) { }
+        public BearerTokenPolicy(System.ClientModel.AuthenticationTokenProvider tokenProvider, string scope) { }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
     public partial class ClientCache
     {
@@ -185,6 +211,15 @@ namespace System.ClientModel.Primitives
         None = 0,
         ApiKeyString = 1,
         TokenCredential = 2,
+    }
+    public partial class GetTokenOptions
+    {
+        public const string AuthorizationUrlPropertyName = "authorizationUrl";
+        public const string RefreshUrlPropertyName = "refreshUrl";
+        public const string ScopesPropertyName = "scopes";
+        public const string TokenUrlPropertyName = "tokenUrl";
+        public GetTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> Properties { get { throw null; } }
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {
