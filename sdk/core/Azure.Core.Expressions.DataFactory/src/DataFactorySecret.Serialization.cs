@@ -41,7 +41,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataFactorySecretBaseDefinition(document.RootElement)!;
+            return DeserializeDataFactorySecretBaseDefinition(document.RootElement) ?? new UnknownSecret();
         }
 
         BinaryData IPersistableModel<DataFactorySecret>.Write(ModelReaderWriterOptions options)
@@ -64,7 +64,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.Parse(data);
-            return DeserializeDataFactorySecretBaseDefinition(document.RootElement)!;
+            return DeserializeDataFactorySecretBaseDefinition(document.RootElement) ?? new UnknownSecret();
         }
 
         string IPersistableModel<DataFactorySecret>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
