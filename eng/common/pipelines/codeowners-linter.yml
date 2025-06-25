@@ -38,13 +38,10 @@ stages:
       UserOrgUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/user-org-visibility-blob"
 
     steps:
-      - task: DotNetCoreCLI@2
-        displayName: 'Install CodeownersLinter'
-        inputs:
-          command: custom
-          custom: 'tool'
-          arguments: 'install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"'
-          workingDirectory: '$(Build.SourcesDirectory)/eng/common'
+      - pwsh: |
+          dotnet tool install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"
+        displayName: Install CodeownersLinter
+        workingDirectory: '$(Agent.WorkFolder)' # Some directory outside of the source clone to avoid hitting global.json files when any version of dotnet will work for this install
 
       - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
         - pwsh: |
