@@ -25,9 +25,9 @@ sdk/
 
 ---
 
-##  Getting Started
+## Getting Started
 
-###  Install the Package
+### Install the Package
 
 Install the package via [NuGet](https://www.nuget.org/):
 
@@ -37,7 +37,7 @@ dotnet add package Azure.ResourceManager.PlanetaryComputer --prerelease
 
 ---
 
-###  Prerequisites
+### Prerequisites
 
 - [.NET SDK 8.0+](https://dotnet.microsoft.com/download)
 - [Azure SDK Test Proxy](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md)
@@ -63,7 +63,7 @@ Not required
 
 ---
 
-##  Supported Tests
+## Supported Tests
 
 | Test Name                        | Description                                 |
 |----------------------------------|---------------------------------------------|
@@ -77,7 +77,7 @@ Not required
 
 ---
 
-##  Running Tests
+## Running Tests
 
 ### Record Mode (Live with Azure)
 
