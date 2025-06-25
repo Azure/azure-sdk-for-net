@@ -25,7 +25,7 @@ public partial class Sample_PersistentAgents_Bing_Custom_Search : SamplesBase<AI
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        var connectionId = TestEnvironment.BING_CONECTION_ID;
+        var connectionId = TestEnvironment.BING_CUSTOM_CONNECTION_ID;
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
@@ -95,7 +95,7 @@ public partial class Sample_PersistentAgents_Bing_Custom_Search : SamplesBase<AI
                 }
                 else if (contentItem is MessageImageFileContent imageFileItem)
                 {
-                    Console.Write($"<image from ID: {imageFileItem.FileId}");
+                    Console.Write($"<image from ID: {imageFileItem.FileId}>");
                 }
                 Console.WriteLine();
             }
@@ -118,7 +118,7 @@ public partial class Sample_PersistentAgents_Bing_Custom_Search : SamplesBase<AI
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        var connectionId = TestEnvironment.BING_CONECTION_ID;
+        var connectionId = TestEnvironment.BING_CUSTOM_CONNECTION_ID;
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         BingCustomSearchToolDefinition bingCustomSearchTool = new(
@@ -185,7 +185,7 @@ public partial class Sample_PersistentAgents_Bing_Custom_Search : SamplesBase<AI
                 }
                 else if (contentItem is MessageImageFileContent imageFileItem)
                 {
-                    Console.Write($"<image from ID: {imageFileItem.FileId}");
+                    Console.Write($"<image from ID: {imageFileItem.FileId}>");
                 }
                 Console.WriteLine();
             }
