@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Linq;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.Input;
@@ -20,7 +19,7 @@ namespace Azure.Generator.Management.Utilities
         {
             var operation = method.Operation;
             var isLongRunning = method.IsLongRunningOperation();
-            return !isLongRunning && (operation.Name == "Delete" && operation.HttpMethod == "DELETE") || (operation.Name == "CreateOrUpdate" && operation.HttpMethod == "PUT");
+            return !isLongRunning && ((operation.Name == "Delete" && operation.HttpMethod == "DELETE") || (operation.Name == "CreateOrUpdate" && operation.HttpMethod == "PUT"));
         }
 
         public static OperationFinalStateVia GetOperationFinalStateVia(this InputServiceMethod method)

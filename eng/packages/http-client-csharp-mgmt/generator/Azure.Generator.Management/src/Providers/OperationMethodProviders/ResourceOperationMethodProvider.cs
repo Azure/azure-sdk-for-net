@@ -52,7 +52,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _responseGenericType = _serviceMethod.GetResponseBodyType();
             _isGeneric = _responseGenericType != null;
             _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
-            _isFakeLongRunningOperation = !_isLongRunningOperation && _serviceMethod.IsFakeLongRunningOperation();
+            _isFakeLongRunningOperation = _serviceMethod.IsFakeLongRunningOperation();
             _clientDiagnosticsField = resourceClientProvider.GetClientDiagnosticsField();
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
