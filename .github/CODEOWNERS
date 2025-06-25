@@ -1025,6 +1025,12 @@
 # ServiceLabel: %Elastic %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
+# PRLabel: %Grafana
+/sdk/grafana/Azure.ResourceManager.*/                              @qingquanzhao
+
+# ServiceLabel: %Grafana %Mgmt
+# ServiceOwners:                                                   @qingquanzhao
+
 # PRLabel: %Hardware Security Modules
 /sdk/hardwaresecuritymodules/Azure.ResourceManager.*/              @emmeliaAra
 
@@ -1096,6 +1102,12 @@
 
 # ServiceLabel: %Operator Nexus - Network Cloud %Mgmt
 # ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
+
+# PRLabel: %Oracle
+/sdk/oracle/Azure.ResourceManager.*/                               @v-mkidane
+
+# ServiceLabel: %Oracle %Mgmt
+# ServiceOwners:                                                   @v-mkidane
 
 # PRLabel: %Pinecone
 /sdk/pineconevectordb/Azure.ResourceManager.*/                     @aggarwalsw
@@ -1183,7 +1195,7 @@
 /eng/pipelines/docindex.yml                                        @danieljurek @hallipr @weshaggard @benbp
 
 # Add owners for package dependency changes
-/eng/Packages.Data.props                                           @JoshLove-msft @christothes @KrzysztofCwalina @tg-msft @jsquire @m-nash @ArthurMa1978 @jorgerangel-msft
+/eng/Packages.Data.props                                           @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
 /eng/http-client-csharp-emitter-package.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
@@ -1192,7 +1204,7 @@
 # ######## Code Generation ########
 
 #PRLabel: %CodeGen %Client
-/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire
+/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire @christothes
 
 #PRLabel: %CodeGen %Mgmt
 /eng/packages/http-client-csharp-mgmt/                             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang

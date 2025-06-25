@@ -41,22 +41,31 @@ namespace MgmtTypeSpec
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllPrivateLinkResourcesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateGetAllPrivateLinkResourcesRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage ?? _endpoint);
-            if (nextPage == null)
-            {
-                uri.AppendPath("/subscriptions/", false);
-                uri.AppendPath(subscriptionId.ToString(), true);
-                uri.AppendPath("/resourceGroups/", false);
-                uri.AppendPath(resourceGroupName, true);
-                uri.AppendPath("/providers/MgmtTypeSpec/privateLinkResources", false);
-            }
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/privateLinkResources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetAllPrivateLinkResourcesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
             request.Uri = uri;
             request.Headers.SetValue("Accept", "application/json");
             return message;
