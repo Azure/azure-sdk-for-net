@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -14,14 +14,14 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 {
-    internal class ServiceFabricManagerNodeTypeUpdateTest : ServiceFabricManagedClustersManagementTestBase
+    internal class ServiceFabricManagedNodeTypeUpdateTests : ServiceFabricManagedClustersManagementTestBase
     {
         public ServiceFabricManagedClusterCollection clusterCollection { get; set; }
         public string clusterName;
         private ResourceGroupResource resourceGroupResource;
         public ServiceFabricManagedClusterResource serviceFabricManagedCluster;
         private ServiceFabricManagedNodeTypeResource serviveFabricManagedClusterNodeType;
-        public ServiceFabricManagerNodeTypeUpdateTest(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public ServiceFabricManagedNodeTypeUpdateTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -66,12 +66,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             this.serviveFabricManagedClusterNodeType = (await nodeTypeCollection.CreateOrUpdateAsync(WaitUntil.Completed, nodeTypeName, nodeTypeData)).Value;
         }
 
-        [Test]
-        [Ignore("Nee re-record")]
-        public async Task UpdateTest()
+        [RecordedTest]
+        public async Task UpdateTagsTest()
         {
             //Update
-            var updateNodetype_lro = await this.serviveFabricManagedClusterNodeType.UpdateAsync(new ServiceFabricManagedNodeTypePatch()
+            var updateNodetype_lro = await this.serviveFabricManagedClusterNodeType.UpdateAsync(WaitUntil.Completed, new ServiceFabricManagedNodeTypePatch()
             {
                 Tags =
                 {
@@ -79,7 +78,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                     ["UpdateKey2"] = "UpdateValue2",
                 }
             });
-            var updateNodetype = updateNodetype_lro.Value;
+
+            ServiceFabricManagedNodeTypeResource updateNodetype = updateNodetype_lro.Value;
+            var nodeTypeTagsDataValues = updateNodetype.Data.Tags;
+            Assert.AreEqual(nodeTypeTagsDataValues["UpdateKey1"], "UpdateValue1");
+            Assert.AreEqual(nodeTypeTagsDataValues["UpdateKey2"], "UpdateValue2");
+        }
+
+        [RecordedTest]
+        public async Task UpdateCapacityTest()
+        {
+            var targetCount = 7;
+
+            //Update
+            var updateNodetype_lro = await this.serviveFabricManagedClusterNodeType.UpdateAsync(WaitUntil.Completed, new ServiceFabricManagedNodeTypePatch()
+            {
+                Sku = new NodeTypeSku(targetCount)
+            });
+
+            ServiceFabricManagedNodeTypeResource updateNodetype = updateNodetype_lro.Value;
+            Assert.AreEqual(updateNodetype.Data.Sku.Capacity, targetCount);
         }
     }
 }

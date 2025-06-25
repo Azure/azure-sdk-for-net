@@ -1,14 +1,22 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.3.0-beta.3 (2025-06-23)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version tag from 'package-2024-09-preview' to 'package-2025-03-preview'. Tag details available at https://github.com/Azure/azure-rest-api-specs/blob/57ce30e761ef4d39e81471cfb732f39043f0b278/specification/servicefabricmanagedclusters/resource-manager/readme.md.
 
-### Bugs Fixed
+Cluster features
+- Fault simulation operations
+- AllocatedOutboundPorts
+- VMImage
 
-### Other Changes
+Nodetype features
+- Fault simulation operations
+- New DiskTypes options PremiumV2_LRS, StandardSSD_ZRS, Premium_ZRS
+- SecurityEncryptionType
+- New actions Deallocate, Start, Redeploy
+- ZoneBalance
 
 ## 1.3.0-beta.2 (2024-11-21)
 
