@@ -61,7 +61,7 @@ function ToSemVer($version){
 
 function SortSemVersions($versions)
 {
-    return $versions | Sort -Property Major, Minor, Patch, PrereleaseLabel, PrereleaseNumber -Descending
+    return $versions | Sort-Object -Property Major, Minor, Patch, PrereleaseLabel, PrereleaseNumber -Descending
 }
 
 function Sort-Versions
