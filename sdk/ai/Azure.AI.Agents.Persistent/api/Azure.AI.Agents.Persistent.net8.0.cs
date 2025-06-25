@@ -1,3 +1,10 @@
+namespace Azure.AI.Agents
+{
+    public partial class AutoFunctionCallOptions
+    {
+        public AutoFunctionCallOptions(System.Collections.Generic.Dictionary<string, System.Delegate> toolDelegates, int maxRetry) { }
+    }
+}
 namespace Azure.AI.Agents.Persistent
 {
     public partial class AISearchIndexResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.AISearchIndexResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.AISearchIndexResource>
