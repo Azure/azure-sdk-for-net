@@ -7,8 +7,6 @@ Project("{B0561A8D-1292-4D56-B8FC-2B4E2C8CFE3D}") = "Azure.ResourceManager.Stand
 EndProject
 Project("{B0561A8D-1292-4D56-B8FC-2B4E2C8CFE3D}") = "Azure.ResourceManager.StandbyPool.Tests", "tests\Azure.ResourceManager.StandbyPool.Tests.csproj", "{FEC17FD3-550C-43BF-998D-0317C64355D5}"
 EndProject
-Project("{B0561A8D-1292-4D56-B8FC-2B4E2C8CFE3D}") = "Azure.ResourceManager.StandbyPool.Samples", "samples\Azure.ResourceManager.StandbyPool.Samples.csproj", "{9EA2CA60-2B8C-4E0F-884D-76AD9D49A0B7}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

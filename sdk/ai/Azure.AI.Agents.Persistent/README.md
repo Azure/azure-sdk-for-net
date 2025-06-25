@@ -35,6 +35,9 @@ managing search indexes, evaluating generative AI performance, and enabling Open
     - [Function call](#function-call)
     - [Azure function Call](#azure-function-call)
     - [OpenAPI](#create-agent-with-openapi)
+    - [Tracing](#tracing)
+      - [Azure Monitor Tracing](#tracing-to-azure-monitor)
+      - [Console Tracing](#tracing-to-console)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -866,6 +869,63 @@ Assert.AreEqual(
     run.LastError?.Message);
 ```
 `
+
+#### Tracing
+
+You can add an Application Insights Azure resource to your Azure AI Foundry project. See the Tracing tab in your AI Foundry project. If one was enabled, you use the Application Insights connection string, configure your Agents, and observe the full execution path through Azure Monitor. Typically, you might want to start tracing before you create an Agent.
+
+Tracing requires enabling OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable value to `true`. You can also enable the feature with the following code:
+```C# Snippet:EnableActivitySourceToGetTraces
+AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+```
+
+To enabled content recording, set the `AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED` environment variable to `true`. Content in this context refers to chat message content, function call tool related function names, function parameter names and values. Alternatively, you can control content recording with the following code:
+```C# Snippet:DisableContentRecordingForTraces
+AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
+```
+Set the value to `true` to enable content recording.
+
+##### Tracing to Azure Montior
+First, set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to point to your Azure Monitor resource.
+
+For tracing to Azure Monitor from your application, the preferred option is to use Azure.Monitor.OpenTelemetry.AspNetCore. Install the package with [NuGet](https://www.nuget.org/ ):
+```dotnetcli
+dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore
+```
+
+More information about using the Azure.Monitor.OpenTelemetry.AspNetCore package can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md ).
+
+Another option is to use Azure.Monitor.OpenTelemetry.Exporter package. Install the pacakge with [NuGet](https://www.nuget.org/ )
+```dotnetcli
+dotnet add package Azure.Monitor.OpenTelemetry.Exporter
+```
+
+Here is an example how to set up tracing to Azure monitor using Azure.Monitor.OpenTelemetry.Exporter:
+```C# Snippet:AgentsTelemetrySetupTracingToAzureMonitor
+var tracerProvider = Sdk.CreateTracerProviderBuilder()
+    .AddSource("Azure.AI.Agents.Persistent.*")
+    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
+    .AddAzureMonitorTraceExporter().Build();
+```
+
+##### Tracing to Console
+
+For tracing to console from your application, install the OpenTelemetry.Exporter.Console with [NuGet](https://www.nuget.org/ ):
+
+```dotnetcli
+dotnet add package OpenTelemetry.Exporter.Console
+```
+
+
+Here is an example how to set up tracing to console:
+```C# Snippet:AgentsTelemetrySetupTracingToConsole
+var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource("Azure.AI.Agents.Persistent.*") // Add the required sources name
+                .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
+                .AddConsoleExporter() // Export traces to the console
+                .Build();
+```
+
 ## Troubleshooting
 
 Any operation that fails will throw a [RequestFailedException][RequestFailedException]. The exception's `code` will hold the HTTP response status code. The exception's `message` contains a detailed message that may be helpful in diagnosing the issue:

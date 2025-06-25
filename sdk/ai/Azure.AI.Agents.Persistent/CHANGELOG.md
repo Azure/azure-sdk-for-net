@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Tracing for Agents
+
 ### Breaking Changes
 
 ### Bugs Fixed
