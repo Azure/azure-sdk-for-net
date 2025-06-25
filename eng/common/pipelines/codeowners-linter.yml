@@ -37,7 +37,10 @@ stages:
       TeamUserUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/azure-sdk-write-teams-blob"
       UserOrgUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/user-org-visibility-blob"
 
-    steps:         
+    steps:
+      - checkout: self
+        fetchDepth: 1
+
       - pwsh: |
           dotnet tool install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"
         displayName: Install CodeownersLinter
