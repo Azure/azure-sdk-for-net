@@ -58,6 +58,42 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual("SamplesModelFactory", modelFactory!.Type.Name);
         }
 
+        [Test]
+        public void CachedMethodsAreResetAfterRenaming()
+        {
+            var model = InputFactory.Model("SomeModel");
+            var plugin = MockHelpers.LoadMockGenerator(
+                inputModels: () => [model],
+                configurationJson: "{ \"package-name\": \"Azure.Messaging.SomeService\" }");
+
+            var visitor = new TestModelRenamerVisitor();
+            visitor.InvokeVisitLibrary(plugin.Object.OutputLibrary);
+
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
+            Assert.IsNotNull(modelFactory);
+            Assert.AreEqual(1, modelFactory!.Methods.Count);
+            Assert.AreEqual("RenamedModel", modelFactory.Methods[0].Signature.Name);
+        }
+
+        private class TestModelRenamerVisitor : ModelFactoryRenamerVisitor
+        {
+            protected override TypeProvider? VisitType(TypeProvider type)
+            {
+                if (type is ModelProvider)
+                {
+                    type.Update(name: "RenamedModel");
+                    return type;
+                }
+
+                return base.VisitType(type);
+            }
+
+            public void InvokeVisitLibrary(OutputLibrary library)
+            {
+                base.VisitLibrary(library);
+            }
+        }
+
         private class TestModelFactoryRenamerVisitor : ModelFactoryRenamerVisitor
         {
             public void InvokeVisitLibrary(OutputLibrary library)
