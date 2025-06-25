@@ -46,6 +46,10 @@ namespace BasicTypeSpec
                 }
                 ListWithContinuationTokenHeaderResponseResponse responseWithType = (ListWithContinuationTokenHeaderResponseResponse)response;
                 nextPage = response.Headers.TryGetValue("next-token", out string value) ? value : null;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
                 yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Things, nextPage, response);
             }
             while (!string.IsNullOrEmpty(nextPage));

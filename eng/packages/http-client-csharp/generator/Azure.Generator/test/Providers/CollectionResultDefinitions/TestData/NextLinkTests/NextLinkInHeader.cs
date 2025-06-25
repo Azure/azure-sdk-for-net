@@ -49,6 +49,10 @@ namespace Samples
                     items.Add(global::System.BinaryData.FromObjectAsJson(item));
                 }
                 nextPage = response.Headers.TryGetValue("nextCat", out string value) ? new global::System.Uri(value) : null;
+                if ((nextPage == null))
+                {
+                    yield break;
+                }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
             }
             while ((nextPage != null));

@@ -48,7 +48,11 @@ namespace BasicTypeSpec
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
-                nextPage = new Uri(responseWithType.Next);
+                nextPage = responseWithType.Next != null ? new Uri(responseWithType.Next) : null;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);

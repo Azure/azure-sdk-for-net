@@ -52,6 +52,10 @@ namespace BasicTypeSpec
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
                 nextPage = responseWithType.NextToken;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
                 yield return Page<BinaryData>.FromValues(items, nextPage, response);
             }
             while (!string.IsNullOrEmpty(nextPage));

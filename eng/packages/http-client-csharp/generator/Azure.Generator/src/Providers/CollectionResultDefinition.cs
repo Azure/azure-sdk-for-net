@@ -205,6 +205,9 @@ namespace Azure.Generator.Providers
                 // Extract next page
                 doWhileStatement.Add(nextPageVariable.Assign(BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
 
+                // Break if the next page is null
+                doWhileStatement.Add(new IfStatement(nextPageVariable.Equal(Null)) { new YieldBreakStatement() });
+
                 // Create and yield the page
                 doWhileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable, nextPageExpression, responseVariable])));
             }
@@ -212,6 +215,9 @@ namespace Azure.Generator.Providers
             {
                 // Extract next page
                 doWhileStatement.Add(nextPageVariable.Assign(BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
+
+                // Break if the next page is null
+                doWhileStatement.Add(new IfStatement(nextPageVariable.Equal(Null)) { new YieldBreakStatement() });
 
                 // Create and yield the page
                 doWhileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [responseWithTypeVariable.Property(_itemsPropertyName).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), nextPageExpression, responseVariable])));
@@ -266,7 +272,12 @@ namespace Azure.Generator.Providers
 
             return _nextPageLocation switch
             {
-                InputResponseLocation.Body =>NeedsConversionToUri() ? New.Instance<Uri>(responseWithTypeVariable.Property(_nextPagePropertyName)) : responseWithTypeVariable.Property(_nextPagePropertyName),
+                InputResponseLocation.Body => NeedsConversionToUri() ?
+                    new TernaryConditionalExpression(
+                        responseWithTypeVariable.Property(_nextPagePropertyName).NotEqual(Null),
+                        New.Instance<Uri>(responseWithTypeVariable.Property(_nextPagePropertyName)),
+                            Null)
+                    : responseWithTypeVariable.Property(_nextPagePropertyName),
                 InputResponseLocation.Header => new TernaryConditionalExpression(
                     responseVariable.Property("Headers")
                         .Invoke("TryGetValue", Literal(_nextPagePropertyName),

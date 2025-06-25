@@ -44,6 +44,10 @@ namespace BasicTypeSpec
                 }
                 ListWithHeaderNextLinkResponse responseWithType = (ListWithHeaderNextLinkResponse)response;
                 nextPage = response.Headers.TryGetValue("next", out string value) ? new Uri(value) : null;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
                 yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Things, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);
