@@ -482,8 +482,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         public async Task GetModelEvaluationResultsAsync()
         {
             // Arrange
-            string projectName = "EmailApp";
-            string trainedModelLabel = "Model1";
+            string projectName = "Aurora-CLU-Prod";
+            string trainedModelLabel = "m1";
             StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 
             ConversationAuthoringTrainedModel trainedModelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
