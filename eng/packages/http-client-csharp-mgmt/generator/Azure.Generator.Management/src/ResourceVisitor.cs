@@ -46,19 +46,6 @@ namespace Azure.Generator.Management
             return type;
         }
 
-        // TODO: Go back and enable this when we have a way to handle the resource model parameters renaming via VisitMethod.
-        // protected override MethodProvider? VisitMethod(MethodProvider method)
-        // {
-        //     foreach (var parameter in method.Signature.Parameters)
-        //     {
-        //         if (ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(parameter.Type))
-        //         {
-        //             parameter.Update("data");
-        //         }
-        //     }
-        //     return base.VisitMethod(method);
-        // }
-
         private void TransformNamespaceForResource(TypeProvider type)
         {
             if (type is ModelProvider model && ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(model.Type))
@@ -71,6 +58,19 @@ namespace Azure.Generator.Management
                 }
             }
         }
+
+        // TODO: Go back and enable this when we have a way to handle the resource model parameters renaming via VisitMethod.
+        // protected override MethodProvider? VisitMethod(MethodProvider method)
+        // {
+        //     foreach (var parameter in method.Signature.Parameters)
+        //     {
+        //         if (ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(parameter.Type))
+        //         {
+        //             parameter.Update("data");
+        //         }
+        //     }
+        //     return base.VisitMethod(method);
+        // }
 
         private static string TransformName(TypeProvider model) => $"{model.Name}Data";
 
