@@ -41,7 +41,9 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataFactorySecretString(document.RootElement) ?? new DataFactorySecretString();
+#pragma warning disable CS8603 // Possible null reference return.
+            return DeserializeDataFactorySecretString(document.RootElement);
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         BinaryData IPersistableModel<DataFactorySecretString>.Write(ModelReaderWriterOptions options)
@@ -64,7 +66,9 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.Parse(data);
-            return DeserializeDataFactorySecretString(document.RootElement) ?? new DataFactorySecretString();
+#pragma warning disable CS8603 // Possible null reference return.
+            return DeserializeDataFactorySecretString(document.RootElement);
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
         string IPersistableModel<DataFactorySecretString>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
