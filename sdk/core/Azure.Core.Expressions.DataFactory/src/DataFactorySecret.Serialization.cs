@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
@@ -41,9 +43,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.ParseValue(ref reader);
-#pragma warning disable CS8603 // Possible null reference return.
             return DeserializeDataFactorySecretBaseDefinition(document.RootElement);
-#pragma warning restore CS8603 // Possible null reference return.
         }
 
         BinaryData IPersistableModel<DataFactorySecret>.Write(ModelReaderWriterOptions options)
@@ -66,14 +66,12 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.Parse(data);
-#pragma warning disable CS8603 // Possible null reference return.
             return DeserializeDataFactorySecretBaseDefinition(document.RootElement);
-#pragma warning restore CS8603 // Possible null reference return.
         }
 
         string IPersistableModel<DataFactorySecret>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal static DataFactorySecret? DeserializeDataFactorySecretBaseDefinition(JsonElement element)
+        internal static DataFactorySecret DeserializeDataFactorySecretBaseDefinition(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,13 +88,13 @@ namespace Azure.Core.Expressions.DataFactory
             return UnknownSecret.DeserializeUnknownSecretBase(element);
         }
 
-        internal partial class DataFactorySecretBaseDefinitionConverter : JsonConverter<DataFactorySecret?>
+        internal partial class DataFactorySecretBaseDefinitionConverter : JsonConverter<DataFactorySecret>
         {
-            public override void Write(Utf8JsonWriter writer, DataFactorySecret? model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, DataFactorySecret model, JsonSerializerOptions options)
             {
                 (model as IUtf8JsonSerializable)?.Write(writer);
             }
-            public override DataFactorySecret? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override DataFactorySecret Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
                 return DeserializeDataFactorySecretBaseDefinition(document.RootElement);

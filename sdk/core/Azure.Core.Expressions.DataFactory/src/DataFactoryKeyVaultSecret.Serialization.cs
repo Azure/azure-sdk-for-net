@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
@@ -49,9 +51,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.ParseValue(ref reader);
-#pragma warning disable CS8603 // Possible null reference return.
             return DeserializeAzureKeyVaultSecretReference(document.RootElement);
-#pragma warning restore CS8603 // Possible null reference return.
         }
 
         BinaryData IPersistableModel<DataFactoryKeyVaultSecret>.Write(ModelReaderWriterOptions options)
@@ -74,23 +74,21 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.Parse(data);
-#pragma warning disable CS8603 // Possible null reference return.
             return DeserializeAzureKeyVaultSecretReference(document.RootElement);
-#pragma warning restore CS8603 // Possible null reference return.
         }
 
         string IPersistableModel<DataFactoryKeyVaultSecret>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal static DataFactoryKeyVaultSecret? DeserializeAzureKeyVaultSecretReference(JsonElement element)
+        internal static DataFactoryKeyVaultSecret DeserializeAzureKeyVaultSecretReference(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataFactoryLinkedServiceReference? store = default;
-            DataFactoryElement<string>? secretName = default;
-            DataFactoryElement<string>? secretVersion = default;
-            string? type = default;
+            DataFactoryLinkedServiceReference store = default;
+            DataFactoryElement<string> secretName = default;
+            DataFactoryElement<string> secretVersion = default;
+            string type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("store"u8))
@@ -121,13 +119,13 @@ namespace Azure.Core.Expressions.DataFactory
             return new DataFactoryKeyVaultSecret(type, store, secretName, secretVersion);
         }
 
-        internal partial class DataFactoryKeyVaultSecretConverter : JsonConverter<DataFactoryKeyVaultSecret?>
+        internal partial class DataFactoryKeyVaultSecretConverter : JsonConverter<DataFactoryKeyVaultSecret>
         {
-            public override void Write(Utf8JsonWriter writer, DataFactoryKeyVaultSecret? model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, DataFactoryKeyVaultSecret model, JsonSerializerOptions options)
             {
                 (model as IUtf8JsonSerializable)?.Write(writer);
             }
-            public override DataFactoryKeyVaultSecret? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override DataFactoryKeyVaultSecret Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
                 return DeserializeAzureKeyVaultSecretReference(document.RootElement);

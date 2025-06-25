@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
@@ -41,9 +43,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.ParseValue(ref reader);
-#pragma warning disable CS8603 // Possible null reference return.
             return DeserializeDataFactorySecretString(document.RootElement);
-#pragma warning restore CS8603 // Possible null reference return.
         }
 
         BinaryData IPersistableModel<DataFactorySecretString>.Write(ModelReaderWriterOptions options)
@@ -66,21 +66,19 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.Parse(data);
-#pragma warning disable CS8603 // Possible null reference return.
             return DeserializeDataFactorySecretString(document.RootElement);
-#pragma warning restore CS8603 // Possible null reference return.
         }
 
         string IPersistableModel<DataFactorySecretString>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal static DataFactorySecretString? DeserializeDataFactorySecretString(JsonElement element)
+        internal static DataFactorySecretString DeserializeDataFactorySecretString(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string? value = default;
-            string? type = default;
+            string value = default;
+            string type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -97,13 +95,13 @@ namespace Azure.Core.Expressions.DataFactory
             return new DataFactorySecretString(type, value);
         }
 
-        internal partial class DataFactorySecretStringConverter : JsonConverter<DataFactorySecretString?>
+        internal partial class DataFactorySecretStringConverter : JsonConverter<DataFactorySecretString>
         {
-            public override void Write(Utf8JsonWriter writer, DataFactorySecretString? model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, DataFactorySecretString model, JsonSerializerOptions options)
             {
                 (model as IUtf8JsonSerializable)?.Write(writer);
             }
-            public override DataFactorySecretString? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override DataFactorySecretString Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
                 return DeserializeDataFactorySecretString(document.RootElement);

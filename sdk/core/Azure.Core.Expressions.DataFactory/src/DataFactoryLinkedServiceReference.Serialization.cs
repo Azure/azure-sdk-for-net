@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.Collections.Generic;
 using System.ClientModel.Primitives;
@@ -62,9 +64,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.ParseValue(ref reader);
-#pragma warning disable CS8603 // Possible null reference return.
             return DeserializeDataFactoryLinkedServiceReference(document.RootElement);
-#pragma warning restore CS8603 // Possible null reference return.
         }
 
         BinaryData IPersistableModel<DataFactoryLinkedServiceReference>.Write(ModelReaderWriterOptions options)
@@ -87,22 +87,20 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.Parse(data);
-#pragma warning disable CS8603 // Possible null reference return.
             return DeserializeDataFactoryLinkedServiceReference(document.RootElement);
-#pragma warning restore CS8603 // Possible null reference return.
         }
 
         string IPersistableModel<DataFactoryLinkedServiceReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal static DataFactoryLinkedServiceReference? DeserializeDataFactoryLinkedServiceReference(JsonElement element)
+        internal static DataFactoryLinkedServiceReference DeserializeDataFactoryLinkedServiceReference(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataFactoryLinkedServiceReferenceKind kind = default;
-            string? referenceName = default;
-            Optional<IDictionary<string, BinaryData?>> parameters = default;
+            string referenceName = default;
+            Optional<IDictionary<string, BinaryData>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -121,7 +119,7 @@ namespace Azure.Core.Expressions.DataFactory
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData?> dictionary = new Dictionary<string, BinaryData?>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -140,13 +138,13 @@ namespace Azure.Core.Expressions.DataFactory
             return new DataFactoryLinkedServiceReference(kind, referenceName, Optional.ToDictionary(parameters));
         }
 
-        internal partial class DataFactoryLinkedServiceReferenceConverter : JsonConverter<DataFactoryLinkedServiceReference?>
+        internal partial class DataFactoryLinkedServiceReferenceConverter : JsonConverter<DataFactoryLinkedServiceReference>
         {
-            public override void Write(Utf8JsonWriter writer, DataFactoryLinkedServiceReference? model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, DataFactoryLinkedServiceReference model, JsonSerializerOptions options)
             {
                 (model as IUtf8JsonSerializable)?.Write(writer);
             }
-            public override DataFactoryLinkedServiceReference? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override DataFactoryLinkedServiceReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
                 return DeserializeDataFactoryLinkedServiceReference(document.RootElement);
