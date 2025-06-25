@@ -25,6 +25,13 @@ namespace Azure.Identity
         /// </summary>
         public VisualStudioCodeCredential() : base(GetBrokerOptoins(FileSystemService.Default)) { }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
+        /// </summary>
+#pragma warning disable CS0618 // Type or member is obsolete
+        public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options) { }
+#pragma warning restore CS0618 // Type or member is obsolete
+
         /// <InheritDoc />
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default) =>
             GetTokenImpl(false, requestContext, cancellationToken).EnsureCompleted();
