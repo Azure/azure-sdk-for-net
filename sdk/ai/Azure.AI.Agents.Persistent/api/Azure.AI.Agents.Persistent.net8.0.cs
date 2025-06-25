@@ -155,6 +155,7 @@ namespace Azure.AI.Agents.Persistent
     public partial class BingCustomSearchToolParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.BingCustomSearchToolParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.BingCustomSearchToolParameters>
     {
         public BingCustomSearchToolParameters(System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.BingCustomSearchConfiguration> searchConfigurations) { }
+        public BingCustomSearchToolParameters(string connectionId, string instanceName) { }
         public System.Collections.Generic.IList<Azure.AI.Agents.Persistent.BingCustomSearchConfiguration> SearchConfigurations { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.BingCustomSearchToolParameters System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.BingCustomSearchToolParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
