@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Avs.Tests
         public const string CLUSTER2_NAME = "Cluster-2";
         public const string ISCSI_PATH_NAME = "default";
         public const string WORKLOAD_NETWORK_NAME = "a8b7ddce-a5d6-11e8-a7e5-43344e310957";
+        public const string HOST_ID = "esx14-r04.p02.westus2.avs.azure.com";
+        public const string PROVISIONED_NETWORK_NAME = "vsan";
 
         protected AvsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -89,6 +91,25 @@ namespace Azure.ResourceManager.Avs.Tests
             ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, RESOURCE_GROUP_NAME, PRIVATE_CLOUD_NAME);
             AvsPrivateCloudResource avsPrivateCloud = Client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
             return avsPrivateCloud;
+        }
+        protected AvsHostResource getAvsHostResource()
+        {
+            string subscriptionId = DefaultSubscription.Data.SubscriptionId;
+            ResourceIdentifier avsHostResourceId = AvsHostResource.CreateResourceIdentifier(subscriptionId, RESOURCE_GROUP_NAME, PRIVATE_CLOUD_NAME, CLUSTER1_NAME, HOST_ID);
+            AvsHostResource avsHost = Client.GetAvsHostResource(avsHostResourceId);
+            return avsHost;
+        }
+        protected AvsHostCollection getAvsHostCollection()
+        {
+            string subscriptionId = DefaultSubscription.Data.SubscriptionId;
+            ResourceIdentifier avsPrivateCloudClusterResourceId = AvsPrivateCloudClusterResource.CreateResourceIdentifier(subscriptionId, RESOURCE_GROUP_NAME, PRIVATE_CLOUD_NAME, CLUSTER1_NAME);
+            AvsPrivateCloudClusterResource avsPrivateCloudCluster = Client.GetAvsPrivateCloudClusterResource(avsPrivateCloudClusterResourceId);
+            AvsHostCollection collection = avsPrivateCloudCluster.GetAvsHosts();
+            return collection;
+        }
+        protected AvsProvisionedNetworkResource getAvsProvisionedNetworkResource()
+        { 
+
         }
     }
 }
