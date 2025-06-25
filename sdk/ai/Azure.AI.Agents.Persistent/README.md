@@ -885,7 +885,7 @@ AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
 ```
 Set the value to `true` to enable content recording.
 
-##### Tracing to Azure Montior
+##### Tracing to Azure Monitor
 First, set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to point to your Azure Monitor resource.
 
 For tracing to Azure Monitor from your application, the preferred option is to use Azure.Monitor.OpenTelemetry.AspNetCore. Install the package with [NuGet](https://www.nuget.org/ ):
