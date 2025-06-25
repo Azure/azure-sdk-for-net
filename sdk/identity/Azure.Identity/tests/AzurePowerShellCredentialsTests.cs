@@ -331,5 +331,35 @@ namespace Azure.Identity.Tests
                 Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext), ScopeUtilities.InvalidScopeMessage);
             }
         }
+
+        [Test]
+        public async Task AuthenticateWithAzurePowerShellCredential_HandlesSecureStringToken()
+        {
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShellSecureString(TimeSpan.FromSeconds(30));
+            var testProcess = new TestProcess { Output = processOutput };
+            AzurePowerShellCredential credential = InstrumentClient(
+                new AzurePowerShellCredential(
+                    new AzurePowerShellCredentialOptions(),
+                    CredentialPipeline.GetInstance(null),
+                    new TestProcessService(testProcess, true)));
+
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(expectedToken, actualToken.Token);
+            Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
+
+            // Verify PowerShell script checks for and handles Az.Accounts module version 5.0.0+
+            var match = System.Text.RegularExpressions.Regex.Match(testProcess.StartInfo.Arguments, "EncodedCommand\\s*\"([^\"]+)\"");
+            if (!match.Success)
+            {
+                throw new InvalidOperationException("Failed to extract the encoded command from the arguments.");
+            }
+            var commandString = match.Groups[1].Value;
+            var b = Convert.FromBase64String(commandString);
+            commandString = Encoding.Unicode.GetString(b);
+
+            Assert.That(commandString, Does.Contain("if ($token.Token -is [System.Security.SecureString])"));
+            Assert.That(commandString, Does.Contain("[System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.Token)"));
+        }
     }
 }

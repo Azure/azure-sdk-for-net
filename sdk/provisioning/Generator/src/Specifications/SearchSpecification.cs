@@ -6,6 +6,7 @@ using System.Linq;
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager.Search;
 using Azure.ResourceManager.Search.Models;
+using Generator.Model;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
@@ -26,6 +27,8 @@ public class SearchSpecification() :
         RemoveModel<SearchSkuName>();
         RemoveProperty<SharedSearchServicePrivateLinkResourceProperties>("SharedPrivateLinkResourceStatus");
         RemoveProperty<SharedSearchServicePrivateLinkResourceProperties>("SharedPrivateLinkResourceProvisioningState");
+        CustomizeProperty<SharedSearchServicePrivateLinkResourceProperties>("Status", p => p.HideLevel = PropertyHideLevel.DoNotHide);
+        CustomizeProperty<SharedSearchServicePrivateLinkResourceProperties>("ProvisioningState", p => p.HideLevel = PropertyHideLevel.DoNotHide);
         
         // Patch models
         CustomizeEnum<SearchServicePrivateLinkServiceConnectionStatus>(e => { foreach (EnumValue member in e.Values) { member.Value = member.Name; } });

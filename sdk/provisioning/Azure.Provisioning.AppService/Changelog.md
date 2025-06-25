@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.1 (2025-06-25)
 
 ### Bugs Fixed
 
-### Other Changes
+- Hide some properties that are incorrectly generated in previous versions.
 
 ## 1.1.0 (2025-06-16)
 

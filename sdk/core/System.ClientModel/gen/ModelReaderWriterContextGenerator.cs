@@ -83,21 +83,17 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         var symbolToTypeRefCacheProvider = context.CompilationProvider.Select((compilation, _) => new TypeSymbolTypeRefCache());
 
-        var assemblyNameProvider = context.CompilationProvider.Select((compilation, _) => compilation.Assembly);
-
         var modelInfoTypes = persistableModelDeclarations
             .Combine(methodInvocations)
             .Select((tuple, _) => tuple.Left.AddRange(tuple.Right));
 
         var combined = classDeclarations
             .Combine(modelInfoTypes)
-            .Combine(assemblyNameProvider)
             .Combine(references)
             .Combine(symbolToKindCacheProvider)
             .Combine(symbolToTypeRefCacheProvider)
             .Select((data, _) => (
-                data.Left.Left.Left.Left.Left,
-                data.Left.Left.Left.Left.Right,
+                data.Left.Left.Left.Left,
                 data.Left.Left.Left.Right,
                 data.Left.Left.Right,
                 data.Left.Right,
@@ -126,7 +122,6 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         SourceProductionContext context,
         (ImmutableArray<INamedTypeSymbol> Contexts,
             ImmutableArray<ITypeSymbol> TypeBuilders,
-            IAssemblySymbol Assembly,
             ImmutableArray<IAssemblySymbol> References,
             TypeSymbolKindCache SymbolToKindCache,
             TypeSymbolTypeRefCache SymbolToTypeRefCache) data)
@@ -150,7 +145,6 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         var mrwContextSymbol = GetMrwContextSymbol(contextSymbol);
 
-        string assemblyName = data.Assembly.Name;
         var contextType = data.SymbolToTypeRefCache.Get(contextSymbol, data.SymbolToKindCache);
 
         var builders = data.TypeBuilders
