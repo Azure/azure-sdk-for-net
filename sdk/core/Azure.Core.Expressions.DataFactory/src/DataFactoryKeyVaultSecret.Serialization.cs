@@ -49,7 +49,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureKeyVaultSecretReference(document.RootElement) ?? throw new InvalidOperationException("Failed to deserialize DataFactoryKeyVaultSecret.");
+            return DeserializeAzureKeyVaultSecretReference(document.RootElement)!;
         }
 
         BinaryData IPersistableModel<DataFactoryKeyVaultSecret>.Write(ModelReaderWriterOptions options)
@@ -72,7 +72,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.Parse(data);
-            return DeserializeAzureKeyVaultSecretReference(document.RootElement) ?? throw new InvalidOperationException("Failed to deserialize DataFactoryKeyVaultSecret.");
+            return DeserializeAzureKeyVaultSecretReference(document.RootElement)!;
         }
 
         string IPersistableModel<DataFactoryKeyVaultSecret>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";

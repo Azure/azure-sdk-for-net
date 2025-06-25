@@ -62,7 +62,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataFactoryLinkedServiceReference(document.RootElement) ?? throw new InvalidOperationException("Failed to deserialize DataFactoryLinkedServiceReference.");
+            return DeserializeDataFactoryLinkedServiceReference(document.RootElement)!;
         }
 
         BinaryData IPersistableModel<DataFactoryLinkedServiceReference>.Write(ModelReaderWriterOptions options)
@@ -85,7 +85,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             using var document = JsonDocument.Parse(data);
-            return DeserializeDataFactoryLinkedServiceReference(document.RootElement) ?? throw new InvalidOperationException("Failed to deserialize DataFactoryLinkedServiceReference.");
+            return DeserializeDataFactoryLinkedServiceReference(document.RootElement)!;
         }
 
         string IPersistableModel<DataFactoryLinkedServiceReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
