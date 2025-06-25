@@ -70,7 +70,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextListSchemaVersionsRequest(nextLink, _groupName, _schemaName, _context) : _client.CreateListSchemaVersionsRequest(_groupName, _schemaName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetSchemaVersionsRequest(nextLink, _groupName, _schemaName, _context) : _client.CreateGetSchemaVersionsRequest(_groupName, _schemaName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaVersions");
             scope.Start();
             try

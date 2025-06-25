@@ -33,7 +33,7 @@ namespace Azure.Communication.Chat.Tests.samples
             createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
             createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
 
-            createChatThreadOptions.RetentionPolicy = new ThreadCreationDateRetentionPolicy(40);
+            createChatThreadOptions.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(40);
 
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
             ChatThreadProperties chatThread = createChatThreadResult.ChatThread;
@@ -48,7 +48,7 @@ namespace Azure.Communication.Chat.Tests.samples
             updateChatThreadPropertiesOptions.Topic = "Launch meeting";
             updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
 
-            updateChatThreadPropertiesOptions.RetentionPolicy = new NoneRetentionPolicy();
+            updateChatThreadPropertiesOptions.RetentionPolicy = ChatRetentionPolicy.None();
 
             await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread_KeyConcepts
