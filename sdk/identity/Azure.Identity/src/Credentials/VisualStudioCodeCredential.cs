@@ -2,208 +2,158 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// Enables authentication to Microsoft Entra ID as the user signed in to Visual Studio Code via
-    /// the 'Azure Account' extension.
-    ///
-    /// It's a <see href="https://github.com/Azure/azure-sdk-for-net/issues/27263">known issue</see> that `VisualStudioCodeCredential`
-    /// doesn't work with <see href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account">Azure Account extension</see>
-    /// versions newer than <b>0.9.11</b>. A long-term fix to this problem is in progress. In the meantime, consider authenticating
-    /// with <see cref="AzureCliCredential"/>.
+    /// the broker. Note that this credential relies on a reference to the Azure.Identity.Broker package.
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This credential is deprecated because the VS Code Azure Account extension on which this credential relies has been deprecated. Consider using other dev-time credentials, such as VisualStudioCredential, AzureCliCredential, AzureDeveloperCliCredential, AzurePowerShellCredential. See the Azure Account extension deprecation notice here: https://github.com/microsoft/vscode-azure-account/issues/964.")]
-    public class VisualStudioCodeCredential : TokenCredential
+    public class VisualStudioCodeCredential : InteractiveBrowserCredential
     {
         private const string CredentialsSection = "VS Code Azure";
-        private const string ClientId = "aebc6443-996d-45c2-90f0-388ff96faa56";
-        private readonly IVisualStudioCodeAdapter _vscAdapter;
-        private readonly IFileSystemService _fileSystem;
-        private readonly CredentialPipeline _pipeline;
-        internal string TenantId { get; }
-        internal string[] AdditionallyAllowedTenantIds { get; }
-        private const string _commonTenant = "common";
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/vscodecredential/troubleshoot";
-        internal MsalPublicClient Client { get; }
-        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
         /// </summary>
-        public VisualStudioCodeCredential() : this(default, default, default, default, default) { }
+        public VisualStudioCodeCredential() : base(GetBrokerOptoins(FileSystemService.Default)) { }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/> with the specified options.
-        /// </summary>
-        /// <param name="options">Options for configuring the credential.</param>
-        public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options) : this(options, default, default, default, default) { }
+        /// <InheritDoc />
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default) =>
+            GetTokenImpl(false, requestContext, cancellationToken).EnsureCompleted();
 
-        internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem,
-            IVisualStudioCodeAdapter vscAdapter)
+        /// <InheritDoc />
+        public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default) =>
+            await GetTokenImpl(true, requestContext, cancellationToken).ConfigureAwait(false);
+
+        private async Task<AccessToken> GetTokenImpl(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            TenantId = options?.TenantId;
-            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            Client = client ?? new MsalPublicClient(_pipeline, TenantId, ClientId, null, options);
-            _fileSystem = fileSystem ?? FileSystemService.Default;
-            _vscAdapter = vscAdapter ?? GetVscAdapter();
-            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
-            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
-        }
-
-        /// <summary>
-        /// Obtains a access token from account signed in to Visual Studio Code.
-        /// </summary>
-        /// <param name="requestContext">The details of the authentication request.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
-        public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            => await GetTokenImplAsync(requestContext, true, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Obtains a access token from account signed in to Visual Studio Code.
-        /// </summary>
-        /// <param name="requestContext">The details of the authentication request.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
-        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            => GetTokenImplAsync(requestContext, false, cancellationToken).EnsureCompleted();
-
-        private async ValueTask<AccessToken> GetTokenImplAsync(TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
-        {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("VisualStudioCodeCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(VisualStudioCodeCredential)}.{nameof(GetToken)}", requestContext);
 
             try
             {
-                GetUserSettings(out var tenant, out var environmentName);
+                var token = async
+                    ? await base.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false)
+                    : base.GetToken(requestContext, cancellationToken);
+                scope.Succeeded(token);
 
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds) ?? tenant;
-
-                if (string.Equals(tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
-                {
-                    throw new CredentialUnavailableException("VisualStudioCodeCredential authentication unavailable. ADFS tenant / authorities are not supported.");
-                }
-
-                var cloudInstance = GetAzureCloudInstance(environmentName);
-                string storedCredentials = GetStoredCredentials(environmentName);
-
-                var result = await Client
-                    .AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
-                    .ConfigureAwait(false);
-                return scope.Succeeded(result.ToAccessToken());
-            }
-            catch (MsalUiRequiredException e)
-            {
-                throw scope.FailWrapAndThrow(
-                    new CredentialUnavailableException(
-                        $"{nameof(VisualStudioCodeCredential)} authentication unavailable. Token acquisition failed. Ensure that you have authenticated in VSCode Azure Account. " + Troubleshooting,
-                        e));
+                return token;
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e, Troubleshooting);
+                throw scope.FailWrapAndThrow(e, "VisualStudioCodeCredential failed to silently authenticate via the broker", isCredentialUnavailable: true);
             }
         }
 
-        private string GetStoredCredentials(string environmentName)
+        internal static InteractiveBrowserCredentialOptions GetBrokerOptoins(IFileSystemService _fileSystem)
         {
+            var options = new InteractiveBrowserCredentialOptions
+            {
+                ClientId = "f8b0c6d2-1a3e-4b5c-9f7d-8e1f2b3c4d5e", // VS Code Azure Client ID
+                AuthenticationRecord = GetAuthenticationRecord(_fileSystem)
+            };
+            return options;
+        }
+
+        internal static AuthenticationRecord GetAuthenticationRecord(IFileSystemService _fileSystem)
+        {
+            var homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            var authRecordPath = Path.Combine(homeDir, ".azure", "ms-azuretools.vscode-azureresourcegroups", "authRecord.json");
+            if (!_fileSystem.FileExists(authRecordPath))
+            {
+                return null;
+            }
             try
             {
-                var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environmentName);
-                if (!IsRefreshTokenString(storedCredentials))
+                var content = _fileSystem.ReadAllText(authRecordPath);
+                var authRecord = ParseAuthenticationRecordFromJson(content);
+                if (authRecord != null && !string.IsNullOrEmpty(authRecord.TenantId) && !string.IsNullOrEmpty(authRecord.HomeAccountId))
                 {
-                    throw new CredentialUnavailableException("Need to re-authenticate user in VSCode Azure Account.");
-                }
-
-                return storedCredentials;
-            }
-            catch (Exception ex) when (!(ex is OperationCanceledException || ex is CredentialUnavailableException))
-            {
-                throw new CredentialUnavailableException("Stored credentials not found. Need to authenticate user in VSCode Azure Account. " + Troubleshooting, ex);
-            }
-        }
-
-        private static bool IsRefreshTokenString(string str)
-        {
-            for (var index = 0; index < str.Length; index++)
-            {
-                var ch = (uint)str[index];
-                if ((ch < '0' || ch > '9') && (ch < 'A' || ch > 'Z') && (ch < 'a' || ch > 'z') && ch != '_' && ch != '-' && ch != '.')
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private void GetUserSettings(out string tenant, out string environmentName)
-        {
-            var path = _vscAdapter.GetUserSettingsPath();
-            tenant = TenantId ?? _commonTenant;
-            environmentName = "AzureCloud";
-
-            try
-            {
-                var content = _fileSystem.ReadAllText(path);
-                var root = JsonDocument.Parse(content).RootElement;
-
-                if (root.TryGetProperty("azure.tenant", out JsonElement tenantProperty))
-                {
-                    tenant = tenantProperty.GetString();
-                }
-
-                if (root.TryGetProperty("azure.cloud", out JsonElement environmentProperty))
-                {
-                    environmentName = environmentProperty.GetString();
+                    return authRecord;
                 }
             }
             catch (IOException) { }
-            catch (JsonException) { }
+            return null;
         }
 
-        private static IVisualStudioCodeAdapter GetVscAdapter()
+        /// <summary>
+        /// Parses JSON content into an AuthenticationRecord object.
+        /// </summary>
+        /// <param name="jsonContent">The JSON content to parse.</param>
+        /// <returns>An AuthenticationRecord if parsing succeeds, null otherwise.</returns>
+        private static AuthenticationRecord ParseAuthenticationRecordFromJson(string jsonContent)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (string.IsNullOrEmpty(jsonContent))
             {
-                return new WindowsVisualStudioCodeAdapter();
+                return null;
             }
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            try
             {
-                return new MacosVisualStudioCodeAdapter();
+                var jsonBytes = System.Text.Encoding.UTF8.GetBytes(jsonContent);
+                var reader = new Utf8JsonReader(jsonBytes);
+
+                string username = null;
+                string authority = null;
+                string homeAccountId = null;
+                string tenantId = null;
+                string clientId = null;
+
+                if (reader.Read() && reader.TokenType == JsonTokenType.StartObject)
+                {
+                    while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+                    {
+                        if (reader.TokenType == JsonTokenType.PropertyName)
+                        {
+                            var propertyName = reader.GetString();
+                            reader.Read(); // Move to the value
+
+                            switch (propertyName)
+                            {
+                                case "username":
+                                    username = reader.GetString();
+                                    break;
+                                case "authority":
+                                    authority = reader.GetString();
+                                    break;
+                                case "homeAccountId":
+                                    homeAccountId = reader.GetString();
+                                    break;
+                                case "tenantId":
+                                    tenantId = reader.GetString();
+                                    break;
+                                case "clientId":
+                                    clientId = reader.GetString();
+                                    break;
+                                    // Skip other properties like "datetime"
+                            }
+                        }
+                    }
+                }
+
+                // Validate that we have all required fields
+                if (!string.IsNullOrEmpty(username) &&
+                    !string.IsNullOrEmpty(authority) &&
+                    !string.IsNullOrEmpty(homeAccountId) &&
+                    !string.IsNullOrEmpty(tenantId) &&
+                    !string.IsNullOrEmpty(clientId))
+                {
+                    return new AuthenticationRecord(username, authority, homeAccountId, tenantId, clientId);
+                }
+            }
+            catch (JsonException)
+            {
+                // Return null if JSON parsing fails
             }
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return new LinuxVisualStudioCodeAdapter();
-            }
-
-            throw new PlatformNotSupportedException();
+            return null;
         }
-
-        private static AzureCloudInstance GetAzureCloudInstance(string name) =>
-            name switch
-            {
-                "AzureCloud" => AzureCloudInstance.AzurePublic,
-                "AzureChina" => AzureCloudInstance.AzureChina,
-                "AzureGermanCloud" => AzureCloudInstance.AzureGermany,
-                "AzureUSGovernment" => AzureCloudInstance.AzureUsGovernment,
-                _ => AzureCloudInstance.AzurePublic
-            };
     }
 }
