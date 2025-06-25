@@ -140,7 +140,6 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> ClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ClientSecretCertificateIssuer { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ClientSecretCertificateSubjectAlternativeName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.BinaryData> ClientSecretCertificateThumbprint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ClientSecretCertificateThumbprintString { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ClientSecretSettingName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> OpenIdIssuer { get { throw null; } set { } }

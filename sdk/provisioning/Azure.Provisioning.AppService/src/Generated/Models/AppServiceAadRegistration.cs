@@ -16,31 +16,6 @@ namespace Azure.Provisioning.AppService;
 public partial class AppServiceAadRegistration : ProvisionableConstruct
 {
     /// <summary>
-    /// An alternative to the client secret, that is the thumbprint of a
-    /// certificate used for signing purposes. This property acts as
-    /// a replacement for the Client Secret. It is also optional.
-    /// To assign an object to this property use
-    /// System.BinaryData.FromObjectAsJson``1(``0,System.Text.Json.JsonSerializerOptions).
-    /// To assign an already formated json string to
-    /// this property use System.BinaryData.FromString(System.String).
-    /// Examples:
-    /// BinaryData.FromObjectAsJson(&quot;foo&quot;)Creates a
-    /// payload of
-    /// &quot;foo&quot;.BinaryData.FromString(&quot;\&quot;foo\&quot;&quot;)Creates
-    /// a payload of &quot;foo&quot;.BinaryData.FromObjectAsJson(new { key =
-    /// &quot;value&quot; })Creates a payload of { &quot;key&quot;:
-    /// &quot;value&quot; }.BinaryData.FromString(&quot;{\&quot;key\&quot;:
-    /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
-    /// &quot;value&quot; }.
-    /// </summary>
-    public BicepValue<BinaryData> ClientSecretCertificateThumbprint 
-    {
-        get { Initialize(); return _clientSecretCertificateThumbprint!; }
-        set { Initialize(); _clientSecretCertificateThumbprint!.Assign(value); }
-    }
-    private BicepValue<BinaryData>? _clientSecretCertificateThumbprint;
-
-    /// <summary>
     /// The OpenID Connect Issuer URI that represents the entity which issues
     /// access tokens for this application.             When using Azure
     /// Active Directory, this value is the URI of the directory tenant, e.g.
@@ -133,7 +108,6 @@ public partial class AppServiceAadRegistration : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _clientSecretCertificateThumbprint = DefineProperty<BinaryData>("ClientSecretCertificateThumbprint", ["ClientSecretCertificateThumbprint"]);
         _openIdIssuer = DefineProperty<string>("OpenIdIssuer", ["openIdIssuer"]);
         _clientId = DefineProperty<string>("ClientId", ["clientId"]);
         _clientSecretSettingName = DefineProperty<string>("ClientSecretSettingName", ["clientSecretSettingName"]);
