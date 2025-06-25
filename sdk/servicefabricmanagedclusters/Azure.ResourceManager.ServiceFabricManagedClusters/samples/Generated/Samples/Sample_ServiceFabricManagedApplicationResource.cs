@@ -96,7 +96,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedApplicationResource serviceFabricManagedApplication = client.GetServiceFabricManagedApplicationResource(serviceFabricManagedApplicationResourceId);
 
             // invoke the operation
-            ServiceFabricManagedApplicationPatch patch = new ServiceFabricManagedApplicationPatch();
+            ServiceFabricManagedApplicationPatch patch = new ServiceFabricManagedApplicationPatch
+            {
+                Tags =
+{
+["a"] = "b"
+},
+            };
             ServiceFabricManagedApplicationResource result = await serviceFabricManagedApplication.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -155,7 +161,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedApplicationResource serviceFabricManagedApplication = client.GetServiceFabricManagedApplicationResource(serviceFabricManagedApplicationResourceId);
 
             // invoke the operation
-            RuntimeResumeApplicationUpgradeContent content = new RuntimeResumeApplicationUpgradeContent();
+            RuntimeResumeApplicationUpgradeContent content = new RuntimeResumeApplicationUpgradeContent
+            {
+                UpgradeDomainName = "UD1",
+            };
             await serviceFabricManagedApplication.ResumeUpgradeAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");

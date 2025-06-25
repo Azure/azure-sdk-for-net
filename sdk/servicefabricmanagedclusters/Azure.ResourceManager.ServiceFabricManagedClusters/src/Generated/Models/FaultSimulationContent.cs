@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="FaultSimulationContent"/>. </summary>
         /// <param name="faultKind"> The kind of fault to be simulated. </param>
-        /// <param name="force"> Force the action to go through without any check on the cluster. </param>
+        /// <param name="isForced"> Force the action to go through without any check on the cluster. </param>
         /// <param name="constraints"> Constraints for Fault Simulation action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FaultSimulationContent(FaultKind faultKind, bool? force, FaultSimulationConstraints constraints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FaultSimulationContent(FaultKind faultKind, bool? isForced, FaultSimulationConstraints constraints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FaultKind = faultKind;
-            Force = force;
+            IsForced = isForced;
             Constraints = constraints;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> The kind of fault to be simulated. </summary>
         internal FaultKind FaultKind { get; set; }
         /// <summary> Force the action to go through without any check on the cluster. </summary>
-        public bool? Force { get; set; }
+        public bool? IsForced { get; set; }
         /// <summary> Constraints for Fault Simulation action. </summary>
         internal FaultSimulationConstraints Constraints { get; set; }
         /// <summary> The absolute expiration timestamp (UTC) after which this fault simulation should be stopped if it's still active. </summary>

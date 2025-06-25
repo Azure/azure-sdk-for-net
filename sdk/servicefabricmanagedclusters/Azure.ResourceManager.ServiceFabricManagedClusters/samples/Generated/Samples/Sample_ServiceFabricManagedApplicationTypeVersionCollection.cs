@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             // invoke the operation
             string version = "1.0";
-            ServiceFabricManagedApplicationTypeVersionData data = new ServiceFabricManagedApplicationTypeVersionData(default);
+            ServiceFabricManagedApplicationTypeVersionData data = new ServiceFabricManagedApplicationTypeVersionData(new AzureLocation("eastus"));
             ArmOperation<ServiceFabricManagedApplicationTypeVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, version, data);
             ServiceFabricManagedApplicationTypeVersionResource result = lro.Value;
 

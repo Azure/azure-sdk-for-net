@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="ZoneFaultSimulationContent"/>. </summary>
         /// <param name="faultKind"> The kind of fault to be simulated. </param>
-        /// <param name="force"> Force the action to go through without any check on the cluster. </param>
+        /// <param name="isForced"> Force the action to go through without any check on the cluster. </param>
         /// <param name="constraints"> Constraints for Fault Simulation action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="zones"> Indicates the zones of the fault simulation. </param>
-        internal ZoneFaultSimulationContent(FaultKind faultKind, bool? force, FaultSimulationConstraints constraints, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones) : base(faultKind, force, constraints, serializedAdditionalRawData)
+        internal ZoneFaultSimulationContent(FaultKind faultKind, bool? isForced, FaultSimulationConstraints constraints, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones) : base(faultKind, isForced, constraints, serializedAdditionalRawData)
         {
             Zones = zones;
             FaultKind = faultKind;

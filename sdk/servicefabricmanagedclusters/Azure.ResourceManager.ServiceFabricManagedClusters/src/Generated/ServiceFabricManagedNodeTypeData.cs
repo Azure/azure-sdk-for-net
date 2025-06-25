@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="additionalNetworkInterfaceConfigurations"> Specifies the settings for any additional secondary network interfaces to attach to the node type. </param>
         /// <param name="computerNamePrefix"> Specifies the computer name prefix. Limited to 9 characters. If specified, allows for a longer name to be specified for the node type name. </param>
         /// <param name="vmApplications"> Specifies the gallery applications that should be made available to the underlying VMSS. </param>
-        /// <param name="zoneBalance"> Setting this to true allows stateless node types to scale out without equal distribution across zones. </param>
+        /// <param name="isZoneBalanceEnabled"> Setting this to true allows stateless node types to scale out without equal distribution across zones. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The node type sku. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IList<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, SecurityEncryptionType? securityEncryptionType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IList<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IList<ServiceFabricManagedVmApplication> vmApplications, bool? zoneBalance, IDictionary<string, string> tags, NodeTypeSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IList<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, NodeTypeSecurityEncryptionType? securityEncryptionType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IList<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IList<ServiceFabricManagedVmApplication> vmApplications, bool? isZoneBalanceEnabled, IDictionary<string, string> tags, NodeTypeSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsPrimary = isPrimary;
             VmInstanceCount = vmInstanceCount;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             AdditionalNetworkInterfaceConfigurations = additionalNetworkInterfaceConfigurations;
             ComputerNamePrefix = computerNamePrefix;
             VmApplications = vmApplications;
-            ZoneBalance = zoneBalance;
+            IsZoneBalanceEnabled = isZoneBalanceEnabled;
             Tags = tags;
             Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <summary> Specifies the security type of the nodeType. Supported values include Standard, TrustedLaunch and ConfidentialVM. </summary>
         public ServiceFabricManagedClusterSecurityType? SecurityType { get; set; }
         /// <summary> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob and VMGuestStateOnly for encryption of just the VMGuestState blob. Note: It can be set for only Confidential VMs. </summary>
-        public SecurityEncryptionType? SecurityEncryptionType { get; set; }
+        public NodeTypeSecurityEncryptionType? SecurityEncryptionType { get; set; }
         /// <summary> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch and ConfidentialVM SecurityType. </summary>
         public bool? IsSecureBootEnabled { get; set; }
         /// <summary> Specifies whether each node is allocated its own public IPv4 address. This is only supported on secondary node types with custom Load Balancers. </summary>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <summary> Specifies the gallery applications that should be made available to the underlying VMSS. </summary>
         public IList<ServiceFabricManagedVmApplication> VmApplications { get; }
         /// <summary> Setting this to true allows stateless node types to scale out without equal distribution across zones. </summary>
-        public bool? ZoneBalance { get; set; }
+        public bool? IsZoneBalanceEnabled { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The node type sku. </summary>

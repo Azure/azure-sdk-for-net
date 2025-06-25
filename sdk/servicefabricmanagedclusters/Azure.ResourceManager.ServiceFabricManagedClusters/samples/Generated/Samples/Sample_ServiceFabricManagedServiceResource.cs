@@ -99,7 +99,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedServiceResource serviceFabricManagedService = client.GetServiceFabricManagedServiceResource(serviceFabricManagedServiceResourceId);
 
             // invoke the operation
-            ServiceFabricManagedServicePatch patch = new ServiceFabricManagedServicePatch();
+            ServiceFabricManagedServicePatch patch = new ServiceFabricManagedServicePatch
+            {
+                Tags =
+{
+["a"] = "b"
+},
+            };
             ServiceFabricManagedServiceResource result = await serviceFabricManagedService.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well

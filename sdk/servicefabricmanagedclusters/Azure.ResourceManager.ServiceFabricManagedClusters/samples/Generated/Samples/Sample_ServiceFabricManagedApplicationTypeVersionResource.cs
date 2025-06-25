@@ -99,7 +99,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedApplicationTypeVersionResource serviceFabricManagedApplicationTypeVersion = client.GetServiceFabricManagedApplicationTypeVersionResource(serviceFabricManagedApplicationTypeVersionResourceId);
 
             // invoke the operation
-            ServiceFabricManagedApplicationTypeVersionPatch patch = new ServiceFabricManagedApplicationTypeVersionPatch();
+            ServiceFabricManagedApplicationTypeVersionPatch patch = new ServiceFabricManagedApplicationTypeVersionPatch
+            {
+                Tags =
+{
+["a"] = "b"
+},
+            };
             ServiceFabricManagedApplicationTypeVersionResource result = await serviceFabricManagedApplicationTypeVersion.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well

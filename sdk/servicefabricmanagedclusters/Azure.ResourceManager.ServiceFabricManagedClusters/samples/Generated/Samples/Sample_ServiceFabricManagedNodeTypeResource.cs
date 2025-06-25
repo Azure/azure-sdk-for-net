@@ -96,7 +96,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
             // invoke the operation
-            ServiceFabricManagedNodeTypePatch patch = new ServiceFabricManagedNodeTypePatch();
+            ServiceFabricManagedNodeTypePatch patch = new ServiceFabricManagedNodeTypePatch
+            {
+                Tags =
+{
+["a"] = "b"
+},
+                Sku = new NodeTypeSku(10)
+                {
+                    Name = "Standard_S0",
+                    Tier = "Standard",
+                },
+            };
             ArmOperation<ServiceFabricManagedNodeTypeResource> lro = await serviceFabricManagedNodeType.UpdateAsync(WaitUntil.Completed, patch);
             ServiceFabricManagedNodeTypeResource result = lro.Value;
 
@@ -129,7 +140,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
             // invoke the operation
-            ServiceFabricManagedNodeTypePatch patch = new ServiceFabricManagedNodeTypePatch();
+            ServiceFabricManagedNodeTypePatch patch = new ServiceFabricManagedNodeTypePatch
+            {
+                Tags =
+{
+["a"] = "b"
+},
+            };
             ArmOperation<ServiceFabricManagedNodeTypeResource> lro = await serviceFabricManagedNodeType.UpdateAsync(WaitUntil.Completed, patch);
             ServiceFabricManagedNodeTypeResource result = lro.Value;
 
@@ -162,7 +179,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
             // invoke the operation
-            NodeTypeActionContent content = new NodeTypeActionContent();
+            NodeTypeActionContent content = new NodeTypeActionContent
+            {
+                Nodes = { "BE_0", "BE_1" },
+            };
             await serviceFabricManagedNodeType.DeallocateAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
@@ -190,7 +210,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
             // invoke the operation
-            NodeTypeActionContent content = new NodeTypeActionContent();
+            NodeTypeActionContent content = new NodeTypeActionContent
+            {
+                Nodes = { "BE_0", "BE_3" },
+            };
             await serviceFabricManagedNodeType.DeleteNodeAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
@@ -218,7 +241,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
             // invoke the operation
-            NodeTypeActionContent content = new NodeTypeActionContent();
+            NodeTypeActionContent content = new NodeTypeActionContent
+            {
+                UpdateType = ServiceFabricManagedClusterUpdateType.ByUpgradeDomain,
+            };
             await serviceFabricManagedNodeType.RedeployAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
@@ -246,7 +272,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
             // invoke the operation
-            NodeTypeActionContent content = new NodeTypeActionContent();
+            NodeTypeActionContent content = new NodeTypeActionContent
+            {
+                Nodes = { "BE_0", "BE_1" },
+            };
             await serviceFabricManagedNodeType.RedeployAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
@@ -274,7 +303,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
             // invoke the operation
-            NodeTypeActionContent content = new NodeTypeActionContent();
+            NodeTypeActionContent content = new NodeTypeActionContent
+            {
+                UpdateType = ServiceFabricManagedClusterUpdateType.ByUpgradeDomain,
+            };
             await serviceFabricManagedNodeType.ReimageAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
@@ -302,7 +334,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
             // invoke the operation
-            NodeTypeActionContent content = new NodeTypeActionContent();
+            NodeTypeActionContent content = new NodeTypeActionContent
+            {
+                Nodes = { "BE_0", "BE_3" },
+            };
             await serviceFabricManagedNodeType.ReimageAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
@@ -330,7 +365,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
             // invoke the operation
-            NodeTypeActionContent content = new NodeTypeActionContent();
+            NodeTypeActionContent content = new NodeTypeActionContent
+            {
+                Nodes = { "BE_0", "BE_3" },
+            };
             await serviceFabricManagedNodeType.RestartAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
@@ -358,7 +396,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
             // invoke the operation
-            NodeTypeActionContent content = new NodeTypeActionContent();
+            NodeTypeActionContent content = new NodeTypeActionContent
+            {
+                Nodes = { "BE_0", "BE_1" },
+            };
             await serviceFabricManagedNodeType.StartAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");

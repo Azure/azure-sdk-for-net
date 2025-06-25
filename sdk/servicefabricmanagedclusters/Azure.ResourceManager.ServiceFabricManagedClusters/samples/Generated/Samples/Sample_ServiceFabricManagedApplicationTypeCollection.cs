@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             // invoke the operation
             string applicationTypeName = "myAppType";
-            ServiceFabricManagedApplicationTypeData data = new ServiceFabricManagedApplicationTypeData(default);
+            ServiceFabricManagedApplicationTypeData data = new ServiceFabricManagedApplicationTypeData(new AzureLocation("eastus"));
             ArmOperation<ServiceFabricManagedApplicationTypeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, applicationTypeName, data);
             ServiceFabricManagedApplicationTypeResource result = lro.Value;
 

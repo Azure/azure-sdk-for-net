@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
@@ -41,7 +42,30 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             // invoke the operation
             string serviceName = "myService";
-            ServiceFabricManagedServiceData data = new ServiceFabricManagedServiceData(default);
+            ServiceFabricManagedServiceData data = new ServiceFabricManagedServiceData(new AzureLocation("eastus"))
+            {
+                Properties = new StatelessServiceProperties("myServiceType", new SingletonPartitionScheme(), 5)
+                {
+                    MinInstanceCount = 3,
+                    MinInstancePercentage = 30,
+                    ServicePackageActivationMode = ManagedServicePackageActivationMode.SharedProcess,
+                    ServiceDnsName = "myservicednsname.myApp",
+                    PlacementConstraints = "NodeType==frontend",
+                    CorrelationScheme = { new ManagedServiceCorrelation(ManagedServiceCorrelationScheme.AlignedAffinity, "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/resRg/providers/Microsoft.ServiceFabric/managedclusters/myCluster/applications/myApp/services/myService1") },
+                    ServiceLoadMetrics = {new ManagedServiceLoadMetric("metric1")
+{
+Weight = ManagedServiceLoadMetricWeight.Low,
+DefaultLoad = 3,
+}},
+                    ServicePlacementPolicies = { new ServicePlacementNonPartiallyPlaceServicePolicy() },
+                    DefaultMoveCost = ServiceFabricManagedServiceMoveCost.Medium,
+                    ScalingPolicies = { new ManagedServiceScalingPolicy(new PartitionInstanceCountScalingMechanism(3, 9, 2), new AveragePartitionLoadScalingTrigger("metricName", 2, 8, "00:01:00")) },
+                },
+                Tags =
+{
+["a"] = "b"
+},
+            };
             ArmOperation<ServiceFabricManagedServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
             ServiceFabricManagedServiceResource result = lro.Value;
 
@@ -78,7 +102,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             // invoke the operation
             string serviceName = "myService";
-            ServiceFabricManagedServiceData data = new ServiceFabricManagedServiceData(default);
+            ServiceFabricManagedServiceData data = new ServiceFabricManagedServiceData(new AzureLocation("eastus"))
+            {
+                Properties = new StatelessServiceProperties("myServiceType", new SingletonPartitionScheme(), 1),
+            };
             ArmOperation<ServiceFabricManagedServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
             ServiceFabricManagedServiceResource result = lro.Value;
 

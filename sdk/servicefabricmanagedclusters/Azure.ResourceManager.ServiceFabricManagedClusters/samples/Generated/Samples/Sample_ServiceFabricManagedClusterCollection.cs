@@ -41,7 +41,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             // invoke the operation
             string clusterName = "mycluster";
-            ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(default, null);
+            ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(new AzureLocation("eastus"), new ServiceFabricManagedClustersSku(ServiceFabricManagedClustersSkuName.Basic))
+            {
+                Tags = { },
+            };
             ArmOperation<ServiceFabricManagedClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             ServiceFabricManagedClusterResource result = lro.Value;
 
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             // invoke the operation
             string clusterName = "myCluster";
-            ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(default, null);
+            ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(new AzureLocation("eastus"), new ServiceFabricManagedClustersSku(ServiceFabricManagedClustersSkuName.Basic));
             ArmOperation<ServiceFabricManagedClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             ServiceFabricManagedClusterResource result = lro.Value;
 

@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
             writer.WritePropertyName("faultKind"u8);
             writer.WriteStringValue(FaultKind.ToString());
-            if (Optional.IsDefined(Force))
+            if (Optional.IsDefined(IsForced))
             {
                 writer.WritePropertyName("force"u8);
-                writer.WriteBooleanValue(Force.Value);
+                writer.WriteBooleanValue(IsForced.Value);
             }
             if (Optional.IsDefined(Constraints))
             {

@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             // invoke the operation
             string applicationName = "myApp";
-            ServiceFabricManagedApplicationData data = new ServiceFabricManagedApplicationData(default);
+            ServiceFabricManagedApplicationData data = new ServiceFabricManagedApplicationData(new AzureLocation("eastus"))
+            {
+                Tags =
+{
+["a"] = "b"
+},
+            };
             ArmOperation<ServiceFabricManagedApplicationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, applicationName, data);
             ServiceFabricManagedApplicationResource result = lro.Value;
 
@@ -76,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             // invoke the operation
             string applicationName = "myApp";
-            ServiceFabricManagedApplicationData data = new ServiceFabricManagedApplicationData(default);
+            ServiceFabricManagedApplicationData data = new ServiceFabricManagedApplicationData(new AzureLocation("eastus"));
             ArmOperation<ServiceFabricManagedApplicationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, applicationName, data);
             ServiceFabricManagedApplicationResource result = lro.Value;
 

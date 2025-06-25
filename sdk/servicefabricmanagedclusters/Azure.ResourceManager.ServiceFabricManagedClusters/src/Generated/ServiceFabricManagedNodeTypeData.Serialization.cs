@@ -372,10 +372,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ZoneBalance))
+            if (Optional.IsDefined(IsZoneBalanceEnabled))
             {
                 writer.WritePropertyName("zoneBalance"u8);
-                writer.WriteBooleanValue(ZoneBalance.Value);
+                writer.WriteBooleanValue(IsZoneBalanceEnabled.Value);
             }
             writer.WriteEndObject();
         }
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             ResourceIdentifier subnetId = default;
             IList<VmSetupAction> vmSetupActions = default;
             ServiceFabricManagedClusterSecurityType? securityType = default;
-            SecurityEncryptionType? securityEncryptionType = default;
+            NodeTypeSecurityEncryptionType? securityEncryptionType = default;
             bool? secureBootEnabled = default;
             bool? enableNodePublicIP = default;
             bool? enableNodePublicIPv6 = default;
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            securityEncryptionType = new SecurityEncryptionType(property0.Value.GetString());
+                            securityEncryptionType = new NodeTypeSecurityEncryptionType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("secureBootEnabled"u8))
