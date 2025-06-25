@@ -37,17 +37,11 @@ stages:
       TeamUserUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/azure-sdk-write-teams-blob"
       UserOrgUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/user-org-visibility-blob"
 
-    steps:
-      - task: UseDotNet@2 # About UseDotNet@2 task: https://learn.microsoft.com/azure/devops/pipelines/tasks/reference/use-dotnet-v2?view=azure-pipelines
-        displayName: "Use .NET SDK from global.json"
-        retryCountOnTaskFailure: 3
-        inputs:
-          useGlobalJson: true
-          
+    steps:         
       - pwsh: |
           dotnet tool install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"
         displayName: Install CodeownersLinter
-        workingDirectory: '$(Build.SourcesDirectory)/eng/common'
+        workingDirectory: '$(Agent.WorkFolder)' # Some directory outside of the source clone to avoid hitting global.json files when any version of dotnet will work for this install
 
       - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
         - pwsh: |
