@@ -7,8 +7,6 @@ Project("{D650D12A-9EE4-4B40-93A1-5DA3CF32E4FF}") = "Azure.ResourceManager.Cloud
 EndProject
 Project("{D650D12A-9EE4-4B40-93A1-5DA3CF32E4FF}") = "Azure.ResourceManager.CloudHealth.Tests", "tests\Azure.ResourceManager.CloudHealth.Tests.csproj", "{40BB2F75-FA3F-46DC-8E2C-12C6CF9A5CA3}"
 EndProject
-Project("{D650D12A-9EE4-4B40-93A1-5DA3CF32E4FF}") = "Azure.ResourceManager.CloudHealth.Samples", "samples\Azure.ResourceManager.CloudHealth.Samples.csproj", "{6BE92905-D9FD-46BC-8A4D-F5DDC7DC9947}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
