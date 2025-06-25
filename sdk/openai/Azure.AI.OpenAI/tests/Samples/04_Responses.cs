@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Threading.Tasks;
 
 namespace Azure.AI.OpenAI.Samples;
 
@@ -134,6 +135,28 @@ public partial class AzureOpenAISamples
 
         foreach (StreamingResponseUpdate update
             in client.CreateResponseStreaming([inputItem], options))
+        {
+            Console.WriteLine(ModelReaderWriter.Write(update));
+        }
+        #endregion
+    }
+
+    public async Task ResponseStreamingAsync()
+    {
+        #region Snippet:ResponseStreamingAsync
+        AzureOpenAIClient azureClient = new(
+            new Uri("https://your-azure-openai-resource.com"),
+            new DefaultAzureCredential());
+
+        // Replace with your deployment name
+        OpenAIResponseClient client = azureClient.GetOpenAIResponseClient("my-gpt-35-turbo-deployment");
+
+        ResponseCreationOptions options = new();
+        ResponseContentPart contentPart = ResponseContentPart.CreateInputTextPart("Tell me a 20-word story about building the best SDK!");
+        ResponseItem inputItem = ResponseItem.CreateUserMessageItem([contentPart]);
+
+        await foreach (StreamingResponseUpdate update
+            in client.CreateResponseStreamingAsync([inputItem], options))
         {
             Console.WriteLine(ModelReaderWriter.Write(update));
         }

@@ -78,6 +78,43 @@ public partial class AzureOpenAISamples
         #endregion
     }
 
+    public async Task ConversationChatAsync()
+    {
+        #region Snippet:ConversationChatAsync
+        AzureOpenAIClient azureClient = new(
+            new Uri("https://your-azure-openai-resource.com"),
+            new DefaultAzureCredential());
+        ChatClient chatClient = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
+
+        var messages = new List<ChatMessage>
+        {
+            new UserChatMessage("Tell me a story about building the best SDK!")
+        };
+
+        for (int i = 0; i < 4; i++)
+        {
+            ChatCompletion completion = await chatClient.CompleteChatAsync(messages, new()
+            {
+                MaxOutputTokenCount = 2048
+            });
+
+            Console.WriteLine($"\n--- Response {i + 1} ---\n");
+
+            foreach (var choice in completion.Content)
+            {
+                Console.WriteLine(choice.Text);
+                messages.Add(new AssistantChatMessage(choice.Text));
+            }
+
+            string exclamations = new('!', i);
+            string questions = new('?', i);
+
+            messages.Add(new SystemChatMessage($"Be as snarky as possible when replying!{exclamations}"));
+            messages.Add(new UserChatMessage($"But why?{questions}"));
+        }
+        #endregion
+    }
+
     public void StreamingChat()
     {
         #region Snippet:StreamChatMessages
@@ -104,9 +141,54 @@ public partial class AzureOpenAISamples
         #endregion
     }
 
-    public async Task StructuredOutputs()
+    public void StructuredOutputs()
     {
         #region Snippet:StructuredOutputs
+        AzureOpenAIClient azureClient = new(
+            new Uri("https://your-azure-openai-resource.com"),
+            new DefaultAzureCredential());
+        ChatClient client = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
+
+        IEnumerable<ChatMessage> messages =
+        [
+            new UserChatMessage("What's heavier, a pound of feathers or sixteen ounces of steel?")
+        ];
+        ChatCompletionOptions options = new ChatCompletionOptions()
+        {
+            ResponseFormat = ChatResponseFormat.CreateJsonSchemaFormat(
+                "test_schema",
+                BinaryData.FromString("""
+                    {
+                      "type": "object",
+                      "properties": {
+                        "answer": {
+                          "type": "string"
+                        },
+                        "steps": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "answer",
+                        "steps"
+                      ],
+                      "additionalProperties": false
+                    }
+                    """),
+                "a single final answer with a supporting collection of steps",
+                jsonSchemaIsStrict: true)
+        };
+        ChatCompletion completion = client.CompleteChat(messages, options)!;
+        Console.WriteLine(completion!.Content![0].Text);
+        #endregion
+    }
+
+    public async Task StructuredOutputsAsync()
+    {
+        #region Snippet:StructuredOutputsAsync
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
