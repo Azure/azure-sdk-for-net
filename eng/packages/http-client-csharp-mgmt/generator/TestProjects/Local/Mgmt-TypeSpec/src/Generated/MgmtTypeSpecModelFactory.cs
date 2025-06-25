@@ -28,7 +28,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="name"> The name of the Foo. </param>
         /// <param name="extendedLocation"></param>
-        /// <returns> A new <see cref="Models.FooData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.FooData"/> instance for mocking. </returns>
         public static FooData FooData(ResourceIdentifier id = default, string @type = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, string name = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
