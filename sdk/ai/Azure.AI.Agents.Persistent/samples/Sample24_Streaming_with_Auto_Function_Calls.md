@@ -131,7 +131,7 @@ AutoFunctionCallOptions autoFunctionCallOptions = new(toolDelegates, 10);
  
 Synchronous sample:
 ```C# Snippet:StreamingWithAutoFunctionCall
-CollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreaming(thread.Id, agent.Id, include: null, autoFunctionCallOptions: autoFunctionCallOptions);
+CollectionResult<StreamingUpdate> stream = client.Runs.CreateRunStreaming(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions);
 foreach (StreamingUpdate streamingUpdate in stream)
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
@@ -152,7 +152,7 @@ foreach (StreamingUpdate streamingUpdate in stream)
 
 Asynchronous sample:
 ```C# Snippet:StreamingWithAutoFunctionCallAsync
-await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, include: null, autoFunctionCallOptions: autoFunctionCallOptions))
+await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, autoFunctionCallOptions: autoFunctionCallOptions))
 {
     if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
     {
