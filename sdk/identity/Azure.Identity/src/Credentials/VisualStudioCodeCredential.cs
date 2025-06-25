@@ -64,11 +64,14 @@ namespace Azure.Identity
 
         internal static InteractiveBrowserCredentialOptions GetBrokerOptoins(IFileSystemService _fileSystem)
         {
-            var options = new InteractiveBrowserCredentialOptions
+            DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options);
+            if (options == null)
             {
-                ClientId = "f8b0c6d2-1a3e-4b5c-9f7d-8e1f2b3c4d5e", // VS Code Azure Client ID
-                AuthenticationRecord = GetAuthenticationRecord(_fileSystem)
-            };
+                throw new CredentialUnavailableException($"The {nameof(VisualStudioCodeCredential)} requires the Azure.Identity.Broker package to be referenced. {CredentialsSection} {Troubleshooting}");
+            }
+
+            // ClientId = "f8b0c6d2-1a3e-4b5c-9f7d-8e1f2b3c4d5e", // VS Code Azure Client ID
+            options.AuthenticationRecord = GetAuthenticationRecord(_fileSystem);
             return options;
         }
 
