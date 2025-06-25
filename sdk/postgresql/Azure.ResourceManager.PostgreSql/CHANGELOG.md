@@ -1,6 +1,10 @@
 # Release History
 
-## 1.2.1 (2025-06-25)
+## 1.3.0 (2025-06-25)
+
+### Features Added
+
+- Introduced `AzureResourceManagerPostgreSqlContext` to make this library AOT compatible.
 
 ### Bugs Fixed
 
