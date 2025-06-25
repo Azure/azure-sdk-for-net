@@ -1025,6 +1025,12 @@
 # ServiceLabel: %Elastic %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
+# PRLabel: %Grafana
+/sdk/grafana/Azure.ResourceManager.*/                              @qingquanzhao
+
+# ServiceLabel: %Grafana %Mgmt
+# ServiceOwners:                                                   @qingquanzhao
+
 # PRLabel: %Hardware Security Modules
 /sdk/hardwaresecuritymodules/Azure.ResourceManager.*/              @emmeliaAra
 

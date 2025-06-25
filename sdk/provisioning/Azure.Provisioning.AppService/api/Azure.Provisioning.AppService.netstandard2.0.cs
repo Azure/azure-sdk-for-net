@@ -1175,6 +1175,7 @@ namespace Azure.Provisioning.AppService
     {
         public FunctionAppAlwaysReadyConfig() { }
         public Azure.Provisioning.BicepValue<int> AlwaysReadyInstanceCount { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<float> InstanceCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -1223,8 +1224,11 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<int> ConcurrentHttpPerInstanceConcurrency { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> FunctionAppInstanceMemoryMB { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> FunctionAppMaximumInstanceCount { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<float> HttpPerInstanceConcurrency { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<float> InstanceMemoryMB { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<float> MaximumInstanceCount { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
