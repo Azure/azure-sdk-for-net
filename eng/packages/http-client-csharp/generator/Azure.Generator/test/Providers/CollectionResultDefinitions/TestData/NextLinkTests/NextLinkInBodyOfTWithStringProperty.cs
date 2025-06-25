@@ -43,7 +43,7 @@ namespace Samples
                     yield break;
                 }
                 global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
-                nextPage = new global::System.Uri(responseWithType.NextCat);
+                nextPage = (responseWithType.NextCat != null) ? new global::System.Uri(responseWithType.NextCat) : null;
                 yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)responseWithType.Cats), nextPage?.AbsoluteUri, response);
             }
             while ((nextPage != null));
