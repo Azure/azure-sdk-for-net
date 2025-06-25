@@ -51,7 +51,7 @@ if ($UpdateVsCodeConfig) {
     }
     $vscodeConfig.servers = $orderedServers
     Write-Host "Updating vscode mcp config at $vscodeConfigPath"
-    $vscodeConfig | ConvertTo-Json -Depth 10 | Set-Content -Path $vscodeConfig -Force
+    $vscodeConfig | ConvertTo-Json -Depth 10 | Set-Content -Path $vscodeConfigPath -Force
 }
 
 $exe = Install-Standalone-Tool `
