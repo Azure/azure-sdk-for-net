@@ -45,12 +45,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
         #region ctors
         /// <summary>
         /// <para>
-        /// Constructs this provider to use no credentials when making a new Blob Storage
+        /// Constructs this provider to use no credentials when making a new Share File Storage
         /// <see cref="StorageResource"/>.
         /// </para>
         /// <para>
         /// This instance will NOT use any credential when constructing the underlying
-        /// Azure.Storage.Blobs client, e.g. <see cref="ShareFileClient(Uri, ShareClientOptions)"/>.
+        /// Azure.Storage.Files.Shares client, e.g. <see cref="ShareFileClient(Uri, ShareClientOptions)"/>.
         /// This is for the purpose of either anonymous access when constructing the client.
         /// </para>
         /// </summary>
@@ -393,15 +393,17 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareClientOptions options = new ShareClientOptions();
 
             // We grab the assembly of ShareFilesStorageResourceProvider which is Azure.Storage.DataMovement.Files.Shares.
-            // Then we can grab the version to set in the ApplicationId which will prefix the User Agent string
-            // with the version.
+            // From there we can grab the version of the Assembly.
             Assembly assembly = typeof(ShareFilesStorageResourceProvider).Assembly;
             AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             if (versionAttribute == null)
             {
                 throw Azure.Storage.Errors.RequiredVersionClientAssembly(assembly, versionAttribute);
             }
-            options.Diagnostics.ApplicationId = $"DataMovement/{versionAttribute.InformationalVersion}";
+            // Now using a policy, update the user agent string with the version and add the policy
+            // to the client options.
+            DataMovementUserAgentPolicy policy = new(versionAttribute.InformationalVersion);
+            options.AddPolicy(policy, HttpPipelinePosition.PerCall);
             return options;
         }
     }

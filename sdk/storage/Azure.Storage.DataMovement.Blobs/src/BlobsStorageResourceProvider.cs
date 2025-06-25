@@ -735,15 +735,17 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobClientOptions options = new BlobClientOptions();
 
             // We grab the assembly of BlobsStorageResourceProvider which is Azure.Storage.DataMovement.Blobs.
-            // Then we can grab the version to set in the ApplicationId which will prefix the User Agent string
-            // with the version.
+            // From there we can grab the version of the Assembly.
             Assembly assembly = typeof(BlobsStorageResourceProvider).Assembly;
             AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             if (versionAttribute == null)
             {
                 throw Errors.RequiredVersionClientAssembly(assembly, versionAttribute);
             }
-            options.Diagnostics.ApplicationId = $"DataMovement/{versionAttribute.InformationalVersion}";
+            // Now using a policy, update the user agent string with the version and add the policy
+            // to the client options.
+            DataMovementUserAgentPolicy policy = new(versionAttribute.InformationalVersion);
+            options.AddPolicy(policy, HttpPipelinePosition.PerCall);
             return options;
         }
     }
