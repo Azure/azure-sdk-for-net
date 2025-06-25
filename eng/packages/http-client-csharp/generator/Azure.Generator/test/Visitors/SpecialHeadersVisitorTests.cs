@@ -31,7 +31,7 @@ namespace Azure.Generator.Tests.Visitors
                 parameters: parameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
-            MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
@@ -102,7 +102,7 @@ namespace Azure.Generator.Tests.Visitors
                 parameters: serviceMethodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
-            MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);

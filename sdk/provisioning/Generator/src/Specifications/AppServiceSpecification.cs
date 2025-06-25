@@ -5,6 +5,7 @@ using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Sql.Models;
+using Generator.Model;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
@@ -48,10 +49,14 @@ public class AppServiceSpecification() :
         // Not generated today:
         // CustomizePropertyIsoDuration<MetricAvailability>("BlobDuration");
         // CustomizePropertyIsoDuration<LogSpecification>("BlobDuration");
+        CustomizeProperty<FunctionAppAlwaysReadyConfig>("InstanceCount", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
+        CustomizeProperty<FunctionAppScaleAndConcurrency>("MaximumInstanceCount", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
+        CustomizeProperty<FunctionAppScaleAndConcurrency>("InstanceMemoryMB", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
+        CustomizeProperty<FunctionAppScaleAndConcurrency>("HttpPerInstanceConcurrency", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
 
         // Naming requirements
         AddNameRequirements<AppCertificateResource>(min: 1, max: 260, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: false);
-        AddNameRequirements<AppServicePlanResource>(min: 1, max: 60, lower: true, upper: true, digits: true, hyphen: true); 
+        AddNameRequirements<AppServicePlanResource>(min: 1, max: 60, lower: true, upper: true, digits: true, hyphen: true);
         AddNameRequirements<WebSiteResource>(min: 2, max: 60, lower: true, upper: true, digits: true, hyphen: true);
         AddNameRequirements<WebSiteSlotResource>(min: 2, max: 59, lower: true, upper: true, digits: true, hyphen: true);
         AddNameRequirements<SitePrivateEndpointConnectionResource>(min: 2, max: 64, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
