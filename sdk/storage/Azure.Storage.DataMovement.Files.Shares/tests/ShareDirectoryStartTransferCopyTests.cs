@@ -88,26 +88,30 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             CancellationToken cancellationToken = default)
             => await DestinationClientBuilder.GetTestShareAsync(service, containerName, cancellationToken: cancellationToken);
 
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerOauthAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
+        {
+            ShareClientOptions options = DestinationClientBuilder.GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            ShareServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
+            return await DestinationClientBuilder.GetTestShareAsync(oauthService, containerName, cancellationToken: cancellationToken);
+        }
+
         protected override StorageResourceContainer GetDestinationStorageResourceContainer(
             ShareClient containerClient,
             string prefix,
             TransferPropertiesTestType propertiesTestType = default)
             => new ShareDirectoryStorageResourceContainer(containerClient.GetDirectoryClient(prefix), GetShareFileStorageResourceOptions(propertiesTestType));
 
-        protected override ShareClient GetOAuthSourceContainerClient(string containerName)
+        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerOauthAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
         {
             ShareClientOptions options = SourceClientBuilder.GetOptions();
             options.ShareTokenIntent = ShareTokenIntent.Backup;
             ShareServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
-            return oauthService.GetShareClient(containerName);
-        }
-
-        protected override ShareClient GetOAuthDestinationContainerClient(string containerName)
-        {
-            ShareClientOptions options = DestinationClientBuilder.GetOptions();
-            options.ShareTokenIntent = ShareTokenIntent.Backup;
-            ShareServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
-            return oauthService.GetShareClient(containerName);
+            return await SourceClientBuilder.GetTestShareAsync(oauthService, containerName, cancellationToken: cancellationToken);
         }
 
         protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(ShareServiceClient service = null, string containerName = null, CancellationToken cancellationToken = default)

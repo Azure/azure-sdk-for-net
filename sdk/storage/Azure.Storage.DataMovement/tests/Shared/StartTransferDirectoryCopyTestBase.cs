@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Test.Shared;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -75,9 +76,11 @@ namespace Azure.Storage.DataMovement.Tests
 
         #region Service-Specific Methods
         /// <summary>
-        /// Gets the service client using OAuth to authenticate.
+        /// Gets a disposing container client with OAuth. The container is created with this call.
         /// </summary>
-        protected abstract TSourceContainerClient GetOAuthSourceContainerClient(string containerName);
+        protected abstract Task<IDisposingContainer<TSourceContainerClient>> GetSourceDisposingContainerOauthAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a service-specific disposing container for use with tests in this class.
@@ -128,6 +131,13 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Gets a disposing container client with OAuth. The container is created with this call.
+        /// </summary>
+        protected abstract Task<IDisposingContainer<TDestinationContainerClient>> GetDestinationDisposingContainerOauthAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Gets a service-specific disposing container for use with tests in this class.
         /// </summary>
         /// <param name="service">Optionally specified service client to get container from.</param>
@@ -136,11 +146,6 @@ namespace Azure.Storage.DataMovement.Tests
             TDestinationServiceClient service = default,
             string containerName = default,
             CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Gets the service client using OAuth to authenticate.
-        /// </summary>
-        protected abstract TDestinationContainerClient GetOAuthDestinationContainerClient(string containerName);
 
         /// <summary>
         /// Gets the specific storage resource from the given TDestinationObjectClient
@@ -584,24 +589,56 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        public async Task DirectoryToDirectory_SpecialChars()
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+
+            long size = DataMovementTestConstants.KB;
+            string sourcePrefix = "source=folder&";
+            string destinationPrefix = "dest=folder&";
+
+            await CreateDirectoryInSourceAsync(source.Container, sourcePrefix);
+            await CreateDirectoryInDestinationAsync(destination.Container, destinationPrefix);
+
+            string itemName1 = string.Join("/", sourcePrefix, "file=test!@#$%");
+            await CreateObjectInSourceAsync(source.Container, size, itemName1);
+            string itemName2 = string.Join("/", sourcePrefix, "file%3Dtest%26"); // Already encoded
+            await CreateObjectInSourceAsync(source.Container, size, itemName2);
+
+            string subDirName = string.Join("/", sourcePrefix, "folder=bar");
+            await CreateDirectoryInSourceAsync(source.Container, subDirName);
+            string itemName3 = string.Join("/", subDirName, "subfile=test!@#$%");
+            await CreateObjectInSourceAsync(source.Container, size, itemName3);
+            string itemName4 = string.Join("/", subDirName, "subfile%3Dtest%26");
+            await CreateObjectInSourceAsync(source.Container, size, itemName4);
+
+            // Act
+            await CopyDirectoryAndVerifyAsync(
+                source.Container,
+                destination.Container,
+                sourcePrefix,
+                destinationPrefix,
+                itemTransferCount: 4).ConfigureAwait(false);
+        }
+
+        [RecordedTest]
         public virtual async Task DirectoryToDirectory_OAuth()
         {
             // Arrange
             long size = DataMovementTestConstants.KB;
-            int waitTimeInSec = 20;
+            int waitTimeInSec = 30;
             string sourceContainerName = GetNewObjectName();
             string destContainerName = GetNewObjectName();
-            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync(containerName: sourceContainerName);
-            TSourceContainerClient oauthSourceContainer = GetOAuthSourceContainerClient(containerName: sourceContainerName);
-
-            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync(containerName: destContainerName);
-            TDestinationContainerClient oauthDestinationContainer = GetOAuthDestinationContainerClient(containerName: destContainerName);
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerOauthAsync(containerName: sourceContainerName);
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerOauthAsync(containerName: destContainerName);
 
             string sourcePrefix = "sourceFolder";
             string destinationPrefix = "destFolder";
 
-            await CreateDirectoryInSourceAsync(oauthSourceContainer, sourcePrefix);
-            await CreateDirectoryInDestinationAsync(oauthDestinationContainer, destinationPrefix);
+            await CreateDirectoryInSourceAsync(source.Container, sourcePrefix);
+            await CreateDirectoryInDestinationAsync(destination.Container, destinationPrefix);
 
             string itemName1 = string.Join("/", sourcePrefix, GetNewObjectName());
             await CreateObjectInSourceAsync(source.Container, size, itemName1);
@@ -620,8 +657,8 @@ namespace Azure.Storage.DataMovement.Tests
             await CreateObjectInSourceAsync(source.Container, size, itemName4);
 
             await CopyDirectoryAndVerifyAsync(
-                oauthSourceContainer,
-                oauthDestinationContainer,
+                source.Container,
+                destination.Container,
                 sourcePrefix,
                 destinationPrefix,
                 4,
