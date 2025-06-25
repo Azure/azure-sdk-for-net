@@ -82,5 +82,11 @@ namespace Azure.AI.Projects
                 ? new ManagedIdentityCredential(clientId)
                 : new ChainedTokenCredential(new AzureCliCredential(), new AzureDeveloperCliCredential());
         }
+
+        public Connections Connections { get => this.GetConnectionsClient(); }
+        public Datasets Datasets { get => this.GetDatasetsClient(); }
+        public Deployments Deployments { get => this.GetDeploymentsClient(); }
+        public Indexes Indexes { get => this.GetIndexesClient(); }
+        public Telemetry Telemetry { get => new Telemetry(this); }
     }
 }
