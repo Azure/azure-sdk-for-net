@@ -44,10 +44,6 @@ namespace Samples
                 }
                 global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
                 nextPage = responseWithType.NextCat;
-                if ((nextPage == null))
-                {
-                    yield break;
-                }
                 yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)responseWithType.Cats), nextPage?.AbsoluteUri, response);
             }
             while ((nextPage != null));

@@ -205,9 +205,6 @@ namespace Azure.Generator.Providers
                 // Extract next page
                 doWhileStatement.Add(nextPageVariable.Assign(BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
 
-                // Break if the next page is null
-                doWhileStatement.Add(new IfStatement(nextPageVariable.Equal(Null)) { new YieldBreakStatement() });
-
                 // Create and yield the page
                 doWhileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable, nextPageExpression, responseVariable])));
             }
@@ -215,9 +212,6 @@ namespace Azure.Generator.Providers
             {
                 // Extract next page
                 doWhileStatement.Add(nextPageVariable.Assign(BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
-
-                // Break if the next page is null
-                doWhileStatement.Add(new IfStatement(nextPageVariable.Equal(Null)) { new YieldBreakStatement() });
 
                 // Create and yield the page
                 doWhileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [responseWithTypeVariable.Property(_itemsPropertyName).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), nextPageExpression, responseVariable])));

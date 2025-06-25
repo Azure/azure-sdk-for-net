@@ -57,10 +57,6 @@ namespace Samples
                     items.Add(global::System.BinaryData.FromObjectAsJson(item));
                 }
                 nextPage = responseWithType.NextPage;
-                if ((nextPage == null))
-                {
-                    yield break;
-                }
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage, response);
             }
             while (!string.IsNullOrEmpty(nextPage));
