@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Tracing for Agents
+- Tracing for Agents. More information [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/README.md#tracing).
 - Convenience constructor for BingCustomSearchToolParameters
 
 ### Breaking Changes
