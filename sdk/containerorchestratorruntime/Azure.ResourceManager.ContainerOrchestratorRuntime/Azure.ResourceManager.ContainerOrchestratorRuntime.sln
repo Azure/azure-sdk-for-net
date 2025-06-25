@@ -7,8 +7,6 @@ Project("{9F6E69E7-B27E-43EA-AC7D-D33ACA837984}") = "Azure.ResourceManager.Conta
 EndProject
 Project("{9F6E69E7-B27E-43EA-AC7D-D33ACA837984}") = "Azure.ResourceManager.ContainerOrchestratorRuntime.Tests", "tests\Azure.ResourceManager.ContainerOrchestratorRuntime.Tests.csproj", "{C0214FC2-88F7-400E-B1EA-DB294F675623}"
 EndProject
-Project("{9F6E69E7-B27E-43EA-AC7D-D33ACA837984}") = "Azure.ResourceManager.ContainerOrchestratorRuntime.Samples", "samples\Azure.ResourceManager.ContainerOrchestratorRuntime.Samples.csproj", "{ED2FB799-83E0-4781-A91E-064B30DC641B}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
