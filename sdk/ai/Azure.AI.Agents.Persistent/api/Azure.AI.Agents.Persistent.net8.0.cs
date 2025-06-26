@@ -1145,6 +1145,15 @@ namespace Azure.AI.Agents.Persistent
             V2025_05_15_Preview = 3,
         }
     }
+    public partial class PersistentAgentsChatClient : Microsoft.Extensions.AI.IChatClient, System.IDisposable
+    {
+        protected PersistentAgentsChatClient() { }
+        public PersistentAgentsChatClient(Azure.AI.Agents.Persistent.PersistentAgentsClient client, string agentId, string? defaultThreadId = null) { }
+        public void Dispose() { }
+        public virtual System.Threading.Tasks.Task<Microsoft.Extensions.AI.ChatResponse> GetResponseAsync(System.Collections.Generic.IEnumerable<Microsoft.Extensions.AI.ChatMessage> messages, Microsoft.Extensions.AI.ChatOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual object? GetService(System.Type serviceType, object? serviceKey = null) { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<Microsoft.Extensions.AI.ChatResponseUpdate> GetStreamingResponseAsync(System.Collections.Generic.IEnumerable<Microsoft.Extensions.AI.ChatMessage> messages, Microsoft.Extensions.AI.ChatOptions? options = null, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class PersistentAgentsClient
     {
         protected PersistentAgentsClient() { }
@@ -1158,6 +1167,10 @@ namespace Azure.AI.Agents.Persistent
         public Azure.AI.Agents.Persistent.VectorStores VectorStores { get { throw null; } }
         public virtual Azure.Response<Azure.AI.Agents.Persistent.ThreadRun> CreateThreadAndRun(string assistantId, Azure.AI.Agents.Persistent.ThreadAndRunOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.ThreadRun>> CreateThreadAndRunAsync(string assistantId, Azure.AI.Agents.Persistent.ThreadAndRunOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public static partial class PersistentAgentsClientExtensions
+    {
+        public static Microsoft.Extensions.AI.IChatClient AsIChatClient(this Azure.AI.Agents.Persistent.PersistentAgentsClient client, string agentId, string? defaultThreadId = null) { throw null; }
     }
     public static partial class PersistentAgentsExtensions
     {
