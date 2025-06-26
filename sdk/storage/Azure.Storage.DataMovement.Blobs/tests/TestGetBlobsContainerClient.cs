@@ -33,14 +33,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         public override AsyncPageable<BlobHierarchyItem> GetBlobsByHierarchyAsync(
-            BlobTraits traits = BlobTraits.None,
-            BlobStates states = BlobStates.None,
-            string delimiter = default,
-            string prefix = default,
+            GetBlobsByHierarchyOptions options = default,
             CancellationToken cancellationToken = default)
         {
             List<BlobHierarchyItem> blobHierarchyItems = [];
-            List<(string Path, bool IsPrefix)> results = _blobHierarchy[prefix];
+            List<(string Path, bool IsPrefix)> results = _blobHierarchy[options.Prefix];
 
             foreach ((string, bool) result in results)
             {
