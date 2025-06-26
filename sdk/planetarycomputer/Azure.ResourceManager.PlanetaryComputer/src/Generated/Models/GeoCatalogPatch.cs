@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PlanetaryComputer.Models
 {
-    /// <summary> Patch request workaround for Swagger LintDiff. Typespec Bug: https://github.com/Azure/typespec-azure/issues/383. </summary>
+    /// <summary> The properties of a GeoCatalog that can be updated. </summary>
     public partial class GeoCatalogPatch
     {
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
 
         /// <summary> Initializes a new instance of <see cref="GeoCatalogPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> Updatable managed service identity. </param>
+        /// <param name="identity"> The managed service identity properties to update. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GeoCatalogPatch(IDictionary<string, string> tags, ManagedServiceIdentityUpdate identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Updatable managed service identity. </summary>
+        /// <summary> The managed service identity properties to update. </summary>
         public ManagedServiceIdentityUpdate Identity { get; set; }
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.PlanetaryComputer
 {
     public partial class GeoCatalogResource : IJsonModel<GeoCatalogData>
     {
+        private static GeoCatalogData s_dataDeserializationInstance;
+        private static GeoCatalogData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GeoCatalogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GeoCatalogData>)Data).Write(writer, options);
 
-        GeoCatalogData IJsonModel<GeoCatalogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GeoCatalogData>)Data).Create(ref reader, options);
+        GeoCatalogData IJsonModel<GeoCatalogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GeoCatalogData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GeoCatalogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GeoCatalogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GeoCatalogData>(Data, options, AzureResourceManagerPlanetaryComputerContext.Default);
 
-        GeoCatalogData IPersistableModel<GeoCatalogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GeoCatalogData>(data, options);
+        GeoCatalogData IPersistableModel<GeoCatalogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GeoCatalogData>(data, options, AzureResourceManagerPlanetaryComputerContext.Default);
 
-        string IPersistableModel<GeoCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GeoCatalogData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GeoCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GeoCatalogData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

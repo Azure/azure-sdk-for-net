@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PlanetaryComputer
 
         GeoCatalogResource IOperationSource<GeoCatalogResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GeoCatalogData>(response.Content);
+            var data = ModelReaderWriter.Read<GeoCatalogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPlanetaryComputerContext.Default);
             return new GeoCatalogResource(_client, data);
         }
 
         async ValueTask<GeoCatalogResource> IOperationSource<GeoCatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GeoCatalogData>(response.Content);
+            var data = ModelReaderWriter.Read<GeoCatalogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPlanetaryComputerContext.Default);
             return await Task.FromResult(new GeoCatalogResource(_client, data)).ConfigureAwait(false);
         }
     }

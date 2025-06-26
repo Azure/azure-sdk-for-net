@@ -9,8 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.PlanetaryComputer.Mocking;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PlanetaryComputer
 {

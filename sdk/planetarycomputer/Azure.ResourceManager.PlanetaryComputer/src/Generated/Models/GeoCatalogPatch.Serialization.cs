@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPlanetaryComputerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GeoCatalogPatch)} does not support writing '{options.Format}' format.");
             }

@@ -12,8 +12,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.PlanetaryComputer.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PlanetaryComputer
 {

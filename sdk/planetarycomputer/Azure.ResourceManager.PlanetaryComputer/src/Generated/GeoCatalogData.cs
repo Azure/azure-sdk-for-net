@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
 {
     /// <summary>
     /// A class representing the GeoCatalog data model.
-    /// A MPC Pro catalog resource
+    /// A Microsoft Planetary Computer Pro GeoCatalog resource
     /// </summary>
     public partial class GeoCatalogData : TrackedResourceData
     {

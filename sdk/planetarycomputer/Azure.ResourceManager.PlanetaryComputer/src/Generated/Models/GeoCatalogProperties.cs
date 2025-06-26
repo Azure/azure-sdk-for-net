@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PlanetaryComputer.Models
 {
-    /// <summary> Details of the MPC Pro GeoCatalog. </summary>
+    /// <summary> The details of the Microsoft Planetary Computer Pro GeoCatalog. </summary>
     public partial class GeoCatalogProperties
     {
         /// <summary>
