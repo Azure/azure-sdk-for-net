@@ -55,8 +55,19 @@ $env:AZURE_SUBSCRIPTION_ID = "<your-subscription-id>"
 $env:AZURE_TEST_MODE = "Record"   # or "Playback"
 $env:AZURE_AUTHORITY_HOST = "https://login.microsoftonline.com"
 ```
-
 ---
+
+### Authenticate the Client
+
+To authenticate the client, use the `DefaultAzureCredential` from the Azure.Identity library. Ensure your environment is set up with the necessary Azure credentials.
+
+```csharp
+using Azure.Identity;
+using Azure.ResourceManager.PlanetaryComputer;
+
+var credential = new DefaultAzureCredential();
+var client = new PlanetaryComputerManagementClient(credential);
+```
 
 ## Supported Tests
 
@@ -112,17 +123,6 @@ $env:AZURE_AUTHORITY_HOST = "https://login.microsoftonline.com"
 
 ---
 
-## Authenticate the Client
-
-To authenticate the client, use the `DefaultAzureCredential` from the Azure.Identity library. Ensure your environment is set up with the necessary Azure credentials.
-
-```csharp
-using Azure.Identity;
-using Azure.ResourceManager.PlanetaryComputer;
-
-var credential = new DefaultAzureCredential();
-var client = new PlanetaryComputerManagementClient(credential);
-```
 
 ## Key concepts
 
