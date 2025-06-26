@@ -69,7 +69,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="name"> The default Foo settings. </param>
-        /// <returns> A new <see cref="Models.FooSettingsData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MgmtTypeSpec.FooSettingsData"/> instance for mocking. </returns>
         public static FooSettingsData FooSettingsData(ResourceIdentifier id = default, string @type = default, SystemData systemData = default, FooSettingsProperties properties = default, string name = default)
         {
             return new FooSettingsData(

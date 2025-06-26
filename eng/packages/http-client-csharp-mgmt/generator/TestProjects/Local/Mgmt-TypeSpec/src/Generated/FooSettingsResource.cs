@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
 {
