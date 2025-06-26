@@ -5,6 +5,8 @@ using System.Buffers;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -63,6 +65,41 @@ public abstract class BinaryContent : IDisposable
         Argument.AssertNotNull(stream, nameof(stream));
 
         return new StreamBinaryContent(stream);
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// JSON representation of the provided object.
+    /// </summary>
+    /// <typeparam name="T">The type of the object to serialize.</typeparam>
+    /// <param name="jsonSerializable">The object to serialize to JSON.</param>
+    /// <param name="options">The <see cref="JsonSerializerOptions"/> to use for serialization.
+    /// If not provided, the default options will be used.</param>
+    /// <returns>An instance of <see cref="BinaryContent"/> that contains the
+    /// JSON representation of the provided object.</returns>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+    public static BinaryContent CreateJson<T>(T jsonSerializable, JsonSerializerOptions? options = default)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
+    {
+        BinaryData data = BinaryData.FromObjectAsJson(jsonSerializable, options);
+        return new BinaryDataBinaryContent(data.ToMemory());
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// JSON representation of the provided object using the specified JSON type information.
+    /// </summary>
+    /// <typeparam name="T">The type of the object to serialize.</typeparam>
+    /// <param name="jsonSerializable">The object to serialize to JSON.</param>
+    /// <param name="jsonTypeInfo">The <see cref="JsonTypeInfo{T}"/> to use for serialization.</param>
+    /// <returns>An instance of <see cref="BinaryContent"/> that contains the
+    /// JSON representation of the provided object.</returns>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+    public static BinaryContent CreateJson<T>(T jsonSerializable, JsonTypeInfo<T> jsonTypeInfo)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
+    {
+        BinaryData data = BinaryData.FromObjectAsJson(jsonSerializable, jsonTypeInfo);
+        return new BinaryDataBinaryContent(data.ToMemory());
     }
 
     /// <summary>
