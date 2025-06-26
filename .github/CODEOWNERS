@@ -771,6 +771,12 @@
 # ServiceLabel: %Image Analysis
 # ServiceOwners:                                                   @rhurey @dargilco
 
+# PRLabel: %Planetary Computer
+/sdk/planetarycomputer/                                            @chahibi @shaktichetan23
+
+# ServiceLabel: %Planetary Computer
+# ServiceOwners:                                                   @chahibi @shaktichetan23
+
 # PRLabel: %Microsoft Playwright Testing
 /sdk/playwrighttesting/                                            @Sid200026 @puagarwa @ShreyaAnand
 
