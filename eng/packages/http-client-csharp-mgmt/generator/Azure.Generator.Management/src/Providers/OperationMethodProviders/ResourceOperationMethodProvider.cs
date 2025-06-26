@@ -163,7 +163,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var uriDeclaration = ResourceMethodSnippets.CreateUriFromMessage(messageVariable, out var uriVariable);
             statements.Add(uriDeclaration);
-            var rehydrationTokenDeclaration = ResourceMethodSnippets.CreateRehydrationToken(uriVariable.As<RequestUriBuilder>(), _serviceMethod.Operation.HttpMethod, out var rehydrationTokenVariable);
+            var rehydrationTokenDeclaration = NextLinkOperationImplementationSnippets.CreateRehydrationToken(uriVariable.As<RequestUriBuilder>(), _serviceMethod.Operation.HttpMethod, out var rehydrationTokenVariable);
             statements.Add(rehydrationTokenDeclaration);
 
             var responseFromValueExpression = Static(typeof(Response)).Invoke(

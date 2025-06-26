@@ -83,43 +83,6 @@ namespace Azure.Generator.Management.Snippets
                 out uriVariable);
         }
 
-        public static MethodBodyStatement CreateRehydrationToken(
-            ScopedApi<RequestUriBuilder> uriVariable,
-            string httpMethod,
-            out VariableExpression rehydrationTokenVariable)
-        {
-            // RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(
-            //     RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-
-            var requestMethodName = httpMethod switch
-            {
-                "DELETE" => nameof(RequestMethod.Delete),
-                "GET" => nameof(RequestMethod.Get),
-                "POST" => nameof(RequestMethod.Post),
-                "PUT" => nameof(RequestMethod.Put),
-                "PATCH" => nameof(RequestMethod.Patch),
-                "HEAD" => nameof(RequestMethod.Head),
-                "OPTIONS" => nameof(RequestMethod.Options),
-                "TRACE" => nameof(RequestMethod.Trace),
-                _ => throw new ArgumentException($"Unsupported HTTP method: {httpMethod}")
-            };
-
-            return Declare(
-                "rehydrationToken",
-                typeof(RehydrationToken),
-                Static(typeof(NextLinkOperationImplementation)).Invoke(
-                    nameof(NextLinkOperationImplementation.GetRehydrationToken),
-                    [
-                        Static(typeof(RequestMethod)).Property(requestMethodName),
-                        uriVariable.Invoke("ToUri"),
-                        uriVariable.InvokeToString(),
-                        Literal("None"),
-                        Null,
-                        Static(typeof(OperationFinalStateVia)).Property(nameof(OperationFinalStateVia.OriginalUri)).InvokeToString()
-                    ]),
-                out rehydrationTokenVariable);
-        }
-
         public static MethodBodyStatement CreateHttpMessage(
             ResourceClientProvider resourceClientProvider,
             string methodName,
