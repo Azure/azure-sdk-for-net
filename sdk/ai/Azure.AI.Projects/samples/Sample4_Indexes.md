@@ -21,7 +21,6 @@ var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
 var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
 var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME") ?? "my-ai-search-index-name";
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-Indexes indexesClient = projectClient.GetIndexesClient();
 
 RequestContent content = RequestContent.Create(new
 {
@@ -34,7 +33,7 @@ RequestContent content = RequestContent.Create(new
 });
 
 Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-var index = indexesClient.CreateOrUpdate(
+var index = projectClient.Indexes.CreateOrUpdate(
     name: indexName,
     version: indexVersion,
     content: content
@@ -42,21 +41,21 @@ var index = indexesClient.CreateOrUpdate(
 Console.WriteLine(index);
 
 Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-var retrievedIndex = indexesClient.GetIndex(name: indexName, version: indexVersion);
+Index retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
 Console.WriteLine(retrievedIndex);
 
 Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-foreach (var version in indexesClient.GetVersions(name: indexName))
+foreach (Index version in projectClient.Indexes.GetVersions(name: indexName))
 {
     Console.WriteLine(version);
 }
 
 Console.WriteLine($"Listing all Indices:");
-foreach (var version in indexesClient.GetIndices())
+foreach (Index version in projectClient.Indexes.GetIndices())
 {
     Console.WriteLine(version);
 }
 
 Console.WriteLine("Delete the Index version created above:");
-indexesClient.Delete(name: indexName, version: indexVersion);
+projectClient.Indexes.Delete(name: indexName, version: indexVersion);
 ```

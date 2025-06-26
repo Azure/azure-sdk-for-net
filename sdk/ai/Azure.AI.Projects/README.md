@@ -211,22 +211,21 @@ var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-Deployments deployments = projectClient.GetDeploymentsClient();
 
 Console.WriteLine("List all deployments:");
-foreach (var deployment in deployments.GetDeployments())
+foreach (Deployment deployment in projectClient.Deployments.GetDeployments())
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-foreach (var deployment in deployments.GetDeployments(modelPublisher: modelPublisher))
+foreach (Deployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"Get a single deployment named `{modelDeploymentName}`:");
-var deploymentDetails = deployments.GetDeployment(modelDeploymentName);
+Deployment deploymentDetails = projectClient.Deployments.GetDeployment(modelDeploymentName);
 Console.WriteLine(deploymentDetails);
 ```
 
@@ -238,35 +237,34 @@ The code below shows some Connection operations, which allow you to enumerate th
 var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-Connections connectionsClient = projectClient.GetConnectionsClient();
 
 Console.WriteLine("List the properties of all connections:");
-foreach (var connection in connectionsClient.GetConnections())
+foreach (Connection connection in projectClient.Connections.GetConnections())
 {
     Console.WriteLine(connection);
     Console.Write(connection.Name);
 }
 
 Console.WriteLine("List the properties of all connections of a particular type (e.g., Azure OpenAI connections):");
-foreach (var connection in connectionsClient.GetConnections(connectionType: ConnectionType.AzureOpenAI))
+foreach (Connection connection in projectClient.Connections.GetConnections(connectionType: ConnectionType.AzureOpenAI))
 {
     Console.WriteLine(connection);
 }
 
 Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-var specificConnection = connectionsClient.Get(connectionName, includeCredentials: false);
+Connection specificConnection = projectClient.Connections.Get(connectionName, includeCredentials: false);
 Console.WriteLine(specificConnection);
 
 Console.WriteLine("Get the properties of a connection with credentials:");
-var specificConnectionCredentials = connectionsClient.Get(connectionName, includeCredentials: true);
+Connection specificConnectionCredentials = projectClient.Connections.Get(connectionName, includeCredentials: true);
 Console.WriteLine(specificConnectionCredentials);
 
 Console.WriteLine($"Get the properties of the default connection:");
-var defaultConnection = connectionsClient.GetDefault(includeCredentials: false);
+Connection defaultConnection = projectClient.Connections.GetDefault(includeCredentials: false);
 Console.WriteLine(defaultConnection);
 
 Console.WriteLine($"Get the properties of the default connection with credentials:");
-var defaultConnectionCredentials = connectionsClient.GetDefault(includeCredentials: true);
+Connection defaultConnectionCredentials = projectClient.Connections.GetDefault(includeCredentials: true);
 Console.WriteLine(defaultConnectionCredentials);
 ```
 
@@ -283,10 +281,9 @@ var datasetVersion2 = System.Environment.GetEnvironmentVariable("DATASET_VERSION
 var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH") ?? "sample_folder/sample_file1.txt";
 var folderPath = System.Environment.GetEnvironmentVariable("SAMPLE_FOLDER_PATH") ?? "sample_folder";
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-Datasets datasets = projectClient.GetDatasetsClient();
 
 Console.WriteLine($"Uploading a single file to create Dataset version {datasetVersion1}:");
-DatasetVersion dataset = datasets.UploadFile(
+DatasetVersion dataset = projectClient.Datasets.UploadFile(
     name: datasetName,
     version: datasetVersion1,
     filePath: filePath,
@@ -295,7 +292,7 @@ DatasetVersion dataset = datasets.UploadFile(
 Console.WriteLine(dataset);
 
 Console.WriteLine($"Uploading folder to create Dataset version {datasetVersion2}:");
-dataset = datasets.UploadFolder(
+dataset = projectClient.Datasets.UploadFolder(
     name: datasetName,
     version: datasetVersion2,
     folderPath: folderPath,
@@ -305,29 +302,29 @@ dataset = datasets.UploadFolder(
 Console.WriteLine(dataset);
 
 Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
-dataset = datasets.GetDataset(datasetName, datasetVersion1);
+dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion1);
 Console.WriteLine(dataset);
 
 Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
-AssetCredentialResponse credentials = datasets.GetCredentials(datasetName, datasetVersion1);
+AssetCredentialResponse credentials = projectClient.Datasets.GetCredentials(datasetName, datasetVersion1);
 Console.WriteLine(credentials);
 
 Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-foreach (var ds in datasets.GetVersions(datasetName))
+foreach (DatasetVersion ds in projectClient.Datasets.GetVersions(datasetName))
 {
     Console.WriteLine(ds);
     Console.WriteLine(ds.Version);
 }
 
 Console.WriteLine($"Listing latest versions for all datasets:");
-foreach (var ds in datasets.GetDatasetVersions())
+foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions())
 {
     Console.WriteLine(ds);
 }
 
 Console.WriteLine($"Deleting Dataset versions {datasetVersion1} and {datasetVersion2}:");
-datasets.Delete(datasetName, datasetVersion1);
-datasets.Delete(datasetName, datasetVersion2);
+projectClient.Datasets.Delete(datasetName, datasetVersion1);
+projectClient.Datasets.Delete(datasetName, datasetVersion2);
 ```
 
 ### Indexes operations
@@ -341,7 +338,6 @@ var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
 var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
 var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME") ?? "my-ai-search-index-name";
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-Indexes indexesClient = projectClient.GetIndexesClient();
 
 RequestContent content = RequestContent.Create(new
 {
@@ -354,7 +350,7 @@ RequestContent content = RequestContent.Create(new
 });
 
 Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-var index = indexesClient.CreateOrUpdate(
+var index = projectClient.Indexes.CreateOrUpdate(
     name: indexName,
     version: indexVersion,
     content: content
@@ -362,23 +358,23 @@ var index = indexesClient.CreateOrUpdate(
 Console.WriteLine(index);
 
 Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-var retrievedIndex = indexesClient.GetIndex(name: indexName, version: indexVersion);
+Index retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
 Console.WriteLine(retrievedIndex);
 
 Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-foreach (var version in indexesClient.GetVersions(name: indexName))
+foreach (Index version in projectClient.Indexes.GetVersions(name: indexName))
 {
     Console.WriteLine(version);
 }
 
 Console.WriteLine($"Listing all Indices:");
-foreach (var version in indexesClient.GetIndices())
+foreach (Index version in projectClient.Indexes.GetIndices())
 {
     Console.WriteLine(version);
 }
 
 Console.WriteLine("Delete the Index version created above:");
-indexesClient.Delete(name: indexName, version: indexVersion);
+projectClient.Indexes.Delete(name: indexName, version: indexVersion);
 ```
 
 ## Troubleshooting

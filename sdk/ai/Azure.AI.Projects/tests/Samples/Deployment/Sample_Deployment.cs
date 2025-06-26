@@ -27,22 +27,21 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        Deployments deployments = projectClient.GetDeploymentsClient();
 
         Console.WriteLine("List all deployments:");
-        foreach (var deployment in deployments.GetDeployments())
+        foreach (Deployment deployment in projectClient.Deployments.GetDeployments())
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-        foreach (var deployment in deployments.GetDeployments(modelPublisher: modelPublisher))
+        foreach (Deployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"Get a single deployment named `{modelDeploymentName}`:");
-        var deploymentDetails = deployments.GetDeployment(modelDeploymentName);
+        Deployment deploymentDetails = projectClient.Deployments.GetDeployment(modelDeploymentName);
         Console.WriteLine(deploymentDetails);
         #endregion
     }
@@ -62,22 +61,21 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 #endif
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-        Deployments deployments = projectClient.GetDeploymentsClient();
 
         Console.WriteLine("List all deployments:");
-        await foreach (var deployment in deployments.GetDeploymentsAsync())
+        await foreach (Deployment deployment in projectClient.Deployments.GetDeploymentsAsync())
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-        await foreach (var deployment in deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
+        await foreach (Deployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"Get a single deployment named `{modelDeploymentName}`:");
-        var deploymentDetails = deployments.GetDeploymentAsync(modelDeploymentName);
+        Deployment deploymentDetails = await projectClient.Deployments.GetDeploymentAsync(modelDeploymentName);
         Console.WriteLine(deploymentDetails);
         #endregion
     }
