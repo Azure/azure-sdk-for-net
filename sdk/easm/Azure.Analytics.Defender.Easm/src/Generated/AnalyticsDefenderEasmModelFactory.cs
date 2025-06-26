@@ -2143,15 +2143,6 @@ namespace Azure.Analytics.Defender.Easm
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.InnerError"/>. </summary>
-        /// <param name="code"> This is a more specific error code than was provided by the containing error. </param>
-        /// <param name="value"> This is an additional field representing the value that caused the error to help with debugging. </param>
-        /// <returns> A new <see cref="Easm.InnerError"/> instance for mocking. </returns>
-        public static InnerError InnerError(string code = null, BinaryData value = null)
-        {
-            return new InnerError(code, value, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Easm.DiscoveryGroup"/>. </summary>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>

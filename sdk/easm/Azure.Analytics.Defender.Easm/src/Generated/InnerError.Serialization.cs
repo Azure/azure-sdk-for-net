@@ -39,7 +39,12 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Value))
+            if (Optional.IsDefined(Innererror))
+            {
+                writer.WritePropertyName("innererror"u8);
+                writer.WriteObjectValue<InnerError>(Innererror, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -89,6 +94,7 @@ namespace Azure.Analytics.Defender.Easm
                 return null;
             }
             string code = default;
+            InnerError innererror = default;
             BinaryData value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -97,6 +103,15 @@ namespace Azure.Analytics.Defender.Easm
                 if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("innererror"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    innererror = DeserializeInnerError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -114,7 +129,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InnerError(code, value, serializedAdditionalRawData);
+            return new InnerError(code, innererror, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InnerError>.Write(ModelReaderWriterOptions options)
