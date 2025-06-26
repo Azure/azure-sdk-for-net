@@ -53,20 +53,22 @@ namespace Azure.Generator.Management.Providers
         protected FieldProvider _clientDiagnosticsField;
         protected FieldProvider _clientField;
 
+        private InputModelType _resourceModel;
+
         private protected ResourceClientProvider(InputClient inputClient, ResourceMetadata resourceMetadata)
         {
             IsSingleton = resourceMetadata.IsSingleton;
             ResourceScope = resourceMetadata.ResourceScope;
             var resourceType = resourceMetadata.ResourceType;
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
-            var resourceModel = resourceMetadata.ResourceModel;
+            _resourceModel = resourceMetadata.ResourceModel;
             // TODO -- the name of a resource is not always the name of its model. Maybe the resource metadata should have a property for the name of the resource?
-            SpecName = resourceModel.Name.ToIdentifierName();
+            SpecName = _resourceModel.Name.ToIdentifierName();
 
             // We should be able to assume that all operations in the resource client are for the same resource
             var requestPath = new RequestPath(inputClient.Methods.First().Operation.Path);
             _resourceServiceMethods = inputClient.Methods;
-            ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(resourceModel)!;
+            ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(_resourceModel)!;
             _restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
 
             //TODO: Remove this when we have a way to handle renaming directly in ResourceVisitor.
@@ -285,7 +287,7 @@ namespace Azure.Generator.Management.Providers
             methods.AddRange(operationMethods);
 
             // Only generate tag methods if the resource model has tag properties
-            if (ShouldGenerateTagMethods())
+            if (ShouldGenerateTagMethods(_resourceModel))
             {
                 methods.AddRange([
                     new AddTagMethodProvider(this, true),
@@ -301,29 +303,27 @@ namespace Azure.Generator.Management.Providers
             return [.. methods];
         }
 
-        private bool ShouldGenerateTagMethods()
+        private bool ShouldGenerateTagMethods(InputModelType model)
         {
-            // Enumerate all properties from the resource data model, including inherited ones
-            ModelProvider? currentModel = ResourceData;
+            InputModelType? currentModel = model;
             while (currentModel != null)
             {
                 foreach (var property in currentModel.Properties)
                 {
-                    // Check if the property type is IDictionary<string, string>, Does Tag property's name has any pattern?
-                    if (property.Type.IsFrameworkType &&
-                        property.Type.IsGenericType &&
-                        property.Type.FrameworkType.GetGenericTypeDefinition() == typeof(IDictionary<,>))
+                    if (property.Name == "tags" && property.Type is not null)
                     {
-                        var genericArgs = property.Type.Arguments;
-                        if (genericArgs.Count == 2 &&
-                            genericArgs[0].Equals(typeof(string)) &&
-                            genericArgs[1].Equals(typeof(string)))
-                        {
+                       if (property.Type is InputDictionaryType dictType)
+                       {
+                            if (dictType.KeyType is InputPrimitiveType kt && kt.Kind == InputPrimitiveTypeKind.String &&
+                                dictType.ValueType is InputPrimitiveType vt && vt.Kind == InputPrimitiveTypeKind.String)
+                            {
+                                return true;
+                            }
                             return true;
-                        }
+                       }
                     }
                 }
-                currentModel = currentModel.BaseModelProvider;
+                currentModel = currentModel.BaseModel;
             }
             return false;
         }
