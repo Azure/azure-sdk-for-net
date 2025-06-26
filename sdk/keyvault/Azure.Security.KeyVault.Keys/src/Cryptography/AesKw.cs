@@ -47,11 +47,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return CreateEncryptor(key, null);
         }
 
-        public ICryptoTransform CreateDecryptor(byte[] key)
-        {
-            return CreateDecryptor(key, null);
-        }
-
         public ICryptoTransform CreateEncryptor(byte[] key, byte[] iv)
         {
             if (key == null)
@@ -64,6 +59,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 throw new ArgumentException("iv length must be 64 bits");
 
             return new AesKwEncryptor(key.Take(KeySizeInBytes), iv ?? DefaultIv);
+        }
+
+        public ICryptoTransform CreateDecryptor(byte[] key)
+        {
+            return CreateDecryptor(key, null);
         }
 
         public ICryptoTransform CreateDecryptor(byte[] key, byte[] iv)
