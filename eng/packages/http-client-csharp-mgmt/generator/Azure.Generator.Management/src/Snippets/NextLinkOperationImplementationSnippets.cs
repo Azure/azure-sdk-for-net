@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Expressions;
-using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
