@@ -48,6 +48,7 @@
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/Azure.ResourceManager.Monitor/api/*.cs",
+    "sdk/planetarycomputer/Azure.ResourceManager.PlanetaryComputer/api/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/openai/Azure.AI.OpenAI/tests/Assets/playback_test_config.json",
     "sdk/purview/*/api/*.cs",
@@ -159,6 +160,7 @@
     "skus",
     "Somaxconn",
     "southcentralus",
+    "spatio",
     "structs",
     "Sybase",
     "Sysctls",
@@ -426,14 +428,6 @@
         "thaa",
         "thaana",
         "tibt"
-      ]
-    },
-    {
-      "filename": "**/sdk/connectedcache/**/*",
-      "words": [
-        "Gbps",
-        "Mbps",
-        "Eflow"
       ]
     },
     {
@@ -1133,7 +1127,6 @@
         "dnsprivateviewocid",
         "Ords",
         "Ocid",
-        "Ocids",
         "ncharacter",
         "ocpu",
         "Iorm",
@@ -1144,11 +1137,7 @@
         "Tcps",
         "Ezconnect",
         "Ezconnectplus",
-        "Oltp",
-        "exadb",
-        "Exadb",
-        "Exascale",
-        "exascale"
+        "Oltp"
       ]
     },
     {
