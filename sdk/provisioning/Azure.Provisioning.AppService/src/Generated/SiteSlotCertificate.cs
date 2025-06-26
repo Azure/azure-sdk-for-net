@@ -10,14 +10,13 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
-using System.ComponentModel;
 
 namespace Azure.Provisioning.AppService;
 
 /// <summary>
-/// AppCertificate.
+/// SiteSlotCertificate.
 /// </summary>
-public partial class AppCertificate : ProvisionableResource
+public partial class SiteSlotCertificate : ProvisionableResource
 {
     /// <summary>
     /// Name of the certificate.
@@ -269,6 +268,28 @@ public partial class AppCertificate : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary>
+    /// Certificate thumbprint.                          To assign an object to
+    /// this property use
+    /// System.BinaryData.FromObjectAsJson``1(``0,System.Text.Json.JsonSerializerOptions).
+    /// To assign an already formated json string to
+    /// this property use System.BinaryData.FromString(System.String).
+    /// Examples:
+    /// BinaryData.FromObjectAsJson(&quot;foo&quot;)Creates a
+    /// payload of
+    /// &quot;foo&quot;.BinaryData.FromString(&quot;\&quot;foo\&quot;&quot;)Creates
+    /// a payload of &quot;foo&quot;.BinaryData.FromObjectAsJson(new { key =
+    /// &quot;value&quot; })Creates a payload of { &quot;key&quot;:
+    /// &quot;value&quot; }.BinaryData.FromString(&quot;{\&quot;key\&quot;:
+    /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
+    /// &quot;value&quot; }.
+    /// </summary>
+    public BicepValue<BinaryData> Thumbprint 
+    {
+        get { Initialize(); return _thumbprint!; }
+    }
+    private BicepValue<BinaryData>? _thumbprint;
+
+    /// <summary>
     /// Certificate thumbprint.
     /// </summary>
     public BicepValue<string> ThumbprintString 
@@ -278,22 +299,32 @@ public partial class AppCertificate : ProvisionableResource
     private BicepValue<string>? _thumbprintString;
 
     /// <summary>
-    /// Creates a new AppCertificate.
+    /// Gets or sets a reference to the parent WebSiteSlot.
+    /// </summary>
+    public WebSiteSlot? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSiteSlot>? _parent;
+
+    /// <summary>
+    /// Creates a new SiteSlotCertificate.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the AppCertificate resource.  This can
-    /// be used to refer to the resource in expressions, but is not the Azure
-    /// name of the resource.  This value can contain letters, numbers, and
-    /// underscores.
+    /// The the Bicep identifier name of the SiteSlotCertificate resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the AppCertificate.</param>
-    public AppCertificate(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/certificates", resourceVersion ?? "2024-11-01")
+    /// <param name="resourceVersion">Version of the SiteSlotCertificate.</param>
+    public SiteSlotCertificate(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/slots/certificates", resourceVersion ?? "2024-11-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of AppCertificate.
+    /// Define all the provisionable properties of SiteSlotCertificate.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
@@ -323,11 +354,13 @@ public partial class AppCertificate : ProvisionableResource
         _siteName = DefineProperty<string>("SiteName", ["properties", "siteName"], isOutput: true);
         _subjectName = DefineProperty<string>("SubjectName", ["properties", "subjectName"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _thumbprint = DefineProperty<BinaryData>("Thumbprint", ["Thumbprint"], isOutput: true);
         _thumbprintString = DefineProperty<string>("ThumbprintString", ["properties", "thumbprint"], isOutput: true);
+        _parent = DefineResource<WebSiteSlot>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported AppCertificate resource versions.
+    /// Supported SiteSlotCertificate resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -335,157 +368,19 @@ public partial class AppCertificate : ProvisionableResource
         /// 2024-11-01.
         /// </summary>
         public static readonly string V2024_11_01 = "2024-11-01";
-
-        /// <summary>
-        /// 2024-04-01.
-        /// </summary>
-        public static readonly string V2024_04_01 = "2024-04-01";
-
-        /// <summary>
-        /// 2023-12-01.
-        /// </summary>
-        public static readonly string V2023_12_01 = "2023-12-01";
-
-        /// <summary>
-        /// 2023-01-01.
-        /// </summary>
-        public static readonly string V2023_01_01 = "2023-01-01";
-
-        /// <summary>
-        /// 2022-09-01.
-        /// </summary>
-        public static readonly string V2022_09_01 = "2022-09-01";
-
-        /// <summary>
-        /// 2022-03-01.
-        /// </summary>
-        public static readonly string V2022_03_01 = "2022-03-01";
-
-        /// <summary>
-        /// 2021-03-01.
-        /// </summary>
-        public static readonly string V2021_03_01 = "2021-03-01";
-
-        /// <summary>
-        /// 2021-02-01.
-        /// </summary>
-        public static readonly string V2021_02_01 = "2021-02-01";
-
-        /// <summary>
-        /// 2021-01-15.
-        /// </summary>
-        public static readonly string V2021_01_15 = "2021-01-15";
-
-        /// <summary>
-        /// 2021-01-01.
-        /// </summary>
-        public static readonly string V2021_01_01 = "2021-01-01";
-
-        /// <summary>
-        /// 2020-12-01.
-        /// </summary>
-        public static readonly string V2020_12_01 = "2020-12-01";
-
-        /// <summary>
-        /// 2020-10-01.
-        /// </summary>
-        public static readonly string V2020_10_01 = "2020-10-01";
-
-        /// <summary>
-        /// 2020-09-01.
-        /// </summary>
-        public static readonly string V2020_09_01 = "2020-09-01";
-
-        /// <summary>
-        /// 2020-06-01.
-        /// </summary>
-        public static readonly string V2020_06_01 = "2020-06-01";
-
-        /// <summary>
-        /// 2019-08-01.
-        /// </summary>
-        public static readonly string V2019_08_01 = "2019-08-01";
-
-        /// <summary>
-        /// 2018-11-01.
-        /// </summary>
-        public static readonly string V2018_11_01 = "2018-11-01";
-
-        /// <summary>
-        /// 2018-02-01.
-        /// </summary>
-        public static readonly string V2018_02_01 = "2018-02-01";
-
-        /// <summary>
-        /// 2016-03-01.
-        /// </summary>
-        public static readonly string V2016_03_01 = "2016-03-01";
-
-        /// <summary>
-        /// 2015-08-01.
-        /// </summary>
-        public static readonly string V2015_08_01 = "2015-08-01";
-
-        /// <summary>
-        /// 2015-07-01.
-        /// </summary>
-        public static readonly string V2015_07_01 = "2015-07-01";
-
-        /// <summary>
-        /// 2015-06-01.
-        /// </summary>
-        public static readonly string V2015_06_01 = "2015-06-01";
-
-        /// <summary>
-        /// 2015-05-01.
-        /// </summary>
-        public static readonly string V2015_05_01 = "2015-05-01";
-
-        /// <summary>
-        /// 2015-04-01.
-        /// </summary>
-        public static readonly string V2015_04_01 = "2015-04-01";
-
-        /// <summary>
-        /// 2015-02-01.
-        /// </summary>
-        public static readonly string V2015_02_01 = "2015-02-01";
-
-        /// <summary>
-        /// 2014-11-01.
-        /// </summary>
-        public static readonly string V2014_11_01 = "2014-11-01";
-
-        /// <summary>
-        /// 2014-06-01.
-        /// </summary>
-        public static readonly string V2014_06_01 = "2014-06-01";
-
-        /// <summary>
-        /// 2014-04-01.
-        /// </summary>
-        public static readonly string V2014_04_01 = "2014-04-01";
     }
 
     /// <summary>
-    /// Creates a reference to an existing AppCertificate.
+    /// Creates a reference to an existing SiteSlotCertificate.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the AppCertificate resource.  This can
-    /// be used to refer to the resource in expressions, but is not the Azure
-    /// name of the resource.  This value can contain letters, numbers, and
-    /// underscores.
+    /// The the Bicep identifier name of the SiteSlotCertificate resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the AppCertificate.</param>
-    /// <returns>The existing AppCertificate resource.</returns>
-    public static AppCertificate FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the SiteSlotCertificate.</param>
+    /// <returns>The existing SiteSlotCertificate resource.</returns>
+    public static SiteSlotCertificate FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
-
-    /// <summary>
-    /// Get the requirements for naming this AppCertificate resource.
-    /// </summary>
-    /// <returns>Naming requirements.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ResourceNameRequirements GetResourceNameRequirements() =>
-        new(minLength: 1, maxLength: 260, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period);
 }
