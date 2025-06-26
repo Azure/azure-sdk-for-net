@@ -12,8 +12,9 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using MgmtTypeSpec;
 
-namespace MgmtTypeSpec
+namespace MgmtTypeSpec.Mocking
 {
     /// <summary></summary>
     public partial class MockableMgmtTypeSpecResourceGroupResource : ArmResource
