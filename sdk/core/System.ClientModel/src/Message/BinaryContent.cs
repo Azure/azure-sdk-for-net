@@ -21,6 +21,11 @@ public abstract class BinaryContent : IDisposable
     private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
 
     /// <summary>
+    /// Gets the media type of the content.
+    /// </summary>
+    public virtual string? MediaType { get; }
+
+    /// <summary>
     /// Creates an instance of <see cref="BinaryContent"/> that contains the
     /// bytes held in the provided <see cref="BinaryData"/> instance.
     /// </summary>
@@ -82,7 +87,7 @@ public abstract class BinaryContent : IDisposable
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         BinaryData data = BinaryData.FromObjectAsJson(jsonSerializable, options);
-        return new BinaryDataBinaryContent(data.ToMemory());
+        return new JsonBinaryContent(data.ToMemory());
     }
 
     /// <summary>
@@ -99,7 +104,7 @@ public abstract class BinaryContent : IDisposable
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         BinaryData data = BinaryData.FromObjectAsJson(jsonSerializable, jsonTypeInfo);
-        return new BinaryDataBinaryContent(data.ToMemory());
+        return new JsonBinaryContent(data.ToMemory());
     }
 
     /// <summary>
@@ -137,6 +142,41 @@ public abstract class BinaryContent : IDisposable
         {
             _bytes = bytes;
         }
+
+        public override bool TryComputeLength(out long length)
+        {
+            length = _bytes.Length;
+            return true;
+        }
+
+        public override void WriteTo(Stream stream, CancellationToken cancellation)
+        {
+            Argument.AssertNotNull(stream, nameof(stream));
+
+            byte[] buffer = _bytes.ToArray();
+            stream.Write(buffer, 0, buffer.Length);
+        }
+
+        public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+        {
+            Argument.AssertNotNull(stream, nameof(stream));
+
+            await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
+        }
+
+        public override void Dispose() { }
+    }
+
+    private sealed class JsonBinaryContent : BinaryContent
+    {
+        private readonly ReadOnlyMemory<byte> _bytes;
+
+        public JsonBinaryContent(ReadOnlyMemory<byte> bytes)
+        {
+            _bytes = bytes;
+        }
+
+        public override string? MediaType => "application/json";
 
         public override bool TryComputeLength(out long length)
         {

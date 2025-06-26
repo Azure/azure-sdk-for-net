@@ -159,20 +159,14 @@ internal class BinaryContentTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void CanCreateJsonBinaryContentFromObject()
+    public async Task CanCreateAndWriteJsonBinaryContentFromObject()
     {
         var testObject = new { Name = "test", Value = 42 };
         using BinaryContent content = BinaryContent.CreateJson(testObject);
 
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.Greater(length, 0);
-    }
-
-    [Test]
-    public async Task CanWriteJsonBinaryContentToStream()
-    {
-        var testObject = new { Name = "test", Value = 42 };
-        using BinaryContent content = BinaryContent.CreateJson(testObject);
+        Assert.AreEqual("application/json", content.MediaType);
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
@@ -183,24 +177,16 @@ internal class BinaryContentTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void CanCreateJsonBinaryContentWithOptions()
+    public async Task CanCreateAndWriteJsonBinaryContentWithOptions()
     {
-        var testObject = new { Name = "test", Value = 42 };
+        var testObject = new { Name = "TEST", Value = 42 };
         var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
         using BinaryContent content = BinaryContent.CreateJson(testObject, options);
 
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.Greater(length, 0);
-    }
-
-    [Test]
-    public async Task CanWriteJsonBinaryContentWithOptionsToStream()
-    {
-        var testObject = new { Name = "TEST", Value = 42 };
-        var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-
-        using BinaryContent content = BinaryContent.CreateJson(testObject, options);
+        Assert.AreEqual("application/json", content.MediaType);
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
@@ -209,25 +195,6 @@ internal class BinaryContentTests : SyncAsyncTestBase
         // With camelCase naming policy, "Name" should become "name"
         Assert.IsTrue(json.Contains("name"));
         Assert.IsTrue(json.Contains("value"));
-    }
-
-    [Test]
-    public void CanCreateJsonBinaryContentWithJsonTypeInfo()
-    {
-        // For testing purposes, let's skip the JsonTypeInfo test since it requires
-        // more complex setup and the main functionality is already tested
-        // with JsonSerializerOptions
-        Assert.Pass("JsonTypeInfo overload exists and compiles correctly");
-    }
-
-    [Test]
-    public async Task CanWriteJsonBinaryContentWithJsonTypeInfoToStream()
-    {
-        // For testing purposes, let's skip the JsonTypeInfo test since it requires
-        // more complex setup and the main functionality is already tested
-        // with JsonSerializerOptions
-        await Task.CompletedTask;
-        Assert.Pass("JsonTypeInfo overload exists and compiles correctly");
     }
 
     [Test]
@@ -246,12 +213,5 @@ internal class BinaryContentTests : SyncAsyncTestBase
         Assert.IsTrue(content.TryComputeLength(out long contentLength));
         Assert.IsTrue(expectedContent.TryComputeLength(out long expectedLength));
         Assert.AreEqual(expectedLength, contentLength);
-    }
-
-    // Test model for JsonTypeInfo tests
-    public class TestModel
-    {
-        public string Name { get; set; } = string.Empty;
-        public int Value { get; set; }
     }
 }
