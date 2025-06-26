@@ -7,8 +7,9 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using MgmtTypeSpec;
 
-namespace MgmtTypeSpec
+namespace MgmtTypeSpec.Mocking
 {
     /// <summary></summary>
     public partial class MockableMgmtTypeSpecArmClient : ArmResource

@@ -12,8 +12,9 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using MgmtTypeSpec;
 
-namespace MgmtTypeSpec
+namespace MgmtTypeSpec.Mocking
 {
     /// <summary></summary>
     public partial class MockableMgmtTypeSpecResourceGroupResource : ArmResource
@@ -41,9 +42,10 @@ namespace MgmtTypeSpec
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<FooResource> GetFoo(string fooName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(fooName, nameof(fooName));
+            Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
             return GetFoos().Get(fooName, cancellationToken);
         }
@@ -52,9 +54,10 @@ namespace MgmtTypeSpec
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<FooResource>> GetFooAsync(string fooName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(fooName, nameof(fooName));
+            Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
             return await GetFoos().GetAsync(fooName, cancellationToken).ConfigureAwait(false);
         }

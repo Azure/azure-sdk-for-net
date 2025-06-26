@@ -210,7 +210,8 @@ namespace Azure.Identity
 
         private static void ValidateResult(string output)
         {
-            if (output.IndexOf(@"<Property Name=""Token"" Type=""System.String"">", StringComparison.OrdinalIgnoreCase) < 0)
+            // Check for Token property in the XML output, regardless of the property type, to handle both legacy and new secure string format.
+            if (output.IndexOf(@"<Property Name=""Token""", StringComparison.OrdinalIgnoreCase) < 0)
             {
                 throw new CredentialUnavailableException("PowerShell did not return a valid response.");
             }
@@ -261,16 +262,24 @@ if ($tenantId.Length -gt 0) {{
     $params['TenantId'] = '{tenantId}'
 }}
 
-$useSecureString = $m.Version -ge [version]'2.17.0'
-if ($useSecureString) {{
+# For Az.Accounts 2.17.0+ but below 5.0.0, explicitly request secure string
+if ($m.Version -ge [version]'2.17.0' -and $m.Version -lt [version]'5.0.0') {{
     $params['AsSecureString'] = $true
 }}
 
 $token = Get-AzAccessToken @params
 
 $customToken = New-Object -TypeName psobject
-if ($useSecureString) {{
-    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value (ConvertFrom-SecureString -AsPlainText $token.Token)
+
+# If the token is a SecureString, convert to plain text using recommended pattern
+if ($token.Token -is [System.Security.SecureString]) {{
+    $ssPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($token.Token)
+    try {{
+        $plainToken = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($ssPtr)
+    }} finally {{
+        [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ssPtr)
+    }}
+    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $plainToken
 }} else {{
     $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
 }}

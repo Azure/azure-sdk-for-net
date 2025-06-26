@@ -4,7 +4,8 @@
 
 ### Features Added
 
-- Tracing for Agents
+- Tracing for Agents. More information [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/README.md#tracing).
+- Convenience constructor for BingCustomSearchToolParameters
 
 ### Breaking Changes
 
@@ -14,7 +15,11 @@
 
 ### Sample updates
 - The Azure function sample was simplified.
-- Added samples for file search citation with streaming. 
+- Added samples for file search citation with streaming.
+- Fabric tool sample added
+- Connected Agent tool sample added
+- Multiple Connected Agent sample added.
+- Bing Custom Search sample added.
 
 ## 1.1.0-beta.2 (2025-06-04)
 
