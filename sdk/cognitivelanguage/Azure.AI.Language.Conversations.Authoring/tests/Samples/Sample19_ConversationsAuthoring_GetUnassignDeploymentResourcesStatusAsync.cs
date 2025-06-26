@@ -21,10 +21,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential credential = new DefaultAzureCredential();
-            ConversationAnalysisAuthoringClientOptions options =
-                new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview);
-
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample19_ConversationsAuthoring_GetUnassignDeploymentResourcesStatusAsync
             // Set project name and create client for the project
