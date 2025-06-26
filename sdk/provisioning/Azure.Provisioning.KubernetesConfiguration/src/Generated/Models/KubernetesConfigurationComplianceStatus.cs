@@ -65,9 +65,9 @@ public partial class KubernetesConfigurationComplianceStatus : ProvisionableCons
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _complianceState = DefineProperty<KubernetesConfigurationComplianceStateType>("ComplianceState", ["complianceState"], isOutput: true);
-        _lastConfigAppliedOn = DefineProperty<DateTimeOffset>("LastConfigAppliedOn", ["lastConfigApplied"], isOutput: true);
-        _message = DefineProperty<string>("Message", ["message"], isOutput: true);
-        _messageLevel = DefineProperty<KubernetesConfigurationMesageLevel>("MessageLevel", ["messageLevel"], isOutput: true);
+        _complianceState = DefineProperty<KubernetesConfigurationComplianceStateType>("ComplianceState", ["ComplianceState"], isOutput: true);
+        _lastConfigAppliedOn = DefineProperty<DateTimeOffset>("LastConfigAppliedOn", ["LastConfigAppliedOn"], isOutput: true);
+        _message = DefineProperty<string>("Message", ["Message"], isOutput: true);
+        _messageLevel = DefineProperty<KubernetesConfigurationMesageLevel>("MessageLevel", ["MessageLevel"], isOutput: true);
     }
 }

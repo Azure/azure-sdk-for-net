@@ -38,16 +38,19 @@ namespace Azure.Generator.Management.Providers
                 var operation = method.Operation;
                 if (operation.HttpMethod == HttpMethod.Get.ToString())
                 {
-                    if (operation.Name == "list")
+                    if (operation.Name == "Get")
                     {
-                        _getAll = method;
-                    }
-                    else if (operation.Name == "get")
-                    {
-                        _get = method;
+                        if (operation.CrossLanguageDefinitionId.Contains("list"))
+                        {
+                            _getAll = method;
+                        }
+                        else
+                        {
+                            _get = method;
+                        }
                     }
                 }
-                if (operation.HttpMethod == HttpMethod.Put.ToString() && operation.Name == "createOrUpdate")
+                if (operation.HttpMethod == HttpMethod.Put.ToString() && operation.Name == "CreateOrUpdate")
                 {
                     _create = method;
                 }
@@ -151,7 +154,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false})
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_create!.Operation, isAsync);
-                result.Add(BuildOperationMethod(_create, convenienceMethod, isAsync));
+                result.Add(new ResourceOperationMethodProvider(this, _create, convenienceMethod, isAsync));
             }
 
             return result;
@@ -174,7 +177,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false})
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
-                result.Add(BuildOperationMethod(_get, convenienceMethod, isAsync));
+                result.Add(new ResourceOperationMethodProvider(this, _get, convenienceMethod, isAsync));
             }
 
             return result;

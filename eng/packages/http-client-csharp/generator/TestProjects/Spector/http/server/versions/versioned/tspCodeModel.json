@@ -352,7 +352,7 @@
      "type": {
       "$id": "38",
       "kind": "url",
-      "name": "url",
+      "name": "endpoint",
       "crossLanguageDefinitionId": "TypeSpec.url"
      },
      "location": "Uri",
@@ -362,7 +362,8 @@
      "isEndpoint": true,
      "skipUrlEncoding": false,
      "explode": false,
-     "kind": "Client"
+     "kind": "Client",
+     "serverUrlTemplate": "{endpoint}"
     }
    ],
    "decorators": [],

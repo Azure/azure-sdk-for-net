@@ -59,6 +59,18 @@ public partial class SiteContainer : ProvisionableResource
     private BicepValue<string>? _image;
 
     /// <summary>
+    /// &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings
+    /// have to be passed to the container as environment variables;
+    /// &lt;code&gt;false&lt;/code&gt; otherwise.
+    /// </summary>
+    public BicepValue<bool> InheritAppSettingsAndConnectionStrings 
+    {
+        get { Initialize(); return _inheritAppSettingsAndConnectionStrings!; }
+        set { Initialize(); _inheritAppSettingsAndConnectionStrings!.Assign(value); }
+    }
+    private BicepValue<bool>? _inheritAppSettingsAndConnectionStrings;
+
+    /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; if the container is the main site
     /// container; &lt;code&gt;false&lt;/code&gt; otherwise.
     /// </summary>
@@ -196,7 +208,7 @@ public partial class SiteContainer : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteContainer.</param>
     public SiteContainer(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/sitecontainers", resourceVersion ?? "2024-04-01")
+        : base(bicepIdentifier, "Microsoft.Web/sites/sitecontainers", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -209,6 +221,7 @@ public partial class SiteContainer : ProvisionableResource
         _authType = DefineProperty<SiteContainerAuthType>("AuthType", ["properties", "authType"]);
         _environmentVariables = DefineListProperty<WebAppEnvironmentVariable>("EnvironmentVariables", ["properties", "environmentVariables"]);
         _image = DefineProperty<string>("Image", ["properties", "image"]);
+        _inheritAppSettingsAndConnectionStrings = DefineProperty<bool>("InheritAppSettingsAndConnectionStrings", ["properties", "inheritAppSettingsAndConnectionStrings"]);
         _isMain = DefineProperty<bool>("IsMain", ["properties", "isMain"]);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _passwordSecret = DefineProperty<string>("PasswordSecret", ["properties", "passwordSecret"]);
@@ -229,6 +242,11 @@ public partial class SiteContainer : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
         /// <summary>
         /// 2024-04-01.
         /// </summary>

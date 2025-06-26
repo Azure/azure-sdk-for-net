@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
+using NUnit.Framework.Internal.Execution;
 
 namespace Azure.AI.Agents.Persistent.Tests
 {
@@ -921,8 +922,6 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.GreaterOrEqual(messages.Count, 1);
         }
 
-        // TODO: Check the service and enable this test.
-        [Ignore("There is a regression on the service side and test will fail. 2025-04-03")]
         [RecordedTest]
         [TestCase(true, true)]
         [TestCase(true, false)]
@@ -1016,8 +1015,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         }
 
         [RecordedTest]
-        // TODO: Implement include in streaming scenario, see task 3801146.
-        // [TestCase(true, true)]
+        [TestCase(true, true)]
         [TestCase(true, false)]
         [TestCase(false, true)]
         [TestCase(false, false)]
@@ -1062,8 +1060,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             ThreadRun fileSearchRun = null;
             if (useStream)
             {
-                // TODO: Implement include in streaming scenario, see task 3801146.
-                await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
+                await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, include: include))
                 {
                     if (streamingUpdate is RunUpdate runUpdate)
                         fileSearchRun = runUpdate.Value;
@@ -1079,11 +1076,10 @@ namespace Azure.AI.Agents.Persistent.Tests
                 List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id).ToListAsync();
                 Assert.GreaterOrEqual(messages.Count, 1);
             }
-            // TODO: Implement include in streaming scenario, see task 3801146.
             List<RunStep> steps = await client.Runs.GetRunStepsAsync(
                 threadId: fileSearchRun.ThreadId,
-                runId: fileSearchRun.Id
-            //    include: include
+                runId: fileSearchRun.Id,
+                include: include
             ).ToListAsync();
             Assert.GreaterOrEqual(steps.Count, 2);
             RunStep step = await client.Runs.GetRunStepAsync(fileSearchRun.ThreadId, fileSearchRun.Id, steps[1].Id, include: include);
@@ -1402,6 +1398,129 @@ namespace Azure.AI.Agents.Persistent.Tests
                     Console.WriteLine();
                     Console.WriteLine("--- Run completed! ---");
                 }
+            }
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task TestAutomaticSubmitToolOutputs(bool correctDefinition)
+        {
+            if (!IsAsync)
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
+
+            string GetHumidityByAddress(string address)
+            {
+                return address.Contains("Seattle") ? "80" : "60";
+            }
+
+            FunctionToolDefinition correctGeHhumidityByAddressTool = new(
+                 name: "GetHumidityByAddress",
+                 description: "Get humidity by address",
+                 parameters: BinaryData.FromObjectAsJson(
+                 new
+                 {
+                     Type = "object",
+                     Properties = new
+                     {
+                         Address = new
+                         {
+                             Type = "string",
+                             Description = "Address"
+                         }
+                     },
+                     Required = new[] { "address" }
+                 },
+                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+
+            FunctionToolDefinition incorrectGeHhumidityByAddressTool = new(
+                 name: "GetHumidityByAddress",
+                 description: "Get humidity by address",
+                 parameters: BinaryData.FromObjectAsJson(
+                 new
+                 {
+                     Type = "object",
+                     Properties = new
+                     {
+                         Addresses = new
+                         {
+                             Type = "array",
+                             Description = "A list of addresses",
+                             Items = new
+                             {
+                                 Type = "object",
+                                 Properties = new
+                                 {
+                                     Street = new
+                                     {
+                                         Type = "string",
+                                         Description = "Street"
+                                     },
+                                     City = new
+                                     {
+                                         Type = "string",
+                                         description = "city"
+                                     },
+                                 },
+                                 Required = new[] { "street", "city" }
+                             }
+                         },
+                     },
+                     Required = new[] { "address" }
+                 },
+                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+
+            Dictionary<string, Delegate> toolDelegates = new();
+            toolDelegates.Add(nameof(GetHumidityByAddress), GetHumidityByAddress);
+
+            PersistentAgentsClient client = GetClient();
+            string output = "";
+            bool completed = false;
+            bool cancelled = false;
+            List<ToolDefinition> tools = new();
+            AutoFunctionCallOptions autoFunctionCallOptions = new(toolDelegates, 0);
+            if (correctDefinition)
+                tools.Add(correctGeHhumidityByAddressTool);
+            else
+                tools.Add(incorrectGeHhumidityByAddressTool);
+
+            PersistentAgent agent = await client.Administration.CreateAgentAsync(
+                    model: "gpt-4o-mini",
+                    name: AGENT_NAME,
+                    instructions: "Use the provided functions to help answer questions.",
+                    tools: tools
+                );
+            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
+
+            PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
+                thread.Id,
+                MessageRole.User,
+                "Get humidity for address, 456 2nd Ave in city, Seattle");
+
+            await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, include: null, autoFunctionCallOptions: autoFunctionCallOptions))
+            {
+                if (streamingUpdate is MessageContentUpdate contentUpdate)
+                {
+                    output += contentUpdate.Text;
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+                {
+                    completed = true;
+                }
+                else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCancelled)
+                {
+                    cancelled = true;
+                }
+            }
+
+            if (correctDefinition)
+            {
+                Assert.True(output.Contains("80"));
+                Assert.True(completed);
+            }
+            else
+            {
+                Assert.True(cancelled);
             }
         }
 
