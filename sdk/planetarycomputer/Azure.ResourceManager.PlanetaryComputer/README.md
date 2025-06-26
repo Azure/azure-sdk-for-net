@@ -167,7 +167,6 @@ If you encounter issues, check the following:
 ## Next steps
 
 Explore additional features of the PlanetaryComputer SDK:
-- [Azure SDK Documentation](https://learn.microsoft.com/en-us/azure/)
 - [Samples Repository](https://github.com/Azure/azure-sdk-for-net)
 
 ## Contributing
