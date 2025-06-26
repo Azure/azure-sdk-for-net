@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using MgmtTypeSpec;
+using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec.Models
+namespace MgmtTypeSpec
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class FooData : IJsonModel<FooData>
