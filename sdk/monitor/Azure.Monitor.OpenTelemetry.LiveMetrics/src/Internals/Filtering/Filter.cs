@@ -366,6 +366,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Expression is not a method"), nameof(expression));
         }
 
+        [UnconditionalSuppressMessage("AOT", "IL2072", Justification = "The DocumentIngress class and its derived classes have DynamicallyAccessedMembers attribute applied to preserve public properties.")]
         private static Type GetPropertyTypeFromFieldName(string fieldName)
         {
             try
