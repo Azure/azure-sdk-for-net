@@ -76,7 +76,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 var operation = await _restClient.FullBackupAsync(
                     WaitUntil.Started,
-                    new SASTokenParameter(blobStorageUri.AbsoluteUri) { Token = sasToken },
+                    new SASTokenParameter(blobStorageUri.AbsoluteUri, sasToken),
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -110,7 +110,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 var operation = _restClient.FullBackup(
                     WaitUntil.Started,
-                    new SASTokenParameter(blobStorageUri.AbsoluteUri) { Token = sasToken },
+                    new SASTokenParameter(blobStorageUri.AbsoluteUri, sasToken),
                     cancellationToken);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
@@ -152,7 +152,7 @@ namespace Azure.Security.KeyVault.Administration
                 var operation = await _restClient.FullRestoreOperationAsync(
                    WaitUntil.Started,
                     new RestoreOperationParameters(
-                        new SASTokenParameter(containerUriString) { Token = sasToken },
+                        new SASTokenParameter(containerUriString, sasToken),
                             folderName),
                     cancellationToken).ConfigureAwait(false);
 
@@ -242,7 +242,7 @@ namespace Azure.Security.KeyVault.Administration
                     WaitUntil.Started,
                     keyName,
                     new SelectiveKeyRestoreOperationParameters(
-                            new SASTokenParameter(containerUriString) { Token = sasToken },
+                            new SASTokenParameter(containerUriString, sasToken),
                                 folderName),
                     cancellationToken).ConfigureAwait(false);
 
