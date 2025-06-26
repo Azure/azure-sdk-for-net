@@ -1,0 +1,44 @@
+parameters:
+  - name: RunBenchmarks
+    type: boolean
+    default: false
+  - name: LinuxPool
+    type: string
+    default: 'azsdk-pool-mms-ubuntu-2204-perf'
+  - name: LinuxVmImage
+    type: string
+    default: 'ubuntu-22.04'
+  - name: WindowsPool
+    type: string
+    default: 'azsdk-pool-mms-win-2022-perf'
+  - name: WindowsVmImage
+    type: string
+    default: 'windows-2022'
+
+jobs:
+- job: Benchmarks
+  displayName: Run Azure.Core Benchmarks
+  condition: eq('${{ parameters.RunBenchmarks }}', true)
+  strategy:
+    matrix:
+      ${{ if contains(parameters.OperatingSystems, 'Linux') }}:
+        Linux:
+          Pool: ${{ parameters.LinuxPool }}
+          OsVmImage: ${{ parameters.LinuxVmImage }}
+          MatrixName: 'Linux'
+      ${{ if contains(parameters.OperatingSystems, 'Windows') }}:
+        Windows:
+          Pool: ${{ parameters.WindowsPool }}
+          OsVmImage: ${{ parameters.WindowsVmImage }}
+          MatrixName: 'Windows'
+  pool:
+    name: $(Pool)
+    vmImage: $(OSVmImage)
+  steps:
+    - task: PowerShell@2
+      displayName: Run Azure.Core Benchmarks and Compare Results
+      inputs:
+        targetType: 'filePath'
+        filePath: $(Build.SourcesDirectory)/eng/scripts/Run-Compare-Benchmarks.ps1
+        workingDirectory: $(Build.SourcesDirectory)/eng/scripts
+        pwsh: true
