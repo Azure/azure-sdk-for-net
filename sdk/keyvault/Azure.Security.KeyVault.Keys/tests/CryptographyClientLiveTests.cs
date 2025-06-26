@@ -513,6 +513,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     return await Client.CreateOctKeyAsync(
                         new CreateOctKeyOptions(keyName) { KeySize = 256 });
 
+                case KeyWrapAlgorithm.CkmAesKeyWrapValue:
+                    return await Client.CreateOctKeyAsync(
+                        new CreateOctKeyOptions(keyName, hardwareProtected: true) { KeySize = 128 });
+
+                case KeyWrapAlgorithm.CkmAesKeyWrapPadValue:
+                    return await Client.CreateOctKeyAsync(
+                        new CreateOctKeyOptions(keyName, hardwareProtected: true) { KeySize = 128 });
+
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }
