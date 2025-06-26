@@ -10,6 +10,11 @@ Thank you to our developer community members who helped to make the Key Vault cl
 
 ### Features Added
 
+- Added Hmac algorithms in `SignatureAlgorithm`
+- Added CkmAesKeyWrap algorithm in `KeyWrapAlgorithm`
+- Added Attestation property for Keys in Managed HSM Key Vaults.
+- Adde new `GetKeyAttestation` operation to get the public part of a stored key along with its attestation blob.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -17,6 +22,8 @@ Thank you to our developer community members who helped to make the Key Vault cl
 - Removed additional forward slash in `RestoreKeyBackup` and `RestoreKeyBackupAsync`.
 
 ### Other Changes
+
+- The default service version is now "7.6".
 
 ## 4.8.0-beta.1 (2025-04-08)
 
