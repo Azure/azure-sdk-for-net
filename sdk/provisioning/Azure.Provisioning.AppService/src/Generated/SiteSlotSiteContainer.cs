@@ -59,6 +59,18 @@ public partial class SiteSlotSiteContainer : ProvisionableResource
     private BicepValue<string>? _image;
 
     /// <summary>
+    /// &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings
+    /// have to be passed to the container as environment variables;
+    /// &lt;code&gt;false&lt;/code&gt; otherwise.
+    /// </summary>
+    public BicepValue<bool> InheritAppSettingsAndConnectionStrings 
+    {
+        get { Initialize(); return _inheritAppSettingsAndConnectionStrings!; }
+        set { Initialize(); _inheritAppSettingsAndConnectionStrings!.Assign(value); }
+    }
+    private BicepValue<bool>? _inheritAppSettingsAndConnectionStrings;
+
+    /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; if the container is the main site
     /// container; &lt;code&gt;false&lt;/code&gt; otherwise.
     /// </summary>
@@ -209,6 +221,7 @@ public partial class SiteSlotSiteContainer : ProvisionableResource
         _authType = DefineProperty<SiteContainerAuthType>("AuthType", ["properties", "authType"]);
         _environmentVariables = DefineListProperty<WebAppEnvironmentVariable>("EnvironmentVariables", ["properties", "environmentVariables"]);
         _image = DefineProperty<string>("Image", ["properties", "image"]);
+        _inheritAppSettingsAndConnectionStrings = DefineProperty<bool>("InheritAppSettingsAndConnectionStrings", ["properties", "inheritAppSettingsAndConnectionStrings"]);
         _isMain = DefineProperty<bool>("IsMain", ["properties", "isMain"]);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _passwordSecret = DefineProperty<string>("PasswordSecret", ["properties", "passwordSecret"]);

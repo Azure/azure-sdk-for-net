@@ -4,8 +4,10 @@
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Sql.Models;
 using Generator.Model;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
@@ -44,7 +46,11 @@ public class AppServiceSpecification() :
         RemoveProperty<WebAppPushSettings>("ResourceType");
         RemoveProperty<HostNameSslState>("Thumbprint");
 
-        // Patch models
+        CustomizeResource<SiteAuthSettingsV2>(r =>
+        {
+            r.ResourceType = "Microsoft.Web/sites/config";
+        });
+        CustomizeProperty<SiteAuthSettingsV2>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `authsettingsV2`
 
         // Not generated today:
         // CustomizePropertyIsoDuration<MetricAvailability>("BlobDuration");
@@ -64,5 +70,13 @@ public class AppServiceSpecification() :
         // Roles
         Roles.Add(new Role("WebPlanContributor", "2cc479cb-7b4d-49a8-b449-8c00fd0f0a4b", "Manage the web plans for websites. Does not allow you to assign roles in Azure RBAC."));
         Roles.Add(new Role("WebsiteContributor", "de139f84-1756-47ae-9be6-808fbbe84772", "Manage websites, but not web plans. Does not allow you to assign roles in Azure RBAC."));
+    }
+
+    protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
+    {
+        // Add missing resources
+        var dict = base.FindConstructibleResources();
+        dict.Add(typeof(SiteAuthSettingsV2), typeof(WebSiteResource).GetMethod("UpdateAuthSettingsV2")!);
+        return dict;
     }
 }
