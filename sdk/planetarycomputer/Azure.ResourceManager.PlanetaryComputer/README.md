@@ -1,4 +1,4 @@
-## Microsft Azure PlanetaryComputer client library for .NET
+## Microsoft Azure PlanetaryComputer client library for .NET
 
 The `Azure.ResourceManager.PlanetaryComputer` SDK is the **.NET Management Plane SDK** for working with `GeoCatalog` resources under the **PlanetaryComputer** service.
 
