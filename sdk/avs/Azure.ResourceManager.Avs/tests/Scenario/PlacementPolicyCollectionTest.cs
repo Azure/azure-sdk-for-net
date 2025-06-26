@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         [AsyncOnly]
         public async Task Create() {
             var collection = await GetPlacementPolicyCollectionAsync();
-            string placementPolicyName = "policy2";
+            string placementPolicyName = "policy1";
             PlacementPolicyData data = new PlacementPolicyData()
             {
                 Properties = new VmHostPlacementPolicyProperties(new ResourceIdentifier[]
