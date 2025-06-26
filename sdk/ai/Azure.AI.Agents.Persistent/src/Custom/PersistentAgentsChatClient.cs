@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable enable
-#pragma warning disable AZC0004, AZC0007, AZC0015
 
 using System;
 using System.Collections.Generic;
@@ -19,7 +18,7 @@ using Microsoft.Extensions.AI;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary>Represents an <see cref="IChatClient"/> for an Azure.AI.Agents.Persistent <see cref="PersistentAgentsClient"/>.</summary>
-    public partial class PersistentAgentsChatClient : IChatClient
+    internal partial class PersistentAgentsChatClient : IChatClient
     {
         /// <summary>The name of the chat client provider.</summary>
         private const string ProviderName = "azure";
