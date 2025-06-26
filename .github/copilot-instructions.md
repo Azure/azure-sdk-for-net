@@ -7,6 +7,13 @@ Note that files in this repository are generally organized in the following way:
 
 There are a few exceptions where package-name is replaced with a shorter directory name. For example in the cognitiveservices directory. The package `Microsoft.Azure.CognitiveServices.Language.SpellCheck` can be found in `azure-sdk-for-net/sdk/cognitiveservices/Language.SpellCheck`. When in doubt, you can look at the name of the .csproj file within the src folder to determine the package name.
 
+## Definitions:
+- "service directory" refers to the folder under `sdk`. For example, `azure-sdk-for-net/sdk/eventhub`, `eventhub` is the service directory
+- "data plane" refers to packages that don't include `ResourceManager` in the package name. They are used to interact with azure resources at application run time.
+- "management plane" refers to packages that include `ResourceManager` in the package name. They are used to manage (create/modify/delete) azure resources.
+- "track 2" refers to packages that start with `Azure`. Unless otherwise specified, assume that references to "data plane" or "management plane" refer to track 2 packages.
+- "functions extensions packages" or sometimes just "extensions packages" refers to packages that start with `Microsoft.Azure.WebJobs.Extensions`. They build on data plane packages and are used with Azure Functions.
+
 # Requirements
 - If you are writing C# code within the `azure-sdk-for-net/sdk` directory:
     1. Follow the coding guidelines in the "Coding guidelines" section below.
@@ -14,9 +21,9 @@ There are a few exceptions where package-name is replaced with a shorter directo
         - Only re-generate these files if instructed to do so. If you are instructed to regenerate an SDK, use `dotnet build /t:GenerateCode`
         - If you feel like you need to make changes to these files beyond re-generating them in order to complete your task, do not do this, instead see if you can work around the problem in the code that is not in the `Generated` folder. If you can't, report this to the user.
     3. Code should build successfully using the following steps:
-        - Find the .sln file that applies to the files you are working on.
-            - This will typically be within the package directory. For example, if you update a file in `azure-sdk-for-net/sdk/batch/Azure.ResourceManager.Batch/src/`, you would need `azure-sdk-for-net/sdk/batch/Azure.ResourceManager.Batch/Azure.ResourceManager.Batch.sln`. From the directory of the sln file, run `dotnet build {solution-file}`. So in this example, you would run `dotnet build Azure.ResourceManager.Batch.sln` in the `azure-sdk-for-net/sdk/batch/Azure.ResourceManager.Batch/` directory.
+        - navigate to the root of the repository and run `dotnet build eng\service.proj /p:ServiceDirectory={service-directory}`
         - If you see build errors, try to fix them, if you can't fix them within 5 iterations, give up and report this to the user. Do not report success if the build fails!
+    4. When you're done working, navigate to the root of the repository and run `.\eng\scripts\Export-API.ps1 {service-directory}`
 ---
 
 ## Coding guidelines
