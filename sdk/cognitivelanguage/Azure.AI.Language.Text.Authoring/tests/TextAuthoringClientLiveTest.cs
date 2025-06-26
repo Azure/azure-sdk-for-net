@@ -149,7 +149,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task DeleteProjectAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
+            string projectName = "MyImportTextProject";
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             // Act
@@ -171,7 +171,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task TrainAsync()
         {
             // Arrange
-            string projectName = "MyTextProject001";
+            string projectName = "single-class-project";
 
             var trainingJobDetails = new TextAuthoringTrainingJobDetails(
                 modelLabel: "model1",
@@ -207,8 +207,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task CancelTrainingJobAsync()
         {
             // Arrange
-            string projectName = "test001";
-            string jobId = "05a7d735-cd04-4402-8aa8-131775ed1bb6_638765568000000000"; // Replace with an actual job ID.
+            string projectName = "single-class-project";
+            string jobId = "a0f21063-df96-49ea-b275-2c50b4c5fe33_638864928000000000"; // Replace with an actual job ID.
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             // Act
