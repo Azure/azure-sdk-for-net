@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.PlanetaryComputer
 {
+    public partial class AzureResourceManagerPlanetaryComputerContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerPlanetaryComputerContext() { }
+        public static Azure.ResourceManager.PlanetaryComputer.AzureResourceManagerPlanetaryComputerContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class GeoCatalogCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PlanetaryComputer.GeoCatalogResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PlanetaryComputer.GeoCatalogResource>, System.Collections.IEnumerable
     {
         protected GeoCatalogCollection() { }
