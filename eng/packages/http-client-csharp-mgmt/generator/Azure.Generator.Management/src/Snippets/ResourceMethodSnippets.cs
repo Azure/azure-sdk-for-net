@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using ProviderParameterProvider = Microsoft.TypeSpec.Generator.Providers.ParameterProvider;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using Microsoft.TypeSpec.Generator.Snippets;
 
 namespace Azure.Generator.Management.Snippets
 {
@@ -83,24 +84,38 @@ namespace Azure.Generator.Management.Snippets
         }
 
         public static MethodBodyStatement CreateRehydrationToken(
-            VariableExpression uriVariable,
-            RequestMethod requestMethod,
+            ScopedApi<RequestUriBuilder> uriVariable,
+            string httpMethod,
             out VariableExpression rehydrationTokenVariable)
         {
             // RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(
             //     RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+
+            var requestMethodName = httpMethod switch
+            {
+                "DELETE" => nameof(RequestMethod.Delete),
+                "GET" => nameof(RequestMethod.Get),
+                "POST" => nameof(RequestMethod.Post),
+                "PUT" => nameof(RequestMethod.Put),
+                "PATCH" => nameof(RequestMethod.Patch),
+                "HEAD" => nameof(RequestMethod.Head),
+                "OPTIONS" => nameof(RequestMethod.Options),
+                "TRACE" => nameof(RequestMethod.Trace),
+                _ => throw new ArgumentException($"Unsupported HTTP method: {httpMethod}")
+            };
+
             return Declare(
                 "rehydrationToken",
                 typeof(RehydrationToken),
                 Static(typeof(NextLinkOperationImplementation)).Invoke(
                     nameof(NextLinkOperationImplementation.GetRehydrationToken),
                     [
-                        Static(typeof(RequestMethod)).Property(nameof(RequestMethod.Delete)),
+                        Static(typeof(RequestMethod)).Property(requestMethodName),
                         uriVariable.Invoke("ToUri"),
-                        uriVariable.Invoke("ToString"),
+                        uriVariable.InvokeToString(),
                         Literal("None"),
-                        Literal("null"),
-                        Static(typeof(OperationFinalStateVia)).Property(nameof(OperationFinalStateVia.OriginalUri)).Invoke("ToString")
+                        Null,
+                        Static(typeof(OperationFinalStateVia)).Property(nameof(OperationFinalStateVia.OriginalUri)).InvokeToString()
                     ]),
                 out rehydrationTokenVariable);
         }
