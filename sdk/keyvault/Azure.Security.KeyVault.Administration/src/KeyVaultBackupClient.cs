@@ -195,7 +195,7 @@ namespace Azure.Security.KeyVault.Administration
                 var operation = _restClient.FullRestoreOperation(
                     WaitUntil.Started,
                     new RestoreOperationParameters(
-                        new SASTokenParameter(containerUriString) { Token = sasToken },
+                        new SASTokenParameter(containerUriString, sasToken),
                             folderName),
                     cancellationToken);
 
@@ -289,7 +289,7 @@ namespace Azure.Security.KeyVault.Administration
                     WaitUntil.Started,
                     keyName,
                     new SelectiveKeyRestoreOperationParameters(
-                            new SASTokenParameter(containerUriString) { Token = sasToken },
+                            new SASTokenParameter(containerUriString, sasToken),
                                 folderName),
                     cancellationToken);
 
@@ -425,7 +425,7 @@ namespace Azure.Security.KeyVault.Administration
                     WaitUntil.Started,
                     new PreRestoreOperationParameters()
                     {
-                        SasTokenParameters = new SASTokenParameter(containerUriString) { Token = sasToken },
+                        SasTokenParameters = new SASTokenParameter(containerUriString, sasToken),
                         FolderToRestore = folderUri.AbsoluteUri
                     },
                     cancellationToken).ConfigureAwait(false);
@@ -472,7 +472,7 @@ namespace Azure.Security.KeyVault.Administration
                     WaitUntil.Started,
                     new PreRestoreOperationParameters()
                     {
-                        SasTokenParameters = new SASTokenParameter(containerUriString) { Token = sasToken },
+                        SasTokenParameters = new SASTokenParameter(containerUriString, sasToken),
                         FolderToRestore = folderUri.AbsoluteUri
                     },
                     cancellationToken);
