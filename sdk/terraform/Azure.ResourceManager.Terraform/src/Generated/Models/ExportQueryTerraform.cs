@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
-        /// <param name="excludeAzureResource"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
-        /// <param name="excludeTerraformResource"> Exclude resources from being exported based on the Terraform resource type. </param>
+        /// <param name="azureResourcesToExclude"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
+        /// <param name="terraformResourcesToExclude"> Exclude resources from being exported based on the Terraform resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="query"> The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
         /// <param name="isRecursive"> Whether to recursively list child resources of the query result. </param>
         /// <param name="table"> The ARG table name. </param>
         /// <param name="authorizationScopeFilter"> The ARG Scope Filter parameter. </param>
-        internal ExportQueryTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IList<string> excludeAzureResource, IList<string> excludeTerraformResource, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, string namePattern, bool? isRecursive, string table, AuthorizationScopeFilter? authorizationScopeFilter) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, excludeAzureResource, excludeTerraformResource, serializedAdditionalRawData)
+        internal ExportQueryTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, string namePattern, bool? isRecursive, string table, TerraformAuthorizationScopeFilter? authorizationScopeFilter) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, azureResourcesToExclude, terraformResourcesToExclude, serializedAdditionalRawData)
         {
             Query = query;
             NamePattern = namePattern;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <summary> The ARG table name. </summary>
         public string Table { get; set; }
         /// <summary> The ARG Scope Filter parameter. </summary>
-        public AuthorizationScopeFilter? AuthorizationScopeFilter { get; set; }
+        public TerraformAuthorizationScopeFilter? AuthorizationScopeFilter { get; set; }
     }
 }

@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
-        /// <param name="excludeAzureResource"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
-        /// <param name="excludeTerraformResource"> Exclude resources from being exported based on the Terraform resource type. </param>
+        /// <param name="azureResourcesToExclude"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
+        /// <param name="terraformResourcesToExclude"> Exclude resources from being exported based on the Terraform resource type. </param>
         /// <param name="query"> The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
         /// <param name="isRecursive"> Whether to recursively list child resources of the query result. </param>
         /// <param name="table"> The ARG table name. </param>
         /// <param name="authorizationScopeFilter"> The ARG Scope Filter parameter. </param>
         /// <returns> A new <see cref="Models.ExportQueryTerraform"/> instance for mocking. </returns>
-        public static ExportQueryTerraform ExportQueryTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, IEnumerable<string> excludeAzureResource = null, IEnumerable<string> excludeTerraformResource = null, string query = null, string namePattern = null, bool? isRecursive = null, string table = null, AuthorizationScopeFilter? authorizationScopeFilter = null)
+        public static ExportQueryTerraform ExportQueryTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, IEnumerable<string> azureResourcesToExclude = null, IEnumerable<string> terraformResourcesToExclude = null, string query = null, string namePattern = null, bool? isRecursive = null, string table = null, TerraformAuthorizationScopeFilter? authorizationScopeFilter = null)
         {
-            excludeAzureResource ??= new List<string>();
-            excludeTerraformResource ??= new List<string>();
+            azureResourcesToExclude ??= new List<string>();
+            terraformResourcesToExclude ??= new List<string>();
 
             return new ExportQueryTerraform(
                 CommonExportType.ExportQuery,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
-                excludeAzureResource?.ToList(),
-                excludeTerraformResource?.ToList(),
+                azureResourcesToExclude?.ToList(),
+                terraformResourcesToExclude?.ToList(),
                 serializedAdditionalRawData: null,
                 query,
                 namePattern,
@@ -51,23 +51,23 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
-        /// <param name="excludeAzureResource"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
-        /// <param name="excludeTerraformResource"> Exclude resources from being exported based on the Terraform resource type. </param>
+        /// <param name="azureResourcesToExclude"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
+        /// <param name="terraformResourcesToExclude"> Exclude resources from being exported based on the Terraform resource type. </param>
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
         /// <returns> A new <see cref="Models.ExportResourceGroupTerraform"/> instance for mocking. </returns>
-        public static ExportResourceGroupTerraform ExportResourceGroupTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, IEnumerable<string> excludeAzureResource = null, IEnumerable<string> excludeTerraformResource = null, string resourceGroupName = null, string namePattern = null)
+        public static ExportResourceGroupTerraform ExportResourceGroupTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, IEnumerable<string> azureResourcesToExclude = null, IEnumerable<string> terraformResourcesToExclude = null, string resourceGroupName = null, string namePattern = null)
         {
-            excludeAzureResource ??= new List<string>();
-            excludeTerraformResource ??= new List<string>();
+            azureResourcesToExclude ??= new List<string>();
+            terraformResourcesToExclude ??= new List<string>();
 
             return new ExportResourceGroupTerraform(
                 CommonExportType.ExportResourceGroup,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
-                excludeAzureResource?.ToList(),
-                excludeTerraformResource?.ToList(),
+                azureResourcesToExclude?.ToList(),
+                terraformResourcesToExclude?.ToList(),
                 serializedAdditionalRawData: null,
                 resourceGroupName,
                 namePattern);

@@ -51,21 +51,21 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WritePropertyName("maskSensitive"u8);
                 writer.WriteBooleanValue(IsMaskSensitiveEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(ExcludeAzureResource))
+            if (Optional.IsCollectionDefined(AzureResourcesToExclude))
             {
                 writer.WritePropertyName("excludeAzureResource"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExcludeAzureResource)
+                foreach (var item in AzureResourcesToExclude)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludeTerraformResource))
+            if (Optional.IsCollectionDefined(TerraformResourcesToExclude))
             {
                 writer.WritePropertyName("excludeTerraformResource"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExcludeTerraformResource)
+                foreach (var item in TerraformResourcesToExclude)
                 {
                     writer.WriteStringValue(item);
                 }

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Terraform.Models
             string namePattern = default;
             bool? recursive = default;
             string table = default;
-            AuthorizationScopeFilter? authorizationScopeFilter = default;
+            TerraformAuthorizationScopeFilter? authorizationScopeFilter = default;
             CommonExportType type = default;
             TargetTerraformProvider? targetProvider = default;
             bool? fullProperties = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Terraform.Models
                     {
                         continue;
                     }
-                    authorizationScopeFilter = new AuthorizationScopeFilter(property.Value.GetString());
+                    authorizationScopeFilter = new TerraformAuthorizationScopeFilter(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
