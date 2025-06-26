@@ -9,8 +9,9 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec.Models
+namespace MgmtTypeSpec
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     internal partial class PrivateLinkResourceData : ResourceData

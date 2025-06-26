@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAnApplicationTypeVersion()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ApplicationTypeVersionPutOperation_example.json
-            // this example is just showing the usage of "ApplicationTypeVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ApplicationTypeVersionPutOperation_example.json
+            // this example is just showing the usage of "ApplicationTypeVersionResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,10 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
 
             // invoke the operation
             string version = "1.0";
-            ServiceFabricManagedApplicationTypeVersionData data = new ServiceFabricManagedApplicationTypeVersionData(new AzureLocation("eastus"))
-            {
-                AppPackageUri = new Uri("http://fakelink.test.com/MyAppType"),
-            };
+            ServiceFabricManagedApplicationTypeVersionData data = new ServiceFabricManagedApplicationTypeVersionData(new AzureLocation("eastus"));
             ArmOperation<ServiceFabricManagedApplicationTypeVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, version, data);
             ServiceFabricManagedApplicationTypeVersionResource result = lro.Value;
 
@@ -59,8 +56,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnApplicationTypeVersion()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ApplicationTypeVersionGetOperation_example.json
-            // this example is just showing the usage of "ApplicationTypeVersions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ApplicationTypeVersionGetOperation_example.json
+            // this example is just showing the usage of "ApplicationTypeVersionResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -94,8 +91,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAListOfApplicationTypeVersionResources()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ApplicationTypeVersionListOperation_example.json
-            // this example is just showing the usage of "ApplicationTypeVersions_ListByApplicationTypes" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ApplicationTypeVersionListOperation_example.json
+            // this example is just showing the usage of "ApplicationTypeVersionResource_ListByApplicationTypes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -131,8 +128,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnApplicationTypeVersion()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ApplicationTypeVersionGetOperation_example.json
-            // this example is just showing the usage of "ApplicationTypeVersions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ApplicationTypeVersionGetOperation_example.json
+            // this example is just showing the usage of "ApplicationTypeVersionResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -162,8 +159,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnApplicationTypeVersion()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2024-09-01-preview/examples/ApplicationTypeVersionGetOperation_example.json
-            // this example is just showing the usage of "ApplicationTypeVersions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-01-preview/ApplicationTypeVersionGetOperation_example.json
+            // this example is just showing the usage of "ApplicationTypeVersionResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

@@ -37,7 +37,7 @@ namespace Azure.Generator.Tests.Visitors
                 parameters: parameters);
             var lroServiceMethod = InputFactory.LongRunningServiceMethod("foo", lro, parameters: parameters);
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
-            MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
@@ -90,7 +90,7 @@ namespace Azure.Generator.Tests.Visitors
                 lro, parameters: parameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
-            MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
@@ -151,7 +151,7 @@ namespace Azure.Generator.Tests.Visitors
                     finalResponse: InputFactory.OperationResponse(),
                     resultPath: "someResultPath"));
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
-            MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
@@ -192,7 +192,7 @@ namespace Azure.Generator.Tests.Visitors
                 lro, parameters: parameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
-            var plugin = MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            var plugin = MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
             var outputLibrary = plugin.Object.OutputLibrary;
             visitor.InvokeVisitLibrary(outputLibrary);
 
@@ -226,7 +226,7 @@ namespace Azure.Generator.Tests.Visitors
                 lro, parameters: parameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
-            var plugin = MockHelpers.LoadMockPlugin(clients: () => [inputClient]);
+            var plugin = MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
             var outputLibrary = plugin.Object.OutputLibrary;
             visitor.InvokeVisitLibrary(outputLibrary);
 

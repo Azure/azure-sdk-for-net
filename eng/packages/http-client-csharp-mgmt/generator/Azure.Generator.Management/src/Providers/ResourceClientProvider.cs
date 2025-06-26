@@ -24,7 +24,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -69,6 +68,18 @@ namespace Azure.Generator.Management.Providers
             _resourceServiceMethods = inputClient.Methods;
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(resourceModel)!;
             _restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+
+            //TODO: Remove this when we have a way to handle renaming directly in ResourceVisitor.
+            foreach (var method in _restClientProvider.Methods)
+            {
+                foreach (var parameter in method.Signature.Parameters)
+                {
+                    if (ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(parameter.Type))
+                    {
+                        parameter.Update(name: "data");
+                    }
+                }
+            }
 
             ContextualParameters = GetContextualParameters(requestPath);
 

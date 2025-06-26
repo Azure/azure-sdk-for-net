@@ -37,10 +37,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>Volumes_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudVolumeResource"/></description>
         /// </item>
@@ -53,9 +49,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudVolumeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string volumeName, NetworkCloudVolumeData data, CancellationToken cancellationToken)
-        {
-            return await CreateOrUpdateAsync(waitUntil, volumeName, data, null, null, cancellationToken).ConfigureAwait(false);
-        }
+            => await CreateOrUpdateAsync(waitUntil, volumeName, data, null, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Create a new volume or update the properties of the existing one.
@@ -67,10 +61,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -85,8 +75,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudVolumeResource> CreateOrUpdate(WaitUntil waitUntil, string volumeName, NetworkCloudVolumeData data, CancellationToken cancellationToken)
-        {
-            return CreateOrUpdate(waitUntil, volumeName, data, null, null, cancellationToken);
-        }
+            => CreateOrUpdate(waitUntil, volumeName, data, null, null, cancellationToken);
     }
 }

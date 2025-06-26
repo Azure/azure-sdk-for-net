@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeSupportedSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
-        /// <param name="tier"> Specifies the tier of the node type. &lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt; **Standard**. </param>
+        /// <param name="tier"> Specifies the tier of the node type. Possible Values: **Standard**. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NodeTypeSupportedSku(string name, string tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> The sku name. </summary>
         public string Name { get; }
-        /// <summary> Specifies the tier of the node type. &lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt; **Standard**. </summary>
+        /// <summary> Specifies the tier of the node type. Possible Values: **Standard**. </summary>
         public string Tier { get; }
     }
 }
