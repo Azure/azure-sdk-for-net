@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Text.Authoring
 {
-    /// <summary> Represents the state of a assign deployment resources job. </summary>
-    public partial class TextAuthoringAssignDeploymentResourcesState
+    /// <summary> Represents the state of a deployment resources job. </summary>
+    public partial class TextAuthoringDeploymentResourcesState
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringAssignDeploymentResourcesState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextAuthoringDeploymentResourcesState"/>. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> The job status. </param>
-        internal TextAuthoringAssignDeploymentResourcesState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, TextAuthoringOperationStatus status)
+        internal TextAuthoringDeploymentResourcesState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, TextAuthoringOperationStatus status)
         {
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
@@ -58,7 +58,7 @@ namespace Azure.AI.Language.Text.Authoring
             Errors = new ChangeTrackingList<ResponseError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringAssignDeploymentResourcesState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextAuthoringDeploymentResourcesState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringAssignDeploymentResourcesState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, TextAuthoringOperationStatus status, IReadOnlyList<ResponseError> warnings, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TextAuthoringDeploymentResourcesState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, TextAuthoringOperationStatus status, IReadOnlyList<ResponseError> warnings, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             CreatedOn = createdOn;
@@ -79,8 +79,8 @@ namespace Azure.AI.Language.Text.Authoring
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringAssignDeploymentResourcesState"/> for deserialization. </summary>
-        internal TextAuthoringAssignDeploymentResourcesState()
+        /// <summary> Initializes a new instance of <see cref="TextAuthoringDeploymentResourcesState"/> for deserialization. </summary>
+        internal TextAuthoringDeploymentResourcesState()
         {
         }
 

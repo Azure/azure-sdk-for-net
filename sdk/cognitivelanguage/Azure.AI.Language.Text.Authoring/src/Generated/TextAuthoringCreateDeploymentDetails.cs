@@ -53,17 +53,17 @@ namespace Azure.AI.Language.Text.Authoring
             Argument.AssertNotNull(trainedModelLabel, nameof(trainedModelLabel));
 
             TrainedModelLabel = trainedModelLabel;
-            AssignedResources = new ChangeTrackingList<TextAuthoringDeploymentResource>();
+            AssignedResourceIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TextAuthoringCreateDeploymentDetails"/>. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
-        /// <param name="assignedResources"> Represents the resources to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
+        /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringCreateDeploymentDetails(string trainedModelLabel, IList<TextAuthoringDeploymentResource> assignedResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TextAuthoringCreateDeploymentDetails(string trainedModelLabel, IList<string> assignedResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TrainedModelLabel = trainedModelLabel;
-            AssignedResources = assignedResources;
+            AssignedResourceIds = assignedResourceIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,7 +74,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Represents the trained model label. </summary>
         public string TrainedModelLabel { get; }
-        /// <summary> Represents the resources to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </summary>
-        public IList<TextAuthoringDeploymentResource> AssignedResources { get; }
+        /// <summary> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </summary>
+        public IList<string> AssignedResourceIds { get; }
     }
 }

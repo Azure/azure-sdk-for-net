@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text.Authoring
 {
-    public partial class TextAuthoringUnassignDeploymentResourcesState : IUtf8JsonSerializable, IJsonModel<TextAuthoringUnassignDeploymentResourcesState>
+    public partial class TextAuthoringDeploymentResourcesState : IUtf8JsonSerializable, IJsonModel<TextAuthoringDeploymentResourcesState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextAuthoringUnassignDeploymentResourcesState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextAuthoringDeploymentResourcesState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TextAuthoringUnassignDeploymentResourcesState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TextAuthoringDeploymentResourcesState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TextAuthoringUnassignDeploymentResourcesState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TextAuthoringDeploymentResourcesState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TextAuthoringUnassignDeploymentResourcesState)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TextAuthoringDeploymentResourcesState)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W")
@@ -87,19 +87,19 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
-        TextAuthoringUnassignDeploymentResourcesState IJsonModel<TextAuthoringUnassignDeploymentResourcesState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TextAuthoringDeploymentResourcesState IJsonModel<TextAuthoringDeploymentResourcesState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TextAuthoringUnassignDeploymentResourcesState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TextAuthoringDeploymentResourcesState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TextAuthoringUnassignDeploymentResourcesState)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TextAuthoringDeploymentResourcesState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTextAuthoringUnassignDeploymentResourcesState(document.RootElement, options);
+            return DeserializeTextAuthoringDeploymentResourcesState(document.RootElement, options);
         }
 
-        internal static TextAuthoringUnassignDeploymentResourcesState DeserializeTextAuthoringUnassignDeploymentResourcesState(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TextAuthoringDeploymentResourcesState DeserializeTextAuthoringDeploymentResourcesState(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -181,7 +181,7 @@ namespace Azure.AI.Language.Text.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TextAuthoringUnassignDeploymentResourcesState(
+            return new TextAuthoringDeploymentResourcesState(
                 jobId,
                 createdDateTime,
                 lastUpdatedDateTime,
@@ -192,43 +192,43 @@ namespace Azure.AI.Language.Text.Authoring
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TextAuthoringUnassignDeploymentResourcesState>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TextAuthoringDeploymentResourcesState>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TextAuthoringUnassignDeploymentResourcesState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TextAuthoringDeploymentResourcesState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TextAuthoringUnassignDeploymentResourcesState)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextAuthoringDeploymentResourcesState)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TextAuthoringUnassignDeploymentResourcesState IPersistableModel<TextAuthoringUnassignDeploymentResourcesState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TextAuthoringDeploymentResourcesState IPersistableModel<TextAuthoringDeploymentResourcesState>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TextAuthoringUnassignDeploymentResourcesState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TextAuthoringDeploymentResourcesState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTextAuthoringUnassignDeploymentResourcesState(document.RootElement, options);
+                        return DeserializeTextAuthoringDeploymentResourcesState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TextAuthoringUnassignDeploymentResourcesState)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextAuthoringDeploymentResourcesState)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TextAuthoringUnassignDeploymentResourcesState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TextAuthoringDeploymentResourcesState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TextAuthoringUnassignDeploymentResourcesState FromResponse(Response response)
+        internal static TextAuthoringDeploymentResourcesState FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTextAuthoringUnassignDeploymentResourcesState(document.RootElement);
+            return DeserializeTextAuthoringDeploymentResourcesState(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

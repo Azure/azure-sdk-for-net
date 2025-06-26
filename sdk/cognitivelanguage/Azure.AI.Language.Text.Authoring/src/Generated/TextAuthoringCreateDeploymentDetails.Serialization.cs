@@ -36,13 +36,13 @@ namespace Azure.AI.Language.Text.Authoring
 
             writer.WritePropertyName("trainedModelLabel"u8);
             writer.WriteStringValue(TrainedModelLabel);
-            if (Optional.IsCollectionDefined(AssignedResources))
+            if (Optional.IsCollectionDefined(AssignedResourceIds))
             {
-                writer.WritePropertyName("assignedResources"u8);
+                writer.WritePropertyName("assignedResourceIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in AssignedResources)
+                foreach (var item in AssignedResourceIds)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.AI.Language.Text.Authoring
                 return null;
             }
             string trainedModelLabel = default;
-            IList<TextAuthoringDeploymentResource> assignedResources = default;
+            IList<string> assignedResourceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,18 +94,18 @@ namespace Azure.AI.Language.Text.Authoring
                     trainedModelLabel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assignedResources"u8))
+                if (property.NameEquals("assignedResourceIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<TextAuthoringDeploymentResource> array = new List<TextAuthoringDeploymentResource>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextAuthoringDeploymentResource.DeserializeTextAuthoringDeploymentResource(item, options));
+                        array.Add(item.GetString());
                     }
-                    assignedResources = array;
+                    assignedResourceIds = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +114,7 @@ namespace Azure.AI.Language.Text.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TextAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResources ?? new ChangeTrackingList<TextAuthoringDeploymentResource>(), serializedAdditionalRawData);
+            return new TextAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResourceIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TextAuthoringCreateDeploymentDetails>.Write(ModelReaderWriterOptions options)

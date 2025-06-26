@@ -49,7 +49,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="resourceId"> Represents the Azure resource Id. </param>
         /// <param name="region"> Represents the resource region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="region"/> is null. </exception>
-        public TextAuthoringDeploymentResource(string resourceId, string region)
+        internal TextAuthoringDeploymentResource(string resourceId, string region)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNull(region, nameof(region));
@@ -61,13 +61,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Initializes a new instance of <see cref="TextAuthoringDeploymentResource"/>. </summary>
         /// <param name="resourceId"> Represents the Azure resource Id. </param>
         /// <param name="region"> Represents the resource region. </param>
-        /// <param name="assignedAoaiResource"> Represents the AOAI resource assigned for data generation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringDeploymentResource(string resourceId, string region, DataGenerationConnectionInfo assignedAoaiResource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TextAuthoringDeploymentResource(string resourceId, string region, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             Region = region;
-            AssignedAoaiResource = assignedAoaiResource;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,10 +75,8 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Represents the Azure resource Id. </summary>
-        public string ResourceId { get; set; }
+        public string ResourceId { get; }
         /// <summary> Represents the resource region. </summary>
-        public string Region { get; set; }
-        /// <summary> Represents the AOAI resource assigned for data generation. </summary>
-        public DataGenerationConnectionInfo AssignedAoaiResource { get; set; }
+        public string Region { get; }
     }
 }
