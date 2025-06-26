@@ -11,8 +11,8 @@ There are a few exceptions where package-name is replaced with a shorter directo
 - "service directory" refers to the folder under `sdk`. For example, `azure-sdk-for-net/sdk/eventhub`, `eventhub` is the service directory
 - "data plane" refers to packages that don't include `ResourceManager` in the package name. They are used to interact with azure resources at application run time.
 - "management plane" refers to packages that include `ResourceManager` in the package name. They are used to manage (create/modify/delete) azure resources.
-- "track 2" refers to packages that start with `Azure`. Unless otherwise specified, assume that references to "data plane" or "management plane" refer to track 2 packages.
-- "functions extensions packages" or sometimes just "extensions packages" refers to packages that start with `Microsoft.Azure.WebJobs.Extensions`. They build on data plane packages and are used with Azure Functions.
+- "track 2" refers to packages that start with `Azure`. Unless otherwise specified, assume that references to "data plane" mean "track 2 data plane", i.e. packages that start with `Azure` and don't include `ResourceManager` in the package name. Unless otherwise specified, assume that references to "management plane" mean "track 2 management plane", i.e. packages that start with `Azure.ResourceManager`.
+- "functions extensions packages" or sometimes just "extensions packages" refers to packages that start with `Microsoft.Azure.WebJobs.Extensions`. They are built on data plane packages and are used with Azure Functions.
 
 # Requirements
 - If you are writing C# code within the `azure-sdk-for-net/sdk` directory:
