@@ -721,7 +721,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var logs = _loggerProvider.GetAllLogMessages().ToArray();
             var log = logs[0];
             Assert.AreEqual(LogLevel.Information, log.Level);
-            Assert.AreEqual($"Queue time is increasing for '{_entityPath}' but we do not scale out unless queue latency is greater than {ServiceBusScaleMonitor.MinimumLastQueueMessageInSecondsThreshold}s. Current queue latency is {lastQueueTime}s.", log.FormattedMessage);
+            Assert.AreEqual($"Queue time is increasing for '{_entityPath}' but we do not scale out unless queue latency is greater than {ServiceBusScaleMonitor.MinimumLastQueueMessageInSecondsThreshold.TotalSeconds}s. Current queue latency is {lastQueueTime}s.", log.FormattedMessage);
         }
 
         [Test]
