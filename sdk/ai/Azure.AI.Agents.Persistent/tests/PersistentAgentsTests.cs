@@ -56,7 +56,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         {
             return new CompositeDisposable(
             new TestAppContextSwitch(new() {
-                { PersistantAgensConstants.UseOldConnectionString, true.ToString() },
+                { PersistentAgentsConstants.UseOldConnectionString, true.ToString() },
             }));
         }
 
