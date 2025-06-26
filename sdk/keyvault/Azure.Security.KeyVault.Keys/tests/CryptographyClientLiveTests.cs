@@ -514,12 +514,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
                         new CreateOctKeyOptions(keyName) { KeySize = 256 });
 
                 case KeyWrapAlgorithm.CkmAesKeyWrapValue:
-                    return await Client.CreateOctKeyAsync(
-                        new CreateOctKeyOptions(keyName, hardwareProtected: true) { KeySize = 128 });
-
                 case KeyWrapAlgorithm.CkmAesKeyWrapPadValue:
+                    if (!IsManagedHSM)
+                    {
+                        Assert.Ignore("CKM key wrap algorithms are only supported on Managed HSM.");
+                    }
+
                     return await Client.CreateOctKeyAsync(
-                        new CreateOctKeyOptions(keyName, hardwareProtected: true) { KeySize = 128 });
+                        new CreateOctKeyOptions(keyName, hardwareProtected: true) { KeySize = 256 });
 
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
