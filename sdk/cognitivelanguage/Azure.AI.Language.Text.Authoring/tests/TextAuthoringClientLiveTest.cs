@@ -48,7 +48,6 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedOn}");
             Console.WriteLine($"Description: {projectMetadata.Description}");
             Console.WriteLine($"StorageInputContainerName: {projectMetadata.StorageInputContainerName}");
-            Console.WriteLine($"StorageAccountResourceId: {projectMetadata.StorageAccountResourceId}");
         }
 
         [RecordedTest]
