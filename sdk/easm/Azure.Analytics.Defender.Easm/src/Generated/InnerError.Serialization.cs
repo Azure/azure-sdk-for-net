@@ -42,7 +42,19 @@ namespace Azure.Analytics.Defender.Easm
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror, options);
+                writer.WriteObjectValue<InnerError>(Innererror, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Value, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,6 +95,7 @@ namespace Azure.Analytics.Defender.Easm
             }
             string code = default;
             InnerError innererror = default;
+            BinaryData value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,13 +114,22 @@ namespace Azure.Analytics.Defender.Easm
                     innererror = DeserializeInnerError(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("value"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    value = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InnerError(code, innererror, serializedAdditionalRawData);
+            return new InnerError(code, innererror, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InnerError>.Write(ModelReaderWriterOptions options)

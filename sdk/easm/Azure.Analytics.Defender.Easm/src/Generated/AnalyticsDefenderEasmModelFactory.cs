@@ -1953,15 +1953,6 @@ namespace Azure.Analytics.Defender.Easm
                 asset);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Easm.InnerError"/>. </summary>
-        /// <param name="code"> One of a server-defined set of error codes. </param>
-        /// <param name="innererror"> Inner error. </param>
-        /// <returns> A new <see cref="Easm.InnerError"/> instance for mocking. </returns>
-        public static InnerError InnerError(string code = null, InnerError innererror = null)
-        {
-            return new InnerError(code, innererror, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Easm.TaskResource"/>. </summary>
         /// <param name="id"> The unique identifier of the task. </param>
         /// <param name="startedAt"> The time the task started. </param>

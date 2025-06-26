@@ -53,17 +53,17 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="innererror"> Inner error. </param>
+        /// <param name="value"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InnerError(string code, InnerError innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InnerError(string code, InnerError innererror, BinaryData value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Innererror = innererror;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> One of a server-defined set of error codes. </summary>
         public string Code { get; }
-        /// <summary> Inner error. </summary>
-        public InnerError Innererror { get; }
     }
 }
