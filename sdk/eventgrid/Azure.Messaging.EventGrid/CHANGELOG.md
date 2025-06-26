@@ -5,7 +5,7 @@
 ### Features Added
 
 - Added a dependency on the `Azure.Messaging.EventGrid.SystemEvents` package.
-  The system events are now referenced via type-forwarding. If you encounter any exceptions
+  The system events are now referenced via [type forwarding](https://learn.microsoft.com/dotnet/standard/assembly/type-forwarding). If you encounter any exceptions
   related to missing types, ensure that you `dotnet clean` and `dotnet build` your project.
 
 ### Breaking Changes
