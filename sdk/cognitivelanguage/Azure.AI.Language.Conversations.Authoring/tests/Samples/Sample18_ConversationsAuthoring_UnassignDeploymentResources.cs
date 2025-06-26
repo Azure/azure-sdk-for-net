@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             DefaultAzureCredential credential = new DefaultAzureCredential();
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
-            #region Snippet:Sample18_ConversationsAuthoring_UnassignDeploymentResourcesAsync
+            #region Snippet:Sample18_ConversationsAuthoring_UnassignDeploymentResources
             // Set project name and create client for the project
             string projectName = "EmailApp";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
