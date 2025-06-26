@@ -21,10 +21,11 @@ There are a few exceptions where package-name is replaced with a shorter directo
         - Only re-generate these files if instructed to do so. If you are instructed to regenerate an SDK, use `dotnet build /t:GenerateCode`
         - If you feel like you need to make changes to these files beyond re-generating them in order to complete your task, do not do this, instead see if you can work around the problem in the code that is not in the `Generated` folder. If you can't, report this to the user.
     3. Code should build successfully using the following steps:
-        - navigate to the root of the repository and run `dotnet build eng\service.proj /p:ServiceDirectory={service-directory}`
+        - navigate to the root of the repository and run `dotnet build eng\service.proj /p:ServiceDirectory={service-directory}` for each service directory you modified. For example, if you modified code in `sdk/eventhub` and `sdk/keyvault`, you would run:
+          `dotnet build eng\service.proj /p:ServiceDirectory=eventhub` and `dotnet build eng\service.proj /p:ServiceDirectory=keyvault`
         - If you see build errors, try to fix them, if you can't fix them within 5 iterations, give up, do not do steps 4 or 5, and report this to the user. Do not report success if the build fails!
-    4. Once the code builds, run the unit tests using `dotnet test eng/service.proj /p:ServiceDirectory={service-directory} --filter TestCategory!=Live`. Try to fix failures if you can within 5 iterations. If you can't, give up and report this to the user. Do not report success if the tests fail!
-    5. When you're done working, navigate to the root of the repository and run `.\eng\scripts\Export-API.ps1 {service-directory}`
+    4. Once the code builds, run the unit tests using `dotnet test eng/service.proj /p:ServiceDirectory={service-directory} --filter TestCategory!=Live` for each service directory you modified. Try to fix failures if you can within 5 iterations. If you can't, give up and report this to the user. Do not report success if the tests fail!
+    5. When you're done working, navigate to the root of the repository and run `.\eng\scripts\Export-API.ps1 {service-directory}` for each service directory you modified.
 ---
 
 ## Coding guidelines
