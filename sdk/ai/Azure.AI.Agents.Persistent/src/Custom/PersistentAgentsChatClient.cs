@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #nullable enable
-#pragma warning disable AZC0003, AZC0004, AZC0007, AZC0015
+#pragma warning disable AZC0004, AZC0007, AZC0015
 
 using System;
 using System.Collections.Generic;
@@ -34,17 +34,20 @@ namespace Azure.AI.Agents.Persistent
         private readonly string? _agentId;
 
         /// <summary>The thread ID to use if none is supplied in <see cref="ChatOptions.ConversationId"/>.</summary>
-        private readonly string? _threadId;
+        private readonly string? _defaultThreadId;
+
+        /// <summary>List of tools associated with the agent.</summary>
+        private IReadOnlyList<ToolDefinition>? _agentTools;
 
         /// <summary>Initializes a new instance of the <see cref="PersistentAgentsChatClient"/> class for the specified <see cref="PersistentAgentsClient"/>.</summary>
-        public PersistentAgentsChatClient(PersistentAgentsClient client, string agentId, string? threadId)
+        public PersistentAgentsChatClient(PersistentAgentsClient client, string agentId, string? defaultThreadId = null)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNullOrWhiteSpace(agentId, nameof(agentId));
 
             _client = client;
             _agentId = agentId;
-            _threadId = threadId;
+            _defaultThreadId = defaultThreadId;
 
             _metadata = new(ProviderName);
         }
@@ -52,7 +55,7 @@ namespace Azure.AI.Agents.Persistent
         protected PersistentAgentsChatClient() { }
 
         /// <inheritdoc />
-        public object? GetService(Type serviceType, object? serviceKey = null) =>
+        public virtual object? GetService(Type serviceType, object? serviceKey = null) =>
             serviceType is null ? throw new ArgumentNullException(nameof(serviceType)) :
             serviceKey is not null ? null :
             serviceType == typeof(ChatClientMetadata) ? _metadata :
@@ -61,21 +64,22 @@ namespace Azure.AI.Agents.Persistent
             null;
 
         /// <inheritdoc />
-        public Task<ChatResponse> GetResponseAsync(
+        public virtual Task<ChatResponse> GetResponseAsync(
             IEnumerable<ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default) =>
             GetStreamingResponseAsync(messages, options, cancellationToken).ToChatResponseAsync(cancellationToken);
 
         /// <inheritdoc />
-        public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(
+        public virtual async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(
             IEnumerable<ChatMessage> messages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messages, nameof(messages));
 
             // Extract necessary state from messages and options.
-            (ThreadAndRunOptions runOptions, List<FunctionResultContent>? toolResults) = CreateRunOptions(messages, options);
+            (ThreadAndRunOptions runOptions, List<FunctionResultContent>? toolResults) =
+                await CreateRunOptionsAsync(messages, options, cancellationToken).ConfigureAwait(false);
 
             // Get the thread ID.
-            string? threadId = options?.ConversationId ?? _threadId;
+            string? threadId = options?.ConversationId ?? _defaultThreadId;
             if (threadId is null && toolResults is not null)
             {
                 throw new ArgumentException("No thread ID was provided, but chat messages includes tool results.", nameof(messages));
@@ -222,8 +226,8 @@ namespace Azure.AI.Agents.Persistent
         /// Creates the <see cref="ThreadAndRunOptions"/> to use for the request and extracts any function result contents
         /// that need to be submitted as tool results.
         /// </summary>
-        private (ThreadAndRunOptions RunOptions, List<FunctionResultContent>? ToolResults) CreateRunOptions(
-            IEnumerable<ChatMessage> messages, ChatOptions? options)
+        private async ValueTask<(ThreadAndRunOptions RunOptions, List<FunctionResultContent>? ToolResults)> CreateRunOptionsAsync(
+            IEnumerable<ChatMessage> messages, ChatOptions? options, CancellationToken cancellationToken)
         {
             // Create the options instance to populate, either a fresh or using one the caller provides.
             ThreadAndRunOptions runOptions =
@@ -242,16 +246,30 @@ namespace Azure.AI.Agents.Persistent
 
                 if (options.Tools is { Count: > 0 } tools)
                 {
+                    List<ToolDefinition> toolDefinitions = [];
+
                     // If the caller has provided any tool overrides, we'll assume they don't want to use the agent's tools.
                     // But if they haven't, the only way we can provide our tools is via an override, whereas we'd really like to
                     // just add them. To handle that, we'll get all of the agent's tools and add them to the override list
                     // along with our tools.
-                    IList<ToolDefinition> toolDefinitions = runOptions.OverrideTools is not null ? [.. runOptions.OverrideTools] : [];
+                    if (runOptions.OverrideTools is null || !runOptions.OverrideTools.Any())
+                    {
+                        if (_agentTools is null)
+                        {
+                            PersistentAgent agent = await _client!.Administration.GetAgentAsync(_agentId, cancellationToken).ConfigureAwait(false);
+                            _agentTools = agent.Tools;
+                        }
 
-                    // TODO: When moved to Azure.AI.Agents.Persistent, merge agent tools with override tools, in similar way like here:
-                    // https://github.com/dotnet/extensions/blob/694b95ef75c6bd9de00ef761dadae4e70ee8739f/src/Libraries/Microsoft.Extensions.AI.OpenAI/OpenAIAssistantChatClient.cs#L263-L279
+                        toolDefinitions.AddRange(_agentTools);
+                    }
 
-                    // The caller can provide tools in the supplied ThreadAndRunOptions. Augment it with any supplied via ChatOptions.Tools.
+                    // The caller can provide tools in the supplied ThreadAndRunOptions.
+                    if (runOptions.OverrideTools is not null)
+                    {
+                        toolDefinitions.AddRange(runOptions.OverrideTools);
+                    }
+
+                    // Now add the tools from ChatOptions.Tools.
                     foreach (AITool tool in tools)
                     {
                         switch (tool)
