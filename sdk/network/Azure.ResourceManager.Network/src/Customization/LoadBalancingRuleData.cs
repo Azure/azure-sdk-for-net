@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancingRuleProperties();
+                    Properties = new LoadBalancingRuleProperties(default, default);
                 }
                 Properties.FrontendIPConfigurationId = value;
             }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancingRuleProperties();
+                    Properties = new LoadBalancingRuleProperties(default, default);
                 }
                 Properties.BackendAddressPoolId = value;
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancingRuleProperties();
+                    Properties = new LoadBalancingRuleProperties(default, default);
                 }
                 Properties.ProbeId = value;
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancingRuleProperties();
+                    Properties = new LoadBalancingRuleProperties(default, default);
                 }
                 Properties.Protocol = value ?? default;
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancingRuleProperties();
+                    Properties = new LoadBalancingRuleProperties(default, default);
                 }
                 Properties.LoadDistribution = value;
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancingRuleProperties();
+                    Properties = new LoadBalancingRuleProperties(default, default);
                 }
                 Properties.FrontendPort = value ?? default;
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancingRuleProperties();
+                    Properties = new LoadBalancingRuleProperties(default, default);
                 }
                 Properties.BackendPort = value;
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancingRuleProperties();
+                    Properties = new LoadBalancingRuleProperties(default, default);
                 }
                 Properties.IdleTimeoutInMinutes = value;
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancingRuleProperties();
+                    Properties = new LoadBalancingRuleProperties(default, default);
                 }
                 Properties.EnableFloatingIP = value;
             }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancingRuleProperties();
+                    Properties = new LoadBalancingRuleProperties(default, default);
                 }
                 Properties.EnableTcpReset = value;
             }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new LoadBalancingRuleProperties();
+                    Properties = new LoadBalancingRuleProperties(default, default);
                 }
                 Properties.DisableOutboundSnat = value;
             }
