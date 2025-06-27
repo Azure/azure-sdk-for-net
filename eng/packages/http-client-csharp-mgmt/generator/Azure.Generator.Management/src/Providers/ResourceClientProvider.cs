@@ -48,7 +48,10 @@ namespace Azure.Generator.Management.Providers
         private IEnumerable<InputServiceMethod> _resourceServiceMethods;
 
         private FieldProvider _dataField;
+        private InputModelType _resourceModel;
         private FieldProvider _resourceTypeField;
+        private bool _hasGetMethod = false;
+
         protected ClientProvider _restClientProvider;
         protected FieldProvider _clientDiagnosticsField;
         protected FieldProvider _clientField;
@@ -58,15 +61,16 @@ namespace Azure.Generator.Management.Providers
             IsSingleton = resourceMetadata.IsSingleton;
             ResourceScope = resourceMetadata.ResourceScope;
             var resourceType = resourceMetadata.ResourceType;
+            _hasGetMethod = resourceMetadata.Methods.Any(m => m.Kind == OperationKind.Get);
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
-            var resourceModel = model;
+            _resourceModel = model;
             // TODO -- the name of a resource is not always the name of its model. Maybe the resource metadata should have a property for the name of the resource?
-            SpecName = resourceModel.Name.ToIdentifierName();
+            SpecName = _resourceModel.Name.ToIdentifierName();
 
             // We should be able to assume that all operations in the resource client are for the same resource
             var requestPath = new RequestPath(ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(resourceMetadata.Methods.First().Id)!.Operation.Path);
             _resourceServiceMethods = resourceMetadata.Methods.Select(m => ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!);
-            ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(resourceModel)!;
+            ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(_resourceModel)!;
 
             // TODO: handle multiple clients in the future, for now we assume that there is only one client for the resource.
             var inputClients = resourceMetadata.Methods.Select(m => ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!)!).Distinct();
@@ -281,17 +285,56 @@ namespace Azure.Generator.Management.Providers
                 }
             }
 
-            return [
-                BuildValidateResourceIdMethod(),
-                .. operationMethods,
-                new AddTagMethodProvider(this, true),
-                new AddTagMethodProvider(this, false),
-                // Disabled SetTag methods generation temporarily: The extension method ReplaceWith for IDictionary<string, string> is defined in SharedExtensions.cs, which is not included in the project yet.
-                // new SetTagsMethodProvider(this, true),
-                // new SetTagsMethodProvider(this, false),
-                new RemoveTagMethodProvider(this, true),
-                new RemoveTagMethodProvider(this, false)
-            ];
+            var methods = new List<MethodProvider>
+            {
+                BuildValidateResourceIdMethod()
+            };
+            methods.AddRange(operationMethods);
+
+            // Only generate tag methods if the resource model has tag properties
+            if (ShouldGenerateTagMethods(_resourceModel))
+            {
+                methods.AddRange([
+                    new AddTagMethodProvider(this, true),
+                    new AddTagMethodProvider(this, false),
+                    // Disabled SetTag methods generation temporarily: The extension method ReplaceWith for IDictionary<string, string> is defined in SharedExtensions.cs, which is not included in the project yet.
+                    // new SetTagsMethodProvider(this, true),
+                    // new SetTagsMethodProvider(this, false),
+                    new RemoveTagMethodProvider(this, true),
+                    new RemoveTagMethodProvider(this, false)
+                ]);
+            }
+
+            return [.. methods];
+        }
+
+        private bool ShouldGenerateTagMethods(InputModelType model)
+        {
+            if (!_hasGetMethod)
+            {
+                return false; // If there is no Get method, we cannot retrieve tags, so no need to generate tag methods.
+            }
+
+            InputModelType? currentModel = model;
+            while (currentModel != null)
+            {
+                foreach (var property in currentModel.Properties)
+                {
+                    if (property.Name == "tags" && property.Type is not null)
+                    {
+                       if (property.Type is InputDictionaryType dictType)
+                       {
+                            if (dictType.KeyType is InputPrimitiveType kt && kt.Kind == InputPrimitiveTypeKind.String &&
+                                dictType.ValueType is InputPrimitiveType vt && vt.Kind == InputPrimitiveTypeKind.String)
+                            {
+                                return true;
+                            }
+                       }
+                    }
+                }
+                currentModel = currentModel.BaseModel;
+            }
+            return false;
         }
 
         public ScopedApi<bool> TryGetApiVersion(out ScopedApi<string> apiVersion)
