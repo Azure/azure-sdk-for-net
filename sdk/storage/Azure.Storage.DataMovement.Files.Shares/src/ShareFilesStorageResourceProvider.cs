@@ -282,6 +282,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             ShareClientOptions clientOptions = GetUserAgentClientOptions();
+
+            ShareDirectoryClient CreateTokenClient()
+            {
+                clientOptions.ShareTokenIntent = ShareTokenIntent.Backup;
+                return new ShareDirectoryClient(directoryUri, _tokenCredential, clientOptions);
+            }
+
             ShareDirectoryClient client = _credentialType switch
             {
                 CredentialType.None => new ShareDirectoryClient(directoryUri, clientOptions),
@@ -291,12 +298,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new ShareDirectoryStorageResourceContainer(client, options);
-
-            ShareDirectoryClient CreateTokenClient()
-            {
-                clientOptions.ShareTokenIntent = ShareTokenIntent.Backup;
-                return new ShareDirectoryClient(directoryUri, _tokenCredential, clientOptions);
-            }
         }
 
         /// <summary>
@@ -322,6 +323,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             ShareClientOptions clientOptions = GetUserAgentClientOptions();
+
+            ShareFileClient CreateTokenClient()
+            {
+                clientOptions.ShareTokenIntent = ShareTokenIntent.Backup;
+                return new ShareFileClient(fileUri, _tokenCredential, clientOptions);
+            }
+
             ShareFileClient client = _credentialType switch
             {
                 CredentialType.None => new ShareFileClient(fileUri, clientOptions),
@@ -331,12 +339,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new ShareFileStorageResource(client, options);
-
-            ShareFileClient CreateTokenClient()
-            {
-                clientOptions.ShareTokenIntent = ShareTokenIntent.Backup;
-                return new ShareFileClient(fileUri, _tokenCredential, clientOptions);
-            }
         }
         #endregion
 
