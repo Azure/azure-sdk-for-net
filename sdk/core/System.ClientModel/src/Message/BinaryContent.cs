@@ -23,7 +23,7 @@ public abstract class BinaryContent : IDisposable
     /// <summary>
     /// Gets the media type of the content.
     /// </summary>
-    public virtual string? MediaType { get; }
+    public string? MediaType { get; protected set; }
 
     /// <summary>
     /// Creates an instance of <see cref="BinaryContent"/> that contains the
@@ -86,7 +86,10 @@ public abstract class BinaryContent : IDisposable
     public static BinaryContent CreateJson<T>(T jsonSerializable, JsonSerializerOptions? options = default)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        return Create(BinaryData.FromObjectAsJson(jsonSerializable, options));
+        Argument.AssertNotNull(jsonSerializable, nameof(jsonSerializable));
+
+        BinaryData data = BinaryData.FromObjectAsJson(jsonSerializable, options);
+        return new BinaryDataBinaryContent(data.ToMemory(), "application/json");
     }
 
     /// <summary>
@@ -102,7 +105,11 @@ public abstract class BinaryContent : IDisposable
     public static BinaryContent CreateJson<T>(T jsonSerializable, JsonTypeInfo<T> jsonTypeInfo)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        return Create(BinaryData.FromObjectAsJson(jsonSerializable, jsonTypeInfo));
+        Argument.AssertNotNull(jsonSerializable, nameof(jsonSerializable));
+        Argument.AssertNotNull(jsonTypeInfo, nameof(jsonTypeInfo));
+
+        BinaryData data = BinaryData.FromObjectAsJson(jsonSerializable, jsonTypeInfo);
+        return new BinaryDataBinaryContent(data.ToMemory(), "application/json");
     }
 
     /// <summary>
@@ -136,9 +143,10 @@ public abstract class BinaryContent : IDisposable
     {
         private readonly ReadOnlyMemory<byte> _bytes;
 
-        public BinaryDataBinaryContent(ReadOnlyMemory<byte> bytes)
+        public BinaryDataBinaryContent(ReadOnlyMemory<byte> bytes, string? mediaType = null)
         {
             _bytes = bytes;
+            MediaType = mediaType;
         }
 
         public override bool TryComputeLength(out long length)
