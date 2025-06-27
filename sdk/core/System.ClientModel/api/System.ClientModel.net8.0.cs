@@ -22,12 +22,12 @@ namespace System.ClientModel
     public abstract partial class BinaryContent : System.IDisposable
     {
         protected BinaryContent() { }
-        public string? MediaType { get { throw null; } }
+        public string? MediaType { get { throw null; } protected set { } }
         public static System.ClientModel.BinaryContent Create(System.BinaryData value) { throw null; }
         public static System.ClientModel.BinaryContent Create(System.IO.Stream stream) { throw null; }
-        public static System.ClientModel.BinaryContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public static System.ClientModel.BinaryContent CreateJson<T>(T jsonSerializable, System.Text.Json.JsonSerializerOptions? options = null) { throw null; }
         public static System.ClientModel.BinaryContent CreateJson<T>(T jsonSerializable, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> jsonTypeInfo) { throw null; }
+        public static System.ClientModel.BinaryContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
