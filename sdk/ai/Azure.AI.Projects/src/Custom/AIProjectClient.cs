@@ -83,10 +83,71 @@ namespace Azure.AI.Projects
                 : new ChainedTokenCredential(new AzureCliCredential(), new AzureDeveloperCliCredential());
         }
 
-        public Connections Connections { get => this.GetConnectionsClient(); }
-        public Datasets Datasets { get => this.GetDatasetsClient(); }
-        public Deployments Deployments { get => this.GetDeploymentsClient(); }
-        public Indexes Indexes { get => this.GetIndexesClient(); }
+        /// <summary> Initializes a new instance of Connections. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        internal virtual Connections GetConnectionsClient(string apiVersion = "2025-05-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new Connections(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of Evaluations. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        internal virtual Evaluations GetEvaluationsClient(string apiVersion = "2025-05-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new Evaluations(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of Datasets. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        internal virtual Datasets GetDatasetsClient(string apiVersion = "2025-05-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new Datasets(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of Indexes. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        internal virtual Indexes GetIndexesClient(string apiVersion = "2025-05-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new Indexes(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of Deployments. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        internal virtual Deployments GetDeploymentsClient(string apiVersion = "2025-05-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new Deployments(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of RedTeams. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        internal virtual RedTeams GetRedTeamsClient(string apiVersion = "2025-05-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new RedTeams(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        public Connections Connections { get => GetConnectionsClient(); }
+        public Datasets Datasets { get => GetDatasetsClient(); }
+        public Deployments Deployments { get => GetDeploymentsClient(); }
+        public Evaluations Evaluations { get => GetEvaluationsClient(); }
+        public Indexes Indexes { get => GetIndexesClient(); }
         public Telemetry Telemetry { get => new Telemetry(this); }
     }
 }

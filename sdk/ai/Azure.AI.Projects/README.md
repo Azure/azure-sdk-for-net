@@ -384,7 +384,7 @@ Any operation that fails will throw a [RequestFailedException][RequestFailedExce
 ```C# Snippet:AI_Projects_Readme_Troubleshooting
 try
 {
-    projectClient.GetDatasetsClient().GetDataset("non-existent-dataset-name", "non-existent-dataset-version");
+    projectClient.Datasets.GetDataset("non-existent-dataset-name", "non-existent-dataset-version");
 }
 catch (RequestFailedException ex) when (ex.Status == 404)
 {
