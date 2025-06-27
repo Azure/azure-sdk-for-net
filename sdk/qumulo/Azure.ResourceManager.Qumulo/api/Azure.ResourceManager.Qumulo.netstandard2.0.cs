@@ -59,18 +59,9 @@ namespace Azure.ResourceManager.Qumulo
     }
     public partial class QumuloFileSystemResourceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.QumuloFileSystemResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.QumuloFileSystemResourceData>
     {
-        public QumuloFileSystemResourceData(Azure.Core.AzureLocation location, Azure.ResourceManager.Qumulo.Models.MarketplaceDetails marketplaceDetails, Azure.ResourceManager.Qumulo.Models.StorageSku storageSku, Azure.ResourceManager.Qumulo.Models.QumuloUserDetails userDetails, string delegatedSubnetId, string adminPassword, int initialCapacity) { }
-        public string AdminPassword { get { throw null; } set { } }
-        public string AvailabilityZone { get { throw null; } set { } }
-        public System.Uri ClusterLoginUri { get { throw null; } set { } }
-        public string DelegatedSubnetId { get { throw null; } set { } }
+        public QumuloFileSystemResourceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public int InitialCapacity { get { throw null; } set { } }
-        public Azure.ResourceManager.Qumulo.Models.MarketplaceDetails MarketplaceDetails { get { throw null; } set { } }
-        public System.Collections.Generic.IList<System.Net.IPAddress> PrivateIPs { get { throw null; } }
-        public Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Qumulo.Models.StorageSku StorageSku { get { throw null; } set { } }
-        public string UserDetailsEmail { get { throw null; } set { } }
+        public Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourceProperties Properties { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Qumulo.QumuloFileSystemResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.QumuloFileSystemResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.QumuloFileSystemResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -104,16 +95,17 @@ namespace Azure.ResourceManager.Qumulo.Models
 {
     public static partial class ArmQumuloModelFactory
     {
-        public static Azure.ResourceManager.Qumulo.Models.MarketplaceDetails MarketplaceDetails(string marketplaceSubscriptionId = null, string planId = null, string offerId = null, string publisherId = null, Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus?)) { throw null; }
-        public static Azure.ResourceManager.Qumulo.QumuloFileSystemResourceData QumuloFileSystemResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Qumulo.Models.MarketplaceDetails marketplaceDetails = null, Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState? provisioningState = default(Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState?), Azure.ResourceManager.Qumulo.Models.StorageSku storageSku = Azure.ResourceManager.Qumulo.Models.StorageSku.Standard, string userDetailsEmail = null, string delegatedSubnetId = null, System.Uri clusterLoginUri = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> privateIPs = null, string adminPassword = null, int initialCapacity = 0, string availabilityZone = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Qumulo.Models.MarketplaceDetails MarketplaceDetails(string marketplaceSubscriptionId, string planId, string offerId, string publisherId, Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus) { throw null; }
+        public static Azure.ResourceManager.Qumulo.Models.MarketplaceDetails MarketplaceDetails(string marketplaceSubscriptionId = null, string planId = null, string offerId = null, string publisherId = null, string termUnit = null, Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus?)) { throw null; }
+        public static Azure.ResourceManager.Qumulo.QumuloFileSystemResourceData QumuloFileSystemResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourceProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourceProperties QumuloFileSystemResourceProperties(Azure.ResourceManager.Qumulo.Models.MarketplaceDetails marketplaceDetails = null, Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState? provisioningState = default(Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState?), string storageSku = null, string userDetailsEmail = null, string delegatedSubnetId = null, string clusterLoginUri = null, System.Collections.Generic.IEnumerable<string> privateIPs = null, string adminPassword = null, string availabilityZone = null) { throw null; }
     }
     public partial class FileSystemResourceUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.Models.FileSystemResourceUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.FileSystemResourceUpdateProperties>
     {
         public FileSystemResourceUpdateProperties() { }
-        public System.Uri ClusterLoginUri { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier DelegatedSubnetId { get { throw null; } set { } }
+        public string DelegatedSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Qumulo.Models.MarketplaceDetails MarketplaceDetails { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> PrivateIPs { get { throw null; } }
         public string UserDetailsEmail { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Qumulo.Models.FileSystemResourceUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.Models.FileSystemResourceUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -124,12 +116,13 @@ namespace Azure.ResourceManager.Qumulo.Models
     }
     public partial class MarketplaceDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.Models.MarketplaceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.MarketplaceDetails>
     {
-        public MarketplaceDetails(string planId, string offerId, string publisherId) { }
+        public MarketplaceDetails(string planId, string offerId) { }
         public string MarketplaceSubscriptionId { get { throw null; } set { } }
         public Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get { throw null; } }
         public string OfferId { get { throw null; } set { } }
         public string PlanId { get { throw null; } set { } }
         public string PublisherId { get { throw null; } set { } }
+        public string TermUnit { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Qumulo.Models.MarketplaceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.Models.MarketplaceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.Models.MarketplaceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -137,12 +130,25 @@ namespace Azure.ResourceManager.Qumulo.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.MarketplaceDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.MarketplaceDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum MarketplaceSubscriptionStatus
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MarketplaceSubscriptionStatus : System.IEquatable<Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus>
     {
-        PendingFulfillmentStart = 0,
-        Subscribed = 1,
-        Suspended = 2,
-        Unsubscribed = 3,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MarketplaceSubscriptionStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus PendingFulfillmentStart { get { throw null; } }
+        public static Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus Subscribed { get { throw null; } }
+        public static Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus Suspended { get { throw null; } }
+        public static Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.Qumulo.Models.MarketplaceSubscriptionStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class QumuloFileSystemResourcePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourcePatch>
     {
@@ -157,21 +163,52 @@ namespace Azure.ResourceManager.Qumulo.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourcePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourcePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum QumuloProvisioningState
+    public partial class QumuloFileSystemResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourceProperties>
     {
-        NotSpecified = 0,
-        Accepted = 1,
-        Creating = 2,
-        Updating = 3,
-        Deleting = 4,
-        Succeeded = 5,
-        Failed = 6,
-        Canceled = 7,
-        Deleted = 8,
+        public QumuloFileSystemResourceProperties(Azure.ResourceManager.Qumulo.Models.MarketplaceDetails marketplaceDetails, string storageSku, Azure.ResourceManager.Qumulo.Models.QumuloUserDetails userDetails, string delegatedSubnetId, string adminPassword) { }
+        public string AdminPassword { get { throw null; } set { } }
+        public string AvailabilityZone { get { throw null; } set { } }
+        public string ClusterLoginUri { get { throw null; } set { } }
+        public string DelegatedSubnetId { get { throw null; } set { } }
+        public Azure.ResourceManager.Qumulo.Models.MarketplaceDetails MarketplaceDetails { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PrivateIPs { get { throw null; } }
+        public Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState? ProvisioningState { get { throw null; } }
+        public string StorageSku { get { throw null; } set { } }
+        public string UserDetailsEmail { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.QumuloFileSystemResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct QumuloProvisioningState : System.IEquatable<Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public QumuloProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState left, Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState left, Azure.ResourceManager.Qumulo.Models.QumuloProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class QumuloUserDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.Models.QumuloUserDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.QumuloUserDetails>
     {
-        public QumuloUserDetails() { }
+        public QumuloUserDetails(string email) { }
         public string Email { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Qumulo.Models.QumuloUserDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Qumulo.Models.QumuloUserDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -179,10 +216,5 @@ namespace Azure.ResourceManager.Qumulo.Models
         Azure.ResourceManager.Qumulo.Models.QumuloUserDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.QumuloUserDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.QumuloUserDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Qumulo.Models.QumuloUserDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public enum StorageSku
-    {
-        Standard = 0,
-        Performance = 1,
     }
 }
