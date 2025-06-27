@@ -12,7 +12,7 @@ using System.Runtime.Serialization;
 
 namespace Azure.Core
 {
-    internal abstract class TypeBinder<TExchange>
+    internal abstract class TypeBinder<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] TExchange>
     {
         private readonly ConcurrentDictionary<Type, BoundTypeInfo> _cache = new();
         private readonly Func<Type, BoundTypeInfo> _valueFactory;
