@@ -6,7 +6,7 @@
 
 - Tracing for Agents. More information [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/README.md#tracing).
 - Convenience constructor for BingCustomSearchToolParameters
-- Automatically function toolcalls.  More information [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/README.md#function-call-executed-automatically).
+- Support for automatic execution of function tool calls. More information [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/README.md#function-call-executed-automatically).
 
 ### Sample updates
 - The Azure function sample was simplified.
