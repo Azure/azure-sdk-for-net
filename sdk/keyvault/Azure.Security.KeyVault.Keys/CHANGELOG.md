@@ -15,8 +15,6 @@ Thank you to our developer community members who helped to make the Key Vault cl
 - Added Attestation property for Keys in Managed HSM Key Vaults.
 - Adde new `GetKeyAttestation` operation to get the public part of a stored key along with its attestation blob.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Removed additional forward slash in `RestoreKeyBackup` and `RestoreKeyBackupAsync`.
