@@ -5,11 +5,13 @@
 ### Features Added
 
 - **Support for Exclusion Filters in Export Operations**:
-  - Added `ExcludeAzureResource` and `ExcludeTerraformResource` properties to export parameter models,
+
+  - Added `AzureResourcesToExclude` and `TerraformResourcesToExclude` properties to export parameter models,
     these allow users to exclude resources from being exported based on Azure resource ID patterns or Terraform resource types.
 
 - **Authorization Scope Filter Support**:
-  - Introduced the `AuthorizationScopeFilter` struct, enabling fine-grained control over the scope of Azure Resource Graph queries during export.
+
+  - Introduced the `TerraformAuthorizationScopeFilter` struct, enabling fine-grained control over the scope of Azure Resource Graph queries during export.
 
 - **Export Result Enhancements**:
   - The `TerraformExportResult` model now includes an `Import` property, providing Terraform import blocks for exported resources.
