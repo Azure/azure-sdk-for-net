@@ -319,7 +319,6 @@ namespace Azure.Generator.Management.Providers
                             {
                                 return true;
                             }
-                            return true;
                        }
                     }
                 }
