@@ -188,6 +188,14 @@ public abstract class BinaryContent : IDisposable
         {
             _model = model;
             _options = options;
+
+            // Set MediaType to JSON if the model will be serialized as JSON
+            // This checks if JSON format is requested, either explicitly ("J") or
+            // via wire format ("W") where the model returns "J" as its preferred format
+            if (options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J"))
+            {
+                MediaType = "application/json";
+            }
         }
 
         private UnsafeBufferSequence.Reader SequenceReader
