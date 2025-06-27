@@ -26,38 +26,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             ResourceIdentifier networkTapRuleResourceId = NetworkTapResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NetworkTapName);
             TestContext.Out.WriteLine($"networkTapRuleResourceId: {networkTapRuleResourceId}");
             TestContext.Out.WriteLine($"NetworkTap Test started.....");
-            NetworkTapCollection collection = ResourceGroupResource.GetNetworkTaps();
+            ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
+            ResourceGroupResource resourceGroup = Client.GetResourceGroupResource(resourceGroupId);
+            NetworkTapCollection collection = resourceGroup.GetNetworkTaps();
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkTapData data = new NetworkTapData(new AzureLocation("eastus"),
-                new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkpacketbrokers/default"), new NetworkTapPropertiesDestinationsItem[]
-                    {
-                        new NetworkTapPropertiesDestinationsItem()
-                        {
-                            Name = "example-destinaionName",
-                            DestinationType = NetworkTapDestinationType.IsolationDomain,
-                            DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3isolationdomains/npbl3isd/internalnetworks/npbv4int"),
-                            IsolationDomainProperties = new IsolationDomainProperties()
-                            {
-                                Encapsulation = IsolationDomainEncapsulationType.None,
-                                NeighborGroupIds =
-                                    {
-                                        new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/ngh1")
-                                    },
-                            },
-                            DestinationTapRuleId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networktaprules/trafficrule1"),
-                        }
-                    }
-                 )
+            var destinationProps = new NetworkTapDestinationProperties(
+                "example-destinaionName",
+                NetworkTapDestinationType.IsolationDomain,
+                new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3isolationdomains/npbl3isd/internalnetworks/npbv4int"))
+            {
+                IsolationDomainProperties = new IsolationDomainProperties
                 {
-                    Annotation = "annotation",
-                    PollingType = NetworkTapPollingType.Pull,
-                    Tags =
-                    {
+                    Encapsulation = IsolationDomainEncapsulationType.None,
+                    NeighborGroupIds = { new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/ngh1") },
+                },
+                DestinationTapRuleId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networktaprules/trafficrule1"),
+            };
+            var properties = new NetworkTapProperties(
+                new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkpacketbrokers/default"),
+                new[] { destinationProps })
+            {
+                Annotation = "annotation",
+                PollingType = NetworkTapPollingType.Pull,
+            };
+
+            NetworkTapData data = new NetworkTapData(new AzureLocation("eastus"), properties)
+            {
+                Tags =
+                {
                     ["key6024"] = "1234",
-                    },
-                };
+                },
+            };
 
             ArmOperation<NetworkTapResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkTapName, data);
             NetworkTapResource createResult = lro.Value;
@@ -77,16 +78,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         {
                             Name = "example-destinaionName",
                             DestinationType = NetworkTapDestinationType.IsolationDomain,
-                            DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3IsloationDomains/example-l3Domain/internalNetworks/example-internalNetwork"),
+                            DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3IsloationDomains/npbl3isd/internalNetworks/npbv4int"),
                             IsolationDomainProperties = new IsolationDomainProperties()
                             {
                                 Encapsulation = IsolationDomainEncapsulationType.None,
                                 NeighborGroupIds =
                                     {
-                                    new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup")
+                                    new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/ngh1")
                                     },
                                 },
-                                DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxxx/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkTapRules/example-destinationTapRule"),
+                                DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxxx/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkTapRules/trafficrule1"),
                             }
                         },
                 Tags =

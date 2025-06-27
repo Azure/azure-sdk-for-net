@@ -25,7 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         [AsyncOnly]
         public async Task NetworkFabricControllers()
         {
-            NetworkFabricControllerCollection collection = ResourceGroupResource.GetNetworkFabricControllers();
+            ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
+            ResourceGroupResource resourceGroup = Client.GetResourceGroupResource(resourceGroupId);
+            NetworkFabricControllerCollection collection = resourceGroup.GetNetworkFabricControllers();
 
             ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NetworkFabricControllerName);
             TestContext.Out.WriteLine($"networkFabricControllerId: {networkFabricControllerResourceId}");
@@ -37,22 +39,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             #region NFC Create Test
 
             TestContext.Out.WriteLine($"NFC create started.....");
-            NetworkFabricControllerData data = new NetworkFabricControllerData(new AzureLocation(TestEnvironment.Location))
+            var properties = new NetworkFabricControllerProperties()
             {
                 Annotation = "annotation",
                 InfrastructureExpressRouteConnections =
                 {
-                    new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"))
-                    {
-                        ExpressRouteAuthorizationKey = "1234ABCD-0A1B-1234-5678-123456ABCDEF",
-                    }
+                    new ExpressRouteConnectionInformation(
+                        new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"),
+                        "1234ABCD-0A1B-1234-5678-123456ABCDEF"
+                    )
                 },
                 WorkloadExpressRouteConnections =
                 {
-                    new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"))
-                    {
-                        ExpressRouteAuthorizationKey = "1234ABCD-0A1B-1234-5678-123456ABCDEF",
-                    }
+                    new ExpressRouteConnectionInformation(
+                        new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"),
+                        "1234ABCD-0A1B-1234-5678-123456ABCDEF"
+                    )
                 },
                 ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration()
                 {
@@ -64,6 +66,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 IPv6AddressSpace = "::/60",
                 NfcSku = NetworkFabricControllerSKU.Standard,
             };
+
+            NetworkFabricControllerData data = new NetworkFabricControllerData(new AzureLocation(TestEnvironment.Location), properties);
 
             ArmOperation<NetworkFabricControllerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkFabricControllerName, data);
 

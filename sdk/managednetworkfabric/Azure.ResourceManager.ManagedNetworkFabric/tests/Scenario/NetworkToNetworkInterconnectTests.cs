@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             NetworkFabricResource networkFabric = Client.GetNetworkFabricResource(networkFabricId);
             networkFabric = await networkFabric.GetAsync();
 
-            ResourceIdentifier networkToNetworkInterconnectId = NetworkToNetworkInterconnectResource.CreateResourceIdentifier(subscriptionId, ResourceGroupResource.Id.Name, networkFabricName, TestEnvironment.NetworkToNetworkInterConnectName);
+            ResourceIdentifier networkToNetworkInterconnectId = NetworkToNetworkInterconnectResource.CreateResourceIdentifier(subscriptionId, TestEnvironment.ResourceGroupName, networkFabricName, TestEnvironment.NetworkToNetworkInterConnectName);
             TestContext.Out.WriteLine($"networkToNetworkInterconnectId: {networkToNetworkInterconnectId}");
             NetworkToNetworkInterconnectResource nni = Client.GetNetworkToNetworkInterconnectResource(networkToNetworkInterconnectId);
 
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
 
-            NetworkToNetworkInterconnectData data = new NetworkToNetworkInterconnectData(NetworkFabricBooleanValue.True)
+            var properties = new NetworkToNetworkInterconnectProperties(NetworkFabricBooleanValue.True)
             {
                 NniType = NniType.CE,
                 IsManagementType = IsManagementType.True,
@@ -52,10 +54,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 {
                     Mtu = 1500
                 },
-                OptionBLayer3Configuration = new NetworkToNetworkInterconnectOptionBLayer3Configuration()
+                OptionBLayer3Configuration = new OptionBLayer3Configuration(61234, 1234)
                 {
-                    PeerAsn = 61234,
-                    VlanId = 1234,
                     PrimaryIPv4Prefix = "10.0.0.12/30",
                     PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
                     SecondaryIPv4Prefix = "40.0.0.14/30",
@@ -70,6 +70,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     ExportIPv4RoutePolicyId = new ResourceIdentifier(TestEnvironment.ExistingRoutePolicyId),
                 }
             };
+
+            NetworkToNetworkInterconnectData data = new NetworkToNetworkInterconnectData(
+                networkToNetworkInterconnectId,
+                TestEnvironment.NetworkToNetworkInterConnectName,
+                NetworkToNetworkInterconnectResource.ResourceType,
+                null,
+                properties,
+                null
+            );
             ArmOperation<NetworkToNetworkInterconnectResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkToNetworkInterConnectName, data);
             Assert.AreEqual(createResult.Value.Data.Name, TestEnvironment.NetworkToNetworkInterConnectName);
 

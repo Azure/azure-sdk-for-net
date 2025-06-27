@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             NetworkDeviceResource networkDevice = Client.GetNetworkDeviceResource(networkDeviceResourceId);
             networkDevice = await networkDevice.GetAsync();
 
-            ResourceIdentifier networkInterfaceId = NetworkDeviceInterfaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupResource.Id.Name, TestEnvironment.NetworkDeviceNameUnderProvisionedNF, TestEnvironment.NetworkInterfaceName);
+            ResourceIdentifier networkInterfaceId = NetworkDeviceInterfaceResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NetworkDeviceNameUnderProvisionedNF, TestEnvironment.NetworkInterfaceName);
             TestContext.Out.WriteLine($"networkInterfaceId: {networkInterfaceId}");
             NetworkDeviceInterfaceResource networkInterface = Client.GetNetworkDeviceInterfaceResource(networkInterfaceId);
 
@@ -53,19 +53,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
-            UpdateAdministrativeStateContent cotnent = new UpdateAdministrativeStateContent()
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent()
             {
                 State = AdministrativeEnableState.Disable
             };
-            ArmOperation<StateUpdateCommonPostActionResult> disableAdminStateResponse = await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, cotnent);
+            ArmOperation<StateUpdateCommonPostActionResult> disableAdminStateResponse = await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
             StateUpdateCommonPostActionResult result = disableAdminStateResponse.Value;
             TestContext.WriteLine($"Succeeded: {result}");
 
-            cotnent = new UpdateAdministrativeStateContent()
+            content = new UpdateAdministrativeStateContent()
             {
                 State = AdministrativeEnableState.Enable
             };
-            ArmOperation<StateUpdateCommonPostActionResult> enableAdminStateResponse = await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, cotnent);
+            ArmOperation<StateUpdateCommonPostActionResult> enableAdminStateResponse = await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
             result = enableAdminStateResponse.Value;
             TestContext.WriteLine($"Succeeded: {result}");
         }

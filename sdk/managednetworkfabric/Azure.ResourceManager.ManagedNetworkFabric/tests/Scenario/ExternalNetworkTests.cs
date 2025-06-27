@@ -38,37 +38,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricExternalNetworkData data = new NetworkFabricExternalNetworkData(PeeringOption.OptionA)
+            var properties = new ExternalNetworkProperties
             {
+                PeeringOption = PeeringOption.OptionA,
                 Annotation = "annotation",
-                OptionBProperties = new L3OptionBProperties()
-                {
-                    RouteTargets = new RouteTargetInformation()
-                    {
-                        ImportIPv4RouteTargets =
-                        {
-                            "65046:10039"
-                        },
-                        ImportIPv6RouteTargets =
-                        {
-                            "65046:10039"
-                        },
-                        ExportIPv4RouteTargets =
-                        {
-                            "65046:10039"
-                        },
-                        ExportIPv6RouteTargets =
-                        {
-                            "65046:10039"
-                        },
-                    },
-                },
-                OptionAProperties = new ExternalNetworkOptionAProperties()
+                OptionAProperties = new ExternalNetworkOptionAProperties
                 {
                     Mtu = 1500,
                     VlanId = 1001,
                     PeerAsn = 65047,
-                    BfdConfiguration = new BfdConfiguration()
+                    BfdConfiguration = new BfdConfiguration
                     {
                         IntervalInMilliSeconds = 300,
                         Multiplier = 15,
@@ -78,7 +57,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     SecondaryIPv4Prefix = "10.1.1.4/30",
                     SecondaryIPv6Prefix = "3FFE:FFFF:0:CD30::a4/127",
                 },
+                OptionBProperties = new L3OptionBProperties
+                {
+                    RouteTargets = new RouteTargetInformation
+                    {
+                        ImportIPv4RouteTargets = { "65046:10039" },
+                        ImportIPv6RouteTargets = { "65046:10039" },
+                        ExportIPv4RouteTargets = { "65046:10039" },
+                        ExportIPv6RouteTargets = { "65046:10039" },
+                    }
+                }
             };
+            NetworkFabricExternalNetworkData data = new NetworkFabricExternalNetworkData(properties);
             ArmOperation<NetworkFabricExternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.ExternalNetworkName, data);
             NetworkFabricExternalNetworkResource createResult = lro.Value;
             Assert.AreEqual(createResult.Data.Name, TestEnvironment.ExternalNetworkName);

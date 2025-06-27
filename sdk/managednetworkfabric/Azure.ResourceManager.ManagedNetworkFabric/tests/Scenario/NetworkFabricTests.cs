@@ -22,7 +22,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         [AsyncOnly]
         public async Task NetworkFabrics()
         {
-           NetworkFabricCollection collection = ResourceGroupResource.GetNetworkFabrics();
+            ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
+            ResourceGroupResource resourceGroup = Client.GetResourceGroupResource(resourceGroupId);
+            NetworkFabricCollection collection = resourceGroup.GetNetworkFabrics();
 
             TestContext.Out.WriteLine($"Entered into the Network Fabric tests....");
 
@@ -37,8 +39,65 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             #region Network Fabric create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricData data = new NetworkFabricData(
-                new AzureLocation(TestEnvironment.Location),
+            var infrastructureVpnConfig = new VpnConfigurationProperties(PeeringOption.OptionA)
+            {
+                OptionBProperties = new VpnOptionBProperties()
+                {
+                    RouteTargets = new RouteTargetInformation()
+                    {
+                        ImportIPv4RouteTargets = { "65046:10039" },
+                        ImportIPv6RouteTargets = { "65046:10039" },
+                        ExportIPv4RouteTargets = { "65046:10039" },
+                        ExportIPv6RouteTargets = { "65046:10039" },
+                    }
+                },
+                OptionAProperties = new VpnOptionAProperties()
+                {
+                    PrimaryIPv4Prefix = "10.0.0.12/30",
+                    PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
+                    SecondaryIPv4Prefix = "20.0.0.13/30",
+                    SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
+                    Mtu = 1501,
+                    VlanId = 3001,
+                    PeerAsn = 1235,
+                    BfdConfiguration = new BfdConfiguration()
+                    {
+                        IntervalInMilliSeconds = 300,
+                        Multiplier = 10,
+                    },
+                }
+            };
+
+            var workloadVpnConfig = new VpnConfigurationProperties(PeeringOption.OptionA)
+            {
+                OptionBProperties = new VpnOptionBProperties()
+                {
+                    RouteTargets = new RouteTargetInformation()
+                    {
+                        ImportIPv4RouteTargets = { "65046:10039" },
+                        ImportIPv6RouteTargets = { "65046:10039" },
+                        ExportIPv4RouteTargets = { "65046:10039" },
+                        ExportIPv6RouteTargets = { "65046:10039" },
+                    }
+                },
+                OptionAProperties = new VpnOptionAProperties()
+                {
+                    PrimaryIPv4Prefix = "10.0.0.14/30",
+                    PrimaryIPv6Prefix = "2FFE:FFFF:0:CD30::a7/127",
+                    SecondaryIPv4Prefix = "10.0.0.15/30",
+                    SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/127",
+                    Mtu = 1500,
+                    VlanId = 3000,
+                    PeerAsn = 61234,
+                    BfdConfiguration = new BfdConfiguration()
+                    {
+                        IntervalInMilliSeconds = 300,
+                        Multiplier = 5,
+                    },
+                }
+            };
+
+            var properties = new NetworkFabricProperties(
                 "fab3",
                 new ResourceIdentifier(TestEnvironment.Provisioned_NFC_ID),
                 7,
@@ -54,96 +113,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     Password = "xxxx",
                     SerialNumber = "123456",
                 },
-                new ManagementNetworkConfigurationProperties(
-                    new VpnConfigurationProperties(PeeringOption.OptionA)
-                    {
-                        OptionBProperties = new OptionBProperties()
-                        {
-                            RouteTargets = new RouteTargetInformation()
-                            {
-                                ImportIPv4RouteTargets =
-                                {
-                                    "65046:10039"
-                                },
-                                ImportIPv6RouteTargets =
-                                {
-                                    "65046:10039"
-                                },
-                                ExportIPv4RouteTargets =
-                                {
-                                    "65046:10039"
-                                },
-                                ExportIPv6RouteTargets =
-                                {
-                                    "65046:10039"
-                                },
-                            },
-                        },
-                        OptionAProperties = new VpnConfigurationOptionAProperties()
-                        {
-                            PrimaryIPv4Prefix = "10.0.0.12/30",
-                            PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                            SecondaryIPv4Prefix = "20.0.0.13/30",
-                            SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
-                            Mtu = 1501,
-                            VlanId = 3001,
-                            PeerAsn = 1235,
-                            BfdConfiguration = new BfdConfiguration()
-                            {
-                                IntervalInMilliSeconds = 300,
-                                Multiplier = 10,
-                            },
-                        },
-                    },
-                    new VpnConfigurationProperties(PeeringOption.OptionA)
-                    {
-                        OptionBProperties = new OptionBProperties()
-                        {
-                            RouteTargets = new RouteTargetInformation()
-                            {
-                                ImportIPv4RouteTargets =
-                                {
-                                    "65046:10039"
-                                },
-                                ImportIPv6RouteTargets =
-                                {
-                                    "65046:10039"
-                                },
-                                ExportIPv4RouteTargets =
-                                {
-                                    "65046:10039"
-                                },
-                                ExportIPv6RouteTargets =
-                                {
-                                    "65046:10039"
-                                },
-                            },
-                        },
-                        OptionAProperties = new VpnConfigurationOptionAProperties()
-                        {
-                            PrimaryIPv4Prefix = "10.0.0.14/30",
-                            PrimaryIPv6Prefix = "2FFE:FFFF:0:CD30::a7/127",
-                            SecondaryIPv4Prefix = "10.0.0.15/30",
-                            SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/127",
-                            Mtu = 1500,
-                            VlanId = 3000,
-                            PeerAsn = 61234,
-                            BfdConfiguration = new BfdConfiguration()
-                            {
-                                IntervalInMilliSeconds = 300,
-                                Multiplier = 5,
-                            },
-                        },
-                    }
-                ))
+                new ManagementNetworkConfigurationProperties(infrastructureVpnConfig, workloadVpnConfig))
             {
                 Annotation = "annotation",
                 RackCount = 2,
                 IPv6Prefix = "3FFE:FFFF:0:CD40::/59",
+            };
+
+            NetworkFabricData data = new NetworkFabricData(new AzureLocation(TestEnvironment.Location), properties)
+            {
                 Tags =
                 {
                     ["keyID"] = "keyValue",
-                },
+                }
             };
             ArmOperation<NetworkFabricResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkFabricName, data);
             #endregion

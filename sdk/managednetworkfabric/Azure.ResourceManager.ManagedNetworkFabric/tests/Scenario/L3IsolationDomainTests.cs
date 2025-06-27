@@ -29,12 +29,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             TestContext.Out.WriteLine($"L3IsolationDomains Test started.....");
 
-            NetworkFabricL3IsolationDomainCollection collection = ResourceGroupResource.GetNetworkFabricL3IsolationDomains();
+            ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
+            ResourceGroupResource resourceGroup = Client.GetResourceGroupResource(resourceGroupId);
+            NetworkFabricL3IsolationDomainCollection collection = resourceGroup.GetNetworkFabricL3IsolationDomains();
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricL3IsolationDomainData data = new NetworkFabricL3IsolationDomainData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier(TestEnvironment.Provisioned_NF_ID))
+            var properties = new L3IsolationDomainProperties()
             {
+                NetworkFabricId = new ResourceIdentifier(TestEnvironment.Provisioned_NF_ID),
                 Annotation = "annotation",
                 RedistributeConnectedSubnets = RedistributeConnectedSubnet.True,
                 RedistributeStaticRoutes = RedistributeStaticRoute.False,
@@ -48,11 +51,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     {
                         new AggregateRoute("3FFE:FFFF:0:CD30::a0/29")
                     },
-                },
+                }
+            };
+
+            NetworkFabricL3IsolationDomainData data = new NetworkFabricL3IsolationDomainData(new AzureLocation(TestEnvironment.Location), properties)
+            {
                 Tags =
                 {
                     ["keyID"] = "KeyValue",
-                },
+                }
             };
             ArmOperation<NetworkFabricL3IsolationDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.L3IsolationDomainName, data);
             NetworkFabricL3IsolationDomainResource createResult = lro.Value;

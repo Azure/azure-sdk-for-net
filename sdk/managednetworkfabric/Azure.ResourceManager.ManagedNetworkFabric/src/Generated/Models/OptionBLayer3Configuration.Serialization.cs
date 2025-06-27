@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -34,7 +34,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(OptionBLayer3Configuration)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
+            {
+                writer.WritePropertyName("primaryIpv4Prefix"u8);
+                writer.WriteStringValue(PrimaryIPv4Prefix);
+            }
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
+            {
+                writer.WritePropertyName("primaryIpv6Prefix"u8);
+                writer.WriteStringValue(PrimaryIPv6Prefix);
+            }
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
+            {
+                writer.WritePropertyName("secondaryIpv4Prefix"u8);
+                writer.WriteStringValue(SecondaryIPv4Prefix);
+            }
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
+            {
+                writer.WritePropertyName("secondaryIpv6Prefix"u8);
+                writer.WriteStringValue(SecondaryIPv6Prefix);
+            }
             if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
@@ -49,6 +68,46 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
+            }
+            if (Optional.IsCollectionDefined(PeLoopbackIPAddress))
+            {
+                writer.WritePropertyName("peLoopbackIpAddress"u8);
+                writer.WriteStartArray();
+                foreach (var item in PeLoopbackIPAddress)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(BmpConfiguration))
+            {
+                writer.WritePropertyName("bmpConfiguration"u8);
+                writer.WriteObjectValue(BmpConfiguration, options);
+            }
+            if (Optional.IsCollectionDefined(PrefixLimits))
+            {
+                writer.WritePropertyName("prefixLimits"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrefixLimits)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -72,17 +131,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            long? peerAsn = default;
-            int? vlanId = default;
-            long? fabricAsn = default;
             string primaryIPv4Prefix = default;
             string primaryIPv6Prefix = default;
             string secondaryIPv4Prefix = default;
             string secondaryIPv6Prefix = default;
+            long? peerAsn = default;
+            int? vlanId = default;
+            long? fabricAsn = default;
+            IList<string> peLoopbackIPAddress = default;
+            NniBmpProperties bmpConfiguration = default;
+            IList<OptionBLayer3PrefixLimitProperties> prefixLimits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("primaryIpv4Prefix"u8))
+                {
+                    primaryIPv4Prefix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("primaryIpv6Prefix"u8))
+                {
+                    primaryIPv6Prefix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("secondaryIpv4Prefix"u8))
+                {
+                    secondaryIPv4Prefix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("secondaryIpv6Prefix"u8))
+                {
+                    secondaryIPv6Prefix = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("peerASN"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -110,24 +192,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     fabricAsn = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("primaryIpv4Prefix"u8))
+                if (property.NameEquals("peLoopbackIpAddress"u8))
                 {
-                    primaryIPv4Prefix = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    peLoopbackIPAddress = array;
                     continue;
                 }
-                if (property.NameEquals("primaryIpv6Prefix"u8))
+                if (property.NameEquals("bmpConfiguration"u8))
                 {
-                    primaryIPv6Prefix = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bmpConfiguration = NniBmpProperties.DeserializeNniBmpProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("secondaryIpv4Prefix"u8))
+                if (property.NameEquals("prefixLimits"u8))
                 {
-                    secondaryIPv4Prefix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("secondaryIpv6Prefix"u8))
-                {
-                    secondaryIPv6Prefix = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<OptionBLayer3PrefixLimitProperties> array = new List<OptionBLayer3PrefixLimitProperties>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(OptionBLayer3PrefixLimitProperties.DeserializeOptionBLayer3PrefixLimitProperties(item, options));
+                    }
+                    prefixLimits = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -141,10 +240,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 primaryIPv6Prefix,
                 secondaryIPv4Prefix,
                 secondaryIPv6Prefix,
-                serializedAdditionalRawData,
                 peerAsn,
                 vlanId,
-                fabricAsn);
+                fabricAsn,
+                peLoopbackIPAddress ?? new ChangeTrackingList<string>(),
+                bmpConfiguration,
+                prefixLimits ?? new ChangeTrackingList<OptionBLayer3PrefixLimitProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OptionBLayer3Configuration>.Write(ModelReaderWriterOptions options)
