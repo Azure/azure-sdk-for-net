@@ -20,6 +20,9 @@ namespace Azure.Generator.Primitives
         private const string ParentDirectory = "../";
         private const string SharedSourceLinkBase = "Shared/Core";
 
+        private int PathSegmentCount => _pathSegmentCount ??= GetPathSegmentCount();
+        private int? _pathSegmentCount;
+
         /// <inheritdoc/>
         protected override string GetSourceProjectFileContent()
         {
@@ -37,33 +40,9 @@ namespace Azure.Generator.Primitives
                 builder.PackageReferences.Add(packages);
             }
 
-            int pathSegmentCount = GetPathSegmentCount();
-            if (AzureClientGenerator.Instance.InputLibrary.InputNamespace.Auth?.ApiKey is not null)
+            foreach (var compileInclude in BuildCompileIncludes())
             {
-                builder.CompileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), SharedSourceLinkBase));
-            }
-
-            bool hasOperation = false;
-            bool hasLongRunningOperation = false;
-            foreach (var client in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
-            {
-                TraverseInput(client, ref hasOperation, ref hasLongRunningOperation);
-            }
-
-            if (hasOperation)
-            {
-                foreach (var file in _operationSharedFiles)
-                {
-                    builder.CompileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
-                }
-            }
-
-            if (hasLongRunningOperation)
-            {
-                foreach (var file in _lroSharedFiles)
-                {
-                    builder.CompileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(file, pathSegmentCount), SharedSourceLinkBase));
-                }
+                builder.CompileIncludes.Add(compileInclude);
             }
 
             return builder.Write();
@@ -141,9 +120,58 @@ namespace Azure.Generator.Primitives
             return pathSegmentCount;
         }
 
-        private string GetCompileInclude(string fileName, int pathSegmentCount)
+        /// <summary>
+        /// Constructs a relative path for a compile include file based on the project structure.
+        /// </summary>
+        /// <param name="fileName">The name of the file to include.</param>
+        /// <param name="relativeSegment">The relative path segment to the shared source files (defaults to RelativeCoreSegment).</param>
+        /// <returns>A relative path string for the compile include file.</returns>
+        protected string GetCompileInclude(string fileName, string relativeSegment = RelativeCoreSegment)
         {
-            return $"{MSBuildThisFileDirectory}{string.Concat(Enumerable.Repeat(ParentDirectory, pathSegmentCount))}{RelativeCoreSegment}{fileName}";
+            return $"{MSBuildThisFileDirectory}{string.Concat(Enumerable.Repeat(ParentDirectory, PathSegmentCount))}{relativeSegment}{fileName}";
+        }
+
+        /// <summary>
+        /// Gets the list of required CompileInclude files based on the project's requirements.
+        /// </summary>
+        /// <returns>A list of CSharpProjectCompileInclude files that should be included in the project.</returns>
+        protected override IReadOnlyList<CSharpProjectCompileInclude> BuildCompileIncludes()
+        {
+            var compileIncludes = new List<CSharpProjectCompileInclude>();
+
+            // Add API key credential policy if API key authentication is configured
+            if (AzureClientGenerator.Instance.InputLibrary.InputNamespace.Auth?.ApiKey is not null)
+            {
+                compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs"), SharedSourceLinkBase));
+            }
+
+            // Analyze clients to determine what shared files are needed
+            bool hasOperation = false;
+            bool hasLongRunningOperation = false;
+            foreach (var client in AzureClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
+            {
+                TraverseInput(client, ref hasOperation, ref hasLongRunningOperation);
+            }
+
+            // Add operation-related shared files if operations are present
+            if (hasOperation)
+            {
+                foreach (var file in _operationSharedFiles)
+                {
+                    compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(file), SharedSourceLinkBase));
+                }
+            }
+
+            // Add long-running operation shared files if LRO operations are present
+            if (hasLongRunningOperation)
+            {
+                foreach (var file in _lroSharedFiles)
+                {
+                    compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(file), SharedSourceLinkBase));
+                }
+            }
+
+            return compileIncludes;
         }
     }
 }
