@@ -501,14 +501,14 @@
 # ServiceOwners:                                                   @thang-bit
 
 # PRLabel: %Event Grid
-/sdk/eventgrid/                                                    @JoshLove-msft @jsquire @m-redding
+/sdk/eventgrid/                                                    @Kishp01 @shankarsama @rajeshka
 
 # PRLabel: %Event Grid %Functions
-/sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/       @jsquire @JoshLove-msft
+/sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/       @Kishp01 @shankarsama @rajeshka
 
 # ServiceLabel: %Event Grid
-# AzureSdkOwners:                                                  @JoshLove-msft
-# ServiceOwners:                                                   @Kishp01 @ahamad-MS
+# AzureSdkOwners:                                                  @Kishp01 @shankarsama @rajeshka
+# ServiceOwners:                                                   @Kishp01 @shankarsama @rajeshka
 
 # PRLabel: %Event Hubs
 /sdk/eventhub/                                                     @jsquire @m-redding
