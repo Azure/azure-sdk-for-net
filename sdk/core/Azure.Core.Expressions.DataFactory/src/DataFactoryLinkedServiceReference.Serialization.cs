@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.ClientModel.Primitives;
@@ -96,11 +94,11 @@ namespace Azure.Core.Expressions.DataFactory
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
-                return null;
+                return null!;
             }
             DataFactoryLinkedServiceReferenceKind kind = default;
-            string referenceName = default;
-            Optional<IDictionary<string, BinaryData>> parameters = default;
+            string? referenceName = default;
+            Optional<IDictionary<string, BinaryData?>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -119,7 +117,7 @@ namespace Azure.Core.Expressions.DataFactory
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, BinaryData?> dictionary = new Dictionary<string, BinaryData?>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)

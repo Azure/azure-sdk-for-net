@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
@@ -83,12 +81,12 @@ namespace Azure.Core.Expressions.DataFactory
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
-                return null;
+                return null!;
             }
-            DataFactoryLinkedServiceReference store = default;
-            DataFactoryElement<string> secretName = default;
-            DataFactoryElement<string> secretVersion = default;
-            string type = default;
+            DataFactoryLinkedServiceReference? store = default;
+            DataFactoryElement<string>? secretName = default;
+            DataFactoryElement<string>? secretVersion = default;
+            string? type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("store"u8))
@@ -116,7 +114,7 @@ namespace Azure.Core.Expressions.DataFactory
                     continue;
                 }
             }
-            return new DataFactoryKeyVaultSecret(type, store, secretName, secretVersion);
+            return new DataFactoryKeyVaultSecret(type!, store!, secretName!, secretVersion!);
         }
 
         internal partial class DataFactoryKeyVaultSecretConverter : JsonConverter<DataFactoryKeyVaultSecret>
