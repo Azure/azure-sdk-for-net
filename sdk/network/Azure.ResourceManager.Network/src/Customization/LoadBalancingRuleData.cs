@@ -3,9 +3,9 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -14,6 +14,15 @@ namespace Azure.ResourceManager.Network
 {
     public partial class LoadBalancingRuleData : NetworkResourceData
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void EnsureProperties()
+        {
+            if (Properties is null)
+            {
+                Properties = new LoadBalancingRuleProperties(default, default);
+            }
+        }
+
         /// <summary> Gets or sets Id. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier FrontendIPConfigurationId
@@ -21,10 +30,7 @@ namespace Azure.ResourceManager.Network
             get => Properties?.FrontendIPConfigurationId;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
+                EnsureProperties();
                 Properties.FrontendIPConfigurationId = value;
             }
         }
@@ -36,10 +42,7 @@ namespace Azure.ResourceManager.Network
             get => Properties?.BackendAddressPoolId;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
+                EnsureProperties();
                 Properties.BackendAddressPoolId = value;
             }
         }
@@ -55,10 +58,7 @@ namespace Azure.ResourceManager.Network
             get => Properties?.ProbeId;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
+                EnsureProperties();
                 Properties.ProbeId = value;
             }
         }
@@ -70,10 +70,7 @@ namespace Azure.ResourceManager.Network
             get => Properties?.Protocol;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
+                EnsureProperties();
                 Properties.Protocol = value ?? default;
             }
         }
@@ -85,10 +82,7 @@ namespace Azure.ResourceManager.Network
             get => Properties?.LoadDistribution;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
+                EnsureProperties();
                 Properties.LoadDistribution = value;
             }
         }
@@ -100,10 +94,7 @@ namespace Azure.ResourceManager.Network
             get => Properties?.FrontendPort;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
+                EnsureProperties();
                 Properties.FrontendPort = value ?? default;
             }
         }
@@ -115,10 +106,7 @@ namespace Azure.ResourceManager.Network
             get => Properties?.BackendPort;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
+                EnsureProperties();
                 Properties.BackendPort = value;
             }
         }
@@ -130,10 +118,7 @@ namespace Azure.ResourceManager.Network
             get => Properties?.IdleTimeoutInMinutes;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
+                EnsureProperties();
                 Properties.IdleTimeoutInMinutes = value;
             }
         }
@@ -145,10 +130,7 @@ namespace Azure.ResourceManager.Network
             get => Properties?.EnableFloatingIP;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
+                EnsureProperties();
                 Properties.EnableFloatingIP = value;
             }
         }
@@ -160,10 +142,7 @@ namespace Azure.ResourceManager.Network
             get => Properties?.EnableTcpReset;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
+                EnsureProperties();
                 Properties.EnableTcpReset = value;
             }
         }
@@ -175,10 +154,7 @@ namespace Azure.ResourceManager.Network
             get => Properties?.DisableOutboundSnat;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
+                EnsureProperties();
                 Properties.DisableOutboundSnat = value;
             }
         }
