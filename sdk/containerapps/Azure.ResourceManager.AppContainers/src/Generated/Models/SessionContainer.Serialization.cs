@@ -81,6 +81,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources, options);
             }
+            if (Optional.IsCollectionDefined(Probes))
+            {
+                writer.WritePropertyName("probes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Probes)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -124,6 +134,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             IList<string> args = default;
             IList<ContainerAppEnvironmentVariable> env = default;
             SessionContainerResources resources = default;
+            IList<SessionProbe> probes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,6 +200,20 @@ namespace Azure.ResourceManager.AppContainers.Models
                     resources = SessionContainerResources.DeserializeSessionContainerResources(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("probes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SessionProbe> array = new List<SessionProbe>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SessionProbe.DeserializeSessionProbe(item, options));
+                    }
+                    probes = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -202,6 +227,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 args ?? new ChangeTrackingList<string>(),
                 env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>(),
                 resources,
+                probes ?? new ChangeTrackingList<SessionProbe>(),
                 serializedAdditionalRawData);
         }
 
@@ -369,6 +395,29 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     builder.Append("  resources: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Resources, options, 2, false, "  resources: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Probes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  probes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Probes))
+                {
+                    if (Probes.Any())
+                    {
+                        builder.Append("  probes: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Probes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  probes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

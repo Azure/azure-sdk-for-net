@@ -110,9 +110,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Nacos": return NacosComponent.DeserializeNacosComponent(element, options);
                     case "SpringBootAdmin": return SpringBootAdminComponent.DeserializeSpringBootAdminComponent(element, options);
                     case "SpringCloudConfig": return SpringCloudConfigComponent.DeserializeSpringCloudConfigComponent(element, options);
                     case "SpringCloudEureka": return SpringCloudEurekaComponent.DeserializeSpringCloudEurekaComponent(element, options);
+                    case "SpringCloudGateway": return SpringCloudGatewayComponent.DeserializeSpringCloudGatewayComponent(element, options);
                 }
             }
             return UnknownJavaComponentProperties.DeserializeUnknownJavaComponentProperties(element, options);
