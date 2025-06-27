@@ -260,4 +260,86 @@ internal class BinaryContentTests : SyncAsyncTestBase
         Assert.AreEqual("application/json", content.MediaType);
         Assert.IsNull(expectedContent.MediaType);
     }
+
+    [Test]
+    public void CreateJsonWithValidationSucceedsForValidJson()
+    {
+        string validJson = """{"name":"test","value":42,"nested":{"array":[1,2,3]}}""";
+        using BinaryContent content = BinaryContent.CreateJson(validJson, validate: true);
+
+        Assert.AreEqual("application/json", content.MediaType);
+        Assert.IsTrue(content.TryComputeLength(out long length));
+        Assert.AreEqual(validJson.Length, length);
+    }
+
+    [Test]
+    public void CreateJsonWithValidationThrowsForInvalidJson()
+    {
+        string invalidJson = """{"name":"test","value":42"""; // Missing closing brace
+
+        var ex = Assert.Throws<ArgumentException>(() => BinaryContent.CreateJson(invalidJson, validate: true));
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+        Assert.AreEqual("jsonString", ex.ParamName);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+        Assert.IsTrue(ex.Message.Contains("not valid JSON"));
+    }
+
+    [Test]
+    public void CreateJsonWithoutValidationSucceedsForInvalidJson()
+    {
+        string invalidJson = """{"name":"test","value":42"""; // Missing closing brace
+
+        // Should not throw when validation is disabled (default behavior)
+        using BinaryContent content = BinaryContent.CreateJson(invalidJson, validate: false);
+        Assert.AreEqual("application/json", content.MediaType);
+
+        // Should also not throw when validation parameter is omitted
+        using BinaryContent content2 = BinaryContent.CreateJson(invalidJson);
+        Assert.AreEqual("application/json", content2.MediaType);
+    }
+
+    [Test]
+    public void CreateJsonWithValidationHandlesEmptyObject()
+    {
+        string emptyObject = "{}";
+        using BinaryContent content = BinaryContent.CreateJson(emptyObject, validate: true);
+
+        Assert.AreEqual("application/json", content.MediaType);
+        Assert.IsTrue(content.TryComputeLength(out long length));
+        Assert.AreEqual(2, length);
+    }
+
+    [Test]
+    public void CreateJsonWithValidationHandlesEmptyArray()
+    {
+        string emptyArray = "[]";
+        using BinaryContent content = BinaryContent.CreateJson(emptyArray, validate: true);
+
+        Assert.AreEqual("application/json", content.MediaType);
+        Assert.IsTrue(content.TryComputeLength(out long length));
+        Assert.AreEqual(2, length);
+    }
+
+    [Test]
+    public void CreateJsonWithValidationThrowsForMalformedJson()
+    {
+        string[] malformedJsonStrings = new[]
+        {
+            "{",
+            "}",
+            "[",
+            "]",
+            "{\"key\":}",
+            "{\"key\"",
+            "\"unterminated string",
+            "{\"key\": value}",  // unquoted value
+            "{key: \"value\"}",  // unquoted key
+        };
+
+        foreach (string malformedJson in malformedJsonStrings)
+        {
+            Assert.Throws<ArgumentException>(() => BinaryContent.CreateJson(malformedJson, validate: true),
+                $"Expected validation to fail for: {malformedJson}");
+        }
+    }
 }

@@ -117,14 +117,42 @@ public abstract class BinaryContent : IDisposable
     /// provided JSON string.
     /// </summary>
     /// <param name="jsonString">The JSON string to be used as the content.</param>
+    /// <param name="validate">Whether to validate that the string contains valid JSON.
+    /// If true, the method will validate the JSON format and throw an exception if invalid.
+    /// Defaults to false for backwards compatibility.</param>
     /// <returns>An instance of <see cref="BinaryContent"/> that contains the
     /// provided JSON string.</returns>
-    public static BinaryContent CreateJson(string jsonString)
+    /// <exception cref="ArgumentException">Thrown when <paramref name="validate"/> is true and
+    /// <paramref name="jsonString"/> is not valid JSON.</exception>
+    public static BinaryContent CreateJson(string jsonString, bool validate = false)
     {
         Argument.AssertNotNull(jsonString, nameof(jsonString));
 
+        if (validate)
+        {
+            ValidateJsonString(jsonString);
+        }
+
         BinaryData data = BinaryData.FromString(jsonString);
         return new BinaryDataBinaryContent(data.ToMemory(), "application/json");
+    }
+
+    private static void ValidateJsonString(string jsonString)
+    {
+        try
+        {
+            var reader = new Utf8JsonReader(System.Text.Encoding.UTF8.GetBytes(jsonString));
+
+            // Skip through the entire JSON document to validate it's well-formed
+            while (reader.Read())
+            {
+                // The Read() method will throw JsonException if the JSON is malformed
+            }
+        }
+        catch (JsonException ex)
+        {
+            throw new ArgumentException($"The provided string is not valid JSON: {ex.Message}", nameof(jsonString), ex);
+        }
     }
 
     /// <summary>
