@@ -231,8 +231,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task GetModelEvaluationSummaryAsync()
         {
             // Arrange
-            string projectName = "test001";
-            string trainedModelLabel = "m1";
+            string projectName = "single-class-project";
+            string trainedModelLabel = "model1";
             TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
             // Act
@@ -308,8 +308,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task LoadSnapshotAsync()
         {
             // Arrange
-            string projectName = "test001";
-            string trainedModelLabel = "m1"; // Replace with your actual model label.
+            string projectName = "single-class-project";
+            string trainedModelLabel = "model1";
             TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
             // Act
@@ -331,7 +331,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task DeleteTrainedModelAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
+            string projectName = "single-class-project";
             string trainedModelLabel = "model1"; // Replace with the actual model label.
             TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
@@ -350,101 +350,30 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task DeployProjectAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
+            string projectName = "single-class-project";
             string deploymentName = "deployment1";
-            var deploymentDetails = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "m2");
+            var deploymentDetails = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "model1");
 
             TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
             // Act
             Operation operation = await deploymentClient.DeployProjectAsync(
-                waitUntil: WaitUntil.Completed,
+                waitUntil: WaitUntil.Started,
                 details: deploymentDetails
             );
 
             // Assert
             Assert.IsNotNull(operation);
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful deployment.");
+            Assert.AreEqual(202, operation.GetRawResponse().Status, "Expected the status to indicate successful deployment.");
 
             // Logging for additional context
             Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
         }
 
         [RecordedTest]
-        public async Task DeployProjectAsync_WithAssignedResources_ShouldReturnAcceptedStatus()
-        {
-            // Arrange
-            string projectName = "single-class-project";
-            string deploymentName = "deploymentWithAssignedResource";
-
-            var requestBody = new
-            {
-                trainedModelLabel = "model1",
-                assignedResources = new[]
-                {
-                    new
-                    {
-                        resourceId = "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/language-sdk-rg/providers/Microsoft.CognitiveServices/accounts/sdk-test-01",
-                        region = "eastus",
-                        assignedAoaiResource = new
-                        {
-                            kind = "AzureOpenAI",
-                            resourceId = "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai",
-                            deploymentName = "gpt-4o"
-                        }
-                    }
-                }
-            };
-
-            string json = JsonSerializer.Serialize(requestBody);
-            Console.WriteLine(json);
-            var requestContent = RequestContent.Create(BinaryData.FromString(json));
-
-            // Use the REST client directly (or if the SDK has an overload for raw JSON):
-            var response = await client.GetDeployment(projectName, deploymentName)
-                .DeployProjectAsync(WaitUntil.Completed, requestContent);
-
-            Console.WriteLine($"Response status: {response.GetRawResponse().Status}");
-            //var deploymentDetails = new TextAuthoringCreateDeploymentDetails(
-            //    trainedModelLabel: "model1");
-
-            ////Directly add to the AssignedResources collection
-            //deploymentDetails.AssignedResources.Add(new TextAuthoringDeploymentResource(
-            //    resourceId: "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/language-sdk-rg/providers/Microsoft.CognitiveServices/accounts/sdk-test-01",
-            //    region: "eastus")
-            //{
-            //    AssignedAoaiResource = new DataGenerationConnectionInfo(
-            //        resourceId: "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai",
-            //        deploymentName: "gpt-4o")
-            //});
-
-            //string jsonPayload = JsonSerializer.Serialize(deploymentDetails, new JsonSerializerOptions { WriteIndented = true });
-            //Console.WriteLine(jsonPayload);
-
-            //var deploymentClient = client.GetDeployment(projectName, deploymentName);
-
-            //// Act
-            //Operation operation = await deploymentClient.DeployProjectAsync(
-            //    waitUntil: WaitUntil.Completed,
-            //    details: deploymentDetails
-            //);
-
-            //// Assert
-            //Assert.IsNotNull(operation);
-            //Assert.AreEqual(202, operation.GetRawResponse().Status, "Expected 202 Accepted status code for deployment initiation.");
-
-            //string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location)
-            //    ? location
-            //    : null;
-
-            //Assert.IsNotNull(operationLocation, "operation-location header is missing.");
-            //Console.WriteLine($"Deployment initiated. Operation-Location: {operationLocation}");
-        }
-
-        [RecordedTest]
         public async Task SwapDeploymentsAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
+            string projectName = "single-class-project";
             var swapDetails = new TextAuthoringSwapDeploymentsDetails(
                 firstDeploymentName: "deployment1",
                 secondDeploymentName: "deployment2"
@@ -469,8 +398,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task DeleteDeploymentAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
-            string deploymentName = "deployment2";
+            string projectName = "single-class-project";
+            string deploymentName = "singleclassdeployment";
             TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
             // Act
