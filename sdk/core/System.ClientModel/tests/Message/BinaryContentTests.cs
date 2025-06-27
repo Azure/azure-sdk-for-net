@@ -27,6 +27,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
         BinaryData data = BinaryData.FromString(value);
         using BinaryContent content = BinaryContent.Create(data);
 
+        Assert.IsNull(content.MediaType);
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.AreEqual(value.Length, length);
     }
@@ -164,6 +165,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
         var testObject = new { Name = "test", Value = 42 };
         using BinaryContent content = BinaryContent.CreateJson(testObject);
 
+        Assert.AreEqual("application/json", content.MediaType);
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.Greater(length, 0);
 
@@ -183,6 +185,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
 
         using BinaryContent content = BinaryContent.CreateJson(testObject, options);
 
+        Assert.AreEqual("application/json", content.MediaType);
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.Greater(length, 0);
 
