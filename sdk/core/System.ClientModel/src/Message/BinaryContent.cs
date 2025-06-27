@@ -113,6 +113,21 @@ public abstract class BinaryContent : IDisposable
     }
 
     /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// provided JSON string.
+    /// </summary>
+    /// <param name="jsonString">The JSON string to be used as the content.</param>
+    /// <returns>An instance of <see cref="BinaryContent"/> that contains the
+    /// provided JSON string.</returns>
+    public static BinaryContent CreateJson(string jsonString)
+    {
+        Argument.AssertNotNull(jsonString, nameof(jsonString));
+
+        BinaryData data = BinaryData.FromString(jsonString);
+        return new BinaryDataBinaryContent(data.ToMemory(), "application/json");
+    }
+
+    /// <summary>
     /// Attempts to compute the length of the underlying body content, if available.
     /// </summary>
     /// <param name="length">The length of the underlying data.</param>

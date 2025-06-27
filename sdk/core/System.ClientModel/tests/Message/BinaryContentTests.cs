@@ -221,4 +221,43 @@ internal class BinaryContentTests : SyncAsyncTestBase
         Assert.IsTrue(expectedContent.TryComputeLength(out long expectedLength));
         Assert.AreEqual(expectedLength, contentLength);
     }
+
+    [Test]
+    public async Task CanCreateAndWriteJsonBinaryContentFromString()
+    {
+        string jsonString = """{"name":"test","value":42}""";
+        using BinaryContent content = BinaryContent.CreateJson(jsonString);
+
+        Assert.AreEqual("application/json", content.MediaType);
+        Assert.IsTrue(content.TryComputeLength(out long length));
+        Assert.AreEqual(jsonString.Length, length);
+
+        MemoryStream stream = new MemoryStream();
+        await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
+
+        string result = System.Text.Encoding.UTF8.GetString(stream.ToArray());
+        Assert.AreEqual(jsonString, result);
+    }
+
+    [Test]
+    public void JsonStringBinaryContentMatchesBinaryDataFromString()
+    {
+        string jsonString = """{"name":"test","value":42}""";
+
+        // Create using the new CreateJson string method
+        using BinaryContent content = BinaryContent.CreateJson(jsonString);
+
+        // Create using the existing pattern
+        BinaryData binaryData = BinaryData.FromString(jsonString);
+        using BinaryContent expectedContent = BinaryContent.Create(binaryData);
+
+        // They should have the same length
+        Assert.IsTrue(content.TryComputeLength(out long contentLength));
+        Assert.IsTrue(expectedContent.TryComputeLength(out long expectedLength));
+        Assert.AreEqual(expectedLength, contentLength);
+
+        // Content should have JSON media type, while regular Create should not
+        Assert.AreEqual("application/json", content.MediaType);
+        Assert.IsNull(expectedContent.MediaType);
+    }
 }
