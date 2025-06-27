@@ -1,6 +1,6 @@
 # Release History
 
-## 4.8.0-beta.2 (Unreleased)
+## 4.8.0 (2025-06-27)
 
 ### Acknowledgments
 
