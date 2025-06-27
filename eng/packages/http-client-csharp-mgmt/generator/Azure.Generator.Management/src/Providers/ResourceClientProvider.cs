@@ -33,19 +33,19 @@ namespace Azure.Generator.Management.Providers
     /// </summary>
     internal class ResourceClientProvider : TypeProvider
     {
-        public static ResourceClientProvider Create(InputClient inputClient, ResourceMetadata resourceMetadata)
+        public static ResourceClientProvider Create(InputModelType model, ResourceMetadata resourceMetadata)
         {
-            var resource = new ResourceClientProvider(inputClient, resourceMetadata);
+            var resource = new ResourceClientProvider(model, resourceMetadata);
             if (!resource.IsSingleton)
             {
-                var collection = new ResourceCollectionClientProvider(inputClient, resourceMetadata, resource);
+                var collection = new ResourceCollectionClientProvider(model, resourceMetadata, resource);
                 resource.ResourceCollection = collection;
             }
 
             return resource;
         }
 
-        private IReadOnlyCollection<InputServiceMethod> _resourceServiceMethods;
+        private IEnumerable<InputServiceMethod> _resourceServiceMethods;
 
         private FieldProvider _dataField;
         private FieldProvider _resourceTypeField;
@@ -53,21 +53,24 @@ namespace Azure.Generator.Management.Providers
         protected FieldProvider _clientDiagnosticsField;
         protected FieldProvider _clientField;
 
-        private protected ResourceClientProvider(InputClient inputClient, ResourceMetadata resourceMetadata)
+        private protected ResourceClientProvider(InputModelType model, ResourceMetadata resourceMetadata)
         {
             IsSingleton = resourceMetadata.IsSingleton;
             ResourceScope = resourceMetadata.ResourceScope;
             var resourceType = resourceMetadata.ResourceType;
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
-            var resourceModel = resourceMetadata.ResourceModel;
+            var resourceModel = model;
             // TODO -- the name of a resource is not always the name of its model. Maybe the resource metadata should have a property for the name of the resource?
             SpecName = resourceModel.Name.ToIdentifierName();
 
             // We should be able to assume that all operations in the resource client are for the same resource
-            var requestPath = new RequestPath(inputClient.Methods.First().Operation.Path);
-            _resourceServiceMethods = inputClient.Methods;
+            var requestPath = new RequestPath(ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(resourceMetadata.Methods.First().Id)!.Operation.Path);
+            _resourceServiceMethods = resourceMetadata.Methods.Select(m => ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!);
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(resourceModel)!;
-            _restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+
+            // TODO: handle multiple clients in the future, for now we assume that there is only one client for the resource.
+            var inputClients = resourceMetadata.Methods.Select(m => ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!)!).Distinct();
+            _restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClients.First())!;
 
             //TODO: Remove this when we have a way to handle renaming directly in ResourceVisitor.
             foreach (var method in _restClientProvider.Methods)
@@ -113,7 +116,7 @@ namespace Azure.Generator.Management.Providers
 
         internal ModelProvider ResourceData { get; }
         internal string SpecName { get; }
-        internal IReadOnlyCollection<InputServiceMethod> ResourceServiceMethods => _resourceServiceMethods;
+        internal IEnumerable<InputServiceMethod> ResourceServiceMethods => _resourceServiceMethods;
 
         public bool IsSingleton { get; }
 
@@ -332,8 +335,11 @@ namespace Azure.Generator.Management.Providers
                     if (convenienceMethod != null)
                     {
                         var resource = convenienceMethod.Signature.Parameters
-                            .Single(p => p.Type.Equals(ResourceData.Type) || p.Type.Equals(typeof(RequestContent)));
-                        arguments.Add(resource);
+                            .SingleOrDefault(p => p.Type.Equals(ResourceData.Type) || p.Type.Equals(typeof(RequestContent)));
+                        if (resource is not null)
+                        {
+                            arguments.Add(resource);
+                        }
                     }
                     else
                     {

@@ -12,6 +12,7 @@ using Azure.Generator.Management.Extensions;
 using System.Collections.Generic;
 using System.Net.Http;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using System.Linq;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
 {

@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { EmitContext } from "@typespec/compiler";
+import { EmitContext, Program } from "@typespec/compiler";
 
-import { CodeModel } from "@typespec/http-client-csharp";
+import { CodeModel, createCSharpEmitterContext, Logger, LoggerLevel } from "@typespec/http-client-csharp";
 
 import {
   $onEmit as $onAzureEmit,
@@ -11,18 +11,37 @@ import {
 } from "@azure-typespec/http-client-csharp";
 import { azureSDKContextOptions } from "./sdk-context-options.js";
 import { updateClients } from "./resource-detection.js";
+import { createSdkContext } from "@azure-tools/typespec-client-generator-core";
 
 export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
+
+  const program = context.program;
+  if (program.compilerOptions.noEmit || program.hasError()) {
+    return;
+  }
+
+  /* set the log level. */
+  const logger = new Logger(program, context.options.logLevel ?? LoggerLevel.INFO);
+  const sdkContext = createCSharpEmitterContext(
+    await createSdkContext(
+      context,
+      "@typespec/http-client-csharp",
+      context.options["sdk-context-options"],
+    ),
+    logger,
+  );
+  program.reportDiagnostics(sdkContext.diagnostics);
+
+  function updateCodeModel(codeModel: CodeModel): CodeModel {
+    updateClients(codeModel, sdkContext);
+    return codeModel;
+  }
+
   context.options["generator-name"] ??= "ManagementClientGenerator";
-  context.options["update-code-model"] = updateCodeModel;
+  context.options["update-code-model"] ??= updateCodeModel;
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
   context.options["model-namespace"] ??= true;
   await $onAzureEmit(context);
-}
 
-function updateCodeModel(codeModel: CodeModel): CodeModel {
-  updateClients(codeModel);
-
-  return codeModel;
 }

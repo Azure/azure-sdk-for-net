@@ -17,7 +17,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -29,30 +28,28 @@ namespace Azure.Generator.Management.Providers
         private InputServiceMethod? _create;
         private InputServiceMethod? _get;
 
-        internal ResourceCollectionClientProvider(InputClient inputClient, ResourceMetadata resourceMetadata, ResourceClientProvider resource) : base(inputClient, resourceMetadata)
+        internal ResourceCollectionClientProvider(InputModelType model, ResourceMetadata resourceMetadata, ResourceClientProvider resource) : base(model, resourceMetadata)
         {
             _resource = resource;
 
-            foreach (var method in inputClient.Methods)
+            foreach (var method in resourceMetadata.Methods)
             {
-                var operation = method.Operation;
-                if (operation.HttpMethod == HttpMethod.Get.ToString())
+                if (_getAll is not null && _create is not null && _get is not null)
                 {
-                    if (operation.Name == "Get")
-                    {
-                        if (operation.CrossLanguageDefinitionId.Contains("list"))
-                        {
-                            _getAll = method;
-                        }
-                        else
-                        {
-                            _get = method;
-                        }
-                    }
+                    break; // we already have all methods we need
                 }
-                if (operation.HttpMethod == HttpMethod.Put.ToString() && operation.Name == "CreateOrUpdate")
+
+                if (method.Kind == OperationKind.Get)
                 {
-                    _create = method;
+                    _get = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
+                }
+                if (method.Kind == OperationKind.List)
+                {
+                    _getAll = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
+                }
+                if (method.Kind == OperationKind.Create)
+                {
+                    _create = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
                 }
             }
         }
