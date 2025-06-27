@@ -1,6 +1,6 @@
 # Release History
 
-## 4.8.0-beta.2 (Unreleased)
+## 4.8.0 (2025-06-27)
 
 ### Acknowledgments
 
@@ -14,8 +14,6 @@ Thank you to our developer community members who helped to make the Key Vault cl
 - Added CkmAesKeyWrap algorithm in `KeyWrapAlgorithm`
 - Added Attestation property for Keys in Managed HSM Key Vaults.
 - Adde new `GetKeyAttestation` operation to get the public part of a stored key along with its attestation blob.
-
-### Breaking Changes
 
 ### Bugs Fixed
 

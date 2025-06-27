@@ -106,9 +106,9 @@ namespace Azure.Security.KeyVault.Keys
     public partial class KeyAttestation
     {
         public KeyAttestation() { }
-        public byte[] CertificatePemFile { get { throw null; } set { } }
-        public byte[] PrivateKeyAttestation { get { throw null; } set { } }
-        public byte[] PublicKeyAttestation { get { throw null; } set { } }
+        public System.ReadOnlyMemory<byte> CertificatePemFile { get { throw null; } set { } }
+        public System.ReadOnlyMemory<byte> PrivateKeyAttestation { get { throw null; } set { } }
+        public System.ReadOnlyMemory<byte> PublicKeyAttestation { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }
     public partial class KeyClient
