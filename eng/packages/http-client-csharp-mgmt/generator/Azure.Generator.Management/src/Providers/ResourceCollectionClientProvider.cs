@@ -74,7 +74,7 @@ namespace Azure.Generator.Management.Providers
 
         // TODO -- we need to change this type to its parent resource type.
         private ScopedApi<ResourceType>? _resourceTypeExpression;
-        protected override ScopedApi<ResourceType> ResourceTypeExpression => _resourceTypeExpression??= BuildCollectionResourceTypeExpression();
+        protected override ScopedApi<ResourceType> ResourceTypeExpression => _resourceTypeExpression ??= BuildCollectionResourceTypeExpression();
 
         private ScopedApi<ResourceType> BuildCollectionResourceTypeExpression()
         {
@@ -148,7 +148,7 @@ namespace Azure.Generator.Management.Providers
                 return result;
             }
 
-            foreach (var isAsync in new List<bool> { true, false})
+            foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_create!.Operation, isAsync);
                 result.Add(new ResourceOperationMethodProvider(this, _create, convenienceMethod, isAsync));
@@ -171,7 +171,7 @@ namespace Azure.Generator.Management.Providers
                 return result;
             }
 
-            foreach (var isAsync in new List<bool> { true, false})
+            foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
                 result.Add(new ResourceOperationMethodProvider(this, _get, convenienceMethod, isAsync));
@@ -188,7 +188,7 @@ namespace Azure.Generator.Management.Providers
                 return result;
             }
 
-            foreach (var isAsync in new List<bool> { true, false})
+            foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
                 var existsMethodProvider = new ExistsOperationMethodProvider(this, _get, convenienceMethod, isAsync);
@@ -206,7 +206,7 @@ namespace Azure.Generator.Management.Providers
                 return result;
             }
 
-            foreach (var isAsync in new List<bool> { true, false})
+            foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
                 var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _get, convenienceMethod, isAsync);
@@ -220,7 +220,21 @@ namespace Azure.Generator.Management.Providers
         /// Gets the collection of parameter names that should be excluded from method parameters.
         /// For collection clients, this excludes all contextual parameters except the last one (typically the resource name).
         /// </summary>
-        internal override IReadOnlyList<string> ImplicitParameterNames =>
-            ContextualParameters == null ? [] : ContextualParameters.Take(ContextualParameters.Count - 1).ToList();
+        internal override IReadOnlyList<string> ImplicitParameterNames
+        {
+            get
+            {
+                if (ContextualParameters is null)
+                    return [];
+
+                // resourceGroupName and subscriptionId are always included in the parameters for collection clients.
+                if (ContextualParameters.Count > 2)
+                {
+                    return ContextualParameters.Take(ContextualParameters.Count - 1).ToList();
+                }
+
+                return ContextualParameters;
+            }
+    }
     }
 }

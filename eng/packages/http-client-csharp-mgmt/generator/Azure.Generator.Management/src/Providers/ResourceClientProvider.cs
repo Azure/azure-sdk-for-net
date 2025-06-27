@@ -6,10 +6,11 @@ using Azure.Core.Pipeline;
 using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
-using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Providers.TagMethodProviders;
+using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
+using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -25,6 +26,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using static System.Net.Mime.MediaTypeNames;
+using OperationKind = Azure.Generator.Management.Models.OperationKind;
 
 namespace Azure.Generator.Management.Providers
 {
@@ -45,12 +48,12 @@ namespace Azure.Generator.Management.Providers
             return resource;
         }
 
-        private IEnumerable<InputServiceMethod> _resourceServiceMethods;
+        private IEnumerable<(OperationKind, InputServiceMethod)> _resourceServiceMethods;
 
         private FieldProvider _dataField;
-        private InputModelType _resourceModel;
         private FieldProvider _resourceTypeField;
         private bool _hasGetMethod = false;
+        private bool _shouldGenerateTagMethods = false;
 
         protected ClientProvider _restClientProvider;
         protected FieldProvider _clientDiagnosticsField;
@@ -63,30 +66,19 @@ namespace Azure.Generator.Management.Providers
             var resourceType = resourceMetadata.ResourceType;
             _hasGetMethod = resourceMetadata.Methods.Any(m => m.Kind == OperationKind.Get);
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
-            _resourceModel = model;
+            _shouldGenerateTagMethods = ShouldGenerateTagMethods(model);
+
             // TODO -- the name of a resource is not always the name of its model. Maybe the resource metadata should have a property for the name of the resource?
-            SpecName = _resourceModel.Name.ToIdentifierName();
+            SpecName = model.Name.ToIdentifierName();
 
             // We should be able to assume that all operations in the resource client are for the same resource
             var requestPath = new RequestPath(ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(resourceMetadata.Methods.First().Id)!.Operation.Path);
-            _resourceServiceMethods = resourceMetadata.Methods.Select(m => ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!);
-            ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(_resourceModel)!;
+            _resourceServiceMethods = resourceMetadata.Methods.Select(m => (m.Kind, ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!));
+            ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
 
             // TODO: handle multiple clients in the future, for now we assume that there is only one client for the resource.
             var inputClients = resourceMetadata.Methods.Select(m => ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!)!).Distinct();
             _restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClients.First())!;
-
-            //TODO: Remove this when we have a way to handle renaming directly in ResourceVisitor.
-            foreach (var method in _restClientProvider.Methods)
-            {
-                foreach (var parameter in method.Signature.Parameters)
-                {
-                    if (ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(parameter.Type))
-                    {
-                        parameter.Update(name: "data");
-                    }
-                }
-            }
 
             ContextualParameters = GetContextualParameters(requestPath);
 
@@ -120,7 +112,7 @@ namespace Azure.Generator.Management.Providers
 
         internal ModelProvider ResourceData { get; }
         internal string SpecName { get; }
-        internal IEnumerable<InputServiceMethod> ResourceServiceMethods => _resourceServiceMethods;
+        internal IEnumerable<(OperationKind Kind, InputServiceMethod Method)> ResourceServiceMethods => _resourceServiceMethods;
 
         public bool IsSingleton { get; }
 
@@ -255,12 +247,18 @@ namespace Azure.Generator.Management.Providers
         protected override MethodProvider[] BuildMethods()
         {
             var operationMethods = new List<MethodProvider>();
-            foreach (var method in _resourceServiceMethods)
+            foreach (var (methodKind, method) in _resourceServiceMethods)
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
                 // exclude the List operations for resource, they will be in ResourceCollection
                 var returnType = convenienceMethod.Signature.ReturnType!;
                 if ((returnType.IsFrameworkType && returnType.IsList) || (method is InputPagingServiceMethod pagingMethod && pagingMethod.PagingMetadata.ItemPropertySegments.Any() == true))
+                {
+                    continue;
+                }
+
+                // Skip Create operations for non-singleton resources
+                if (!IsSingleton && methodKind == OperationKind.Create)
                 {
                     continue;
                 }
@@ -292,7 +290,7 @@ namespace Azure.Generator.Management.Providers
             methods.AddRange(operationMethods);
 
             // Only generate tag methods if the resource model has tag properties
-            if (ShouldGenerateTagMethods(_resourceModel))
+            if (_shouldGenerateTagMethods)
             {
                 methods.AddRange([
                     new AddTagMethodProvider(this, true),
@@ -346,12 +344,13 @@ namespace Azure.Generator.Management.Providers
         }
 
         public ValueExpression[] PopulateArguments(
-            IReadOnlyList<ParameterProvider> parameters,
+            IReadOnlyList<ParameterProvider> requestParameters,
             VariableExpression contextVariable,
-            MethodProvider? convenienceMethod = null)
+            IReadOnlyList<ParameterProvider> methodParameters,
+            InputOperation operation)
         {
             var arguments = new List<ValueExpression>();
-            foreach (var parameter in parameters)
+            foreach (var parameter in requestParameters)
             {
                 if (parameter.Name.Equals("subscriptionId", StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -375,13 +374,20 @@ namespace Azure.Generator.Management.Providers
                 else if (parameter.Type.Equals(typeof(RequestContent)))
                 {
                     // If convenience method is provided, find the resource parameter from it
-                    if (convenienceMethod != null)
+                    if (methodParameters.Count > 0)
                     {
-                        var resource = convenienceMethod.Signature.Parameters
-                            .SingleOrDefault(p => p.Type.Equals(ResourceData.Type) || p.Type.Equals(typeof(RequestContent)));
-                        if (resource is not null)
+                        // Find the content parameter in the method parameters
+                        var contentInputParameter = operation.Parameters.First(p => !ImplicitParameterNames.Contains(p.Name) && p.Kind == InputParameterKind.Method && p.Type is not InputPrimitiveType);
+                        var resource = methodParameters
+                            .SingleOrDefault(p => p.Name == "data" || p.Name == contentInputParameter.Name);
+                        if (resource != null)
                         {
                             arguments.Add(resource);
+                        }
+                        else
+                        {
+                            // Otherwise just add the parameter as-is
+                            arguments.Add(parameter);
                         }
                     }
                     else
@@ -396,7 +402,7 @@ namespace Azure.Generator.Management.Providers
                 }
                 else
                 {
-                    arguments.Add(parameter);
+                    arguments.Add(methodParameters.Single(p => p.Name == parameter.Name));
                 }
             }
             return [.. arguments];
