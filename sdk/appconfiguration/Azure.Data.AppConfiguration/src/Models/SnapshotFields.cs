@@ -8,7 +8,13 @@ using System.ComponentModel;
 
 namespace Azure.Data.AppConfiguration
 {
+    // CUSTOM:
+    // - Suppress operators.
+    // - Renamed members.
     /// <summary> The SnapshotFields. </summary>
+    [CodeGenSuppress("==", typeof(SnapshotFields), typeof(SnapshotFields))]
+    [CodeGenSuppress("!=", typeof(SnapshotFields), typeof(SnapshotFields))]
+    [CodeGenSuppress("", typeof(string))]
     public readonly partial struct SnapshotFields : IEquatable<SnapshotFields>
     {
         private readonly string _value;
@@ -38,21 +44,33 @@ namespace Azure.Data.AppConfiguration
         public static SnapshotFields Status { get; } = new SnapshotFields(StatusValue);
         /// <summary> filters. </summary>
         public static SnapshotFields Filters { get; } = new SnapshotFields(FiltersValue);
+
         /// <summary> composition_type. </summary>
+        [CodeGenMember("CompositionType")]
         public static SnapshotFields SnapshotComposition { get; } = new SnapshotFields(SnapshotCompositionValue);
+
         /// <summary> created. </summary>
+        [CodeGenMember("Created")]
         public static SnapshotFields CreatedOn { get; } = new SnapshotFields(CreatedOnValue);
+
         /// <summary> expires. </summary>
+        [CodeGenMember("Expires")]
         public static SnapshotFields ExpiresOn { get; } = new SnapshotFields(ExpiresOnValue);
         /// <summary> retention_period. </summary>
         public static SnapshotFields RetentionPeriod { get; } = new SnapshotFields(RetentionPeriodValue);
+
         /// <summary> size. </summary>
+        [CodeGenMember("Size")]
         public static SnapshotFields SizeInBytes { get; } = new SnapshotFields(SizeInBytesValue);
+
         /// <summary> items_count. </summary>
+        [CodeGenMember("ItemsCount")]
         public static SnapshotFields ItemCount { get; } = new SnapshotFields(ItemCountValue);
         /// <summary> tags. </summary>
         public static SnapshotFields Tags { get; } = new SnapshotFields(TagsValue);
+
         /// <summary> etag. </summary>
+        [CodeGenMember("Etag")]
         public static SnapshotFields ETag { get; } = new SnapshotFields(ETagValue);
         /// <summary> Determines if two <see cref="SnapshotFields"/> values are the same. </summary>
         public static bool operator ==(SnapshotFields left, SnapshotFields right) => left.Equals(right);
