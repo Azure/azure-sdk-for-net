@@ -271,7 +271,6 @@ namespace Azure.AI.Projects
         /// <param name="connectionType"> List connections of this specific type. </param>
         /// <param name="defaultConnection"> List connections that are default connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnectionsAsync(ConnectionType?,bool?,CancellationToken)']/*" />
         public virtual AsyncPageable<Connection> GetConnectionsAsync(ConnectionType? connectionType = null, bool? defaultConnection = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -284,7 +283,6 @@ namespace Azure.AI.Projects
         /// <param name="connectionType"> List connections of this specific type. </param>
         /// <param name="defaultConnection"> List connections that are default connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnections(ConnectionType?,bool?,CancellationToken)']/*" />
         public virtual Pageable<Connection> GetConnections(ConnectionType? connectionType = null, bool? defaultConnection = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -313,7 +311,6 @@ namespace Azure.AI.Projects
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnectionsAsync(string,bool?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetConnectionsAsync(string connectionType, bool? defaultConnection, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType, defaultConnection, context);
@@ -341,7 +338,6 @@ namespace Azure.AI.Projects
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Connections.xml" path="doc/members/member[@name='GetConnections(string,bool?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetConnections(string connectionType, bool? defaultConnection, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType, defaultConnection, context);
