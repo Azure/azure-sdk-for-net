@@ -25,10 +25,12 @@ There are a few exceptions where package-name is replaced with a shorter directo
           `dotnet build eng\service.proj /p:ServiceDirectory=eventhub` and `dotnet build eng\service.proj /p:ServiceDirectory=keyvault`
         - If you see build errors, try to fix them, if you can't fix them within 5 iterations, give up, do not do steps 4 or 5, and report this to the user. Do not report success if the build fails!
     4. Once the code builds, run the unit tests using `dotnet test eng/service.proj /p:ServiceDirectory={service-directory} --filter TestCategory!=Live` for each service directory you modified. Try to fix failures if you can within 5 iterations. If you can't, give up and report this to the user. Do not report success if the tests fail!
-    5. When you're done working, navigate to the root of the repository and run `.\eng\scripts\Export-API.ps1 {service-directory}` for each service directory you modified.
+    5. When working on public APIs, you MUST avoid causing any breaking changes as defined in https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/breaking-change-rules.md
+    6. When you're done working, navigate to the root of the repository and run `.\eng\scripts\Export-API.ps1 {service-directory}` for each service directory you modified.
 ---
 
 ## Coding guidelines
 - Follow implementation guidelines at https://azure.github.io/azure-sdk/dotnet_implementation.html
+- Follow the formatting standards defined in https://github.com/Azure/azure-sdk-for-net/blob/main/.editorconfig
 - When writing tests, do not emit "Act", "Arrange" or "Assert" comments.
 - Do not add extra whitespace to the end of lines.
