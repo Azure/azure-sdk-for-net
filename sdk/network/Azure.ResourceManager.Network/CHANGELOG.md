@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-- Fixed a issue that if `LoadBalancingRuleData.FrontendIPConfigurationId` or other hidden properties on `LoadBalancingRuleData` class are assigned with values, the corresponding service operation would fail with `NullReferenceException` because the collection properties on `LoadBalancingRuleData` class are not initialized.
+- Fixed an issue that if `LoadBalancingRuleData.FrontendIPConfigurationId` or other hidden properties on `LoadBalancingRuleData` class are assigned with values, the corresponding service operation would fail with `NullReferenceException` because the collection properties on `LoadBalancingRuleData` class are not initialized.
 
 ## 1.11.0 (2025-05-22)
 
