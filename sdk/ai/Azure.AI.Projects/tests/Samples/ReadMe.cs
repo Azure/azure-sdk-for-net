@@ -33,7 +33,7 @@ public partial class Readme : SamplesBase<AIProjectsTestEnvironment>
         #region Snippet:AI_Projects_Readme_Troubleshooting
         try
         {
-            projectClient.GetDatasetsClient().GetDataset("non-existent-dataset-name", "non-existent-dataset-version");
+            projectClient.Datasets.GetDataset("non-existent-dataset-name", "non-existent-dataset-version");
         }
         catch (RequestFailedException ex) when (ex.Status == 404)
         {

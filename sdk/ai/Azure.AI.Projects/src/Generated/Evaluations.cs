@@ -60,7 +60,6 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluationAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<Evaluation>> GetEvaluationAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -75,7 +74,6 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluation(string,CancellationToken)']/*" />
         public virtual Response<Evaluation> GetEvaluation(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -106,7 +104,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluationAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetEvaluationAsync(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -146,7 +143,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluation(string,RequestContext)']/*" />
         public virtual Response GetEvaluation(string name, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -169,7 +165,6 @@ namespace Azure.AI.Projects
         /// <param name="evaluation"> Evaluation to be run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAsync(Evaluation,CancellationToken)']/*" />
         public virtual async Task<Response<Evaluation>> CreateAsync(Evaluation evaluation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(evaluation, nameof(evaluation));
@@ -184,7 +179,6 @@ namespace Azure.AI.Projects
         /// <param name="evaluation"> Evaluation to be run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='Create(Evaluation,CancellationToken)']/*" />
         public virtual Response<Evaluation> Create(Evaluation evaluation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(evaluation, nameof(evaluation));
@@ -215,7 +209,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -254,7 +247,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
         public virtual Response Create(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -277,7 +269,6 @@ namespace Azure.AI.Projects
         /// <param name="evaluation"> Agent evaluation to be run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAgentEvaluationAsync(AgentEvaluationRequest,CancellationToken)']/*" />
         public virtual async Task<Response<AgentEvaluation>> CreateAgentEvaluationAsync(AgentEvaluationRequest evaluation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(evaluation, nameof(evaluation));
@@ -292,7 +283,6 @@ namespace Azure.AI.Projects
         /// <param name="evaluation"> Agent evaluation to be run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluation"/> is null. </exception>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAgentEvaluation(AgentEvaluationRequest,CancellationToken)']/*" />
         public virtual Response<AgentEvaluation> CreateAgentEvaluation(AgentEvaluationRequest evaluation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(evaluation, nameof(evaluation));
@@ -323,7 +313,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAgentEvaluationAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateAgentEvaluationAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -362,7 +351,6 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='CreateAgentEvaluation(RequestContent,RequestContext)']/*" />
         public virtual Response CreateAgentEvaluation(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -383,7 +371,6 @@ namespace Azure.AI.Projects
 
         /// <summary> List evaluation runs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluationsAsync(CancellationToken)']/*" />
         public virtual AsyncPageable<Evaluation> GetEvaluationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -394,7 +381,6 @@ namespace Azure.AI.Projects
 
         /// <summary> List evaluation runs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluations(CancellationToken)']/*" />
         public virtual Pageable<Evaluation> GetEvaluations(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
@@ -421,7 +407,6 @@ namespace Azure.AI.Projects
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluationsAsync(RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetEvaluationsAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(context);
@@ -447,7 +432,6 @@ namespace Azure.AI.Projects
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Evaluations.xml" path="doc/members/member[@name='GetEvaluations(RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetEvaluations(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(context);

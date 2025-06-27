@@ -82,18 +82,13 @@ namespace Azure.AI.Projects
         public Azure.AI.Projects.Connections Connections { get { throw null; } }
         public Azure.AI.Projects.Datasets Datasets { get { throw null; } }
         public Azure.AI.Projects.Deployments Deployments { get { throw null; } }
+        public Azure.AI.Projects.Evaluations Evaluations { get { throw null; } }
         public Azure.AI.Projects.Indexes Indexes { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public Azure.AI.Projects.Telemetry Telemetry { get { throw null; } }
         public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
         public OpenAI.Chat.ChatClient GetAzureOpenAIChatClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null) { throw null; }
         public override System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId) { throw null; }
-        public virtual Azure.AI.Projects.Connections GetConnectionsClient(string apiVersion = "2025-05-15-preview") { throw null; }
-        public virtual Azure.AI.Projects.Datasets GetDatasetsClient(string apiVersion = "2025-05-15-preview") { throw null; }
-        public virtual Azure.AI.Projects.Deployments GetDeploymentsClient(string apiVersion = "2025-05-15-preview") { throw null; }
-        public virtual Azure.AI.Projects.Evaluations GetEvaluationsClient(string apiVersion = "2025-05-15-preview") { throw null; }
-        public virtual Azure.AI.Projects.Indexes GetIndexesClient(string apiVersion = "2025-05-15-preview") { throw null; }
-        public virtual Azure.AI.Projects.RedTeams GetRedTeamsClient(string apiVersion = "2025-05-15-preview") { throw null; }
     }
     public partial class AIProjectClientOptions : Azure.Core.ClientOptions
     {
