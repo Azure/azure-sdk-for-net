@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace BasicTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> this is a model with a client name. </summary>
     public partial class RenamedModel : IJsonModel<RenamedModel>
     {
         /// <summary> Initializes a new instance of <see cref="RenamedModel"/> for deserialization. </summary>
@@ -148,7 +148,7 @@ namespace BasicTypeSpec
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(renamedModel, ModelSerializationExtensions.WireOptions);
             return content;
         }

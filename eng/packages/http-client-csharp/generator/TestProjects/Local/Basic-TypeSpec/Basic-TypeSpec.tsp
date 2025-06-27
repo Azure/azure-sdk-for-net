@@ -12,7 +12,7 @@ import "@azure-tools/typespec-azure-core";
   "{basicTypeSpecUrl}",
   "Endpoint Service",
   {
-    basicTypeSpecUrl: string,
+    basicTypeSpecUrl: url,
   }
 )
 @useAuth(ApiKeyAuth<ApiKeyLocation.header, "my-api-key"> | AadToken)
@@ -387,6 +387,28 @@ op ListWithNextLink(): {
   things: ThingModel[];
 
   @nextLink next?: url;
+};
+
+@route("/linkString")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithStringNextLink(): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink next?: string;
+};
+
+@route("/linkHeader")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithHeaderNextLink(): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink @header next?: string;
 };
 
 @route("/continuation")

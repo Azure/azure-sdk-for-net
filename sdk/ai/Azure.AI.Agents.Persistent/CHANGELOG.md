@@ -1,15 +1,30 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
+
+- Tracing for Agents. More information [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/README.md#tracing).
+- Convenience constructor for BingCustomSearchToolParameters
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed uploading files with non ASCII symbols in names.
 
 ### Other Changes
+
+### Sample updates
+- The Azure function sample was simplified.
+- Added samples for file search citation with streaming.
+- Fabric tool sample added
+- Connected Agent tool sample added
+- Multiple Connected Agent sample added.
+- Bing Custom Search sample added.
+
+## 1.1.0-beta.2 (2025-06-04)
+
+### Bugs Fixed
+- Fixed uploading files with non ASCII symbols in names.
 
 ## 1.1.0-beta.1 (2025-05-21)
 

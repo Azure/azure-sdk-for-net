@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
@@ -34,10 +32,5 @@ namespace _Type.Model.Inheritance.EnumDiscriminator
         protected override Dog PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Golden>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="golden"> The <see cref="Golden"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Golden golden) => throw null;
-
-        public static explicit operator Golden(Response result) => throw null;
     }
 }

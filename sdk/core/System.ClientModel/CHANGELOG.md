@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0-beta.1 (2025-06-13)
+
+### Features Added
+
+- Added the following types for 3rd-party Authentication support: `AuthenticationTokenProvider`, `GetTokenOptions`, `AuthenticationToken`, `AuthenticationPolicy`, and `BearerTokenPolicy`.
+
+## 1.4.2 (2025-06-05)
+
+### Bugs Fixed
+
+- First part of performance improvements for System.ClientModel.SourceGeneration to shorten lengthy builds.
 
 ## 1.4.1 (2025-05-09)
 

@@ -51,15 +51,23 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseActionContent"/>. </summary>
-        /// <param name="peerDBId"> The database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </param>
+        /// <param name="peerDBId"> The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </param>
+        /// <param name="peerDBOcid"> Ocid of the Disaster Recovery peer database, which is located in a different region from the current peer database. </param>
+        /// <param name="peerDBLocation"> The location of the Disaster Recovery peer database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseActionContent(string peerDBId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutonomousDatabaseActionContent(string peerDBId, string peerDBOcid, string peerDBLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PeerDBId = peerDBId;
+            PeerDBOcid = peerDBOcid;
+            PeerDBLocation = peerDBLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </summary>
+        /// <summary> The Azure resource ID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </summary>
         public string PeerDBId { get; set; }
+        /// <summary> Ocid of the Disaster Recovery peer database, which is located in a different region from the current peer database. </summary>
+        public string PeerDBOcid { get; set; }
+        /// <summary> The location of the Disaster Recovery peer database. </summary>
+        public string PeerDBLocation { get; set; }
     }
 }
