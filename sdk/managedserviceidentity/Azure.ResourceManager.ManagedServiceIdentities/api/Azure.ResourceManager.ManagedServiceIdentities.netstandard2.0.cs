@@ -138,6 +138,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     {
         public UserAssignedIdentityData(Azure.Core.AzureLocation location) { }
         public System.Guid? ClientId { get { throw null; } }
+        public Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope? IsolationScope { get { throw null; } set { } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -217,8 +218,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
     {
         public static Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData FederatedIdentityCredentialData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri issuerUri = null, string subject = null, System.Collections.Generic.IEnumerable<string> audiences = null) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData SystemAssignedIdentityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), System.Uri clientSecretUri = null) { throw null; }
-        public static Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData UserAssignedIdentityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch UserAssignedIdentityPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData UserAssignedIdentityData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Guid? tenantId, System.Guid? principalId, System.Guid? clientId) { throw null; }
+        public static Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData UserAssignedIdentityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope? isolationScope = default(Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch UserAssignedIdentityPatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Guid? tenantId, System.Guid? principalId, System.Guid? clientId) { throw null; }
+        public static Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch UserAssignedIdentityPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope? isolationScope = default(Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope?)) { throw null; }
     }
     public partial class IdentityAssociatedResourceData : Azure.ResourceManager.Models.ResourceData
     {
@@ -227,10 +232,29 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         public string SubscriptionDisplayName { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IsolationScope : System.IEquatable<Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IsolationScope(string value) { throw null; }
+        public static Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope None { get { throw null; } }
+        public static Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope Regional { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope left, Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope left, Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class UserAssignedIdentityPatch : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch>
     {
         public UserAssignedIdentityPatch(Azure.Core.AzureLocation location) { }
         public System.Guid? ClientId { get { throw null; } }
+        public Azure.ResourceManager.ManagedServiceIdentities.Models.IsolationScope? IsolationScope { get { throw null; } set { } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
