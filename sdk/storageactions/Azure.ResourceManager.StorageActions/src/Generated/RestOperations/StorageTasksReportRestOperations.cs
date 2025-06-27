@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.StorageActions
         /// <summary> Initializes a new instance of StorageTasksReportRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public StorageTasksReportRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.StorageActions
             uri.AppendPath("/providers/Microsoft.StorageActions/storageTasks/", false);
             uri.AppendPath(storageTaskName, true);
             uri.AppendPath("/reports", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
                 uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
@@ -55,7 +56,6 @@ namespace Azure.ResourceManager.StorageActions
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.StorageActions
             uri.AppendPath("/providers/Microsoft.StorageActions/storageTasks/", false);
             uri.AppendPath(storageTaskName, true);
             uri.AppendPath("/reports", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
                 uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
@@ -81,7 +82,6 @@ namespace Azure.ResourceManager.StorageActions
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
