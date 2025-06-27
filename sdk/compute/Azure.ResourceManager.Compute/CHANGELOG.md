@@ -8,12 +8,6 @@
   - This property contains the properties of the VirtualMachineScaleSetVm. It supports `AdditionalProperties` to send and receive private/internal properties supported by the service.
   - Please use the properties in `VirtualMachineScaleSetVmData.Properties` to set the properties of the VirtualMachineScaleSetVm, instead of using those properties at the root level of `VirtualMachineScaleSetVmData` class.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.9.0 (2025-03-31)
 
 ### Features Added
