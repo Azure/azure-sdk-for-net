@@ -166,7 +166,6 @@ internal class BinaryContentTests : SyncAsyncTestBase
 
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.Greater(length, 0);
-        Assert.AreEqual("application/json", content.MediaType);
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
@@ -186,7 +185,6 @@ internal class BinaryContentTests : SyncAsyncTestBase
 
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.Greater(length, 0);
-        Assert.AreEqual("application/json", content.MediaType);
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);

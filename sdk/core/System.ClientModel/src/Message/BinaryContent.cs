@@ -86,8 +86,7 @@ public abstract class BinaryContent : IDisposable
     public static BinaryContent CreateJson<T>(T jsonSerializable, JsonSerializerOptions? options = default)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        BinaryData data = BinaryData.FromObjectAsJson(jsonSerializable, options);
-        return new JsonBinaryContent(data.ToMemory());
+        return Create(BinaryData.FromObjectAsJson(jsonSerializable, options));
     }
 
     /// <summary>
@@ -103,8 +102,7 @@ public abstract class BinaryContent : IDisposable
     public static BinaryContent CreateJson<T>(T jsonSerializable, JsonTypeInfo<T> jsonTypeInfo)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        BinaryData data = BinaryData.FromObjectAsJson(jsonSerializable, jsonTypeInfo);
-        return new JsonBinaryContent(data.ToMemory());
+        return Create(BinaryData.FromObjectAsJson(jsonSerializable, jsonTypeInfo));
     }
 
     /// <summary>
@@ -142,41 +140,6 @@ public abstract class BinaryContent : IDisposable
         {
             _bytes = bytes;
         }
-
-        public override bool TryComputeLength(out long length)
-        {
-            length = _bytes.Length;
-            return true;
-        }
-
-        public override void WriteTo(Stream stream, CancellationToken cancellation)
-        {
-            Argument.AssertNotNull(stream, nameof(stream));
-
-            byte[] buffer = _bytes.ToArray();
-            stream.Write(buffer, 0, buffer.Length);
-        }
-
-        public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
-        {
-            Argument.AssertNotNull(stream, nameof(stream));
-
-            await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
-        }
-
-        public override void Dispose() { }
-    }
-
-    private sealed class JsonBinaryContent : BinaryContent
-    {
-        private readonly ReadOnlyMemory<byte> _bytes;
-
-        public JsonBinaryContent(ReadOnlyMemory<byte> bytes)
-        {
-            _bytes = bytes;
-        }
-
-        public override string? MediaType => "application/json";
 
         public override bool TryComputeLength(out long length)
         {
