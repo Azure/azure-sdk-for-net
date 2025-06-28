@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role Assignments. </summary>
     public partial class KeyVaultRoleAssignment
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignment"/>. </summary>
         internal KeyVaultRoleAssignment()
         {
@@ -20,20 +26,25 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="name"> The role assignment name. </param>
         /// <param name="type"> The role assignment type. </param>
         /// <param name="properties"> Role assignment properties. </param>
-        internal KeyVaultRoleAssignment(string id, string name, string type, KeyVaultRoleAssignmentProperties properties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultRoleAssignment(string id, string name, string @type, KeyVaultRoleAssignmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            Type = type;
+            Type = @type;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The role assignment ID. </summary>
         public string Id { get; }
+
         /// <summary> The role assignment name. </summary>
         public string Name { get; }
+
         /// <summary> The role assignment type. </summary>
         public string Type { get; }
+
         /// <summary> Role assignment properties. </summary>
         public KeyVaultRoleAssignmentProperties Properties { get; }
     }

@@ -5,26 +5,150 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class RoleAssignmentCreateParameters : IUtf8JsonSerializable
+    internal partial class RoleAssignmentCreateParameters : IJsonModel<RoleAssignmentCreateParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentCreateParameters"/> for deserialization. </summary>
+        internal RoleAssignmentCreateParameters()
+        {
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<RoleAssignmentCreateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleAssignmentCreateParameters)} does not support writing '{format}' format.");
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoleAssignmentCreateParameters IJsonModel<RoleAssignmentCreateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RoleAssignmentCreateParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleAssignmentCreateParameters)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleAssignmentCreateParameters(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RoleAssignmentCreateParameters DeserializeRoleAssignmentCreateParameters(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            RoleAssignmentProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("properties"u8))
+                {
+                    properties = RoleAssignmentProperties.DeserializeRoleAssignmentProperties(prop.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new RoleAssignmentCreateParameters(properties, additionalBinaryDataProperties);
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RoleAssignmentCreateParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSecurityKeyVaultAdministrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RoleAssignmentCreateParameters)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoleAssignmentCreateParameters IPersistableModel<RoleAssignmentCreateParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RoleAssignmentCreateParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeRoleAssignmentCreateParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoleAssignmentCreateParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RoleAssignmentCreateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="roleAssignmentCreateParameters"> The <see cref="RoleAssignmentCreateParameters"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(RoleAssignmentCreateParameters roleAssignmentCreateParameters)
+        {
+            if (roleAssignmentCreateParameters == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(roleAssignmentCreateParameters, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }
