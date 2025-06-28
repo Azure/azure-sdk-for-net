@@ -66,14 +66,16 @@ namespace Azure.ResourceManager.Avs
         /// <param name="netAppVolume"> An Azure NetApp Files volume. </param>
         /// <param name="diskPoolVolume"> An iSCSI volume. </param>
         /// <param name="elasticSanVolume"> An Elastic SAN volume. </param>
+        /// <param name="pureStorageVolume"> A Pure Storage volume. </param>
         /// <param name="status"> The operational status of the datastore. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, WritableSubResource netAppVolume, DiskPoolVolume diskPoolVolume, ElasticSanVolume elasticSanVolume, DatastoreStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, WritableSubResource netAppVolume, DiskPoolVolume diskPoolVolume, ElasticSanVolume elasticSanVolume, AvsPureStorageVolume pureStorageVolume, DatastoreStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             NetAppVolume = netAppVolume;
             DiskPoolVolume = diskPoolVolume;
             ElasticSanVolume = elasticSanVolume;
+            PureStorageVolume = pureStorageVolume;
             Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -105,6 +107,8 @@ namespace Azure.ResourceManager.Avs
             set => ElasticSanVolume = new ElasticSanVolume(value);
         }
 
+        /// <summary> A Pure Storage volume. </summary>
+        public AvsPureStorageVolume PureStorageVolume { get; set; }
         /// <summary> The operational status of the datastore. </summary>
         public DatastoreStatus? Status { get; }
     }

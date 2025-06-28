@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AuthorizationsGet()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Authorizations_Get.json
-            // this example is just showing the usage of "Authorizations_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Authorizations_Get.json
+            // this example is just showing the usage of "ExpressRouteAuthorization_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_AuthorizationsDelete()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Authorizations_Delete.json
-            // this example is just showing the usage of "Authorizations_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Authorizations_Delete.json
+            // this example is just showing the usage of "ExpressRouteAuthorization_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_AuthorizationsCreateOrUpdate()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Authorizations_CreateOrUpdate.json
-            // this example is just showing the usage of "Authorizations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Authorizations_CreateOrUpdate.json
+            // this example is just showing the usage of "ExpressRouteAuthorization_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

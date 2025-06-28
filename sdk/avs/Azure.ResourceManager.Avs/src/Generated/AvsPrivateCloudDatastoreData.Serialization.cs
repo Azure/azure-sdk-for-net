@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("elasticSanVolume"u8);
                 writer.WriteObjectValue(ElasticSanVolume, options);
             }
+            if (Optional.IsDefined(PureStorageVolume))
+            {
+                writer.WritePropertyName("pureStorageVolume"u8);
+                writer.WriteObjectValue(PureStorageVolume, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -96,6 +101,7 @@ namespace Azure.ResourceManager.Avs
             WritableSubResource netAppVolume = default;
             DiskPoolVolume diskPoolVolume = default;
             ElasticSanVolume elasticSanVolume = default;
+            AvsPureStorageVolume pureStorageVolume = default;
             DatastoreStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -170,6 +176,15 @@ namespace Azure.ResourceManager.Avs
                             elasticSanVolume = ElasticSanVolume.DeserializeElasticSanVolume(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("pureStorageVolume"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            pureStorageVolume = AvsPureStorageVolume.DeserializeAvsPureStorageVolume(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -197,6 +212,7 @@ namespace Azure.ResourceManager.Avs
                 netAppVolume,
                 diskPoolVolume,
                 elasticSanVolume,
+                pureStorageVolume,
                 status,
                 serializedAdditionalRawData);
         }

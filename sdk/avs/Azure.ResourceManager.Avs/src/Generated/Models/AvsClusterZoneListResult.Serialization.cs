@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class ClusterZoneList : IUtf8JsonSerializable, IJsonModel<ClusterZoneList>
+    public partial class AvsClusterZoneListResult : IUtf8JsonSerializable, IJsonModel<AvsClusterZoneListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterZoneList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsClusterZoneListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ClusterZoneList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AvsClusterZoneListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterZoneList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsClusterZoneListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterZoneList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsClusterZoneListResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Zones))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
-        ClusterZoneList IJsonModel<ClusterZoneList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AvsClusterZoneListResult IJsonModel<AvsClusterZoneListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterZoneList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsClusterZoneListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterZoneList)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsClusterZoneListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterZoneList(document.RootElement, options);
+            return DeserializeAvsClusterZoneListResult(document.RootElement, options);
         }
 
-        internal static ClusterZoneList DeserializeClusterZoneList(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AvsClusterZoneListResult DeserializeAvsClusterZoneListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -106,38 +106,38 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClusterZoneList(zones ?? new ChangeTrackingList<AvsClusterZone>(), serializedAdditionalRawData);
+            return new AvsClusterZoneListResult(zones ?? new ChangeTrackingList<AvsClusterZone>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ClusterZoneList>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AvsClusterZoneListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterZoneList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsClusterZoneListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterZoneList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsClusterZoneListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ClusterZoneList IPersistableModel<ClusterZoneList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AvsClusterZoneListResult IPersistableModel<AvsClusterZoneListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterZoneList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsClusterZoneListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeClusterZoneList(document.RootElement, options);
+                        return DeserializeAvsClusterZoneListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterZoneList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsClusterZoneListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ClusterZoneList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AvsClusterZoneListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

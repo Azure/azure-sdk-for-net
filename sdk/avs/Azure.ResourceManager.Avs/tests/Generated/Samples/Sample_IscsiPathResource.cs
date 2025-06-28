@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_IscsiPathsGet()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/IscsiPaths_Get.json
-            // this example is just showing the usage of "IscsiPaths_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/IscsiPaths_Get.json
+            // this example is just showing the usage of "IscsiPath_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_IscsiPathsDelete()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/IscsiPaths_Delete.json
-            // this example is just showing the usage of "IscsiPaths_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/IscsiPaths_Delete.json
+            // this example is just showing the usage of "IscsiPath_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_IscsiPathsCreateOrUpdate()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/IscsiPaths_CreateOrUpdate.json
-            // this example is just showing the usage of "IscsiPaths_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/IscsiPaths_CreateOrUpdate.json
+            // this example is just showing the usage of "IscsiPath_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -92,10 +92,7 @@ namespace Azure.ResourceManager.Avs.Samples
             IscsiPathResource iscsiPath = client.GetIscsiPathResource(iscsiPathResourceId);
 
             // invoke the operation
-            IscsiPathData data = new IscsiPathData
-            {
-                NetworkBlock = "192.168.0.0/24",
-            };
+            IscsiPathData data = new IscsiPathData();
             ArmOperation<IscsiPathResource> lro = await iscsiPath.CreateOrUpdateAsync(WaitUntil.Completed, data);
             IscsiPathResource result = lro.Value;
 

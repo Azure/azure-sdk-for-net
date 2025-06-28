@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ScriptExecutionsGet()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/ScriptExecutions_Get.json
-            // this example is just showing the usage of "ScriptExecutions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/ScriptExecutions_Get.json
+            // this example is just showing the usage of "ScriptExecution_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ScriptExecutionsDelete()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/ScriptExecutions_Delete.json
-            // this example is just showing the usage of "ScriptExecutions_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/ScriptExecutions_Delete.json
+            // this example is just showing the usage of "ScriptExecution_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ScriptExecutionsCreateOrUpdate()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/ScriptExecutions_CreateOrUpdate.json
-            // this example is just showing the usage of "ScriptExecutions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/ScriptExecutions_CreateOrUpdate.json
+            // this example is just showing the usage of "ScriptExecution_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -97,23 +97,7 @@ namespace Azure.ResourceManager.Avs.Samples
             ScriptExecutionResource scriptExecution = client.GetScriptExecutionResource(scriptExecutionResourceId);
 
             // invoke the operation
-            ScriptExecutionData data = new ScriptExecutionData
-            {
-                ScriptCmdletId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/scriptPackages/AVS.PowerCommands@1.0.0/scriptCmdlets/New-SsoExternalIdentitySource"),
-                Parameters = {new ScriptStringExecutionParameterDetails("DomainName")
-{
-Value = "placeholderDomain.local",
-}, new ScriptStringExecutionParameterDetails("BaseUserDN")
-{
-Value = "DC=placeholder, DC=placeholder",
-}},
-                HiddenParameters = {new ScriptSecureStringExecutionParameterDetails("Password")
-{
-SecureValue = "PlaceholderPassword",
-}},
-                Timeout = "P0Y0M0DT0H60M60S",
-                Retention = "P0Y0M60DT0H60M60S",
-            };
+            ScriptExecutionData data = new ScriptExecutionData();
             ArmOperation<ScriptExecutionResource> lro = await scriptExecution.UpdateAsync(WaitUntil.Completed, data);
             ScriptExecutionResource result = lro.Value;
 
@@ -128,7 +112,7 @@ SecureValue = "PlaceholderPassword",
         [Ignore("Only validating compilation of examples")]
         public async Task GetExecutionLogs_ScriptExecutionsGetExecutionLogs()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/ScriptExecutions_GetExecutionLogs.json
+            // Generated from example definition: 2024-09-01/ScriptExecutions_GetExecutionLogs.json
             // this example is just showing the usage of "ScriptExecutions_GetExecutionLogs" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

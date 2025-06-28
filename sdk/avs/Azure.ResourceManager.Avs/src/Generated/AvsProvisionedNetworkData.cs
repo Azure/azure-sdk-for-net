@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Avs.Models;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Avs.Models
+namespace Azure.ResourceManager.Avs
 {
-    /// <summary> List of all zones and associated hosts for a cluster. </summary>
-    internal partial class ClusterZoneList
+    /// <summary>
+    /// A class representing the AvsProvisionedNetwork data model.
+    /// A provisioned network resource
+    /// </summary>
+    public partial class AvsProvisionedNetworkData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +51,25 @@ namespace Azure.ResourceManager.Avs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterZoneList"/>. </summary>
-        internal ClusterZoneList()
+        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkData"/>. </summary>
+        internal AvsProvisionedNetworkData()
         {
-            Zones = new ChangeTrackingList<AvsClusterZone>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterZoneList"/>. </summary>
-        /// <param name="zones"> Zone and associated hosts info. </param>
+        /// <summary> Initializes a new instance of <see cref="AvsProvisionedNetworkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterZoneList(IReadOnlyList<AvsClusterZone> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvsProvisionedNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsProvisionedNetworkProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Zones = zones;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Zone and associated hosts info. </summary>
-        public IReadOnlyList<AvsClusterZone> Zones { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public AvsProvisionedNetworkProperties Properties { get; }
     }
 }

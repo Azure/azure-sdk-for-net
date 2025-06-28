@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_GlobalReachConnectionsCreateOrUpdate()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/GlobalReachConnections_CreateOrUpdate.json
-            // this example is just showing the usage of "GlobalReachConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/GlobalReachConnections_CreateOrUpdate.json
+            // this example is just showing the usage of "GlobalReachConnection_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,11 +40,7 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string globalReachConnectionName = "connection1";
-            GlobalReachConnectionData data = new GlobalReachConnectionData
-            {
-                AuthorizationKey = "01010101-0101-0101-0101-010101010101",
-                PeerExpressRouteCircuit = new ResourceIdentifier("/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.Network/expressRouteCircuits/mypeer"),
-            };
+            GlobalReachConnectionData data = new GlobalReachConnectionData();
             ArmOperation<GlobalReachConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, globalReachConnectionName, data);
             GlobalReachConnectionResource result = lro.Value;
 
@@ -59,8 +55,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GlobalReachConnectionsGet()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/GlobalReachConnections_Get.json
-            // this example is just showing the usage of "GlobalReachConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/GlobalReachConnections_Get.json
+            // this example is just showing the usage of "GlobalReachConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -93,8 +89,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GlobalReachConnectionsList()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/GlobalReachConnections_List.json
-            // this example is just showing the usage of "GlobalReachConnections_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/GlobalReachConnections_List.json
+            // this example is just showing the usage of "GlobalReachConnection_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -129,8 +125,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GlobalReachConnectionsGet()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/GlobalReachConnections_Get.json
-            // this example is just showing the usage of "GlobalReachConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/GlobalReachConnections_Get.json
+            // this example is just showing the usage of "GlobalReachConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -159,8 +155,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GlobalReachConnectionsGet()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/GlobalReachConnections_Get.json
-            // this example is just showing the usage of "GlobalReachConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/GlobalReachConnections_Get.json
+            // this example is just showing the usage of "GlobalReachConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

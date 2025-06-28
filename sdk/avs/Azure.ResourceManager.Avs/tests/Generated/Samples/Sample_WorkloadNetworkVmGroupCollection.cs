@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WorkloadNetworksCreateVMGroup()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_CreateVMGroup.json
-            // this example is just showing the usage of "WorkloadNetworks_CreateVmGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_CreateVMGroup.json
+            // this example is just showing the usage of "WorkloadNetworkVMGroup_CreateVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,12 +40,7 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string vmGroupId = "vmGroup1";
-            WorkloadNetworkVmGroupData data = new WorkloadNetworkVmGroupData
-            {
-                DisplayName = "vmGroup1",
-                Members = { "564d43da-fefc-2a3b-1d92-42855622fa50" },
-                Revision = 1L,
-            };
+            WorkloadNetworkVmGroupData data = new WorkloadNetworkVmGroupData();
             ArmOperation<WorkloadNetworkVmGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmGroupId, data);
             WorkloadNetworkVmGroupResource result = lro.Value;
 
@@ -60,8 +55,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetVMGroup()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetVMGroup.json
-            // this example is just showing the usage of "WorkloadNetworks_GetVmGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetVMGroup.json
+            // this example is just showing the usage of "WorkloadNetworkVMGroup_GetVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -94,8 +89,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_WorkloadNetworksListVMGroups()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_ListVMGroups.json
-            // this example is just showing the usage of "WorkloadNetworks_ListVmGroups" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_ListVMGroups.json
+            // this example is just showing the usage of "WorkloadNetworkVMGroup_ListVmGroups" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -130,8 +125,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_WorkloadNetworksGetVMGroup()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetVMGroup.json
-            // this example is just showing the usage of "WorkloadNetworks_GetVmGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetVMGroup.json
+            // this example is just showing the usage of "WorkloadNetworkVMGroup_GetVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -160,8 +155,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_WorkloadNetworksGetVMGroup()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetVMGroup.json
-            // this example is just showing the usage of "WorkloadNetworks_GetVmGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetVMGroup.json
+            // this example is just showing the usage of "WorkloadNetworkVMGroup_GetVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

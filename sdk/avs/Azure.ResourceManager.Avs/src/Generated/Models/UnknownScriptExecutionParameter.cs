@@ -10,16 +10,16 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> Unknown version of ScriptExecutionParameter. </summary>
+    /// <summary> Unknown version of ScriptExecutionParameterDetails. </summary>
     internal partial class UnknownScriptExecutionParameter : ScriptExecutionParameterDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownScriptExecutionParameter"/>. </summary>
-        /// <param name="parameterType"> script execution parameter type. </param>
+        /// <param name="type"> script execution parameter type. </param>
         /// <param name="name"> The parameter name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownScriptExecutionParameter(ScriptExecutionParameterType parameterType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(parameterType, name, serializedAdditionalRawData)
+        internal UnknownScriptExecutionParameter(ScriptExecutionParameterType type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, name, serializedAdditionalRawData)
         {
-            ParameterType = parameterType;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="UnknownScriptExecutionParameter"/> for deserialization. </summary>

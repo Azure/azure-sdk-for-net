@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VirtualMachinesGet()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/VirtualMachines_Get.json
-            // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/VirtualMachines_Get.json
+            // this example is just showing the usage of "VirtualMachine_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RestrictMovement_VirtualMachinesRestrictMovement()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/VirtualMachines_RestrictMovement.json
+            // Generated from example definition: 2024-09-01/VirtualMachines_RestrictMovement.json
             // this example is just showing the usage of "VirtualMachines_RestrictMovement" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetDnsZone()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetDnsZone.json
-            // this example is just showing the usage of "WorkloadNetworks_GetDnsZone" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetDnsZone.json
+            // this example is just showing the usage of "WorkloadNetworkDnsZone_GetDnsZone" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +50,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_WorkloadNetworksDeleteDnsZone()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_DeleteDnsZone.json
-            // this example is just showing the usage of "WorkloadNetworks_DeleteDnsZone" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_DeleteDnsZone.json
+            // this example is just showing the usage of "WorkloadNetworkDnsZone_DeleteDnsZone" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +77,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_WorkloadNetworksUpdateDnsZone()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_UpdateDnsZone.json
-            // this example is just showing the usage of "WorkloadNetworks_UpdateDnsZone" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_UpdateDnsZone.json
+            // this example is just showing the usage of "WorkloadNetworkDnsZone_UpdateDnsZone" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,14 +95,7 @@ namespace Azure.ResourceManager.Avs.Samples
             WorkloadNetworkDnsZoneResource workloadNetworkDnsZone = client.GetWorkloadNetworkDnsZoneResource(workloadNetworkDnsZoneResourceId);
 
             // invoke the operation
-            WorkloadNetworkDnsZoneData data = new WorkloadNetworkDnsZoneData
-            {
-                DisplayName = "dnsZone1",
-                Domain = { },
-                DnsServerIPs = { IPAddress.Parse("1.1.1.1") },
-                SourceIP = IPAddress.Parse("8.8.8.8"),
-                Revision = 1L,
-            };
+            WorkloadNetworkDnsZoneData data = new WorkloadNetworkDnsZoneData();
             ArmOperation<WorkloadNetworkDnsZoneResource> lro = await workloadNetworkDnsZone.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkDnsZoneResource result = lro.Value;
 
