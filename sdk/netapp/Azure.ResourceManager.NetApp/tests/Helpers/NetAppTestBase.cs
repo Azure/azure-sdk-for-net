@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
         public static long _gibibyte = 1024L * 1024L * 1024L;
         public static long _defaultUsageThreshold = 100 * _gibibyte;
         public static List<string> _defaultProtocolTypes = new() { "NFSv3" };
+        public static List<string> _nfsProtocolTypes = new() { "NFSv4.1" };
 
         internal NetAppAccountResource _netAppAccount;
         internal CapacityPoolCollection _capacityPoolCollection { get => _netAppAccount.GetCapacityPools(); }
@@ -66,6 +67,28 @@ namespace Azure.ResourceManager.NetApp.Tests.Helpers
         public static IList<NetAppVolumeExportPolicyRule> _defaultExportPolicyRuleList = new List<NetAppVolumeExportPolicyRule>()
         {
             _defaultExportPolicyRule
+        };
+
+        public static NetAppVolumeExportPolicyRule _nfs41ExportPolicyRule = new()
+        {
+            RuleIndex = 1,
+            IsUnixReadOnly = false,
+            IsUnixReadWrite = true,
+            AllowCifsProtocol = false,
+            AllowNfsV3Protocol = false,
+            AllowNfsV41Protocol = true,
+            AllowedClients = "0.0.0.0/0",
+            IsKerberos5ReadOnly = false,
+            IsKerberos5ReadWrite = false,
+            IsKerberos5iReadOnly = false,
+            IsKerberos5iReadWrite = false,
+            IsKerberos5pReadOnly = false,
+            IsKerberos5pReadWrite = false
+        };
+
+        public static IList<NetAppVolumeExportPolicyRule> _nfs41ExportPolicyRuleList = new List<NetAppVolumeExportPolicyRule>()
+        {
+            _nfs41ExportPolicyRule
         };
 
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
