@@ -159,6 +159,7 @@ trigger:
     - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB
+    - sdk/PlanetaryComputer/Azure.ResourceManager.PlanetaryComputer
     - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot
@@ -383,6 +384,7 @@ pr:
     - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/pineconevectordb/Azure.ResourceManager.PineconeVectorDB
+    - sdk/PlanetaryComputer/Azure.ResourceManager.PlanetaryComputer
     - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/portalservices/Azure.ResourceManager.PortalServicesCopilot
