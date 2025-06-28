@@ -90,7 +90,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             foreach (var method in resourceClientProvider.ResourceServiceMethods)
             {
                 var operation = method.Operation;
-                if (operation.HttpMethod == HttpMethod.Get.ToString() && operation.Name == "get")
+                if (operation.HttpMethod == HttpMethod.Get.ToString() && operation.Name == "Get")
                 {
                     getServiceMethod = method;
                     break;
@@ -104,11 +104,10 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             statements.Add(ResourceMethodSnippets.CreateHttpMessage(resourceClientProvider, "CreateGetRequest", arguments, out var messageVariable));
 
-            var responseType = new CSharpType(typeof(Response<>), resourceClientProvider.ResourceData.Type);
             statements.AddRange(ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                 messageVariable,
                 contextVariable,
-                responseType,
+                resourceClientProvider.ResourceData.Type,
                 isAsync,
                 out responseVariable));
 

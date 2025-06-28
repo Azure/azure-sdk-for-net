@@ -24,7 +24,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -54,21 +53,35 @@ namespace Azure.Generator.Management.Providers
         protected FieldProvider _clientDiagnosticsField;
         protected FieldProvider _clientField;
 
+        private InputModelType _resourceModel;
+
         private protected ResourceClientProvider(InputClient inputClient, ResourceMetadata resourceMetadata)
         {
             IsSingleton = resourceMetadata.IsSingleton;
             ResourceScope = resourceMetadata.ResourceScope;
             var resourceType = resourceMetadata.ResourceType;
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
-            var resourceModel = resourceMetadata.ResourceModel;
+            _resourceModel = resourceMetadata.ResourceModel;
             // TODO -- the name of a resource is not always the name of its model. Maybe the resource metadata should have a property for the name of the resource?
-            SpecName = resourceModel.Name.ToIdentifierName();
+            SpecName = _resourceModel.Name.ToIdentifierName();
 
             // We should be able to assume that all operations in the resource client are for the same resource
             var requestPath = new RequestPath(inputClient.Methods.First().Operation.Path);
             _resourceServiceMethods = inputClient.Methods;
-            ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(resourceModel)!;
+            ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(_resourceModel)!;
             _restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+
+            //TODO: Remove this when we have a way to handle renaming directly in ResourceVisitor.
+            foreach (var method in _restClientProvider.Methods)
+            {
+                foreach (var parameter in method.Signature.Parameters)
+                {
+                    if (ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(parameter.Type))
+                    {
+                        parameter.Update(name: "data");
+                    }
+                }
+            }
 
             ContextualParameters = GetContextualParameters(requestPath);
 
@@ -247,52 +260,72 @@ namespace Azure.Generator.Management.Providers
                     continue;
                 }
 
-                // Check if this is an update operation (PUT method for non-singleton resource)
-                var isUpdateOperation = method.Operation.HttpMethod == HttpMethod.Put.ToString() && !IsSingleton;
+                // Check if this is an update operation (PUT or Patch method for non-singleton resource)
+                var isUpdateOperation = (method.Operation.HttpMethod == HttpMethod.Put.ToString() || method.Operation.HttpMethod == HttpMethod.Patch.ToString()) && !IsSingleton;
 
                 if (isUpdateOperation)
                 {
                     var updateMethodProvider = new UpdateOperationMethodProvider(this, method, convenienceMethod, false);
                     operationMethods.Add(updateMethodProvider);
 
-                    var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, true);
+                    var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
                     var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, method, asyncConvenienceMethod, true);
                     operationMethods.Add(updateAsyncMethodProvider);
                 }
                 else
                 {
-                    operationMethods.Add(BuildOperationMethod(method, convenienceMethod, false));
-                    var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, true);
-                    operationMethods.Add(BuildOperationMethod(method, asyncConvenienceMethod, true));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, method, convenienceMethod, false));
+                    var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, method, asyncConvenienceMethod, true));
                 }
             }
 
-            return [
-                BuildValidateResourceIdMethod(),
-                .. operationMethods,
-                new AddTagMethodProvider(this, true),
-                new AddTagMethodProvider(this, false),
-                // Disabled SetTag methods generation temporarily: The extension method ReplaceWith for IDictionary<string, string> is defined in SharedExtensions.cs, which is not included in the project yet.
-                // new SetTagsMethodProvider(this, true),
-                // new SetTagsMethodProvider(this, false),
-                new RemoveTagMethodProvider(this, true),
-                new RemoveTagMethodProvider(this, false)
-            ];
+            var methods = new List<MethodProvider>
+            {
+                BuildValidateResourceIdMethod()
+            };
+            methods.AddRange(operationMethods);
+
+            // Only generate tag methods if the resource model has tag properties
+            if (ShouldGenerateTagMethods(_resourceModel))
+            {
+                methods.AddRange([
+                    new AddTagMethodProvider(this, true),
+                    new AddTagMethodProvider(this, false),
+                    // Disabled SetTag methods generation temporarily: The extension method ReplaceWith for IDictionary<string, string> is defined in SharedExtensions.cs, which is not included in the project yet.
+                    // new SetTagsMethodProvider(this, true),
+                    // new SetTagsMethodProvider(this, false),
+                    new RemoveTagMethodProvider(this, true),
+                    new RemoveTagMethodProvider(this, false)
+                ]);
+            }
+
+            return [.. methods];
         }
 
-        protected MethodProvider BuildOperationMethod(InputServiceMethod method, MethodProvider convenienceMethod, bool isAsync)
+        private bool ShouldGenerateTagMethods(InputModelType model)
         {
-            return BuildOperationMethodCore(method, convenienceMethod, isAsync);
+            InputModelType? currentModel = model;
+            while (currentModel != null)
+            {
+                foreach (var property in currentModel.Properties)
+                {
+                    if (property.Name == "tags" && property.Type is not null)
+                    {
+                       if (property.Type is InputDictionaryType dictType)
+                       {
+                            if (dictType.KeyType is InputPrimitiveType kt && kt.Kind == InputPrimitiveTypeKind.String &&
+                                dictType.ValueType is InputPrimitiveType vt && vt.Kind == InputPrimitiveTypeKind.String)
+                            {
+                                return true;
+                            }
+                       }
+                    }
+                }
+                currentModel = currentModel.BaseModel;
+            }
+            return false;
         }
-
-        protected MethodProvider BuildOperationMethodCore(InputServiceMethod method, MethodProvider convenienceMethod, bool isAsync)
-        {
-            return new ResourceOperationMethodProvider(this, method, convenienceMethod, isAsync);
-        }
-
-        // TODO: get clean name of operation Name
-        protected MethodProvider GetCorrespondingConvenienceMethod(InputOperation operation, bool isAsync)
-            => _restClientProvider.CanonicalView.Methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
 
         public ScopedApi<bool> TryGetApiVersion(out ScopedApi<string> apiVersion)
         {
@@ -335,7 +368,7 @@ namespace Azure.Generator.Management.Providers
                     if (convenienceMethod != null)
                     {
                         var resource = convenienceMethod.Signature.Parameters
-                            .Single(p => p.Type.Equals(ResourceData.Type));
+                            .Single(p => p.Type.Equals(ResourceData.Type) || p.Type.Equals(typeof(RequestContent)));
                         arguments.Add(resource);
                     }
                     else

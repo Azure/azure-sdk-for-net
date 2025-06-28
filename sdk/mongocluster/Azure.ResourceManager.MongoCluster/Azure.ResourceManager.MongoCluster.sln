@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.MongoCluster.Samples", "samples\Azure.ResourceManager.MongoCluster.Samples.csproj", "{322467E1-41E9-45C6-B523-46594155B7E5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.MongoCluster", "src\Azure.ResourceManager.MongoCluster.csproj", "{205EDD1F-276C-4329-B391-C62F93FE4AFB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.MongoCluster.Tests", "tests\Azure.ResourceManager.MongoCluster.Tests.csproj", "{D168B846-01D6-40BB-8952-8221AE4D45F0}"

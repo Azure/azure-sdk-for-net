@@ -72,6 +72,16 @@ namespace Azure.Generator.Management.Snippets
             return Declare("context", typeof(RequestContext), New.Instance(typeof(RequestContext), requestContextParams), out contextVariable);
         }
 
+        public static MethodBodyStatement CreateUriFromMessage(VariableExpression messageVariable, out VariableExpression uriVariable)
+        {
+            // Uri uri = message.Request.Uri;
+            return Declare(
+                "uri",
+                typeof(RequestUriBuilder),
+                messageVariable.Property("Request").Property("Uri"),
+                out uriVariable);
+        }
+
         public static MethodBodyStatement CreateHttpMessage(
             ResourceClientProvider resourceClientProvider,
             string methodName,
@@ -89,7 +99,7 @@ namespace Azure.Generator.Management.Snippets
         public static IReadOnlyList<MethodBodyStatement> CreateGenericResponsePipelineProcessing(
             VariableExpression messageVariable,
             VariableExpression contextVariable,
-            CSharpType responseType,
+            CSharpType responseGenericType,
             bool isAsync,
             out VariableExpression responseVariable)
         {
@@ -107,10 +117,10 @@ namespace Azure.Generator.Management.Snippets
             // Response<T> response = Response.FromValue((T)result, result);
             var responseDeclaration = Declare(
                 "response",
-                responseType,
+                new CSharpType(typeof(Response<>), responseGenericType),
                 Static(typeof(Response)).Invoke(
                     nameof(Response.FromValue),
-                    [resultVariable.CastTo(responseType.Arguments[0]), resultVariable]),
+                    [resultVariable.CastTo(responseGenericType), resultVariable]),
                 out responseVariable);
             statements.Add(responseDeclaration);
 
