@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Text.Authoring;
@@ -16,28 +17,32 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
     {
         [Test]
         [AsyncOnly]
-        public async Task DeployProjectAsync()
+        public async Task UnassignDeploymentResourcesAsync()
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            #region Snippet:Sample14_TextAuthoring_DeployProjectAsync
-            string projectName = "LoanAgreements";
-            string deploymentName = "DeploymentName";
-            TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+            #region Snippet:Sample18_TextAuthoring_UnassignDeploymentResourcesAsync
+            string projectName = "MyTextProject";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
 
-            var deploymentConfig = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
-
-            Operation operation = await deploymentClient.DeployProjectAsync(
-                waitUntil: WaitUntil.Completed,
-                details: deploymentConfig
+            var unassignDetails = new TextAuthoringUnassignDeploymentResourcesDetails(
+                new List<string>
+                {
+                    "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/Microsoft.CognitiveServices/accounts/my-cognitive-account"
+                }
             );
 
-            Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
+            Operation operation = await projectClient.UnassignDeploymentResourcesAsync(
+                waitUntil: WaitUntil.Completed,
+                details: unassignDetails
+            );
+
+            Console.WriteLine($"Unassign operation completed with status: {operation.GetRawResponse().Status}");
             #endregion
 
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful deployment.");
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful unassignment of deployment resources.");
         }
     }
 }

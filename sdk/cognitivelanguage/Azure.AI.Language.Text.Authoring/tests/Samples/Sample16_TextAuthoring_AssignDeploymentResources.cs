@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.AI.Language.Text.Authoring;
 using Azure.AI.Language.Text.Authoring.Tests;
@@ -15,28 +16,33 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
     {
         [Test]
         [SyncOnly]
-        public void DeployProject()
+        public void AssignDeploymentResources()
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            #region Snippet:Sample14_TextAuthoring_DeployProject
-            string projectName = "LoanAgreements";
-            string deploymentName = "DeploymentName";
-            TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+            #region Snippet:Sample16_TextAuthoring_AssignDeploymentResources
+            string projectName = "MyTextProject";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
 
-            var deploymentDetails = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
-
-            Operation operation = deploymentClient.DeployProject(
-                waitUntil: WaitUntil.Completed,
-                details: deploymentDetails
+            var resourceMetadata = new TextAuthoringResourceMetadata(
+                azureResourceId: "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/Microsoft.CognitiveServices/accounts/my-cognitive-account",
+                customDomain: "my-custom-domain",
+                region: "my-region"
             );
 
-            Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
-            #endregion
+            var assignDetails = new TextAuthoringAssignDeploymentResourcesDetails(
+                new List<TextAuthoringResourceMetadata> { resourceMetadata }
+            );
 
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful deployment.");
+            Operation operation = projectClient.AssignDeploymentResources(
+                waitUntil: WaitUntil.Completed,
+                details: assignDetails
+            );
+
+            Console.WriteLine($"Deployment resources assigned with status: {operation.GetRawResponse().Status}");
+            #endregion
         }
     }
 }

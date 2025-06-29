@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Azure;
 using Azure.AI.Language.Text.Authoring;
 using Azure.AI.Language.Text.Authoring.Tests;
@@ -15,28 +17,45 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
     {
         [Test]
         [SyncOnly]
-        public void DeployProject()
+        public void GetAssignDeploymentResourcesStatus()
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            #region Snippet:Sample14_TextAuthoring_DeployProject
-            string projectName = "LoanAgreements";
-            string deploymentName = "DeploymentName";
-            TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+            #region Snippet:Sample17_TextAuthoring_GetAssignDeploymentResourcesStatus
+            string projectName = "MyTextProject";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
 
-            var deploymentDetails = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
-
-            Operation operation = deploymentClient.DeployProject(
-                waitUntil: WaitUntil.Completed,
-                details: deploymentDetails
+            var resourceMetadata = new TextAuthoringResourceMetadata(
+                azureResourceId: "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/Microsoft.CognitiveServices/accounts/my-cognitive-account",
+                customDomain: "my-custom-domain",
+                region: "my-region"
             );
 
-            Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
-            #endregion
+            var assignDetails = new TextAuthoringAssignDeploymentResourcesDetails(
+                new List<TextAuthoringResourceMetadata> { resourceMetadata }
+            );
 
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful deployment.");
+            // Submit assignment operation
+            Operation assignOperation = projectClient.AssignDeploymentResources(
+                waitUntil: WaitUntil.Started,
+                details: assignDetails
+            );
+
+            string operationLocation = assignOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out var location)
+                ? location
+                : throw new InvalidOperationException("Operation-Location header not found.");
+
+            // Extract only the jobId part from the URL
+            string jobId = new Uri(location).Segments.Last().Split('?')[0];
+            Console.WriteLine($"Job ID: {jobId}");
+
+            // Call status API
+            Response<TextAuthoringDeploymentResourcesState> statusResponse = projectClient.GetAssignDeploymentResourcesStatus(jobId);
+
+            Console.WriteLine($"Deployment assignment status: {statusResponse.Value.Status}");
+            #endregion
         }
     }
 }
