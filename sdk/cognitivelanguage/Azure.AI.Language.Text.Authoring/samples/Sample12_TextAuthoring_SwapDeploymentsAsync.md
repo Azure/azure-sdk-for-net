@@ -18,9 +18,9 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To swap deployments, call SwapDeploymentsAsync on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample12_TextAuthoring_SwapDeploymentsAsync
-string projectName = "LoanAgreements";
-string firstDeploymentName = "DeploymentA";
-string secondDeploymentName = "DeploymentB";
+string projectName = "MySwapProjectAsync";
+string firstDeploymentName = "Deployment1";
+string secondDeploymentName = "Deployment2";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 
 var swapDetails = new TextAuthoringSwapDeploymentsDetails

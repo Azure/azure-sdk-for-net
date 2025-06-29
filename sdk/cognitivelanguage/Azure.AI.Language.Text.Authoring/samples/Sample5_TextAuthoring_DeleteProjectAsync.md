@@ -18,7 +18,7 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To delete a project, call DeleteProjectAsync on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample5_TextAuthoring_DeleteProjectAsync
-string projectName = "ProjectToDelete";
+string projectName = "MyProjectToDeleteAsync";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 
 Operation operation = await projectClient.DeleteProjectAsync(

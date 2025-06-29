@@ -18,8 +18,8 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To delete a trained model, call DeleteTrainedModelAsync on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample11_TextAuthoring_DeleteTrainedModelAsync
-string projectName = "LoanAgreements";
-string trainedModelLabel = "ModelLabel"; // Replace with the actual model label.
+string projectName = "MyModelProjectAsync";
+string trainedModelLabel = "model1";
 TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
 Response response = await trainedModelClient.DeleteTrainedModelAsync();

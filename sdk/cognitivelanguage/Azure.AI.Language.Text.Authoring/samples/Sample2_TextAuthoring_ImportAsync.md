@@ -20,15 +20,15 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 To import project data, call ImportAsync on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample2_TextAuthoring_ImportAsync
-string projectName = "LoanAgreements";
+string projectName = "MyImportProjectAsync";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 var projectMetadata = new TextAuthoringCreateProjectDetails(
     projectKind: "CustomEntityRecognition",
-    storageInputContainerName: "loanagreements",
+    storageInputContainerName: "test-data",
     language: "en"
 )
 {
-    Description = "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
+    Description = "Sample dataset for Custom Entity Recognition",
     Multilingual = false
 };
 

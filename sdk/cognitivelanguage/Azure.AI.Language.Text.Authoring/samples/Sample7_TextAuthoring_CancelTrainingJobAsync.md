@@ -18,7 +18,7 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To cancel a training job, call CancelTrainingJobAsync on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample7_TextAuthoring_CancelTrainingJobAsync
-string projectName = "LoanAgreements";
+string projectName = "MyTrainingProjectAsync";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 
 string jobId = "training-job-id"; // Replace with an actual job ID.

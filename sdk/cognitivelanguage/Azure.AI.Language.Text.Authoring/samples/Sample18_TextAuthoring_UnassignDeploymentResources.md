@@ -18,8 +18,8 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To deploy a project, call DeployProject on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample14_TextAuthoring_DeployProject
-string projectName = "LoanAgreements";
-string deploymentName = "DeploymentName";
+string projectName = "MyDeploymentProject";
+string deploymentName = "Deployment1";
 TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
 var deploymentDetails = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "29886710a2ae49259d62cffca977db66");

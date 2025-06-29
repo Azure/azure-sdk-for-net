@@ -20,8 +20,18 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 To retrieve deployment details, call `GetDeployment` on the `TextAuthoringDeployment` client. The method returns a `Response<TextAuthoringProjectDeployment>` containing the deployment details.
   
 ```C# Snippet:Sample15_TextAuthoring_GetDeployment
-string projectName = "MyTextProject"; string deploymentName = "MyDeployment"; TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+string projectName = "MyDeploymentProject";
+string deploymentName = "MyDeployment";
+TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
 Response<TextAuthoringProjectDeployment> response = deploymentClient.GetDeployment();
+
 TextAuthoringProjectDeployment deployment = response.Value;
-Console.WriteLine($"Deployment Name: {deployment.DeploymentName}"); Console.WriteLine($"Model Id: {deployment.ModelId}"); Console.WriteLine($"Last Trained On: {deployment.LastTrainedOn}"); Console.WriteLine($"Last Deployed On: {deployment.LastDeployedOn}"); Console.WriteLine($"Deployment Expired On: {deployment.DeploymentExpiredOn}"); Console.WriteLine($"Model Training Config Version: {deployment.ModelTrainingConfigVersion}");
+
+Console.WriteLine($"Deployment Name: {deployment.DeploymentName}");
+Console.WriteLine($"Model Id: {deployment.ModelId}");
+Console.WriteLine($"Last Trained On: {deployment.LastTrainedOn}");
+Console.WriteLine($"Last Deployed On: {deployment.LastDeployedOn}");
+Console.WriteLine($"Deployment Expired On: {deployment.DeploymentExpiredOn}");
+Console.WriteLine($"Model Training Config Version: {deployment.ModelTrainingConfigVersion}");
 ```

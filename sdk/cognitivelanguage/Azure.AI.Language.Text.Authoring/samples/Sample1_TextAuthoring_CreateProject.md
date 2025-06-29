@@ -24,17 +24,13 @@ string projectName = "MyNewProject";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 var projectData = new TextAuthoringCreateProjectDetails(
     projectKind: "customMultiLabelClassification",
-    storageInputContainerName: "e2e0test0data",
+    storageInputContainerName: "test-data",
     language: "en"
 )
 {
     Description = "Project description for a Custom Entity Recognition project",
     Multilingual = true
 };
-
-Response response = projectClient.CreateProject(projectData);
-
-Console.WriteLine($"Project created with status: {response.Status}");
 ```
 
 To create a project, the CreateProject method sends a request with the necessary project data (such as name, language, and project type). The method returns a Response object indicating the creation status.

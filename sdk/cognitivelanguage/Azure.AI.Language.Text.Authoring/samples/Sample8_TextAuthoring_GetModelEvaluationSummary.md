@@ -18,8 +18,8 @@ TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, c
 To retrieve the evaluation summary of a trained model, call GetModelEvaluationSummary on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample8_TextAuthoring_GetSingleLabelClassificationEvaluationSummary
-string projectName = "LoanAgreements";
-string trainedModelLabel = "model2";
+string projectName = "MyEvaluationProject";
+string trainedModelLabel = "model1";
 TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
 // Get the evaluation summary for the trained model

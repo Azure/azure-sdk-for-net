@@ -22,7 +22,7 @@ string projectName = "MyNewProjectAsync";
 TextAuthoringProject projectClient = client.GetProject(projectName);
 var projectData = new TextAuthoringCreateProjectDetails(
     projectKind: "customMultiLabelClassification",
-    storageInputContainerName: "e2e0test0data",
+    storageInputContainerName: "test-data",
     language: "en"
 )
 {
