@@ -53,14 +53,19 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNull(category, nameof(category));
 
             Category = category;
+            AssociatedEntities = new ChangeTrackingList<ConversationExportedAssociatedEntityLabel>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConversationExportedIntent"/>. </summary>
         /// <param name="category"> The intent category. </param>
+        /// <param name="description"> The intent description. </param>
+        /// <param name="associatedEntities"> The list of associated entities. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationExportedIntent(string category, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationExportedIntent(string category, string description, IList<ConversationExportedAssociatedEntityLabel> associatedEntities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
+            Description = description;
+            AssociatedEntities = associatedEntities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,5 +76,9 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> The intent category. </summary>
         public string Category { get; }
+        /// <summary> The intent description. </summary>
+        public string Description { get; set; }
+        /// <summary> The list of associated entities. </summary>
+        public IList<ConversationExportedAssociatedEntityLabel> AssociatedEntities { get; }
     }
 }
