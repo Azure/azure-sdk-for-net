@@ -1,6 +1,6 @@
-# Deploying a Project Asynchronously in Azure AI Language
+# Retrieving Deployment Details Asynchronously in Azure AI Language
 
-This sample demonstrates how to deploy a project asynchronously using the `Azure.AI.Language.Text.Authoring` SDK.
+This sample demonstrates how to retrieve deployment details asynchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
 ## Create an `AuthoringClient`
 
@@ -13,11 +13,13 @@ TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOpti
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
-## Deploy a Project Asynchronously
+The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
-To deploy a project, call DeployProjectAsync on the TextAnalysisAuthoring client.
+## Retrieve Deployment Details Asynchronously
 
-```C# Snippet:Sample14_TextAuthoring_DeployProjectAsync
+To retrieve deployment details, call `GetDeploymentAsync` on the `TextAuthoringDeployment` client. The method returns a `Response<TextAuthoringProjectDeployment>` containing the deployment details.
+
+```C# Snippet:Sample15_TextAuthoring_GetDeploymentAsync
 string projectName = "LoanAgreements";
 string deploymentName = "DeploymentName";
 TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
@@ -31,5 +33,3 @@ Operation operation = await deploymentClient.DeployProjectAsync(
 
 Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
 ```
-
-To deploy a project, the DeployProjectAsync method sends a request with the project name, deployment name, and deployment configuration. The method returns an Operation object indicating the deployment status.

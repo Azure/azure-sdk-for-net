@@ -21,22 +21,22 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            #region Snippet:Sample14_TextAuthoring_DeployProject
-            string projectName = "LoanAgreements";
-            string deploymentName = "DeploymentName";
+            #region Snippet:Sample15_TextAuthoring_GetDeployment
+            string projectName = "MyTextProject";
+            string deploymentName = "MyDeployment";
             TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
-            var deploymentDetails = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
+            Response<TextAuthoringProjectDeployment> response = deploymentClient.GetDeployment();
 
-            Operation operation = deploymentClient.DeployProject(
-                waitUntil: WaitUntil.Completed,
-                details: deploymentDetails
-            );
+            TextAuthoringProjectDeployment deployment = response.Value;
 
-            Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
+            Console.WriteLine($"Deployment Name: {deployment.DeploymentName}");
+            Console.WriteLine($"Model Id: {deployment.ModelId}");
+            Console.WriteLine($"Last Trained On: {deployment.LastTrainedOn}");
+            Console.WriteLine($"Last Deployed On: {deployment.LastDeployedOn}");
+            Console.WriteLine($"Deployment Expired On: {deployment.DeploymentExpiredOn}");
+            Console.WriteLine($"Model Training Config Version: {deployment.ModelTrainingConfigVersion}");
             #endregion
-
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful deployment.");
         }
     }
 }

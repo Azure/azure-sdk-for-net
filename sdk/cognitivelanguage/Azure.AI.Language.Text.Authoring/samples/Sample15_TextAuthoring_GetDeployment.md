@@ -1,6 +1,6 @@
-# Deploying a Project Synchronously in Azure AI Language
+# Retrieving Deployment Details Synchronously in Azure AI Language
 
-This sample demonstrates how to deploy a project synchronously using the `Azure.AI.Language.Text.Authoring` SDK.
+This sample demonstrates how to retrieve deployment details synchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
 ## Create an `AuthoringClient`
 
@@ -13,23 +13,15 @@ TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOpti
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
-## Deploy a Project Synchronously
+The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
-To deploy a project, call DeployProject on the TextAnalysisAuthoring client.
+## Retrieve Deployment Details Synchronously
 
-```C# Snippet:Sample14_TextAuthoring_DeployProject
-string projectName = "LoanAgreements";
-string deploymentName = "DeploymentName";
-TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
-
-var deploymentDetails = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
-
-Operation operation = deploymentClient.DeployProject(
-    waitUntil: WaitUntil.Completed,
-    details: deploymentDetails
-);
-
-Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
+To retrieve deployment details, call `GetDeployment` on the `TextAuthoringDeployment` client. The method returns a `Response<TextAuthoringProjectDeployment>` containing the deployment details.
+  
+```C# Snippet:Sample15_TextAuthoring_GetDeployment
+string projectName = "MyTextProject"; string deploymentName = "MyDeployment"; TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+Response<TextAuthoringProjectDeployment> response = deploymentClient.GetDeployment();
+TextAuthoringProjectDeployment deployment = response.Value;
+Console.WriteLine($"Deployment Name: {deployment.DeploymentName}"); Console.WriteLine($"Model Id: {deployment.ModelId}"); Console.WriteLine($"Last Trained On: {deployment.LastTrainedOn}"); Console.WriteLine($"Last Deployed On: {deployment.LastDeployedOn}"); Console.WriteLine($"Deployment Expired On: {deployment.DeploymentExpiredOn}"); Console.WriteLine($"Model Training Config Version: {deployment.ModelTrainingConfigVersion}");
 ```
-
-To deploy a project, the DeployProject method sends a request with the project name, deployment name, and deployment configuration. The method returns an Operation object indicating the deployment status.
