@@ -22,8 +22,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample10_TextAuthoring_LoadSnapshot
-            string projectName = "LoanAgreements";
-            string trainedModelLabel = "ModelLabel"; // Replace with your actual model label.
+            string projectName = "MySnapshotProject";
+            string trainedModelLabel = "model1";
             TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
             Operation operation = trainedModelClient.LoadSnapshot(

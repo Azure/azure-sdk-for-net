@@ -22,8 +22,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample11_TextAuthoring_DeleteTrainedModel
-            string projectName = "LoanAgreements";
-            string trainedModelLabel = "ModelLabel"; // Replace with the actual model label.
+            string projectName = "MyModelProject";
+            string trainedModelLabel = "model1";
             TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
             Response response = trainedModelClient.DeleteTrainedModel();

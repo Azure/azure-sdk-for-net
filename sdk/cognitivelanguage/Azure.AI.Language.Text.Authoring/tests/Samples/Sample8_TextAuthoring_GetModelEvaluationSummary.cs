@@ -22,8 +22,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
             #region Snippet:Sample8_TextAuthoring_GetSingleLabelClassificationEvaluationSummary
 
-            string projectName = "LoanAgreements";
-            string trainedModelLabel = "model2";
+            string projectName = "MyEvaluationProject";
+            string trainedModelLabel = "model1";
             TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
             // Get the evaluation summary for the trained model

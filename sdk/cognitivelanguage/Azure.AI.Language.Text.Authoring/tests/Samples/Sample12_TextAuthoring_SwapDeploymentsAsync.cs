@@ -23,9 +23,9 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample12_TextAuthoring_SwapDeploymentsAsync
-            string projectName = "LoanAgreements";
-            string firstDeploymentName = "DeploymentA";
-            string secondDeploymentName = "DeploymentB";
+            string projectName = "MySwapProjectAsync";
+            string firstDeploymentName = "Deployment1";
+            string secondDeploymentName = "Deployment2";
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             var swapDetails = new TextAuthoringSwapDeploymentsDetails

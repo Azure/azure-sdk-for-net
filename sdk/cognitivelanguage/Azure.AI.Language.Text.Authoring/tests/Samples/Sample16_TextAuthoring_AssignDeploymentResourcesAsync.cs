@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample16_TextAuthoring_AssignDeploymentResourcesAsync
-            string projectName = "MyTextProject";
+            string projectName = "MyResourceProjectAsync";
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             var resourceMetadata = new TextAuthoringResourceMetadata(

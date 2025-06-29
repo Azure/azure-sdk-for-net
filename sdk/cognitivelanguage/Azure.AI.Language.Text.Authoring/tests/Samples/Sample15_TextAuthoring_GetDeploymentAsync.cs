@@ -23,8 +23,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample15_TextAuthoring_GetDeploymentAsync
-            string projectName = "MyTextProject";
-            string deploymentName = "MyDeployment";
+            string projectName = "MyDeploymentProjectAsync";
+            string deploymentName = "Deployment1";
             TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
             Response<TextAuthoringProjectDeployment> response = await deploymentClient.GetDeploymentAsync();

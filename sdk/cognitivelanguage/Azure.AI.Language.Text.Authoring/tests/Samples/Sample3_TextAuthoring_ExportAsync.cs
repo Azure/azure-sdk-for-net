@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample3_TextAuthoring_ExportAsync
-            string projectName = "MyExportedTextProjectAsync";
+            string projectName = "MyExportedProjectAsync";
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             Operation operation = await projectClient.ExportAsync(

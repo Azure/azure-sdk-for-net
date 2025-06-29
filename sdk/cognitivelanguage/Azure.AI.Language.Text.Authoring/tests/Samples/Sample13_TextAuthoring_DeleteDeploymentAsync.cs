@@ -23,8 +23,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample13_TextAuthoring_DeleteDeploymentAsync
-            string projectName = "LoanAgreements";
-            string deploymentName = "DeploymentA";
+            string projectName = "MyDeploymentProjectAsync";
+            string deploymentName = "Deployment1";
             TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
 
             Operation operation = await deploymentClient.DeleteDeploymentAsync(

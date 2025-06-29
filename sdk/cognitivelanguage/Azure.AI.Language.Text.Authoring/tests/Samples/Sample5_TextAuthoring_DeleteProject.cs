@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample5_TextAuthoring_DeleteProject
-            string projectName = "ProjectToDelete";
+            string projectName = "MyProjectToDelete";
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             Operation operation = projectClient.DeleteProject(

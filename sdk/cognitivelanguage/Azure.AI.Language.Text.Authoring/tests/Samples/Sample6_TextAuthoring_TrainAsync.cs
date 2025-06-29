@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 {
-    public partial class Sample5_TextAuthoring_TrainAsync : SamplesBase<AuthoringClientTestEnvironment>
+    public partial class Sample6_TextAuthoring_TrainAsync : SamplesBase<AuthoringClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]
@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample6_TextAuthoring_TrainAsync
-            string projectName = "LoanAgreements";
+            string projectName = "MyTrainingProjectAsync";
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             var trainingJobConfig = new TextAuthoringTrainingJobDetails(

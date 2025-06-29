@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample9_TextAuthoring_GetModelEvaluationResults
-            string projectName = "MyTextProject";
+            string projectName = "MyEvaluationProject";
             string trainedModelLabel = "model1";
             StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 

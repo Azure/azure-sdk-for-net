@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample19_TextAuthoring_GetUnassignDeploymentResourcesStatus
-            string projectName = "MyTextProject";
+            string projectName = "MyResourceProject";
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             // Prepare the details for unassigning resources

@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample7_TextAuthoring_CancelTrainingJob
-            string projectName = "LoanAgreements";
+            string projectName = "MyTrainingProject";
             TextAuthoringProject projectClient = client.GetProject(projectName);
 
             string jobId = "training-job-id"; // Replace with an actual job ID.

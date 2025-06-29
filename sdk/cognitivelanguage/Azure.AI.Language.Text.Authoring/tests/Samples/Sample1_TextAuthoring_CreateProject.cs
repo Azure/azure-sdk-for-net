@@ -26,18 +26,18 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             TextAuthoringProject projectClient = client.GetProject(projectName);
             var projectData = new TextAuthoringCreateProjectDetails(
                 projectKind: "customMultiLabelClassification",
-                storageInputContainerName: "e2e0test0data",
+                storageInputContainerName: "test-data",
                 language: "en"
             )
             {
                 Description = "Project description for a Custom Entity Recognition project",
                 Multilingual = true
             };
+            #endregion
 
             Response response = projectClient.CreateProject(projectData);
 
             Console.WriteLine($"Project created with status: {response.Status}");
-            #endregion
 
             Assert.AreEqual(201, response.Status, "Expected the status to indicate project creation success.");
         }
