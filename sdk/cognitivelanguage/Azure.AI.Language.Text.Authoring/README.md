@@ -3,14 +3,24 @@
 Azure Text Authoring is part of the Azure Cognitive Service for Language, a cloud-based service that provides tools for creating, managing, and deploying text processing and AI solutions. This client library offers the following features:
 
 * Creating and managing text analysis projects
-* Importing and exporting text analysis projects
-* Training models for text processing and analysis
-* Evaluating trained models
-* Deploying text processing models
-* Swapping deployments for active models
-* Canceling active training jobs
+* Importing data into text analysis projects
+* Exporting text analysis projects
+* Retrieving project details
+* Deleting projects
+* Training models
+* Canceling training jobs
+* Retrieving model evaluation summaries
+* Retrieving model evaluation results
 * Managing project snapshots
-* Deleting trained models and deployments
+* Deleting trained models
+* Swapping deployments
+* Deleting deployments
+* Deploying trained models
+* Retrieving deployment details
+* Assigning deployment resources
+* Checking the status of assigned resource operations
+* Unassigning deployment resources
+* Checking the status of unassigned resource operations
 
 [Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][text_refdocs] | [Product documentation][text_docs] | [Samples][source_samples]
 
