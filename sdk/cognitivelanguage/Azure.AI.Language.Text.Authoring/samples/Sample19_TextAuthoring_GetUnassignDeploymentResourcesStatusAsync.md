@@ -1,6 +1,6 @@
-# Deploying a Project Asynchronously in Azure AI Language
+# Retrieving Deployment Resources Unassignment Status Asynchronously in Azure AI Language
 
-This sample demonstrates how to deploy a project asynchronously using the `Azure.AI.Language.Text.Authoring` SDK.
+This sample demonstrates how to retrieve the status of deployment resources unassignment asynchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
 ## Create an `AuthoringClient`
 
@@ -13,23 +13,47 @@ TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOpti
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
-## Deploy a Project Asynchronously
+## Retrieve Deployment Resources Unassignment Status Asynchronously
 
-To deploy a project, call DeployProjectAsync on the TextAnalysisAuthoring client.
+To retrieve the status of deployment resources unassignment, call `GetUnassignDeploymentResourcesStatusAsync` on the `TextAuthoringProject` client. The method returns a `Response<TextAuthoringDeploymentResourcesState>` containing the unassignment status.
 
-```C# Snippet:Sample14_TextAuthoring_DeployProjectAsync
-string projectName = "MyDeploymentProjectAsync";
-string deploymentName = "Deployment1";
-TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+```C# Snippet:Sample19_TextAuthoring_GetUnassignDeploymentResourcesStatusAsync
+string projectName = "MyResourceProjectAsync";
+TextAuthoringProject projectClient = client.GetProject(projectName);
 
-var deploymentConfig = new TextAuthoringCreateDeploymentDetails(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
-
-Operation operation = await deploymentClient.DeployProjectAsync(
-    waitUntil: WaitUntil.Completed,
-    details: deploymentConfig
+// Prepare the details for unassigning resources
+var unassignDetails = new TextAuthoringUnassignDeploymentResourcesDetails(
+    new[]
+    {
+        "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/Microsoft.CognitiveServices/accounts/my-cognitive-account"
+    }
 );
 
-Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
-```
+// Submit the unassign operation and get the job ID
+Operation unassignOperation = await projectClient.UnassignDeploymentResourcesAsync(
+    waitUntil: WaitUntil.Started,
+    details: unassignDetails
+);
 
-To deploy a project, the DeployProjectAsync method sends a request with the project name, deployment name, and deployment configuration. The method returns an Operation object indicating the deployment status.
+string operationLocation = unassignOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out var location)
+    ? location
+    : throw new InvalidOperationException("Operation-Location header not found.");
+
+string jobId = new Uri(location).Segments.Last().Split('?')[0];
+Console.WriteLine($"Unassign Job ID: {jobId}");
+
+// Call the API to get unassign job status
+Response<TextAuthoringDeploymentResourcesState> response =
+    await projectClient.GetUnassignDeploymentResourcesStatusAsync(jobId);
+
+Console.WriteLine($"Job Status: {response.Value.Status}");
+
+if (response.Value.Errors != null && response.Value.Errors.Any())
+{
+    Console.WriteLine("Errors:");
+    foreach (var error in response.Value.Errors)
+    {
+        Console.WriteLine($"- Code: {error.Code}, Message: {error.Message}");
+    }
+}
+```
