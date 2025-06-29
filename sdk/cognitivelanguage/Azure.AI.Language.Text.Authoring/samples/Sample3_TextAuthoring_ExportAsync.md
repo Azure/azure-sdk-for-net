@@ -13,8 +13,6 @@ TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOpti
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
-The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
-
 ## Export Project Data Asynchronously
 
 To export project data, call `ExportAsync` on the `TextAuthoringProject` client. The method returns an `Operation` that allows you to track the status of the export operation. You can also extract the `operation-location` header from the raw response to get the URL of the operation.

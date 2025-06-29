@@ -13,8 +13,6 @@ TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOpti
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
-The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
-
 ## Retrieve Deployment Details Asynchronously
 
 To retrieve deployment details, call `GetDeploymentAsync` on the `TextAuthoringDeployment` client. The method returns a `Response<TextAuthoringProjectDeployment>` containing the deployment details.

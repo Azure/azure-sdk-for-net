@@ -13,8 +13,6 @@ TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOpti
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
-The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
-
 ## Retrieve Model Evaluation Results Synchronously
 
 To retrieve model evaluation results, call `GetModelEvaluationResults` on the `TextAuthoringTrainedModel` client. The method returns a `Pageable<TextAuthoringDocumentEvalResult>` that allows you to enumerate the evaluation results for each document.
