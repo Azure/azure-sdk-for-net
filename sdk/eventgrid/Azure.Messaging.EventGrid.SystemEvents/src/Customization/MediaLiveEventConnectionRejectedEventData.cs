@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Encoder connection rejected event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventConnectionRejected event. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MediaLiveEventConnectionRejectedEventData
     {
         /// <summary> Initializes a new instance of <see cref="MediaLiveEventConnectionRejectedEventData"/>. </summary>

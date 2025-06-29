@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutRaiPolicy()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/PutRaiPolicy.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2025-06-01/examples/PutRaiPolicy.json
             // this example is just showing the usage of "RaiPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,81 +49,81 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
                     BasePolicyName = "Microsoft.Default",
                     ContentFilters = {new RaiPolicyContentFilter
 {
-Name = "hate",
+Name = "Hate",
 Enabled = false,
 SeverityThreshold = RaiPolicyContentLevel.High,
 Blocking = false,
 Source = RaiPolicyContentSource.Prompt,
 }, new RaiPolicyContentFilter
 {
-Name = "hate",
+Name = "Hate",
 Enabled = true,
 SeverityThreshold = RaiPolicyContentLevel.Medium,
 Blocking = true,
 Source = RaiPolicyContentSource.Completion,
 }, new RaiPolicyContentFilter
 {
-Name = "sexual",
+Name = "Sexual",
 Enabled = true,
 SeverityThreshold = RaiPolicyContentLevel.High,
 Blocking = true,
 Source = RaiPolicyContentSource.Prompt,
 }, new RaiPolicyContentFilter
 {
-Name = "sexual",
+Name = "Sexual",
 Enabled = true,
 SeverityThreshold = RaiPolicyContentLevel.Medium,
 Blocking = true,
 Source = RaiPolicyContentSource.Completion,
 }, new RaiPolicyContentFilter
 {
-Name = "selfharm",
+Name = "Selfharm",
 Enabled = true,
 SeverityThreshold = RaiPolicyContentLevel.High,
 Blocking = true,
 Source = RaiPolicyContentSource.Prompt,
 }, new RaiPolicyContentFilter
 {
-Name = "selfharm",
+Name = "Selfharm",
 Enabled = true,
 SeverityThreshold = RaiPolicyContentLevel.Medium,
 Blocking = true,
 Source = RaiPolicyContentSource.Completion,
 }, new RaiPolicyContentFilter
 {
-Name = "violence",
+Name = "Violence",
 Enabled = true,
 SeverityThreshold = RaiPolicyContentLevel.Medium,
 Blocking = true,
 Source = RaiPolicyContentSource.Prompt,
 }, new RaiPolicyContentFilter
 {
-Name = "violence",
+Name = "Violence",
 Enabled = true,
 SeverityThreshold = RaiPolicyContentLevel.Medium,
 Blocking = true,
 Source = RaiPolicyContentSource.Completion,
 }, new RaiPolicyContentFilter
 {
-Name = "jailbreak",
+Name = "Jailbreak",
 Enabled = true,
 Blocking = true,
 Source = RaiPolicyContentSource.Prompt,
 }, new RaiPolicyContentFilter
 {
-Name = "protected_material_text",
+Name = "Protected Material Text",
 Enabled = true,
 Blocking = true,
 Source = RaiPolicyContentSource.Completion,
 }, new RaiPolicyContentFilter
 {
-Name = "protected_material_code",
+Name = "Protected Material Code",
 Enabled = true,
 Blocking = true,
 Source = RaiPolicyContentSource.Completion,
 }, new RaiPolicyContentFilter
 {
-Name = "profanity",
+Name = "Profanity",
 Enabled = true,
 Blocking = true,
 Source = RaiPolicyContentSource.Prompt,
@@ -144,7 +144,7 @@ Source = RaiPolicyContentSource.Prompt,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRaiPolicy()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetRaiPolicy.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2025-06-01/examples/GetRaiPolicy.json
             // this example is just showing the usage of "RaiPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +178,7 @@ Source = RaiPolicyContentSource.Prompt,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListRaiPolicies()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/ListRaiPolicies.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2025-06-01/examples/ListRaiPolicies.json
             // this example is just showing the usage of "RaiPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -214,7 +214,7 @@ Source = RaiPolicyContentSource.Prompt,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetRaiPolicy()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetRaiPolicy.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2025-06-01/examples/GetRaiPolicy.json
             // this example is just showing the usage of "RaiPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -244,7 +244,7 @@ Source = RaiPolicyContentSource.Prompt,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetRaiPolicy()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetRaiPolicy.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2025-06-01/examples/GetRaiPolicy.json
             // this example is just showing the usage of "RaiPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -1,12 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary>
     /// Error code describing the error. If you get an enum with a value of <see cref="int.MaxValue"/>, that means the service has returned a new category, and you
     /// should upgrade to the latest SDK.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public enum MediaJobErrorCode
     {
         /// <summary> Fatal service error, please contact support. </summary>

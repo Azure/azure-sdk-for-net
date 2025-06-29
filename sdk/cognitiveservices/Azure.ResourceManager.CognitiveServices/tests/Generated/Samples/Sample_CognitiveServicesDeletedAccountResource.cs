@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAccount()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetDeletedAccount.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2025-06-01/examples/GetDeletedAccount.json
             // this example is just showing the usage of "DeletedAccounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesDeletedAccountResource created on azure
             // for more information of creating CognitiveServicesDeletedAccountResource, please refer to the document of CognitiveServicesDeletedAccountResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
             AzureLocation location = new AzureLocation("westus");
             string resourceGroupName = "myResourceGroup";
             string accountName = "myAccount";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAccount()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/PurgeDeletedAccount.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2025-06-01/examples/PurgeDeletedAccount.json
             // this example is just showing the usage of "DeletedAccounts_Purge" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CognitiveServicesDeletedAccountResource created on azure
             // for more information of creating CognitiveServicesDeletedAccountResource, please refer to the document of CognitiveServicesDeletedAccountResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
             AzureLocation location = new AzureLocation("westus");
             string resourceGroupName = "myResourceGroup";
             string accountName = "PropTest01";

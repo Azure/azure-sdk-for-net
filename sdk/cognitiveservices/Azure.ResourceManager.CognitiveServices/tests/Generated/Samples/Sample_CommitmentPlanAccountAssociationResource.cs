@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCommitmentPlan()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/GetSharedCommitmentPlanAssociation.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2025-06-01/examples/GetSharedCommitmentPlanAssociation.json
             // this example is just showing the usage of "CommitmentPlans_GetAssociation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CommitmentPlanAccountAssociationResource created on azure
             // for more information of creating CommitmentPlanAccountAssociationResource, please refer to the document of CommitmentPlanAccountAssociationResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "resourceGroupName";
             string commitmentPlanName = "commitmentPlanName";
             string commitmentPlanAssociationName = "commitmentPlanAssociationName";
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteCommitmentPlan()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/DeleteSharedCommitmentPlanAssociation.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2025-06-01/examples/DeleteSharedCommitmentPlanAssociation.json
             // this example is just showing the usage of "CommitmentPlans_DeleteAssociation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CommitmentPlanAccountAssociationResource created on azure
             // for more information of creating CommitmentPlanAccountAssociationResource, please refer to the document of CommitmentPlanAccountAssociationResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "resourceGroupName";
             string commitmentPlanName = "commitmentPlanName";
             string commitmentPlanAssociationName = "commitmentPlanAssociationName";
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PutCommitmentPlan()
         {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/CreateSharedCommitmentPlanAssociation.json
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2025-06-01/examples/CreateSharedCommitmentPlanAssociation.json
             // this example is just showing the usage of "CommitmentPlans_CreateOrUpdateAssociation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
             // this example assumes you already have this CommitmentPlanAccountAssociationResource created on azure
             // for more information of creating CommitmentPlanAccountAssociationResource, please refer to the document of CommitmentPlanAccountAssociationResource
-            string subscriptionId = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "resourceGroupName";
             string commitmentPlanName = "commitmentPlanName";
             string commitmentPlanAssociationName = "commitmentPlanAssociationName";

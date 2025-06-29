@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("storageAccountKey"u8);
                 writer.WriteStringValue(StorageAccountKey);
             }
+            if (Optional.IsDefined(StorageAccountKeyReference))
+            {
+                writer.WritePropertyName("storageAccountKeyReference"u8);
+                writer.WriteStringValue(StorageAccountKeyReference);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,6 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             bool? readOnly = default;
             string storageAccountName = default;
             string storageAccountKey = default;
+            string storageAccountKeyReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,13 +123,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     storageAccountKey = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("storageAccountKeyReference"u8))
+                {
+                    storageAccountKeyReference = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerInstanceAzureFileVolume(shareName, readOnly, storageAccountName, storageAccountKey, serializedAdditionalRawData);
+            return new ContainerInstanceAzureFileVolume(
+                shareName,
+                readOnly,
+                storageAccountName,
+                storageAccountKey,
+                storageAccountKeyReference,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInstanceAzureFileVolume>.Write(ModelReaderWriterOptions options)
