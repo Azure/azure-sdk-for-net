@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
@@ -13,17 +12,17 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
-    public partial class Sample16_ConversationsAuthoring_AssignDeploymentResourcesAsync : SamplesBase<AuthoringClientTestEnvironment>
+    public partial class Sample16_ConversationsAuthoring_AssignDeploymentResources : SamplesBase<AuthoringClientTestEnvironment>
     {
         [Test]
-        [AsyncOnly]
-        public async Task AssignDeploymentResourcesAsync()
+        [SyncOnly]
+        public void AssignDeploymentResources()
         {
             Uri endpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential credential = new DefaultAzureCredential();
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
-            #region Snippet:Sample16_ConversationsAuthoring_AssignDeploymentResourcesAsync
+            #region Snippet:Sample16_ConversationsAuthoring_AssignDeploymentResources
             // Arrange
             string sampleProjectName = "SampleProject";
             ConversationAuthoringProject sampleProjectClient = client.GetProject(sampleProjectName);
@@ -39,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             );
 
             // Act
-            Operation sampleOperation = await sampleProjectClient.AssignDeploymentResourcesAsync(
+            Operation sampleOperation = sampleProjectClient.AssignDeploymentResources(
                 waitUntil: WaitUntil.Started,
                 details: sampleAssignDetails
             );

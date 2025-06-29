@@ -19,37 +19,37 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         [AsyncOnly]
         public async Task UnassignDeploymentResourcesAsync()
         {
-            Uri endpoint = TestEnvironment.Endpoint;
-            DefaultAzureCredential credential = new DefaultAzureCredential();
-            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+            Uri sampleEndpoint = TestEnvironment.Endpoint;
+            DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
+            var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
 
             #region Snippet:Sample18_ConversationsAuthoring_UnassignDeploymentResourcesAsync
             // Set project name and create client for the project
-            string projectName = "EmailApp";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+            string sampleProjectName = "SampleProject";
+            ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 
             // Define assigned resource ID to be unassigned
-            var assignedResourceIds = new List<string>
+            var sampleAssignedResourceIds = new List<string>
             {
-                "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/language-sdk-rg/providers/Microsoft.CognitiveServices/accounts/sdk-test-02"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-resource-group/providers/Microsoft.CognitiveServices/accounts/sample-account"
             };
 
             // Build the unassignment details
-            var unassignDetails = new ConversationAuthoringUnassignDeploymentResourcesDetails(assignedResourceIds);
+            var sampleUnassignDetails = new ConversationAuthoringUnassignDeploymentResourcesDetails(sampleAssignedResourceIds);
 
             // Call the operation
-            Operation operation = await projectClient.UnassignDeploymentResourcesAsync(
+            Operation sampleOperation = await sampleProjectClient.UnassignDeploymentResourcesAsync(
                 waitUntil: WaitUntil.Started,
-                details: unassignDetails
+                details: sampleUnassignDetails
             );
 
-            Console.WriteLine($"UnassignDeploymentResourcesAsync initiated. Status: {operation.GetRawResponse().Status}");
+            Console.WriteLine($"UnassignDeploymentResourcesAsync initiated. Status: {sampleOperation.GetRawResponse().Status}");
 
             // Print jobId from Operation-Location
-            if (operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location))
+            if (sampleOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location))
             {
-                string jobId = new Uri(location).Segments.Last().Split('?')[0];
-                Console.WriteLine($"Job ID: {jobId}");
+                string sampleJobId = new Uri(location).Segments.Last().Split('?')[0];
+                Console.WriteLine($"Job ID: {sampleJobId}");
             }
             else
             {

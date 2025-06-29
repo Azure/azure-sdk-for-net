@@ -19,31 +19,31 @@ To unassign deployment resources, call `UnassignDeploymentResources` on the `Con
 
 ```C# Snippet:Sample18_ConversationsAuthoring_UnassignDeploymentResources
 // Set project name and create client for the project
-string projectName = "EmailApp";
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
+string sampleProjectName = "SampleProject";
+ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 
 // Define assigned resource ID to be unassigned
-var assignedResourceIds = new List<string>
+var sampleAssignedResourceIds = new List<string>
 {
-    "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/language-sdk-rg/providers/Microsoft.CognitiveServices/accounts/sdk-test-02"
+    "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-resource-group/providers/Microsoft.CognitiveServices/accounts/sample-account"
 };
 
 // Build the unassignment details
-var unassignDetails = new ConversationAuthoringUnassignDeploymentResourcesDetails(assignedResourceIds);
+var sampleUnassignDetails = new ConversationAuthoringUnassignDeploymentResourcesDetails(sampleAssignedResourceIds);
 
 // Start the operation
-Operation operation = projectClient.UnassignDeploymentResources(
+Operation sampleOperation = sampleProjectClient.UnassignDeploymentResources(
     waitUntil: WaitUntil.Started,
-    details: unassignDetails
+    details: sampleUnassignDetails
 );
 
-Console.WriteLine($"UnassignDeploymentResources initiated. Status: {operation.GetRawResponse().Status}");
+Console.WriteLine($"UnassignDeploymentResources initiated. Status: {sampleOperation.GetRawResponse().Status}");
 
 // Print jobId from Operation-Location
-if (operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location))
+if (sampleOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location))
 {
-    string jobId = new Uri(location).Segments.Last().Split('?')[0];
-    Console.WriteLine($"Job ID: {jobId}");
+    string sampleJobId = new Uri(location).Segments.Last().Split('?')[0];
+    Console.WriteLine($"Job ID: {sampleJobId}");
 }
 else
 {
