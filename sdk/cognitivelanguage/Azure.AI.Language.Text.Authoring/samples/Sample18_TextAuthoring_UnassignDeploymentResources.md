@@ -7,7 +7,7 @@ This sample demonstrates how to unassign deployment resources synchronously usin
 To create a `AuthoringClient`, use the service endpoint of a custom subdomain Language resource and authenticate with `DefaultAzureCredential`.
 
 ```C# Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("{endpoint}");;
 DefaultAzureCredential credential = new DefaultAzureCredential();
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 ```

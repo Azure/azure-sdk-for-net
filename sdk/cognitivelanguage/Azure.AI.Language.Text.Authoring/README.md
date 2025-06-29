@@ -61,8 +61,8 @@ using Azure.AI.Language.Text.Authoring;
 With your endpoint and API key, you can instantiate a TextAnalysisAuthoringClient using specific service options:
 
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your apikey");
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
@@ -87,7 +87,7 @@ using Microsoft.Extensions.Options;
 Then you can create an instance of DefaultAzureCredential and pass it to a new instance of your client:
 
 ```C# Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("{endpoint}");;
 DefaultAzureCredential credential = new DefaultAzureCredential();
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 ```
@@ -105,8 +105,8 @@ You have the flexibility to explicitly select a supported service API version wh
 For example:
 
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your apikey");
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```

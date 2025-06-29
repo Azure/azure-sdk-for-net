@@ -20,8 +20,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         public void CreateAuthoringClientForSpecificApiVersion()
         {
             #region Snippet:CreateTextAuthoringClientForSpecificApiVersion
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-            AzureKeyCredential credential = new("your apikey");
+            Uri endpoint = new Uri("{endpoint}");
+            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 #if !SNIPPET
             endpoint = TestEnvironment.Endpoint;
             credential = new(TestEnvironment.ApiKey);
@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         public void AuthoringClient_CreateWithDefaultAzureCredential()
         {
             #region Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+            Uri endpoint = new Uri("{endpoint}");;
 #if !SNIPPET
             endpoint = TestEnvironment.Endpoint;
 #endif
