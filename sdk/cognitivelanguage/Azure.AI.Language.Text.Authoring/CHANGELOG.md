@@ -14,6 +14,11 @@
 ### Other Changes
 
 - Added tests and samples for some legacy features.
+  - Get Deployment
+  - Assign Deployment Resources
+  - Get Assign Deployment Resources Status
+  - Unassign Deployment Resources
+  - Get Unassign Deployment Resources Status
 
 ## 1.0.0-beta.1 (2025-03-04)
 
