@@ -414,5 +414,97 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             // Logging for additional context
             Console.WriteLine($"Deployment deletion completed with status: {operation.GetRawResponse().Status}");
         }
+
+        [RecordedTest]
+        public async Task ExportProjectAsync()
+        {
+            // Arrange
+            string projectName = "single-class-project";
+
+            TextAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+
+            // Act
+            Operation operation = await projectAuthoringClient.ExportAsync(
+                waitUntil: WaitUntil.Completed,
+                stringIndexType: StringIndexType.Utf16CodeUnit);
+
+            // Assert
+            Assert.IsNotNull(operation, "The export operation should not be null.");
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected operation status to be 200 (OK).");
+
+            // Extract and check the operation-location header
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            Console.WriteLine($"Project export completed with status: {operation.GetRawResponse().Status}");
+        }
+
+        [RecordedTest]
+        public async Task GetModelEvaluationResultsAsync()
+        {
+            // Arrange
+            string projectName = "single-class-project";
+            string trainedModelLabel = "model1";
+            StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
+
+            TextAuthoringTrainedModel trainedModelAuthoringClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
+            // Act
+            AsyncPageable<TextAuthoringDocumentEvalResult> results = trainedModelAuthoringClient.GetModelEvaluationResultsAsync(
+                stringIndexType: stringIndexType
+            );
+
+            // Assert
+            Assert.IsNotNull(results, "The evaluation results should not be null.");
+
+            await foreach (TextAuthoringDocumentEvalResult result in results)
+            {
+                // Validate base properties
+                Assert.IsNotNull(result, "The result should not be null.");
+                Assert.IsNotNull(result.Location, "The result location should not be null.");
+                Assert.IsNotNull(result.Language, "The result language should not be null.");
+
+                // Validate classification result
+                if (result is CustomSingleLabelClassificationDocumentEvalResult singleLabelResult)
+                {
+                    var classification = singleLabelResult.CustomSingleLabelClassificationResult;
+
+                    Assert.IsNotNull(classification, "The classification result should not be null.");
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(classification.ExpectedClass), "The expected class should not be null or empty.");
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(classification.PredictedClass), "The predicted class should not be null or empty.");
+                }
+                else
+                {
+                    Assert.Fail($"Unsupported result type: {result.GetType().Name}");
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetDeploymentAsync()
+        {
+            // Arrange
+            string projectName = "single-class-project";
+            string deploymentName = "deployment1";
+
+            TextAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+            // Act
+            Response<TextAuthoringProjectDeployment> response = await deploymentClient.GetDeploymentAsync();
+
+            // Assert
+            Assert.IsNotNull(response, "The response should not be null.");
+            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected status to be 200 (OK).");
+
+            TextAuthoringProjectDeployment deployment = response.Value;
+
+            Assert.IsNotNull(deployment, "Deployment details should not be null.");
+            Assert.IsNotNull(deployment.DeploymentName, "DeploymentName should not be null.");
+            Assert.IsNotNull(deployment.ModelId, "ModelId should not be null.");
+            Assert.IsNotNull(deployment.LastTrainedOn, "LastTrainedOn should not be null.");
+            Assert.IsNotNull(deployment.LastDeployedOn, "LastDeployedOn should not be null.");
+            Assert.IsNotNull(deployment.DeploymentExpiredOn, "DeploymentExpiredOn should not be null.");
+            Assert.IsNotNull(deployment.ModelTrainingConfigVersion, "ModelTrainingConfigVersion should not be null.");
+        }
     }
 }
