@@ -2,15 +2,14 @@
 
 This sample demonstrates how to assign deployment resources asynchronously using the `Azure.AI.Language.Text.Authoring` SDK.
 
-## Create an `AuthoringClient`
+## Create an `AuthoringClient` using AAD Authentication
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create a `AuthoringClient`, use the service endpoint of a custom subdomain Language resource and authenticate with `DefaultAzureCredential`.
 
-```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
+```C# Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your apikey");
-TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
+DefaultAzureCredential credential = new DefaultAzureCredential();
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 ```
 
 ## Assign Deployment Resources Asynchronously
