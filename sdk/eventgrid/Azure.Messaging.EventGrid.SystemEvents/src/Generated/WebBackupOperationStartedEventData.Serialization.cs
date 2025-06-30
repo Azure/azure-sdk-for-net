@@ -36,8 +36,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(WebBackupOperationStartedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("appEventTypeDetail"u8);
-            writer.WriteObjectValue(AppEventTypeDetail, options);
+            if (Optional.IsDefined(AppEventTypeDetail))
+            {
+                writer.WritePropertyName("appEventTypeDetail"u8);
+                writer.WriteObjectValue(AppEventTypeDetail, options);
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -118,6 +121,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("appEventTypeDetail"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     appEventTypeDetail = AppEventTypeDetail.DeserializeAppEventTypeDetail(property.Value, options);
                     continue;
                 }

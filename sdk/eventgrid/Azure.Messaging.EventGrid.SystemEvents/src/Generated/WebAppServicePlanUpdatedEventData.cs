@@ -46,16 +46,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WebAppServicePlanUpdatedEventData"/>. </summary>
-        /// <param name="appServicePlanEventTypeDetail"> Detail of action on the app service plan. </param>
-        /// <param name="sku"> sku of app service plan. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appServicePlanEventTypeDetail"/> or <paramref name="sku"/> is null. </exception>
-        internal WebAppServicePlanUpdatedEventData(AppServicePlanEventTypeDetail appServicePlanEventTypeDetail, WebAppServicePlanUpdatedEventDataSku sku)
+        internal WebAppServicePlanUpdatedEventData()
         {
-            Argument.AssertNotNull(appServicePlanEventTypeDetail, nameof(appServicePlanEventTypeDetail));
-            Argument.AssertNotNull(sku, nameof(sku));
-
-            AppServicePlanEventTypeDetail = appServicePlanEventTypeDetail;
-            Sku = sku;
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppServicePlanUpdatedEventData"/>. </summary>
@@ -79,11 +71,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Address = address;
             Verb = verb;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WebAppServicePlanUpdatedEventData"/> for deserialization. </summary>
-        internal WebAppServicePlanUpdatedEventData()
-        {
         }
 
         /// <summary> Detail of action on the app service plan. </summary>

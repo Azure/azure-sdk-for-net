@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using MgmtTypeSpec.Mocking;
 
 namespace MgmtTypeSpec
 {
@@ -42,6 +43,18 @@ namespace MgmtTypeSpec
             return GetMockableMgmtTypeSpecArmClient(client).GetFooResource(id);
         }
 
+        /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
+        public static FooSettingsResource GetFooSettingsResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetFooSettingsResource(id);
+        }
+
         /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
@@ -58,10 +71,11 @@ namespace MgmtTypeSpec
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="fooName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         public static Response<FooResource> GetFoo(this ResourceGroupResource resourceGroupResource, string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            Argument.AssertNotNull(fooName, nameof(fooName));
+            Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
             return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFoo(fooName, cancellationToken);
         }
@@ -71,10 +85,11 @@ namespace MgmtTypeSpec
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="fooName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         public static async Task<Response<FooResource>> GetFooAsync(this ResourceGroupResource resourceGroupResource, string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            Argument.AssertNotNull(fooName, nameof(fooName));
+            Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
             return await GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFooAsync(fooName, cancellationToken).ConfigureAwait(false);
         }

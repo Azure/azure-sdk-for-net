@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Linq;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
-using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -15,6 +13,13 @@ namespace Azure.Generator.Management.Utilities
         public static bool IsLongRunningOperation(this InputServiceMethod method)
         {
             return method is InputLongRunningServiceMethod || method is InputLongRunningPagingServiceMethod;
+        }
+
+        public static bool IsFakeLongRunningOperation(this InputServiceMethod method)
+        {
+            var operation = method.Operation;
+            var isLongRunning = method.IsLongRunningOperation();
+            return !isLongRunning && ((operation.Name == "Delete" && operation.HttpMethod == "DELETE") || (operation.Name == "CreateOrUpdate" && operation.HttpMethod == "PUT"));
         }
 
         public static OperationFinalStateVia GetOperationFinalStateVia(this InputServiceMethod method)
@@ -40,7 +45,7 @@ namespace Azure.Generator.Management.Utilities
 
         public static CSharpType GetOperationMethodReturnType(this InputServiceMethod method, bool isAsync, CSharpType resourceClientCSharpType, CSharpType resourceDataType)
         {
-            bool isLongRunningOperation = method.IsLongRunningOperation();
+            bool isLongRunningOperation = method.IsLongRunningOperation() || method.IsFakeLongRunningOperation();
             var responseBodyCSharpType = method.GetResponseBodyType();
 
             // Determine the content type for the operation

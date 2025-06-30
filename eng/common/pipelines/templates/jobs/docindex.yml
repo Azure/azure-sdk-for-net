@@ -1,7 +1,8 @@
 jobs:
   - job: CreateDocIndex
     pool:
-      name: azsdk-pool-mms-win-2022-general
+      name: azsdk-pool
+      demands: ImageOverride -equals windows-2022
     steps:
       - task: UsePythonVersion@0
         displayName: 'Use Python 3.11'
@@ -36,14 +37,14 @@ jobs:
           Copy-Item -Path $(Build.SourcesDirectory)/eng/* -Destination ./ -Recurse -Force
           echo "##vso[task.setvariable variable=toolPath]$(Build.BinariesDirectory)"
         workingDirectory: $(Build.BinariesDirectory)
-        displayName: Move eng/common to Tool Directory   
+        displayName: Move eng/common to Tool Directory
 
       - task: PublishPipelineArtifact@0
         condition: succeeded()
         inputs:
           artifactName: "Doc.Index"
           targetPath: $(Build.ArtifactStagingDirectory)/docfx_project/_site
-          
+
       - pwsh: |
           git checkout -b gh-pages-local --track origin/gh-pages-root -f
         workingDirectory: $(Build.SourcesDirectory)
