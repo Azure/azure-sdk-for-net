@@ -357,7 +357,7 @@ namespace Azure.Generator.Management.Providers
                 }
                 // TODO: handle parents
                 // Handle resource name - the last contextual parameter
-                else if (ContextualParameters.Count() > 0 && parameter.Name.Equals(ContextualParameters.Last(), StringComparison.InvariantCultureIgnoreCase))
+                else if (ContextualParameters.Any() && parameter.Name.Equals(ContextualParameters.Last(), StringComparison.InvariantCultureIgnoreCase))
                 {
                     arguments.Add(
                         This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.Name)));
