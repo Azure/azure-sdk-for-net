@@ -20,9 +20,6 @@ namespace Azure.Generator.Primitives
         private const string ParentDirectory = "../";
         private const string SharedSourceLinkBase = "Shared/Core";
 
-        private int PathSegmentCount => _pathSegmentCount ??= GetPathSegmentCount();
-        private int? _pathSegmentCount;
-
         /// <inheritdoc/>
         protected override string GetSourceProjectFileContent()
         {
@@ -58,8 +55,7 @@ namespace Azure.Generator.Primitives
             "DiagnosticScopeFactory.cs",
             "DiagnosticScope.cs",
             "HttpMessageSanitizer.cs",
-            "TrimmingAttribute.cs",
-            "NoValueResponseOfT.cs",
+            "TrimmingAttribute.cs"
         ];
 
         private static readonly IReadOnlyList<string> _lroSharedFiles =
@@ -128,7 +124,7 @@ namespace Azure.Generator.Primitives
         /// <returns>A relative path string for the compile include file.</returns>
         protected string GetCompileInclude(string fileName, string relativeSegment = RelativeCoreSegment)
         {
-            return $"{MSBuildThisFileDirectory}{string.Concat(Enumerable.Repeat(ParentDirectory, PathSegmentCount))}{relativeSegment}{fileName}";
+            return $"{MSBuildThisFileDirectory}{string.Concat(Enumerable.Repeat(ParentDirectory, GetPathSegmentCount()))}{relativeSegment}{fileName}";
         }
 
         /// <summary>
