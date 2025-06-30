@@ -32,7 +32,7 @@ steps:
       artifactName: '$(PublishArtifactName)'
       targetPath: '${{ parameters.ArtifactPath }}'
       # Disable sbom generation by default for our public or pull request validation builds to avoid unnecessary work
-      ${{ if or(eq(variables['System.TeamProject'], 'public'), eq(variables['Build.Reason'], 'PullRequest') }}:
+      ${{ if or(eq(variables['System.TeamProject'], 'public'), eq(variables['Build.Reason'], 'PullRequest')) }}:
         sbomEnabled: false
       ${{ else }}:
         sbomEnabled: ${{ parameters.SbomEnabled }}
