@@ -15,10 +15,9 @@ namespace Azure.Generator.Management
     public class ManagementInputLibrary : InputLibrary
     {
         private IReadOnlyDictionary<InputModelType, ResourceMetadata>? _resourceMetadata;
-        private IReadOnlyDictionary<string, InputModelType>? _inputModelsByCrossLanguageDefinitionId;
-        private IReadOnlyDictionary<string, InputClient>? _inputClientsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
+        private HashSet<InputModelType>? _resourceModels;
 
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
@@ -43,11 +42,9 @@ namespace Azure.Generator.Management
             return base.InputNamespace;
         }
 
+        private HashSet<InputModelType> ResourceModels => _resourceModels ??= [.. InputNamespace.Models.Where(m => m.Decorators.Any(d => d.Name.Equals(KnownDecorators.ResourceMetadata)))];
+
         private IReadOnlyDictionary<InputModelType, ResourceMetadata> ResourceMetadata => _resourceMetadata ??= DeserializeResourceMetadata();
-
-        private IReadOnlyDictionary<string, InputModelType> InputModelsByCrossLanguageDefinitionId => _inputModelsByCrossLanguageDefinitionId ??= BuildModelCrossLanguageDefinitionIds();
-
-        private IReadOnlyDictionary<string, InputClient> InputClientsByCrossLanguageDefinitionId => _inputClientsByCrossLanguageDefinitionId ??= InputNamespace.Clients.ToDictionary(c => c.CrossLanguageDefinitionId, c => c);
 
         private IReadOnlyDictionary<string, InputServiceMethod> InputMethodsByCrossLanguageDefinitionId => _inputServiceMethodsByCrossLanguageDefinitionId ??= InputNamespace.Clients.SelectMany(c => c.Methods).ToDictionary(m => m.CrossLanguageDefinitionId, m => m);
 
@@ -75,29 +72,7 @@ namespace Azure.Generator.Management
         internal ResourceMetadata? GetResourceMetadata(InputModelType model)
             => ResourceMetadata.TryGetValue(model, out var metadata) ? metadata : null;
 
-        internal InputModelType? GetModelByCrossLanguageDefinitionId(string crossLanguageDefinitionId)
-            => InputModelsByCrossLanguageDefinitionId.TryGetValue(crossLanguageDefinitionId, out var model) ? model : null;
-
-        internal InputClient? GetClientByCrossLanguageDefinitionId(string crossLanguageDefinitionId)
-            => InputClientsByCrossLanguageDefinitionId.TryGetValue(crossLanguageDefinitionId, out var client) ? client : null;
-
-        internal bool IsResourceModel(InputModelType model)
-            => model.Decorators.Any(d => d.Name.Equals(KnownDecorators.ResourceMetadata));
-
-        private IReadOnlyDictionary<string, InputModelType> BuildModelCrossLanguageDefinitionIds()
-        {
-            // TODO -- we must have this because of a bug or a design issue in TCGC: https://github.com/Azure/typespec-azure/issues/1297
-            // once this is solved, we could change this to the simple invocation of `ToDictionary`.
-            var result = new Dictionary<string, InputModelType>();
-            foreach (var model in InputNamespace.Models)
-            {
-                if (!result.ContainsKey(model.CrossLanguageDefinitionId))
-                {
-                    result.Add(model.CrossLanguageDefinitionId, model);
-                }
-            }
-            return result;
-        }
+        internal bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);
 
         private IReadOnlyDictionary<InputModelType, ResourceMetadata> DeserializeResourceMetadata()
         {
