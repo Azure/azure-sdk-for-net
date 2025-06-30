@@ -4,6 +4,7 @@
 using System.Buffers;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
@@ -19,6 +20,8 @@ namespace System.ClientModel;
 public abstract class BinaryContent : IDisposable
 {
     private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
+    private const string JsonSerializerRequiresDynamicCode = "JSON serialization and deserialization might require types that cannot be statically analyzed and might need runtime code generation.";
+    private const string JsonSerializerRequiresUnreferencedCode = "JSON serialization and deserialization might require types that cannot be statically analyzed.";
 
     /// <summary>
     /// Gets the media type of the content.
@@ -83,6 +86,8 @@ public abstract class BinaryContent : IDisposable
     /// <returns>An instance of <see cref="BinaryContent"/> that contains the
     /// JSON representation of the provided object.</returns>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
+    [RequiresDynamicCode(JsonSerializerRequiresDynamicCode)]
+    [RequiresUnreferencedCode(JsonSerializerRequiresUnreferencedCode)]
     public static BinaryContent CreateJson<T>(T jsonSerializable, JsonSerializerOptions? options = default)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {

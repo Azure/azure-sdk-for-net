@@ -26,6 +26,7 @@ namespace System.ClientModel
         public static System.ClientModel.BinaryContent Create(System.BinaryData value) { throw null; }
         public static System.ClientModel.BinaryContent Create(System.IO.Stream stream) { throw null; }
         public static System.ClientModel.BinaryContent CreateJson(string jsonString, bool validate = false) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("JSON serialization and deserialization might require types that cannot be statically analyzed and might need runtime code generation.")]
         public static System.ClientModel.BinaryContent CreateJson<T>(T jsonSerializable, System.Text.Json.JsonSerializerOptions? options = null) { throw null; }
         public static System.ClientModel.BinaryContent CreateJson<T>(T jsonSerializable, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> jsonTypeInfo) { throw null; }
         public static System.ClientModel.BinaryContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
