@@ -772,10 +772,9 @@
 # ServiceOwners:                                                   @rhurey @dargilco
 
 # PRLabel: %Planetary Computer
-/sdk/planetarycomputer/                                            @chahibi @shaktichetan23
-
+/sdk/planetarycomputer/                                            @chahibi @shaktichetan23 @thisisdevanshu @mandarinamdar
 # ServiceLabel: %Planetary Computer
-# ServiceOwners:                                                   @chahibi @shaktichetan23
+# ServiceOwners:                                                   @chahibi @shaktichetan23 @thisisdevanshu @mandarinamdar
 
 # PRLabel: %Microsoft Playwright Testing
 /sdk/playwrighttesting/                                            @Sid200026 @puagarwa @ShreyaAnand
