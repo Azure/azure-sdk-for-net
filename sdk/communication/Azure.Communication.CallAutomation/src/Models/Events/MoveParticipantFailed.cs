@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = internalEvent.CorrelationId;
             OperationContext = internalEvent.OperationContext;
             FromCall = internalEvent.FromCall;
-            Participant = CommunicationIdentifierSerializer.Deserialize(internalEvent.Participant);
+            Participant = CommunicationIdentifierSerializer_2025_06_30.Deserialize(internalEvent.Participant);
             ResultInformation = internalEvent.ResultInformation;
         }
         /// <summary>

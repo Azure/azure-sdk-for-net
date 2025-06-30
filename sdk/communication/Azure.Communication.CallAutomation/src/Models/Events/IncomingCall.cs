@@ -19,8 +19,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="internalEvent">Internal Representation of the IncomingCallEvent. </param>
         internal IncomingCall(IncomingCallInternal internalEvent)
         {
-            To = CommunicationIdentifierSerializer.Deserialize(internalEvent.To);
-            From = CommunicationIdentifierSerializer.Deserialize(internalEvent.From);
+            To = CommunicationIdentifierSerializer_2025_06_30.Deserialize(internalEvent.To);
+            From = CommunicationIdentifierSerializer_2025_06_30.Deserialize(internalEvent.From);
             ServerCallId = internalEvent.ServerCallId;
             CallerDisplayName = internalEvent.CallerDisplayName;
             CustomContext = new CustomCallingContext(internalEvent.CustomContext.SipHeaders, internalEvent.CustomContext.VoipHeaders);
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
 
             if (internalEvent.OnBehalfOfCallee != null)
             {
-                OnBehalfOfCallee = CommunicationIdentifierSerializer.Deserialize(internalEvent.OnBehalfOfCallee);
+                OnBehalfOfCallee = CommunicationIdentifierSerializer_2025_06_30.Deserialize(internalEvent.OnBehalfOfCallee);
             }
 
             CorrelationId = internalEvent.CorrelationId;

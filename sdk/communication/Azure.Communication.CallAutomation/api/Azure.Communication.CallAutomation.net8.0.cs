@@ -1706,13 +1706,6 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.StreamingData Parse(byte[] receivedBytes) { throw null; }
         public static Azure.Communication.CallAutomation.StreamingData Parse(string stringJson) { throw null; }
     }
-    public partial class TeamsExtensionUserIdentifierModel
-    {
-        public TeamsExtensionUserIdentifierModel(string userId, string tenantId, string resourceId) { }
-        public string ResourceId { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
-        public string UserId { get { throw null; } set { } }
-    }
     public enum TextFormat
     {
         Display = 0,
