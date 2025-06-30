@@ -46,16 +46,16 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The FooProperties. </summary>
-        /// <param name="serviceUrl"> the service url. </param>
+        /// <param name="serviceUri"> the service url. </param>
         /// <param name="something"> something. </param>
         /// <param name="boolValue"> boolean value. </param>
         /// <param name="floatValue"> float value. </param>
         /// <param name="doubleValue"> double value. </param>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUrl = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default)
+        public static FooProperties FooProperties(Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default)
         {
             return new FooProperties(
-                serviceUrl,
+                serviceUri,
                 something,
                 boolValue,
                 floatValue,
