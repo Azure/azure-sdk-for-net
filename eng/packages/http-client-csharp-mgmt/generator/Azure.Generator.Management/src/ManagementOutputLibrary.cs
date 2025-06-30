@@ -48,9 +48,9 @@ namespace Azure.Generator.Management
         private IReadOnlyList<ResourceClientProvider> BuildResources()
         {
             var resources = new List<ResourceClientProvider>();
-            foreach (var client in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
+            foreach (var model in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
-                var resource = BuildResource(client);
+                var resource = BuildResource(model);
                 if (resource is not null)
                 {
                     resources.Add(resource);
@@ -102,13 +102,13 @@ namespace Azure.Generator.Management
             return [.. mockableResources, extensionProvider];
         }
 
-        // TODO -- in a near future we might need to change the input, because in real typespec, there is no guarantee that one client corresponds to one resource.
-        private static ResourceClientProvider? BuildResource(InputClient client)
+        // TODO -- in a near future we might need to change the input, because in real typespec, there is no guarantee that one model corresponds to one resource.
+        private static ResourceClientProvider? BuildResource(InputModelType model)
         {
-            // A resource client should contain the decorator "Azure.ResourceManager.@resourceMetadata"
-            var resourceMetadata = ManagementClientGenerator.Instance.InputLibrary.GetResourceMetadata(client);
+            // A resource model should contain the decorator "Azure.ResourceManager.@resourceMetadata"
+            var resourceMetadata = ManagementClientGenerator.Instance.InputLibrary.GetResourceMetadata(model);
             return resourceMetadata is not null ?
-                ResourceClientProvider.Create(client, resourceMetadata) :
+                ResourceClientProvider.Create(model, resourceMetadata) :
                 null;
         }
 

@@ -12,7 +12,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> Properties of a private link resource. </summary>
-    internal partial class PrivateLinkResourceProperties
+    public partial class PrivateLinkResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

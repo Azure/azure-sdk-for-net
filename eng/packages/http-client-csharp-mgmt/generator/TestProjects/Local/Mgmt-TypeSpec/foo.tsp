@@ -40,7 +40,7 @@ interface Foos {
 
     delete is ArmResourceDeleteWithoutOkAsync<Foo>;
 
-    update is ArmCustomPatchAsync<Foo>;
+    update is ArmCustomPatchAsync<Foo, Foo>;
 
     list is ArmResourceListByParent<Foo>;
 }
@@ -60,13 +60,13 @@ name: string;
 interface FooSettingsOperations {
   get is ArmResourceRead<FooSettings>;
   createOrUpdate is ArmResourceCreateOrReplaceSync<FooSettings>;
-  update is ArmCustomPatchSync<
-    FooSettings,
-    Azure.ResourceManager.Foundations.ResourceUpdateModel<
-      FooSettings,
-      FooSettingsProperties
-    >
-  >;
+//   update is ArmCustomPatchSync<
+//     FooSettings,
+//     Azure.ResourceManager.Foundations.ResourceUpdateModel<
+//       FooSettings,
+//       FooSettingsProperties
+//     >
+//   >;
   delete is ArmResourceDeleteSync<FooSettings>;
 }
 
