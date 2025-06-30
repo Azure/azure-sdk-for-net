@@ -23,14 +23,24 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
         {
+        }
+
+        private InputNamespace? _inputNamespace;
+        /// <inheritdoc/>
+        public override InputNamespace InputNamespace => _inputNamespace ??= BuildInputNamespaceInternal();
+
+        private InputNamespace BuildInputNamespaceInternal()
+        {
             // For MPG, we always generate convenience methods for all operations.
-            foreach (var client in InputNamespace.Clients)
+            foreach (var client in base.InputNamespace.Clients)
             {
                 foreach (var method in client.Methods)
                 {
                     method.Operation.Update(generateConvenienceMethod: true);
                 }
             }
+
+            return base.InputNamespace;
         }
 
         private IReadOnlyDictionary<InputModelType, ResourceMetadata> ResourceMetadata => _resourceMetadata ??= DeserializeResourceMetadata();

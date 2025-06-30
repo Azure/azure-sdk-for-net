@@ -5,6 +5,8 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Tests.Common;
 using Microsoft.TypeSpec.Generator.Input;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Azure.Generator.Management.Tests.Common
 {
@@ -26,11 +28,13 @@ namespace Azure.Generator.Management.Tests.Common
                         decorators: decorators);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
-            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}");
+            var subscriptionIdParameter = InputFactory.Parameter("subscriptionId", InputPrimitiveType.String, location: InputRequestLocation.Path, kind: InputParameterKind.Client);
+            var resourceGroupParameter = InputFactory.Parameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path, kind: InputParameterKind.Client);
+            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/a/test/{testName}");
             var crossLanguageDefinitionId = Guid.NewGuid().ToString();
             var client = InputFactory.Client(
                 TestClientName,
-                methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter], crossLanguageDefinitionId: crossLanguageDefinitionId)],
+                methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: crossLanguageDefinitionId)],
                 crossLanguageDefinitionId: $"Test.{TestClientName}");
             decorators.Add(BuildResourceMetadata(responseModel, client, "a/test", false, ResourceScope.ResourceGroup, [new ResourceMethod(crossLanguageDefinitionId, OperationKind.Get)]));
             return (client, [responseModel]);
@@ -38,12 +42,18 @@ namespace Azure.Generator.Management.Tests.Common
 
         private static InputDecoratorInfo BuildResourceMetadata(InputModelType resourceModel, InputClient resourceClient, string resourceType, bool isSingleton, ResourceScope resourceScope, IReadOnlyList<ResourceMethod> methods)
         {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            };
+
             var arguments = new Dictionary<string, BinaryData>
             {
                 [KnownDecorators.ResourceType] = FromLiteralString(resourceType),
-                [KnownDecorators.IsSingleton] = BinaryData.FromObjectAsJson(isSingleton),
+                [KnownDecorators.IsSingleton] = BinaryData.FromObjectAsJson(isSingleton, options),
                 [KnownDecorators.ResourceScope] = FromLiteralString(resourceScope.ToString()),
-                [KnownDecorators.Methods] = BinaryData.FromObjectAsJson(methods),
+                [KnownDecorators.Methods] = BinaryData.FromObjectAsJson(methods, options),
             };
 
             return new InputDecoratorInfo(KnownDecorators.ResourceMetadata, arguments);
