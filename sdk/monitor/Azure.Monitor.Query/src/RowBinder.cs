@@ -13,7 +13,9 @@ namespace Azure.Monitor.Query
     {
         internal static RowBinder Shared = new();
 
-        internal IReadOnlyList<T> BindResults<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(IReadOnlyList<LogsTable> tables)
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
+        internal IReadOnlyList<T> BindResults<T>(IReadOnlyList<LogsTable> tables)
         {
             List<T> results = new List<T>();
             if (typeof(IDictionary<string, object>).IsAssignableFrom(typeof(T)))

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
 using Azure.Core;
@@ -44,6 +45,8 @@ namespace Azure.Monitor.Query.Models
         /// Maps table rows to a model of type <typeparamref name="T"/>.
         /// </summary>
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
+        [RequiresUnreferencedCode(LogsBatchQueryResultCollection.RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(LogsBatchQueryResultCollection.RequiresDynamicCodeMessage)]
         internal IReadOnlyList<T> Deserialize<T>()
         {
             return RowBinder.Shared.BindResults<T>(new[] { this });
