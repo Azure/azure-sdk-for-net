@@ -130,5 +130,21 @@ namespace MgmtTypeSpec.Models
         {
             return new FooSettingsProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties: null);
         }
+
+        /// <summary> The type used for update operations of the FooSettings. </summary>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.FooSettingsUpdate"/> instance for mocking. </returns>
+        public static FooSettingsUpdate FooSettingsUpdate(FooSettingsUpdateProperties properties = default)
+        {
+            return new FooSettingsUpdate(properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The updatable properties of the FooSettings. </summary>
+        /// <param name="accessControlEnabled"></param>
+        /// <returns> A new <see cref="Models.FooSettingsUpdateProperties"/> instance for mocking. </returns>
+        public static FooSettingsUpdateProperties FooSettingsUpdateProperties(bool? accessControlEnabled = default)
+        {
+            return new FooSettingsUpdateProperties(accessControlEnabled, additionalBinaryDataProperties: null);
+        }
     }
 }

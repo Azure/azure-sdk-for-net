@@ -60,13 +60,13 @@ name: string;
 interface FooSettingsOperations {
   get is ArmResourceRead<FooSettings>;
   createOrUpdate is ArmResourceCreateOrReplaceSync<FooSettings>;
-//   update is ArmCustomPatchSync<
-//     FooSettings,
-//     Azure.ResourceManager.Foundations.ResourceUpdateModel<
-//       FooSettings,
-//       FooSettingsProperties
-//     >
-//   >;
+  update is ArmCustomPatchSync<
+    FooSettings,
+    Azure.ResourceManager.Foundations.ResourceUpdateModel<
+      FooSettings,
+      FooSettingsProperties
+    >
+  >;
   delete is ArmResourceDeleteSync<FooSettings>;
 }
 

@@ -23,6 +23,14 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
         {
+            // For MPG, we always generate convenience methods for all operations.
+            foreach (var client in InputNamespace.Clients)
+            {
+                foreach (var method in client.Methods)
+                {
+                    method.Operation.Update(generateConvenienceMethod: true);
+                }
+            }
         }
 
         private IReadOnlyDictionary<InputModelType, ResourceMetadata> ResourceMetadata => _resourceMetadata ??= DeserializeResourceMetadata();
