@@ -56,6 +56,6 @@ export enum ResourceOperationKind {
   Delete = "Delete",
   Get = "Get",
   List = "List",
-  Update = "Update",
+  Update = "Update"
   // ListBySubscription = "ListBySubscription",
 }

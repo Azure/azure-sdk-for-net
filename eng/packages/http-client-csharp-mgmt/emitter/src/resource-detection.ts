@@ -5,14 +5,23 @@ import {
   CodeModel,
   CSharpEmitterContext,
   InputClient,
-  InputModelType} from "@typespec/http-client-csharp";
+  InputModelType
+} from "@typespec/http-client-csharp";
 import {
   calculateResourceTypeFromPath,
   ResourceMetadata,
   ResourceOperationKind,
   ResourceScope
 } from "./resource-metadata.js";
-import { DecoratorInfo, getClientType, SdkClientType, SdkHttpOperation, SdkMethod, SdkModelType, SdkServiceOperation } from "@azure-tools/typespec-client-generator-core";
+import {
+  DecoratorInfo,
+  getClientType,
+  SdkClientType,
+  SdkHttpOperation,
+  SdkMethod,
+  SdkModelType,
+  SdkServiceOperation
+} from "@azure-tools/typespec-client-generator-core";
 import {
   armResourceActionName,
   armResourceCreateOrUpdateName,
@@ -30,22 +39,35 @@ import {
 } from "./sdk-context-options.js";
 import { DecoratorApplication, Model } from "@typespec/compiler";
 
-export async function updateClients(codeModel: CodeModel, sdkContext: CSharpEmitterContext) {
-  const serviceMethods = new Map<string, SdkMethod<SdkHttpOperation>>(getAllSdkClients(sdkContext).flatMap((c) => c.methods).map(obj => [obj.crossLanguageDefinitionId, obj]));
-  const models = new Map<string, SdkModelType>(sdkContext.sdkPackage.models.map((m) => [m.crossLanguageDefinitionId, m]));
+export async function updateClients(
+  codeModel: CodeModel,
+  sdkContext: CSharpEmitterContext
+) {
+  const serviceMethods = new Map<string, SdkMethod<SdkHttpOperation>>(
+    getAllSdkClients(sdkContext)
+      .flatMap((c) => c.methods)
+      .map((obj) => [obj.crossLanguageDefinitionId, obj])
+  );
+  const models = new Map<string, SdkModelType>(
+    sdkContext.sdkPackage.models.map((m) => [m.crossLanguageDefinitionId, m])
+  );
   const resourceModels = getAllResourceModels(codeModel);
 
-  const resourceModelMap = new Map<string, ResourceMetadata>(resourceModels
-    .map((m) => [
-      m.crossLanguageDefinitionId, 
+  const resourceModelMap = new Map<string, ResourceMetadata>(
+    resourceModels.map((m) => [
+      m.crossLanguageDefinitionId,
       {
         resourceType: "",
         isSingleton: m.decorators?.some((d) => d.name == singleton) ?? false,
         resourceScope: getResourceScope(m),
         methods: [],
-        parentResource: getParentResourceModelId(sdkContext, models.get(m.crossLanguageDefinitionId)),
+        parentResource: getParentResourceModelId(
+          sdkContext,
+          models.get(m.crossLanguageDefinitionId)
+        )
       } as ResourceMetadata
-    ]));
+    ])
+  );
 
   // first we flatten all possible clients in the code model
   const clients = getAllClients(codeModel);
@@ -55,8 +77,11 @@ export async function updateClients(codeModel: CodeModel, sdkContext: CSharpEmit
   // we also calculate the resource type from the path of the operation
   for (const client of clients) {
     for (const method of client.methods) {
-      const serviceMethod = serviceMethods.get(method.crossLanguageDefinitionId);
-      const [kind, modelId] = parseResourceOperation(serviceMethod, sdkContext) ?? [];
+      const serviceMethod = serviceMethods.get(
+        method.crossLanguageDefinitionId
+      );
+      const [kind, modelId] =
+        parseResourceOperation(serviceMethod, sdkContext) ?? [];
       if (modelId && kind) {
         const entry = resourceModelMap.get(modelId);
         entry?.methods.push({
@@ -64,7 +89,9 @@ export async function updateClients(codeModel: CodeModel, sdkContext: CSharpEmit
           kind
         });
         if (entry && !entry.resourceType) {
-          entry.resourceType = calculateResourceTypeFromPath(method.operation.path);
+          entry.resourceType = calculateResourceTypeFromPath(
+            method.operation.path
+          );
         }
       }
     }
@@ -79,43 +106,79 @@ export async function updateClients(codeModel: CodeModel, sdkContext: CSharpEmit
   }
 }
 
-function parseResourceOperation(serviceMethod: SdkMethod<SdkHttpOperation> | undefined, sdkContext: CSharpEmitterContext): [ResourceOperationKind, string | undefined] | undefined {
+function parseResourceOperation(
+  serviceMethod: SdkMethod<SdkHttpOperation> | undefined,
+  sdkContext: CSharpEmitterContext
+): [ResourceOperationKind, string | undefined] | undefined {
   const decorators = serviceMethod?.__raw?.decorators;
   for (const decorator of decorators ?? []) {
     if (decorator.definition?.name === armResourceReadName) {
-      return [ResourceOperationKind.Get, getResourceModelId(sdkContext, decorator)];
+      return [
+        ResourceOperationKind.Get,
+        getResourceModelId(sdkContext, decorator)
+      ];
     } else if (decorator.definition?.name == armResourceCreateOrUpdateName) {
-      return [ResourceOperationKind.Create, getResourceModelId(sdkContext, decorator)];
+      return [
+        ResourceOperationKind.Create,
+        getResourceModelId(sdkContext, decorator)
+      ];
     } else if (decorator.definition?.name == armResourceUpdateName) {
-      return [ResourceOperationKind.Update, getResourceModelId(sdkContext, decorator)];
+      return [
+        ResourceOperationKind.Update,
+        getResourceModelId(sdkContext, decorator)
+      ];
     } else if (decorator.definition?.name == armResourceDeleteName) {
-      return [ResourceOperationKind.Delete, getResourceModelId(sdkContext, decorator)];
+      return [
+        ResourceOperationKind.Delete,
+        getResourceModelId(sdkContext, decorator)
+      ];
     } else if (decorator.definition?.name == armResourceListName) {
-      return [ResourceOperationKind.List, getResourceModelId(sdkContext, decorator)];
+      return [
+        ResourceOperationKind.List,
+        getResourceModelId(sdkContext, decorator)
+      ];
     } else if (decorator.definition?.name == armResourceActionName) {
-      return [ResourceOperationKind.Action, getResourceModelId(sdkContext, decorator)];
+      return [
+        ResourceOperationKind.Action,
+        getResourceModelId(sdkContext, decorator)
+      ];
     }
   }
   return undefined;
 }
 
-function getParentResourceModelId(sdkContext: CSharpEmitterContext, model: SdkModelType | undefined): string | undefined {
+function getParentResourceModelId(
+  sdkContext: CSharpEmitterContext,
+  model: SdkModelType | undefined
+): string | undefined {
   const decorators = (model?.__raw as Model)?.decorators;
-  const parentResourceDecorator = decorators?.find((d) => d.definition?.name == parentResourceName);
+  const parentResourceDecorator = decorators?.find(
+    (d) => d.definition?.name == parentResourceName
+  );
   return getResourceModelId(sdkContext, parentResourceDecorator) ?? undefined;
 }
 
-function getResourceModelId(sdkContext: CSharpEmitterContext, decorator?: DecoratorApplication): string | undefined {
+function getResourceModelId(
+  sdkContext: CSharpEmitterContext,
+  decorator?: DecoratorApplication
+): string | undefined {
   if (!decorator) return undefined;
-  const model = getClientType(sdkContext, decorator.args[0].value as Model) as SdkModelType;
+  const model = getClientType(
+    sdkContext,
+    decorator.args[0].value as Model
+  ) as SdkModelType;
   if (model) {
     return model.crossLanguageDefinitionId;
   } else {
-    throw new Error(`Resource model not found for decorator ${decorator.decorator.name}`);
+    throw new Error(
+      `Resource model not found for decorator ${decorator.decorator.name}`
+    );
   }
 }
 
-export function getAllSdkClients(sdkContext: CSharpEmitterContext): SdkClientType<SdkServiceOperation>[] {
+export function getAllSdkClients(
+  sdkContext: CSharpEmitterContext
+): SdkClientType<SdkServiceOperation>[] {
   const clients: SdkClientType<SdkServiceOperation>[] = [];
   for (const client of sdkContext.sdkPackage.clients) {
     traverseClient(client);
@@ -155,7 +218,7 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   const resourceModels: InputModelType[] = [];
   for (const model of codeModel.models) {
     if (model.decorators?.some((d) => d.name == armResourceInternal)) {
-      model.crossLanguageDefinitionId
+      model.crossLanguageDefinitionId;
       resourceModels.push(model);
     }
   }
@@ -174,7 +237,10 @@ function getResourceScope(model: InputModelType): ResourceScope {
   return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
 }
 
-function addResourceMetadata(model: InputModelType, metadata: ResourceMetadata) {
+function addResourceMetadata(
+  model: InputModelType,
+  metadata: ResourceMetadata
+) {
   const resourceMetadataDecorator: DecoratorInfo = {
     name: resourceMetadata,
     arguments: {

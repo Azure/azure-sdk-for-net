@@ -21,7 +21,7 @@ export const armResourceOperations =
   "Azure.ResourceManager.@armResourceOperations";
 const armResourceOperationsRegex =
   "Azure\\.ResourceManager\\.@armResourceOperations";
-  
+
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#singleton
 export const singleton = "Azure.ResourceManager.@singleton";
 const singletonRegex = "Azure\\.ResourceManager\\.@singleton";
@@ -32,9 +32,11 @@ export const armResourceReadName = "@armResourceRead";
 const armResourceReadRegex = "Azure\\.ResourceManager\\.@armResourceRead";
 
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armresourcecreateorupdate
-export const armResourceCreateOrUpdate = "Azure.ResourceManager.@armResourceCreateOrUpdate";
+export const armResourceCreateOrUpdate =
+  "Azure.ResourceManager.@armResourceCreateOrUpdate";
 export const armResourceCreateOrUpdateName = "@armResourceCreateOrUpdate";
-const armResourceCreateOrUpdateRegex = "Azure\\.ResourceManager\\.@armResourceCreateOrUpdate";
+const armResourceCreateOrUpdateRegex =
+  "Azure\\.ResourceManager\\.@armResourceCreateOrUpdate";
 
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceAction
 export const armResourceAction = "Azure.ResourceManager.@armResourceAction";

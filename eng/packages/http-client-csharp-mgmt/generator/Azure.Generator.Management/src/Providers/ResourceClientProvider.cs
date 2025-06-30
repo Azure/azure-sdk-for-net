@@ -373,27 +373,13 @@ namespace Azure.Generator.Management.Providers
                 }
                 else if (parameter.Type.Equals(typeof(RequestContent)))
                 {
-                    // If convenience method is provided, find the resource parameter from it
                     if (methodParameters.Count > 0)
                     {
                         // Find the content parameter in the method parameters
+                        // TODO: need to revisit the filter here
                         var contentInputParameter = operation.Parameters.First(p => !ImplicitParameterNames.Contains(p.Name) && p.Kind == InputParameterKind.Method && p.Type is not InputPrimitiveType);
-                        var resource = methodParameters
-                            .SingleOrDefault(p => p.Name == "data" || p.Name == contentInputParameter.Name);
-                        if (resource != null)
-                        {
-                            arguments.Add(resource);
-                        }
-                        else
-                        {
-                            // Otherwise just add the parameter as-is
-                            arguments.Add(parameter);
-                        }
-                    }
-                    else
-                    {
-                        // Otherwise just add the parameter as-is
-                        arguments.Add(parameter);
+                        var resource = methodParameters.Single(p => p.Name == "data" || p.Name == contentInputParameter.Name);
+                        arguments.Add(resource);
                     }
                 }
                 else if (parameter.Type.Equals(typeof(RequestContext)))

@@ -133,18 +133,12 @@ interface Employees2 {
       resourceMetadataDecorator.arguments?.resourceScope,
       "ResourceGroup"
     );
-    strictEqual(
-      resourceMetadataDecorator.arguments?.methods.length,
-      6
-    );
+    strictEqual(resourceMetadataDecorator.arguments?.methods.length, 6);
     strictEqual(
       resourceMetadataDecorator.arguments?.methods[0].id,
       getMethod.crossLanguageDefinitionId
     );
-    strictEqual(
-      resourceMetadataDecorator.arguments?.methods[0].kind,
-      "Get"
-    );
+    strictEqual(resourceMetadataDecorator.arguments?.methods[0].kind, "Get");
     strictEqual(
       resourceMetadataDecorator.arguments?.parentResource,
       parentModel.crossLanguageDefinitionId
