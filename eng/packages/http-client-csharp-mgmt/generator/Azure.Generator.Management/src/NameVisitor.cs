@@ -20,9 +20,9 @@ namespace Azure.Generator.Management
 
             foreach (var property in model.Properties)
             {
-                if (TryTransformUrlToUri(property.Name, out var newPropertyName))
+                if (property is InputModelProperty modelProperty && TryTransformUrlToUri(property.Name, out var newPropertyName))
                 {
-                    // property.Update(name: newPropertyName);
+                    modelProperty.Update(name: newPropertyName);
                 }
             }
             return base.PreVisitModel(model, type);
