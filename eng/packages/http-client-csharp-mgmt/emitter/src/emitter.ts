@@ -3,12 +3,7 @@
 
 import { EmitContext } from "@typespec/compiler";
 
-import {
-  CodeModel,
-  createCSharpEmitterContext,
-  Logger,
-  LoggerLevel
-} from "@typespec/http-client-csharp";
+import { CodeModel } from "@typespec/http-client-csharp";
 
 import {
   $onEmit as $onAzureEmit,
@@ -24,18 +19,10 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
     return;
   }
 
-  /* set the log level. */
-  const logger = new Logger(
-    program,
-    context.options.logLevel ?? LoggerLevel.INFO
-  );
-  const sdkContext = createCSharpEmitterContext(
-    await createSdkContext(
-      context,
-      "@typespec/http-client-csharp",
-      context.options["sdk-context-options"]
-    ),
-    logger
+  const sdkContext = await createSdkContext(
+    context,
+    "@typespec/http-client-csharp",
+    context.options["sdk-context-options"]
   );
   program.reportDiagnostics(sdkContext.diagnostics);
 

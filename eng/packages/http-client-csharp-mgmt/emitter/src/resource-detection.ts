@@ -3,7 +3,6 @@
 
 import {
   CodeModel,
-  CSharpEmitterContext,
   InputClient,
   InputModelType
 } from "@typespec/http-client-csharp";
@@ -17,6 +16,7 @@ import {
   DecoratorInfo,
   getClientType,
   SdkClientType,
+  SdkContext,
   SdkHttpOperation,
   SdkMethod,
   SdkModelType,
@@ -38,10 +38,11 @@ import {
   tenantResource
 } from "./sdk-context-options.js";
 import { DecoratorApplication, Model } from "@typespec/compiler";
+import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
 
 export async function updateClients(
   codeModel: CodeModel,
-  sdkContext: CSharpEmitterContext
+  sdkContext: SdkContext<AzureEmitterOptions, SdkHttpOperation>
 ) {
   const serviceMethods = new Map<string, SdkMethod<SdkHttpOperation>>(
     getAllSdkClients(sdkContext)
@@ -108,7 +109,7 @@ export async function updateClients(
 
 function parseResourceOperation(
   serviceMethod: SdkMethod<SdkHttpOperation> | undefined,
-  sdkContext: CSharpEmitterContext
+  sdkContext: SdkContext<AzureEmitterOptions, SdkHttpOperation>
 ): [ResourceOperationKind, string | undefined] | undefined {
   const decorators = serviceMethod?.__raw?.decorators;
   for (const decorator of decorators ?? []) {
@@ -148,7 +149,7 @@ function parseResourceOperation(
 }
 
 function getParentResourceModelId(
-  sdkContext: CSharpEmitterContext,
+  sdkContext: SdkContext<AzureEmitterOptions, SdkHttpOperation>,
   model: SdkModelType | undefined
 ): string | undefined {
   const decorators = (model?.__raw as Model)?.decorators;
@@ -159,7 +160,7 @@ function getParentResourceModelId(
 }
 
 function getResourceModelId(
-  sdkContext: CSharpEmitterContext,
+  sdkContext: SdkContext<AzureEmitterOptions, SdkHttpOperation>,
   decorator?: DecoratorApplication
 ): string | undefined {
   if (!decorator) return undefined;
@@ -177,7 +178,7 @@ function getResourceModelId(
 }
 
 export function getAllSdkClients(
-  sdkContext: CSharpEmitterContext
+  sdkContext: SdkContext<AzureEmitterOptions, SdkHttpOperation>
 ): SdkClientType<SdkServiceOperation>[] {
   const clients: SdkClientType<SdkServiceOperation>[] = [];
   for (const client of sdkContext.sdkPackage.clients) {
