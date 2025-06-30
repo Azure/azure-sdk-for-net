@@ -9,6 +9,11 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using System.Net.Http;
+using Azure.Identity;
+using System.Threading;
+using System.Net.Security;
+using System.Net;
 
 namespace Azure.ResourceManager.Avs.Tests
 {
@@ -20,16 +25,15 @@ namespace Azure.ResourceManager.Avs.Tests
 
         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
 
-        public const string RESOURCE_GROUP_NAME = "group1";
-        public const string PRIVATE_CLOUD_NAME = "cloud1";
-        public const string CLUSTER1_NAME = "cluster1";
-        public const string CLUSTER2_NAME = "cluster2";
+        public const string RESOURCE_GROUP_NAME = "avs-dotnet-test";
+        public const string PRIVATE_CLOUD_NAME = "avs-dotnet-test-3317";
+        public const string CLUSTER1_NAME = "Cluster-1";
+        public const string CLUSTER2_NAME = "Cluster-2";
         public const string ISCSI_PATH_NAME = "default";
-        public const string WORKLOAD_NETWORK_NAME = "vmGroup1";
-        public const string HOST_ID = "esx03-r52.1111111111111111111.westcentralus.prod.azure.com";
+        public const string WORKLOAD_NETWORK_NAME = "03335585-9574-4d44-a001-818ca9a9c282";
+        public const string HOST_ID = "esx14-r04.p02.westus2.avs.azure.com";
         public const string PROVISIONED_NETWORK_NAME = "vsan";
         public const string STORAGE_POLICY_NAME = "storagePolicy1";
-
         protected AvsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -43,18 +47,8 @@ namespace Azure.ResourceManager.Avs.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
-            var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri("https://localhost/"), "https://localhost/");
-            // Use your mock subscription GUID here
-            string subscriptionId = "ba75e79b-dd95-4025-9dbf-3a7ae8dff2b5";
-            Client = new ArmClient(new MockTokenCredential(), subscriptionId, options);
-            // DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
-            var subscriptions = Client.GetSubscriptions().GetAllAsync();
-            await foreach (var sub in subscriptions)
-            {
-                DefaultSubscription = sub;
-                break;
-            }
+            Client = GetArmClient();
+            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
         {
