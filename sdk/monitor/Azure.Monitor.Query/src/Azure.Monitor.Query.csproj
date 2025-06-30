@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>A library for querying Azure Monitor's Logs and Metrics data sources.</Description>
     <AssemblyTitle>Azure Monitor Query client library</AssemblyTitle>
@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Memory.Data" /> <!-- TODO remove after Azure.Core release with updated version -->
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
