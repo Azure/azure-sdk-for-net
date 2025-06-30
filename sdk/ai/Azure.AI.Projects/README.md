@@ -224,8 +224,8 @@ foreach (Deployment deployment in projectClient.Deployments.GetDeployments(model
     Console.WriteLine(deployment);
 }
 
-Console.WriteLine($"Get a single deployment named `{modelDeploymentName}`:");
-Deployment deploymentDetails = projectClient.Deployments.GetDeployment(modelDeploymentName);
+Console.WriteLine($"Get a single model deployment named `{modelDeploymentName}`:");
+ModelDeployment deploymentDetails = projectClient.Deployments.GetModelDeployment(modelDeploymentName);
 Console.WriteLine(deploymentDetails);
 ```
 

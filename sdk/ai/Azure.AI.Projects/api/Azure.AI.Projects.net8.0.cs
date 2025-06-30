@@ -405,6 +405,10 @@ namespace Azure.AI.Projects
         public virtual Azure.Pageable<System.BinaryData> GetDeployments(string modelPublisher, string modelName, string deploymentType, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.Projects.Deployment> GetDeploymentsAsync(string modelPublisher = null, string modelName = null, Azure.AI.Projects.DeploymentType? deploymentType = default(Azure.AI.Projects.DeploymentType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetDeploymentsAsync(string modelPublisher, string modelName, string deploymentType, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AI.Projects.ModelDeployment GetModelDeployment(string name, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AI.Projects.ModelDeployment GetModelDeployment(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.Projects.ModelDeployment> GetModelDeploymentAsync(string name, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.Projects.ModelDeployment> GetModelDeploymentAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeploymentType : System.IEquatable<Azure.AI.Projects.DeploymentType>
