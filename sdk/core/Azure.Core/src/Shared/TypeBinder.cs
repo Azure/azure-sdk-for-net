@@ -12,17 +12,23 @@ using System.Runtime.Serialization;
 
 namespace Azure.Core
 {
-    internal abstract class TypeBinder<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] TExchange>
+    internal abstract class TypeBinder<TExchange>
     {
+        public const string RequiresUnreferencedCodeMessage = "TypeBinder uses MakeGenericType() to construct generic types at runtime. The resulting types and their members may be trimmed. This can be suppressed if the target type T is a primitive.";
+        public const string RequiresDynamicCodeMessage = "TypeBinder uses MakeGenericType() to construct generic types at runtime. This can be suppressed if the target type T is a primitive.";
         private readonly ConcurrentDictionary<Type, BoundTypeInfo> _cache = new();
         private readonly Func<Type, BoundTypeInfo> _valueFactory;
 
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         protected TypeBinder()
         {
             _valueFactory = t => new(t, this);
         }
 
-        public T Deserialize<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(TExchange source)
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
+        public T Deserialize<T>(TExchange source)
         {
             var info = GetBinderInfo(typeof(T));
             return info.Deserialize<T>(source);
@@ -45,6 +51,8 @@ namespace Azure.Core
             return _cache.GetOrAdd(type, _valueFactory);
         }
 
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public BoundTypeInfo GetBinderInfo(Type type, Type interfaceType)
         {
             return _cache.GetOrAdd(type, t => new BoundTypeInfo(type, interfaceType, this));
@@ -59,12 +67,16 @@ namespace Azure.Core
             private bool _isPrimitive;
             private readonly BoundMemberInfo[] _members;
 
+            [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+            [RequiresDynamicCode(RequiresDynamicCodeMessage)]
             public BoundTypeInfo(Type type, TypeBinder<TExchange> binderImplementation)
             {
                 _binderImplementation = binderImplementation;
                 _members = GetMembers(type).ToArray();
             }
 
+            [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+            [RequiresDynamicCode(RequiresDynamicCodeMessage)]
             public BoundTypeInfo(Type type, Type interfaceType, TypeBinder<TExchange> binderImplementation)
             {
                 if (!interfaceType.IsInterface || !interfaceType.IsAssignableFrom(type))
@@ -75,6 +87,8 @@ namespace Azure.Core
                 _members = GetMembers(type).Union(GetMembers(interfaceType)).ToArray();
             }
 
+            [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+            [RequiresDynamicCode(RequiresDynamicCodeMessage)]
             private List<BoundMemberInfo> GetMembers(Type type)
             {
                 List<BoundMemberInfo> members = new List<BoundMemberInfo>();
