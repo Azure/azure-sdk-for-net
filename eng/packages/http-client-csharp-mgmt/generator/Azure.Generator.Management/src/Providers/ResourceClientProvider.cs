@@ -24,9 +24,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
-using static System.Net.Mime.MediaTypeNames;
 using OperationKind = Azure.Generator.Management.Models.OperationKind;
 
 namespace Azure.Generator.Management.Providers
@@ -264,7 +262,7 @@ namespace Azure.Generator.Management.Providers
                 }
 
                 // Check if this is an update operation (PUT or Patch method for non-singleton resource)
-                var isUpdateOperation = (method.Operation.HttpMethod == HttpMethod.Put.ToString() || method.Operation.HttpMethod == HttpMethod.Patch.ToString()) && !IsSingleton;
+                var isUpdateOperation = (methodKind == OperationKind.Create || methodKind == OperationKind.Update) && !IsSingleton;
 
                 if (isUpdateOperation)
                 {
