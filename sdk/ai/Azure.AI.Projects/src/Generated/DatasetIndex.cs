@@ -12,10 +12,10 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Index resource Definition
-    /// Please note <see cref="Index"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="DatasetIndex"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureAISearchIndex"/>, <see cref="CosmosDBIndex"/> and <see cref="ManagedAzureAISearchIndex"/>.
     /// </summary>
-    public abstract partial class Index
+    public abstract partial class DatasetIndex
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,13 +49,13 @@ namespace Azure.AI.Projects
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Index"/>. </summary>
-        protected Index()
+        /// <summary> Initializes a new instance of <see cref="DatasetIndex"/>. </summary>
+        protected DatasetIndex()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Index"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetIndex"/>. </summary>
         /// <param name="type"> Type of index. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -63,7 +63,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Index(IndexType type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DatasetIndex(IndexType type, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Id = id;

@@ -46,7 +46,7 @@ namespace Azure.AI.Projects
         {
             if (!string.IsNullOrEmpty(connectionName))
             {
-                Connection selectedConnection = this.GetConnectionsClient().Get(connectionName, includeCredentials: true);
+                ConnectionProperties selectedConnection = this.GetConnectionsClient().Get(connectionName, includeCredentials: true);
                 if (selectedConnection.Type != ConnectionType.AzureOpenAI)
                 {
                     throw new InvalidOperationException($"Connection '{connectionName}' is not of type AzureOpenAI.");

@@ -61,14 +61,14 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Index>> GetIndexAsync(string name, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatasetIndex>> GetIndexAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetIndexAsync(name, version, context).ConfigureAwait(false);
-            return Response.FromValue(Index.FromResponse(response), response);
+            return Response.FromValue(DatasetIndex.FromResponse(response), response);
         }
 
         /// <summary> Get the specific version of the Index. </summary>
@@ -77,14 +77,14 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Index> GetIndex(string name, string version, CancellationToken cancellationToken = default)
+        public virtual Response<DatasetIndex> GetIndex(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetIndex(name, version, context);
-            return Response.FromValue(Index.FromResponse(response), response);
+            return Response.FromValue(DatasetIndex.FromResponse(response), response);
         }
 
         /// <summary>
@@ -324,14 +324,14 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual AsyncPageable<Index> GetVersionsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatasetIndex> GetVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Index.DeserializeIndex(e), ClientDiagnostics, _pipeline, "Indexes.GetVersions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatasetIndex.DeserializeDatasetIndex(e), ClientDiagnostics, _pipeline, "Indexes.GetVersions", "value", "nextLink", context);
         }
 
         /// <summary> List all versions of the given Index. </summary>
@@ -339,14 +339,14 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Pageable<Index> GetVersions(string name, CancellationToken cancellationToken = default)
+        public virtual Pageable<DatasetIndex> GetVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(name, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, name, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Index.DeserializeIndex(e), ClientDiagnostics, _pipeline, "Indexes.GetVersions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatasetIndex.DeserializeDatasetIndex(e), ClientDiagnostics, _pipeline, "Indexes.GetVersions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -411,22 +411,22 @@ namespace Azure.AI.Projects
 
         /// <summary> List the latest version of each Index. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Index> GetIndicesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatasetIndex> GetIndicesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetIndicesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetIndicesNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Index.DeserializeIndex(e), ClientDiagnostics, _pipeline, "Indexes.GetIndices", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatasetIndex.DeserializeDatasetIndex(e), ClientDiagnostics, _pipeline, "Indexes.GetIndices", "value", "nextLink", context);
         }
 
         /// <summary> List the latest version of each Index. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Index> GetIndices(CancellationToken cancellationToken = default)
+        public virtual Pageable<DatasetIndex> GetIndices(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetIndicesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetIndicesNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Index.DeserializeIndex(e), ClientDiagnostics, _pipeline, "Indexes.GetIndices", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatasetIndex.DeserializeDatasetIndex(e), ClientDiagnostics, _pipeline, "Indexes.GetIndices", "value", "nextLink", context);
         }
 
         /// <summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Sku information. </summary>
-    public partial class Sku
+    public partial class ModelDeploymentSku
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Sku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelDeploymentSku"/>. </summary>
         /// <param name="capacity"> Sku capacity. </param>
         /// <param name="family"> Sku family. </param>
         /// <param name="name"> Sku name. </param>
         /// <param name="size"> Sku size. </param>
         /// <param name="tier"> Sku tier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="family"/>, <paramref name="name"/>, <paramref name="size"/> or <paramref name="tier"/> is null. </exception>
-        internal Sku(long capacity, string family, string name, string size, string tier)
+        internal ModelDeploymentSku(long capacity, string family, string name, string size, string tier)
         {
             Argument.AssertNotNull(family, nameof(family));
             Argument.AssertNotNull(name, nameof(name));
@@ -66,14 +66,14 @@ namespace Azure.AI.Projects
             Tier = tier;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Sku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelDeploymentSku"/>. </summary>
         /// <param name="capacity"> Sku capacity. </param>
         /// <param name="family"> Sku family. </param>
         /// <param name="name"> Sku name. </param>
         /// <param name="size"> Sku size. </param>
         /// <param name="tier"> Sku tier. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Sku(long capacity, string family, string name, string size, string tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ModelDeploymentSku(long capacity, string family, string name, string size, string tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Capacity = capacity;
             Family = family;
@@ -83,8 +83,8 @@ namespace Azure.AI.Projects
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Sku"/> for deserialization. </summary>
-        internal Sku()
+        /// <summary> Initializes a new instance of <see cref="ModelDeploymentSku"/> for deserialization. </summary>
+        internal ModelDeploymentSku()
         {
         }
 

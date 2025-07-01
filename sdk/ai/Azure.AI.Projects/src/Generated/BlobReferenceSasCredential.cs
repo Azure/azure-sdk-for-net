@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> SAS Credential definition. </summary>
-    public partial class SasCredential
+    public partial class BlobReferenceSasCredential
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,22 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SasCredential"/>. </summary>
-        internal SasCredential()
+        /// <summary> Initializes a new instance of <see cref="BlobReferenceSasCredential"/>. </summary>
+        internal BlobReferenceSasCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SasCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobReferenceSasCredential"/>. </summary>
         /// <param name="sasUri"> SAS uri. </param>
         /// <param name="type"> Type of credential. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SasCredential(Uri sasUri, SasCredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BlobReferenceSasCredential(Uri sasUri, BlobReferenceSasCredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SasUri = sasUri;
             Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Type of credential. </summary>
-        public SasCredentialType Type { get; } = SasCredentialType.SAS;
+        public BlobReferenceSasCredentialType Type { get; } = BlobReferenceSasCredentialType.SAS;
     }
 }

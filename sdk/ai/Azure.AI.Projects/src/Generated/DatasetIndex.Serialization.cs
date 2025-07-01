@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    [PersistableModelProxy(typeof(UnknownIndex))]
-    public partial class Index : IUtf8JsonSerializable, IJsonModel<Index>
+    [PersistableModelProxy(typeof(UnknownDatasetIndex))]
+    public partial class DatasetIndex : IUtf8JsonSerializable, IJsonModel<DatasetIndex>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Index>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetIndex>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Index>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatasetIndex>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Index>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetIndex>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Index)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatasetIndex)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("type"u8);
@@ -84,19 +84,19 @@ namespace Azure.AI.Projects
             }
         }
 
-        Index IJsonModel<Index>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DatasetIndex IJsonModel<DatasetIndex>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Index>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetIndex>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Index)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatasetIndex)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIndex(document.RootElement, options);
+            return DeserializeDatasetIndex(document.RootElement, options);
         }
 
-        internal static Index DeserializeIndex(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DatasetIndex DeserializeDatasetIndex(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -113,46 +113,46 @@ namespace Azure.AI.Projects
                     case "ManagedAzureSearch": return ManagedAzureAISearchIndex.DeserializeManagedAzureAISearchIndex(element, options);
                 }
             }
-            return UnknownIndex.DeserializeUnknownIndex(element, options);
+            return UnknownDatasetIndex.DeserializeUnknownDatasetIndex(element, options);
         }
 
-        BinaryData IPersistableModel<Index>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DatasetIndex>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Index>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetIndex>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Index)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatasetIndex)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Index IPersistableModel<Index>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DatasetIndex IPersistableModel<DatasetIndex>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Index>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetIndex>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIndex(document.RootElement, options);
+                        return DeserializeDatasetIndex(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Index)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatasetIndex)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Index>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatasetIndex>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Index FromResponse(Response response)
+        internal static DatasetIndex FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIndex(document.RootElement);
+            return DeserializeDatasetIndex(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
