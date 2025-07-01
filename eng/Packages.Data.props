@@ -119,7 +119,7 @@
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.12.2" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.21.0" />
-    <PackageReference Update="Azure.Messaging.EventGrid.SystemEvents" Version="1.0.0-beta.5" />
+    <PackageReference Update="Azure.Messaging.EventGrid.SystemEvents" Version="1.0.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.20.1" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.4.0" />
     <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
@@ -139,7 +139,7 @@
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.AppContainers" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.ApplicationInsights" Version="1.0.1" />
-    <PackageReference Update="Azure.ResourceManager.AppService" Version="1.3.0" />
+    <PackageReference Update="Azure.ResourceManager.AppService" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.Authorization" Version="1.1.4" />
     <PackageReference Update="Azure.ResourceManager.Batch" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.4.0" />
@@ -450,7 +450,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250501.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20250624.1</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20250619.1</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20250630.3</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20250629.1</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>
