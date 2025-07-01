@@ -945,7 +945,7 @@
     {
       "$id": "78",
       "kind": "model",
-      "name": "PortalServicesCopilotSettings",
+      "name": "PortalServicesCopilotSetting",
       "namespace": "Azure.ResourceManager.PortalServicesCopilot",
       "crossLanguageDefinitionId": "Microsoft.PortalServices.CopilotSettingsResource",
       "usage": "Input,Output,Json",
@@ -1276,7 +1276,7 @@
           "type": {
             "$id": "104",
             "kind": "model",
-            "name": "PortalServicesCopilotSettingsProperties ",
+            "name": "PortalServicesCopilotSettingProperties",
             "namespace": "Azure.ResourceManager.PortalServicesCopilot",
             "crossLanguageDefinitionId": "Microsoft.PortalServices.CopilotSettingsProperties",
             "usage": "Input,Output,Json",
