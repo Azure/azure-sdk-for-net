@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
 {
-    /// <summary> Client options for <see cref="FlattenPropertyClient"/>. </summary>
     public partial class FlattenPropertyClientOptions : ClientOptions
     {
     }

@@ -5,54 +5,25 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure;
 
 namespace _Specs_.Azure.Core.Basic
 {
-    /// <summary> Details about a user. </summary>
     public partial class User
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        public User(string name) => throw null;
 
-        /// <summary> Initializes a new instance of <see cref="User"/>. </summary>
-        /// <param name="name"> The user's name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public User(string name)
+        public int Id => throw null;
+
+        public string Name
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-            Orders = new ChangeTrackingList<UserOrder>();
+            get => throw null;
+            set => throw null;
         }
 
-        /// <summary> Initializes a new instance of <see cref="User"/>. </summary>
-        /// <param name="id"> The user's id. </param>
-        /// <param name="name"> The user's name. </param>
-        /// <param name="orders"> The user's order list. </param>
-        /// <param name="etag"> The entity tag for this resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal User(int id, string name, IList<UserOrder> orders, ETag etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Id = id;
-            Name = name;
-            Orders = orders;
-            Etag = etag;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
+        public IList<UserOrder> Orders => throw null;
 
-        /// <summary> The user's id. </summary>
-        public int Id { get; }
-
-        /// <summary> The user's name. </summary>
-        public string Name { get; set; }
-
-        /// <summary> The user's order list. </summary>
-        public IList<UserOrder> Orders { get; }
-
-        /// <summary> The entity tag for this resource. </summary>
-        public ETag Etag { get; }
+        public ETag Etag => throw null;
     }
 }

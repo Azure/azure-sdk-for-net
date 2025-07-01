@@ -12,30 +12,14 @@ using _Specs_.Azure.ClientGenerator.Core.FlattenProperty;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class _Specs_AzureClientGeneratorCoreFlattenPropertyClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="FlattenPropertyClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public static IAzureClientBuilder<FlattenPropertyClient, FlattenPropertyClientOptions> AddFlattenPropertyClient<TBuilder>(this TBuilder builder, Uri endpoint)
-            where TBuilder : IAzureClientFactoryBuilder
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-            return builder.RegisterClientFactory<FlattenPropertyClient, FlattenPropertyClientOptions>(options => new FlattenPropertyClient(endpoint, options));
-        }
-
-        /// <summary> Registers a <see cref="FlattenPropertyClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<FlattenPropertyClient, FlattenPropertyClientOptions> AddFlattenPropertyClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-        {
-            return builder.RegisterClientFactory<FlattenPropertyClient, FlattenPropertyClientOptions>(configuration);
-        }
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
     }
 }

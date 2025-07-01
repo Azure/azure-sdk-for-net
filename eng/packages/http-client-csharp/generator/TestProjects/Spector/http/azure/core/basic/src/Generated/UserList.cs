@@ -5,35 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace _Specs_.Azure.Core.Basic
 {
-    /// <summary> The UserList. </summary>
     public partial class UserList
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="UserList"/>. </summary>
-        /// <param name="users"></param>
-        internal UserList(IEnumerable<User> users)
-        {
-            Users = users.ToList();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UserList"/>. </summary>
-        /// <param name="users"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserList(IList<User> users, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Users = users;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Gets the Users. </summary>
-        public IList<User> Users { get; }
+        public IList<User> Users => throw null;
     }
 }
