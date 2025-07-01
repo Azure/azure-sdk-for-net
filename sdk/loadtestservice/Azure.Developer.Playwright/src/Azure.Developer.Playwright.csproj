@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageTags>Azure, Cloud, Playwright, Playwright Service, Playwright Testing</PackageTags>
     <Description>
