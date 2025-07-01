@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Tests
         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
 
         public const string RESOURCE_GROUP_NAME = "avs-dotnet-test";
-        public const string PRIVATE_CLOUD_NAME = "avs-dotnet-test-3317";
+        public const string PRIVATE_CLOUD_NAME = "avs-dotnet-test-w2";
         public const string CLUSTER1_NAME = "Cluster-1";
         public const string CLUSTER2_NAME = "Cluster-2";
         public const string ISCSI_PATH_NAME = "default";
