@@ -292,8 +292,9 @@ namespace Azure.Generator.Management.Providers
                 methods.AddRange([
                     new AddTagMethodProvider(this, true),
                     new AddTagMethodProvider(this, false),
-                    new SetTagsMethodProvider(this, true),
-                    new SetTagsMethodProvider(this, false),
+                    // Disabled SetTag methods generation temporarily: The extension method ReplaceWith for IDictionary<string, string> is defined in SharedExtensions.cs, which is not included in the project yet.
+                    // new SetTagsMethodProvider(this, true),
+                    // new SetTagsMethodProvider(this, false),
                     new RemoveTagMethodProvider(this, true),
                     new RemoveTagMethodProvider(this, false)
                 ]);
