@@ -26,6 +26,8 @@ public class Resource(Specification spec, Type armType)
     public SimpleModel? GetKeysType { get; set; }
     public bool GetKeysIsList { get; set; }
 
+    // TODO -- add discriminated child resources to support such cases as DeploymentScript
+
     public override string ToString() => $"<Resource {Spec!.Name}::{Name}>";
 
     public override void Lint()
