@@ -918,11 +918,12 @@ function GetSDKProjectFolder()
             $service = $yml["parameters"]["service-dir"]["default"];
         }
         if ($yml["options"] -And $yml["options"]["@azure-tools/typespec-csharp"]) {
-            if ($yml["options"]["@azure-tools/typespec-csharp"]["package-dir"]) {
-                $packageDir = $yml["options"]["@azure-tools/typespec-csharp"]["package-dir"]
+            $csharpOpts = $yml["options"]["@azure-tools/typespec-csharp"]
+            if ($csharpOpts["package-dir"]) {
+                $packageDir = $csharpOpts["package-dir"]
             }
-            if ($yml["options"]["@azure-tools/typespec-csharp"]["service-dir"]) {
-                $service = $yml["options"]["@azure-tools/typespec-csharp"]["service-dir"]
+            if ($csharpOpts["service-dir"]) {
+                $service = $csharpOpts["service-dir"]
             }
         }
     }
