@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Broker;
 
@@ -31,6 +32,12 @@ namespace Azure.Identity.Broker
         public DevelopmentBrokerOptions() : base()
         {
             _beforeBuildClient = AddBroker;
+
+            // Set default value for UseDefaultBrokerAccount on macOS
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                RedirectUri = new("msauth.com.msauth.unsignedapp://auth");
+            }
         }
 
         Action<PublicClientApplicationBuilder> IMsalSettablePublicClientInitializerOptions.BeforeBuildClient

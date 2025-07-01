@@ -24,7 +24,7 @@ This troubleshooting guide covers failure investigation techniques, common error
 - [Troubleshoot AzureCliCredential authentication issues](#troubleshoot-azureclicredential-authentication-issues)
 - [Troubleshoot AzurePowerShellCredential authentication issues](#troubleshoot-azurepowershellcredential-authentication-issues)
 - [Troubleshoot multi-tenant authentication issues](#troubleshoot-multi-tenant-authentication-issues)
-- [Troubleshoot Web Account Manager (WAM) brokered authentication issues](#troubleshoot-web-account-manager-wam-brokered-authentication-issues)
+- [Troubleshoot brokered authentication issues](#troubleshoot-brokered-authentication-issues)
 - [Troubleshoot AzurePipelinesCredential authentication issues](#troubleshoot-azurepipelinescredential-authentication-issues)
 - [Get additional help](#get-additional-help)
 
@@ -335,8 +335,9 @@ Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 |---|---|---|
 |The current credential is not configured to acquire tokens for tenant <tenant ID>|<p>The application must configure the credential to allow token acquisition from the requested tenant.|Make one of the following changes in your app:<ul><li>Add the requested tenant ID to `AdditionallyAllowedTenants` on the credential options.</li><li>Add `*` to `AdditionallyAllowedTenants` to allow token acquisition for any tenant.</li></ul></p><p>This exception was added as part of a breaking change to multi-tenant authentication in version `1.7.0`. Users experiencing this error after upgrading can find details on the change and migration in [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170).</p> |
 
-## Troubleshoot Web Account Manager (WAM) brokered authentication issues
+## Troubleshoot brokered authentication issues
 
+### Common error messages for Web Account Manager (WAM)
 | Error Message |Description| Mitigation |
 |---|---|---|
 |AADSTS50011|The application is missing the expected redirect URI.|Ensure that one of redirect URIs registered for the Microsoft Entra application matches the following URI pattern: `ms-appx-web://Microsoft.AAD.BrokerPlugin/{client_id}`|
@@ -358,6 +359,12 @@ Since version `1.0.0-beta.4` of [Azure.Identity.Broker](https://www.nuget.org/pa
 You may also log in another MSA account by selecting "Microsoft account":
 
 ![Microsoft account](./images/MSA4.png)
+
+### Common errors for broker on MacOS
+
+| Error Message |Description| Mitigation |
+|---|---|---|
+|0xffffffffffff5bf0 - Application's teamId is missing, and redirectUri is not matching unsigned format|For console applications using the broker on MacOS, the following `RedirectUri` should be set: `msauth.com.msauth.unsignedapp://auth`|
 
 ## Troubleshoot AzurePipelinesCredential authentication issues
 
