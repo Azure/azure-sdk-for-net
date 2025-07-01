@@ -9,6 +9,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A metric availability value. </summary>
+    [Obsolete]
     public partial class SqlMetricAvailability
     {
         /// <summary>

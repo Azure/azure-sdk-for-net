@@ -12,6 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The response to a list database metrics request. </summary>
+    [Obsolete]
     internal partial class SqlMetricListResult
     {
         /// <summary>

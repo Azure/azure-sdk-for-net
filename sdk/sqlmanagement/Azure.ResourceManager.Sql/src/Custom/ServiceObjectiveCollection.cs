@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Sql
     /// Each <see cref="ServiceObjectiveResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
     /// To get a <see cref="ServiceObjectiveCollection"/> instance call the GetServiceObjectives method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
+    [Obsolete]
     public partial class ServiceObjectiveCollection : ArmCollection, IEnumerable<ServiceObjectiveResource>, IAsyncEnumerable<ServiceObjectiveResource>
     {
         private readonly ClientDiagnostics _serviceObjectiveClientDiagnostics;

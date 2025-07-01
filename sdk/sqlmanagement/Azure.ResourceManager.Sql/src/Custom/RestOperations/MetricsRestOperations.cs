@@ -13,6 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
+    [Obsolete]
     internal partial class MetricsRestOperations
     {
         private readonly TelemetryDetails _userAgent;

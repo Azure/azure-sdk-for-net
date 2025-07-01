@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Sql
     /// from an instance of <see cref="ArmClient"/> using the GetServiceObjectiveResource method.
     /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetServiceObjective method.
     /// </summary>
+    [Obsolete]
     public partial class ServiceObjectiveResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceObjectiveResource"/> instance. </summary>

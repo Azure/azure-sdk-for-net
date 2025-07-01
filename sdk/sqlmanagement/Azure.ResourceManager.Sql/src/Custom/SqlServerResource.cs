@@ -162,9 +162,10 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets a collection of ServiceObjectiveResources in the SqlServer. </summary>
         /// <returns> An object representing collection of ServiceObjectiveResources and their operations over a ServiceObjectiveResource. </returns>
+        [Obsolete]
         public virtual ServiceObjectiveCollection GetServiceObjectives()
         {
-            return GetCachedClient(client => new ServiceObjectiveCollection(client, Id));
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -193,6 +194,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
+        [Obsolete]
         public virtual async Task<Response<ServiceObjectiveResource>> GetServiceObjectiveAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
             return await GetServiceObjectives().GetAsync(serviceObjectiveName, cancellationToken).ConfigureAwait(false);
@@ -224,16 +226,18 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
+        [Obsolete]
         public virtual Response<ServiceObjectiveResource> GetServiceObjective(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            return GetServiceObjectives().Get(serviceObjectiveName, cancellationToken);
+            throw new NotSupportedException();
         }
 
         /// <summary> Gets a collection of SqlServerCommunicationLinkResources in the SqlServer. </summary>
         /// <returns> An object representing collection of SqlServerCommunicationLinkResources and their operations over a SqlServerCommunicationLinkResource. </returns>
+        [Obsolete]
         public virtual SqlServerCommunicationLinkCollection GetSqlServerCommunicationLinks()
         {
-            return GetCachedClient(client => new SqlServerCommunicationLinkCollection(client, Id));
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -262,6 +266,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
+        [Obsolete]
         public virtual async Task<Response<SqlServerCommunicationLinkResource>> GetSqlServerCommunicationLinkAsync(string communicationLinkName, CancellationToken cancellationToken = default)
         {
             return await GetSqlServerCommunicationLinks().GetAsync(communicationLinkName, cancellationToken).ConfigureAwait(false);
@@ -293,9 +298,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
+        [Obsolete]
         public virtual Response<SqlServerCommunicationLinkResource> GetSqlServerCommunicationLink(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            return GetSqlServerCommunicationLinks().Get(communicationLinkName, cancellationToken);
+            throw new NotSupportedException();
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Database metrics. </summary>
+    [Obsolete]
     public partial class SqlMetric
     {
         /// <summary>

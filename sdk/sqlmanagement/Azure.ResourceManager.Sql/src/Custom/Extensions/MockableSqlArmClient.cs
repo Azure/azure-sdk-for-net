@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -29,10 +30,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceObjectiveResource"/> object. </returns>
+        [Obsolete]
         public virtual ServiceObjectiveResource GetServiceObjectiveResource(ResourceIdentifier id)
         {
-            ServiceObjectiveResource.ValidateResourceId(id);
-            return new ServiceObjectiveResource(Client, id);
+            throw new NotSupportedException();
         }
 
         /// <summary>
@@ -41,10 +42,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlServerCommunicationLinkResource"/> object. </returns>
+        [Obsolete]
         public virtual SqlServerCommunicationLinkResource GetSqlServerCommunicationLinkResource(ResourceIdentifier id)
         {
-            SqlServerCommunicationLinkResource.ValidateResourceId(id);
-            return new SqlServerCommunicationLinkResource(Client, id);
+            throw new NotSupportedException();
         }
     }
 }

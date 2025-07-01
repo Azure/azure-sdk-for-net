@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Sql
     /// A class representing the ServiceObjective data model.
     /// Represents a database service objective.
     /// </summary>
+    [Obsolete]
     public partial class ServiceObjectiveData : ResourceData
     {
         /// <summary>
