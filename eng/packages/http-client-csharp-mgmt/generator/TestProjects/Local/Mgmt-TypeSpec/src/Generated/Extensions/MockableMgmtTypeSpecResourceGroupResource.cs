@@ -17,7 +17,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Mocking
 {
     /// <summary></summary>
-    public partial class MockableMgmtTypeSpecResourceGroupResource : ArmResource
+    internal partial class MockableMgmtTypeSpecResourceGroupResource : ArmResource
     {
         /// <summary> Initializes a new instance of MockableMgmtTypeSpecResourceGroupResource for mocking. </summary>
         protected MockableMgmtTypeSpecResourceGroupResource()
