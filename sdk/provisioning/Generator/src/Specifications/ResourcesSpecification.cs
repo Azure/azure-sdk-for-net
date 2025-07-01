@@ -55,6 +55,18 @@ public class ResourcesSpecification : Specification
         RemoveProperty<AzureCliScript>("Identity");
         RemoveProperty<AzureCliScript>("SystemData");
         RemoveProperty<AzureCliScript>("Tags");
+        CustomizeResource<AzurePowerShellScript>(r =>
+        {
+            r.BaseType = GetModel<ArmDeploymentScriptResource>() as TypeModel;
+            r.DiscriminatorName = "Kind";
+            r.DiscriminatorValue = "AzurePowerShell";
+        });
+        RemoveProperty<AzurePowerShellScript>("Id");
+        RemoveProperty<AzurePowerShellScript>("Name");
+        RemoveProperty<AzurePowerShellScript>("Location");
+        RemoveProperty<AzurePowerShellScript>("Identity");
+        RemoveProperty<AzurePowerShellScript>("SystemData");
+        RemoveProperty<AzurePowerShellScript>("Tags");
 
         // Naming requirements
         AddNameRequirements<ArmDeploymentResource>(min: 1, max: 64, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
@@ -66,8 +78,10 @@ public class ResourcesSpecification : Specification
         var result = base.FindConstructibleResources();
 
         result.Add(typeof(AzureCliScript), typeof(ResourcesSpecification).GetMethod("CreateOrUpdateAzureCliScript", BindingFlags.NonPublic | BindingFlags.Static)!);
+        result.Add(typeof(AzurePowerShellScript), typeof(ResourcesSpecification).GetMethod("CreateOrUpdateAzurePowerShellScript", BindingFlags.NonPublic | BindingFlags.Static)!);
         return result;
     }
 
     private static ArmOperation<ArmDeploymentScriptResource> CreateOrUpdateAzureCliScript(AzureCliScript content) { return null!; }
+    private static ArmOperation<ArmDeploymentScriptResource> CreateOrUpdateAzurePowerShellScript(AzurePowerShellScript content) { return null!; }
 }
