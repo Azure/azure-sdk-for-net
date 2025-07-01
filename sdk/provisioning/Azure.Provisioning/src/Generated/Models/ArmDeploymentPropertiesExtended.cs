@@ -229,6 +229,8 @@ public partial class ArmDeploymentPropertiesExtended : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _outputResources = DefineListProperty<SubResource>("OutputResources", ["outputResources"], isOutput: true);
+        _validatedResources = DefineListProperty<SubResource>("ValidatedResources", ["validatedResources"], isOutput: true);
         _provisioningState = DefineProperty<ResourcesProvisioningState>("ProvisioningState", ["provisioningState"], isOutput: true);
         _correlationId = DefineProperty<string>("CorrelationId", ["correlationId"], isOutput: true);
         _timestamp = DefineProperty<DateTimeOffset>("Timestamp", ["timestamp"], isOutput: true);

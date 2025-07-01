@@ -5,6 +5,7 @@ using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using Generator.Model;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -68,6 +69,16 @@ public class ResourcesSpecification : Specification
         RemoveProperty<AzurePowerShellScript>("SystemData");
         RemoveProperty<AzurePowerShellScript>("Tags");
 
+        // Backward compatibility
+        CustomizeProperty<ArmDeploymentPropertiesExtended>("OutputResources", p =>
+        {
+            p.HideLevel = PropertyHideLevel.HideProperty;
+        });
+        CustomizeProperty<ArmDeploymentPropertiesExtended>("ValidatedResources", p =>
+        {
+            p.HideLevel = PropertyHideLevel.HideProperty;
+        });
+
         // Naming requirements
         AddNameRequirements<ArmDeploymentResource>(min: 1, max: 64, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
         AddNameRequirements<TemplateSpecResource>(min: 1, max: 90, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
@@ -77,11 +88,12 @@ public class ResourcesSpecification : Specification
     {
         var result = base.FindConstructibleResources();
 
-        result.Add(typeof(AzureCliScript), typeof(ResourcesSpecification).GetMethod("CreateOrUpdateAzureCliScript", BindingFlags.NonPublic | BindingFlags.Static)!);
-        result.Add(typeof(AzurePowerShellScript), typeof(ResourcesSpecification).GetMethod("CreateOrUpdateAzurePowerShellScript", BindingFlags.NonPublic | BindingFlags.Static)!);
+        result.Add(typeof(AzureCliScript), typeof(ResourcesSpecification).GetMethod(nameof(CreateOrUpdateAzureCliScript), BindingFlags.NonPublic | BindingFlags.Static)!);
+        result.Add(typeof(AzurePowerShellScript), typeof(ResourcesSpecification).GetMethod(nameof(CreateOrUpdateAzurePowerShellScript), BindingFlags.NonPublic | BindingFlags.Static)!);
         return result;
     }
 
+    // These methods are here as a workaround to generate correct properties for the above two discriminated child resources.
     private static ArmOperation<ArmDeploymentScriptResource> CreateOrUpdateAzureCliScript(AzureCliScript content) { return null!; }
     private static ArmOperation<ArmDeploymentScriptResource> CreateOrUpdateAzurePowerShellScript(AzurePowerShellScript content) { return null!; }
 }
