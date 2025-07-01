@@ -141,11 +141,12 @@ namespace Azure.Monitor.Query
     }
     public partial class MetricsQueryClientOptions : Azure.Core.ClientOptions
     {
-        public MetricsQueryClientOptions(Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion.V2018_01_01) { }
+        public MetricsQueryClientOptions(Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion.V2024_02_01) { }
         public Azure.Monitor.Query.MetricsQueryAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2018_01_01 = 1,
+            V2024_02_01 = 2,
         }
     }
     public partial class MetricsQueryOptions

@@ -16,17 +16,14 @@ namespace BasicTypeSpec
     internal partial class BasicTypeSpecClientGetWithNextLinkCollectionResult : Pageable<BinaryData>
     {
         private readonly BasicTypeSpecClient _client;
-        private readonly Uri _nextPage;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithNextLinkCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
-        /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientGetWithNextLinkCollectionResult(BasicTypeSpecClient client, Uri nextPage, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithNextLinkCollectionResult(BasicTypeSpecClient client, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _nextPage = nextPage;
             _context = context;
         }
 
@@ -36,7 +33,7 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientGetWithNextLinkCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             do
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -61,17 +58,12 @@ namespace BasicTypeSpec
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateListWithNextLinkRequest(nextLink, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetWithNextLinkRequest(nextLink, _context) : _client.CreateGetWithNextLinkRequest(_context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithNextLink");
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, CancellationToken);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

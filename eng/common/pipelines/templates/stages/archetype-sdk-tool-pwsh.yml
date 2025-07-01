@@ -25,18 +25,15 @@ stages:
         strategy:
           matrix:
             Windows:
-              Pool: azsdk-pool-mms-win-2022-general
+              Pool: azsdk-pool
               Image: windows-2022
             Linux:
-              Pool: azsdk-pool-mms-ubuntu-2204-general
-              Image: ubuntu-22.04
-            Mac:
-              Pool: Azure Pipelines
-              Image: macos-latest
+              Pool: azsdk-pool
+              Image: ubuntu-24.04
 
         pool:
           name: $(Pool)
-          vmImage: $(Image)
+          demands: ImageOverride -equals $(Image)
 
         steps:
           - ${{ parameters.PreTestSteps }}

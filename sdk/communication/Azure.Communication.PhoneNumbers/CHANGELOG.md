@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 - Adds support for mobile number types
