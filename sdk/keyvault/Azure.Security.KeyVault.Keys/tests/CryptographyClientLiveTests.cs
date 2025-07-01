@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        public async Task WrapUnwrapRoundTrip([EnumValues(Exclude = new[] { nameof(KeyWrapAlgorithm.A128KW), nameof(KeyWrapAlgorithm.A192KW), nameof(KeyWrapAlgorithm.A256KW) })]KeyWrapAlgorithm algorithm)
+        public async Task WrapUnwrapRoundTrip([EnumValues(Exclude = new[] { nameof(KeyWrapAlgorithm.A128KW), nameof(KeyWrapAlgorithm.A192KW), nameof(KeyWrapAlgorithm.A256KW), nameof(KeyWrapAlgorithm.CkmAesKeyWrap), nameof(KeyWrapAlgorithm.CkmAesKeyWrapPad) })]KeyWrapAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -485,9 +485,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case EncryptionAlgorithm.RsaOaepValue:
                 case EncryptionAlgorithm.RsaOaep256Value:
                     return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
-                case EncryptionAlgorithm.CkmAesKeyWrapValue:
-                case EncryptionAlgorithm.CkmAesKeyWrapPadValue:
-                    return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 256 });
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }
@@ -515,6 +512,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case KeyWrapAlgorithm.A256KWValue:
                     return await Client.CreateOctKeyAsync(
                         new CreateOctKeyOptions(keyName) { KeySize = 256 });
+
+                case KeyWrapAlgorithm.CkmAesKeyWrapValue:
+                case KeyWrapAlgorithm.CkmAesKeyWrapPadValue:
+                    if (!IsManagedHSM)
+                    {
+                        Assert.Ignore("CKM key wrap algorithms are only supported on Managed HSM.");
+                    }
+
+                    return await Client.CreateOctKeyAsync(
+                        new CreateOctKeyOptions(keyName, hardwareProtected: true) { KeySize = 256 });
 
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));

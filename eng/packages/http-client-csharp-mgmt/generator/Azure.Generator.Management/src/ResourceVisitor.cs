@@ -19,6 +19,46 @@ namespace Azure.Generator.Management
             return type;
         }
 
+        private void TransformResource(InputModelType model, TypeProvider type)
+        {
+            if (type is ModelProvider && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
+            {
+                type.Update(
+                    relativeFilePath: TransformRelativeFilePath(type),
+                    name: TransformName(type));
+
+                foreach (var serialization in type.SerializationProviders)
+                {
+                    serialization.Update(
+                        relativeFilePath: TransformRelativeFilePathForSerialization(serialization),
+                        name: TransformName(serialization));
+                }
+            }
+        }
+
+        // Because we have NamespaceVisitor with VisitType in Azure.Generater, we need to override the namespace with VisitType here
+        protected override TypeProvider? VisitType(TypeProvider type)
+        {
+            if (type is not null)
+            {
+                TransformNamespaceForResource(type);
+            }
+            return type;
+        }
+
+        private void TransformNamespaceForResource(TypeProvider type)
+        {
+            if (type is ModelProvider model && ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(model.Type))
+            {
+                type.Update(@namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
+
+                foreach (var serialization in type.SerializationProviders)
+                {
+                    serialization.Update(@namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
+                }
+            }
+        }
+
         // TODO: Go back and enable this when we have a way to handle the resource model parameters renaming via VisitMethod.
         // protected override MethodProvider? VisitMethod(MethodProvider method)
         // {
@@ -31,20 +71,6 @@ namespace Azure.Generator.Management
         //     }
         //     return base.VisitMethod(method);
         // }
-
-        private void TransformResource(InputModelType model, TypeProvider type)
-        {
-            if (type is ModelProvider && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
-            {
-                type.Update(relativeFilePath: TransformRelativeFilePath(type));
-                type.Update(name: TransformName(type));
-                foreach (var serialization in type.SerializationProviders)
-                {
-                    serialization.Update(relativeFilePath: TransformRelativeFilePathForSerialization(serialization));
-                    serialization.Update(name: TransformName(serialization));
-                }
-            }
-        }
 
         private static string TransformName(TypeProvider model) => $"{model.Name}Data";
 

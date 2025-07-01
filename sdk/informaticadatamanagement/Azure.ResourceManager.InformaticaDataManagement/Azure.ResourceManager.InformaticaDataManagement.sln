@@ -7,8 +7,6 @@ Project("{66C01A99-F8DE-4A87-B0B0-43A39D527041}") = "Azure.ResourceManager.Infor
 EndProject
 Project("{66C01A99-F8DE-4A87-B0B0-43A39D527041}") = "Azure.ResourceManager.InformaticaDataManagement.Tests", "tests\Azure.ResourceManager.InformaticaDataManagement.Tests.csproj", "{9329AC8C-D588-44B5-944D-55C212F870AF}"
 EndProject
-Project("{66C01A99-F8DE-4A87-B0B0-43A39D527041}") = "Azure.ResourceManager.InformaticaDataManagement.Samples", "samples\Azure.ResourceManager.InformaticaDataManagement.Samples.csproj", "{B31F8DA3-633B-42FF-867D-1CBBBADD54B1}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

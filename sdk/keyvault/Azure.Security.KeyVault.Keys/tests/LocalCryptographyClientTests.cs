@@ -368,7 +368,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        public async Task WrapKeyUnwrapKeyRoundtrip([EnumValues(Exclude = new[] { nameof(KeyWrapAlgorithm.RsaOaep256) })] KeyWrapAlgorithm algorithm)
+        public async Task WrapKeyUnwrapKeyRoundtrip([EnumValues(Exclude = new[] { nameof(KeyWrapAlgorithm.RsaOaep256), nameof(KeyWrapAlgorithm.CkmAesKeyWrap), nameof(KeyWrapAlgorithm.CkmAesKeyWrapPad) })] KeyWrapAlgorithm algorithm)
         {
             JsonWebKey jwk = KeyUtilities.CreateKey(algorithm, includePrivateParameters: true);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
