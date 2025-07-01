@@ -19,24 +19,6 @@ namespace Azure.Provisioning.Resources;
 public partial class ArmDeploymentPropertiesExtended : ProvisionableConstruct
 {
     /// <summary>
-    /// Array of provisioned resources.
-    /// </summary>
-    public BicepList<SubResource> OutputResources 
-    {
-        get { Initialize(); return _outputResources!; }
-    }
-    private BicepList<SubResource>? _outputResources;
-
-    /// <summary>
-    /// Array of validated resources.
-    /// </summary>
-    public BicepList<SubResource> ValidatedResources 
-    {
-        get { Initialize(); return _validatedResources!; }
-    }
-    private BicepList<SubResource>? _validatedResources;
-
-    /// <summary>
     /// Denotes the state of provisioning.
     /// </summary>
     public BicepValue<ResourcesProvisioningState> ProvisioningState 
@@ -247,8 +229,6 @@ public partial class ArmDeploymentPropertiesExtended : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _outputResources = DefineListProperty<SubResource>("OutputResources", ["outputResources"], isOutput: true);
-        _validatedResources = DefineListProperty<SubResource>("ValidatedResources", ["validatedResources"], isOutput: true);
         _provisioningState = DefineProperty<ResourcesProvisioningState>("ProvisioningState", ["provisioningState"], isOutput: true);
         _correlationId = DefineProperty<string>("CorrelationId", ["correlationId"], isOutput: true);
         _timestamp = DefineProperty<DateTimeOffset>("Timestamp", ["timestamp"], isOutput: true);

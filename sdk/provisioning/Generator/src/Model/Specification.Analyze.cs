@@ -143,7 +143,6 @@ public abstract partial class Specification
                         parent = parent.ParentResource;
                     }
                 }
-                /**/
             });
     }
 

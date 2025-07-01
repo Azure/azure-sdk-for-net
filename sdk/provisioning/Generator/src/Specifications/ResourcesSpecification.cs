@@ -2,8 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Generator.Model;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
@@ -39,8 +43,31 @@ public class ResourcesSpecification : Specification
         // CustomizePropertyIsoDuration<AzurePowerShellScript>("Timeout");
         // CustomizePropertyIsoDuration<ArmDeploymentOperationProperties>("Duration");
 
+        CustomizeResource<AzureCliScript>(r =>
+        {
+            r.BaseType = GetModel<ArmDeploymentScriptResource>() as TypeModel;
+            r.DiscriminatorName = "Kind";
+            r.DiscriminatorValue = "AzureCLI";
+        });
+        RemoveProperty<AzureCliScript>("Id");
+        RemoveProperty<AzureCliScript>("Name");
+        RemoveProperty<AzureCliScript>("Location");
+        RemoveProperty<AzureCliScript>("Identity");
+        RemoveProperty<AzureCliScript>("SystemData");
+        RemoveProperty<AzureCliScript>("Tags");
+
         // Naming requirements
         AddNameRequirements<ArmDeploymentResource>(min: 1, max: 64, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
         AddNameRequirements<TemplateSpecResource>(min: 1, max: 90, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
     }
+
+    private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
+    {
+        var result = base.FindConstructibleResources();
+
+        result.Add(typeof(AzureCliScript), typeof(ResourcesSpecification).GetMethod("CreateOrUpdateAzureCliScript", BindingFlags.NonPublic | BindingFlags.Static)!);
+        return result;
+    }
+
+    private static ArmOperation<ArmDeploymentScriptResource> CreateOrUpdateAzureCliScript(AzureCliScript content) { return null!; }
 }

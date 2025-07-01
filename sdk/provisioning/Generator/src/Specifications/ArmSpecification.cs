@@ -74,12 +74,4 @@ public class ArmSpecification : Specification
         Roles.Add(new Role("ManagedIdentityContributor", "e40ec5ca-96e0-45a2-b4ff-59039f2c2b59", "Create, Read, Update, and Delete User Assigned Identity"));
         Roles.Add(new Role("ManagedIdentityOperator", "f1a07417-d97a-45cb-824c-7a7467783830", "Read and Assign User Assigned Identity"));
     }
-
-    private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
-    {
-        // Add missing resources
-        var dict = base.FindConstructibleResources();
-        dict.Add(typeof(AzureCliScript), typeof(ArmDeploymentScriptCollection).GetMethod("CreateOrUpdate")!);
-        return dict;
-    }
 }

@@ -107,6 +107,7 @@ public partial class FederatedIdentityCredential : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _audiences = DefineListProperty<string>("Audiences", ["properties", "audiences"]);
         _issuerUri = DefineProperty<Uri>("IssuerUri", ["properties", "issuer"]);
