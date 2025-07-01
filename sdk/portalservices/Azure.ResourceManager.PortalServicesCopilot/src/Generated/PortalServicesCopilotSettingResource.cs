@@ -17,36 +17,36 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PortalServicesCopilot
 {
     /// <summary></summary>
-    public partial class PortalServicesCopilotSettingsResource : ArmResource
+    public partial class PortalServicesCopilotSettingResource : ArmResource
     {
-        private readonly ClientDiagnostics _portalservicescopilotsettingsClientDiagnostics;
-        private readonly CopilotSettings _portalservicescopilotsettingsRestClient;
-        private readonly PortalServicesCopilotSettingsData _data;
+        private readonly ClientDiagnostics _portalservicescopilotsettingClientDiagnostics;
+        private readonly CopilotSettings _portalservicescopilotsettingRestClient;
+        private readonly PortalServicesCopilotSettingData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.PortalServices/copilotSettings";
 
-        /// <summary> Initializes a new instance of PortalServicesCopilotSettingsResource for mocking. </summary>
-        protected PortalServicesCopilotSettingsResource()
+        /// <summary> Initializes a new instance of PortalServicesCopilotSettingResource for mocking. </summary>
+        protected PortalServicesCopilotSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PortalServicesCopilotSettingsResource(ArmClient client, PortalServicesCopilotSettingsData data) : this(client, data.Id)
+        internal PortalServicesCopilotSettingResource(ArmClient client, PortalServicesCopilotSettingData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PortalServicesCopilotSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PortalServicesCopilotSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _portalservicescopilotsettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PortalServicesCopilot", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string portalservicescopilotsettingsApiVersion);
-            _portalservicescopilotsettingsRestClient = new CopilotSettings(_portalservicescopilotsettingsClientDiagnostics, Pipeline, Endpoint, portalservicescopilotsettingsApiVersion);
+            _portalservicescopilotsettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PortalServicesCopilot", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string portalservicescopilotsettingApiVersion);
+            _portalservicescopilotsettingRestClient = new CopilotSettings(_portalservicescopilotsettingClientDiagnostics, Pipeline, Endpoint, portalservicescopilotsettingApiVersion);
             ValidateResourceId(id);
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual PortalServicesCopilotSettingsData Data
+        public virtual PortalServicesCopilotSettingData Data
         {
             get
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.PortalServicesCopilot
 
         /// <summary> Get a CopilotSettingsResource. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Response<PortalServicesCopilotSettingsResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PortalServicesCopilotSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _portalservicescopilotsettingsClientDiagnostics.CreateScope("PortalServicesCopilotSettingsResource.Get");
+            using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.Get");
             scope.Start();
             try
             {
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingsRestClient.CreateGetRequest(context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateGetRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PortalServicesCopilotSettingsData> response = Response.FromValue((PortalServicesCopilotSettingsData)result, result);
+                Response<PortalServicesCopilotSettingData> response = Response.FromValue((PortalServicesCopilotSettingData)result, result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PortalServicesCopilotSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PortalServicesCopilotSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.PortalServicesCopilot
 
         /// <summary> Get a CopilotSettingsResource. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual async Task<Response<PortalServicesCopilotSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PortalServicesCopilotSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _portalservicescopilotsettingsClientDiagnostics.CreateScope("PortalServicesCopilotSettingsResource.GetAsync");
+            using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.GetAsync");
             scope.Start();
             try
             {
@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingsRestClient.CreateGetRequest(context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateGetRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PortalServicesCopilotSettingsData> response = Response.FromValue((PortalServicesCopilotSettingsData)result, result);
+                Response<PortalServicesCopilotSettingData> response = Response.FromValue((PortalServicesCopilotSettingData)result, result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PortalServicesCopilotSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PortalServicesCopilotSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PortalServicesCopilotSettingsResource> CreateOrUpdate(WaitUntil waitUntil, PortalServicesCopilotSettingsData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PortalServicesCopilotSettingResource> CreateOrUpdate(WaitUntil waitUntil, PortalServicesCopilotSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _portalservicescopilotsettingsClientDiagnostics.CreateScope("PortalServicesCopilotSettingsResource.CreateOrUpdate");
+            using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingsRestClient.CreateCreateOrUpdateRequest(data, context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateCreateOrUpdateRequest(data, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PortalServicesCopilotSettingsData> response = Response.FromValue((PortalServicesCopilotSettingsData)result, result);
+                Response<PortalServicesCopilotSettingData> response = Response.FromValue((PortalServicesCopilotSettingData)result, result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                PortalServicesCopilotArmOperation<PortalServicesCopilotSettingsResource> operation = new PortalServicesCopilotArmOperation<PortalServicesCopilotSettingsResource>(Response.FromValue(new PortalServicesCopilotSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                PortalServicesCopilotArmOperation<PortalServicesCopilotSettingResource> operation = new PortalServicesCopilotArmOperation<PortalServicesCopilotSettingResource>(Response.FromValue(new PortalServicesCopilotSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -176,11 +176,11 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PortalServicesCopilotSettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PortalServicesCopilotSettingsData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PortalServicesCopilotSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PortalServicesCopilotSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _portalservicescopilotsettingsClientDiagnostics.CreateScope("PortalServicesCopilotSettingsResource.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.CreateOrUpdateAsync");
             scope.Start();
             try
             {
@@ -189,12 +189,12 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingsRestClient.CreateCreateOrUpdateRequest(data, context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateCreateOrUpdateRequest(data, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PortalServicesCopilotSettingsData> response = Response.FromValue((PortalServicesCopilotSettingsData)result, result);
+                Response<PortalServicesCopilotSettingData> response = Response.FromValue((PortalServicesCopilotSettingData)result, result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                PortalServicesCopilotArmOperation<PortalServicesCopilotSettingsResource> operation = new PortalServicesCopilotArmOperation<PortalServicesCopilotSettingsResource>(Response.FromValue(new PortalServicesCopilotSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                PortalServicesCopilotArmOperation<PortalServicesCopilotSettingResource> operation = new PortalServicesCopilotArmOperation<PortalServicesCopilotSettingResource>(Response.FromValue(new PortalServicesCopilotSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<PortalServicesCopilotSettingsResource> Update(RequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PortalServicesCopilotSettingResource> Update(RequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _portalservicescopilotsettingsClientDiagnostics.CreateScope("PortalServicesCopilotSettingsResource.Update");
+            using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.Update");
             scope.Start();
             try
             {
@@ -226,14 +226,14 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingsRestClient.CreateUpdateRequest(content, context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(content, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PortalServicesCopilotSettingsData> response = Response.FromValue((PortalServicesCopilotSettingsData)result, result);
+                Response<PortalServicesCopilotSettingData> response = Response.FromValue((PortalServicesCopilotSettingData)result, result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PortalServicesCopilotSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PortalServicesCopilotSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -247,11 +247,11 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<PortalServicesCopilotSettingsResource>> UpdateAsync(RequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PortalServicesCopilotSettingResource>> UpdateAsync(RequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _portalservicescopilotsettingsClientDiagnostics.CreateScope("PortalServicesCopilotSettingsResource.UpdateAsync");
+            using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.UpdateAsync");
             scope.Start();
             try
             {
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingsRestClient.CreateUpdateRequest(content, context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(content, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PortalServicesCopilotSettingsData> response = Response.FromValue((PortalServicesCopilotSettingsData)result, result);
+                Response<PortalServicesCopilotSettingData> response = Response.FromValue((PortalServicesCopilotSettingData)result, result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PortalServicesCopilotSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PortalServicesCopilotSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _portalservicescopilotsettingsClientDiagnostics.CreateScope("PortalServicesCopilotSettingsResource.Delete");
+            using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.Delete");
             scope.Start();
             try
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingsRestClient.CreateDeleteRequest(context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateDeleteRequest(context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _portalservicescopilotsettingsClientDiagnostics.CreateScope("PortalServicesCopilotSettingsResource.DeleteAsync");
+            using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.DeleteAsync");
             scope.Start();
             try
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingsRestClient.CreateDeleteRequest(context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateDeleteRequest(context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PortalServicesCopilot.Models
 {
     /// <summary> The Copilot Settings properties. </summary>
-    public partial class PortalServicesCopilotSettingsProperties
+    public partial class PortalServicesCopilotSettingProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingProperties"/>. </summary>
         /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
-        public PortalServicesCopilotSettingsProperties(bool accessControlEnabled)
+        public PortalServicesCopilotSettingProperties(bool accessControlEnabled)
         {
             AccessControlEnabled = accessControlEnabled;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingProperties"/>. </summary>
         /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PortalServicesCopilotSettingsProperties(bool accessControlEnabled, PortalServicesResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PortalServicesCopilotSettingProperties(bool accessControlEnabled, PortalServicesResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccessControlEnabled = accessControlEnabled;
             ProvisioningState = provisioningState;

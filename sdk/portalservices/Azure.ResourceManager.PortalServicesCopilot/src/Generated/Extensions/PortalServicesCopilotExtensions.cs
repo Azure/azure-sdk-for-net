@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.PortalServicesCopilot
             return tenantResource.GetCachedClient(client => new MockablePortalServicesCopilotTenantResource(client, tenantResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="PortalServicesCopilotSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PortalServicesCopilotSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PortalServicesCopilotSettingsResource"/> object. </returns>
-        public static PortalServicesCopilotSettingsResource GetPortalServicesCopilotSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PortalServicesCopilotSettingResource"/> object. </returns>
+        public static PortalServicesCopilotSettingResource GetPortalServicesCopilotSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePortalServicesCopilotArmClient(client).GetPortalServicesCopilotSettingsResource(id);
+            return GetMockablePortalServicesCopilotArmClient(client).GetPortalServicesCopilotSettingResource(id);
         }
     }
 }
