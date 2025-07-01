@@ -1,14 +1,18 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0 (2025-06-23)
 
 ### Features Added
 
-### Breaking Changes
+- General Availability release of `Azure.Messaging.EventGrid.SystemEvents`. Note this package
+should not be used with versions of `Azure.Messaging.EventGrid` prior to 5.0.0 as it will result in
+type conflicts. Version 5.0.0 and later of `Azure.Messaging.EventGrid` type forwards the system events to this package.
 
-### Bugs Fixed
+## 1.0.0-beta.5 (2025-06-04)
 
 ### Other Changes
+
+- Reshipping due to issue with symbols publishing in previous version.
 
 ## 1.0.0-beta.4 (2025-06-03)
 

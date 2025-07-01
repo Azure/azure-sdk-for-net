@@ -20,14 +20,15 @@ describe("Configuration tests", async () => {
       runner
     );
     vi.mock("@typespec/http-client-csharp", async (importOriginal) => {
-      const actual = await importOriginal<typeof import("@typespec/http-client-csharp")>();
+      const actual =
+        await importOriginal<typeof import("@typespec/http-client-csharp")>();
       return {
         ...actual,
         $onEmit: async () => {
           // do nothing
         }
       };
-    })
+    });
   });
 
   it("Diagnostic is logged when model-namespace is set without namespace", async () => {
@@ -58,7 +59,7 @@ describe("Configuration tests", async () => {
   });
   it("package-name defaults to namespace", async () => {
     const options: AzureEmitterOptions = {
-      "namespace": "Test.Namespace"
+      namespace: "Test.Namespace"
     };
     const context = createEmitterContext(program, options);
     $onEmit(context);
@@ -74,7 +75,7 @@ describe("Configuration tests", async () => {
   });
   it("package-name value used if set", async () => {
     const options: AzureEmitterOptions = {
-      "namespace": "Test.Namespace",
+      namespace: "Test.Namespace",
       "package-name": "Test.Package"
     };
     const context = createEmitterContext(program, options);
@@ -84,4 +85,3 @@ describe("Configuration tests", async () => {
     strictEqual(context.options["package-name"], "Test.Package");
   });
 });
-

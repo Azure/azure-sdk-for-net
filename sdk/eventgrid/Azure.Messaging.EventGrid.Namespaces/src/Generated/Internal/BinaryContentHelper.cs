@@ -16,9 +16,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
     {
         /// <param name="enumerable"></param>
         public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable)
-            where T : notnull 
+            where T : notnull
         {
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="enumerable"></param>
         public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable)
         {
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
@@ -59,9 +59,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <param name="span"></param>
         public static RequestContent FromEnumerable<T>(ReadOnlySpan<T> span)
-            where T : notnull 
+            where T : notnull
         {
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             int i = 0;
             for (; i < span.Length; i++)
@@ -75,9 +75,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <param name="dictionary"></param>
         public static RequestContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
-            where TValue : notnull 
+            where TValue : notnull
         {
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
             foreach (var item in dictionary)
             {
@@ -92,7 +92,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="dictionary"></param>
         public static RequestContent FromDictionary(IDictionary<string, BinaryData> dictionary)
         {
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
             foreach (var item in dictionary)
             {
@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="value"></param>
         public static RequestContent FromObject(object value)
         {
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue<object>(value, ModelSerializationExtensions.WireOptions);
             return content;
         }
@@ -129,7 +129,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="value"></param>
         public static RequestContent FromObject(BinaryData value)
         {
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
 #if NET6_0_OR_GREATER
             content.JsonWriter.WriteRawValue(value);
 #else

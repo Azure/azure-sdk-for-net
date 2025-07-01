@@ -3,6 +3,7 @@
 
 using System.ClientModel.Internal;
 using System.Collections;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
@@ -12,7 +13,7 @@ internal class JsonCollectionWriter : CollectionWriter
     internal override BinaryData Write(IEnumerable enumerable, ModelReaderWriterOptions options)
     {
         using UnsafeBufferSequence sequenceWriter = new();
-        using Utf8JsonWriter writer = new(sequenceWriter);
+        using Utf8JsonWriter writer = new(sequenceWriter, new JsonWriterOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
         WriteEnumerable(enumerable, writer, options);
         writer.Flush();
         return sequenceWriter.ExtractReader().ToBinaryData();
