@@ -15,6 +15,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class EventGridNamespacesModelFactory
     {
+
         /// <summary> Details of the Receive operation response. </summary>
         /// <param name="details"> Array of receive responses, one per cloud event. </param>
         /// <returns> A new <see cref="Namespaces.ReceiveResult"/> instance for mocking. </returns>
