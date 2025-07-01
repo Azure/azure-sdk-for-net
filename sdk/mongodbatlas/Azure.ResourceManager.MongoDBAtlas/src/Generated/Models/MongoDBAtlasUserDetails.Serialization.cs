@@ -9,13 +9,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 using Azure.ResourceManager.MongoDBAtlas;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
-    /// <summary></summary>
+    /// <summary> User details for an organization. </summary>
     public partial class MongoDBAtlasUserDetails : IJsonModel<MongoDBAtlasUserDetails>
     {
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasUserDetails"/> for deserialization. </summary>
@@ -197,25 +195,5 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MongoDBAtlasUserDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="mongoDBAtlasUserDetails"> The <see cref="MongoDBAtlasUserDetails"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(MongoDBAtlasUserDetails mongoDBAtlasUserDetails)
-        {
-            if (mongoDBAtlasUserDetails == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(mongoDBAtlasUserDetails, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="MongoDBAtlasUserDetails"/> from. </param>
-        public static explicit operator MongoDBAtlasUserDetails(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeMongoDBAtlasUserDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

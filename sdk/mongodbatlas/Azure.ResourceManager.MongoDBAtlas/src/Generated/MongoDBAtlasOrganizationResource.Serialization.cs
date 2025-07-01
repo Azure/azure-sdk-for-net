@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager.MongoDBAtlas.Models;
 
 namespace Azure.ResourceManager.MongoDBAtlas
 {

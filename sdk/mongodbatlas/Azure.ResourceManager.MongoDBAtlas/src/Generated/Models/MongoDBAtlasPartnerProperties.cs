@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasPartnerProperties"/>. </summary>
         /// <param name="organizationId"> Organization Id in MongoDB system. </param>
-        /// <param name="redirectUrl"> Redirect URL for the MongoDB. </param>
+        /// <param name="redirectUri"> Redirect URL for the MongoDB. </param>
         /// <param name="organizationName"> Organization name in MongoDB system. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MongoDBAtlasPartnerProperties(string organizationId, string redirectUrl, string organizationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBAtlasPartnerProperties(string organizationId, string redirectUri, string organizationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OrganizationId = organizationId;
-            RedirectUrl = redirectUrl;
+            RedirectUri = redirectUri;
             OrganizationName = organizationName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public string OrganizationId { get; set; }
 
         /// <summary> Redirect URL for the MongoDB. </summary>
-        public string RedirectUrl { get; set; }
+        public string RedirectUri { get; set; }
 
         /// <summary> Organization name in MongoDB system. </summary>
         public string OrganizationName { get; set; }

@@ -7,8 +7,9 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MongoDBAtlas;
 
-namespace Azure.ResourceManager.MongoDBAtlas
+namespace Azure.ResourceManager.MongoDBAtlas.Mocking
 {
     /// <summary></summary>
     public partial class MockableMongoDBAtlasArmClient : ArmResource

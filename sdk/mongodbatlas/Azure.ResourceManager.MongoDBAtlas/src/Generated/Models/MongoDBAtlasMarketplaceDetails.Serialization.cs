@@ -9,13 +9,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 using Azure.ResourceManager.MongoDBAtlas;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
-    /// <summary></summary>
+    /// <summary> Marketplace details for an organization. </summary>
     public partial class MongoDBAtlasMarketplaceDetails : IJsonModel<MongoDBAtlasMarketplaceDetails>
     {
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasMarketplaceDetails"/> for deserialization. </summary>
@@ -164,25 +162,5 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MongoDBAtlasMarketplaceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="mongoDBAtlasMarketplaceDetails"> The <see cref="MongoDBAtlasMarketplaceDetails"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(MongoDBAtlasMarketplaceDetails mongoDBAtlasMarketplaceDetails)
-        {
-            if (mongoDBAtlasMarketplaceDetails == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(mongoDBAtlasMarketplaceDetails, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="MongoDBAtlasMarketplaceDetails"/> from. </param>
-        public static explicit operator MongoDBAtlasMarketplaceDetails(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeMongoDBAtlasMarketplaceDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

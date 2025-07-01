@@ -9,13 +9,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 using Azure.ResourceManager.MongoDBAtlas;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
-    /// <summary></summary>
+    /// <summary> Properties specific to Organization. </summary>
     public partial class MongoDBAtlasOrganizationProperties : IJsonModel<MongoDBAtlasOrganizationProperties>
     {
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasOrganizationProperties"/> for deserialization. </summary>
@@ -179,25 +177,5 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MongoDBAtlasOrganizationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="mongoDBAtlasOrganizationProperties"> The <see cref="MongoDBAtlasOrganizationProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(MongoDBAtlasOrganizationProperties mongoDBAtlasOrganizationProperties)
-        {
-            if (mongoDBAtlasOrganizationProperties == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(mongoDBAtlasOrganizationProperties, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="MongoDBAtlasOrganizationProperties"/> from. </param>
-        public static explicit operator MongoDBAtlasOrganizationProperties(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeMongoDBAtlasOrganizationProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

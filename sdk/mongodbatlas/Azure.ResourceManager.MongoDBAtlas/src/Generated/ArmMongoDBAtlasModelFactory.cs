@@ -15,7 +15,7 @@ using Azure.ResourceManager.MongoDBAtlas;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class AzureResourceManagerMongoDBAtlasModelFactory
+    public static partial class ArmMongoDBAtlasModelFactory
     {
 
         /// <summary> The resource model definition for an Azure Organization. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="name"> Name of the Organization resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.MongoDBAtlasOrganizationData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasOrganizationData"/> instance for mocking. </returns>
         public static MongoDBAtlasOrganizationData MongoDBAtlasOrganizationData(ResourceIdentifier id = default, string @type = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, MongoDBAtlasOrganizationProperties properties = default, string name = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <summary> MongoDB specific Properties. </summary>
         /// <param name="organizationId"> Organization Id in MongoDB system. </param>
-        /// <param name="redirectUrl"> Redirect URL for the MongoDB. </param>
+        /// <param name="redirectUri"> Redirect URL for the MongoDB. </param>
         /// <param name="organizationName"> Organization name in MongoDB system. </param>
         /// <returns> A new <see cref="Models.MongoDBAtlasPartnerProperties"/> instance for mocking. </returns>
-        public static MongoDBAtlasPartnerProperties MongoDBAtlasPartnerProperties(string organizationId = default, string redirectUrl = default, string organizationName = default)
+        public static MongoDBAtlasPartnerProperties MongoDBAtlasPartnerProperties(string organizationId = default, string redirectUri = default, string organizationName = default)
         {
-            return new MongoDBAtlasPartnerProperties(organizationId, redirectUrl, organizationName, additionalBinaryDataProperties: null);
+            return new MongoDBAtlasPartnerProperties(organizationId, redirectUri, organizationName, additionalBinaryDataProperties: null);
         }
     }
 }

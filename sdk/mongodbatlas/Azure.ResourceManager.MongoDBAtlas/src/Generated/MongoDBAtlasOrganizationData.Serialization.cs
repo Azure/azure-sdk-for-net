@@ -12,11 +12,11 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.MongoDBAtlas;
+using Azure.ResourceManager.MongoDBAtlas.Models;
 
-namespace Azure.ResourceManager.MongoDBAtlas.Models
+namespace Azure.ResourceManager.MongoDBAtlas
 {
-    /// <summary></summary>
+    /// <summary> The resource model definition for an Azure Organization. </summary>
     public partial class MongoDBAtlasOrganizationData : IJsonModel<MongoDBAtlasOrganizationData>
     {
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasOrganizationData"/> for deserialization. </summary>
@@ -215,15 +215,15 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MongoDBAtlasOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="data"> The <see cref="MongoDBAtlasOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(MongoDBAtlasOrganizationData data)
+        /// <param name="mongoDBAtlasOrganizationData"> The <see cref="MongoDBAtlasOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(MongoDBAtlasOrganizationData mongoDBAtlasOrganizationData)
         {
-            if (data == null)
+            if (mongoDBAtlasOrganizationData == null)
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(mongoDBAtlasOrganizationData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 

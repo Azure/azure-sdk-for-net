@@ -9,13 +9,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 using Azure.ResourceManager.MongoDBAtlas;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
-    /// <summary></summary>
+    /// <summary> Offer details for the marketplace that is selected by the user. </summary>
     public partial class MongoDBAtlasOfferDetails : IJsonModel<MongoDBAtlasOfferDetails>
     {
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasOfferDetails"/> for deserialization. </summary>
@@ -197,25 +195,5 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MongoDBAtlasOfferDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="mongoDBAtlasOfferDetails"> The <see cref="MongoDBAtlasOfferDetails"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(MongoDBAtlasOfferDetails mongoDBAtlasOfferDetails)
-        {
-            if (mongoDBAtlasOfferDetails == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(mongoDBAtlasOfferDetails, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="MongoDBAtlasOfferDetails"/> from. </param>
-        public static explicit operator MongoDBAtlasOfferDetails(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeMongoDBAtlasOfferDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

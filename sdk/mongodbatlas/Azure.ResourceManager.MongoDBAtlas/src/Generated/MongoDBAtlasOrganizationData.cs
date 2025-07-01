@@ -9,9 +9,9 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.MongoDBAtlas;
+using Azure.ResourceManager.MongoDBAtlas.Models;
 
-namespace Azure.ResourceManager.MongoDBAtlas.Models
+namespace Azure.ResourceManager.MongoDBAtlas
 {
     /// <summary> The resource model definition for an Azure Organization. </summary>
     public partial class MongoDBAtlasOrganizationData : TrackedResourceData

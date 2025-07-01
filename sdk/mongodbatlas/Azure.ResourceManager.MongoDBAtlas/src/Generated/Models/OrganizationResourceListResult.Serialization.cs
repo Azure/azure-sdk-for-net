@@ -10,12 +10,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 using Azure.ResourceManager.MongoDBAtlas;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
-    /// <summary></summary>
+    /// <summary> The response of a OrganizationResource list operation. </summary>
     internal partial class OrganizationResourceListResult : IJsonModel<OrganizationResourceListResult>
     {
         /// <summary> Initializes a new instance of <see cref="OrganizationResourceListResult"/> for deserialization. </summary>
@@ -166,18 +165,6 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OrganizationResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="organizationResourceListResult"> The <see cref="OrganizationResourceListResult"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(OrganizationResourceListResult organizationResourceListResult)
-        {
-            if (organizationResourceListResult == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(organizationResourceListResult, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="OrganizationResourceListResult"/> from. </param>
         public static explicit operator OrganizationResourceListResult(Response result)

@@ -9,13 +9,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 using Azure.ResourceManager.MongoDBAtlas;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
-    /// <summary></summary>
+    /// <summary> MongoDB specific Properties. </summary>
     public partial class MongoDBAtlasPartnerProperties : IJsonModel<MongoDBAtlasPartnerProperties>
     {
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasPartnerProperties"/> for deserialization. </summary>
@@ -46,10 +44,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 writer.WritePropertyName("organizationId"u8);
                 writer.WriteStringValue(OrganizationId);
             }
-            if (Optional.IsDefined(RedirectUrl))
+            if (Optional.IsDefined(RedirectUri))
             {
                 writer.WritePropertyName("redirectUrl"u8);
-                writer.WriteStringValue(RedirectUrl);
+                writer.WriteStringValue(RedirectUri);
             }
             writer.WritePropertyName("organizationName"u8);
             writer.WriteStringValue(OrganizationName);
@@ -96,7 +94,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 return null;
             }
             string organizationId = default;
-            string redirectUrl = default;
+            string redirectUri = default;
             string organizationName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -108,7 +106,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 }
                 if (prop.NameEquals("redirectUrl"u8))
                 {
-                    redirectUrl = prop.Value.GetString();
+                    redirectUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("organizationName"u8))
@@ -121,7 +119,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MongoDBAtlasPartnerProperties(organizationId, redirectUrl, organizationName, additionalBinaryDataProperties);
+            return new MongoDBAtlasPartnerProperties(organizationId, redirectUri, organizationName, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -163,25 +161,5 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MongoDBAtlasPartnerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="mongoDBAtlasPartnerProperties"> The <see cref="MongoDBAtlasPartnerProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(MongoDBAtlasPartnerProperties mongoDBAtlasPartnerProperties)
-        {
-            if (mongoDBAtlasPartnerProperties == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(mongoDBAtlasPartnerProperties, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="MongoDBAtlasPartnerProperties"/> from. </param>
-        public static explicit operator MongoDBAtlasPartnerProperties(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeMongoDBAtlasPartnerProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MongoDBAtlas.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MongoDBAtlas
@@ -58,10 +59,11 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public static Response<MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            Argument.AssertNotNull(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             return GetMockableMongoDBAtlasResourceGroupResource(resourceGroupResource).GetMongoDBAtlasOrganization(organizationName, cancellationToken);
         }
@@ -71,10 +73,11 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public static async Task<Response<MongoDBAtlasOrganizationResource>> GetMongoDBAtlasOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            Argument.AssertNotNull(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             return await GetMockableMongoDBAtlasResourceGroupResource(resourceGroupResource).GetMongoDBAtlasOrganizationAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }

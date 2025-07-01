@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.MongoDBAtlas.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MongoDBAtlas
@@ -56,9 +55,10 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<MongoDBAtlasOrganizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationName, MongoDBAtlasOrganizationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _mongodbatlasorganizationClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.CreateOrUpdateAsync");
@@ -98,9 +98,10 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<MongoDBAtlasOrganizationResource> CreateOrUpdate(WaitUntil waitUntil, string organizationName, MongoDBAtlasOrganizationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _mongodbatlasorganizationClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.CreateOrUpdate");
@@ -138,9 +139,10 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MongoDBAtlasOrganizationResource>> GetAsync(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using DiagnosticScope scope = _mongodbatlasorganizationClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.GetAsync");
             scope.Start();
@@ -171,9 +173,10 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MongoDBAtlasOrganizationResource> Get(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using DiagnosticScope scope = _mongodbatlasorganizationClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.Get");
             scope.Start();
@@ -204,9 +207,10 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using DiagnosticScope scope = _mongodbatlasorganizationClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.ExistsAsync");
             scope.Start();
@@ -233,9 +237,10 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using DiagnosticScope scope = _mongodbatlasorganizationClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.Exists");
             scope.Start();
@@ -262,9 +267,10 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MongoDBAtlasOrganizationResource>> GetIfExistsAsync(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using DiagnosticScope scope = _mongodbatlasorganizationClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.GetIfExistsAsync");
             scope.Start();
@@ -295,9 +301,10 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MongoDBAtlasOrganizationResource> GetIfExists(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(organizationName, nameof(organizationName));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
             using DiagnosticScope scope = _mongodbatlasorganizationClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.GetIfExists");
             scope.Start();

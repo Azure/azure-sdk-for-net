@@ -14,33 +14,37 @@ using Azure.ResourceManager.MongoDBAtlas.Models;
 
 namespace Azure.ResourceManager.MongoDBAtlas
 {
-    internal partial class OrganizationsListBySubscriptionCollectionResult : Pageable<BinaryData>
+    internal partial class OrganizationsGetByResourceGroupCollectionResult : Pageable<BinaryData>
     {
         private readonly Organizations _client;
-        private readonly Uri _nextPage;
         private readonly Guid _subscriptionId;
+        private readonly string _resourceGroupName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of OrganizationsListBySubscriptionCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of OrganizationsGetByResourceGroupCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Organizations client used to send requests. </param>
-        /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public OrganizationsListBySubscriptionCollectionResult(Organizations client, Uri nextPage, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public OrganizationsGetByResourceGroupCollectionResult(Organizations client, Guid subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
             _client = client;
-            _nextPage = nextPage;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _context = context;
         }
 
-        /// <summary> Gets the pages of OrganizationsListBySubscriptionCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of OrganizationsGetByResourceGroupCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of OrganizationsListBySubscriptionCollectionResult as an enumerable collection. </returns>
+        /// <returns> The pages of OrganizationsGetByResourceGroupCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             do
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -65,17 +69,12 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateListBySubscriptionRequest(nextLink, _subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Organizations.ListBySubscription");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Organizations.GetByResourceGroup");
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, CancellationToken);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.MongoDBAtlas.Models;
 
 namespace Azure.ResourceManager.MongoDBAtlas
 {

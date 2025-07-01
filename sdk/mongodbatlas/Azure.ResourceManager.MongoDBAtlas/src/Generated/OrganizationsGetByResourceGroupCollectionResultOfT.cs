@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,36 +14,40 @@ using Azure.ResourceManager.MongoDBAtlas.Models;
 
 namespace Azure.ResourceManager.MongoDBAtlas
 {
-    internal partial class OrganizationsListBySubscriptionAsyncCollectionResultOfT : AsyncPageable<MongoDBAtlasOrganizationData>
+    internal partial class OrganizationsGetByResourceGroupCollectionResultOfT : Pageable<MongoDBAtlasOrganizationData>
     {
         private readonly Organizations _client;
-        private readonly Uri _nextPage;
         private readonly Guid _subscriptionId;
+        private readonly string _resourceGroupName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of OrganizationsListBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of OrganizationsGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Organizations client used to send requests. </param>
-        /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public OrganizationsListBySubscriptionAsyncCollectionResultOfT(Organizations client, Uri nextPage, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public OrganizationsGetByResourceGroupCollectionResultOfT(Organizations client, Guid subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
             _client = client;
-            _nextPage = nextPage;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _context = context;
         }
 
-        /// <summary> Gets the pages of OrganizationsListBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of OrganizationsGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of OrganizationsListBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<MongoDBAtlasOrganizationData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of OrganizationsGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<MongoDBAtlasOrganizationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             do
             {
-                Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -59,19 +62,14 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateListBySubscriptionRequest(nextLink, _subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Organizations.ListBySubscription");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Organizations.GetByResourceGroup");
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {
