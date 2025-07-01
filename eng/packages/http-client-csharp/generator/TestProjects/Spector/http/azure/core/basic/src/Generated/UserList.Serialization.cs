@@ -9,20 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 
-namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
+namespace _Specs_.Azure.Core.Basic
 {
-    /// <summary> This is the child model to be flattened. </summary>
-    public partial class ChildModel : IJsonModel<ChildModel>
+    /// <summary> The UserList. </summary>
+    public partial class UserList : IJsonModel<UserList>
     {
-        /// <summary> Initializes a new instance of <see cref="ChildModel"/> for deserialization. </summary>
-        internal ChildModel()
+        /// <summary> Initializes a new instance of <see cref="UserList"/> for deserialization. </summary>
+        internal UserList()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ChildModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UserList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,15 +34,18 @@ namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChildModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UserList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChildModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UserList)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("description"u8);
-            writer.WriteStringValue(Description);
-            writer.WritePropertyName("age"u8);
-            writer.WriteNumberValue(Age);
+            writer.WritePropertyName("users"u8);
+            writer.WriteStartArray();
+            foreach (User item in Users)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -61,42 +65,41 @@ namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ChildModel IJsonModel<ChildModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        UserList IJsonModel<UserList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ChildModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual UserList JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChildModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UserList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChildModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UserList)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChildModel(document.RootElement, options);
+            return DeserializeUserList(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ChildModel DeserializeChildModel(JsonElement element, ModelReaderWriterOptions options)
+        internal static UserList DeserializeUserList(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string description = default;
-            int age = default;
+            IList<User> users = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("description"u8))
+                if (prop.NameEquals("users"u8))
                 {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("age"u8))
-                {
-                    age = prop.Value.GetInt32();
+                    List<User> array = new List<User>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(User.DeserializeUser(item, options));
+                    }
+                    users = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,47 +107,55 @@ namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ChildModel(description, age, additionalBinaryDataProperties);
+            return new UserList(users, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ChildModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<UserList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChildModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UserList>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, _Specs_AzureClientGeneratorCoreFlattenPropertyContext.Default);
+                    return ModelReaderWriter.Write(this, options, _Specs_AzureCoreBasicContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ChildModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserList)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ChildModel IPersistableModel<ChildModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        UserList IPersistableModel<UserList>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ChildModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual UserList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChildModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UserList>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeChildModel(document.RootElement, options);
+                        return DeserializeUserList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChildModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserList)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ChildModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UserList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="UserList"/> from. </param>
+        public static explicit operator UserList(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeUserList(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

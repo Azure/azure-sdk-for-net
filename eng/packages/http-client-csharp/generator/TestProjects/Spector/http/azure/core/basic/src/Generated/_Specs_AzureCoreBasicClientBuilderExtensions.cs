@@ -8,34 +8,34 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using _Specs_.Azure.ClientGenerator.Core.FlattenProperty;
+using _Specs_.Azure.Core.Basic;
 
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-    public static partial class _Specs_AzureClientGeneratorCoreFlattenPropertyClientBuilderExtensions
+    public static partial class _Specs_AzureCoreBasicClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="FlattenPropertyClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="BasicClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<FlattenPropertyClient, FlattenPropertyClientOptions> AddFlattenPropertyClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<BasicClient, BasicClientOptions> AddBasicClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-            return builder.RegisterClientFactory<FlattenPropertyClient, FlattenPropertyClientOptions>(options => new FlattenPropertyClient(endpoint, options));
+            return builder.RegisterClientFactory<BasicClient, BasicClientOptions>(options => new BasicClient(endpoint, options));
         }
 
-        /// <summary> Registers a <see cref="FlattenPropertyClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="BasicClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<FlattenPropertyClient, FlattenPropertyClientOptions> AddFlattenPropertyClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<BasicClient, BasicClientOptions> AddBasicClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<FlattenPropertyClient, FlattenPropertyClientOptions>(configuration);
+            return builder.RegisterClientFactory<BasicClient, BasicClientOptions>(configuration);
         }
     }
 }

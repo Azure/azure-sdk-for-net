@@ -10,19 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
+namespace _Specs_.Azure.Core.Basic
 {
-    /// <summary> This is the child model to be flattened. </summary>
-    public partial class ChildModel : IJsonModel<ChildModel>
+    /// <summary> UserOrder for testing list with expand. </summary>
+    public partial class UserOrder : IJsonModel<UserOrder>
     {
-        /// <summary> Initializes a new instance of <see cref="ChildModel"/> for deserialization. </summary>
-        internal ChildModel()
+        /// <summary> Initializes a new instance of <see cref="UserOrder"/> for deserialization. </summary>
+        internal UserOrder()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ChildModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UserOrder>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,15 +33,20 @@ namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChildModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UserOrder>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChildModel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UserOrder)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("description"u8);
-            writer.WriteStringValue(Description);
-            writer.WritePropertyName("age"u8);
-            writer.WriteNumberValue(Age);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteNumberValue(Id);
+            }
+            writer.WritePropertyName("userId"u8);
+            writer.WriteNumberValue(UserId);
+            writer.WritePropertyName("detail"u8);
+            writer.WriteStringValue(Detail);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -61,42 +66,48 @@ namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ChildModel IJsonModel<ChildModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        UserOrder IJsonModel<UserOrder>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ChildModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual UserOrder JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChildModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UserOrder>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChildModel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UserOrder)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChildModel(document.RootElement, options);
+            return DeserializeUserOrder(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ChildModel DeserializeChildModel(JsonElement element, ModelReaderWriterOptions options)
+        internal static UserOrder DeserializeUserOrder(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string description = default;
-            int age = default;
+            int id = default;
+            int userId = default;
+            string detail = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("description"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    description = prop.Value.GetString();
+                    id = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("age"u8))
+                if (prop.NameEquals("userId"u8))
                 {
-                    age = prop.Value.GetInt32();
+                    userId = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("detail"u8))
+                {
+                    detail = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,47 +115,47 @@ namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ChildModel(description, age, additionalBinaryDataProperties);
+            return new UserOrder(id, userId, detail, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ChildModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<UserOrder>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChildModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UserOrder>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, _Specs_AzureClientGeneratorCoreFlattenPropertyContext.Default);
+                    return ModelReaderWriter.Write(this, options, _Specs_AzureCoreBasicContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ChildModel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserOrder)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ChildModel IPersistableModel<ChildModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        UserOrder IPersistableModel<UserOrder>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ChildModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual UserOrder PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChildModel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UserOrder>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeChildModel(document.RootElement, options);
+                        return DeserializeUserOrder(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChildModel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserOrder)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ChildModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UserOrder>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
