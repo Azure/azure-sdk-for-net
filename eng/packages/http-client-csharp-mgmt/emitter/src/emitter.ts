@@ -24,7 +24,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   }
 
   context.options["generator-name"] ??= "ManagementClientGenerator";
-  context.options["update-code-model"] ??= updateCodeModel;
+  context.options["update-code-model"] = updateCodeModel;
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
   context.options["model-namespace"] ??= true;
