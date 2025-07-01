@@ -6,8 +6,9 @@
 
 ### Breaking Changes
 * Name changes:
-  * In Datasets methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `pendingUploadRequest`
+  * In `Datasets` methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `pendingUploadRequest`
   * `Connection` has been renamed `ConnectionProperties`
+  * `Deployment` has been renamed `AIDeployment`
   * `Index` has been renamed `DatasetIndex`
   * `SasCredential` has been renamed `BlobReferenceSasCredential`
   * `Sku` has been renamed `ModelDeploymentSku`
