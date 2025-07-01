@@ -14,30 +14,30 @@ using Azure.ResourceManager.PortalServicesCopilot.Models;
 namespace Azure.ResourceManager.PortalServicesCopilot
 {
     /// <summary> The copilot settings tenant resource definition. </summary>
-    public partial class PortalServicesCopilotSettingsData : ResourceData
+    public partial class PortalServicesCopilotSettingData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingsData"/>. </summary>
-        public PortalServicesCopilotSettingsData()
+        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingData"/>. </summary>
+        public PortalServicesCopilotSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingsData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="name"> The default copilot settings, applying to entire tenant. </param>
-        internal PortalServicesCopilotSettingsData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PortalServicesCopilotSettingsProperties properties, string name) : base(id, name, @type, systemData)
+        internal PortalServicesCopilotSettingData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PortalServicesCopilotSettingProperties properties, string name) : base(id, name, @type, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public PortalServicesCopilotSettingsProperties Properties { get; set; }
+        public PortalServicesCopilotSettingProperties Properties { get; set; }
     }
 }

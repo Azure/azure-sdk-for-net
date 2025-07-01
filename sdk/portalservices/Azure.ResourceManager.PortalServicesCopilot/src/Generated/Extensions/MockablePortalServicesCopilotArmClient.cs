@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="PortalServicesCopilotSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PortalServicesCopilotSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PortalServicesCopilotSettingsResource"/> object. </returns>
-        public virtual PortalServicesCopilotSettingsResource GetPortalServicesCopilotSettingsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PortalServicesCopilotSettingResource"/> object. </returns>
+        public virtual PortalServicesCopilotSettingResource GetPortalServicesCopilotSettingResource(ResourceIdentifier id)
         {
-            PortalServicesCopilotSettingsResource.ValidateResourceId(id);
-            return new PortalServicesCopilotSettingsResource(Client, id);
+            PortalServicesCopilotSettingResource.ValidateResourceId(id);
+            return new PortalServicesCopilotSettingResource(Client, id);
         }
     }
 }

@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="name"> The default copilot settings, applying to entire tenant. </param>
-        /// <returns> A new <see cref="PortalServicesCopilot.PortalServicesCopilotSettingsData"/> instance for mocking. </returns>
-        public static PortalServicesCopilotSettingsData PortalServicesCopilotSettingsData(ResourceIdentifier id = default, string @type = default, SystemData systemData = default, PortalServicesCopilotSettingsProperties properties = default, string name = default)
+        /// <returns> A new <see cref="PortalServicesCopilot.PortalServicesCopilotSettingData"/> instance for mocking. </returns>
+        public static PortalServicesCopilotSettingData PortalServicesCopilotSettingData(ResourceIdentifier id = default, string @type = default, SystemData systemData = default, PortalServicesCopilotSettingProperties properties = default, string name = default)
         {
-            return new PortalServicesCopilotSettingsData(
+            return new PortalServicesCopilotSettingData(
                 id,
                 @type,
                 systemData,
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         /// <summary> The Copilot Settings properties. </summary>
         /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
-        /// <returns> A new <see cref="Models.PortalServicesCopilotSettingsProperties"/> instance for mocking. </returns>
-        public static PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool accessControlEnabled = default, PortalServicesResourceProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.PortalServicesCopilotSettingProperties"/> instance for mocking. </returns>
+        public static PortalServicesCopilotSettingProperties PortalServicesCopilotSettingProperties(bool accessControlEnabled = default, PortalServicesResourceProvisioningState? provisioningState = default)
         {
-            return new PortalServicesCopilotSettingsProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties: null);
+            return new PortalServicesCopilotSettingProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties: null);
         }
     }
 }
