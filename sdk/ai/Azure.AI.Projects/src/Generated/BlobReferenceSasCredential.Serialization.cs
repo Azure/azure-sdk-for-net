@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class SasCredential : IUtf8JsonSerializable, IJsonModel<SasCredential>
+    public partial class BlobReferenceSasCredential : IUtf8JsonSerializable, IJsonModel<BlobReferenceSasCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SasCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobReferenceSasCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SasCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BlobReferenceSasCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SasCredential>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceSasCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SasCredential)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobReferenceSasCredential)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W")
@@ -58,19 +58,19 @@ namespace Azure.AI.Projects
             }
         }
 
-        SasCredential IJsonModel<SasCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BlobReferenceSasCredential IJsonModel<BlobReferenceSasCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SasCredential>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceSasCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SasCredential)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobReferenceSasCredential)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSasCredential(document.RootElement, options);
+            return DeserializeBlobReferenceSasCredential(document.RootElement, options);
         }
 
-        internal static SasCredential DeserializeSasCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BlobReferenceSasCredential DeserializeBlobReferenceSasCredential(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -79,7 +79,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             Uri sasUri = default;
-            SasCredentialType type = default;
+            BlobReferenceSasCredentialType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new SasCredentialType(property.Value.GetString());
+                    type = new BlobReferenceSasCredentialType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,46 +100,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SasCredential(sasUri, type, serializedAdditionalRawData);
+            return new BlobReferenceSasCredential(sasUri, type, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SasCredential>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BlobReferenceSasCredential>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SasCredential>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceSasCredential>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SasCredential)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobReferenceSasCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SasCredential IPersistableModel<SasCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BlobReferenceSasCredential IPersistableModel<BlobReferenceSasCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SasCredential>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobReferenceSasCredential>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSasCredential(document.RootElement, options);
+                        return DeserializeBlobReferenceSasCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SasCredential)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobReferenceSasCredential)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SasCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BlobReferenceSasCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SasCredential FromResponse(Response response)
+        internal static BlobReferenceSasCredential FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSasCredential(document.RootElement);
+            return DeserializeBlobReferenceSasCredential(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

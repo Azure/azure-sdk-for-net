@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Managed Azure AI Search Index Definition. </summary>
-    public partial class ManagedAzureAISearchIndex : Index
+    public partial class ManagedAzureAISearchIndex : DatasetIndex
     {
         /// <summary> Initializes a new instance of <see cref="ManagedAzureAISearchIndex"/>. </summary>
         /// <param name="vectorStoreId"> Vector store id of managed index. </param>

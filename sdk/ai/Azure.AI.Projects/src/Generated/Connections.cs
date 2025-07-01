@@ -60,13 +60,13 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<Connection>> GetConnectionAsync(string name, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ConnectionProperties>> GetConnectionAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetConnectionAsync(name, context).ConfigureAwait(false);
-            return Response.FromValue(Connection.FromResponse(response), response);
+            return Response.FromValue(ConnectionProperties.FromResponse(response), response);
         }
 
         /// <summary> Get a connection by name, without populating connection credentials. </summary>
@@ -74,13 +74,13 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<Connection> GetConnection(string name, CancellationToken cancellationToken = default)
+        internal virtual Response<ConnectionProperties> GetConnection(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetConnection(name, context);
-            return Response.FromValue(Connection.FromResponse(response), response);
+            return Response.FromValue(ConnectionProperties.FromResponse(response), response);
         }
 
         /// <summary>
@@ -166,13 +166,13 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<Connection>> GetWithCredentialsAsync(string name, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ConnectionProperties>> GetWithCredentialsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetWithCredentialsAsync(name, context).ConfigureAwait(false);
-            return Response.FromValue(Connection.FromResponse(response), response);
+            return Response.FromValue(ConnectionProperties.FromResponse(response), response);
         }
 
         /// <summary> Get a connection by name, with its connection credentials. </summary>
@@ -180,13 +180,13 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<Connection> GetWithCredentials(string name, CancellationToken cancellationToken = default)
+        internal virtual Response<ConnectionProperties> GetWithCredentials(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetWithCredentials(name, context);
-            return Response.FromValue(Connection.FromResponse(response), response);
+            return Response.FromValue(ConnectionProperties.FromResponse(response), response);
         }
 
         /// <summary>
@@ -271,24 +271,24 @@ namespace Azure.AI.Projects
         /// <param name="connectionType"> List connections of this specific type. </param>
         /// <param name="defaultConnection"> List connections that are default connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Connection> GetConnectionsAsync(ConnectionType? connectionType = null, bool? defaultConnection = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConnectionProperties> GetConnectionsAsync(ConnectionType? connectionType = null, bool? defaultConnection = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType?.ToString(), defaultConnection, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsNextPageRequest(nextLink, connectionType?.ToString(), defaultConnection, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Connection.DeserializeConnection(e), ClientDiagnostics, _pipeline, "Connections.GetConnections", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConnectionProperties.DeserializeConnectionProperties(e), ClientDiagnostics, _pipeline, "Connections.GetConnections", "value", "nextLink", context);
         }
 
         /// <summary> List all connections in the project, without populating connection credentials. </summary>
         /// <param name="connectionType"> List connections of this specific type. </param>
         /// <param name="defaultConnection"> List connections that are default connections. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Connection> GetConnections(ConnectionType? connectionType = null, bool? defaultConnection = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConnectionProperties> GetConnections(ConnectionType? connectionType = null, bool? defaultConnection = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConnectionsRequest(connectionType?.ToString(), defaultConnection, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConnectionsNextPageRequest(nextLink, connectionType?.ToString(), defaultConnection, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Connection.DeserializeConnection(e), ClientDiagnostics, _pipeline, "Connections.GetConnections", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConnectionProperties.DeserializeConnectionProperties(e), ClientDiagnostics, _pipeline, "Connections.GetConnections", "value", "nextLink", context);
         }
 
         /// <summary>

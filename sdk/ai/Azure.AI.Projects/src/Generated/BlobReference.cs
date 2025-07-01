@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobUri"/>, <paramref name="storageAccountArmId"/> or <paramref name="credential"/> is null. </exception>
-        internal BlobReference(Uri blobUri, string storageAccountArmId, SasCredential credential)
+        internal BlobReference(Uri blobUri, string storageAccountArmId, BlobReferenceSasCredential credential)
         {
             Argument.AssertNotNull(blobUri, nameof(blobUri));
             Argument.AssertNotNull(storageAccountArmId, nameof(storageAccountArmId));
@@ -66,7 +66,7 @@ namespace Azure.AI.Projects
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BlobReference(Uri blobUri, string storageAccountArmId, SasCredential credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BlobReference(Uri blobUri, string storageAccountArmId, BlobReferenceSasCredential credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlobUri = blobUri;
             StorageAccountArmId = storageAccountArmId;
@@ -81,6 +81,6 @@ namespace Azure.AI.Projects
         /// <summary> ARM ID of the storage account to use. </summary>
         public string StorageAccountArmId { get; }
         /// <summary> Credential info to access the storage account. </summary>
-        public SasCredential Credential { get; }
+        public BlobReferenceSasCredential Credential { get; }
     }
 }

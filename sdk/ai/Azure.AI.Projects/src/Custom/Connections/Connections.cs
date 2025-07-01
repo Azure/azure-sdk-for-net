@@ -18,9 +18,9 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="connectionName">The name of the connection. Required.</param>
         /// <param name="includeCredentials">Whether to include credentials in the response. Default is false.</param>
-        /// <returns>A <see cref="Connection"/> object.</returns>
+        /// <returns>A <see cref="ConnectionProperties"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public Connection Get(string connectionName, bool includeCredentials = false)
+        public ConnectionProperties Get(string connectionName, bool includeCredentials = false)
         {
             if (string.IsNullOrWhiteSpace(connectionName))
             {
@@ -41,9 +41,9 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="connectionName">The name of the connection. Required.</param>
         /// <param name="includeCredentials">Whether to include credentials in the response. Default is false.</param>
-        /// <returns>A <see cref="Connection"/> object.</returns>
+        /// <returns>A <see cref="ConnectionProperties"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public async Task<Response<Connection>> GetAsync(string connectionName, bool includeCredentials = false)
+        public async Task<Response<ConnectionProperties>> GetAsync(string connectionName, bool includeCredentials = false)
         {
             if (string.IsNullOrWhiteSpace(connectionName))
             {
@@ -64,9 +64,9 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="connectionType"> List connections of this specific type. </param>
         /// <param name="includeCredentials">Whether to include credentials in the response. Default is false.</param>
-        /// <returns>A <see cref="Connection"/> object.</returns>
+        /// <returns>A <see cref="ConnectionProperties"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public Connection GetDefault(ConnectionType? connectionType = null, bool includeCredentials = false)
+        public ConnectionProperties GetDefault(ConnectionType? connectionType = null, bool includeCredentials = false)
         {
             foreach (var connection in GetConnections(connectionType))
             {
@@ -86,9 +86,9 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="connectionType"> List connections of this specific type. </param>
         /// <param name="includeCredentials">Whether to include credentials in the response. Default is false.</param>
-        /// <returns>A <see cref="Connection"/> object.</returns>
+        /// <returns>A <see cref="ConnectionProperties"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public async Task<Connection> GetDefaultAsync(ConnectionType? connectionType = null, bool includeCredentials = false)
+        public async Task<ConnectionProperties> GetDefaultAsync(ConnectionType? connectionType = null, bool includeCredentials = false)
         {
             await foreach (var connection in GetConnectionsAsync().ConfigureAwait(false))
             {

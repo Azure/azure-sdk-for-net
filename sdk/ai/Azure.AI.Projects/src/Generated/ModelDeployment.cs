@@ -30,7 +30,7 @@ namespace Azure.AI.Projects
         /// <param name="capabilities"> Capabilities of deployed model. </param>
         /// <param name="sku"> Sku of the model deployment. </param>
         /// <param name="connectionName"> Name of the connection the deployment comes from. </param>
-        internal ModelDeployment(DeploymentType type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string modelName, string modelVersion, string modelPublisher, IReadOnlyDictionary<string, string> capabilities, Sku sku, string connectionName) : base(type, name, serializedAdditionalRawData)
+        internal ModelDeployment(DeploymentType type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string modelName, string modelVersion, string modelPublisher, IReadOnlyDictionary<string, string> capabilities, ModelDeploymentSku sku, string connectionName) : base(type, name, serializedAdditionalRawData)
         {
             ModelName = modelName;
             ModelVersion = modelVersion;
@@ -49,7 +49,7 @@ namespace Azure.AI.Projects
         /// <summary> Capabilities of deployed model. </summary>
         public IReadOnlyDictionary<string, string> Capabilities { get; }
         /// <summary> Sku of the model deployment. </summary>
-        public Sku Sku { get; }
+        public ModelDeploymentSku Sku { get; }
         /// <summary> Name of the connection the deployment comes from. </summary>
         public string ConnectionName { get; }
     }

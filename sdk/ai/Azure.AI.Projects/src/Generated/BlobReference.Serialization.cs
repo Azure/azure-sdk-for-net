@@ -79,7 +79,7 @@ namespace Azure.AI.Projects
             }
             Uri blobUri = default;
             string storageAccountArmId = default;
-            SasCredential credential = default;
+            BlobReferenceSasCredential credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("credential"u8))
                 {
-                    credential = SasCredential.DeserializeSasCredential(property.Value, options);
+                    credential = BlobReferenceSasCredential.DeserializeBlobReferenceSasCredential(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

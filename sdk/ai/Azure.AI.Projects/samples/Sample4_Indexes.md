@@ -26,7 +26,6 @@ RequestContent content = RequestContent.Create(new
 {
     connectionName = aiSearchConnectionName,
     indexName = aiSearchIndexName,
-    indexVersion = indexVersion,
     type = "AzureSearch",
     description = "Sample Index for testing",
     displayName = "Sample Index"
@@ -41,17 +40,17 @@ var index = projectClient.Indexes.CreateOrUpdate(
 Console.WriteLine(index);
 
 Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-Index retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
+DatasetIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
 Console.WriteLine(retrievedIndex);
 
 Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-foreach (Index version in projectClient.Indexes.GetVersions(name: indexName))
+foreach (DatasetIndex version in projectClient.Indexes.GetVersions(name: indexName))
 {
     Console.WriteLine(version);
 }
 
 Console.WriteLine($"Listing all Indices:");
-foreach (Index version in projectClient.Indexes.GetIndices())
+foreach (DatasetIndex version in projectClient.Indexes.GetIndices())
 {
     Console.WriteLine(version);
 }

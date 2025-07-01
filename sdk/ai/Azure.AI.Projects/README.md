@@ -239,32 +239,32 @@ var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("List the properties of all connections:");
-foreach (Connection connection in projectClient.Connections.GetConnections())
+foreach (ConnectionProperties connection in projectClient.Connections.GetConnections())
 {
     Console.WriteLine(connection);
-    Console.Write(connection.Name);
+    Console.WriteLine(connection.Name);
 }
 
 Console.WriteLine("List the properties of all connections of a particular type (e.g., Azure OpenAI connections):");
-foreach (Connection connection in projectClient.Connections.GetConnections(connectionType: ConnectionType.AzureOpenAI))
+foreach (ConnectionProperties connection in projectClient.Connections.GetConnections(connectionType: ConnectionType.AzureOpenAI))
 {
     Console.WriteLine(connection);
 }
 
 Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-Connection specificConnection = projectClient.Connections.Get(connectionName, includeCredentials: false);
+ConnectionProperties specificConnection = projectClient.Connections.Get(connectionName, includeCredentials: false);
 Console.WriteLine(specificConnection);
 
 Console.WriteLine("Get the properties of a connection with credentials:");
-Connection specificConnectionCredentials = projectClient.Connections.Get(connectionName, includeCredentials: true);
+ConnectionProperties specificConnectionCredentials = projectClient.Connections.Get(connectionName, includeCredentials: true);
 Console.WriteLine(specificConnectionCredentials);
 
 Console.WriteLine($"Get the properties of the default connection:");
-Connection defaultConnection = projectClient.Connections.GetDefault(includeCredentials: false);
+ConnectionProperties defaultConnection = projectClient.Connections.GetDefault(includeCredentials: false);
 Console.WriteLine(defaultConnection);
 
 Console.WriteLine($"Get the properties of the default connection with credentials:");
-Connection defaultConnectionCredentials = projectClient.Connections.GetDefault(includeCredentials: true);
+ConnectionProperties defaultConnectionCredentials = projectClient.Connections.GetDefault(includeCredentials: true);
 Console.WriteLine(defaultConnectionCredentials);
 ```
 
@@ -343,7 +343,6 @@ RequestContent content = RequestContent.Create(new
 {
     connectionName = aiSearchConnectionName,
     indexName = aiSearchIndexName,
-    indexVersion = indexVersion,
     type = "AzureSearch",
     description = "Sample Index for testing",
     displayName = "Sample Index"
@@ -358,17 +357,17 @@ var index = projectClient.Indexes.CreateOrUpdate(
 Console.WriteLine(index);
 
 Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-Index retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
+DatasetIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
 Console.WriteLine(retrievedIndex);
 
 Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-foreach (Index version in projectClient.Indexes.GetVersions(name: indexName))
+foreach (DatasetIndex version in projectClient.Indexes.GetVersions(name: indexName))
 {
     Console.WriteLine(version);
 }
 
 Console.WriteLine($"Listing all Indices:");
-foreach (Index version in projectClient.Indexes.GetIndices())
+foreach (DatasetIndex version in projectClient.Indexes.GetIndices())
 {
     Console.WriteLine(version);
 }
