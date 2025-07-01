@@ -5,8 +5,12 @@
 ### Features Added
 
 ### Breaking Changes
-* Method argument name changes:
+* Name changes:
   * In Datasets methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `pendingUploadRequest`
+  * `Connection` has been renamed `ConnectionProperties`
+  * `Index` has been renamed `DatasetIndex`
+  * `SasCredential` has been renamed `BlobReferenceSasCredential`
+  * `Sku` has been renamed `ModelDeploymentSku`
 * Removing `GetChatCompletionsClient`, `GetEmbeddingsClient`, and `GetImageEmbeddingsClient` methods from `AIProjectClient`. The Inference client should be used directly instead.
 * Replacing `GetConnectionsClient`, `GetDatasetsClient`, `GetDeploymentsClient`, and`GetIndexesClient` with `Connections`, `Datasets`, `Deployments`, and `Indexes` properties.
 
