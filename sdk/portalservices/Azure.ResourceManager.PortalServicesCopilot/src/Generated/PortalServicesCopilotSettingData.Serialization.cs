@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
             string @type = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PortalServicesCopilotSettingProperties properties = default;
+            PortalServicesCopilotSettingsProperties properties = default;
             string name = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     {
                         continue;
                     }
-                    properties = PortalServicesCopilotSettingProperties.DeserializePortalServicesCopilotSettingProperties(prop.Value, options);
+                    properties = PortalServicesCopilotSettingsProperties.DeserializePortalServicesCopilotSettingsProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
