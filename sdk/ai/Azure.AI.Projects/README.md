@@ -369,7 +369,7 @@ indexesClient.Delete(name: indexName, version: indexVersion);
 A helper class is provided to trace your own functions. The trace functions in the class will log function parameters and the return value for supported types.
 Note that this helper class will log the parameters and return value always when tracing is enabled, so be mindful with sensitive data.
 
-Here are is a sample async function that we want to trace:
+Here is a sample async function that we want to trace:
 ```C# Snippet:AI_Projects_TelemetryAsyncFunctionExample
 // Simple async function to trace
 public static async Task<string> ProcessOrderAsync(string orderId, int quantity, decimal price)
@@ -388,7 +388,7 @@ using (tracerProvider)
 }
 ```
 
-Here are is a sample sync function that we want to trace:
+Here is a sample sync function that we want to trace:
 ```C# Snippet:AI_Projects_TelemetrySyncFunctionExample
 // Simple sync function to trace
 public static string ProcessOrder(string orderId, int quantity, decimal price)

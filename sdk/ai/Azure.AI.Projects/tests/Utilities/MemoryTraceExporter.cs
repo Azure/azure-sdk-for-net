@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 using System.Collections.Generic;
 using OpenTelemetry;
-using OpenTelemetry.Trace;
 using System.Diagnostics;
-using Moq;
 
 namespace Azure.AI.Projects.Tests.Utilities
 {
@@ -19,6 +17,13 @@ namespace Azure.AI.Projects.Tests.Utilities
                 _activities.Add(activity);
             }
             return ExportResult.Success;
+        }
+
+        protected override bool OnForceFlush(int timeoutMilliseconds)
+        {
+            // Since this is an in-memory exporter, there's nothing to flush
+            // Return true to indicate the flush was successful
+            return true;
         }
 
         public IReadOnlyList<Activity> GetExportedActivities() => _activities;
