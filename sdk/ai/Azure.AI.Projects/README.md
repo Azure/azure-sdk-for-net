@@ -33,6 +33,8 @@ See [full set of Agents samples](https://github.com/Azure/azure-sdk-for-net/tree
   - [Connections operations](#connections-operations)
   - [Dataset operations](#dataset-operations)
   - [Indexes operations](#indexes-operations)
+- [Telemetry](#telemetry)
+  - [Trace your own functions](#trace-your-own-functions)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -358,6 +360,50 @@ foreach (var version in indexesClient.GetIndices())
 
 Console.WriteLine("Delete the Index version created above:");
 indexesClient.Delete(name: indexName, version: indexVersion);
+```
+
+## Telemetry
+
+### Trace your own functions
+
+A helper class is provided to trace your own functions. The trace functions in the class will log function parameters and the return value for supported types.
+Note that this helper class will log the parameters and return value always when tracing is enabled, so be mindful with sensitive data.
+
+Here are is a sample async function that we want to trace:
+```C# Snippet:AI_Projects_TelemetryAsyncFunctionExample
+// Simple async function to trace
+public static async Task<string> ProcessOrderAsync(string orderId, int quantity, decimal price)
+{
+    await Task.Delay(100); // Simulate async work
+    var total = quantity * price;
+    return $"Order {orderId}: {quantity} items, Total: ${total:F2}";
+}
+```
+
+You can trace async functions like this:
+```C# Snippet:AI_Projects_TelemetryTraceFunctionExampleAsync
+using (tracerProvider)
+{
+    var asyncResult = await FunctionTracer.TraceAsync(() => ProcessOrderAsync("ORD-456", 3, 15.50m));
+}
+```
+
+Here are is a sample sync function that we want to trace:
+```C# Snippet:AI_Projects_TelemetrySyncFunctionExample
+// Simple sync function to trace
+public static string ProcessOrder(string orderId, int quantity, decimal price)
+{
+    var total = quantity * price;
+    return $"Order {orderId}: {quantity} items, Total: ${total:F2}";
+}
+```
+
+Sync functions can be traced like this:
+```C# Snippet:AI_Projects_TelemetryTraceFunctionExampleSync
+using (tracerProvider)
+{
+    var syncResult = FunctionTracer.Trace(() => ProcessOrder("ORD-123", 5, 29.99m));
+}
 ```
 
 ## Troubleshooting
