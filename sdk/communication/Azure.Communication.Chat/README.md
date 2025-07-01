@@ -70,7 +70,7 @@ CreateChatThreadOptions createChatThreadOptions = new CreateChatThreadOptions("H
 createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
 createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
 
-createChatThreadOptions.RetentionPolicy = new ThreadCreationDateRetentionPolicy(40);
+createChatThreadOptions.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(40);
 
 CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
 ChatThreadProperties chatThread = createChatThreadResult.ChatThread;
@@ -96,7 +96,7 @@ UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new Update
 updateChatThreadPropertiesOptions.Topic = "Launch meeting";
 updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
 
-updateChatThreadPropertiesOptions.RetentionPolicy = new NoneRetentionPolicy();
+updateChatThreadPropertiesOptions.RetentionPolicy = ChatRetentionPolicy.None();
 
 await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
 ```
@@ -202,7 +202,7 @@ createChatThreadOptions.Participants.Add(chatParticipant);
 createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
 createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
 
-createChatThreadOptions.RetentionPolicy = new ThreadCreationDateRetentionPolicy(60);
+createChatThreadOptions.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(60);
 
 CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
 string threadId = createChatThreadResult.ChatThread.Id;
@@ -246,7 +246,7 @@ UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new Update
 updateChatThreadPropertiesOptions.Topic = "new topic !";
 updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
 
-updateChatThreadPropertiesOptions.RetentionPolicy = new ThreadCreationDateRetentionPolicy(60);
+updateChatThreadPropertiesOptions.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(60);
 
 await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
 ```
