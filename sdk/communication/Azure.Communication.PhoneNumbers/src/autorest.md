@@ -7,7 +7,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 public-clients: true
-tag: package-phonenumber-2025-04-15-preview
+tag: package-phonenumber-2025-06-01
 model-namespace: false
 require:
     -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/9233e7c79a08e64172ce00b3568759dae4442c19/specification/communication/data-plane/PhoneNumbers/readme.md
