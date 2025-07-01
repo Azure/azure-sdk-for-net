@@ -3,7 +3,7 @@
 
 import { EmitContext } from "@typespec/compiler";
 
-import { CodeModel } from "@typespec/http-client-csharp";
+import { CodeModel, CSharpEmitterContext } from "@typespec/http-client-csharp";
 
 import {
   $onEmit as $onAzureEmit,
@@ -11,7 +11,6 @@ import {
 } from "@azure-typespec/http-client-csharp";
 import { azureSDKContextOptions } from "./sdk-context-options.js";
 import { updateClients } from "./resource-detection.js";
-import { createSdkContext } from "@azure-tools/typespec-client-generator-core";
 
 export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   const program = context.program;
@@ -19,14 +18,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
     return;
   }
 
-  const sdkContext = await createSdkContext(
-    context,
-    "@typespec/http-client-csharp",
-    context.options["sdk-context-options"]
-  );
-  program.reportDiagnostics(sdkContext.diagnostics);
-
-  function updateCodeModel(codeModel: CodeModel): CodeModel {
+  function updateCodeModel(codeModel: CodeModel, sdkContext: CSharpEmitterContext): CodeModel {
     updateClients(codeModel, sdkContext, program);
     return codeModel;
   }
