@@ -17,10 +17,7 @@ namespace Azure.ResourceManager.Network
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void EnsureProperties()
         {
-            if (Properties is null)
-            {
-                Properties = new LoadBalancingRuleProperties(default, default);
-            }
+            Properties ??= new LoadBalancingRuleProperties(default, default);
         }
 
         /// <summary> Gets or sets Id. </summary>
@@ -49,7 +46,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> An array of references to pool of DIPs. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IList<WritableSubResource> BackendAddressPools => Properties?.BackendAddressPools;
+        public IList<WritableSubResource> BackendAddressPools
+        {
+            get
+            {
+                EnsureProperties();
+                return Properties.BackendAddressPools;
+            }
+        }
 
         /// <summary> Gets or sets Id. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
