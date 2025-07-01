@@ -50,24 +50,15 @@ public class ResourcesSpecification : Specification
             r.DiscriminatorName = "Kind";
             r.DiscriminatorValue = "AzureCLI";
         });
-        RemoveProperty<AzureCliScript>("Id");
-        RemoveProperty<AzureCliScript>("Name");
-        RemoveProperty<AzureCliScript>("Location");
-        RemoveProperty<AzureCliScript>("Identity");
-        RemoveProperty<AzureCliScript>("SystemData");
-        RemoveProperty<AzureCliScript>("Tags");
         CustomizeResource<AzurePowerShellScript>(r =>
         {
             r.BaseType = GetModel<ArmDeploymentScriptResource>() as TypeModel;
             r.DiscriminatorName = "Kind";
             r.DiscriminatorValue = "AzurePowerShell";
         });
-        RemoveProperty<AzurePowerShellScript>("Id");
-        RemoveProperty<AzurePowerShellScript>("Name");
-        RemoveProperty<AzurePowerShellScript>("Location");
-        RemoveProperty<AzurePowerShellScript>("Identity");
-        RemoveProperty<AzurePowerShellScript>("SystemData");
-        RemoveProperty<AzurePowerShellScript>("Tags");
+        // remove the properties that inherited from the base type ArmDeploymentScript
+        RemoveProperties<AzureCliScript>("Id", "Name", "Location", "Identity", "SystemData", "Tags");
+        RemoveProperties<AzurePowerShellScript>("Id", "Name", "Location", "Identity", "SystemData", "Tags");
 
         // Backward compatibility
         CustomizeProperty<ArmDeploymentPropertiesExtended>("OutputResources", p =>
@@ -82,6 +73,14 @@ public class ResourcesSpecification : Specification
         // Naming requirements
         AddNameRequirements<ArmDeploymentResource>(min: 1, max: 64, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
         AddNameRequirements<TemplateSpecResource>(min: 1, max: 90, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
+    }
+
+    private void RemoveProperties<T>(params string[] propertyNames)
+    {
+        foreach (string propertyName in propertyNames)
+        {
+            RemoveProperty<T>(propertyName);
+        }
     }
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
