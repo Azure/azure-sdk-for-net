@@ -11,7 +11,7 @@ namespace System.ClientModel.Primitives;
 public class BearerTokenPolicy : AuthenticationPolicy
 {
     private readonly AuthenticationTokenProvider _tokenProvider;
-    private readonly GetTokenOptions _flowContext;
+    private readonly GetTokenOptions? _flowContext;
 
     /// <summary>
     /// Creates a new instance of <see cref="BearerTokenPolicy"/>.
@@ -32,7 +32,10 @@ public class BearerTokenPolicy : AuthenticationPolicy
     public BearerTokenPolicy(AuthenticationTokenProvider tokenProvider, string scope)
     {
         _tokenProvider = tokenProvider;
-        _flowContext = new GetTokenOptions(new[] { scope }, new Dictionary<string, object>());
+        _flowContext = new GetTokenOptions(new Dictionary<string, object>()
+        {
+            [GetTokenOptions.ScopesPropertyName] = new ReadOnlyMemory<string>([scope])
+        });
     }
 
     /// <inheritdoc />
@@ -53,18 +56,36 @@ public class BearerTokenPolicy : AuthenticationPolicy
         {
             throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
         }
-        AuthenticationToken token;
-        if (message.TryGetProperty(typeof(GetTokenOptions), out var rawContext) && rawContext is GetTokenOptions scopesContext)
+        AuthenticationToken? token = null;
+
+        // The following scenarios are supported:
+        // 1. If the message does not have a GetTokenOptions property.
+        //    - When _flowContext is null, this shall be treated as a NoAuth scenario. The message will be processed without authentication.
+        //    - When _flowContext is not null, the message will be processed with the service level flow context as-is.
+        // 2. If the message has a GetTokenOptions property, it shall contain a IEnumerable<IReadOnlyDictionary<string, object>>
+        //    - When _flowContext is null, the property value shall contain the flows supported by the operation.
+        //      If the operation defines additional scopes, they will be embedded in the 'scopes' property of any IEnumerable<IReadOnlyDictionary<string, object>>.
+        //    - When _flowContext is not null it shall be ignored and the property value shall define the flows supported by the operation.
+
+        if (message.TryGetProperty(typeof(GetTokenOptions), out var rawContext) && rawContext is IEnumerable<IReadOnlyDictionary<string, object>> flowsContexts)
         {
-            var context = _flowContext.WithAdditionalScopes(scopesContext.Scopes);
-            token = async ? await _tokenProvider.GetTokenAsync(context, message.CancellationToken).ConfigureAwait(false) :
-            _tokenProvider.GetToken(context, message.CancellationToken);
+            var context = GetOptionsFromContexts(flowsContexts, _tokenProvider);
+            if (context is not null)
+            {
+                token = async ? await _tokenProvider.GetTokenAsync(context, message.CancellationToken).ConfigureAwait(false) :
+                _tokenProvider.GetToken(context, message.CancellationToken);
+            }
         }
-        else
+        else if (_flowContext is not null && _flowContext.Properties.Count > 0)
         {
-            token = _tokenProvider.GetToken(_flowContext, message.CancellationToken);
+            token = async ? await _tokenProvider.GetTokenAsync(_flowContext, message.CancellationToken).ConfigureAwait(false) :
+                _tokenProvider.GetToken(_flowContext, message.CancellationToken);
         }
-        message.Request.Headers.Set("Authorization", $"Bearer {token.TokenValue}");
+
+        if (token is not null)
+        {
+            message.Request.Headers.Set("Authorization", $"Bearer {token.TokenValue}");
+        }
 
         if (async)
         {
@@ -76,7 +97,7 @@ public class BearerTokenPolicy : AuthenticationPolicy
         }
     }
 
-    internal static GetTokenOptions GetOptionsFromContexts(IEnumerable<IReadOnlyDictionary<string, object>> contexts, AuthenticationTokenProvider tokenProvider)
+    internal static GetTokenOptions? GetOptionsFromContexts(IEnumerable<IReadOnlyDictionary<string, object>> contexts, AuthenticationTokenProvider tokenProvider)
     {
         foreach (var context in contexts)
         {
@@ -86,6 +107,6 @@ public class BearerTokenPolicy : AuthenticationPolicy
                 return options;
             }
         }
-        throw new InvalidOperationException($"The service does not support any of the auth flows implemented by the supplied token provider {tokenProvider.GetType().FullName}.");
+        return null;
     }
 }

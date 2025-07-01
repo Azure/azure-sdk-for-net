@@ -13,11 +13,11 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using MgmtTypeSpec;
+using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec.Models
+namespace MgmtTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class FooData : IJsonModel<FooData>
     {
         /// <summary> Initializes a new instance of <see cref="FooData"/> for deserialization. </summary>
@@ -223,7 +223,7 @@ namespace MgmtTypeSpec.Models
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(fooData, ModelSerializationExtensions.WireOptions);
             return content;
         }

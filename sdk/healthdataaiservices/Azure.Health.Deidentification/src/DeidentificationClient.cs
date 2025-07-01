@@ -5,10 +5,7 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Health.Deidentification
 {
@@ -25,7 +22,7 @@ namespace Azure.Health.Deidentification
         {
             using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobs");
             scope.Start();
-            return GetJobsInternalsAsync(maxpagesize, null, cancellationToken);
+            return GetJobsInternalAsync(maxpagesize, null, cancellationToken);
         }
 
         /// <summary> List de-identification jobs. </summary>
@@ -37,7 +34,7 @@ namespace Azure.Health.Deidentification
         {
             using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobs");
             scope.Start();
-            return GetJobsInternals(maxpagesize, null, cancellationToken);
+            return GetJobsInternal(maxpagesize, null, cancellationToken);
         }
 
         /// <summary>
@@ -64,7 +61,7 @@ namespace Azure.Health.Deidentification
         {
             using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobs");
             scope.Start();
-            return GetJobsInternalsAsync(maxpagesize, null, context);
+            return GetJobsInternalAsync(maxpagesize, null, context);
         }
 
         /// <summary>
@@ -91,7 +88,7 @@ namespace Azure.Health.Deidentification
         {
             using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobs");
             scope.Start();
-            return GetJobsInternals(maxpagesize, null, context);
+            return GetJobsInternal(maxpagesize, null, context);
         }
 
         /// <summary> List processed documents within a job. </summary>
@@ -106,7 +103,7 @@ namespace Azure.Health.Deidentification
         {
             using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocuments");
             scope.Start();
-            return GetJobDocumentsInternalsAsync(jobName, maxpagesize, null, cancellationToken);
+            return GetJobDocumentsInternalAsync(jobName, maxpagesize, null, cancellationToken);
         }
 
         /// <summary> List processed documents within a job. </summary>
@@ -121,7 +118,7 @@ namespace Azure.Health.Deidentification
         {
             using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocuments");
             scope.Start();
-            return GetJobDocumentsInternals(jobName, maxpagesize, null, cancellationToken);
+            return GetJobDocumentsInternal(jobName, maxpagesize, null, cancellationToken);
         }
 
         /// <summary>
@@ -151,7 +148,7 @@ namespace Azure.Health.Deidentification
         {
             using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocuments");
             scope.Start();
-            return GetJobDocumentsInternalsAsync(jobName, maxpagesize, null, context);
+            return GetJobDocumentsInternalAsync(jobName, maxpagesize, null, context);
         }
 
         /// <summary>
@@ -181,7 +178,7 @@ namespace Azure.Health.Deidentification
         {
             using var scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocuments");
             scope.Start();
-            return GetJobDocumentsInternals(jobName, maxpagesize, null, context);
+            return GetJobDocumentsInternal(jobName, maxpagesize, null, context);
         }
     }
 }

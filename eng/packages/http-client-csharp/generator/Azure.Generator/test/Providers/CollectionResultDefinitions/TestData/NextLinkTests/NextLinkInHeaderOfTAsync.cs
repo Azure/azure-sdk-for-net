@@ -18,17 +18,14 @@ namespace Samples
     internal partial class CatClientGetCatsAsyncCollectionResultOfT : global::Azure.AsyncPageable<global::Samples.Models.Cat>
     {
         private readonly global::Samples.CatClient _client;
-        private readonly global::System.Uri _nextPage;
         private readonly global::Azure.RequestContext _context;
 
         /// <summary> Initializes a new instance of CatClientGetCatsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CatClient client used to send requests. </param>
-        /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CatClientGetCatsAsyncCollectionResultOfT(global::Samples.CatClient client, global::System.Uri nextPage, global::Azure.RequestContext context)
+        public CatClientGetCatsAsyncCollectionResultOfT(global::Samples.CatClient client, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
             _client = client;
-            _nextPage = nextPage;
             _context = context;
         }
 
@@ -38,36 +35,32 @@ namespace Samples
         /// <returns> The pages of CatClientGetCatsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async global::System.Collections.Generic.IAsyncEnumerable<global::Azure.Page<global::Samples.Models.Cat>> AsPages(string continuationToken, int? pageSizeHint)
         {
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
             do
             {
-                global::Azure.Response response = await this.GetNextResponse(pageSizeHint, continuationToken).ConfigureAwait(false);
+                global::Azure.Response response = await this.GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
                 if ((response is null))
                 {
                     yield break;
                 }
                 global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
-                continuationToken = response.Headers.TryGetValue("nextCat", out string value) ? value : null;
-                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)responseWithType.Cats), continuationToken, response);
+                nextPage = response.Headers.TryGetValue("nextCat", out string value) ? new global::System.Uri(value) : null;
+                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)responseWithType.Cats), nextPage?.AbsoluteUri, response);
             }
-            while (!string.IsNullOrEmpty(continuationToken));
+            while ((nextPage != null));
         }
 
-        /// <summary> Get response from next link. </summary>
+        /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async global::System.Threading.Tasks.ValueTask<global::Azure.Response> GetNextResponse(int? pageSizeHint, string continuationToken)
+        /// <param name="nextLink"> The next link to use for the next page of results. </param>
+        private async global::System.Threading.Tasks.ValueTask<global::Azure.Response> GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
-            global::Azure.Core.HttpMessage message = _client.CreateGetCatsRequest(_nextPage, _context);
+            global::Azure.Core.HttpMessage message = (nextLink != null) ? _client.CreateNextGetCatsRequest(nextLink, _context) : _client.CreateGetCatsRequest(_context);
             using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CatClient.GetCats");
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, _context.CancellationToken).ConfigureAwait(false);
-                if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
-                {
-                    throw new global::Azure.RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (global::System.Exception e)
             {

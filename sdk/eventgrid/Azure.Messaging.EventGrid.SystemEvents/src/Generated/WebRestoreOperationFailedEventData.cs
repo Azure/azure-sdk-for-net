@@ -46,13 +46,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WebRestoreOperationFailedEventData"/>. </summary>
-        /// <param name="appEventTypeDetail"> Detail of action on the app. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appEventTypeDetail"/> is null. </exception>
-        internal WebRestoreOperationFailedEventData(AppEventTypeDetail appEventTypeDetail)
+        internal WebRestoreOperationFailedEventData()
         {
-            Argument.AssertNotNull(appEventTypeDetail, nameof(appEventTypeDetail));
-
-            AppEventTypeDetail = appEventTypeDetail;
         }
 
         /// <summary> Initializes a new instance of <see cref="WebRestoreOperationFailedEventData"/>. </summary>
@@ -74,11 +69,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Address = address;
             Verb = verb;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WebRestoreOperationFailedEventData"/> for deserialization. </summary>
-        internal WebRestoreOperationFailedEventData()
-        {
         }
 
         /// <summary> Detail of action on the app. </summary>

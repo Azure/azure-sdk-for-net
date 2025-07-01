@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Azure.Provisioning.ContainerService simplifies declarative resource provisioning in .NET.</Description>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.5</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>12</LangVersion>
 

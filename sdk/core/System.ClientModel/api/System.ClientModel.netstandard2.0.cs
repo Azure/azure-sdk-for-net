@@ -96,7 +96,7 @@ namespace System.ClientModel.Primitives
     public partial class AuthenticationToken
     {
         public AuthenticationToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
-        public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.DateTimeOffset? RefreshOn { get { throw null; } }
         public string TokenType { get { throw null; } }
         public string TokenValue { get { throw null; } }
@@ -218,10 +218,8 @@ namespace System.ClientModel.Primitives
         public const string RefreshUrlPropertyName = "refreshUrl";
         public const string ScopesPropertyName = "scopes";
         public const string TokenUrlPropertyName = "tokenUrl";
-        public GetTokenOptions(System.ReadOnlyMemory<string> scopes, System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { }
+        public GetTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { }
         public System.Collections.Generic.IReadOnlyDictionary<string, object> Properties { get { throw null; } }
-        public System.ReadOnlyMemory<string> Scopes { get { throw null; } }
-        public System.ClientModel.Primitives.GetTokenOptions WithAdditionalScopes(System.ReadOnlyMemory<string> additionalScopes) { throw null; }
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {

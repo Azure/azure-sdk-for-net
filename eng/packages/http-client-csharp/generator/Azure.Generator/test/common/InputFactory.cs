@@ -180,6 +180,7 @@ namespace Azure.Generator.Tests.Common
                 false,
                 false,
                 null,
+                null,
                 null);
         }
 
@@ -541,11 +542,11 @@ namespace Azure.Generator.Tests.Common
             return new InputArrayType("list", "list", elementType);
         }
 
-        public static InputPagingServiceMetadata NextLinkPagingMetadata(string itemPropertyName, string nextLinkName, InputResponseLocation nextLinkLocation)
+        public static InputPagingServiceMetadata NextLinkPagingMetadata(string itemPropertyName, string nextLinkName, InputResponseLocation nextLinkLocation, IReadOnlyList<InputParameter>? reinjectedParameters = null)
         {
             return PagingMetadata(
                 [itemPropertyName],
-                new InputNextLink(null, [nextLinkName], nextLinkLocation),
+                new InputNextLink(null, [nextLinkName], nextLinkLocation, reinjectedParameters),
                 null);
         }
     }

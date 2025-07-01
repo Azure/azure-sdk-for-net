@@ -25,9 +25,10 @@ namespace Samples
         /// <param name="animalKind"> animalKind description. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="global::System.ArgumentNullException"> <paramref name="animalKind"/> is null. </exception>
-        public CatClientGetCatsCollectionResultOfT(global::Samples.CatClient client, string animalKind, global::Azure.RequestContext context)
+        /// <exception cref="global::System.ArgumentException"> <paramref name="animalKind"/> is an empty string, and was expected to be non-empty. </exception>
+        public CatClientGetCatsCollectionResultOfT(global::Samples.CatClient client, string animalKind, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
-            global::Samples.Argument.AssertNotNull(animalKind, nameof(animalKind));
+            global::Samples.Argument.AssertNotNullOrEmpty(animalKind, nameof(animalKind));
 
             _client = client;
             _animalKind = animalKind;
@@ -40,21 +41,12 @@ namespace Samples
         /// <returns> The pages of CatClientGetCatsCollectionResultOfT as an enumerable collection. </returns>
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::Samples.Models.Cat>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            do
-            {
-                global::Azure.Response response = this.GetNextResponse(pageSizeHint, continuationToken);
-                if ((response is null))
-                {
-                    yield break;
-                }
-                global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
-                continuationToken = null;
-                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)responseWithType.Cats), continuationToken, response);
-            }
-            while (!string.IsNullOrEmpty(continuationToken));
+            global::Azure.Response response = this.GetNextResponse(pageSizeHint, null);
+            global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
+            yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)responseWithType.Cats), null, response);
         }
 
-        /// <summary> Get response from next link. </summary>
+        /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private global::Azure.Response GetNextResponse(int? pageSizeHint, string continuationToken)
@@ -64,12 +56,7 @@ namespace Samples
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, _context.CancellationToken);
-                if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
-                {
-                    throw new global::Azure.RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (global::System.Exception e)
             {

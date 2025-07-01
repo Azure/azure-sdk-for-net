@@ -10,6 +10,14 @@
 
 ### Other Changes
 
+- Adjusted the options used for JSON serialization to relax encoding rules and reduce the cost and impact. ([#50885](https://github.com/Azure/azure-sdk-for-net/pull/50885))
+
+## 1.46.2 (2025-06-05)
+
+### Features Added
+
+- Adopt System.ClientModel 1.4.2
+
 ## 1.46.1 (2025-05-09)
 
 ### Features Added

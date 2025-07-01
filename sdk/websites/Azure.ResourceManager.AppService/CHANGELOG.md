@@ -1,5 +1,17 @@
 # Release History
 
+## 1.5.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fix deserialization method for `AppServiceApiDefinitionInfo` class to allow empty url string.
+
+### Other Changes
+
 ## 1.4.0 (2025-05-23)
 
 ### Features Added

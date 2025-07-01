@@ -212,7 +212,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Create storage resource containers
             StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
                 source.Container.GetDirectoryClient(sourcePrefix),
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
 
             StorageResource destinationResource = LocalFilesStorageResourceProvider.FromDirectory(destination.DirectoryPath);
 
@@ -280,7 +280,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Create storage resource containers
             StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
                 source.Container.GetDirectoryClient(sourcePrefix),
-                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocols.Nfs });
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
 
             StorageResource destinationResource = LocalFilesStorageResourceProvider.FromDirectory(destination.DirectoryPath);
 

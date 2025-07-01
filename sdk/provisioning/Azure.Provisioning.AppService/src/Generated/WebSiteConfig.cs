@@ -78,7 +78,9 @@ public partial class WebSiteConfig : ProvisionableResource
     private BicepValue<string>? _appCommandLine;
 
     /// <summary>
-    /// Application settings.
+    /// Application settings. This property is not returned in response to
+    /// normal create and read requests since it may contain sensitive
+    /// information.
     /// </summary>
     public BicepList<AppServiceNameValuePair> AppSettings 
     {
@@ -118,7 +120,8 @@ public partial class WebSiteConfig : ProvisionableResource
     private BicepDictionary<AppServiceStorageAccessInfo>? _azureStorageAccounts;
 
     /// <summary>
-    /// Connection strings.
+    /// Connection strings. This property is not returned in response to normal
+    /// create and read requests since it may contain sensitive information.
     /// </summary>
     public BicepList<ConnStringInfo> ConnectionStrings 
     {
@@ -220,6 +223,18 @@ public partial class WebSiteConfig : ProvisionableResource
         set { Initialize(); _healthCheckPath!.Assign(value); }
     }
     private BicepValue<string>? _healthCheckPath;
+
+    /// <summary>
+    /// Http20ProxyFlag: Configures a website to allow http2.0 to pass be
+    /// proxied all the way to the app. 0 = disabled, 1 = pass through all
+    /// http2 traffic, 2 = pass through gRPC only.
+    /// </summary>
+    public BicepValue<int> Http20ProxyFlag 
+    {
+        get { Initialize(); return _http20ProxyFlag!; }
+        set { Initialize(); _http20ProxyFlag!.Assign(value); }
+    }
+    private BicepValue<int>? _http20ProxyFlag;
 
     /// <summary>
     /// IP security restrictions for main.
@@ -826,7 +841,7 @@ public partial class WebSiteConfig : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the WebSiteConfig.</param>
     public WebSiteConfig(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/config", resourceVersion ?? "2024-04-01")
+        : base(bicepIdentifier, "Microsoft.Web/sites/config", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -855,6 +870,7 @@ public partial class WebSiteConfig : ProvisionableResource
         _functionAppScaleLimit = DefineProperty<int>("FunctionAppScaleLimit", ["properties", "functionAppScaleLimit"]);
         _handlerMappings = DefineListProperty<HttpRequestHandlerMapping>("HandlerMappings", ["properties", "handlerMappings"]);
         _healthCheckPath = DefineProperty<string>("HealthCheckPath", ["properties", "healthCheckPath"]);
+        _http20ProxyFlag = DefineProperty<int>("Http20ProxyFlag", ["properties", "http20ProxyFlag"]);
         _iPSecurityRestrictions = DefineListProperty<AppServiceIPSecurityRestriction>("IPSecurityRestrictions", ["properties", "ipSecurityRestrictions"]);
         _iPSecurityRestrictionsDefaultAction = DefineProperty<SiteDefaultAction>("IPSecurityRestrictionsDefaultAction", ["properties", "ipSecurityRestrictionsDefaultAction"]);
         _isAlwaysOn = DefineProperty<bool>("IsAlwaysOn", ["properties", "alwaysOn"]);
@@ -919,6 +935,11 @@ public partial class WebSiteConfig : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
         /// <summary>
         /// 2024-04-01.
         /// </summary>
