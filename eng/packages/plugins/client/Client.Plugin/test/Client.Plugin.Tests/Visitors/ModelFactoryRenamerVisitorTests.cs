@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System.Linq;
-using Azure.Generator.Tests.Common;
-using Azure.Generator.Tests.TestHelpers;
-using Azure.Generator.Visitors;
+using Client.Plugin.Tests.Common;
+using Client.Plugin.Tests.TestHelpers;
+using Client.Plugin.Visitors;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 
-namespace Azure.Generator.Tests.Visitors
+namespace Client.Plugin.Tests.Visitors
 {
     public class ModelFactoryRenamerVisitorTests
     {

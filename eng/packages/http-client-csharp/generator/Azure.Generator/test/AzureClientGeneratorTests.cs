@@ -9,14 +9,14 @@ namespace Azure.Generator.Tests
 {
     public class AzureClientGeneratorTests
     {
-        [Test]
-        public void RenamingVisitorsAreBeforeOtherVisitors()
-        {
-            var generator = MockHelpers.LoadMockGenerator();
-            var visitors = generator.Object.Visitors;
-            Assert.IsNotNull(visitors);
+        //[Test]
+        //public void RenamingVisitorsAreBeforeOtherVisitors()
+        //{
+        //    var generator = MockHelpers.LoadMockGenerator();
+        //    var visitors = generator.Object.Visitors;
+        //    Assert.IsNotNull(visitors);
 
-            Assert.IsInstanceOf<ModelFactoryRenamerVisitor>(visitors[0]);
-        }
+        //    Assert.IsInstanceOf<ModelFactoryRenamerVisitor>(visitors[0]);
+        //}
     }
 }
