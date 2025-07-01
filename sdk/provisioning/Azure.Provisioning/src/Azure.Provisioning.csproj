@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Contains the core functionality for defining Azure infrastructure with dotnet code.</Description>
-    <Version>1.2.0-beta.1</Version>
+    <Version>1.2.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
