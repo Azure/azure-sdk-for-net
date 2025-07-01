@@ -24,10 +24,10 @@ namespace Azure.Generator.Management.Primitives
                 compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(coreShareFile), SharedCoreLinkBase));
             }
 
-            foreach (var armShareFile in armSharedFiles)
-            {
-                compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(armShareFile, RelativeArmSegment), SharedArmLinkBase));
-            }
+            // foreach (var armShareFile in armSharedFiles)
+            // {
+            //     compileIncludes.Add(new CSharpProjectCompileInclude(GetCompileInclude(armShareFile, RelativeArmSegment), SharedArmLinkBase));
+            // }
 
             return compileIncludes;
         }
