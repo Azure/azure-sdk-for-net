@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="name"> The default copilot settings, applying to entire tenant. </param>
-        internal PortalServicesCopilotSettingData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PortalServicesCopilotSettingProperties properties, string name) : base(id, name, @type, systemData)
+        internal PortalServicesCopilotSettingData(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PortalServicesCopilotSettingsProperties properties, string name) : base(id, name, @type, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public PortalServicesCopilotSettingProperties Properties { get; set; }
+        public PortalServicesCopilotSettingsProperties Properties { get; set; }
     }
 }
