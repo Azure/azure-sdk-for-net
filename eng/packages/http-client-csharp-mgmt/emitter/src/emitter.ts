@@ -27,7 +27,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   program.reportDiagnostics(sdkContext.diagnostics);
 
   function updateCodeModel(codeModel: CodeModel): CodeModel {
-    updateClients(codeModel, sdkContext);
+    updateClients(codeModel, sdkContext, program);
     return codeModel;
   }
 

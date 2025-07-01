@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
-using Azure.Generator.Management.Primitives;
 using Azure.Generator.Tests.Common;
 using Microsoft.TypeSpec.Generator.Input;
 using System.Text.Json;
@@ -50,13 +49,13 @@ namespace Azure.Generator.Management.Tests.Common
 
             var arguments = new Dictionary<string, BinaryData>
             {
-                [KnownDecorators.ResourceType] = FromLiteralString(resourceType),
-                [KnownDecorators.IsSingleton] = BinaryData.FromObjectAsJson(isSingleton, options),
-                [KnownDecorators.ResourceScope] = FromLiteralString(resourceScope.ToString()),
-                [KnownDecorators.Methods] = BinaryData.FromObjectAsJson(methods, options),
+                ["resourceType"] = FromLiteralString(resourceType),
+                ["isSingleton"] = BinaryData.FromObjectAsJson(isSingleton, options),
+                ["resourceScope"] = FromLiteralString(resourceScope.ToString()),
+                ["methods"] = BinaryData.FromObjectAsJson(methods, options),
             };
 
-            return new InputDecoratorInfo(KnownDecorators.ResourceMetadata, arguments);
+            return new InputDecoratorInfo("Azure.ClientGenerator.Core.@resourceSchema", arguments);
 
             static BinaryData FromLiteralString(string literal)
                 => BinaryData.FromString($"\"{literal}\"");

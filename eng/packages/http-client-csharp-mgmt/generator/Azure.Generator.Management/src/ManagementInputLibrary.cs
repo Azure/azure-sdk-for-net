@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
-using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Generic;
@@ -14,6 +13,13 @@ namespace Azure.Generator.Management
     /// <inheritdoc/>
     public class ManagementInputLibrary : InputLibrary
     {
+        private const string ResourceMetadataDecoratorName = "Azure.ClientGenerator.Core.@resourceSchema";
+        private const string ResourceType = "resourceType";
+        private const string IsSingleton = "isSingleton";
+        private const string ResourceScope = "resourceScope";
+        private const string Methods = "methods";
+        private const string ParentResource = "parentResource";
+
         private IReadOnlyDictionary<InputModelType, ResourceMetadata>? _resourceMetadata;
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
@@ -42,7 +48,7 @@ namespace Azure.Generator.Management
             return base.InputNamespace;
         }
 
-        private HashSet<InputModelType> ResourceModels => _resourceModels ??= [.. InputNamespace.Models.Where(m => m.Decorators.Any(d => d.Name.Equals(KnownDecorators.ResourceMetadata)))];
+        private HashSet<InputModelType> ResourceModels => _resourceModels ??= [.. InputNamespace.Models.Where(m => m.Decorators.Any(d => d.Name.Equals(ResourceMetadataDecoratorName)))];
 
         private IReadOnlyDictionary<InputModelType, ResourceMetadata> ResourceMetadata => _resourceMetadata ??= DeserializeResourceMetadata();
 
@@ -79,7 +85,7 @@ namespace Azure.Generator.Management
             var resourceMetadata = new Dictionary<InputModelType, ResourceMetadata>();
             foreach (var model in InputNamespace.Models)
             {
-                var decorator = model.Decorators.FirstOrDefault(d => d.Name == KnownDecorators.ResourceMetadata);
+                var decorator = model.Decorators.FirstOrDefault(d => d.Name == ResourceMetadataDecoratorName);
                 if (decorator != null)
                 {
                     var metadata = BuildResourceMetadata(decorator);
@@ -96,17 +102,17 @@ namespace Azure.Generator.Management
                 ResourceScope? resourceScope = null;
                 var methods = new List<ResourceMethod>();
                 string? parentResource = null;
-                if (args.TryGetValue(KnownDecorators.ResourceType, out var resourceTypeData))
+                if (args.TryGetValue(ResourceType, out var resourceTypeData))
                 {
                     resourceType = resourceTypeData.ToObjectFromJson<string>();
                 }
 
-                if (args.TryGetValue(KnownDecorators.IsSingleton, out var isSingletonData))
+                if (args.TryGetValue(IsSingleton, out var isSingletonData))
                 {
                     isSingleton = isSingletonData.ToObjectFromJson<bool>();
                 }
 
-                if (args.TryGetValue(KnownDecorators.ResourceScope, out var scopeData))
+                if (args.TryGetValue(ResourceScope, out var scopeData))
                 {
                     var scopeString = scopeData.ToObjectFromJson<string>();
                     if (Enum.TryParse<ResourceScope>(scopeString, true, out var scope))
@@ -115,13 +121,13 @@ namespace Azure.Generator.Management
                     }
                 }
 
-                if (args.TryGetValue(KnownDecorators.Methods, out var operationsData))
+                if (args.TryGetValue(Methods, out var operationsData))
                 {
                     using var document = JsonDocument.Parse(operationsData);
                     var element = document.RootElement;
                     if (element.ValueKind != JsonValueKind.Array)
                     {
-                        throw new InvalidOperationException($"Expected an array for {KnownDecorators.Methods}, but got {element.ValueKind}.");
+                        throw new InvalidOperationException($"Expected an array for {Methods}, but got {element.ValueKind}.");
                     }
                     foreach (var item in element.EnumerateArray())
                     {
@@ -129,7 +135,7 @@ namespace Azure.Generator.Management
                         OperationKind? operationKind = null;
                         if (item.ValueKind != JsonValueKind.Object)
                         {
-                            throw new InvalidOperationException($"Expected an object in the array for {KnownDecorators.Methods}, but got {item.ValueKind}.");
+                            throw new InvalidOperationException($"Expected an object in the array for {Methods}, but got {item.ValueKind}.");
                         }
                         if (item.TryGetProperty("id", out var idData))
                         {
@@ -146,7 +152,7 @@ namespace Azure.Generator.Management
                     }
                 }
 
-                if (args.TryGetValue(KnownDecorators.ParentResource, out var parentResourceData))
+                if (args.TryGetValue(ParentResource, out var parentResourceData))
                 {
                     parentResource = parentResourceData.ToObjectFromJson<string>();
                 }
