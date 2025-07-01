@@ -18,15 +18,6 @@ namespace Azure.Provisioning.Storage;
 public partial class StorageTaskAssignmentProperties : ProvisionableConstruct
 {
     /// <summary>
-    /// Represents the provisioning state of the storage task assignment.
-    /// </summary>
-    public BicepValue<StorageProvisioningState> ProvisioningState 
-    {
-        get { Initialize(); return _provisioningState!; }
-    }
-    private BicepValue<StorageProvisioningState>? _provisioningState;
-
-    /// <summary>
     /// Id of the corresponding storage task.
     /// </summary>
     public BicepValue<ResourceIdentifier> TaskId 

@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using MgmtTypeSpec.Mocking;
 
 namespace MgmtTypeSpec
 {
@@ -19,13 +20,13 @@ namespace MgmtTypeSpec
     public static partial class MgmtTypeSpecExtensions
     {
         /// <param name="client"></param>
-        public static MockableMgmtTypeSpecArmClient GetMockableMgmtTypeSpecArmClient(ArmClient client)
+        private static MockableMgmtTypeSpecArmClient GetMockableMgmtTypeSpecArmClient(ArmClient client)
         {
             return client.GetCachedClient(client0 => new MockableMgmtTypeSpecArmClient(client0, ResourceIdentifier.Root));
         }
 
         /// <param name="resourceGroupResource"></param>
-        public static MockableMgmtTypeSpecResourceGroupResource GetMockableMgmtTypeSpecResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockableMgmtTypeSpecResourceGroupResource GetMockableMgmtTypeSpecResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
             return resourceGroupResource.GetCachedClient(client => new MockableMgmtTypeSpecResourceGroupResource(client, resourceGroupResource.Id));
         }
@@ -40,6 +41,18 @@ namespace MgmtTypeSpec
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMgmtTypeSpecArmClient(client).GetFooResource(id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
+        public static FooSettingsResource GetFooSettingsResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetFooSettingsResource(id);
         }
 
         /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>

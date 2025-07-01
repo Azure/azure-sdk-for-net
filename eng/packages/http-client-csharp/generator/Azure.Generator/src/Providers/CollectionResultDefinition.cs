@@ -266,7 +266,12 @@ namespace Azure.Generator.Providers
 
             return _nextPageLocation switch
             {
-                InputResponseLocation.Body =>NeedsConversionToUri() ? New.Instance<Uri>(responseWithTypeVariable.Property(_nextPagePropertyName)) : responseWithTypeVariable.Property(_nextPagePropertyName),
+                InputResponseLocation.Body => NeedsConversionToUri() ?
+                    new TernaryConditionalExpression(
+                        responseWithTypeVariable.Property(_nextPagePropertyName).NotEqual(Null),
+                        New.Instance<Uri>(responseWithTypeVariable.Property(_nextPagePropertyName)),
+                            Null)
+                    : responseWithTypeVariable.Property(_nextPagePropertyName),
                 InputResponseLocation.Header => new TernaryConditionalExpression(
                     responseVariable.Property("Headers")
                         .Invoke("TryGetValue", Literal(_nextPagePropertyName),

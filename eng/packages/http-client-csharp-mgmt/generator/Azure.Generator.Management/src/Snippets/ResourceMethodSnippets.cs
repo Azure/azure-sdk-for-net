@@ -72,6 +72,16 @@ namespace Azure.Generator.Management.Snippets
             return Declare("context", typeof(RequestContext), New.Instance(typeof(RequestContext), requestContextParams), out contextVariable);
         }
 
+        public static MethodBodyStatement CreateUriFromMessage(VariableExpression messageVariable, out VariableExpression uriVariable)
+        {
+            // Uri uri = message.Request.Uri;
+            return Declare(
+                "uri",
+                typeof(RequestUriBuilder),
+                messageVariable.Property("Request").Property("Uri"),
+                out uriVariable);
+        }
+
         public static MethodBodyStatement CreateHttpMessage(
             ResourceClientProvider resourceClientProvider,
             string methodName,
