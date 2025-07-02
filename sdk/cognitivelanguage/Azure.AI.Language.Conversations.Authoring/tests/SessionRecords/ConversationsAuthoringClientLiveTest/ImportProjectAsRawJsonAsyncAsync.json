@@ -13,7 +13,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "projectFileVersion": "2022-10-01-preview",
+        "projectFileVersion": "2025-05-15-preview",
         "stringIndexType": "Utf16CodeUnit",
         "metadata": {
           "projectKind": "Conversation",
@@ -87,20 +87,20 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "8a8054a2-053a-4899-9d07-880f843fa40d",
+        "apim-request-id": "6eb95156-fd3f-4210-acb9-98121efd8459",
         "Content-Length": "0",
-        "Date": "Wed, 02 Jul 2025 20:58:43 GMT",
-        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels0702/import/jobs/65e8a44e-8746-433b-bb31-6f0f8727a83c_638870112000000000?api-version=2025-05-15-preview",
-        "request-id": "8a8054a2-053a-4899-9d07-880f843fa40d",
+        "Date": "Wed, 02 Jul 2025 22:19:43 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels0702/import/jobs/c88f9140-af87-4135-a282-f018b6006ee1_638870112000000000?api-version=2025-05-15-preview",
+        "request-id": "6eb95156-fd3f-4210-acb9-98121efd8459",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "206",
+        "x-envoy-upstream-service-time": "191",
         "x-ms-region": "East US"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels0702/import/jobs/65e8a44e-8746-433b-bb31-6f0f8727a83c_638870112000000000?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels0702/import/jobs/c88f9140-af87-4135-a282-f018b6006ee1_638870112000000000?api-version=2025-05-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
@@ -112,26 +112,26 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "6d27ac8b-65bc-4342-a7dc-b1a5a748318c",
-        "Content-Length": "216",
+        "apim-request-id": "c2ee734a-e67e-45e5-b028-0d0ddae3ed01",
+        "Content-Length": "219",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 02 Jul 2025 20:58:43 GMT",
-        "request-id": "6d27ac8b-65bc-4342-a7dc-b1a5a748318c",
+        "Date": "Wed, 02 Jul 2025 22:19:44 GMT",
+        "request-id": "c2ee734a-e67e-45e5-b028-0d0ddae3ed01",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "31",
+        "x-envoy-upstream-service-time": "28",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
-        "jobId": "65e8a44e-8746-433b-bb31-6f0f8727a83c_638870112000000000",
-        "createdDateTime": "2025-07-02T20:58:43Z",
-        "lastUpdatedDateTime": "2025-07-02T20:58:43Z",
-        "expirationDateTime": "2025-07-09T20:58:43Z",
-        "status": "running"
+        "jobId": "c88f9140-af87-4135-a282-f018b6006ee1_638870112000000000",
+        "createdDateTime": "2025-07-02T22:19:44Z",
+        "lastUpdatedDateTime": "2025-07-02T22:19:44Z",
+        "expirationDateTime": "2025-07-09T22:19:44Z",
+        "status": "notStarted"
       }
     },
     {
-      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels0702/import/jobs/65e8a44e-8746-433b-bb31-6f0f8727a83c_638870112000000000?api-version=2025-05-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels0702/import/jobs/c88f9140-af87-4135-a282-f018b6006ee1_638870112000000000?api-version=2025-05-15-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": "Sanitized",
@@ -143,21 +143,21 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": "*",
-        "apim-request-id": "ecdaca8c-336f-4550-9677-5c181a22c809",
+        "apim-request-id": "85c41c8d-c0fb-4d23-8d98-860bcfe3cf1a",
         "Content-Length": "218",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 02 Jul 2025 20:58:44 GMT",
-        "request-id": "ecdaca8c-336f-4550-9677-5c181a22c809",
+        "Date": "Wed, 02 Jul 2025 22:19:45 GMT",
+        "request-id": "85c41c8d-c0fb-4d23-8d98-860bcfe3cf1a",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "35",
+        "x-envoy-upstream-service-time": "30",
         "x-ms-region": "East US"
       },
       "ResponseBody": {
-        "jobId": "65e8a44e-8746-433b-bb31-6f0f8727a83c_638870112000000000",
-        "createdDateTime": "2025-07-02T20:58:43Z",
-        "lastUpdatedDateTime": "2025-07-02T20:58:43Z",
-        "expirationDateTime": "2025-07-09T20:58:43Z",
+        "jobId": "c88f9140-af87-4135-a282-f018b6006ee1_638870112000000000",
+        "createdDateTime": "2025-07-02T22:19:44Z",
+        "lastUpdatedDateTime": "2025-07-02T22:19:44Z",
+        "expirationDateTime": "2025-07-09T22:19:44Z",
         "status": "succeeded"
       }
     }
@@ -165,6 +165,6 @@
   "Variables": {
     "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_AUTHORING_KEY": "Sanitized",
-    "RandomSeed": "261648229"
+    "RandomSeed": "1322944693"
   }
 }

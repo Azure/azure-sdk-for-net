@@ -94,6 +94,80 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
         [Test]
         [AsyncOnly]
+        public async Task ImportProjectAsRawJsonAsync()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample2_ConversationsAuthoring_ImportProjectAsRawJsonAsync
+            string projectName = "MyImportedProjectAsync";
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+            string rawJson = """
+            {
+              "projectFileVersion": "2025-05-15-preview",
+              "stringIndexType": "Utf16CodeUnit",
+              "metadata": {
+                "projectKind": "Conversation",
+                "language": "en-us",
+                "settings": {
+                  "confidenceThreshold": 0.0
+                },
+                "projectName": "MyImportedProjectAsync",
+                "multilingual": false,
+                "description": ""
+              },
+              "assets": {
+                "projectKind": "Conversation",
+                "intents": [
+                  { "category": "IntentAlpha" },
+                  { "category": "IntentBeta" }
+                ],
+                "entities": [
+                  {
+                    "category": "EntityX",
+                    "compositionSetting": "combineComponents"
+                  }
+                ],
+                "utterances": [
+                  {
+                    "text": "Example input text A",
+                    "intent": "IntentBeta",
+                    "language": "en-us",
+                    "dataset": "Train",
+                    "entities": [
+                      { "category": "EntityX", "offset": 8, "length": 4 }
+                    ]
+                  },
+                  {
+                    "text": "Example input text B",
+                    "intent": "IntentBeta",
+                    "language": "en-us",
+                    "dataset": "Train",
+                    "entities": [
+                      { "category": "EntityX", "offset": 8, "length": 3 }
+                    ]
+                  }
+                ]
+              }
+            }
+            """;
+
+            Operation operation = await projectClient.ImportAsync(
+                waitUntil: WaitUntil.Started,
+                exportedProject: rawJson,
+                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+            );
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            Console.WriteLine($"Project import (raw JSON) completed with status: {operation.GetRawResponse().Status}");
+            #endregion
+        }
+
+        [Test]
+        [AsyncOnly]
         public async Task ImportAsync_WithMetadataAndAssets()
         {
             Uri endpoint = TestEnvironment.Endpoint;

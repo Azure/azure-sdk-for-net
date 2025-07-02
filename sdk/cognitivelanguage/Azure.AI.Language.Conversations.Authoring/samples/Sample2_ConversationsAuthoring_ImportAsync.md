@@ -86,6 +86,74 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");
 ```
 
+
+## Import a Project Using Raw JSON Async
+
+To import a project using raw JSON asynchronously, define the JSON string matching the structure of `ConversationAuthoringExportedProject`. Then call `ImportAsync` on the `ConversationAuthoringProject` client.
+
+```C# Snippet:Sample2_ConversationsAuthoring_ImportRawJsonAsync
+string rawJson = """
+{
+  "projectFileVersion": "2025-05-15-preview",
+  "stringIndexType": "Utf16CodeUnit",
+  "metadata": {
+    "projectKind": "Conversation",
+    "language": "en-us",
+    "settings": {
+      "confidenceThreshold": 0.0
+    },
+    "projectName": "MyImportedProjectAsync",
+    "multilingual": false,
+    "description": ""
+  },
+  "assets": {
+    "projectKind": "Conversation",
+    "intents": [
+      { "category": "IntentAlpha" },
+      { "category": "IntentBeta" }
+    ],
+    "entities": [
+      {
+        "category": "EntityX",
+        "compositionSetting": "combineComponents"
+      }
+    ],
+    "utterances": [
+      {
+        "text": "Example input text A",
+        "intent": "IntentBeta",
+        "language": "en-us",
+        "dataset": "Train",
+        "entities": [
+          { "category": "EntityX", "offset": 8, "length": 4 }
+        ]
+      },
+      {
+        "text": "Example input text B",
+        "intent": "IntentBeta",
+        "language": "en-us",
+        "dataset": "Train",
+        "entities": [
+          { "category": "EntityX", "offset": 8, "length": 3 }
+        ]
+      }
+    ]
+  }
+}
+""";
+
+Operation operation = await projectClient.ImportAsync(
+    waitUntil: WaitUntil.Completed,
+    exportedProject: rawJson,
+    exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+);
+
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
+Console.WriteLine($"Operation Location: {operationLocation}");
+Console.WriteLine($"Project import (raw JSON) completed with status: {operation.GetRawResponse().Status}");
+
+```
+
 ## Import a New Project async with Metadata and Assets
 
 To import a project async, construct a `ConversationAuthoringExportedProject` that includes the metadata and assets. Then call `Import` on the `ConversationAuthoringProject` client.

@@ -166,7 +166,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             // Define the raw JSON string matching the structure of ConversationAuthoringExportedProject
             string rawJson = """
             {
-              "projectFileVersion": "2022-10-01-preview",
+              "projectFileVersion": "2025-05-15-preview",
               "stringIndexType": "Utf16CodeUnit",
               "metadata": {
                 "projectKind": "Conversation",
@@ -226,7 +226,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
 
             // Call the ImportRawJsonAsync method (assumes SDK method exists for raw string input)
-            Operation operation = await projectAuthoringClient.ImportRawJsonAsync(
+            Operation operation = await projectAuthoringClient.ImportAsync(
                 waitUntil: WaitUntil.Completed,
                 rawJson,
                 exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation

@@ -17,7 +17,7 @@ The values of the endpoint and apiKey variables can be retrieved from: Environme
 
 ## Import a New Project
 
-To import a project synchronously, call Import on the ConversationAuthoringProject client. The method returns an Operation object, which you can use to track the status of the operation. The operation-location header contains the location of the operation for further tracking.
+To import a project synchronously, call Import on the `ConversationAuthoringProject` client. The method returns an Operation object, which you can use to track the status of the operation. The operation-location header contains the location of the operation for further tracking.
 
 ```C# Snippet:Sample2_ConversationsAuthoring_Import
 string projectName = "MyImportedProject";
@@ -84,6 +84,72 @@ string operationLocation = operation.GetRawResponse().Headers.TryGetValue("opera
 Console.WriteLine($"Operation Location: {operationLocation}");
 
 Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");
+```
+
+## Import a Project Using Raw JSON
+
+To import a project using raw JSON, define the JSON string matching the structure of `ConversationAuthoringExportedProject`. Then call `ImportAsync` on the `ConversationAuthoringProject` client.
+
+```C# Snippet:Sample2_ConversationsAuthoring_ImportRawJson
+string rawJson = """
+{
+  "projectFileVersion": "2025-05-15-preview",
+  "stringIndexType": "Utf16CodeUnit",
+  "metadata": {
+    "projectKind": "Conversation",
+    "language": "en-us",
+    "settings": {
+      "confidenceThreshold": 0.0
+    },
+    "projectName": "MyImportedProjectAsync",
+    "multilingual": false,
+    "description": ""
+  },
+  "assets": {
+    "projectKind": "Conversation",
+    "intents": [
+      { "category": "IntentAlpha" },
+      { "category": "IntentBeta" }
+    ],
+    "entities": [
+      {
+        "category": "EntityX",
+        "compositionSetting": "combineComponents"
+      }
+    ],
+    "utterances": [
+      {
+        "text": "Example input text A",
+        "intent": "IntentBeta",
+        "language": "en-us",
+        "dataset": "Train",
+        "entities": [
+          { "category": "EntityX", "offset": 8, "length": 4 }
+        ]
+      },
+      {
+        "text": "Example input text B",
+        "intent": "IntentBeta",
+        "language": "en-us",
+        "dataset": "Train",
+        "entities": [
+          { "category": "EntityX", "offset": 8, "length": 3 }
+        ]
+      }
+    ]
+  }
+}
+""";
+
+Operation operation = await projectClient.ImportAsync(
+    waitUntil: WaitUntil.Completed,
+    exportedProject: rawJson,
+    exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+);
+
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
+Console.WriteLine($"Operation Location: {operationLocation}");
+Console.WriteLine($"Project import (raw JSON) completed with status: {operation.GetRawResponse().Status}");
 ```
 
 ## Import a New Project with Metadata and Assets
