@@ -70,7 +70,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
 
     /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-    public override IJsonModel<object> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override IJsonModel<object>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         IJsonModel<object>? AotCompatActivate()
@@ -96,7 +96,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
         var result = iJsonModel.Create(ref reader, _options);
         if (result is null)
         {
-            throw new InvalidOperationException($"Failed to create an instance of {typeToConvert.ToFriendlyName()} from the provided JSON data.");
+            return null;
         }
         return (IJsonModel<object>)result;
     }
