@@ -7,7 +7,7 @@ using Microsoft.TypeSpec.Generator.Input.Extensions;
 namespace Client.Plugin.Tests.Common
 {
     /// <summary>
-    /// Provider methods to construct intput test data
+    /// Provider methods to construct input test data
     /// </summary>
     public static class InputFactory
     {
@@ -104,7 +104,7 @@ namespace Client.Plugin.Tests.Common
         public static class Constant
         {
             /// <summary>
-            /// Construct input constnat for string
+            /// Construct input constant for string
             /// </summary>
             /// <param name="value"></param>
             /// <returns></returns>
@@ -114,7 +114,7 @@ namespace Client.Plugin.Tests.Common
             }
 
             /// <summary>
-            /// Construct input constnat for int64
+            /// Construct input constant for int64
             /// </summary>
             /// <param name="value"></param>
             /// <returns></returns>
@@ -141,7 +141,7 @@ namespace Client.Plugin.Tests.Common
                 kind: InputParameterKind.Constant);
 
         /// <summary>
-        /// Construct input paraemter
+        /// Construct input parameter
         /// </summary>
         /// <param name="name"></param>
         /// <param name="type"></param>
