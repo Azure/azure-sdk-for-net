@@ -247,5 +247,93 @@ namespace Azure.Core.Tests
             // Should not throw
             content.Dispose();
         }
+
+        [Test]
+        public void PersistableModelContent()
+        {
+            var model = new TestPersistableModel { Name = "persistable", Value = 123 };
+            var content = RequestContent.Create(model);
+
+            var stream = new MemoryStream();
+            content.WriteTo(stream, default);
+            stream.Position = 0;
+
+            var document = JsonDocument.Parse(stream);
+            Assert.AreEqual("persistable", document.RootElement.GetProperty("name").GetString());
+            Assert.AreEqual(123, document.RootElement.GetProperty("value").GetInt32());
+        }
+
+        [Test]
+        public async Task PersistableModelContentAsync()
+        {
+            var model = new TestPersistableModel { Name = "persistable", Value = 123 };
+            var content = RequestContent.Create(model);
+
+            var stream = new MemoryStream();
+            await content.WriteToAsync(stream, default);
+            stream.Position = 0;
+
+            var document = JsonDocument.Parse(stream);
+            Assert.AreEqual("persistable", document.RootElement.GetProperty("name").GetString());
+            Assert.AreEqual(123, document.RootElement.GetProperty("value").GetInt32());
+        }
+
+        [Test]
+        public void MixedFormatModelContentJson()
+        {
+            var model = new TestMixedFormatModel { Name = "mixed", Value = 456 };
+            var options = new ModelReaderWriterOptions("J"); // JSON format
+            var content = RequestContent.Create(model, options);
+
+            var stream = new MemoryStream();
+            content.WriteTo(stream, default);
+            stream.Position = 0;
+
+            var document = JsonDocument.Parse(stream);
+            Assert.AreEqual("mixed", document.RootElement.GetProperty("name").GetString());
+            Assert.AreEqual(456, document.RootElement.GetProperty("value").GetInt32());
+        }
+
+        [Test]
+        public void MixedFormatModelContentXml()
+        {
+            var model = new TestMixedFormatModel { Name = "mixed", Value = 456 };
+            var options = new ModelReaderWriterOptions("X"); // XML format
+            var content = RequestContent.Create(model, options);
+
+            var stream = new MemoryStream();
+            content.WriteTo(stream, default);
+            stream.Position = 0;
+
+            var streamReader = new StreamReader(stream);
+            var xmlContent = streamReader.ReadToEnd();
+
+            // Verify XML structure
+            Assert.That(xmlContent, Contains.Substring("<TestMixedFormatModel>"));
+            Assert.That(xmlContent, Contains.Substring("<name>mixed</name>"));
+            Assert.That(xmlContent, Contains.Substring("<value>456</value>"));
+            Assert.That(xmlContent, Contains.Substring("</TestMixedFormatModel>"));
+        }
+
+        [Test]
+        public async Task MixedFormatModelContentXmlAsync()
+        {
+            var model = new TestMixedFormatModel { Name = "mixed", Value = 456 };
+            var options = new ModelReaderWriterOptions("X"); // XML format
+            var content = RequestContent.Create(model, options);
+
+            var stream = new MemoryStream();
+            await content.WriteToAsync(stream, default);
+            stream.Position = 0;
+
+            var streamReader = new StreamReader(stream);
+            var xmlContent = streamReader.ReadToEnd();
+
+            // Verify XML structure
+            Assert.That(xmlContent, Contains.Substring("<TestMixedFormatModel>"));
+            Assert.That(xmlContent, Contains.Substring("<name>mixed</name>"));
+            Assert.That(xmlContent, Contains.Substring("<value>456</value>"));
+            Assert.That(xmlContent, Contains.Substring("</TestMixedFormatModel>"));
+        }
     }
 }
