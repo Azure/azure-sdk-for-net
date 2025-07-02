@@ -90,5 +90,177 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");
             #endregion
         }
+
+        [Test]
+        [SyncOnly]
+        public void ImportProjectAsRawJson()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample2_ConversationsAuthoring_ImportProjectAsRawJson
+            string projectName = "MyImportedProject";
+
+            string rawJson = """
+            {
+              "projectFileVersion": "2025-05-15-preview",
+              "stringIndexType": "Utf16CodeUnit",
+              "metadata": {
+                "projectKind": "Conversation",
+                "language": "en-us",
+                "settings": {
+                  "confidenceThreshold": 0.0
+                },
+                "projectName": "MyImportedProject",
+                "multilingual": false,
+                "description": ""
+              },
+              "assets": {
+                "projectKind": "Conversation",
+                "intents": [
+                  { "category": "IntentA" },
+                  { "category": "IntentB" }
+                ],
+                "entities": [
+                  {
+                    "category": "EntityA",
+                    "compositionSetting": "combineComponents"
+                  }
+                ],
+                "utterances": [
+                  {
+                    "text": "Example text one",
+                    "intent": "IntentB",
+                    "language": "en-us",
+                    "dataset": "Train",
+                    "entities": [
+                      { "category": "EntityA", "offset": 8, "length": 4 }
+                    ]
+                  },
+                  {
+                    "text": "Example text two",
+                    "intent": "IntentB",
+                    "language": "en-us",
+                    "dataset": "Train",
+                    "entities": [
+                      { "category": "EntityA", "offset": 8, "length": 3 }
+                    ]
+                  }
+                ]
+              }
+            }
+            """;
+
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+            Operation operation = projectClient.Import(
+                waitUntil: WaitUntil.Started,
+                exportedProject: rawJson,
+                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+            );
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            Console.WriteLine($"Project import (raw JSON) completed with status: {operation.GetRawResponse().Status}");
+            #endregion
+        }
+
+        [Test]
+        [SyncOnly]
+        public void Import_WithMetadataAndAssets()
+        {
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+            #region Snippet:Sample2_ConversationsAuthoring_ImportProjectWithMetadataAndResources
+            string projectName = "ImportedApp";
+
+            // Create metadata
+            ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
+                projectKind: "Conversation",
+                language: "en-us")
+            {
+                Settings = new ConversationAuthoringProjectSettings(0.7F),
+                Multilingual = true,
+                Description = "Trying out CLU",
+                ProjectName = projectName
+            };
+
+            // Define intents and entities
+            ConversationExportedProjectAsset projectAssets = new ConversationExportedProjectAsset();
+
+            projectAssets.Intents.Add(new ConversationExportedIntent("Read")
+            {
+                Description = "The read intent",
+                AssociatedEntities = { new ConversationExportedAssociatedEntityLabel("Sender") }
+            });
+            projectAssets.Intents.Add(new ConversationExportedIntent("Delete")
+            {
+                Description = "The delete intent"
+            });
+
+            projectAssets.Entities.Add(new ConversationExportedEntity("Sender")
+            {
+                Description = "The description of Sender"
+            });
+
+            projectAssets.Entities.Add(new ConversationExportedEntity("Number")
+            {
+                Description = "The description of Number",
+                Regex = new ExportedEntityRegex
+                {
+                    Expressions =
+                    {
+                        new ExportedEntityRegexExpression
+                        {
+                            RegexKey = "UK Phone numbers",
+                            Language = "en-us",
+                            RegexPattern = @"^\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})$"
+                        }
+                    }
+                }
+            });
+
+            // Add utterances
+            projectAssets.Utterances.Add(new ConversationExportedUtterance("Open Blake's email", "Read")
+            {
+                Dataset = "Train",
+                Entities = { new ExportedUtteranceEntityLabel("Sender", offset: 5, length: 5) }
+            });
+
+            projectAssets.Utterances.Add(new ConversationExportedUtterance("Delete last email", "Delete")
+            {
+                Language = "en-gb",
+                Dataset = "Test"
+            });
+
+            // Build the exported project
+            ConversationAuthoringExportedProject exportedProject = new ConversationAuthoringExportedProject(
+                projectFileVersion: "2025-05-15-preview",
+                stringIndexType: StringIndexType.Utf16CodeUnit,
+                metadata: projectMetadata)
+            {
+                Assets = projectAssets
+            };
+
+            // Get project authoring client
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+            // Start import operation
+            Operation operation = projectClient.Import(
+                WaitUntil.Started,
+                exportedProject,
+                ConversationAuthoringExportedProjectFormat.Conversation
+            );
+
+            Console.WriteLine($"Project import request submitted with status: {operation.GetRawResponse().Status}");
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location)
+                ? location : "Not found";
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            #endregion
+        }
     }
 }
