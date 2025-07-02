@@ -90,7 +90,9 @@ Console.WriteLine($"Project import completed with status: {operation.GetRawRespo
 
 To import a project using raw JSON, define the JSON string matching the structure of `ConversationAuthoringExportedProject`. Then call `ImportAsync` on the `ConversationAuthoringProject` client.
 
-```C# Snippet:Sample2_ConversationsAuthoring_ImportRawJson
+```C# Snippet:Sample2_ConversationsAuthoring_ImportProjectAsRawJson
+string projectName = "MyImportedProject";
+
 string rawJson = """
 {
   "projectFileVersion": "2025-05-15-preview",
@@ -101,39 +103,39 @@ string rawJson = """
     "settings": {
       "confidenceThreshold": 0.0
     },
-    "projectName": "MyImportedProjectAsync",
+    "projectName": "MyImportedProject",
     "multilingual": false,
     "description": ""
   },
   "assets": {
     "projectKind": "Conversation",
     "intents": [
-      { "category": "IntentAlpha" },
-      { "category": "IntentBeta" }
+      { "category": "IntentA" },
+      { "category": "IntentB" }
     ],
     "entities": [
       {
-        "category": "EntityX",
+        "category": "EntityA",
         "compositionSetting": "combineComponents"
       }
     ],
     "utterances": [
       {
-        "text": "Example input text A",
-        "intent": "IntentBeta",
+        "text": "Example text one",
+        "intent": "IntentB",
         "language": "en-us",
         "dataset": "Train",
         "entities": [
-          { "category": "EntityX", "offset": 8, "length": 4 }
+          { "category": "EntityA", "offset": 8, "length": 4 }
         ]
       },
       {
-        "text": "Example input text B",
-        "intent": "IntentBeta",
+        "text": "Example text two",
+        "intent": "IntentB",
         "language": "en-us",
         "dataset": "Train",
         "entities": [
-          { "category": "EntityX", "offset": 8, "length": 3 }
+          { "category": "EntityA", "offset": 8, "length": 3 }
         ]
       }
     ]
@@ -141,8 +143,10 @@ string rawJson = """
 }
 """;
 
-Operation operation = await projectClient.ImportAsync(
-    waitUntil: WaitUntil.Completed,
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+Operation operation = projectClient.Import(
+    waitUntil: WaitUntil.Started,
     exportedProject: rawJson,
     exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
 );

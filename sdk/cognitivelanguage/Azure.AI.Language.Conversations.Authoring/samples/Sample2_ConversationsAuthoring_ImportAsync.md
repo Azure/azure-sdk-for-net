@@ -91,7 +91,10 @@ Console.WriteLine($"Project import completed with status: {operation.GetRawRespo
 
 To import a project using raw JSON asynchronously, define the JSON string matching the structure of `ConversationAuthoringExportedProject`. Then call `ImportAsync` on the `ConversationAuthoringProject` client.
 
-```C# Snippet:Sample2_ConversationsAuthoring_ImportRawJsonAsync
+```C# Snippet:Sample2_ConversationsAuthoring_ImportProjectAsRawJsonAsync
+string projectName = "MyImportedProjectAsync";
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
 string rawJson = """
 {
   "projectFileVersion": "2025-05-15-preview",
@@ -143,7 +146,7 @@ string rawJson = """
 """;
 
 Operation operation = await projectClient.ImportAsync(
-    waitUntil: WaitUntil.Completed,
+    waitUntil: WaitUntil.Started,
     exportedProject: rawJson,
     exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
 );
@@ -151,7 +154,6 @@ Operation operation = await projectClient.ImportAsync(
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
 Console.WriteLine($"Project import (raw JSON) completed with status: {operation.GetRawResponse().Status}");
-
 ```
 
 ## Import a New Project async with Metadata and Assets
