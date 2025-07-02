@@ -46,26 +46,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="InstallSolutionContent"/>. </summary>
-        /// <param name="solution"> Solution Name. </param>
-        /// <param name="solutionVersion"> Solution Version Name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solution"/> or <paramref name="solutionVersion"/> is null. </exception>
-        public InstallSolutionContent(string solution, string solutionVersion)
+        /// <param name="solutionVersionId"> Solution Version ARM Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionVersionId"/> is null. </exception>
+        public InstallSolutionContent(string solutionVersionId)
         {
-            Argument.AssertNotNull(solution, nameof(solution));
-            Argument.AssertNotNull(solutionVersion, nameof(solutionVersion));
+            Argument.AssertNotNull(solutionVersionId, nameof(solutionVersionId));
 
-            Solution = solution;
-            SolutionVersion = solutionVersion;
+            SolutionVersionId = solutionVersionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="InstallSolutionContent"/>. </summary>
-        /// <param name="solution"> Solution Name. </param>
-        /// <param name="solutionVersion"> Solution Version Name. </param>
+        /// <param name="solutionVersionId"> Solution Version ARM Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstallSolutionContent(string solution, string solutionVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InstallSolutionContent(string solutionVersionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Solution = solution;
-            SolutionVersion = solutionVersion;
+            SolutionVersionId = solutionVersionId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,9 +69,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         {
         }
 
-        /// <summary> Solution Name. </summary>
-        public string Solution { get; }
-        /// <summary> Solution Version Name. </summary>
-        public string SolutionVersion { get; }
+        /// <summary> Solution Version ARM Id. </summary>
+        public string SolutionVersionId { get; set; }
     }
 }

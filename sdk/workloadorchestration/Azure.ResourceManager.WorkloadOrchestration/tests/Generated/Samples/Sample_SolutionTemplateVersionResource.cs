@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SolutionTemplateVersionsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/SolutionTemplateVersions_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplateVersions_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "SolutionTemplateVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task BulkDeploySolution_SolutionTemplateVersionsBulkDeploySolutionMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/SolutionTemplateVersions_BulkDeploySolution_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplateVersions_BulkDeploySolution_MaximumSet_Gen.json
             // this example is just showing the usage of "SolutionTemplateVersions_BulkDeploySolution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ new BulkDeployTargetDetails(new ResourceIdentifier("/subscriptions/00000000-0000
         [Ignore("Only validating compilation of examples")]
         public async Task BulkPublishSolution_SolutionTemplateVersionsBulkPublishSolutionMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/SolutionTemplateVersions_BulkPublishSolution_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/SolutionTemplateVersions_BulkPublishSolution_MaximumSet_Gen.json
             // this example is just showing the usage of "SolutionTemplateVersions_BulkPublishSolution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

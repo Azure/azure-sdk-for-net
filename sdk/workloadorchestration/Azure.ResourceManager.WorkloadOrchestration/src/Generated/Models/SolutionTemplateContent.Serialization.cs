@@ -34,10 +34,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 throw new FormatException($"The model {nameof(SolutionTemplateContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("solutionTemplate"u8);
-            writer.WriteStringValue(SolutionTemplate);
-            writer.WritePropertyName("solutionTemplateVersion"u8);
-            writer.WriteStringValue(SolutionTemplateVersion);
+            writer.WritePropertyName("solutionTemplateVersionId"u8);
+            writer.WriteStringValue(SolutionTemplateVersionId);
             if (Optional.IsDefined(SolutionInstanceName))
             {
                 writer.WritePropertyName("solutionInstanceName"u8);
@@ -90,22 +88,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
-            string solutionTemplate = default;
-            string solutionTemplateVersion = default;
+            string solutionTemplateVersionId = default;
             string solutionInstanceName = default;
             IList<SolutionDependencyContent> solutionDependencies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("solutionTemplate"u8))
+                if (property.NameEquals("solutionTemplateVersionId"u8))
                 {
-                    solutionTemplate = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("solutionTemplateVersion"u8))
-                {
-                    solutionTemplateVersion = property.Value.GetString();
+                    solutionTemplateVersionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("solutionInstanceName"u8))
@@ -133,7 +125,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SolutionTemplateContent(solutionTemplate, solutionTemplateVersion, solutionInstanceName, solutionDependencies ?? new ChangeTrackingList<SolutionDependencyContent>(), serializedAdditionalRawData);
+            return new SolutionTemplateContent(solutionTemplateVersionId, solutionInstanceName, solutionDependencies ?? new ChangeTrackingList<SolutionDependencyContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionTemplateContent>.Write(ModelReaderWriterOptions options)

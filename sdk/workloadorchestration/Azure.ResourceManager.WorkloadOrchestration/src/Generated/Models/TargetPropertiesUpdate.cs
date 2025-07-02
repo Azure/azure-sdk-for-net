@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -55,16 +56,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="TargetPropertiesUpdate"/>. </summary>
         /// <param name="description"> Description of target. </param>
         /// <param name="displayName"> Display name of target. </param>
+        /// <param name="contextId"> ArmId of Context. </param>
         /// <param name="targetSpecification"> target spec. </param>
         /// <param name="capabilities"> List of capabilities. </param>
         /// <param name="hierarchyLevel"> Hierarchy Level. </param>
         /// <param name="solutionScope"> Scope of the target resource. </param>
         /// <param name="state"> State of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetPropertiesUpdate(string description, string displayName, IDictionary<string, BinaryData> targetSpecification, IList<string> capabilities, string hierarchyLevel, string solutionScope, ResourceState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TargetPropertiesUpdate(string description, string displayName, ResourceIdentifier contextId, IDictionary<string, BinaryData> targetSpecification, IList<string> capabilities, string hierarchyLevel, string solutionScope, ResourceState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             DisplayName = displayName;
+            ContextId = contextId;
             TargetSpecification = targetSpecification;
             Capabilities = capabilities;
             HierarchyLevel = hierarchyLevel;
@@ -77,6 +80,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string Description { get; set; }
         /// <summary> Display name of target. </summary>
         public string DisplayName { get; set; }
+        /// <summary> ArmId of Context. </summary>
+        public ResourceIdentifier ContextId { get; set; }
         /// <summary>
         /// target spec
         /// <para>

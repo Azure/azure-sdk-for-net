@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ContextsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Contexts_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Contexts_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Contexts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ContextsDeleteMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Contexts_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Contexts_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "Contexts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ContextsUpdateMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Contexts_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Contexts_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "Contexts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,148 +114,6 @@ State = ResourceState.Active,
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
             ContextData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Execute_ContextsExecuteMaximumSet()
-        {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Contexts_Execute_MaximumSet_Gen.json
-            // this example is just showing the usage of "Contexts_Execute" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContextResource created on azure
-            // for more information of creating ContextResource, please refer to the document of ContextResource
-            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
-            string resourceGroupName = "rgconfigurationmanager";
-            string contextName = "testname";
-            ResourceIdentifier contextResourceId = ContextResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, contextName);
-            ContextResource context = client.GetContextResource(contextResourceId);
-
-            // invoke the operation
-            WorkflowExecuteContent content = new WorkflowExecuteContent("htvbuvnppidfcfkescoh")
-            {
-                Workflow = "pylrvqyxzjzynvhgpvz",
-                Stage = "shydfdgbxwpgfsonfxfdcvdydehebd",
-                Inputs = { },
-            };
-            ArmOperation<ExecutionResource> lro = await context.ExecuteAsync(WaitUntil.Completed, content);
-            ExecutionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ExecutionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Publish_ContextsPublishMaximumSet()
-        {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Contexts_Publish_MaximumSet_Gen.json
-            // this example is just showing the usage of "Contexts_Publish" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContextResource created on azure
-            // for more information of creating ContextResource, please refer to the document of ContextResource
-            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
-            string resourceGroupName = "rgconfigurationmanager";
-            string contextName = "testname";
-            ResourceIdentifier contextResourceId = ContextResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, contextName);
-            ContextResource context = client.GetContextResource(contextResourceId);
-
-            // invoke the operation
-            WorkflowVersionContent content = new WorkflowVersionContent("tclkkagng", "wnikqid")
-            {
-                WorkflowName = "hkk",
-            };
-            ArmOperation<WorkflowVersionResource> lro = await context.PublishAsync(WaitUntil.Completed, content);
-            WorkflowVersionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            WorkflowVersionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Resolve_ContextsResolveMaximumSet()
-        {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Contexts_Resolve_MaximumSet_Gen.json
-            // this example is just showing the usage of "Contexts_Resolve" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContextResource created on azure
-            // for more information of creating ContextResource, please refer to the document of ContextResource
-            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
-            string resourceGroupName = "rgconfigurationmanager";
-            string contextName = "testname";
-            ResourceIdentifier contextResourceId = ContextResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, contextName);
-            ContextResource context = client.GetContextResource(contextResourceId);
-
-            // invoke the operation
-            WorkflowTemplateReviewContent content = new WorkflowTemplateReviewContent("qcgobsknnajrofjznziibjrzu", new Dictionary<string, BinaryData>())
-            {
-                WorkflowTemplateName = "ykowjikzvaopbpdwexedbaw",
-            };
-            ArmOperation<WorkflowVersionResource> lro = await context.ResolveAsync(WaitUntil.Completed, content);
-            WorkflowVersionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            WorkflowVersionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Review_ContextsReviewMaximumSet()
-        {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Contexts_Review_MaximumSet_Gen.json
-            // this example is just showing the usage of "Contexts_Review" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContextResource created on azure
-            // for more information of creating ContextResource, please refer to the document of ContextResource
-            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
-            string resourceGroupName = "rgconfigurationmanager";
-            string contextName = "testname";
-            ResourceIdentifier contextResourceId = ContextResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, contextName);
-            ContextResource context = client.GetContextResource(contextResourceId);
-
-            // invoke the operation
-            WorkflowTemplateReviewContent content = new WorkflowTemplateReviewContent("qcgobsknnajrofjznziibjrzu", new Dictionary<string, BinaryData>())
-            {
-                WorkflowTemplateName = "ykowjikzvaopbpdwexedbaw",
-            };
-            ArmOperation<WorkflowVersionResource> lro = await context.ReviewAsync(WaitUntil.Completed, content);
-            WorkflowVersionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            WorkflowVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

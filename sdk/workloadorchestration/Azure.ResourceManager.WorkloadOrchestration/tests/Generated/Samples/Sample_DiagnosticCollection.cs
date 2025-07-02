@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DiagnosticsCreateOrUpdateMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Diagnostics_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Diagnostics_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "Diagnostics_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DiagnosticsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Diagnostics_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Diagnostics_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Diagnostics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DiagnosticsListByResourceGroupMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Diagnostics_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Diagnostics_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "Diagnostics_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_DiagnosticsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Diagnostics_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Diagnostics_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Diagnostics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DiagnosticsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Diagnostics_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Diagnostics_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Diagnostics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

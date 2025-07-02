@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 throw new FormatException($"The model {nameof(RemoveRevisionContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("solution"u8);
-            writer.WriteStringValue(Solution);
+            writer.WritePropertyName("solutionTemplateId"u8);
+            writer.WriteStringValue(SolutionTemplateId);
             writer.WritePropertyName("solutionVersion"u8);
             writer.WriteStringValue(SolutionVersion);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
-            string solution = default;
+            string solutionTemplateId = default;
             string solutionVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("solution"u8))
+                if (property.NameEquals("solutionTemplateId"u8))
                 {
-                    solution = property.Value.GetString();
+                    solutionTemplateId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("solutionVersion"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RemoveRevisionContent(solution, solutionVersion, serializedAdditionalRawData);
+            return new RemoveRevisionContent(solutionTemplateId, solutionVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemoveRevisionContent>.Write(ModelReaderWriterOptions options)

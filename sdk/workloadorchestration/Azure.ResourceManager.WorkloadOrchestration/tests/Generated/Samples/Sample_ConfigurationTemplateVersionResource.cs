@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfigurationTemplateVersionsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/ConfigurationTemplateVersions_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-01-01-preview/examples/ConfigurationTemplateVersions_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "ConfigurationTemplateVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -100,75 +100,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         public virtual Response<ConfigTemplateResource> GetConfigTemplate(string configTemplateName, CancellationToken cancellationToken = default)
         {
             return GetConfigTemplates().Get(configTemplateName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ConfigurationTemplateResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ConfigurationTemplateResources and their operations over a ConfigurationTemplateResource. </returns>
-        public virtual ConfigurationTemplateCollection GetConfigurationTemplates()
-        {
-            return GetCachedClient(client => new ConfigurationTemplateCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Configuration Template Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configurationTemplates/{configurationTemplateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfigurationTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationTemplateName"> The name of the ConfigurationTemplate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationTemplateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ConfigurationTemplateResource>> GetConfigurationTemplateAsync(string configurationTemplateName, CancellationToken cancellationToken = default)
-        {
-            return await GetConfigurationTemplates().GetAsync(configurationTemplateName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Configuration Template Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configurationTemplates/{configurationTemplateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfigurationTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationTemplateName"> The name of the ConfigurationTemplate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationTemplateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ConfigurationTemplateResource> GetConfigurationTemplate(string configurationTemplateName, CancellationToken cancellationToken = default)
-        {
-            return GetConfigurationTemplates().Get(configurationTemplateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContextResources in the ResourceGroupResource. </summary>
@@ -191,7 +122,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -222,7 +153,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -260,7 +191,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -291,7 +222,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +260,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,7 +291,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,7 +329,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -429,7 +360,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -445,75 +376,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         public virtual Response<SolutionTemplateResource> GetSolutionTemplate(string solutionTemplateName, CancellationToken cancellationToken = default)
         {
             return GetSolutionTemplates().Get(solutionTemplateName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of TargetTemplateResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of TargetTemplateResources and their operations over a TargetTemplateResource. </returns>
-        public virtual TargetTemplateCollection GetTargetTemplates()
-        {
-            return GetCachedClient(client => new TargetTemplateCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Target Template Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targetTemplates/{targetTemplateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TargetTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="targetTemplateName"> The name of the TargetTemplate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetTemplateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TargetTemplateResource>> GetTargetTemplateAsync(string targetTemplateName, CancellationToken cancellationToken = default)
-        {
-            return await GetTargetTemplates().GetAsync(targetTemplateName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Target Template Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targetTemplates/{targetTemplateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TargetTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="targetTemplateName"> The name of the TargetTemplate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetTemplateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<TargetTemplateResource> GetTargetTemplate(string targetTemplateName, CancellationToken cancellationToken = default)
-        {
-            return GetTargetTemplates().Get(targetTemplateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of TargetResources in the ResourceGroupResource. </summary>
@@ -536,7 +398,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -567,7 +429,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -583,75 +445,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         public virtual Response<TargetResource> GetTarget(string targetName, CancellationToken cancellationToken = default)
         {
             return GetTargets().Get(targetName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of WorkflowTemplateResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of WorkflowTemplateResources and their operations over a WorkflowTemplateResource. </returns>
-        public virtual WorkflowTemplateCollection GetWorkflowTemplates()
-        {
-            return GetCachedClient(client => new WorkflowTemplateCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Workflow Template Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/workflowTemplates/{workflowTemplateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workflowTemplateName"> The name of the WorkflowTemplate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowTemplateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkflowTemplateResource>> GetWorkflowTemplateAsync(string workflowTemplateName, CancellationToken cancellationToken = default)
-        {
-            return await GetWorkflowTemplates().GetAsync(workflowTemplateName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Workflow Template Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/workflowTemplates/{workflowTemplateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workflowTemplateName"> The name of the WorkflowTemplate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowTemplateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<WorkflowTemplateResource> GetWorkflowTemplate(string workflowTemplateName, CancellationToken cancellationToken = default)
-        {
-            return GetWorkflowTemplates().Get(workflowTemplateName, cancellationToken);
         }
     }
 }

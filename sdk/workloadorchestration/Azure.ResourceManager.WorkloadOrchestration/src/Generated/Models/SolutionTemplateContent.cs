@@ -46,29 +46,24 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SolutionTemplateContent"/>. </summary>
-        /// <param name="solutionTemplate"> Solution Template Name. </param>
-        /// <param name="solutionTemplateVersion"> Solution Template Version Name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionTemplate"/> or <paramref name="solutionTemplateVersion"/> is null. </exception>
-        public SolutionTemplateContent(string solutionTemplate, string solutionTemplateVersion)
+        /// <param name="solutionTemplateVersionId"> Solution Template Version ARM Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionTemplateVersionId"/> is null. </exception>
+        public SolutionTemplateContent(string solutionTemplateVersionId)
         {
-            Argument.AssertNotNull(solutionTemplate, nameof(solutionTemplate));
-            Argument.AssertNotNull(solutionTemplateVersion, nameof(solutionTemplateVersion));
+            Argument.AssertNotNull(solutionTemplateVersionId, nameof(solutionTemplateVersionId));
 
-            SolutionTemplate = solutionTemplate;
-            SolutionTemplateVersion = solutionTemplateVersion;
+            SolutionTemplateVersionId = solutionTemplateVersionId;
             SolutionDependencies = new ChangeTrackingList<SolutionDependencyContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SolutionTemplateContent"/>. </summary>
-        /// <param name="solutionTemplate"> Solution Template Name. </param>
-        /// <param name="solutionTemplateVersion"> Solution Template Version Name. </param>
+        /// <param name="solutionTemplateVersionId"> Solution Template Version ARM Id. </param>
         /// <param name="solutionInstanceName"> Solution Instance Name. </param>
         /// <param name="solutionDependencies"> Solution Dependencies. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionTemplateContent(string solutionTemplate, string solutionTemplateVersion, string solutionInstanceName, IList<SolutionDependencyContent> solutionDependencies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionTemplateContent(string solutionTemplateVersionId, string solutionInstanceName, IList<SolutionDependencyContent> solutionDependencies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SolutionTemplate = solutionTemplate;
-            SolutionTemplateVersion = solutionTemplateVersion;
+            SolutionTemplateVersionId = solutionTemplateVersionId;
             SolutionInstanceName = solutionInstanceName;
             SolutionDependencies = solutionDependencies;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -79,10 +74,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         {
         }
 
-        /// <summary> Solution Template Name. </summary>
-        public string SolutionTemplate { get; }
-        /// <summary> Solution Template Version Name. </summary>
-        public string SolutionTemplateVersion { get; }
+        /// <summary> Solution Template Version ARM Id. </summary>
+        public string SolutionTemplateVersionId { get; }
         /// <summary> Solution Instance Name. </summary>
         public string SolutionInstanceName { get; set; }
         /// <summary> Solution Dependencies. </summary>

@@ -37,6 +37,78 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of JobResources in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
+        public virtual JobCollection GetJobs(ResourceIdentifier scope)
+        {
+            return new JobCollection(Client, scope);
+        }
+
+        /// <summary>
+        /// Get a Job resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="jobName"> The name of the Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<JobResource>> GetJobAsync(ResourceIdentifier scope, string jobName, CancellationToken cancellationToken = default)
+        {
+            return await GetJobs(scope).GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Job resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="jobName"> The name of the Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<JobResource> GetJob(ResourceIdentifier scope, string jobName, CancellationToken cancellationToken = default)
+        {
+            return GetJobs(scope).Get(jobName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of SchemaReferenceResources in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of SchemaReferenceResources and their operations over a SchemaReferenceResource. </returns>
@@ -58,7 +130,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -90,7 +162,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -107,6 +179,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         public virtual Response<SchemaReferenceResource> GetSchemaReference(ResourceIdentifier scope, string schemaReferenceName, CancellationToken cancellationToken = default)
         {
             return GetSchemaReferences(scope).Get(schemaReferenceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="JobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JobResource"/> object. </returns>
+        public virtual JobResource GetJobResource(ResourceIdentifier id)
+        {
+            JobResource.ValidateResourceId(id);
+            return new JobResource(Client, id);
         }
 
         /// <summary>
@@ -131,18 +215,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         {
             ConfigTemplateResource.ValidateResourceId(id);
             return new ConfigTemplateResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationTemplateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationTemplateResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationTemplateResource"/> object. </returns>
-        public virtual ConfigurationTemplateResource GetConfigurationTemplateResource(ResourceIdentifier id)
-        {
-            ConfigurationTemplateResource.ValidateResourceId(id);
-            return new ConfigurationTemplateResource(Client, id);
         }
 
         /// <summary>
@@ -194,18 +266,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TargetTemplateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TargetTemplateResource.CreateResourceIdentifier" /> to create a <see cref="TargetTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TargetTemplateResource"/> object. </returns>
-        public virtual TargetTemplateResource GetTargetTemplateResource(ResourceIdentifier id)
-        {
-            TargetTemplateResource.ValidateResourceId(id);
-            return new TargetTemplateResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="TargetResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="TargetResource.CreateResourceIdentifier" /> to create a <see cref="TargetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -218,18 +278,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowTemplateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowTemplateResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowTemplateResource"/> object. </returns>
-        public virtual WorkflowTemplateResource GetWorkflowTemplateResource(ResourceIdentifier id)
-        {
-            WorkflowTemplateResource.ValidateResourceId(id);
-            return new WorkflowTemplateResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ConfigTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ConfigTemplateVersionResource.CreateResourceIdentifier" /> to create a <see cref="ConfigTemplateVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -239,30 +287,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         {
             ConfigTemplateVersionResource.ValidateResourceId(id);
             return new ConfigTemplateVersionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationTemplateVersionResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationTemplateVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationTemplateVersionResource"/> object. </returns>
-        public virtual ConfigurationTemplateVersionResource GetConfigurationTemplateVersionResource(ResourceIdentifier id)
-        {
-            ConfigurationTemplateVersionResource.ValidateResourceId(id);
-            return new ConfigurationTemplateVersionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EventGridFilterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventGridFilterResource.CreateResourceIdentifier" /> to create an <see cref="EventGridFilterResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventGridFilterResource"/> object. </returns>
-        public virtual EventGridFilterResource GetEventGridFilterResource(ResourceIdentifier id)
-        {
-            EventGridFilterResource.ValidateResourceId(id);
-            return new EventGridFilterResource(Client, id);
         }
 
         /// <summary>
@@ -407,18 +431,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         {
             SolutionVersionResource.ValidateResourceId(id);
             return new SolutionVersionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="WorkflowTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowTemplateVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowTemplateVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowTemplateVersionResource"/> object. </returns>
-        public virtual WorkflowTemplateVersionResource GetWorkflowTemplateVersionResource(ResourceIdentifier id)
-        {
-            WorkflowTemplateVersionResource.ValidateResourceId(id);
-            return new WorkflowTemplateVersionResource(Client, id);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WorkflowVersionsCreateOrUpdateMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/WorkflowVersions_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/WorkflowVersions_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "WorkflowVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,14 +47,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             {
                 Properties = new WorkflowVersionProperties(new StageSpec[]
             {
-new StageSpec("amrbjd", new Dictionary<string, BinaryData>(), new TaskSpec[]
+new StageSpec("amrbjd")
 {
-new TaskSpec("xxmeyvmgydbcwxqwjhadjxjod", new Dictionary<string, BinaryData>())
+Specification = {},
+Tasks = {new TaskSpec("xxmeyvmgydbcwxqwjhadjxjod", new Dictionary<string, BinaryData>())
 {
 TargetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"),
-}
-})
-{
+}},
 TaskOption = new TaskConfig
 {
 Concurrency = 3,
@@ -85,7 +84,7 @@ MaxToleratedFailures = 0,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkflowVersionsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/WorkflowVersions_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/WorkflowVersions_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "WorkflowVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,7 +119,7 @@ MaxToleratedFailures = 0,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_WorkflowVersionsListByWorkflowMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/WorkflowVersions_ListByWorkflow_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/WorkflowVersions_ListByWorkflow_MaximumSet_Gen.json
             // this example is just showing the usage of "WorkflowVersions_ListByWorkflow" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,7 +156,7 @@ MaxToleratedFailures = 0,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_WorkflowVersionsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/WorkflowVersions_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/WorkflowVersions_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "WorkflowVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -188,7 +187,7 @@ MaxToleratedFailures = 0,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_WorkflowVersionsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/WorkflowVersions_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/WorkflowVersions_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "WorkflowVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

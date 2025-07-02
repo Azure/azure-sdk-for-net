@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_TargetsGetMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Targets_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Targets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_TargetsDeleteMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Targets_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "Targets_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_TargetsUpdateMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Targets_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "Targets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,6 +100,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
                 {
                     Description = "yhnhdpznncdvncmnvoeohqjx",
                     DisplayName = "pguujtzjjvixgjitugybrefp",
+                    ContextId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"),
                     TargetSpecification = { },
                     Capabilities = { "dasqhyxfakivfzqb" },
                     HierarchyLevel = "hfyntwxetgsmnucbjvvphtyxu",
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task InstallSolution_TargetsInstallSolutionMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Targets_InstallSolution_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_InstallSolution_MaximumSet_Gen.json
             // this example is just showing the usage of "Targets_InstallSolution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             TargetResource target = client.GetTargetResource(targetResourceId);
 
             // invoke the operation
-            InstallSolutionContent content = new InstallSolutionContent("ayggzqrdodozomnfvgag", "jqsmzygmvhtvhwnpgojpfkhpb");
+            InstallSolutionContent content = new InstallSolutionContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}");
             await target.InstallSolutionAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task PublishSolutionVersion_TargetsPublishSolutionVersionMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Targets_PublishSolutionVersion_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_PublishSolutionVersion_MaximumSet_Gen.json
             // this example is just showing the usage of "Targets_PublishSolutionVersion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             TargetResource target = client.GetTargetResource(targetResourceId);
 
             // invoke the operation
-            SolutionVersionContent content = new SolutionVersionContent("ywafigxpemxvuxrybbgvzbprhaspgt", "lwjsyauhyngiydh", "fhnasirsxjtkejttkbewcu");
+            SolutionVersionContent content = new SolutionVersionContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}");
             ArmOperation<SolutionVersionResource> lro = await target.PublishSolutionVersionAsync(WaitUntil.Completed, content);
             SolutionVersionResource result = lro.Value;
 
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RemoveRevision_TargetsRemoveRevisionMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Targets_RemoveRevision_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_RemoveRevision_MaximumSet_Gen.json
             // this example is just showing the usage of "Targets_RemoveRevision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             TargetResource target = client.GetTargetResource(targetResourceId);
 
             // invoke the operation
-            RemoveRevisionContent content = new RemoveRevisionContent("jpdyngmnvpzblkv", "tomwmqybqomwkfaeukjneva");
+            RemoveRevisionContent content = new RemoveRevisionContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}", "tomwmqybqomwkfaeukjneva");
             await target.RemoveRevisionAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ResolveConfiguration_TargetsResolveConfigurationMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Targets_ResolveConfiguration_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_ResolveConfiguration_MaximumSet_Gen.json
             // this example is just showing the usage of "Targets_ResolveConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             TargetResource target = client.GetTargetResource(targetResourceId);
 
             // invoke the operation
-            SolutionTemplateContent content = new SolutionTemplateContent("fkkhgpcnsm", "adbdfozvdwuuaegtpsneuty")
+            SolutionTemplateContent content = new SolutionTemplateContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}/{resourceType}/{resourceName}")
             {
                 SolutionInstanceName = "testname",
                 SolutionDependencies = {new SolutionDependencyContent
@@ -251,7 +252,7 @@ Dependencies = {},
         [Ignore("Only validating compilation of examples")]
         public async Task ReviewSolutionVersion_TargetsReviewSolutionVersionMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Targets_ReviewSolutionVersion_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_ReviewSolutionVersion_MaximumSet_Gen.json
             // this example is just showing the usage of "Targets_ReviewSolutionVersion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -268,7 +269,7 @@ Dependencies = {},
             TargetResource target = client.GetTargetResource(targetResourceId);
 
             // invoke the operation
-            SolutionTemplateContent content = new SolutionTemplateContent("fkkhgpcnsm", "adbdfozvdwuuaegtpsneuty")
+            SolutionTemplateContent content = new SolutionTemplateContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}/{resourceType}/{resourceName}")
             {
                 SolutionInstanceName = "testname",
                 SolutionDependencies = {new SolutionDependencyContent
@@ -295,7 +296,7 @@ Dependencies = {},
         [Ignore("Only validating compilation of examples")]
         public async Task UninstallSolution_TargetsUninstallSolutionMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Targets_UninstallSolution_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_UninstallSolution_MaximumSet_Gen.json
             // this example is just showing the usage of "Targets_UninstallSolution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -312,7 +313,7 @@ Dependencies = {},
             TargetResource target = client.GetTargetResource(targetResourceId);
 
             // invoke the operation
-            UninstallSolutionContent content = new UninstallSolutionContent("npwgvjk")
+            UninstallSolutionContent content = new UninstallSolutionContent("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}")
             {
                 SolutionInstanceName = "lzihiumrcxbolmkqktvtuqyhg",
             };
@@ -325,7 +326,7 @@ Dependencies = {},
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateExternalValidationStatus_TargetsUpdateExternalValidationStatusMaximumSet()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Targets_UpdateExternalValidationStatus_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Targets_UpdateExternalValidationStatus_MaximumSet_Gen.json
             // this example is just showing the usage of "Targets_UpdateExternalValidationStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 throw new FormatException($"The model {nameof(UninstallSolutionContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("solutionName"u8);
-            writer.WriteStringValue(SolutionName);
+            writer.WritePropertyName("solutionTemplateId"u8);
+            writer.WriteStringValue(SolutionTemplateId);
             if (Optional.IsDefined(SolutionInstanceName))
             {
                 writer.WritePropertyName("solutionInstanceName"u8);
@@ -78,15 +78,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
-            string solutionName = default;
+            string solutionTemplateId = default;
             string solutionInstanceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("solutionName"u8))
+                if (property.NameEquals("solutionTemplateId"u8))
                 {
-                    solutionName = property.Value.GetString();
+                    solutionTemplateId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("solutionInstanceName"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UninstallSolutionContent(solutionName, solutionInstanceName, serializedAdditionalRawData);
+            return new UninstallSolutionContent(solutionTemplateId, solutionInstanceName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UninstallSolutionContent>.Write(ModelReaderWriterOptions options)

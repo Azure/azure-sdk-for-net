@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -48,18 +47,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Initializes a new instance of <see cref="StageSpec"/>. </summary>
         /// <param name="name"> Name of Stage. </param>
-        /// <param name="specification"> Stage specification. </param>
-        /// <param name="tasks"> List of tasks in the stage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="specification"/> or <paramref name="tasks"/> is null. </exception>
-        public StageSpec(string name, IDictionary<string, BinaryData> specification, IEnumerable<TaskSpec> tasks)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public StageSpec(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(specification, nameof(specification));
-            Argument.AssertNotNull(tasks, nameof(tasks));
 
             Name = name;
-            Specification = specification;
-            Tasks = tasks.ToList();
+            Specification = new ChangeTrackingDictionary<string, BinaryData>();
+            Tasks = new ChangeTrackingList<TaskSpec>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StageSpec"/>. </summary>

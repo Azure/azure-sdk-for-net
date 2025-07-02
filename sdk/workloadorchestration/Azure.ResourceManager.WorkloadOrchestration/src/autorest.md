@@ -9,7 +9,7 @@ csharp: true
 library-name: WorkloadOrchestration
 namespace: Azure.ResourceManager.WorkloadOrchestration
 # default tag is a preview version
-require: C:\Users\audapure\Repo\Projects\swagger\azure-rest-api-specs-pr\specification\edge\resource-manager\Microsoft.Edge\configurationmanager\readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/292b2f01ed2c626f777fdb31ec0cd153db11c967/specification/edge/resource-manager/Microsoft.Edge/configurationmanager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,7 +19,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-tag: package-2025-06-01-preview
+tag: package-2025-06-01
 
 rename-mapping:
   BulkPublishSolutionParameter: BulkPublishSolutionContent

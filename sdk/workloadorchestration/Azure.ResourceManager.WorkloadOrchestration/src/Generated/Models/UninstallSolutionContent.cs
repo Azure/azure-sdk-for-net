@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="UninstallSolutionContent"/>. </summary>
-        /// <param name="solutionName"> Solution Name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionName"/> is null. </exception>
-        public UninstallSolutionContent(string solutionName)
+        /// <param name="solutionTemplateId"> Solution Template ARM Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionTemplateId"/> is null. </exception>
+        public UninstallSolutionContent(string solutionTemplateId)
         {
-            Argument.AssertNotNull(solutionName, nameof(solutionName));
+            Argument.AssertNotNull(solutionTemplateId, nameof(solutionTemplateId));
 
-            SolutionName = solutionName;
+            SolutionTemplateId = solutionTemplateId;
         }
 
         /// <summary> Initializes a new instance of <see cref="UninstallSolutionContent"/>. </summary>
-        /// <param name="solutionName"> Solution Name. </param>
+        /// <param name="solutionTemplateId"> Solution Template ARM Id. </param>
         /// <param name="solutionInstanceName"> Solution Instance Name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UninstallSolutionContent(string solutionName, string solutionInstanceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UninstallSolutionContent(string solutionTemplateId, string solutionInstanceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SolutionName = solutionName;
+            SolutionTemplateId = solutionTemplateId;
             SolutionInstanceName = solutionInstanceName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         {
         }
 
-        /// <summary> Solution Name. </summary>
-        public string SolutionName { get; }
+        /// <summary> Solution Template ARM Id. </summary>
+        public string SolutionTemplateId { get; }
         /// <summary> Solution Instance Name. </summary>
         public string SolutionInstanceName { get; set; }
     }

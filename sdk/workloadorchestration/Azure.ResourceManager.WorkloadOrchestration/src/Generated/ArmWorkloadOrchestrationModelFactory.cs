@@ -16,6 +16,90 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmWorkloadOrchestrationModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.JobData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="WorkloadOrchestration.JobData"/> instance for mocking. </returns>
+        public static JobData JobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, JobProperties properties = null, string etag = null)
+        {
+            return new JobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.JobProperties"/>. </summary>
+        /// <param name="jobType"> The type of job. </param>
+        /// <param name="startOn"> Start time of the job (ISO8601). </param>
+        /// <param name="endOn"> End time of the job (ISO8601). </param>
+        /// <param name="status"> Status of the job. </param>
+        /// <param name="jobParameter">
+        /// Parameters for the job.
+        /// Please note <see cref="JobParameterBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DeployJobParameter"/>.
+        /// </param>
+        /// <param name="correlationId"> Correlation ID for tracking. </param>
+        /// <param name="steps"> Steps and substatuses for the job. </param>
+        /// <param name="triggeredBy"> The OID or identity that triggered the job. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="errorDetails"> Error Details if any failure is there. </param>
+        /// <returns> A new <see cref="Models.JobProperties"/> instance for mocking. </returns>
+        public static JobProperties JobProperties(JobType jobType = default, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, JobStatus status = default, JobParameterBase jobParameter = null, string correlationId = null, IEnumerable<JobStep> steps = null, string triggeredBy = null, ProvisioningState? provisioningState = null, ResponseError errorDetails = null)
+        {
+            steps ??= new List<JobStep>();
+
+            return new JobProperties(
+                jobType,
+                startOn,
+                endOn,
+                status,
+                jobParameter,
+                correlationId,
+                steps?.ToList(),
+                triggeredBy,
+                provisioningState,
+                errorDetails,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.JobStep"/>. </summary>
+        /// <param name="name"> Name of the step. </param>
+        /// <param name="status"> Status of the step. </param>
+        /// <param name="startOn"> Start time of the step (ISO8601). </param>
+        /// <param name="endOn"> End time of the step (ISO8601). </param>
+        /// <param name="message"> Message for the step. </param>
+        /// <param name="statistics">
+        /// Statistics for the step
+        /// Please note <see cref="JobStepStatisticsBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DeployJobStepStatistics"/>.
+        /// </param>
+        /// <param name="steps"> Nested substeps for this step. </param>
+        /// <param name="errorDetails"> Error Details if any failure is there. </param>
+        /// <returns> A new <see cref="Models.JobStep"/> instance for mocking. </returns>
+        public static JobStep JobStep(string name = null, JobStatus status = default, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string message = null, JobStepStatisticsBase statistics = null, IEnumerable<JobStep> steps = null, ResponseError errorDetails = null)
+        {
+            steps ??= new List<JobStep>();
+
+            return new JobStep(
+                name,
+                status,
+                startOn,
+                endOn,
+                message,
+                statistics,
+                steps?.ToList(),
+                errorDetails,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.SchemaReferenceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -43,24 +127,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static SchemaReferenceProperties SchemaReferenceProperties(string schemaId = null, ProvisioningState? provisioningState = null)
         {
             return new SchemaReferenceProperties(schemaId, provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SchemaReferencePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="schemaId"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.SchemaReferencePatch"/> instance for mocking. </returns>
-        public static SchemaReferencePatch SchemaReferencePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string schemaId = null)
-        {
-            return new SchemaReferencePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                schemaId != null ? new SchemaReferencePropertiesUpdate(schemaId, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.ConfigTemplateData"/>. </summary>
@@ -97,42 +163,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static ConfigTemplateProperties ConfigTemplateProperties(string description = null, string latestVersion = null, ProvisioningState? provisioningState = null)
         {
             return new ConfigTemplateProperties(description, latestVersion, provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.ConfigurationTemplateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.ConfigurationTemplateData"/> instance for mocking. </returns>
-        public static ConfigurationTemplateData ConfigurationTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ConfigurationTemplateProperties properties = null, string etag = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ConfigurationTemplateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationTemplateProperties"/>. </summary>
-        /// <param name="description"> Description of config template. </param>
-        /// <param name="latestVersion"> Latest config template version. </param>
-        /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.ConfigurationTemplateProperties"/> instance for mocking. </returns>
-        public static ConfigurationTemplateProperties ConfigurationTemplateProperties(string description = null, string latestVersion = null, ProvisioningState? provisioningState = null)
-        {
-            return new ConfigurationTemplateProperties(description, latestVersion, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.ContextData"/>. </summary>
@@ -283,45 +313,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.TargetTemplateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.TargetTemplateData"/> instance for mocking. </returns>
-        public static TargetTemplateData TargetTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, TargetTemplateProperties properties = null, string etag = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new TargetTemplateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TargetTemplateProperties"/>. </summary>
-        /// <param name="description"> Description of Target template. </param>
-        /// <param name="targetSpec"> target spec. </param>
-        /// <param name="orchestratorType"> Orchestrator Type. </param>
-        /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.TargetTemplateProperties"/> instance for mocking. </returns>
-        public static TargetTemplateProperties TargetTemplateProperties(string description = null, IDictionary<string, BinaryData> targetSpec = null, OrchestratorType? orchestratorType = null, ProvisioningState? provisioningState = null)
-        {
-            targetSpec ??= new Dictionary<string, BinaryData>();
-
-            return new TargetTemplateProperties(description, targetSpec, orchestratorType, provisioningState, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.TargetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -353,6 +344,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="Models.TargetProperties"/>. </summary>
         /// <param name="description"> Description of target. </param>
         /// <param name="displayName"> Display name of target. </param>
+        /// <param name="contextId"> ArmId of Context. </param>
         /// <param name="targetSpecification"> target spec. </param>
         /// <param name="capabilities"> List of capabilities. </param>
         /// <param name="hierarchyLevel"> Hierarchy Level. </param>
@@ -361,7 +353,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="state"> State of resource. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.TargetProperties"/> instance for mocking. </returns>
-        public static TargetProperties TargetProperties(string description = null, string displayName = null, IDictionary<string, BinaryData> targetSpecification = null, IEnumerable<string> capabilities = null, string hierarchyLevel = null, DeploymentStatus status = null, string solutionScope = null, ResourceState? state = null, ProvisioningState? provisioningState = null)
+        public static TargetProperties TargetProperties(string description = null, string displayName = null, ResourceIdentifier contextId = null, IDictionary<string, BinaryData> targetSpecification = null, IEnumerable<string> capabilities = null, string hierarchyLevel = null, DeploymentStatus status = null, string solutionScope = null, ResourceState? state = null, ProvisioningState? provisioningState = null)
         {
             targetSpecification ??= new Dictionary<string, BinaryData>();
             capabilities ??= new List<string>();
@@ -369,6 +361,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new TargetProperties(
                 description,
                 displayName,
+                contextId,
                 targetSpecification,
                 capabilities?.ToList(),
                 hierarchyLevel,
@@ -424,42 +417,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static ComponentStatus ComponentStatus(string name = null, string status = null)
         {
             return new ComponentStatus(name, status, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.WorkflowTemplateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.WorkflowTemplateData"/> instance for mocking. </returns>
-        public static WorkflowTemplateData WorkflowTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkflowTemplateProperties properties = null, string etag = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new WorkflowTemplateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkflowTemplateProperties"/>. </summary>
-        /// <param name="description"> Description of Workflow template. </param>
-        /// <param name="latestVersion"> Latest Workflow template version. </param>
-        /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.WorkflowTemplateProperties"/> instance for mocking. </returns>
-        public static WorkflowTemplateProperties WorkflowTemplateProperties(string description = null, string latestVersion = null, ProvisioningState? provisioningState = null)
-        {
-            return new WorkflowTemplateProperties(description, latestVersion, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigTemplatePatch"/>. </summary>
@@ -531,67 +488,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new RemoveVersionResult(status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationTemplatePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="configurationTemplatePropertiesUpdateDescription"> The resource-specific properties for this resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ConfigurationTemplatePatch"/> instance for mocking. </returns>
-        public static ConfigurationTemplatePatch ConfigurationTemplatePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string configurationTemplatePropertiesUpdateDescription = null, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ConfigurationTemplatePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                configurationTemplatePropertiesUpdateDescription != null ? new ConfigurationTemplatePropertiesUpdate(configurationTemplatePropertiesUpdateDescription, serializedAdditionalRawData: null) : null,
-                tags,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationTemplateVersionWithUpdateType"/>. </summary>
-        /// <param name="updateType"> Update type. </param>
-        /// <param name="version"> Version to create. </param>
-        /// <param name="configurationTemplateVersion"> Configuration Template Version. </param>
-        /// <returns> A new <see cref="Models.ConfigurationTemplateVersionWithUpdateType"/> instance for mocking. </returns>
-        public static ConfigurationTemplateVersionWithUpdateType ConfigurationTemplateVersionWithUpdateType(UpdateType? updateType = null, string version = null, ConfigurationTemplateVersionData configurationTemplateVersion = null)
-        {
-            return new ConfigurationTemplateVersionWithUpdateType(updateType, version, configurationTemplateVersion, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.ConfigurationTemplateVersionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.ConfigurationTemplateVersionData"/> instance for mocking. </returns>
-        public static ConfigurationTemplateVersionData ConfigurationTemplateVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ConfigurationTemplateVersionProperties properties = null, string etag = null)
-        {
-            return new ConfigurationTemplateVersionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationTemplateVersionProperties"/>. </summary>
-        /// <param name="configurations"> Configuration values. </param>
-        /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.ConfigurationTemplateVersionProperties"/> instance for mocking. </returns>
-        public static ConfigurationTemplateVersionProperties ConfigurationTemplateVersionProperties(string configurations = null, ProvisioningState? provisioningState = null)
-        {
-            return new ConfigurationTemplateVersionProperties(configurations, provisioningState, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ContextPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -612,209 +508,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 properties,
                 tags,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.EventGridFilterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.EventGridFilterData"/> instance for mocking. </returns>
-        public static EventGridFilterData EventGridFilterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EventGridFilterProperties properties = null)
-        {
-            return new EventGridFilterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EventGridFilterProperties"/>. </summary>
-        /// <param name="filter"> Filter details. </param>
-        /// <param name="subscriberIdentityInfo"> Subscriber Identity details. </param>
-        /// <param name="provisioningState"> Provisioning State. </param>
-        /// <returns> A new <see cref="Models.EventGridFilterProperties"/> instance for mocking. </returns>
-        public static EventGridFilterProperties EventGridFilterProperties(Filter filter = null, SubscriberIdentityInfo subscriberIdentityInfo = null, ProvisioningState? provisioningState = null)
-        {
-            return new EventGridFilterProperties(filter, subscriberIdentityInfo, provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EventGridFilterPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.EventGridFilterPatch"/> instance for mocking. </returns>
-        public static EventGridFilterPatch EventGridFilterPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EventGridFilterProperties properties = null)
-        {
-            return new EventGridFilterPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkflowExecuteContent"/>. </summary>
-        /// <param name="workflow"> Workflow Name. </param>
-        /// <param name="workflowVersion"> Workflow Version Name. </param>
-        /// <param name="stage"> Workflow first stage. </param>
-        /// <param name="inputs"> Inputs from execution. </param>
-        /// <returns> A new <see cref="Models.WorkflowExecuteContent"/> instance for mocking. </returns>
-        public static WorkflowExecuteContent WorkflowExecuteContent(string workflow = null, string workflowVersion = null, string stage = null, IDictionary<string, BinaryData> inputs = null)
-        {
-            inputs ??= new Dictionary<string, BinaryData>();
-
-            return new WorkflowExecuteContent(workflow, workflowVersion, stage, inputs, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.ExecutionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The complex type of the extended location. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.ExecutionData"/> instance for mocking. </returns>
-        public static ExecutionData ExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExecutionProperties properties = null, AzureResourceManagerCommonTypesExtendedLocation extendedLocation = null, string etag = null)
-        {
-            return new ExecutionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                extendedLocation,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExecutionProperties"/>. </summary>
-        /// <param name="workflowVersionId"> Workflow version of execution. </param>
-        /// <param name="specification"> Execution specification. </param>
-        /// <param name="status"> Status of Execution. </param>
-        /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.ExecutionProperties"/> instance for mocking. </returns>
-        public static ExecutionProperties ExecutionProperties(string workflowVersionId = null, IDictionary<string, BinaryData> specification = null, ExecutionStatus status = null, ProvisioningState? provisioningState = null)
-        {
-            specification ??= new Dictionary<string, BinaryData>();
-
-            return new ExecutionProperties(workflowVersionId, specification, status, provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExecutionStatus"/>. </summary>
-        /// <param name="updateOn"> The lastModified timestamp of the Status. </param>
-        /// <param name="status"> Deployment status. </param>
-        /// <param name="statusMessage"> status details. </param>
-        /// <param name="stageHistory"> target resource statuses. </param>
-        /// <returns> A new <see cref="Models.ExecutionStatus"/> instance for mocking. </returns>
-        public static ExecutionStatus ExecutionStatus(DateTimeOffset? updateOn = null, int? status = null, string statusMessage = null, IEnumerable<StageStatus> stageHistory = null)
-        {
-            stageHistory ??= new List<StageStatus>();
-
-            return new ExecutionStatus(updateOn, status, statusMessage, stageHistory?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StageStatus"/>. </summary>
-        /// <param name="status"> Deployment status. </param>
-        /// <param name="statusMessage"> Status message. </param>
-        /// <param name="stage"> Current stage. </param>
-        /// <param name="nextstage"> Next stage. </param>
-        /// <param name="errorMessage"> Error message. </param>
-        /// <param name="isActive"> whether this stage is active or inactive. </param>
-        /// <param name="inputs"> The inputs of the StageHistory, Inputs holds a key-value map of user-defined parameters for the initial stage. </param>
-        /// <param name="outputs"> The outputs of the StageHistory, it is different as the different input stages. </param>
-        /// <returns> A new <see cref="Models.StageStatus"/> instance for mocking. </returns>
-        public static StageStatus StageStatus(int? status = null, string statusMessage = null, string stage = null, string nextstage = null, string errorMessage = null, ActiveState? isActive = null, IReadOnlyDictionary<string, BinaryData> inputs = null, IReadOnlyDictionary<string, BinaryData> outputs = null)
-        {
-            inputs ??= new Dictionary<string, BinaryData>();
-            outputs ??= new Dictionary<string, BinaryData>();
-
-            return new StageStatus(
-                status,
-                statusMessage,
-                stage,
-                nextstage,
-                errorMessage,
-                isActive,
-                inputs,
-                outputs,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkflowVersionContent"/>. </summary>
-        /// <param name="workflowName"> Workflow Name. </param>
-        /// <param name="workflowVersion"> Workflow Version Name. </param>
-        /// <param name="reviewId"> Review ID. </param>
-        /// <returns> A new <see cref="Models.WorkflowVersionContent"/> instance for mocking. </returns>
-        public static WorkflowVersionContent WorkflowVersionContent(string workflowName = null, string workflowVersion = null, string reviewId = null)
-        {
-            return new WorkflowVersionContent(workflowName, workflowVersion, reviewId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.WorkflowVersionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The complex type of the extended location. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.WorkflowVersionData"/> instance for mocking. </returns>
-        public static WorkflowVersionData WorkflowVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkflowVersionProperties properties = null, AzureResourceManagerCommonTypesExtendedLocation extendedLocation = null, string etag = null)
-        {
-            return new WorkflowVersionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                extendedLocation,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkflowVersionProperties"/>. </summary>
-        /// <param name="revision"> Revision number of resolved config for this workflow version. </param>
-        /// <param name="configuration"> Resolved configuration values. </param>
-        /// <param name="stageSpec"> A list of stage specs. </param>
-        /// <param name="reviewId"> Review id of resolved config for this workflow version. </param>
-        /// <param name="state"> State of workflow version. </param>
-        /// <param name="specification"> Execution specification. </param>
-        /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.WorkflowVersionProperties"/> instance for mocking. </returns>
-        public static WorkflowVersionProperties WorkflowVersionProperties(int? revision = null, string configuration = null, IEnumerable<StageSpec> stageSpec = null, string reviewId = null, State? state = null, IDictionary<string, BinaryData> specification = null, ProvisioningState? provisioningState = null)
-        {
-            stageSpec ??= new List<StageSpec>();
-            specification ??= new Dictionary<string, BinaryData>();
-
-            return new WorkflowVersionProperties(
-                revision,
-                configuration,
-                stageSpec?.ToList(),
-                reviewId,
-                state,
-                specification,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkflowTemplateReviewContent"/>. </summary>
-        /// <param name="workflowTemplateName"> Workflow Template Name. </param>
-        /// <param name="workflowTemplateVersion"> Workflow Template Version Name. </param>
-        /// <param name="stageTargetMap"> Stage to Target Map. </param>
-        /// <returns> A new <see cref="Models.WorkflowTemplateReviewContent"/> instance for mocking. </returns>
-        public static WorkflowTemplateReviewContent WorkflowTemplateReviewContent(string workflowTemplateName = null, string workflowTemplateVersion = null, IDictionary<string, BinaryData> stageTargetMap = null)
-        {
-            stageTargetMap ??= new Dictionary<string, BinaryData>();
-
-            return new WorkflowTemplateReviewContent(workflowTemplateName, workflowTemplateVersion, stageTargetMap, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.SiteReferenceData"/>. </summary>
@@ -911,6 +604,53 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.WorkflowVersionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The complex type of the extended location. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="WorkloadOrchestration.WorkflowVersionData"/> instance for mocking. </returns>
+        public static WorkflowVersionData WorkflowVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkflowVersionProperties properties = null, AzureResourceManagerCommonTypesExtendedLocation extendedLocation = null, string etag = null)
+        {
+            return new WorkflowVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                extendedLocation,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkflowVersionProperties"/>. </summary>
+        /// <param name="revision"> Revision number of resolved config for this workflow version. </param>
+        /// <param name="configuration"> Resolved configuration values. </param>
+        /// <param name="stageSpec"> A list of stage specs. </param>
+        /// <param name="reviewId"> Review id of resolved config for this workflow version. </param>
+        /// <param name="state"> State of workflow version. </param>
+        /// <param name="specification"> Execution specification. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="Models.WorkflowVersionProperties"/> instance for mocking. </returns>
+        public static WorkflowVersionProperties WorkflowVersionProperties(int? revision = null, string configuration = null, IEnumerable<StageSpec> stageSpec = null, string reviewId = null, State? state = null, IDictionary<string, BinaryData> specification = null, ProvisioningState? provisioningState = null)
+        {
+            stageSpec ??= new List<StageSpec>();
+            specification ??= new Dictionary<string, BinaryData>();
+
+            return new WorkflowVersionProperties(
+                revision,
+                configuration,
+                stageSpec?.ToList(),
+                reviewId,
+                state,
+                specification,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.WorkflowVersionPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -926,6 +666,81 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 resourceType,
                 systemData,
                 properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.ExecutionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The complex type of the extended location. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="WorkloadOrchestration.ExecutionData"/> instance for mocking. </returns>
+        public static ExecutionData ExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExecutionProperties properties = null, AzureResourceManagerCommonTypesExtendedLocation extendedLocation = null, string etag = null)
+        {
+            return new ExecutionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                extendedLocation,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExecutionProperties"/>. </summary>
+        /// <param name="workflowVersionId"> Workflow version of execution. </param>
+        /// <param name="specification"> Execution specification. </param>
+        /// <param name="status"> Status of Execution. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="Models.ExecutionProperties"/> instance for mocking. </returns>
+        public static ExecutionProperties ExecutionProperties(string workflowVersionId = null, IDictionary<string, BinaryData> specification = null, ExecutionStatus status = null, ProvisioningState? provisioningState = null)
+        {
+            specification ??= new Dictionary<string, BinaryData>();
+
+            return new ExecutionProperties(workflowVersionId, specification, status, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExecutionStatus"/>. </summary>
+        /// <param name="updateOn"> The lastModified timestamp of the Status. </param>
+        /// <param name="status"> Deployment status. </param>
+        /// <param name="statusMessage"> status details. </param>
+        /// <param name="stageHistory"> target resource statuses. </param>
+        /// <returns> A new <see cref="Models.ExecutionStatus"/> instance for mocking. </returns>
+        public static ExecutionStatus ExecutionStatus(DateTimeOffset? updateOn = null, int? status = null, string statusMessage = null, IEnumerable<StageStatus> stageHistory = null)
+        {
+            stageHistory ??= new List<StageStatus>();
+
+            return new ExecutionStatus(updateOn, status, statusMessage, stageHistory?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StageStatus"/>. </summary>
+        /// <param name="status"> Deployment status. </param>
+        /// <param name="statusMessage"> Status message. </param>
+        /// <param name="stage"> Current stage. </param>
+        /// <param name="nextstage"> Next stage. </param>
+        /// <param name="errorMessage"> Error message. </param>
+        /// <param name="isActive"> whether this stage is active or inactive. </param>
+        /// <param name="inputs"> The inputs of the StageHistory, Inputs holds a key-value map of user-defined parameters for the initial stage. </param>
+        /// <param name="outputs"> The outputs of the StageHistory, it is different as the different input stages. </param>
+        /// <returns> A new <see cref="Models.StageStatus"/> instance for mocking. </returns>
+        public static StageStatus StageStatus(int? status = null, string statusMessage = null, string stage = null, string nextstage = null, string errorMessage = null, ActiveState? isActive = null, IReadOnlyDictionary<string, BinaryData> inputs = null, IReadOnlyDictionary<string, BinaryData> outputs = null)
+        {
+            inputs ??= new Dictionary<string, BinaryData>();
+            outputs ??= new Dictionary<string, BinaryData>();
+
+            return new StageStatus(
+                status,
+                statusMessage,
+                stage,
+                nextstage,
+                errorMessage,
+                isActive,
+                inputs,
+                outputs,
                 serializedAdditionalRawData: null);
         }
 
@@ -1208,28 +1023,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new BulkPublishTargetDetails(targetId, solutionInstanceName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TargetTemplatePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.TargetTemplatePatch"/> instance for mocking. </returns>
-        public static TargetTemplatePatch TargetTemplatePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TargetTemplatePropertiesUpdate properties = null, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new TargetTemplatePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                tags,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.TargetPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1287,9 +1080,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionInstanceName"> Solution instance name. </param>
         /// <param name="solutionDependencies"> Solution Dependency Context. </param>
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
+        /// <param name="latestActionTrackingUri"> The URI for tracking the latest action performed on this solution version. </param>
+        /// <param name="actionType"> The type of the latest action performed on this solution version. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.SolutionVersionProperties"/> instance for mocking. </returns>
-        public static SolutionVersionProperties SolutionVersionProperties(string solutionTemplateVersionId = null, int? revision = null, string targetDisplayName = null, string configuration = null, string targetLevelConfiguration = null, IDictionary<string, BinaryData> specification = null, string reviewId = null, string externalValidationId = null, State? state = null, string solutionInstanceName = null, IEnumerable<SolutionDependency> solutionDependencies = null, ResponseError errorDetails = null, ProvisioningState? provisioningState = null)
+        public static SolutionVersionProperties SolutionVersionProperties(string solutionTemplateVersionId = null, int? revision = null, string targetDisplayName = null, string configuration = null, string targetLevelConfiguration = null, IDictionary<string, BinaryData> specification = null, string reviewId = null, string externalValidationId = null, State? state = null, string solutionInstanceName = null, IEnumerable<SolutionDependency> solutionDependencies = null, ResponseError errorDetails = null, string latestActionTrackingUri = null, JobType? actionType = null, ProvisioningState? provisioningState = null)
         {
             specification ??= new Dictionary<string, BinaryData>();
             solutionDependencies ??= new List<SolutionDependency>();
@@ -1307,6 +1102,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 solutionInstanceName,
                 solutionDependencies?.ToList(),
                 errorDetails,
+                latestActionTrackingUri,
+                actionType,
                 provisioningState,
                 serializedAdditionalRawData: null);
         }
@@ -1332,16 +1129,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SolutionTemplateContent"/>. </summary>
-        /// <param name="solutionTemplate"> Solution Template Name. </param>
-        /// <param name="solutionTemplateVersion"> Solution Template Version Name. </param>
+        /// <param name="solutionTemplateVersionId"> Solution Template Version ARM Id. </param>
         /// <param name="solutionInstanceName"> Solution Instance Name. </param>
         /// <param name="solutionDependencies"> Solution Dependencies. </param>
         /// <returns> A new <see cref="Models.SolutionTemplateContent"/> instance for mocking. </returns>
-        public static SolutionTemplateContent SolutionTemplateContent(string solutionTemplate = null, string solutionTemplateVersion = null, string solutionInstanceName = null, IEnumerable<SolutionDependencyContent> solutionDependencies = null)
+        public static SolutionTemplateContent SolutionTemplateContent(string solutionTemplateVersionId = null, string solutionInstanceName = null, IEnumerable<SolutionDependencyContent> solutionDependencies = null)
         {
             solutionDependencies ??= new List<SolutionDependencyContent>();
 
-            return new SolutionTemplateContent(solutionTemplate, solutionTemplateVersion, solutionInstanceName, solutionDependencies?.ToList(), serializedAdditionalRawData: null);
+            return new SolutionTemplateContent(solutionTemplateVersionId, solutionInstanceName, solutionDependencies?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResolvedConfiguration"/>. </summary>
@@ -1566,12 +1362,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UninstallSolutionContent"/>. </summary>
-        /// <param name="solutionName"> Solution Name. </param>
+        /// <param name="solutionTemplateId"> Solution Template ARM Id. </param>
         /// <param name="solutionInstanceName"> Solution Instance Name. </param>
         /// <returns> A new <see cref="Models.UninstallSolutionContent"/> instance for mocking. </returns>
-        public static UninstallSolutionContent UninstallSolutionContent(string solutionName = null, string solutionInstanceName = null)
+        public static UninstallSolutionContent UninstallSolutionContent(string solutionTemplateId = null, string solutionInstanceName = null)
         {
-            return new UninstallSolutionContent(solutionName, solutionInstanceName, serializedAdditionalRawData: null);
+            return new UninstallSolutionContent(solutionTemplateId, solutionInstanceName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UpdateExternalValidationStatusContent"/>. </summary>
@@ -1583,78 +1379,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static UpdateExternalValidationStatusContent UpdateExternalValidationStatusContent(string solutionVersionId = null, ResponseError errorDetails = null, string externalValidationId = null, ValidationStatus validationStatus = default)
         {
             return new UpdateExternalValidationStatusContent(solutionVersionId, errorDetails, externalValidationId, validationStatus, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkflowTemplatePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.WorkflowTemplatePatch"/> instance for mocking. </returns>
-        public static WorkflowTemplatePatch WorkflowTemplatePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkflowTemplatePropertiesUpdate properties = null, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new WorkflowTemplatePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                tags,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WorkloadOrchestration.WorkflowTemplateVersionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="WorkloadOrchestration.WorkflowTemplateVersionData"/> instance for mocking. </returns>
-        public static WorkflowTemplateVersionData WorkflowTemplateVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkflowTemplateVersionProperties properties = null, string etag = null)
-        {
-            return new WorkflowTemplateVersionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkflowTemplateVersionProperties"/>. </summary>
-        /// <param name="configurations"> Config expressions for this workflow version. </param>
-        /// <param name="stageSpecTemplate"> workflow template specification. </param>
-        /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <returns> A new <see cref="Models.WorkflowTemplateVersionProperties"/> instance for mocking. </returns>
-        public static WorkflowTemplateVersionProperties WorkflowTemplateVersionProperties(string configurations = null, IEnumerable<StageSpecTemplate> stageSpecTemplate = null, ProvisioningState? provisioningState = null)
-        {
-            stageSpecTemplate ??= new List<StageSpecTemplate>();
-
-            return new WorkflowTemplateVersionProperties(configurations, stageSpecTemplate?.ToList(), provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WorkflowTemplateVersionPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.WorkflowTemplateVersionPatch"/> instance for mocking. </returns>
-        public static WorkflowTemplateVersionPatch WorkflowTemplateVersionPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkflowTemplateVersionPropertiesUpdate properties = null)
-        {
-            return new WorkflowTemplateVersionPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
         }
     }
 }

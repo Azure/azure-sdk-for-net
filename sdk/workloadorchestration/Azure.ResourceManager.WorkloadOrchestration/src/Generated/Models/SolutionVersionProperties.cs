@@ -69,9 +69,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionInstanceName"> Solution instance name. </param>
         /// <param name="solutionDependencies"> Solution Dependency Context. </param>
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
+        /// <param name="latestActionTrackingUri"> The URI for tracking the latest action performed on this solution version. </param>
+        /// <param name="actionType"> The type of the latest action performed on this solution version. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionVersionProperties(string solutionTemplateVersionId, int? revision, string targetDisplayName, string configuration, string targetLevelConfiguration, IDictionary<string, BinaryData> specification, string reviewId, string externalValidationId, State? state, string solutionInstanceName, IReadOnlyList<SolutionDependency> solutionDependencies, ResponseError errorDetails, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionVersionProperties(string solutionTemplateVersionId, int? revision, string targetDisplayName, string configuration, string targetLevelConfiguration, IDictionary<string, BinaryData> specification, string reviewId, string externalValidationId, State? state, string solutionInstanceName, IReadOnlyList<SolutionDependency> solutionDependencies, ResponseError errorDetails, string latestActionTrackingUri, JobType? actionType, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionTemplateVersionId = solutionTemplateVersionId;
             Revision = revision;
@@ -85,6 +87,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             SolutionInstanceName = solutionInstanceName;
             SolutionDependencies = solutionDependencies;
             ErrorDetails = errorDetails;
+            LatestActionTrackingUri = latestActionTrackingUri;
+            ActionType = actionType;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -147,6 +151,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public IReadOnlyList<SolutionDependency> SolutionDependencies { get; }
         /// <summary> Error Details if any failure is there. </summary>
         public ResponseError ErrorDetails { get; }
+        /// <summary> The URI for tracking the latest action performed on this solution version. </summary>
+        public string LatestActionTrackingUri { get; }
+        /// <summary> The type of the latest action performed on this solution version. </summary>
+        public JobType? ActionType { get; }
         /// <summary> Provisioning state of resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

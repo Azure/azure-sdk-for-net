@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_ExecutionsCreateOrUpdateMaximumSet()
+        public async Task CreateOrUpdate_ExecutionsCreateOrUpdateMaximumSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Executions_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Executions_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "Executions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
             // this example assumes you already have this WorkflowVersionResource created on azure
             // for more information of creating WorkflowVersionResource, please refer to the document of WorkflowVersionResource
-            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
+            string subscriptionId = "EE6D9590-0D52-4B1C-935C-FE49DBF838EB";
             string resourceGroupName = "rgconfigurationmanager";
-            string contextName = "testname";
-            string workflowName = "testname";
-            string versionName = "testname";
+            string contextName = "abcde";
+            string workflowName = "abcde";
+            string versionName = "abcde";
             ResourceIdentifier workflowVersionResourceId = WorkflowVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, contextName, workflowName, versionName);
             WorkflowVersionResource workflowVersion = client.GetWorkflowVersionResource(workflowVersionResourceId);
 
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             ExecutionCollection collection = workflowVersion.GetExecutions();
 
             // invoke the operation
-            string executionName = "testname";
+            string executionName = "abcde";
             ExecutionData data = new ExecutionData
             {
-                Properties = new ExecutionProperties("iayjygxfcuavyksynoidukxcuffku")
+                Properties = new ExecutionProperties("souenlqwltljsojdcbpc")
                 {
                     Specification = { },
                 },
-                ExtendedLocation = new AzureResourceManagerCommonTypesExtendedLocation("szjrwimeqyiue", ExtendedLocationType.EdgeZone),
+                ExtendedLocation = new AzureResourceManagerCommonTypesExtendedLocation("ugf", ExtendedLocationType.EdgeZone),
             };
             ArmOperation<ExecutionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, executionName, data);
             ExecutionResource result = lro.Value;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_ExecutionsGetMaximumSet()
+        public async Task Get_ExecutionsGetMaximumSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Executions_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Executions_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Executions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
             // this example assumes you already have this WorkflowVersionResource created on azure
             // for more information of creating WorkflowVersionResource, please refer to the document of WorkflowVersionResource
-            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
+            string subscriptionId = "EE6D9590-0D52-4B1C-935C-FE49DBF838EB";
             string resourceGroupName = "rgconfigurationmanager";
-            string contextName = "testname";
-            string workflowName = "testname";
-            string versionName = "testname";
+            string contextName = "abcde";
+            string workflowName = "abcde";
+            string versionName = "abcde";
             ResourceIdentifier workflowVersionResourceId = WorkflowVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, contextName, workflowName, versionName);
             WorkflowVersionResource workflowVersion = client.GetWorkflowVersionResource(workflowVersionResourceId);
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             ExecutionCollection collection = workflowVersion.GetExecutions();
 
             // invoke the operation
-            string executionName = "testname";
+            string executionName = "abcde";
             ExecutionResource result = await collection.GetAsync(executionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ExecutionsListByWorkflowVersionMaximumSet()
+        public async Task GetAll_ExecutionsListByWorkflowVersionMaximumSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Executions_ListByWorkflowVersion_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Executions_ListByWorkflowVersion_MaximumSet_Gen.json
             // this example is just showing the usage of "Executions_ListByWorkflowVersion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
             // this example assumes you already have this WorkflowVersionResource created on azure
             // for more information of creating WorkflowVersionResource, please refer to the document of WorkflowVersionResource
-            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
+            string subscriptionId = "EE6D9590-0D52-4B1C-935C-FE49DBF838EB";
             string resourceGroupName = "rgconfigurationmanager";
-            string contextName = "testname";
-            string workflowName = "testname";
-            string versionName = "testname";
+            string contextName = "abcde";
+            string workflowName = "abcde";
+            string versionName = "abcde";
             ResourceIdentifier workflowVersionResourceId = WorkflowVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, contextName, workflowName, versionName);
             WorkflowVersionResource workflowVersion = client.GetWorkflowVersionResource(workflowVersionResourceId);
 
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_ExecutionsGetMaximumSet()
+        public async Task Exists_ExecutionsGetMaximumSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Executions_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Executions_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Executions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
             // this example assumes you already have this WorkflowVersionResource created on azure
             // for more information of creating WorkflowVersionResource, please refer to the document of WorkflowVersionResource
-            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
+            string subscriptionId = "EE6D9590-0D52-4B1C-935C-FE49DBF838EB";
             string resourceGroupName = "rgconfigurationmanager";
-            string contextName = "testname";
-            string workflowName = "testname";
-            string versionName = "testname";
+            string contextName = "abcde";
+            string workflowName = "abcde";
+            string versionName = "abcde";
             ResourceIdentifier workflowVersionResourceId = WorkflowVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, contextName, workflowName, versionName);
             WorkflowVersionResource workflowVersion = client.GetWorkflowVersionResource(workflowVersionResourceId);
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             ExecutionCollection collection = workflowVersion.GetExecutions();
 
             // invoke the operation
-            string executionName = "testname";
+            string executionName = "abcde";
             bool result = await collection.ExistsAsync(executionName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -169,9 +169,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_ExecutionsGetMaximumSet()
+        public async Task GetIfExists_ExecutionsGetMaximumSetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/preview/2025-06-01-preview/examples/Executions_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/edge/resource-manager/Microsoft.Edge/configurationmanager/stable/2025-06-01/examples/Executions_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Executions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
 
             // this example assumes you already have this WorkflowVersionResource created on azure
             // for more information of creating WorkflowVersionResource, please refer to the document of WorkflowVersionResource
-            string subscriptionId = "9D54FE4C-00AF-4836-8F48-B6A9C4E47192";
+            string subscriptionId = "EE6D9590-0D52-4B1C-935C-FE49DBF838EB";
             string resourceGroupName = "rgconfigurationmanager";
-            string contextName = "testname";
-            string workflowName = "testname";
-            string versionName = "testname";
+            string contextName = "abcde";
+            string workflowName = "abcde";
+            string versionName = "abcde";
             ResourceIdentifier workflowVersionResourceId = WorkflowVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, contextName, workflowName, versionName);
             WorkflowVersionResource workflowVersion = client.GetWorkflowVersionResource(workflowVersionResourceId);
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Samples
             ExecutionCollection collection = workflowVersion.GetExecutions();
 
             // invoke the operation
-            string executionName = "testname";
+            string executionName = "abcde";
             NullableResponse<ExecutionResource> response = await collection.GetIfExistsAsync(executionName);
             ExecutionResource result = response.HasValue ? response.Value : null;
 

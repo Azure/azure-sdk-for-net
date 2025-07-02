@@ -17,8 +17,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
     {
         private ClientDiagnostics _configTemplateClientDiagnostics;
         private ConfigTemplatesRestOperations _configTemplateRestClient;
-        private ClientDiagnostics _configurationTemplateClientDiagnostics;
-        private ConfigurationTemplatesRestOperations _configurationTemplateRestClient;
         private ClientDiagnostics _contextClientDiagnostics;
         private ContextsRestOperations _contextRestClient;
         private ClientDiagnostics _diagnosticClientDiagnostics;
@@ -27,12 +25,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         private SchemasRestOperations _schemaRestClient;
         private ClientDiagnostics _solutionTemplateClientDiagnostics;
         private SolutionTemplatesRestOperations _solutionTemplateRestClient;
-        private ClientDiagnostics _targetTemplateClientDiagnostics;
-        private TargetTemplatesRestOperations _targetTemplateRestClient;
         private ClientDiagnostics _targetClientDiagnostics;
         private TargetsRestOperations _targetRestClient;
-        private ClientDiagnostics _workflowTemplateClientDiagnostics;
-        private WorkflowTemplatesRestOperations _workflowTemplateRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableWorkloadOrchestrationSubscriptionResource"/> class for mocking. </summary>
         protected MockableWorkloadOrchestrationSubscriptionResource()
@@ -48,8 +42,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
 
         private ClientDiagnostics ConfigTemplateClientDiagnostics => _configTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ConfigTemplateResource.ResourceType.Namespace, Diagnostics);
         private ConfigTemplatesRestOperations ConfigTemplateRestClient => _configTemplateRestClient ??= new ConfigTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfigTemplateResource.ResourceType));
-        private ClientDiagnostics ConfigurationTemplateClientDiagnostics => _configurationTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ConfigurationTemplateResource.ResourceType.Namespace, Diagnostics);
-        private ConfigurationTemplatesRestOperations ConfigurationTemplateRestClient => _configurationTemplateRestClient ??= new ConfigurationTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ConfigurationTemplateResource.ResourceType));
         private ClientDiagnostics ContextClientDiagnostics => _contextClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", ContextResource.ResourceType.Namespace, Diagnostics);
         private ContextsRestOperations ContextRestClient => _contextRestClient ??= new ContextsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContextResource.ResourceType));
         private ClientDiagnostics DiagnosticClientDiagnostics => _diagnosticClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", DiagnosticResource.ResourceType.Namespace, Diagnostics);
@@ -58,12 +50,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         private SchemasRestOperations SchemaRestClient => _schemaRestClient ??= new SchemasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SchemaResource.ResourceType));
         private ClientDiagnostics SolutionTemplateClientDiagnostics => _solutionTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", SolutionTemplateResource.ResourceType.Namespace, Diagnostics);
         private SolutionTemplatesRestOperations SolutionTemplateRestClient => _solutionTemplateRestClient ??= new SolutionTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SolutionTemplateResource.ResourceType));
-        private ClientDiagnostics TargetTemplateClientDiagnostics => _targetTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", TargetTemplateResource.ResourceType.Namespace, Diagnostics);
-        private TargetTemplatesRestOperations TargetTemplateRestClient => _targetTemplateRestClient ??= new TargetTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TargetTemplateResource.ResourceType));
         private ClientDiagnostics TargetClientDiagnostics => _targetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", TargetResource.ResourceType.Namespace, Diagnostics);
         private TargetsRestOperations TargetRestClient => _targetRestClient ??= new TargetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TargetResource.ResourceType));
-        private ClientDiagnostics WorkflowTemplateClientDiagnostics => _workflowTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", WorkflowTemplateResource.ResourceType.Namespace, Diagnostics);
-        private WorkflowTemplatesRestOperations WorkflowTemplateRestClient => _workflowTemplateRestClient ??= new WorkflowTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WorkflowTemplateResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -84,7 +72,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -114,7 +102,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -136,66 +124,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/configurationTemplates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationTemplates_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfigurationTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigurationTemplateResource> GetConfigurationTemplatesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfigurationTemplateResource(Client, ConfigurationTemplateData.DeserializeConfigurationTemplateData(e)), ConfigurationTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetConfigurationTemplates", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/configurationTemplates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationTemplates_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfigurationTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigurationTemplateResource> GetConfigurationTemplates(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfigurationTemplateResource(Client, ConfigurationTemplateData.DeserializeConfigurationTemplateData(e)), ConfigurationTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetConfigurationTemplates", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/contexts</description>
         /// </item>
         /// <item>
@@ -204,7 +132,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -234,7 +162,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -264,7 +192,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,7 +222,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -324,7 +252,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -354,7 +282,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -384,7 +312,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -414,7 +342,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -436,66 +364,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/targetTemplates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetTemplates_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TargetTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TargetTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TargetTemplateResource> GetTargetTemplatesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TargetTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TargetTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TargetTemplateResource(Client, TargetTemplateData.DeserializeTargetTemplateData(e)), TargetTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetTargetTemplates", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/targetTemplates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TargetTemplates_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TargetTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TargetTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TargetTemplateResource> GetTargetTemplates(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TargetTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TargetTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TargetTemplateResource(Client, TargetTemplateData.DeserializeTargetTemplateData(e)), TargetTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetTargetTemplates", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/targets</description>
         /// </item>
         /// <item>
@@ -504,7 +372,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -534,7 +402,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -549,66 +417,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => TargetRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TargetRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TargetResource(Client, TargetData.DeserializeTargetData(e)), TargetClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetTargets", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/workflowTemplates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTemplates_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkflowTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkflowTemplateResource> GetWorkflowTemplatesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkflowTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkflowTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkflowTemplateResource(Client, WorkflowTemplateData.DeserializeWorkflowTemplateData(e)), WorkflowTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetWorkflowTemplates", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/workflowTemplates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkflowTemplates_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkflowTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkflowTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkflowTemplateResource> GetWorkflowTemplates(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WorkflowTemplateRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkflowTemplateRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkflowTemplateResource(Client, WorkflowTemplateData.DeserializeWorkflowTemplateData(e)), WorkflowTemplateClientDiagnostics, Pipeline, "MockableWorkloadOrchestrationSubscriptionResource.GetWorkflowTemplates", "value", "nextLink", cancellationToken);
         }
     }
 }

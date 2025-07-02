@@ -46,25 +46,25 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RemoveRevisionContent"/>. </summary>
-        /// <param name="solution"> Solution Name. </param>
+        /// <param name="solutionTemplateId"> Solution Template ARM Id. </param>
         /// <param name="solutionVersion"> Solution Version Name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solution"/> or <paramref name="solutionVersion"/> is null. </exception>
-        public RemoveRevisionContent(string solution, string solutionVersion)
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionTemplateId"/> or <paramref name="solutionVersion"/> is null. </exception>
+        public RemoveRevisionContent(string solutionTemplateId, string solutionVersion)
         {
-            Argument.AssertNotNull(solution, nameof(solution));
+            Argument.AssertNotNull(solutionTemplateId, nameof(solutionTemplateId));
             Argument.AssertNotNull(solutionVersion, nameof(solutionVersion));
 
-            Solution = solution;
+            SolutionTemplateId = solutionTemplateId;
             SolutionVersion = solutionVersion;
         }
 
         /// <summary> Initializes a new instance of <see cref="RemoveRevisionContent"/>. </summary>
-        /// <param name="solution"> Solution Name. </param>
+        /// <param name="solutionTemplateId"> Solution Template ARM Id. </param>
         /// <param name="solutionVersion"> Solution Version Name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemoveRevisionContent(string solution, string solutionVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RemoveRevisionContent(string solutionTemplateId, string solutionVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Solution = solution;
+            SolutionTemplateId = solutionTemplateId;
             SolutionVersion = solutionVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         {
         }
 
-        /// <summary> Solution Name. </summary>
-        public string Solution { get; }
+        /// <summary> Solution Template ARM Id. </summary>
+        public string SolutionTemplateId { get; }
         /// <summary> Solution Version Name. </summary>
         public string SolutionVersion { get; }
     }

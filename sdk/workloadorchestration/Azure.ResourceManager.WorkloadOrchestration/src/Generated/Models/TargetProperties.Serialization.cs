@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             writer.WriteStringValue(Description);
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
+            writer.WritePropertyName("contextId"u8);
+            writer.WriteStringValue(ContextId);
             writer.WritePropertyName("targetSpecification"u8);
             writer.WriteStartObject();
             foreach (var item in TargetSpecification)
@@ -126,6 +128,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
             string description = default;
             string displayName = default;
+            ResourceIdentifier contextId = default;
             IDictionary<string, BinaryData> targetSpecification = default;
             IList<string> capabilities = default;
             string hierarchyLevel = default;
@@ -145,6 +148,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("contextId"u8))
+                {
+                    contextId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetSpecification"u8))
@@ -220,6 +228,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new TargetProperties(
                 description,
                 displayName,
+                contextId,
                 targetSpecification,
                 capabilities,
                 hierarchyLevel,

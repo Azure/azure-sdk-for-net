@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -49,20 +50,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="TargetProperties"/>. </summary>
         /// <param name="description"> Description of target. </param>
         /// <param name="displayName"> Display name of target. </param>
+        /// <param name="contextId"> ArmId of Context. </param>
         /// <param name="targetSpecification"> target spec. </param>
         /// <param name="capabilities"> List of capabilities. </param>
         /// <param name="hierarchyLevel"> Hierarchy Level. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="description"/>, <paramref name="displayName"/>, <paramref name="targetSpecification"/>, <paramref name="capabilities"/> or <paramref name="hierarchyLevel"/> is null. </exception>
-        public TargetProperties(string description, string displayName, IDictionary<string, BinaryData> targetSpecification, IEnumerable<string> capabilities, string hierarchyLevel)
+        /// <exception cref="ArgumentNullException"> <paramref name="description"/>, <paramref name="displayName"/>, <paramref name="contextId"/>, <paramref name="targetSpecification"/>, <paramref name="capabilities"/> or <paramref name="hierarchyLevel"/> is null. </exception>
+        public TargetProperties(string description, string displayName, ResourceIdentifier contextId, IDictionary<string, BinaryData> targetSpecification, IEnumerable<string> capabilities, string hierarchyLevel)
         {
             Argument.AssertNotNull(description, nameof(description));
             Argument.AssertNotNull(displayName, nameof(displayName));
+            Argument.AssertNotNull(contextId, nameof(contextId));
             Argument.AssertNotNull(targetSpecification, nameof(targetSpecification));
             Argument.AssertNotNull(capabilities, nameof(capabilities));
             Argument.AssertNotNull(hierarchyLevel, nameof(hierarchyLevel));
 
             Description = description;
             DisplayName = displayName;
+            ContextId = contextId;
             TargetSpecification = targetSpecification;
             Capabilities = capabilities.ToList();
             HierarchyLevel = hierarchyLevel;
@@ -71,6 +75,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="TargetProperties"/>. </summary>
         /// <param name="description"> Description of target. </param>
         /// <param name="displayName"> Display name of target. </param>
+        /// <param name="contextId"> ArmId of Context. </param>
         /// <param name="targetSpecification"> target spec. </param>
         /// <param name="capabilities"> List of capabilities. </param>
         /// <param name="hierarchyLevel"> Hierarchy Level. </param>
@@ -79,10 +84,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="state"> State of resource. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetProperties(string description, string displayName, IDictionary<string, BinaryData> targetSpecification, IList<string> capabilities, string hierarchyLevel, DeploymentStatus status, string solutionScope, ResourceState? state, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TargetProperties(string description, string displayName, ResourceIdentifier contextId, IDictionary<string, BinaryData> targetSpecification, IList<string> capabilities, string hierarchyLevel, DeploymentStatus status, string solutionScope, ResourceState? state, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             DisplayName = displayName;
+            ContextId = contextId;
             TargetSpecification = targetSpecification;
             Capabilities = capabilities;
             HierarchyLevel = hierarchyLevel;
@@ -102,6 +108,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public string Description { get; set; }
         /// <summary> Display name of target. </summary>
         public string DisplayName { get; set; }
+        /// <summary> ArmId of Context. </summary>
+        public ResourceIdentifier ContextId { get; set; }
         /// <summary>
         /// target spec
         /// <para>

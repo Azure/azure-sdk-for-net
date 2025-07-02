@@ -114,6 +114,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 writer.WritePropertyName("errorDetails"u8);
                 JsonSerializer.Serialize(writer, ErrorDetails);
             }
+            if (options.Format != "W" && Optional.IsDefined(LatestActionTrackingUri))
+            {
+                writer.WritePropertyName("latestActionTrackingUri"u8);
+                writer.WriteStringValue(LatestActionTrackingUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActionType))
+            {
+                writer.WritePropertyName("actionType"u8);
+                writer.WriteStringValue(ActionType.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -168,6 +178,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             string solutionInstanceName = default;
             IReadOnlyList<SolutionDependency> solutionDependencies = default;
             ResponseError errorDetails = default;
+            string latestActionTrackingUri = default;
+            JobType? actionType = default;
             ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -266,6 +278,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     errorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("latestActionTrackingUri"u8))
+                {
+                    latestActionTrackingUri = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("actionType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    actionType = new JobType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -294,6 +320,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 solutionInstanceName,
                 solutionDependencies ?? new ChangeTrackingList<SolutionDependency>(),
                 errorDetails,
+                latestActionTrackingUri,
+                actionType,
                 provisioningState,
                 serializedAdditionalRawData);
         }

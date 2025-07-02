@@ -46,31 +46,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SolutionVersionContent"/>. </summary>
-        /// <param name="solution"> Solution Name. </param>
-        /// <param name="solutionVersion"> Solution Version Name. </param>
-        /// <param name="reviewId"> Review ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solution"/>, <paramref name="solutionVersion"/> or <paramref name="reviewId"/> is null. </exception>
-        public SolutionVersionContent(string solution, string solutionVersion, string reviewId)
+        /// <param name="solutionVersionId"> Solution Version ARM Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionVersionId"/> is null. </exception>
+        public SolutionVersionContent(string solutionVersionId)
         {
-            Argument.AssertNotNull(solution, nameof(solution));
-            Argument.AssertNotNull(solutionVersion, nameof(solutionVersion));
-            Argument.AssertNotNull(reviewId, nameof(reviewId));
+            Argument.AssertNotNull(solutionVersionId, nameof(solutionVersionId));
 
-            Solution = solution;
-            SolutionVersion = solutionVersion;
-            ReviewId = reviewId;
+            SolutionVersionId = solutionVersionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="SolutionVersionContent"/>. </summary>
-        /// <param name="solution"> Solution Name. </param>
-        /// <param name="solutionVersion"> Solution Version Name. </param>
-        /// <param name="reviewId"> Review ID. </param>
+        /// <param name="solutionVersionId"> Solution Version ARM Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionVersionContent(string solution, string solutionVersion, string reviewId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionVersionContent(string solutionVersionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Solution = solution;
-            SolutionVersion = solutionVersion;
-            ReviewId = reviewId;
+            SolutionVersionId = solutionVersionId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -79,11 +69,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         {
         }
 
-        /// <summary> Solution Name. </summary>
-        public string Solution { get; }
-        /// <summary> Solution Version Name. </summary>
-        public string SolutionVersion { get; }
-        /// <summary> Review ID. </summary>
-        public string ReviewId { get; }
+        /// <summary> Solution Version ARM Id. </summary>
+        public string SolutionVersionId { get; }
     }
 }

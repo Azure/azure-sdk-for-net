@@ -36,33 +36,39 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("specification"u8);
-            writer.WriteStartObject();
-            foreach (var item in Specification)
+            if (Optional.IsCollectionDefined(Specification))
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("specification"u8);
+                writer.WriteStartObject();
+                foreach (var item in Specification)
                 {
-                    writer.WriteNullValue();
-                    continue;
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("tasks"u8);
-            writer.WriteStartArray();
-            foreach (var item in Tasks)
+            if (Optional.IsCollectionDefined(Tasks))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("tasks"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tasks)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (Optional.IsDefined(TaskOption))
             {
                 writer.WritePropertyName("taskOption"u8);
@@ -120,6 +126,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (property.NameEquals("specification"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -137,6 +147,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (property.NameEquals("tasks"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<TaskSpec> array = new List<TaskSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -160,7 +174,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StageSpec(name, specification, tasks, taskOption, serializedAdditionalRawData);
+            return new StageSpec(name, specification ?? new ChangeTrackingDictionary<string, BinaryData>(), tasks ?? new ChangeTrackingList<TaskSpec>(), taskOption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StageSpec>.Write(ModelReaderWriterOptions options)

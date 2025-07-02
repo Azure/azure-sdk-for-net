@@ -34,10 +34,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 throw new FormatException($"The model {nameof(InstallSolutionContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("solution"u8);
-            writer.WriteStringValue(Solution);
-            writer.WritePropertyName("solutionVersion"u8);
-            writer.WriteStringValue(SolutionVersion);
+            writer.WritePropertyName("solutionVersionId"u8);
+            writer.WriteStringValue(SolutionVersionId);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,20 +73,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
-            string solution = default;
-            string solutionVersion = default;
+            string solutionVersionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("solution"u8))
+                if (property.NameEquals("solutionVersionId"u8))
                 {
-                    solution = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("solutionVersion"u8))
-                {
-                    solutionVersion = property.Value.GetString();
+                    solutionVersionId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +89,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InstallSolutionContent(solution, solutionVersion, serializedAdditionalRawData);
+            return new InstallSolutionContent(solutionVersionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstallSolutionContent>.Write(ModelReaderWriterOptions options)
