@@ -586,7 +586,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Operation> ImportRawJsonAsync(WaitUntil waitUntil, string exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(exportedProject, nameof(exportedProject));
@@ -607,7 +607,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Operation ImportRawJson(WaitUntil waitUntil, string exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        public virtual Operation Import(WaitUntil waitUntil, string exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(exportedProject, nameof(exportedProject));
@@ -628,7 +628,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ImportRawJsonAsync(WaitUntil,string,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ImportAsync(WaitUntil,string,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -672,7 +672,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ImportRawJson(WaitUntil,string,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Import(WaitUntil,string,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
