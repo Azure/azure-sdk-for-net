@@ -152,8 +152,7 @@ namespace Azure.Security.KeyVault.Administration
                 var operation = await _restClient.FullRestoreOperationAsync(
                    WaitUntil.Started,
                     new RestoreOperationParameters(
-                        new SASTokenParameter(
-                            containerUriString, sasToken),
+                        new SASTokenParameter(containerUriString, sasToken),
                             folderName),
                     cancellationToken).ConfigureAwait(false);
 
@@ -196,8 +195,7 @@ namespace Azure.Security.KeyVault.Administration
                 var operation = _restClient.FullRestoreOperation(
                     WaitUntil.Started,
                     new RestoreOperationParameters(
-                        new SASTokenParameter(
-                            containerUriString, sasToken),
+                        new SASTokenParameter(containerUriString, sasToken),
                             folderName),
                     cancellationToken);
 
@@ -244,8 +242,7 @@ namespace Azure.Security.KeyVault.Administration
                     WaitUntil.Started,
                     keyName,
                     new SelectiveKeyRestoreOperationParameters(
-                            new SASTokenParameter(
-                                containerUriString, sasToken),
+                            new SASTokenParameter(containerUriString, sasToken),
                                 folderName),
                     cancellationToken).ConfigureAwait(false);
 
@@ -292,8 +289,7 @@ namespace Azure.Security.KeyVault.Administration
                     WaitUntil.Started,
                     keyName,
                     new SelectiveKeyRestoreOperationParameters(
-                            new SASTokenParameter(
-                                containerUriString, sasToken),
+                            new SASTokenParameter(containerUriString, sasToken),
                                 folderName),
                     cancellationToken);
 
@@ -368,7 +364,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 var restoreResult = await _restClient.RestoreStatusAsync(jobId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SelectiveKeyRestoreDetailsInternal(restoreResult.Value), restoreResult.GetRawResponse());
+                return Response.FromValue(new SelectiveKeyRestoreDetailsInternal((RestoreDetailsInternal)(object)restoreResult.Value), restoreResult.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -391,7 +387,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 var restoreResult = _restClient.RestoreStatus(jobId, cancellationToken);
-                return Response.FromValue(new SelectiveKeyRestoreDetailsInternal(restoreResult.Value), restoreResult.GetRawResponse());
+                return Response.FromValue(new SelectiveKeyRestoreDetailsInternal((RestoreDetailsInternal)(object)restoreResult.Value), restoreResult.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -427,10 +423,11 @@ namespace Azure.Security.KeyVault.Administration
 
                 var operation = await _restClient.PreFullRestoreOperationAsync(
                     WaitUntil.Started,
-                    new PreRestoreOperationParameters(
-                        new SASTokenParameter(containerUriString, sasToken),
-                        folderUri.AbsoluteUri
-                        ),
+                    new PreRestoreOperationParameters()
+                    {
+                        SasTokenParameters = new SASTokenParameter(containerUriString, sasToken),
+                        FolderToRestore = folderUri.AbsoluteUri
+                    },
                     cancellationToken).ConfigureAwait(false);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
@@ -473,10 +470,11 @@ namespace Azure.Security.KeyVault.Administration
 
                 var operation = _restClient.PreFullRestoreOperation(
                     WaitUntil.Started,
-                    new PreRestoreOperationParameters(
-                        new SASTokenParameter(containerUriString, sasToken),
-                        folderUri.AbsoluteUri
-                        ),
+                    new PreRestoreOperationParameters()
+                    {
+                        SasTokenParameters = new SASTokenParameter(containerUriString, sasToken),
+                        FolderToRestore = folderUri.AbsoluteUri
+                    },
                     cancellationToken);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
@@ -556,11 +554,12 @@ namespace Azure.Security.KeyVault.Administration
             {
                 Operation<FullBackupDetailsInternal> operation = await _restClient.PreFullBackupAsync(
                     WaitUntil.Started,
-                    new PreBackupOperationParameters(
-                        blobStorageUri.AbsoluteUri,
-                        sasToken,
-                        useManagedIdentity: (sasToken == default)
-                        ),
+                    new PreBackupOperationParameters()
+                    {
+                        StorageResourceUri = blobStorageUri.AbsoluteUri,
+                        Token = sasToken,
+                        UseManagedIdentity = (sasToken == default)
+                    },
                     cancellationToken).ConfigureAwait(false);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
@@ -574,47 +573,48 @@ namespace Azure.Security.KeyVault.Administration
                 scope.Failed(ex);
                 throw;
             }
-         }
+        }
 
-         /// <summary>
-         /// Initiates a pre-backup check on the Key Vault. This operation checks if it is possible to back up the entire collection of keys from a Key Vault.
-         /// </summary>
-         /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
-         /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
-         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
-         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-         /// <returns>A <see cref="KeyVaultBackupOperation"/> representing the result of the operation.</returns>
-         public virtual KeyVaultBackupOperation StartPreBackup(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
-         {
-             Argument.AssertNotNull(blobStorageUri, nameof(blobStorageUri));
-             Argument.AssertNotNull(sasToken, nameof(sasToken));
+        /// <summary>
+        /// Initiates a pre-backup check on the Key Vault. This operation checks if it is possible to back up the entire collection of keys from a Key Vault.
+        /// </summary>
+        /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
+        /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns>A <see cref="KeyVaultBackupOperation"/> representing the result of the operation.</returns>
+        public virtual KeyVaultBackupOperation StartPreBackup(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(blobStorageUri, nameof(blobStorageUri));
+            Argument.AssertNotNull(sasToken, nameof(sasToken));
 
-             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreBackup)}");
-             scope.Start();
-             try
-             {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreBackup)}");
+            scope.Start();
+            try
+            {
                 Operation<FullBackupDetailsInternal> operation = _restClient.PreFullBackup(
-                     WaitUntil.Started,
-                     new PreBackupOperationParameters(
-                         blobStorageUri.AbsoluteUri,
-                         sasToken,
-                         useManagedIdentity: (sasToken == default)
-                         ),
-                     cancellationToken);
+                    WaitUntil.Started,
+                    new PreBackupOperationParameters()
+                    {
+                        StorageResourceUri = blobStorageUri.AbsoluteUri,
+                        Token = sasToken,
+                        UseManagedIdentity = (sasToken == default)
+                    },
+                    cancellationToken);
 
                 // Rest client returns an Operation without headers, so we need to create a new response with headers.
                 var headers = new AzureSecurityKeyVaultAdministrationFullBackupHeaders(operation.GetRawResponse());
                 var responseWithHeaders = ResponseWithHeaders.FromValue(headers,operation.GetRawResponse());
 
-                 return new KeyVaultBackupOperation(this, responseWithHeaders);
-             }
-             catch (Exception ex)
-             {
-                 scope.Failed(ex);
-                 throw;
-             }
-         }
+                return new KeyVaultBackupOperation(this, responseWithHeaders);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         internal static void ParseFolderName(Uri folderUri, out string containerUriString, out string folderName)
         {
