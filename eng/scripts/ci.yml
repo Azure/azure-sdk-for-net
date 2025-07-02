@@ -32,3 +32,5 @@ extends:
   parameters:
     TargetDirectory: eng/scripts/
     TargetTags: 'UnitTest'
+    PreTestSteps:
+     - template: /eng/pipelines/templates/steps/install-dotnet.yml
