@@ -15,7 +15,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Basic
 {
     public class AzureCoreBasicTests : SpectorTestBase
     {
-        [Test]
+        [SpectorTest]
         public Task Azure_Core_Basic_createOrUpdate() => Test(async (host) =>
         {
             var value = new
@@ -30,21 +30,21 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Basic
             Assert.AreEqual("11bdc430-65e8-45ad-81d9-8ffa60d55b59", (string)responseBody["etag"]!);
         });
 
-        [Test]
+        [SpectorTest]
         public Task Azure_Core_Basic_createOrReplace() => Test(async (host) =>
         {
             User response = await new BasicClient(host, null).CreateOrReplaceAsync(1, new User("Madge"));
             Assert.AreEqual("Madge", response.Name);
         });
 
-        [Test]
+        [SpectorTest]
         public Task Azure_Core_Basic_get() => Test(async (host) =>
         {
             User response = await new BasicClient(host, null).GetAsync(1);
             Assert.AreEqual("Madge", response.Name);
         });
 
-        [Test]
+        [SpectorTest]
         public Task Azure_Core_Basic_list() => Test(async (host) =>
         {
             AsyncPageable<User> allPages = new BasicClient(host, null).GetAsync(5, 10, null, new[] {"id"}, "id lt 10", new[] {"id", "orders", "etag"}, new[] {"orders"});
@@ -68,21 +68,21 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Basic
             }
         });
 
-        [Test]
+        [SpectorTest]
         public Task Azure_Core_Basic_delete() => Test(async (host) =>
         {
             var response = await new BasicClient(host, null).DeleteAsync(1);
             Assert.AreEqual(204, response.Status);
         });
 
-        [Test]
+        [SpectorTest]
         public Task Azure_Core_Basic_export() => Test(async (host) =>
         {
             User response = await new BasicClient(host, null).ExportAsync(1, "json");
             Assert.AreEqual("Madge", response.Name);
         });
 
-        [Test]
+        [SpectorTest]
         public Task Azure_Core_Basic_exportAllUsers() => Test(async (host) =>
         {
             var response = await new BasicClient(host, null).ExportAllUsersAsync("json");
@@ -93,7 +93,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Basic
             Assert.AreEqual(2, response.Value.Users.Count());
         });
 
-        [Test]
+        [SpectorTest]
         public void Azure_Core_basic_RenameListMethod()
         {
             var getUsersMethod = typeof(BasicClient).GetMethod("GetAsync", new[] { typeof(int?), typeof(int?), typeof(int?), typeof(IEnumerable<string>), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(CancellationToken) });
