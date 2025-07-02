@@ -19,7 +19,7 @@ namespace Azure.Generator;
 public class AzureClientGenerator : ScmCodeModelGenerator
 {
     private static AzureClientGenerator? _instance;
-    internal static AzureClientGenerator Instance => _instance ?? throw new InvalidOperationException("AzureClientGenerator is not loaded.");
+    internal static new AzureClientGenerator Instance => _instance ?? throw new InvalidOperationException("AzureClientGenerator is not loaded.");
 
     /// <inheritdoc/>
     public override AzureTypeFactory TypeFactory { get; }
