@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         [RecordedTest]
         public async Task ResourceExisits()
         {
-            WorkloadNetworkVmGroupCollection collection = getWorkloadNetworkResource().GetWorkloadNetworkVmGroups();
+            WorkloadNetworkVmGroupCollection collection = GetWorkloadNetworkResource().GetWorkloadNetworkVmGroups();
             bool result = await collection.ExistsAsync(WORKLOAD_NETWORK_NAME);
             Assert.True(result);
             result =  await collection.ExistsAsync("wn1");
