@@ -124,15 +124,15 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="RequestContent"/> that wraps an <see cref="IJsonModel{T}"/>.
+        /// Creates an instance of <see cref="RequestContent"/> that wraps an <see cref="IPersistableModel{T}"/>.
         /// </summary>
         /// <typeparam name="T">The type of the model.</typeparam>
-        /// <param name="model">The <see cref="IJsonModel{T}"/> to use.</param>
+        /// <param name="model">The <see cref="IPersistableModel{T}"/> to use.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-        /// <returns>An instance of <see cref="RequestContent"/> that wraps an <see cref="IJsonModel{T}"/>.</returns>
-        public static RequestContent Create<T>(T model, ModelReaderWriterOptions? options = null) where T : IJsonModel<T>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps an <see cref="IPersistableModel{T}"/>.</returns>
+        public static RequestContent Create<T>(T model, ModelReaderWriterOptions? options = null) where T : IPersistableModel<T>
         {
-            return new JsonModelRequestContent<T>(model, options);
+            return new PersistableModelRequestContent<T>(model, options);
         }
 
         /// <summary>
@@ -361,11 +361,11 @@ namespace Azure.Core
             }
         }
 
-        private sealed class JsonModelRequestContent<T> : RequestContent where T : IJsonModel<T>
+        private sealed class PersistableModelRequestContent<T> : RequestContent where T : IPersistableModel<T>
         {
             private readonly BinaryContent _binaryContent;
 
-            public JsonModelRequestContent(T model, ModelReaderWriterOptions? options)
+            public PersistableModelRequestContent(T model, ModelReaderWriterOptions? options)
             {
                 _binaryContent = BinaryContent.Create(model, options);
             }
