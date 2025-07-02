@@ -962,10 +962,40 @@
         {
           "name": "Azure.ResourceManager.@singleton",
           "arguments": {}
+        },
+        {
+          "name": "Azure.ClientGenerator.Core.@resourceSchema",
+          "arguments": {
+            "isSingleton": true,
+            "resourceType": "Microsoft.PortalServices/copilotSettings",
+            "resourceScope": "Tenant",
+            "methods": [
+              {
+                "$id": "79",
+                "id": "Microsoft.PortalServices.CopilotSettings.get",
+                "kind": "Get"
+              },
+              {
+                "$id": "80",
+                "id": "Microsoft.PortalServices.CopilotSettings.createOrUpdate",
+                "kind": "Create"
+              },
+              {
+                "$id": "81",
+                "id": "Microsoft.PortalServices.CopilotSettings.update",
+                "kind": "Update"
+              },
+              {
+                "$id": "82",
+                "id": "Microsoft.PortalServices.CopilotSettings.delete",
+                "kind": "Delete"
+              }
+            ]
+          }
         }
       ],
       "baseModel": {
-        "$id": "79",
+        "$id": "83",
         "kind": "model",
         "name": "ProxyResource",
         "namespace": "Azure.ResourceManager.PortalServicesCopilot",
@@ -975,7 +1005,7 @@
         "summary": "Proxy Resource",
         "decorators": [],
         "baseModel": {
-          "$id": "80",
+          "$id": "84",
           "kind": "model",
           "name": "Resource",
           "namespace": "Azure.ResourceManager.PortalServicesCopilot",
@@ -986,18 +1016,18 @@
           "decorators": [],
           "properties": [
             {
-              "$id": "81",
+              "$id": "85",
               "kind": "property",
               "name": "id",
               "serializedName": "id",
               "doc": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
               "type": {
-                "$id": "82",
+                "$id": "86",
                 "kind": "string",
                 "name": "armResourceIdentifier",
                 "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
                 "baseType": {
-                  "$id": "83",
+                  "$id": "87",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1018,13 +1048,13 @@
               }
             },
             {
-              "$id": "84",
+              "$id": "88",
               "kind": "property",
               "name": "name",
               "serializedName": "name",
               "doc": "The name of the resource",
               "type": {
-                "$id": "85",
+                "$id": "89",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1043,18 +1073,18 @@
               }
             },
             {
-              "$id": "86",
+              "$id": "90",
               "kind": "property",
               "name": "type",
               "serializedName": "type",
               "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
               "type": {
-                "$id": "87",
+                "$id": "91",
                 "kind": "string",
                 "name": "armResourceType",
                 "crossLanguageDefinitionId": "Azure.Core.armResourceType",
                 "baseType": {
-                  "$id": "88",
+                  "$id": "92",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1075,13 +1105,13 @@
               }
             },
             {
-              "$id": "89",
+              "$id": "93",
               "kind": "property",
               "name": "systemData",
               "serializedName": "systemData",
               "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
               "type": {
-                "$id": "90",
+                "$id": "94",
                 "kind": "model",
                 "name": "SystemData",
                 "namespace": "Azure.ResourceManager.PortalServicesCopilot",
@@ -1091,13 +1121,13 @@
                 "decorators": [],
                 "properties": [
                   {
-                    "$id": "91",
+                    "$id": "95",
                     "kind": "property",
                     "name": "createdBy",
                     "serializedName": "createdBy",
                     "doc": "The identity that created the resource.",
                     "type": {
-                      "$id": "92",
+                      "$id": "96",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1116,7 +1146,7 @@
                     }
                   },
                   {
-                    "$id": "93",
+                    "$id": "97",
                     "kind": "property",
                     "name": "createdByType",
                     "serializedName": "createdByType",
@@ -1137,18 +1167,18 @@
                     }
                   },
                   {
-                    "$id": "94",
+                    "$id": "98",
                     "kind": "property",
                     "name": "createdAt",
                     "serializedName": "createdAt",
                     "doc": "The timestamp of resource creation (UTC).",
                     "type": {
-                      "$id": "95",
+                      "$id": "99",
                       "kind": "utcDateTime",
                       "name": "utcDateTime",
                       "encode": "rfc3339",
                       "wireType": {
-                        "$id": "96",
+                        "$id": "100",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1170,13 +1200,13 @@
                     }
                   },
                   {
-                    "$id": "97",
+                    "$id": "101",
                     "kind": "property",
                     "name": "lastModifiedBy",
                     "serializedName": "lastModifiedBy",
                     "doc": "The identity that last modified the resource.",
                     "type": {
-                      "$id": "98",
+                      "$id": "102",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1195,7 +1225,7 @@
                     }
                   },
                   {
-                    "$id": "99",
+                    "$id": "103",
                     "kind": "property",
                     "name": "lastModifiedByType",
                     "serializedName": "lastModifiedByType",
@@ -1216,18 +1246,18 @@
                     }
                   },
                   {
-                    "$id": "100",
+                    "$id": "104",
                     "kind": "property",
                     "name": "lastModifiedAt",
                     "serializedName": "lastModifiedAt",
                     "doc": "The timestamp of resource last modification (UTC)",
                     "type": {
-                      "$id": "101",
+                      "$id": "105",
                       "kind": "utcDateTime",
                       "name": "utcDateTime",
                       "encode": "rfc3339",
                       "wireType": {
-                        "$id": "102",
+                        "$id": "106",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1268,13 +1298,13 @@
       },
       "properties": [
         {
-          "$id": "103",
+          "$id": "107",
           "kind": "property",
           "name": "properties",
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$id": "104",
+            "$id": "108",
             "kind": "model",
             "name": "PortalServicesCopilotSettingsProperties",
             "namespace": "Azure.ResourceManager.PortalServicesCopilot",
@@ -1284,13 +1314,13 @@
             "decorators": [],
             "properties": [
               {
-                "$id": "105",
+                "$id": "109",
                 "kind": "property",
                 "name": "accessControlEnabled",
                 "serializedName": "accessControlEnabled",
                 "doc": "Boolean indicating if role-based access control is enabled for copilot in this tenant.",
                 "type": {
-                  "$id": "106",
+                  "$id": "110",
                   "kind": "boolean",
                   "name": "boolean",
                   "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -1309,7 +1339,7 @@
                 }
               },
               {
-                "$id": "107",
+                "$id": "111",
                 "kind": "property",
                 "name": "provisioningState",
                 "serializedName": "provisioningState",
@@ -1344,13 +1374,13 @@
           }
         },
         {
-          "$id": "108",
+          "$id": "112",
           "kind": "path",
           "name": "name",
           "serializedName": "name",
           "doc": "The default copilot settings, applying to entire tenant.",
           "type": {
-            "$id": "109",
+            "$id": "113",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1368,19 +1398,19 @@
       ]
     },
     {
-      "$ref": "104"
+      "$ref": "108"
     },
     {
-      "$ref": "79"
+      "$ref": "83"
     },
     {
-      "$ref": "80"
+      "$ref": "84"
     },
     {
-      "$ref": "90"
+      "$ref": "94"
     },
     {
-      "$id": "110",
+      "$id": "114",
       "kind": "model",
       "name": "CopilotSettingsResourceUpdate",
       "namespace": "Azure.ResourceManager.PortalServicesCopilot",
@@ -1390,13 +1420,13 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "111",
+          "$id": "115",
           "kind": "property",
           "name": "properties",
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$id": "112",
+            "$id": "116",
             "kind": "model",
             "name": "CopilotSettingsResourceUpdateProperties",
             "namespace": "Azure.ResourceManager.PortalServicesCopilot",
@@ -1406,13 +1436,13 @@
             "decorators": [],
             "properties": [
               {
-                "$id": "113",
+                "$id": "117",
                 "kind": "property",
                 "name": "accessControlEnabled",
                 "serializedName": "accessControlEnabled",
                 "doc": "Boolean indicating if role-based access control is enabled for copilot in this tenant.",
                 "type": {
-                  "$id": "114",
+                  "$id": "118",
                   "kind": "boolean",
                   "name": "boolean",
                   "crossLanguageDefinitionId": "TypeSpec.boolean",
@@ -1447,12 +1477,12 @@
       ]
     },
     {
-      "$ref": "112"
+      "$ref": "116"
     }
   ],
   "clients": [
     {
-      "$id": "115",
+      "$id": "119",
       "kind": "client",
       "name": "PortalServicesClient",
       "namespace": "Azure.ResourceManager.PortalServicesCopilot",
@@ -1460,12 +1490,12 @@
       "methods": [],
       "parameters": [
         {
-          "$id": "116",
+          "$id": "120",
           "name": "endpoint",
           "nameInRequest": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "117",
+            "$id": "121",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1480,7 +1510,7 @@
           "kind": "Client",
           "defaultValue": {
             "type": {
-              "$id": "118",
+              "$id": "122",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1502,13 +1532,13 @@
       ],
       "children": [
         {
-          "$id": "119",
+          "$id": "123",
           "kind": "client",
           "name": "Operations",
           "namespace": "Azure.ResourceManager.PortalServicesCopilot",
           "methods": [
             {
-              "$id": "120",
+              "$id": "124",
               "kind": "paging",
               "name": "list",
               "accessibility": "public",
@@ -1517,19 +1547,19 @@
               ],
               "doc": "List the operations for the provider",
               "operation": {
-                "$id": "121",
+                "$id": "125",
                 "name": "list",
                 "resourceName": "Operations",
                 "doc": "List the operations for the provider",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "122",
+                    "$id": "126",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "123",
+                      "$id": "127",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1544,7 +1574,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "124",
+                        "$id": "128",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1555,7 +1585,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "125",
+                    "$id": "129",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -1597,7 +1627,7 @@
                 "decorators": [],
                 "examples": [
                   {
-                    "$id": "126",
+                    "$id": "130",
                     "kind": "http",
                     "name": "List the operations for the Microsoft.PortalServices provider.",
                     "description": "List the operations for the Microsoft.PortalServices provider.",
@@ -1605,13 +1635,13 @@
                     "parameters": [
                       {
                         "parameter": {
-                          "$ref": "122"
+                          "$ref": "126"
                         },
                         "value": {
-                          "$id": "127",
+                          "$id": "131",
                           "kind": "string",
                           "type": {
-                            "$ref": "123"
+                            "$ref": "127"
                           },
                           "value": "2024-04-01-preview"
                         }
@@ -1634,28 +1664,28 @@
                         },
                         "statusCode": 200,
                         "bodyValue": {
-                          "$id": "128",
+                          "$id": "132",
                           "kind": "model",
                           "type": {
                             "$ref": "37"
                           },
                           "value": {
                             "value": {
-                              "$id": "129",
+                              "$id": "133",
                               "kind": "array",
                               "type": {
                                 "$ref": "39"
                               },
                               "value": [
                                 {
-                                  "$id": "130",
+                                  "$id": "134",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "40"
                                   },
                                   "value": {
                                     "name": {
-                                      "$id": "131",
+                                      "$id": "135",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "42"
@@ -1663,14 +1693,14 @@
                                       "value": "Microsoft.PortalServices/copilotSettings/read"
                                     },
                                     "display": {
-                                      "$id": "132",
+                                      "$id": "136",
                                       "kind": "model",
                                       "type": {
                                         "$ref": "46"
                                       },
                                       "value": {
                                         "provider": {
-                                          "$id": "133",
+                                          "$id": "137",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "48"
@@ -1678,7 +1708,7 @@
                                           "value": "Azure Portal"
                                         },
                                         "resource": {
-                                          "$id": "134",
+                                          "$id": "138",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "50"
@@ -1686,7 +1716,7 @@
                                           "value": "CopilotSettings"
                                         },
                                         "operation": {
-                                          "$id": "135",
+                                          "$id": "139",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "52"
@@ -1694,7 +1724,7 @@
                                           "value": "Read copilotsettings"
                                         },
                                         "description": {
-                                          "$id": "136",
+                                          "$id": "140",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "54"
@@ -1706,14 +1736,14 @@
                                   }
                                 },
                                 {
-                                  "$id": "137",
+                                  "$id": "141",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "40"
                                   },
                                   "value": {
                                     "name": {
-                                      "$id": "138",
+                                      "$id": "142",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "42"
@@ -1721,14 +1751,14 @@
                                       "value": "Microsoft.PortalServices/copilotSettings/write"
                                     },
                                     "display": {
-                                      "$id": "139",
+                                      "$id": "143",
                                       "kind": "model",
                                       "type": {
                                         "$ref": "46"
                                       },
                                       "value": {
                                         "provider": {
-                                          "$id": "140",
+                                          "$id": "144",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "48"
@@ -1736,7 +1766,7 @@
                                           "value": "Azure Portal"
                                         },
                                         "resource": {
-                                          "$id": "141",
+                                          "$id": "145",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "50"
@@ -1744,7 +1774,7 @@
                                           "value": "CopilotSettings"
                                         },
                                         "operation": {
-                                          "$id": "142",
+                                          "$id": "146",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "52"
@@ -1752,7 +1782,7 @@
                                           "value": "Update copilotsettings"
                                         },
                                         "description": {
-                                          "$id": "143",
+                                          "$id": "147",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "54"
@@ -1764,14 +1794,14 @@
                                   }
                                 },
                                 {
-                                  "$id": "144",
+                                  "$id": "148",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "40"
                                   },
                                   "value": {
                                     "name": {
-                                      "$id": "145",
+                                      "$id": "149",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "42"
@@ -1779,14 +1809,14 @@
                                       "value": "Microsoft.PortalServices/copilotSettings/delete"
                                     },
                                     "display": {
-                                      "$id": "146",
+                                      "$id": "150",
                                       "kind": "model",
                                       "type": {
                                         "$ref": "46"
                                       },
                                       "value": {
                                         "provider": {
-                                          "$id": "147",
+                                          "$id": "151",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "48"
@@ -1794,7 +1824,7 @@
                                           "value": "Azure Portal"
                                         },
                                         "resource": {
-                                          "$id": "148",
+                                          "$id": "152",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "50"
@@ -1802,7 +1832,7 @@
                                           "value": "CopilotSettings"
                                         },
                                         "operation": {
-                                          "$id": "149",
+                                          "$id": "153",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "52"
@@ -1810,7 +1840,7 @@
                                           "value": "Delete copilotsettings"
                                         },
                                         "description": {
-                                          "$id": "150",
+                                          "$id": "154",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "54"
@@ -1822,14 +1852,14 @@
                                   }
                                 },
                                 {
-                                  "$id": "151",
+                                  "$id": "155",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "40"
                                   },
                                   "value": {
                                     "isDataAction": {
-                                      "$id": "152",
+                                      "$id": "156",
                                       "kind": "boolean",
                                       "type": {
                                         "$ref": "44"
@@ -1837,7 +1867,7 @@
                                       "value": true
                                     },
                                     "name": {
-                                      "$id": "153",
+                                      "$id": "157",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "42"
@@ -1845,14 +1875,14 @@
                                       "value": "Microsoft.PortalServices/copilotSettings/conversations/action"
                                     },
                                     "display": {
-                                      "$id": "154",
+                                      "$id": "158",
                                       "kind": "model",
                                       "type": {
                                         "$ref": "46"
                                       },
                                       "value": {
                                         "provider": {
-                                          "$id": "155",
+                                          "$id": "159",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "48"
@@ -1860,7 +1890,7 @@
                                           "value": "Azure Portal"
                                         },
                                         "resource": {
-                                          "$id": "156",
+                                          "$id": "160",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "50"
@@ -1868,7 +1898,7 @@
                                           "value": "CopilotSettings"
                                         },
                                         "operation": {
-                                          "$id": "157",
+                                          "$id": "161",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "52"
@@ -1876,7 +1906,7 @@
                                           "value": "Conversations"
                                         },
                                         "description": {
-                                          "$id": "158",
+                                          "$id": "162",
                                           "kind": "string",
                                           "type": {
                                             "$ref": "54"
@@ -1898,7 +1928,7 @@
               },
               "parameters": [
                 {
-                  "$id": "159",
+                  "$id": "163",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -1942,12 +1972,12 @@
           ],
           "parameters": [
             {
-              "$id": "160",
+              "$id": "164",
               "name": "endpoint",
               "nameInRequest": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "161",
+                "$id": "165",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1962,7 +1992,7 @@
               "kind": "Client",
               "defaultValue": {
                 "type": {
-                  "$id": "162",
+                  "$id": "166",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1978,17 +2008,17 @@
             "2024-04-01-preview"
           ],
           "parent": {
-            "$ref": "115"
+            "$ref": "119"
           }
         },
         {
-          "$id": "163",
+          "$id": "167",
           "kind": "client",
           "name": "CopilotSettings",
           "namespace": "Azure.ResourceManager.PortalServicesCopilot",
           "methods": [
             {
-              "$id": "164",
+              "$id": "168",
               "kind": "basic",
               "name": "get",
               "accessibility": "public",
@@ -1997,19 +2027,19 @@
               ],
               "doc": "Get a CopilotSettingsResource",
               "operation": {
-                "$id": "165",
+                "$id": "169",
                 "name": "get",
                 "resourceName": "CopilotSettingsResource",
                 "doc": "Get a CopilotSettingsResource",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "166",
+                    "$id": "170",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "167",
+                      "$id": "171",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2024,7 +2054,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "168",
+                        "$id": "172",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2035,7 +2065,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "169",
+                    "$id": "173",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -2082,7 +2112,7 @@
                 ],
                 "examples": [
                   {
-                    "$id": "170",
+                    "$id": "174",
                     "kind": "http",
                     "name": "Get Copilot Settings",
                     "description": "Get Copilot Settings",
@@ -2090,13 +2120,13 @@
                     "parameters": [
                       {
                         "parameter": {
-                          "$ref": "166"
+                          "$ref": "170"
                         },
                         "value": {
-                          "$id": "171",
+                          "$id": "175",
                           "kind": "string",
                           "type": {
-                            "$ref": "167"
+                            "$ref": "171"
                           },
                           "value": "2024-04-01-preview"
                         }
@@ -2119,50 +2149,50 @@
                         },
                         "statusCode": 200,
                         "bodyValue": {
-                          "$id": "172",
+                          "$id": "176",
                           "kind": "model",
                           "type": {
                             "$ref": "78"
                           },
                           "value": {
                             "properties": {
-                              "$id": "173",
+                              "$id": "177",
                               "kind": "model",
                               "type": {
-                                "$ref": "104"
+                                "$ref": "108"
                               },
                               "value": {
                                 "accessControlEnabled": {
-                                  "$id": "174",
+                                  "$id": "178",
                                   "kind": "boolean",
                                   "type": {
-                                    "$ref": "106"
+                                    "$ref": "110"
                                   },
                                   "value": true
                                 }
                               }
                             },
                             "id": {
-                              "$id": "175",
+                              "$id": "179",
                               "kind": "string",
                               "type": {
-                                "$ref": "82"
+                                "$ref": "86"
                               },
                               "value": "/providers/Microsoft.Portal/copilotSettings/default"
                             },
                             "name": {
-                              "$id": "176",
+                              "$id": "180",
                               "kind": "string",
                               "type": {
-                                "$ref": "85"
+                                "$ref": "89"
                               },
                               "value": "default"
                             },
                             "type": {
-                              "$id": "177",
+                              "$id": "181",
                               "kind": "string",
                               "type": {
-                                "$ref": "87"
+                                "$ref": "91"
                               },
                               "value": "Microsoft.PortalServices/copilotSettings"
                             }
@@ -2175,7 +2205,7 @@
               },
               "parameters": [
                 {
-                  "$id": "178",
+                  "$id": "182",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -2203,7 +2233,7 @@
               "crossLanguageDefinitionId": "Microsoft.PortalServices.CopilotSettings.get"
             },
             {
-              "$id": "179",
+              "$id": "183",
               "kind": "basic",
               "name": "createOrUpdate",
               "accessibility": "public",
@@ -2212,19 +2242,19 @@
               ],
               "doc": "Create a CopilotSettingsResource",
               "operation": {
-                "$id": "180",
+                "$id": "184",
                 "name": "createOrUpdate",
                 "resourceName": "CopilotSettingsResource",
                 "doc": "Create a CopilotSettingsResource",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "181",
+                    "$id": "185",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "182",
+                      "$id": "186",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2239,7 +2269,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "183",
+                        "$id": "187",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2250,7 +2280,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "184",
+                    "$id": "188",
                     "name": "contentType",
                     "nameInRequest": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
@@ -2268,7 +2298,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "185",
+                    "$id": "189",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -2285,7 +2315,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "186",
+                    "$id": "190",
                     "name": "resource",
                     "nameInRequest": "resource",
                     "doc": "Resource create parameters.",
@@ -2349,7 +2379,7 @@
                 ],
                 "examples": [
                   {
-                    "$id": "187",
+                    "$id": "191",
                     "kind": "http",
                     "name": "Create a new Copilot settings or update an existing one",
                     "description": "Create a new Copilot settings or update an existing one",
@@ -2357,40 +2387,40 @@
                     "parameters": [
                       {
                         "parameter": {
-                          "$ref": "181"
+                          "$ref": "185"
                         },
                         "value": {
-                          "$id": "188",
+                          "$id": "192",
                           "kind": "string",
                           "type": {
-                            "$ref": "182"
+                            "$ref": "186"
                           },
                           "value": "2024-04-01-preview"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "186"
+                          "$ref": "190"
                         },
                         "value": {
-                          "$id": "189",
+                          "$id": "193",
                           "kind": "model",
                           "type": {
                             "$ref": "78"
                           },
                           "value": {
                             "properties": {
-                              "$id": "190",
+                              "$id": "194",
                               "kind": "model",
                               "type": {
-                                "$ref": "104"
+                                "$ref": "108"
                               },
                               "value": {
                                 "accessControlEnabled": {
-                                  "$id": "191",
+                                  "$id": "195",
                                   "kind": "boolean",
                                   "type": {
-                                    "$ref": "106"
+                                    "$ref": "110"
                                   },
                                   "value": true
                                 }
@@ -2417,50 +2447,50 @@
                         },
                         "statusCode": 200,
                         "bodyValue": {
-                          "$id": "192",
+                          "$id": "196",
                           "kind": "model",
                           "type": {
                             "$ref": "78"
                           },
                           "value": {
                             "properties": {
-                              "$id": "193",
+                              "$id": "197",
                               "kind": "model",
                               "type": {
-                                "$ref": "104"
+                                "$ref": "108"
                               },
                               "value": {
                                 "accessControlEnabled": {
-                                  "$id": "194",
+                                  "$id": "198",
                                   "kind": "boolean",
                                   "type": {
-                                    "$ref": "106"
+                                    "$ref": "110"
                                   },
                                   "value": true
                                 }
                               }
                             },
                             "id": {
-                              "$id": "195",
+                              "$id": "199",
                               "kind": "string",
                               "type": {
-                                "$ref": "82"
+                                "$ref": "86"
                               },
                               "value": "/providers/Microsoft.Portal/copilotSettings/default"
                             },
                             "name": {
-                              "$id": "196",
+                              "$id": "200",
                               "kind": "string",
                               "type": {
-                                "$ref": "85"
+                                "$ref": "89"
                               },
                               "value": "default"
                             },
                             "type": {
-                              "$id": "197",
+                              "$id": "201",
                               "kind": "string",
                               "type": {
-                                "$ref": "87"
+                                "$ref": "91"
                               },
                               "value": "Microsoft.PortalServices/copilotSettings"
                             }
@@ -2483,50 +2513,50 @@
                         },
                         "statusCode": 201,
                         "bodyValue": {
-                          "$id": "198",
+                          "$id": "202",
                           "kind": "model",
                           "type": {
                             "$ref": "78"
                           },
                           "value": {
                             "properties": {
-                              "$id": "199",
+                              "$id": "203",
                               "kind": "model",
                               "type": {
-                                "$ref": "104"
+                                "$ref": "108"
                               },
                               "value": {
                                 "accessControlEnabled": {
-                                  "$id": "200",
+                                  "$id": "204",
                                   "kind": "boolean",
                                   "type": {
-                                    "$ref": "106"
+                                    "$ref": "110"
                                   },
                                   "value": true
                                 }
                               }
                             },
                             "id": {
-                              "$id": "201",
+                              "$id": "205",
                               "kind": "string",
                               "type": {
-                                "$ref": "82"
+                                "$ref": "86"
                               },
                               "value": "/providers/Microsoft.Portal/copilotSettings/default"
                             },
                             "name": {
-                              "$id": "202",
+                              "$id": "206",
                               "kind": "string",
                               "type": {
-                                "$ref": "85"
+                                "$ref": "89"
                               },
                               "value": "default"
                             },
                             "type": {
-                              "$id": "203",
+                              "$id": "207",
                               "kind": "string",
                               "type": {
-                                "$ref": "87"
+                                "$ref": "91"
                               },
                               "value": "Microsoft.PortalServices/copilotSettings"
                             }
@@ -2539,7 +2569,7 @@
               },
               "parameters": [
                 {
-                  "$id": "204",
+                  "$id": "208",
                   "name": "resource",
                   "nameInRequest": "resource",
                   "doc": "Resource create parameters.",
@@ -2557,7 +2587,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "205",
+                  "$id": "209",
                   "name": "contentType",
                   "nameInRequest": "contentType",
                   "doc": "Body parameter's content type. Known values are application/json",
@@ -2575,7 +2605,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "206",
+                  "$id": "210",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -2603,7 +2633,7 @@
               "crossLanguageDefinitionId": "Microsoft.PortalServices.CopilotSettings.createOrUpdate"
             },
             {
-              "$id": "207",
+              "$id": "211",
               "kind": "basic",
               "name": "update",
               "accessibility": "public",
@@ -2612,19 +2642,19 @@
               ],
               "doc": "Update a CopilotSettingsResource",
               "operation": {
-                "$id": "208",
+                "$id": "212",
                 "name": "update",
                 "resourceName": "CopilotSettingsResource",
                 "doc": "Update a CopilotSettingsResource",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "209",
+                    "$id": "213",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "210",
+                      "$id": "214",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2639,7 +2669,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "211",
+                        "$id": "215",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2650,7 +2680,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "212",
+                    "$id": "216",
                     "name": "contentType",
                     "nameInRequest": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
@@ -2668,7 +2698,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "213",
+                    "$id": "217",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -2685,12 +2715,12 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "214",
+                    "$id": "218",
                     "name": "properties",
                     "nameInRequest": "properties",
                     "doc": "The resource properties to be updated.",
                     "type": {
-                      "$ref": "110"
+                      "$ref": "114"
                     },
                     "location": "Body",
                     "isApiVersion": false,
@@ -2728,10 +2758,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": false,
                 "crossLanguageDefinitionId": "Microsoft.PortalServices.CopilotSettings.update",
-                "decorators": [],
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceUpdate",
+                    "arguments": {}
+                  }
+                ],
                 "examples": [
                   {
-                    "$id": "215",
+                    "$id": "219",
                     "kind": "http",
                     "name": "Update Copilot Settings",
                     "description": "Update Copilot Settings",
@@ -2739,40 +2774,40 @@
                     "parameters": [
                       {
                         "parameter": {
-                          "$ref": "209"
+                          "$ref": "213"
                         },
                         "value": {
-                          "$id": "216",
+                          "$id": "220",
                           "kind": "string",
                           "type": {
-                            "$ref": "210"
+                            "$ref": "214"
                           },
                           "value": "2024-04-01-preview"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "214"
+                          "$ref": "218"
                         },
                         "value": {
-                          "$id": "217",
+                          "$id": "221",
                           "kind": "model",
                           "type": {
-                            "$ref": "110"
+                            "$ref": "114"
                           },
                           "value": {
                             "properties": {
-                              "$id": "218",
+                              "$id": "222",
                               "kind": "model",
                               "type": {
-                                "$ref": "112"
+                                "$ref": "116"
                               },
                               "value": {
                                 "accessControlEnabled": {
-                                  "$id": "219",
+                                  "$id": "223",
                                   "kind": "boolean",
                                   "type": {
-                                    "$ref": "114"
+                                    "$ref": "118"
                                   },
                                   "value": true
                                 }
@@ -2799,50 +2834,50 @@
                         },
                         "statusCode": 200,
                         "bodyValue": {
-                          "$id": "220",
+                          "$id": "224",
                           "kind": "model",
                           "type": {
                             "$ref": "78"
                           },
                           "value": {
                             "properties": {
-                              "$id": "221",
+                              "$id": "225",
                               "kind": "model",
                               "type": {
-                                "$ref": "104"
+                                "$ref": "108"
                               },
                               "value": {
                                 "accessControlEnabled": {
-                                  "$id": "222",
+                                  "$id": "226",
                                   "kind": "boolean",
                                   "type": {
-                                    "$ref": "106"
+                                    "$ref": "110"
                                   },
                                   "value": true
                                 }
                               }
                             },
                             "id": {
-                              "$id": "223",
+                              "$id": "227",
                               "kind": "string",
                               "type": {
-                                "$ref": "82"
+                                "$ref": "86"
                               },
                               "value": "/providers/Microsoft.Portal/copilotSettings/default"
                             },
                             "name": {
-                              "$id": "224",
+                              "$id": "228",
                               "kind": "string",
                               "type": {
-                                "$ref": "85"
+                                "$ref": "89"
                               },
                               "value": "default"
                             },
                             "type": {
-                              "$id": "225",
+                              "$id": "229",
                               "kind": "string",
                               "type": {
-                                "$ref": "87"
+                                "$ref": "91"
                               },
                               "value": "Microsoft.PortalServices/copilotSettings"
                             }
@@ -2855,12 +2890,12 @@
               },
               "parameters": [
                 {
-                  "$id": "226",
+                  "$id": "230",
                   "name": "properties",
                   "nameInRequest": "properties",
                   "doc": "The resource properties to be updated.",
                   "type": {
-                    "$ref": "110"
+                    "$ref": "114"
                   },
                   "location": "Body",
                   "isApiVersion": false,
@@ -2873,7 +2908,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "227",
+                  "$id": "231",
                   "name": "contentType",
                   "nameInRequest": "contentType",
                   "doc": "Body parameter's content type. Known values are application/json",
@@ -2891,7 +2926,7 @@
                   "skipUrlEncoding": false
                 },
                 {
-                  "$id": "228",
+                  "$id": "232",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -2919,7 +2954,7 @@
               "crossLanguageDefinitionId": "Microsoft.PortalServices.CopilotSettings.update"
             },
             {
-              "$id": "229",
+              "$id": "233",
               "kind": "basic",
               "name": "delete",
               "accessibility": "public",
@@ -2928,19 +2963,19 @@
               ],
               "doc": "Delete a CopilotSettingsResource",
               "operation": {
-                "$id": "230",
+                "$id": "234",
                 "name": "delete",
                 "resourceName": "CopilotSettingsResource",
                 "doc": "Delete a CopilotSettingsResource",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "231",
+                    "$id": "235",
                     "name": "apiVersion",
                     "nameInRequest": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "232",
+                      "$id": "236",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2955,7 +2990,7 @@
                     "kind": "Client",
                     "defaultValue": {
                       "type": {
-                        "$id": "233",
+                        "$id": "237",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2966,7 +3001,7 @@
                     "skipUrlEncoding": false
                   },
                   {
-                    "$id": "234",
+                    "$id": "238",
                     "name": "accept",
                     "nameInRequest": "Accept",
                     "type": {
@@ -3006,10 +3041,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Microsoft.PortalServices.CopilotSettings.delete",
-                "decorators": [],
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceDelete",
+                    "arguments": {}
+                  }
+                ],
                 "examples": [
                   {
-                    "$id": "235",
+                    "$id": "239",
                     "kind": "http",
                     "name": "Delete Copilot Settings",
                     "description": "Delete Copilot Settings",
@@ -3017,13 +3057,13 @@
                     "parameters": [
                       {
                         "parameter": {
-                          "$ref": "231"
+                          "$ref": "235"
                         },
                         "value": {
-                          "$id": "236",
+                          "$id": "240",
                           "kind": "string",
                           "type": {
-                            "$ref": "232"
+                            "$ref": "236"
                           },
                           "value": "2024-04-01-preview"
                         }
@@ -3056,7 +3096,7 @@
               },
               "parameters": [
                 {
-                  "$id": "237",
+                  "$id": "241",
                   "name": "accept",
                   "nameInRequest": "accept",
                   "type": {
@@ -3082,12 +3122,12 @@
           ],
           "parameters": [
             {
-              "$id": "238",
+              "$id": "242",
               "name": "endpoint",
               "nameInRequest": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "239",
+                "$id": "243",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -3102,7 +3142,7 @@
               "kind": "Client",
               "defaultValue": {
                 "type": {
-                  "$id": "240",
+                  "$id": "244",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
@@ -3116,16 +3156,6 @@
             {
               "name": "Azure.ResourceManager.@armResourceOperations",
               "arguments": {}
-            },
-            {
-              "name": "Azure.ClientGenerator.Core.@resourceSchema",
-              "arguments": {
-                "resourceModel": "Microsoft.PortalServices.CopilotSettingsResource",
-                "resourceClient": "Microsoft.PortalServices.CopilotSettings",
-                "isSingleton": true,
-                "resourceType": "Microsoft.PortalServices/copilotSettings",
-                "resourceScope": "Tenant"
-              }
             }
           ],
           "crossLanguageDefinitionId": "Microsoft.PortalServices.CopilotSettings",
@@ -3133,7 +3163,7 @@
             "2024-04-01-preview"
           ],
           "parent": {
-            "$ref": "115"
+            "$ref": "119"
           }
         }
       ]
