@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         [RecordedTest]
         public async Task ResourceExisits()
         {
-            WorkloadNetworkVmGroupCollection collection = GetWorkloadNetworkResource().GetWorkloadNetworkVmGroups();
+            WorkloadNetworkVmGroupCollection collection = getWorkloadNetworkResource().GetWorkloadNetworkVmGroups();
             bool result = await collection.ExistsAsync(WORKLOAD_NETWORK_NAME);
             Assert.True(result);
             result =  await collection.ExistsAsync("wn1");
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         [RecordedTest]
         public async Task GetIfExisits()
         {
-            WorkloadNetworkVmGroupCollection collection = GetWorkloadNetworkResource().GetWorkloadNetworkVmGroups();
+            WorkloadNetworkVmGroupCollection collection = getWorkloadNetworkResource().GetWorkloadNetworkVmGroups();
             NullableResponse<WorkloadNetworkVmGroupResource> response = await collection.GetIfExistsAsync(WORKLOAD_NETWORK_NAME);
             WorkloadNetworkVmGroupResource result = response.HasValue ? response.Value : null;
             Assert.NotNull(result);
