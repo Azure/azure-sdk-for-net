@@ -44,5 +44,21 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         {
             return new PortalServicesCopilotSettingsProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties: null);
         }
+
+        /// <summary> The type used for update operations of the CopilotSettingsResource. </summary>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.CopilotSettingsResourceUpdate"/> instance for mocking. </returns>
+        public static CopilotSettingsResourceUpdate CopilotSettingsResourceUpdate(CopilotSettingsResourceUpdateProperties properties = default)
+        {
+            return new CopilotSettingsResourceUpdate(properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The updatable properties of the CopilotSettingsResource. </summary>
+        /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
+        /// <returns> A new <see cref="Models.CopilotSettingsResourceUpdateProperties"/> instance for mocking. </returns>
+        public static CopilotSettingsResourceUpdateProperties CopilotSettingsResourceUpdateProperties(bool? accessControlEnabled = default)
+        {
+            return new CopilotSettingsResourceUpdateProperties(accessControlEnabled, additionalBinaryDataProperties: null);
+        }
     }
 }
