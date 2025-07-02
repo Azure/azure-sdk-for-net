@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
     {
         public virtual ModelDeployment GetModelDeployment(string name, CancellationToken cancellationToken = default)
         {
-            Response<Deployment> response = GetDeployment(name, cancellationToken);
+            Response<AIDeployment> response = GetDeployment(name, cancellationToken);
             ModelDeployment deployment = (ModelDeployment)response.Value;
             return deployment;
         }
@@ -26,13 +26,13 @@ namespace Azure.AI.Projects
         public virtual ModelDeployment GetModelDeployment(string name, RequestContext context)
         {
             Response response = GetDeployment(name, context);
-            ModelDeployment deployment = (ModelDeployment)Deployment.FromResponse(response);
+            ModelDeployment deployment = (ModelDeployment)AIDeployment.FromResponse(response);
             return deployment;
         }
 
         public virtual async Task<ModelDeployment> GetModelDeploymentAsync(string name, CancellationToken cancellationToken = default)
         {
-            Response<Deployment> response = await GetDeploymentAsync(name, cancellationToken).ConfigureAwait(false);;
+            Response<AIDeployment> response = await GetDeploymentAsync(name, cancellationToken).ConfigureAwait(false);;
             ModelDeployment deployment = (ModelDeployment)response.Value;
             return deployment;
         }
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects
         public virtual async Task<ModelDeployment> GetModelDeploymentAsync(string name, RequestContext context)
         {
             Response response = await GetDeploymentAsync(name, context).ConfigureAwait(false);
-            ModelDeployment deployment = (ModelDeployment)Deployment.FromResponse(response);
+            ModelDeployment deployment = (ModelDeployment)AIDeployment.FromResponse(response);
             return deployment;
         }
     }

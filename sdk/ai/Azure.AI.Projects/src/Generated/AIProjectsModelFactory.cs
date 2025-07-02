@@ -398,13 +398,13 @@ namespace Azure.AI.Projects
                 fieldMapping);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Projects.Deployment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Projects.AIDeployment"/>. </summary>
         /// <param name="type"> The type of the deployment. </param>
         /// <param name="name"> Name of the deployment. </param>
-        /// <returns> A new <see cref="Projects.Deployment"/> instance for mocking. </returns>
-        public static Deployment Deployment(string type = null, string name = null)
+        /// <returns> A new <see cref="Projects.AIDeployment"/> instance for mocking. </returns>
+        public static AIDeployment AIDeployment(string type = null, string name = null)
         {
-            return new UnknownDeployment(type == null ? default : new DeploymentType(type), name, serializedAdditionalRawData: null);
+            return new UnknownAIDeployment(type == null ? default : new DeploymentType(type), name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.ModelDeployment"/>. </summary>

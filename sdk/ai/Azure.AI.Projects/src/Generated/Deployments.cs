@@ -60,13 +60,13 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Deployment>> GetDeploymentAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AIDeployment>> GetDeploymentAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetDeploymentAsync(name, context).ConfigureAwait(false);
-            return Response.FromValue(Deployment.FromResponse(response), response);
+            return Response.FromValue(AIDeployment.FromResponse(response), response);
         }
 
         /// <summary> Get a deployed model. </summary>
@@ -74,13 +74,13 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Deployment> GetDeployment(string name, CancellationToken cancellationToken = default)
+        public virtual Response<AIDeployment> GetDeployment(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetDeployment(name, context);
-            return Response.FromValue(Deployment.FromResponse(response), response);
+            return Response.FromValue(AIDeployment.FromResponse(response), response);
         }
 
         /// <summary>
@@ -166,12 +166,12 @@ namespace Azure.AI.Projects
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
         /// <param name="deploymentType"> Type of deployment to filter list by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Deployment> GetDeploymentsAsync(string modelPublisher = null, string modelName = null, DeploymentType? deploymentType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AIDeployment> GetDeploymentsAsync(string modelPublisher = null, string modelName = null, DeploymentType? deploymentType = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(modelPublisher, modelName, deploymentType?.ToString(), context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, modelPublisher, modelName, deploymentType?.ToString(), context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Deployment.DeserializeDeployment(e), ClientDiagnostics, _pipeline, "Deployments.GetDeployments", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AIDeployment.DeserializeAIDeployment(e), ClientDiagnostics, _pipeline, "Deployments.GetDeployments", "value", "nextLink", context);
         }
 
         /// <summary> List all deployed models in the project. </summary>
@@ -179,12 +179,12 @@ namespace Azure.AI.Projects
         /// <param name="modelName"> Model name (the publisher specific name) to filter models by. </param>
         /// <param name="deploymentType"> Type of deployment to filter list by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Deployment> GetDeployments(string modelPublisher = null, string modelName = null, DeploymentType? deploymentType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AIDeployment> GetDeployments(string modelPublisher = null, string modelName = null, DeploymentType? deploymentType = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(modelPublisher, modelName, deploymentType?.ToString(), context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, modelPublisher, modelName, deploymentType?.ToString(), context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Deployment.DeserializeDeployment(e), ClientDiagnostics, _pipeline, "Deployments.GetDeployments", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AIDeployment.DeserializeAIDeployment(e), ClientDiagnostics, _pipeline, "Deployments.GetDeployments", "value", "nextLink", context);
         }
 
         /// <summary>

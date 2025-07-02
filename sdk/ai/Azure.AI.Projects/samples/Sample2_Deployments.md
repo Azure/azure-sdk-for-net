@@ -19,13 +19,13 @@ var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER"
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("List all deployments:");
-foreach (Deployment deployment in projectClient.Deployments.GetDeployments())
+foreach (AIDeployment deployment in projectClient.Deployments.GetDeployments())
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-foreach (Deployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
+foreach (AIDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
 {
     Console.WriteLine(deployment);
 }
@@ -44,13 +44,13 @@ var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER"
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("List all deployments:");
-await foreach (Deployment deployment in projectClient.Deployments.GetDeploymentsAsync())
+await foreach (AIDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-await foreach (Deployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
+await foreach (AIDeployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
 {
     Console.WriteLine(deployment);
 }

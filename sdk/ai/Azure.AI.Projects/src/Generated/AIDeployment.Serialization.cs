@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    [PersistableModelProxy(typeof(UnknownDeployment))]
-    public partial class Deployment : IUtf8JsonSerializable, IJsonModel<Deployment>
+    [PersistableModelProxy(typeof(UnknownAIDeployment))]
+    public partial class AIDeployment : IUtf8JsonSerializable, IJsonModel<AIDeployment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Deployment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AIDeployment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Deployment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AIDeployment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Deployment>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AIDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Deployment)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AIDeployment)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("type"u8);
@@ -58,19 +58,19 @@ namespace Azure.AI.Projects
             }
         }
 
-        Deployment IJsonModel<Deployment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AIDeployment IJsonModel<AIDeployment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Deployment>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AIDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Deployment)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AIDeployment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeployment(document.RootElement, options);
+            return DeserializeAIDeployment(document.RootElement, options);
         }
 
-        internal static Deployment DeserializeDeployment(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AIDeployment DeserializeAIDeployment(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -85,46 +85,46 @@ namespace Azure.AI.Projects
                     case "ModelDeployment": return ModelDeployment.DeserializeModelDeployment(element, options);
                 }
             }
-            return UnknownDeployment.DeserializeUnknownDeployment(element, options);
+            return UnknownAIDeployment.DeserializeUnknownAIDeployment(element, options);
         }
 
-        BinaryData IPersistableModel<Deployment>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AIDeployment>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Deployment>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AIDeployment>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Deployment)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIDeployment)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Deployment IPersistableModel<Deployment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AIDeployment IPersistableModel<AIDeployment>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Deployment>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AIDeployment>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeployment(document.RootElement, options);
+                        return DeserializeAIDeployment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Deployment)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIDeployment)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Deployment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AIDeployment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Deployment FromResponse(Response response)
+        internal static AIDeployment FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDeployment(document.RootElement);
+            return DeserializeAIDeployment(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

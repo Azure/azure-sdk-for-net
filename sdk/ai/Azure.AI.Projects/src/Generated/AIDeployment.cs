@@ -12,10 +12,10 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Model Deployment Definition
-    /// Please note <see cref="Deployment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="AIDeployment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ModelDeployment"/>.
     /// </summary>
-    public abstract partial class Deployment
+    public abstract partial class AIDeployment
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,16 +49,16 @@ namespace Azure.AI.Projects
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Deployment"/>. </summary>
-        protected Deployment()
+        /// <summary> Initializes a new instance of <see cref="AIDeployment"/>. </summary>
+        protected AIDeployment()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Deployment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIDeployment"/>. </summary>
         /// <param name="type"> The type of the deployment. </param>
         /// <param name="name"> Name of the deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Deployment(DeploymentType type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AIDeployment(DeploymentType type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Name = name;
