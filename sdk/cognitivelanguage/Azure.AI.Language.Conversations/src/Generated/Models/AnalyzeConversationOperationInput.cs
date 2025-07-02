@@ -71,12 +71,14 @@ namespace Azure.AI.Language.Conversations.Models
         /// Please note <see cref="AnalyzeConversationOperationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PiiOperationAction"/>, <see cref="SummarizationOperationAction"/> and <see cref="CustomSummarizationOperationAction"/>.
         /// </param>
+        /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationOperationInput(string displayName, MultiLanguageConversationInput conversationInput, IList<AnalyzeConversationOperationAction> actions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeConversationOperationInput(string displayName, MultiLanguageConversationInput conversationInput, IList<AnalyzeConversationOperationAction> actions, float? cancelAfter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             ConversationInput = conversationInput;
             Actions = actions;
+            CancelAfter = cancelAfter;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -95,5 +97,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// The available derived classes include <see cref="PiiOperationAction"/>, <see cref="SummarizationOperationAction"/> and <see cref="CustomSummarizationOperationAction"/>.
         /// </summary>
         public IList<AnalyzeConversationOperationAction> Actions { get; }
+        /// <summary> Optional duration in seconds after which the job will be canceled if not completed. </summary>
+        public float? CancelAfter { get; set; }
     }
 }

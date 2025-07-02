@@ -68,9 +68,9 @@ public partial class ManagedClusterStorageProfile : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _isDiskCsiDriverEnabled = DefineProperty<bool>("IsDiskCsiDriverEnabled", ["diskCSIDriver"]);
-        _isFileCsiDriverEnabled = DefineProperty<bool>("IsFileCsiDriverEnabled", ["fileCSIDriver"]);
-        _isSnapshotControllerEnabled = DefineProperty<bool>("IsSnapshotControllerEnabled", ["snapshotController"]);
-        _isBlobCsiDriverEnabled = DefineProperty<bool>("IsBlobCsiDriverEnabled", ["blobCSIDriver"]);
+        _isDiskCsiDriverEnabled = DefineProperty<bool>("IsDiskCsiDriverEnabled", ["diskCSIDriver", "enabled"]);
+        _isFileCsiDriverEnabled = DefineProperty<bool>("IsFileCsiDriverEnabled", ["fileCSIDriver", "enabled"]);
+        _isSnapshotControllerEnabled = DefineProperty<bool>("IsSnapshotControllerEnabled", ["snapshotController", "enabled"]);
+        _isBlobCsiDriverEnabled = DefineProperty<bool>("IsBlobCsiDriverEnabled", ["blobCSIDriver", "enabled"]);
     }
 }

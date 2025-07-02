@@ -15,27 +15,25 @@ using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
 {
-    internal partial class PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT : AsyncPageable<PrivateLinkResourceData>
+    internal partial class PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT : AsyncPageable<PrivateLinkData>
     {
         private readonly PrivateLinks _client;
-        private readonly Uri _nextPage;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PrivateLinks client used to send requests. </param>
-        /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinks client, Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinks client, Guid subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             _client = client;
-            _nextPage = nextPage;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _context = context;
@@ -45,9 +43,9 @@ namespace MgmtTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<PrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<PrivateLinkData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             do
             {
                 Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
@@ -55,9 +53,9 @@ namespace MgmtTypeSpec
                 {
                     yield break;
                 }
-                PrivateLinkResourceListResult responseWithType = (PrivateLinkResourceListResult)response;
+                PrivateLinkListResult responseWithType = (PrivateLinkListResult)response;
                 nextPage = responseWithType.NextLink;
-                yield return Page<PrivateLinkResourceData>.FromValues((IReadOnlyList<PrivateLinkResourceData>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PrivateLinkData>.FromValues((IReadOnlyList<PrivateLinkData>)responseWithType.Value, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);
         }
@@ -67,17 +65,12 @@ namespace MgmtTypeSpec
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetAllPrivateLinkResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllPrivateLinkResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetAllPrivateLinkResourcesRequest(_subscriptionId, _resourceGroupName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateLinks.GetAllPrivateLinkResources");
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

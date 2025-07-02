@@ -12,6 +12,7 @@ using Azure.Generator.Management.Extensions;
 using System.Collections.Generic;
 using System.Net.Http;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using System.Linq;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
 {
@@ -74,7 +75,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             return This.Invoke(canUseTagResourceMethod, [cancellationTokenParam], null, isAsync);
         }
 
-        protected static List<MethodBodyStatement> CreateRequestContextAndProcessMessage(
+        protected List<MethodBodyStatement> CreateRequestContextAndProcessMessage(
             ResourceClientProvider resourceClientProvider,
             bool isAsync,
             ParameterProvider cancellationTokenParam,
@@ -87,10 +88,10 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             InputServiceMethod? getServiceMethod = null;
 
-            foreach (var method in resourceClientProvider.ResourceServiceMethods)
+            foreach (var (kind, method) in resourceClientProvider.ResourceServiceMethods)
             {
                 var operation = method.Operation;
-                if (operation.HttpMethod == HttpMethod.Get.ToString() && operation.Name == "get")
+                if (kind == Models.OperationKind.Get)
                 {
                     getServiceMethod = method;
                     break;
@@ -100,15 +101,14 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var clientProvider = resourceClientProvider.GetClientProvider();
             var convenienceMethod = clientProvider.GetConvenienceMethodByOperation(getServiceMethod!.Operation, isAsync);
             var requestMethod = clientProvider.GetRequestMethodByOperation(getServiceMethod.Operation);
-            var arguments = resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, convenienceMethod);
+            var arguments = resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, getServiceMethod.Operation);
 
             statements.Add(ResourceMethodSnippets.CreateHttpMessage(resourceClientProvider, "CreateGetRequest", arguments, out var messageVariable));
 
-            var responseType = new CSharpType(typeof(Response<>), resourceClientProvider.ResourceData.Type);
             statements.AddRange(ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                 messageVariable,
                 contextVariable,
-                responseType,
+                resourceClientProvider.ResourceData.Type,
                 isAsync,
                 out responseVariable));
 

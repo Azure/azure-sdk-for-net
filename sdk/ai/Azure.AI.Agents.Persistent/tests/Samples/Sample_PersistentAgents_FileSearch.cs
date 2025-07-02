@@ -102,7 +102,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
                 {
                     if (toolCall is RunStepFileSearchToolCall fileSearh)
                     {
-                        Console.WriteLine($"The search tool have found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
+                        Console.WriteLine($"The search tool has found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
                         Console.WriteLine(fileSearh.FileSearch.Results[0].Content[0].Text);
                         Console.WriteLine("===============================================================");
                     }
@@ -211,7 +211,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
                 {
                     if (toolCall is RunStepFileSearchToolCall fileSearh)
                     {
-                        Console.WriteLine($"The search tool have found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
+                        Console.WriteLine($"The search tool has found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
                         Console.WriteLine(fileSearh.FileSearch.Results[0].Content[0].Text);
                         Console.WriteLine("===============================================================");
                     }

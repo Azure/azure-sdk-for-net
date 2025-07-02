@@ -56,6 +56,16 @@ public partial class ContainerRegistryPolicies : ProvisionableConstruct
     private BicepValue<ContainerRegistryExportPolicyStatus>? _exportStatus;
 
     /// <summary>
+    /// The value that indicates whether the policy is enabled or not.
+    /// </summary>
+    public BicepValue<AadAuthenticationAsArmPolicyStatus> AzureADAuthenticationAsArmStatus 
+    {
+        get { Initialize(); return _azureADAuthenticationAsArmStatus!; }
+        set { Initialize(); _azureADAuthenticationAsArmStatus!.Assign(value); }
+    }
+    private BicepValue<AadAuthenticationAsArmPolicyStatus>? _azureADAuthenticationAsArmStatus;
+
+    /// <summary>
     /// Creates a new ContainerRegistryPolicies.
     /// </summary>
     public ContainerRegistryPolicies()
@@ -72,5 +82,6 @@ public partial class ContainerRegistryPolicies : ProvisionableConstruct
         _trustPolicy = DefineModelProperty<ContainerRegistryTrustPolicy>("TrustPolicy", ["trustPolicy"]);
         _retentionPolicy = DefineModelProperty<ContainerRegistryRetentionPolicy>("RetentionPolicy", ["retentionPolicy"]);
         _exportStatus = DefineProperty<ContainerRegistryExportPolicyStatus>("ExportStatus", ["exportPolicy", "status"]);
+        _azureADAuthenticationAsArmStatus = DefineProperty<AadAuthenticationAsArmPolicyStatus>("AzureADAuthenticationAsArmStatus", ["azureADAuthenticationAsArmPolicy", "status"]);
     }
 }

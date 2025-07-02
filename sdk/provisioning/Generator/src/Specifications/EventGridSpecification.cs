@@ -19,6 +19,9 @@ public class EventGridSpecification() :
         // Patch models
         CustomizeModel<EventGridNamespaceClientResource>(m => m.Name = "EventGridNamespaceClientResource");
         CustomizePropertyIsoDuration<QueueInfo>("EventTimeToLive");
+        CustomizeEnum<EventGridPublicNetworkAccess>(e => { e.Values.Add(new EnumValue(e, "SecuredByPerimeter", "SecuredByPerimeter") { Hidden = true }); });
+        CustomizeEnum<PartnerNamespaceChannelProvisioningState>(e => { e.Values.Add(new EnumValue(e, "IdleDueToMirroredPartnerDestinationDeletion", "IdleDueToMirroredPartnerDestinationDeletion") { Hidden = true }); });
+        CustomizeEnum<PartnerNamespaceChannelType>(e => { e.Values.Add(new EnumValue(e, "PartnerDestination", "PartnerDestination") { Hidden = true }); });
 
         // Naming requirements
         AddNameRequirements<EventGridDomainResource>(min: 3, max: 50, lower: true, upper: true, digits: true, hyphen: true);
