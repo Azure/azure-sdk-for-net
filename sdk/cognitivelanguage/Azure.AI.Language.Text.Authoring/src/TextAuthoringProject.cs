@@ -1646,14 +1646,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TextAuthoringAssignDeploymentResourcesState>> GetAssignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringDeploymentResourcesState>> GetAssignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetAssignDeploymentResourcesStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringAssignDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing assign deployment resources job. </summary>
@@ -1661,14 +1661,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TextAuthoringAssignDeploymentResourcesState> GetAssignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringDeploymentResourcesState> GetAssignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAssignDeploymentResourcesStatus(jobId, context);
-            return Response.FromValue(TextAuthoringAssignDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
@@ -1676,14 +1676,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TextAuthoringUnassignDeploymentResourcesState>> GetUnassignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TextAuthoringDeploymentResourcesState>> GetUnassignDeploymentResourcesStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetUnassignDeploymentResourcesStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(TextAuthoringUnassignDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status of an existing unassign deployment resources job. </summary>
@@ -1691,14 +1691,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TextAuthoringUnassignDeploymentResourcesState> GetUnassignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<TextAuthoringDeploymentResourcesState> GetUnassignDeploymentResourcesStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetUnassignDeploymentResourcesStatus(jobId, context);
-            return Response.FromValue(TextAuthoringUnassignDeploymentResourcesState.FromResponse(response), response);
+            return Response.FromValue(TextAuthoringDeploymentResourcesState.FromResponse(response), response);
         }
 
         /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. </summary>
