@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +20,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MongoDBAtlas
 {
     /// <summary></summary>
-    public partial class MongoDBAtlasOrganizationCollection : ArmCollection
+    public partial class MongoDBAtlasOrganizationCollection : ArmCollection, IEnumerable<MongoDBAtlasOrganizationResource>, IAsyncEnumerable<MongoDBAtlasOrganizationResource>
     {
         private readonly ClientDiagnostics _mongodbatlasorganizationClientDiagnostics;
         private readonly Organizations _mongodbatlasorganizationRestClient;
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<MongoDBAtlasOrganizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationName, MongoDBAtlasOrganizationData data, CancellationToken cancellationToken = default)
@@ -96,7 +98,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<MongoDBAtlasOrganizationResource> CreateOrUpdate(WaitUntil waitUntil, string organizationName, MongoDBAtlasOrganizationData data, CancellationToken cancellationToken = default)
@@ -137,7 +139,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
 
         /// <summary> Get a OrganizationResource. </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MongoDBAtlasOrganizationResource>> GetAsync(string organizationName, CancellationToken cancellationToken = default)
@@ -171,7 +173,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
 
         /// <summary> Get a OrganizationResource. </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MongoDBAtlasOrganizationResource> Get(string organizationName, CancellationToken cancellationToken = default)
@@ -203,9 +205,23 @@ namespace Azure.ResourceManager.MongoDBAtlas
             }
         }
 
+        /// <summary> List OrganizationResource resources by resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<MongoDBAtlasOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary> List OrganizationResource resources by resource group. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<MongoDBAtlasOrganizationResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string organizationName, CancellationToken cancellationToken = default)
@@ -235,7 +251,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string organizationName, CancellationToken cancellationToken = default)
@@ -265,7 +281,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MongoDBAtlasOrganizationResource>> GetIfExistsAsync(string organizationName, CancellationToken cancellationToken = default)
@@ -299,7 +315,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MongoDBAtlasOrganizationResource> GetIfExists(string organizationName, CancellationToken cancellationToken = default)
@@ -329,6 +345,22 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<MongoDBAtlasOrganizationResource> IEnumerable<MongoDBAtlasOrganizationResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<MongoDBAtlasOrganizationResource> IAsyncEnumerable<MongoDBAtlasOrganizationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

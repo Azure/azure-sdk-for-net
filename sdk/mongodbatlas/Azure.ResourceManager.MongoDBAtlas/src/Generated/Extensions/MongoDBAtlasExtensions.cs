@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.MongoDBAtlas
     public static partial class MongoDBAtlasExtensions
     {
         /// <param name="client"></param>
-        public static MockableMongoDBAtlasArmClient GetMockableMongoDBAtlasArmClient(ArmClient client)
+        private static MockableMongoDBAtlasArmClient GetMockableMongoDBAtlasArmClient(ArmClient client)
         {
             return client.GetCachedClient(client0 => new MockableMongoDBAtlasArmClient(client0, ResourceIdentifier.Root));
         }
 
         /// <param name="resourceGroupResource"></param>
-        public static MockableMongoDBAtlasResourceGroupResource GetMockableMongoDBAtlasResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockableMongoDBAtlasResourceGroupResource GetMockableMongoDBAtlasResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
             return resourceGroupResource.GetCachedClient(client => new MockableMongoDBAtlasResourceGroupResource(client, resourceGroupResource.Id));
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <summary> Get a OrganizationResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="organizationName"> Name of the Organization resource. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public static Response<MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <summary> Get a OrganizationResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="organizationName"> Name of the Organization resource. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public static async Task<Response<MongoDBAtlasOrganizationResource>> GetMongoDBAtlasOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)

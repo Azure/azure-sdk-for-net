@@ -8,14 +8,12 @@ namespace Azure.ResourceManager.MongoDBAtlas
     }
     public static partial class MongoDBAtlasExtensions
     {
-        public static Azure.ResourceManager.MongoDBAtlas.Mocking.MockableMongoDBAtlasArmClient GetMockableMongoDBAtlasArmClient(Azure.ResourceManager.ArmClient client) { throw null; }
-        public static Azure.ResourceManager.MongoDBAtlas.Mocking.MockableMongoDBAtlasResourceGroupResource GetMockableMongoDBAtlasResourceGroupResource(Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganization(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>> GetMongoDBAtlasOrganizationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource GetMongoDBAtlasOrganizationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationCollection GetMongoDBAtlasOrganizations(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
     }
-    public partial class MongoDBAtlasOrganizationCollection : Azure.ResourceManager.ArmCollection
+    public partial class MongoDBAtlasOrganizationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>, System.Collections.IEnumerable
     {
         protected MongoDBAtlasOrganizationCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string organizationName, Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -23,9 +21,14 @@ namespace Azure.ResourceManager.MongoDBAtlas
         public virtual Azure.Response<bool> Exists(string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> Get(string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>> GetAsync(string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> GetIfExists(string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>> GetIfExistsAsync(string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class MongoDBAtlasOrganizationData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData>
     {
@@ -58,14 +61,14 @@ namespace Azure.ResourceManager.MongoDBAtlas
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> Update(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
@@ -220,11 +223,5 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class ArmMongoDBAtlasClientBuilderExtensions
-    {
     }
 }

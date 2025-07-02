@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
 
         /// <summary> Get a OrganizationResource. </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganization(string organizationName, CancellationToken cancellationToken = default)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
 
         /// <summary> Get a OrganizationResource. </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MongoDBAtlasOrganizationResource>> GetMongoDBAtlasOrganizationAsync(string organizationName, CancellationToken cancellationToken = default)
