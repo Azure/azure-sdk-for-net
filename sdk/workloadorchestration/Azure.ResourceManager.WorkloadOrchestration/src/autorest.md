@@ -37,7 +37,7 @@ rename-mapping:
   WorkflowExecuteParameter: WorkflowExecuteContent
   WorkflowVersionParameter: WorkflowVersionContent
   WorkflowTemplateReviewParameter: WorkflowTemplateReviewContent
-
+  DeployJobParameter: DeployJobContent
 ```
 
 

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "deploy": return DeployJobParameter.DeserializeDeployJobParameter(element, options);
+                    case "deploy": return DeployJobContent.DeserializeDeployJobContent(element, options);
                 }
             }
             return UnknownJobParameterBase.DeserializeUnknownJobParameterBase(element, options);

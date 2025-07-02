@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Parameters for a deployment job. </summary>
-    public partial class DeployJobParameter : JobParameterBase
+    public partial class DeployJobContent : JobParameterBase
     {
-        /// <summary> Initializes a new instance of <see cref="DeployJobParameter"/>. </summary>
-        public DeployJobParameter()
+        /// <summary> Initializes a new instance of <see cref="DeployJobContent"/>. </summary>
+        public DeployJobContent()
         {
             JobType = JobType.Deploy;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeployJobParameter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeployJobContent"/>. </summary>
         /// <param name="jobType"> Job type discriminator value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameter"> Install Solution Parameter. </param>
-        internal DeployJobParameter(JobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, InstallSolutionContent parameter) : base(jobType, serializedAdditionalRawData)
+        internal DeployJobContent(JobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, InstallSolutionContent parameter) : base(jobType, serializedAdditionalRawData)
         {
             Parameter = parameter;
             JobType = jobType;

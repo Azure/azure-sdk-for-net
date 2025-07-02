@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    public partial class DeployJobParameter : IUtf8JsonSerializable, IJsonModel<DeployJobParameter>
+    public partial class DeployJobContent : IUtf8JsonSerializable, IJsonModel<DeployJobContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeployJobParameter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeployJobContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeployJobParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeployJobContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeployJobParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeployJobContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeployJobParameter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeployJobContent)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        DeployJobParameter IJsonModel<DeployJobParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeployJobContent IJsonModel<DeployJobContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeployJobParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeployJobContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeployJobParameter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeployJobContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeployJobParameter(document.RootElement, options);
+            return DeserializeDeployJobContent(document.RootElement, options);
         }
 
-        internal static DeployJobParameter DeserializeDeployJobParameter(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeployJobContent DeserializeDeployJobContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -88,38 +88,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeployJobParameter(jobType, serializedAdditionalRawData, parameter);
+            return new DeployJobContent(jobType, serializedAdditionalRawData, parameter);
         }
 
-        BinaryData IPersistableModel<DeployJobParameter>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeployJobContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeployJobParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeployJobContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeployJobParameter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeployJobContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeployJobParameter IPersistableModel<DeployJobParameter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeployJobContent IPersistableModel<DeployJobContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeployJobParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeployJobContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeployJobParameter(document.RootElement, options);
+                        return DeserializeDeployJobContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeployJobParameter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeployJobContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeployJobParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeployJobContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

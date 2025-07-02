@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="jobParameter">
         /// Parameters for the job.
         /// Please note <see cref="JobParameterBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeployJobParameter"/>.
+        /// The available derived classes include <see cref="DeployJobContent"/>.
         /// </param>
         /// <param name="correlationId"> Correlation ID for tracking. </param>
         /// <param name="steps"> Steps and substatuses for the job. </param>
