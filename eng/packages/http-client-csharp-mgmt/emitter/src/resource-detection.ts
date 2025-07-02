@@ -38,7 +38,7 @@ import {
   subscriptionResource,
   tenantResource
 } from "./sdk-context-options.js";
-import { DecoratorApplication, Model, NoTarget, Program } from "@typespec/compiler";
+import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
 import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
 
 export async function updateClients(
@@ -172,12 +172,12 @@ function getResourceModelId(
   if (model) {
     return model.crossLanguageDefinitionId;
   } else {
-      sdkContext.logger.reportDiagnostic({
-        code: "general-error",
-        message: `Resource model not found for decorator ${decorator.decorator.name}`,
-        target: NoTarget,
-        severity: "error"
-      });
+    sdkContext.logger.reportDiagnostic({
+      code: "general-error",
+      message: `Resource model not found for decorator ${decorator.decorator.name}`,
+      target: NoTarget,
+      severity: "error"
+    });
     return undefined;
   }
 }
