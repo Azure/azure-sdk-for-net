@@ -85,9 +85,9 @@ In order to run the tests, the following environment variables need to be set:
 
 4. These values depend on the subscription you are using for testing. Please refer to this [document][env_variables] to get the values.
 
-The easiest way to run the tests is via Visual Studio's test runner. Please note that the Visual Studio 2022 is required as one of the test target frameworks is `.NET 6.0`.
+The easiest way to run the tests is via Visual Studio's test runner. Please note that the Visual Studio 2022 is required as one of the test target frameworks is `.NET 8.0`.
 
-You can also run tests via the command line using `dotnet test`, but that will run tests for all supported platforms simultaneously and intermingle their output. You can run the tests for just one platform with `dotnet test -f net6.0` or `dotnet test -f net462`.
+You can also run tests via the command line using `dotnet test`, but that will run tests for all supported platforms simultaneously and intermingle their output. You can run the tests for just one platform with `dotnet test -f net8.0` or `dotnet test -f net462`.
 
 If you are using system environment variables, make sure to restart Visual Studio or the terminal after setting or changing the environment variables.
 

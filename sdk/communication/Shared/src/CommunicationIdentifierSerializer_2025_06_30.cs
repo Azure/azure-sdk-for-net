@@ -8,19 +8,15 @@ using Base = Azure.Communication.CommunicationIdentifierSerializer;
 
 namespace Azure.Communication
 {
-    internal class CommunicationIdentifierSerializer_2025_03_15_preview
+    internal class CommunicationIdentifierSerializer_2025_06_30
     {
-        // Uncomment and use in CallAutomation SDK instead of the base CommunicationIdentifierSerializer once the common swagger is updated to 2025-03-15-preview
-        // and includes the new TeamsExtensionUserIdentifierModel and new properties for PhoneNumberIdentifierModel
-
-        /*
         public static CommunicationIdentifier Deserialize(CommunicationIdentifierModel identifier)
         {
             string rawId = Base.AssertNotNull(identifier.RawId, nameof(identifier.RawId), nameof(CommunicationIdentifierModel));
 
             AssertMaximumOneNestedModel(identifier);
 
-            var kind = identifier.Kind ?? GetKind_2025_03_15_preview(identifier);
+            var kind = identifier.Kind ?? GetKind_2025_06_30(identifier);
 
             if (kind == CommunicationIdentifierModelKind.TeamsExtensionUser
                  && identifier.TeamsExtensionUser is not null)
@@ -54,7 +50,7 @@ namespace Azure.Communication
             }
         }
 
-        private static CommunicationIdentifierModelKind GetKind_2025_03_15_preview(CommunicationIdentifierModel identifier)
+        private static CommunicationIdentifierModelKind GetKind_2025_06_30(CommunicationIdentifierModel identifier)
         {
             if (identifier.TeamsExtensionUser is not null)
             {
@@ -86,6 +82,5 @@ namespace Azure.Communication
                 },
                 _ => Base.Serialize(identifier),
             };
-        */
     }
 }
