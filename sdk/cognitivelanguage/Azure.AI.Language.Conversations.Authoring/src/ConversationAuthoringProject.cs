@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -38,6 +39,8 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("Import", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringExportedProject), typeof(ConversationAuthoringExportedProjectFormat?), typeof(CancellationToken))]
     [CodeGenSuppress("ImportAsync", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("Import", typeof(WaitUntil), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("ImportRawJsonAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(ConversationAuthoringExportedProjectFormat?), typeof(CancellationToken))]
+    [CodeGenSuppress("ImportRawJson", typeof(WaitUntil), typeof(string), typeof(string), typeof(ConversationAuthoringExportedProjectFormat?), typeof(CancellationToken))]
     [CodeGenSuppress("CopyProjectAsync", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringCopyProjectDetails), typeof(CancellationToken))]
     [CodeGenSuppress("CopyProject", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringCopyProjectDetails), typeof(CancellationToken))]
     [CodeGenSuppress("CopyProjectAsync", typeof(WaitUntil), typeof(string), typeof(ConversationAuthoringCopyProjectDetails), typeof(RequestContext))]
@@ -568,6 +571,48 @@ namespace Azure.AI.Language.Conversations.Authoring
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Triggers a job to import a project using raw JSON string input.
+        /// This is an alternative to the structured import method, and is useful when importing directly from exported project files.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="exportedProject">
+        /// A raw JSON string representing the entire project to import.
+        /// This string should match the format of an exported Analyze Conversations project.
+        /// </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Operation> ImportRawJsonAsync(WaitUntil waitUntil, string exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(exportedProject, nameof(exportedProject));
+
+            using RequestContent content = RequestContent.Create(Encoding.UTF8.GetBytes(exportedProject));
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await ImportRawJsonAsync(waitUntil, _projectName, content, exportedProjectFormat?.ToString(), context).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Triggers a job to import a project using raw JSON string input.
+        /// This is an alternative to the structured import method, and is useful when importing directly from exported project files.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="exportedProject">
+        /// A raw JSON string representing the entire project to import.
+        /// This string should match the format of an exported Analyze Conversations project.
+        /// </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Operation ImportRawJson(WaitUntil waitUntil, string exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+            Argument.AssertNotNullOrEmpty(exportedProject, nameof(exportedProject));
+
+            using RequestContent content = RequestContentHelper.FromObject(exportedProject);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return ImportRawJson(waitUntil, _projectName, content, exportedProjectFormat?.ToString(), context);
         }
 
         /// <summary> Gets the status for an import. </summary>

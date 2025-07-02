@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Authoring;
@@ -129,6 +130,17 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             };
 
             ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+            var jsonOptions = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            };
+
+            string json = JsonSerializer.Serialize(exportedProject, jsonOptions);
+            Console.WriteLine("Serialized JSON Request:");
+            Console.WriteLine(json);
+
             // Call the ImportAsync function
             Operation operation = await projectAuthoringClient.ImportAsync(
                 waitUntil: WaitUntil.Completed,
@@ -144,6 +156,89 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
             Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");
+        }
+
+        [RecordedTest]
+        public async Task ImportProjectAsRawJsonAsync()
+        {
+            string projectName = "Test-data-labels0702";
+
+            // Define the raw JSON string matching the structure of ConversationAuthoringExportedProject
+            string rawJson = """
+            {
+              "projectFileVersion": "2022-10-01-preview",
+              "stringIndexType": "Utf16CodeUnit",
+              "metadata": {
+                "projectKind": "Conversation",
+                "language": "en-us",
+                "settings": {
+                  "confidenceThreshold": 0.0
+                },
+                "projectName": "Test-data-labels0702",
+                "multilingual": false,
+                "description": ""
+              },
+              "assets": {
+            		"projectKind": "Conversation",
+                "intents": [
+                  { "category": "None" },
+                  { "category": "Buy" }
+                ],
+                "entities": [
+                  {
+                    "category": "product",
+                    "compositionSetting": "combineComponents"
+                  }
+                ],
+                "utterances": [
+                  {
+                    "text": "I want to buy a house",
+                    "intent": "Buy",
+                    "language": "en-us",
+                    "dataset": "Train",
+                    "entities": [
+                      { "category": "product", "offset": 16, "length": 5 }
+                    ]
+                  },
+                  {
+                    "text": "I want to buy surface pro",
+                    "intent": "Buy",
+                    "language": "en-us",
+                    "dataset": "Train",
+                    "entities": [
+                      { "category": "product", "offset": 14, "length": 11 }
+                    ]
+                  },
+                  {
+                    "text": "I want to buy xbox",
+                    "intent": "Buy",
+                    "language": "en-us",
+                    "dataset": "Train",
+                    "entities": [
+                      { "category": "product", "offset": 14, "length": 4 }
+                    ]
+                  }
+                ]
+              }
+            }
+            """;
+
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+
+            // Call the ImportRawJsonAsync method (assumes SDK method exists for raw string input)
+            Operation operation = await projectAuthoringClient.ImportRawJsonAsync(
+                waitUntil: WaitUntil.Completed,
+                rawJson,
+                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+            );
+
+            // Assert the operation and response
+            Assert.IsNotNull(operation);
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected operation status to be 200 (OK).");
+
+            string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
+            Console.WriteLine($"Operation Location: {operationLocation}");
+            Console.WriteLine($"Project import (raw JSON) completed with status: {operation.GetRawResponse().Status}");
         }
 
         [RecordedTest]

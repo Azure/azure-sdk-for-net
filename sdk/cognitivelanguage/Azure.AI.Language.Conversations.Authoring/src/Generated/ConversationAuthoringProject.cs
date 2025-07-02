@@ -162,54 +162,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary>
-        /// Triggers a job to import a project using raw JSON string input.
-        /// This is an alternative to the structured import method, and is useful when importing directly from exported project files.
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="exportedProject">
-        /// A raw JSON string representing the entire project to import.
-        /// This string should match the format of an exported Analyze Conversations project.
-        /// </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedProject"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedProject"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> ImportRawJsonAsync(WaitUntil waitUntil, string projectName, string exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(exportedProject, nameof(exportedProject));
-
-            using RequestContent content = RequestContentHelper.FromObject(exportedProject);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return await ImportRawJsonAsync(waitUntil, projectName, content, exportedProjectFormat?.ToString(), context).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Triggers a job to import a project using raw JSON string input.
-        /// This is an alternative to the structured import method, and is useful when importing directly from exported project files.
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="exportedProject">
-        /// A raw JSON string representing the entire project to import.
-        /// This string should match the format of an exported Analyze Conversations project.
-        /// </param>
-        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedProject"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedProject"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation ImportRawJson(WaitUntil waitUntil, string projectName, string exportedProject, ConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(exportedProject, nameof(exportedProject));
-
-            using RequestContent content = RequestContentHelper.FromObject(exportedProject);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return ImportRawJson(waitUntil, projectName, content, exportedProjectFormat?.ToString(), context);
-        }
-
-        /// <summary>
         /// [Protocol Method] Triggers a job to import a project using raw JSON string input.
         /// This is an alternative to the structured import method, and is useful when importing directly from exported project files.
         /// <list type="bullet">
@@ -220,7 +172,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ImportRawJsonAsync(WaitUntil,string,string,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ImportRawJsonAsync(WaitUntil,string,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -264,7 +216,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ImportRawJson(WaitUntil,string,string,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ImportRawJson(WaitUntil,string,ConversationAuthoringExportedProjectFormat?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
