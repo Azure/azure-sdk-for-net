@@ -292,14 +292,14 @@ namespace Azure.AI.Agents.Persistent
         // File client methods
         ////////////////////////////////////////////////////////////////////////////
 
-            /// <summary> Create a vector store file by attaching a file to a vector store. </summary>
-            /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-            /// <param name="fileId"> Identifier of the file. </param>
-            /// <param name="dataSource"> Azure asset ID. </param>
-            /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file. If not set, uses the auto strategy. </param>
-            /// <param name="cancellationToken"> The cancellation token to use. </param>
-            /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-            /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <summary> Create a vector store file by attaching a file to a vector store. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="fileId"> Identifier of the file. </param>
+        /// <param name="dataSource"> Azure asset ID. </param>
+        /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file. If not set, uses the auto strategy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = null, VectorStoreDataSource dataSource = null, VectorStoreChunkingStrategy chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             return await _filesClient.CreateVectorStoreFileAsync(vectorStoreId: vectorStoreId, fileId: fileId, dataSource: dataSource, chunkingStrategy: chunkingStrategy, cancellationToken: cancellationToken).ConfigureAwait(false);
