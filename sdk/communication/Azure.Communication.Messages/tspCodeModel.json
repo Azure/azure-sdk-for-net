@@ -542,8 +542,8 @@
     {
       "$id": "42",
       "kind": "enum",
-      "name": "MessageTemplateStatus",
-      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateStatus",
+      "name": "RepeatabilityResult",
+      "crossLanguageDefinitionId": "Azure.Core.RepeatabilityResult",
       "valueType": {
         "$id": "43",
         "kind": "string",
@@ -555,15 +555,15 @@
         {
           "$id": "44",
           "kind": "enumvalue",
-          "name": "approved",
-          "value": "approved",
+          "name": "accepted",
+          "value": "accepted",
           "valueType": {
             "$ref": "43"
           },
           "enumType": {
             "$ref": "42"
           },
-          "doc": "Message template is approved.",
+          "doc": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation.",
           "decorators": []
         },
         {
@@ -577,33 +577,159 @@
           "enumType": {
             "$ref": "42"
           },
+          "doc": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server.",
+          "decorators": []
+        }
+      ],
+      "namespace": "Azure.Communication.Messages",
+      "doc": "Repeatability Result header options",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "Output",
+      "decorators": []
+    },
+    {
+      "$id": "46",
+      "kind": "enum",
+      "name": "Versions",
+      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.Versions",
+      "valueType": {
+        "$id": "47",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "48",
+          "kind": "enumvalue",
+          "name": "c2024_02_01",
+          "value": "2024-02-01",
+          "valueType": {
+            "$ref": "47"
+          },
+          "enumType": {
+            "$ref": "46"
+          },
+          "doc": "Azure Communication Messages 2024-02-01 api version",
+          "decorators": []
+        },
+        {
+          "$id": "49",
+          "kind": "enumvalue",
+          "name": "c2024_08_30",
+          "value": "2024-08-30",
+          "valueType": {
+            "$ref": "47"
+          },
+          "enumType": {
+            "$ref": "46"
+          },
+          "doc": "Azure Communication Messages 2024-08-30 api version",
+          "decorators": []
+        },
+        {
+          "$id": "50",
+          "kind": "enumvalue",
+          "name": "c2025_01_15_Preview",
+          "value": "2025-01-15-preview",
+          "valueType": {
+            "$ref": "47"
+          },
+          "enumType": {
+            "$ref": "46"
+          },
+          "doc": "Azure Communication Messages 2025-01-15-preview api version",
+          "decorators": []
+        },
+        {
+          "$id": "51",
+          "kind": "enumvalue",
+          "name": "c2025_04_01_Preview",
+          "value": "2025-04-01-preview",
+          "valueType": {
+            "$ref": "47"
+          },
+          "enumType": {
+            "$ref": "46"
+          },
+          "doc": "Azure Communication Messages 2025-04-01-preview api version",
+          "decorators": []
+        }
+      ],
+      "namespace": "Azure.Communication.Messages",
+      "doc": "Azure Communication Messages Versions",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": []
+    },
+    {
+      "$id": "52",
+      "kind": "enum",
+      "name": "MessageTemplateStatus",
+      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateStatus",
+      "valueType": {
+        "$id": "53",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "54",
+          "kind": "enumvalue",
+          "name": "approved",
+          "value": "approved",
+          "valueType": {
+            "$ref": "53"
+          },
+          "enumType": {
+            "$ref": "52"
+          },
+          "doc": "Message template is approved.",
+          "decorators": []
+        },
+        {
+          "$id": "55",
+          "kind": "enumvalue",
+          "name": "rejected",
+          "value": "rejected",
+          "valueType": {
+            "$ref": "53"
+          },
+          "enumType": {
+            "$ref": "52"
+          },
           "doc": "Message template is rejected.",
           "decorators": []
         },
         {
-          "$id": "46",
+          "$id": "56",
           "kind": "enumvalue",
           "name": "pending",
           "value": "pending",
           "valueType": {
-            "$ref": "43"
+            "$ref": "53"
           },
           "enumType": {
-            "$ref": "42"
+            "$ref": "52"
           },
           "doc": "Message template is pending.",
           "decorators": []
         },
         {
-          "$id": "47",
+          "$id": "57",
           "kind": "enumvalue",
           "name": "paused",
           "value": "paused",
           "valueType": {
-            "$ref": "43"
+            "$ref": "53"
           },
           "enumType": {
-            "$ref": "42"
+            "$ref": "52"
           },
           "doc": "Message template is paused.",
           "decorators": []
@@ -617,12 +743,12 @@
       "decorators": []
     },
     {
-      "$id": "48",
+      "$id": "58",
       "kind": "enum",
       "name": "CommunicationMessagesChannel",
       "crossLanguageDefinitionId": "Azure.Communication.MessagesService.CommunicationMessagesChannel",
       "valueType": {
-        "$id": "49",
+        "$id": "59",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -630,15 +756,15 @@
       },
       "values": [
         {
-          "$id": "50",
+          "$id": "60",
           "kind": "enumvalue",
           "name": "whatsApp",
           "value": "whatsApp",
           "valueType": {
-            "$ref": "49"
+            "$ref": "59"
           },
           "enumType": {
-            "$ref": "48"
+            "$ref": "58"
           },
           "doc": "The WhatsApp communication messages channel type.",
           "decorators": []
@@ -652,12 +778,12 @@
       "decorators": []
     },
     {
-      "$id": "51",
+      "$id": "61",
       "kind": "enum",
       "name": "OutboundDeliveryStrategyKind",
       "crossLanguageDefinitionId": "Azure.Communication.MessagesService.OutboundDeliveryStrategyKind",
       "valueType": {
-        "$id": "52",
+        "$id": "62",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -665,29 +791,29 @@
       },
       "values": [
         {
-          "$id": "53",
+          "$id": "63",
           "kind": "enumvalue",
           "name": "internalOnly",
           "value": "internalOnly",
           "valueType": {
-            "$ref": "52"
+            "$ref": "62"
           },
           "enumType": {
-            "$ref": "51"
+            "$ref": "61"
           },
           "doc": "Delivery strategy for internal only.",
           "decorators": []
         },
         {
-          "$id": "54",
+          "$id": "64",
           "kind": "enumvalue",
           "name": "allParticipants",
           "value": "allParticipants",
           "valueType": {
-            "$ref": "52"
+            "$ref": "62"
           },
           "enumType": {
-            "$ref": "51"
+            "$ref": "61"
           },
           "doc": "Delivery strategy for all participants.",
           "decorators": []
@@ -701,12 +827,12 @@
       "decorators": []
     },
     {
-      "$id": "55",
+      "$id": "65",
       "kind": "enum",
       "name": "ParticipantKind",
       "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ParticipantKind",
       "valueType": {
-        "$id": "56",
+        "$id": "66",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -714,29 +840,29 @@
       },
       "values": [
         {
-          "$id": "57",
+          "$id": "67",
           "kind": "enumvalue",
           "name": "internal",
           "value": "internal",
           "valueType": {
-            "$ref": "56"
+            "$ref": "66"
           },
           "enumType": {
-            "$ref": "55"
+            "$ref": "65"
           },
           "doc": "A participant internal to Azure Communication Services.",
           "decorators": []
         },
         {
-          "$id": "58",
+          "$id": "68",
           "kind": "enumvalue",
           "name": "external",
           "value": "external",
           "valueType": {
-            "$ref": "56"
+            "$ref": "66"
           },
           "enumType": {
-            "$ref": "55"
+            "$ref": "65"
           },
           "doc": "A participant on other platforms",
           "decorators": []
@@ -750,12 +876,12 @@
       "decorators": []
     },
     {
-      "$id": "59",
+      "$id": "69",
       "kind": "enum",
       "name": "MessagePlatformKind",
       "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessagePlatformKind",
       "valueType": {
-        "$id": "60",
+        "$id": "70",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -763,43 +889,43 @@
       },
       "values": [
         {
-          "$id": "61",
+          "$id": "71",
           "kind": "enumvalue",
           "name": "communication",
           "value": "communication",
           "valueType": {
-            "$ref": "60"
+            "$ref": "70"
           },
           "enumType": {
-            "$ref": "59"
+            "$ref": "69"
           },
           "doc": "Azure Communication platform.",
           "decorators": []
         },
         {
-          "$id": "62",
+          "$id": "72",
           "kind": "enumvalue",
           "name": "bot",
           "value": "bot",
           "valueType": {
-            "$ref": "60"
+            "$ref": "70"
           },
           "enumType": {
-            "$ref": "59"
+            "$ref": "69"
           },
           "doc": "Bot platform.",
           "decorators": []
         },
         {
-          "$id": "63",
+          "$id": "73",
           "kind": "enumvalue",
           "name": "whatsApp",
           "value": "whatsApp",
           "valueType": {
-            "$ref": "60"
+            "$ref": "70"
           },
           "enumType": {
-            "$ref": "59"
+            "$ref": "69"
           },
           "doc": "WhatsApp platform.",
           "decorators": []
@@ -810,132 +936,6 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
-    },
-    {
-      "$id": "64",
-      "kind": "enum",
-      "name": "RepeatabilityResult",
-      "crossLanguageDefinitionId": "Azure.Core.RepeatabilityResult",
-      "valueType": {
-        "$id": "65",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "values": [
-        {
-          "$id": "66",
-          "kind": "enumvalue",
-          "name": "accepted",
-          "value": "accepted",
-          "valueType": {
-            "$ref": "65"
-          },
-          "enumType": {
-            "$ref": "64"
-          },
-          "doc": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation.",
-          "decorators": []
-        },
-        {
-          "$id": "67",
-          "kind": "enumvalue",
-          "name": "rejected",
-          "value": "rejected",
-          "valueType": {
-            "$ref": "65"
-          },
-          "enumType": {
-            "$ref": "64"
-          },
-          "doc": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server.",
-          "decorators": []
-        }
-      ],
-      "namespace": "Azure.Communication.Messages",
-      "doc": "Repeatability Result header options",
-      "isFixed": true,
-      "isFlags": false,
-      "usage": "Output",
-      "decorators": []
-    },
-    {
-      "$id": "68",
-      "kind": "enum",
-      "name": "Versions",
-      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.Versions",
-      "valueType": {
-        "$id": "69",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "values": [
-        {
-          "$id": "70",
-          "kind": "enumvalue",
-          "name": "c2024_02_01",
-          "value": "2024-02-01",
-          "valueType": {
-            "$ref": "69"
-          },
-          "enumType": {
-            "$ref": "68"
-          },
-          "doc": "Azure Communication Messages 2024-02-01 api version",
-          "decorators": []
-        },
-        {
-          "$id": "71",
-          "kind": "enumvalue",
-          "name": "c2024_08_30",
-          "value": "2024-08-30",
-          "valueType": {
-            "$ref": "69"
-          },
-          "enumType": {
-            "$ref": "68"
-          },
-          "doc": "Azure Communication Messages 2024-08-30 api version",
-          "decorators": []
-        },
-        {
-          "$id": "72",
-          "kind": "enumvalue",
-          "name": "c2025_01_15_Preview",
-          "value": "2025-01-15-preview",
-          "valueType": {
-            "$ref": "69"
-          },
-          "enumType": {
-            "$ref": "68"
-          },
-          "doc": "Azure Communication Messages 2025-01-15-preview api version",
-          "decorators": []
-        },
-        {
-          "$id": "73",
-          "kind": "enumvalue",
-          "name": "c2025_04_01_Preview",
-          "value": "2025-04-01-preview",
-          "valueType": {
-            "$ref": "69"
-          },
-          "enumType": {
-            "$ref": "68"
-          },
-          "doc": "Azure Communication Messages 2025-04-01-preview api version",
-          "decorators": []
-        }
-      ],
-      "namespace": "Azure.Communication.Messages",
-      "doc": "Azure Communication Messages Versions",
-      "isFixed": true,
-      "isFlags": false,
-      "usage": "ApiVersionEnum",
       "decorators": []
     }
   ],
@@ -4802,7 +4802,7 @@
                 "serializedName": "kind",
                 "doc": "The type discriminator describing a template type.",
                 "type": {
-                  "$ref": "48"
+                  "$ref": "58"
                 },
                 "optional": false,
                 "readOnly": false,
@@ -4874,7 +4874,7 @@
                   "serializedName": "status",
                   "doc": "The aggregated template status.",
                   "type": {
-                    "$ref": "42"
+                    "$ref": "52"
                   },
                   "optional": false,
                   "readOnly": false,
@@ -4939,7 +4939,7 @@
                       "serializedName": "kind",
                       "doc": "Message template response type is whatsApp.",
                       "type": {
-                        "$ref": "50"
+                        "$ref": "60"
                       },
                       "optional": false,
                       "readOnly": false,
@@ -5126,7 +5126,7 @@
           "serializedName": "outboundDeliveryStrategy",
           "doc": "Outbound delivery strategy for the conversation.",
           "type": {
-            "$ref": "51"
+            "$ref": "61"
           },
           "optional": true,
           "readOnly": false,
@@ -5166,7 +5166,7 @@
                 "serializedName": "kind",
                 "doc": "The type discriminator describing a participant type.",
                 "type": {
-                  "$ref": "55"
+                  "$ref": "65"
                 },
                 "optional": false,
                 "readOnly": false,
@@ -5257,7 +5257,7 @@
                       "serializedName": "kind",
                       "doc": "Participant type is internal.",
                       "type": {
-                        "$ref": "57"
+                        "$ref": "67"
                       },
                       "optional": false,
                       "readOnly": false,
@@ -5293,7 +5293,7 @@
                           "serializedName": "kind",
                           "doc": "Type of message platform (e.g., WhatsApp).",
                           "type": {
-                            "$ref": "59"
+                            "$ref": "69"
                           },
                           "optional": false,
                           "readOnly": false,
@@ -5359,7 +5359,7 @@
                                 "serializedName": "kind",
                                 "doc": "Contact type is communication.",
                                 "type": {
-                                  "$ref": "61"
+                                  "$ref": "71"
                                 },
                                 "optional": false,
                                 "readOnly": false,
@@ -5396,7 +5396,7 @@
                                 "serializedName": "kind",
                                 "doc": "Contact type is bot.",
                                 "type": {
-                                  "$ref": "62"
+                                  "$ref": "72"
                                 },
                                 "optional": false,
                                 "readOnly": false,
@@ -5458,7 +5458,7 @@
                                 "serializedName": "kind",
                                 "doc": "Contact type is whatsApp.",
                                 "type": {
-                                  "$ref": "63"
+                                  "$ref": "73"
                                 },
                                 "optional": false,
                                 "readOnly": false,
@@ -5511,7 +5511,7 @@
                       "serializedName": "kind",
                       "doc": "Participant type is external.",
                       "type": {
-                        "$ref": "58"
+                        "$ref": "68"
                       },
                       "optional": false,
                       "readOnly": false,
@@ -6843,7 +6843,7 @@
           "serializedName": "outboundDeliveryStrategy",
           "doc": "The options of the outbound delivery strategy for messages sent by participants in a conversation.\r\nSupports internalOnly, allChannels.",
           "type": {
-            "$ref": "51"
+            "$ref": "61"
           },
           "optional": true,
           "readOnly": false,
@@ -7103,7 +7103,7 @@
                     "nameInResponse": "Repeatability-Result",
                     "doc": "Indicates whether the repeatable request was accepted or rejected.",
                     "type": {
-                      "$ref": "64"
+                      "$ref": "42"
                     }
                   },
                   {
@@ -8647,7 +8647,7 @@
                     "nameInResponse": "Repeatability-Result",
                     "doc": "Indicates whether the repeatable request was accepted or rejected.",
                     "type": {
-                      "$ref": "64"
+                      "$ref": "42"
                     }
                   },
                   {
@@ -8989,7 +8989,7 @@
                     "nameInResponse": "Repeatability-Result",
                     "doc": "Indicates whether the repeatable request was accepted or rejected.",
                     "type": {
-                      "$ref": "64"
+                      "$ref": "42"
                     }
                   },
                   {
@@ -9493,7 +9493,7 @@
                                   "$id": "699",
                                   "kind": "string",
                                   "type": {
-                                    "$ref": "51"
+                                    "$ref": "61"
                                   },
                                   "value": "allParticipants"
                                 },
@@ -9532,7 +9532,7 @@
                                           "$id": "705",
                                           "kind": "string",
                                           "type": {
-                                            "$ref": "58"
+                                            "$ref": "68"
                                           },
                                           "value": "external"
                                         },
@@ -9563,7 +9563,7 @@
                                                   "$id": "710",
                                                   "kind": "string",
                                                   "type": {
-                                                    "$ref": "63"
+                                                    "$ref": "73"
                                                   },
                                                   "value": "whatsApp"
                                                 }
@@ -9589,7 +9589,7 @@
                                                   "$id": "714",
                                                   "kind": "string",
                                                   "type": {
-                                                    "$ref": "61"
+                                                    "$ref": "71"
                                                   },
                                                   "value": "communication"
                                                 }
@@ -9627,7 +9627,7 @@
                                           "$id": "719",
                                           "kind": "string",
                                           "type": {
-                                            "$ref": "57"
+                                            "$ref": "67"
                                           },
                                           "value": "internal"
                                         },
@@ -9651,7 +9651,7 @@
                                               "$id": "723",
                                               "kind": "string",
                                               "type": {
-                                                "$ref": "61"
+                                                "$ref": "71"
                                               },
                                               "value": "communication"
                                             }
@@ -9707,7 +9707,7 @@
                                   "$id": "729",
                                   "kind": "string",
                                   "type": {
-                                    "$ref": "51"
+                                    "$ref": "61"
                                   },
                                   "value": "allParticipants"
                                 },
@@ -9746,7 +9746,7 @@
                                           "$id": "735",
                                           "kind": "string",
                                           "type": {
-                                            "$ref": "58"
+                                            "$ref": "68"
                                           },
                                           "value": "external"
                                         },
@@ -9777,7 +9777,7 @@
                                                   "$id": "740",
                                                   "kind": "string",
                                                   "type": {
-                                                    "$ref": "63"
+                                                    "$ref": "73"
                                                   },
                                                   "value": "whatsApp"
                                                 }
@@ -9803,7 +9803,7 @@
                                                   "$id": "744",
                                                   "kind": "string",
                                                   "type": {
-                                                    "$ref": "61"
+                                                    "$ref": "71"
                                                   },
                                                   "value": "communication"
                                                 }
@@ -9841,7 +9841,7 @@
                                           "$id": "749",
                                           "kind": "string",
                                           "type": {
-                                            "$ref": "57"
+                                            "$ref": "67"
                                           },
                                           "value": "internal"
                                         },
@@ -9865,7 +9865,7 @@
                                               "$id": "753",
                                               "kind": "string",
                                               "type": {
-                                                "$ref": "61"
+                                                "$ref": "71"
                                               },
                                               "value": "communication"
                                             }
@@ -10823,7 +10823,7 @@
                     "nameInResponse": "Repeatability-Result",
                     "doc": "Indicates whether the repeatable request was accepted or rejected.",
                     "type": {
-                      "$ref": "64"
+                      "$ref": "42"
                     }
                   },
                   {
@@ -10935,7 +10935,7 @@
                                   "$id": "845",
                                   "kind": "string",
                                   "type": {
-                                    "$ref": "58"
+                                    "$ref": "68"
                                   },
                                   "value": "external"
                                 },
@@ -10966,7 +10966,7 @@
                                           "$id": "850",
                                           "kind": "string",
                                           "type": {
-                                            "$ref": "63"
+                                            "$ref": "73"
                                           },
                                           "value": "whatsApp"
                                         }
@@ -10996,7 +10996,7 @@
                                   "$id": "854",
                                   "kind": "string",
                                   "type": {
-                                    "$ref": "57"
+                                    "$ref": "67"
                                   },
                                   "value": "internal"
                                 },
@@ -11020,7 +11020,7 @@
                                       "$id": "858",
                                       "kind": "string",
                                       "type": {
-                                        "$ref": "61"
+                                        "$ref": "71"
                                       },
                                       "value": "communication"
                                     }
@@ -11049,7 +11049,7 @@
                           "nameInResponse": "Repeatability-Result",
                           "doc": "Indicates whether the repeatable request was accepted or rejected.",
                           "type": {
-                            "$ref": "64"
+                            "$ref": "42"
                           }
                         },
                         {
@@ -11475,7 +11475,7 @@
                     "nameInResponse": "Repeatability-Result",
                     "doc": "Indicates whether the repeatable request was accepted or rejected.",
                     "type": {
-                      "$ref": "64"
+                      "$ref": "42"
                     }
                   },
                   {
@@ -11596,7 +11596,7 @@
                           "nameInResponse": "Repeatability-Result",
                           "doc": "Indicates whether the repeatable request was accepted or rejected.",
                           "type": {
-                            "$ref": "64"
+                            "$ref": "42"
                           }
                         },
                         {
@@ -11986,7 +11986,7 @@
                     "nameInResponse": "Repeatability-Result",
                     "doc": "Indicates whether the repeatable request was accepted or rejected.",
                     "type": {
-                      "$ref": "64"
+                      "$ref": "42"
                     }
                   },
                   {
@@ -12073,7 +12073,7 @@
                           "nameInResponse": "Repeatability-Result",
                           "doc": "Indicates whether the repeatable request was accepted or rejected.",
                           "type": {
-                            "$ref": "64"
+                            "$ref": "42"
                           }
                         },
                         {
@@ -12499,7 +12499,7 @@
                     "nameInResponse": "Repeatability-Result",
                     "doc": "Indicates whether the repeatable request was accepted or rejected.",
                     "type": {
-                      "$ref": "64"
+                      "$ref": "42"
                     }
                   },
                   {
@@ -12926,7 +12926,7 @@
                     "nameInResponse": "Repeatability-Result",
                     "doc": "Indicates whether the repeatable request was accepted or rejected.",
                     "type": {
-                      "$ref": "64"
+                      "$ref": "42"
                     }
                   },
                   {
@@ -14051,7 +14051,7 @@
                     "nameInResponse": "Repeatability-Result",
                     "doc": "Indicates whether the repeatable request was accepted or rejected.",
                     "type": {
-                      "$ref": "64"
+                      "$ref": "42"
                     }
                   },
                   {
@@ -14442,7 +14442,7 @@
                     "nameInResponse": "Repeatability-Result",
                     "doc": "Indicates whether the repeatable request was accepted or rejected.",
                     "type": {
-                      "$ref": "64"
+                      "$ref": "42"
                     }
                   },
                   {
