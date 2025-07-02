@@ -85,7 +85,6 @@ describe("Configuration tests", async () => {
     strictEqual(context.options["package-name"], "Test.Package");
   });
 
-  // New tests for additional decorators logic
   describe("Additional decorators configuration", () => {
     it("adds default decorator when sdk-context-options is not set", async () => {
       const context = createEmitterContext(program);
