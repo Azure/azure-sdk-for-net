@@ -6,7 +6,7 @@ Invoke-Pester -Output Detailed $PSScriptRoot\Toc-Generation.Tests.ps1
 
 Import-Module Pester
 
-if (!(Get-Command nuget -ErrorAction SilentlyContinue))) {
+if (!(Get-Command nuget -ErrorAction SilentlyContinue)) {
     Write-Host "Skipping tests because 'nuget' is not on the path"
     exit 0
 }
