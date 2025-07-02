@@ -3,10 +3,6 @@
 
 import { CreateSdkContextOptions } from "@azure-tools/typespec-client-generator-core";
 
-// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-client-generator-core/README.md#usesystemtextjsonconverter
-const useSystemTextJsonConverterRegex =
-  "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter";
-
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armprovidernamespace
 const armProviderNamespaceRegex =
   "Azure\\.ResourceManager\\.@armProviderNamespace";
