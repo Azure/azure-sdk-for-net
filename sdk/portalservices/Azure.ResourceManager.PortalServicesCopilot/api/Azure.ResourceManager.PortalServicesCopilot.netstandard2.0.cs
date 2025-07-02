@@ -103,9 +103,3 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         public override string ToString() { throw null; }
     }
 }
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class ArmPortalServicesCopilotClientBuilderExtensions
-    {
-    }
-}
