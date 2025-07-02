@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Test.Shared;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -589,37 +588,40 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        public async Task DirectoryToDirectory_SpecialChars()
+        [TestCase("source=path@#%")]
+        [TestCase("source%21path%40%23%25")]
+        public async Task DirectoryToDirectory_SpecialChars(string prefix)
         {
             // Arrange
             await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
             await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
 
             long size = DataMovementTestConstants.KB;
-            string sourcePrefix = "source=folder&";
-            string destinationPrefix = "dest=folder&";
 
-            await CreateDirectoryInSourceAsync(source.Container, sourcePrefix);
-            await CreateDirectoryInDestinationAsync(destination.Container, destinationPrefix);
+            await CreateDirectoryInSourceAsync(source.Container, prefix);
+            await CreateDirectoryInDestinationAsync(destination.Container, prefix);
 
-            string itemName1 = string.Join("/", sourcePrefix, "file=test!@#$%");
+            string itemName1 = string.Join("/", prefix, "file=test!@#$%");
             await CreateObjectInSourceAsync(source.Container, size, itemName1);
-            string itemName2 = string.Join("/", sourcePrefix, "file%3Dtest%26"); // Already encoded
+            string itemName2 = string.Join("/", prefix, "file%3Dtest%26"); // Already encoded
             await CreateObjectInSourceAsync(source.Container, size, itemName2);
 
-            string subDirName = string.Join("/", sourcePrefix, "folder=bar");
+            string subDirName = string.Join("/", prefix, "folder=bar");
             await CreateDirectoryInSourceAsync(source.Container, subDirName);
             string itemName3 = string.Join("/", subDirName, "subfile=test!@#$%");
             await CreateObjectInSourceAsync(source.Container, size, itemName3);
             string itemName4 = string.Join("/", subDirName, "subfile%3Dtest%26");
             await CreateObjectInSourceAsync(source.Container, size, itemName4);
+            string subDirName2 = string.Join("/", prefix, "space folder");
+            await CreateDirectoryInSourceAsync(source.Container, subDirName2);
+            string itemName5 = string.Join("/", subDirName2, "space file");
 
             // Act
             await CopyDirectoryAndVerifyAsync(
                 source.Container,
                 destination.Container,
-                sourcePrefix,
-                destinationPrefix,
+                prefix,
+                prefix,
                 itemTransferCount: 4).ConfigureAwait(false);
         }
 
