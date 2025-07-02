@@ -30,10 +30,10 @@ function DownloadNugetPackage($package, $version, $destination) {
     # Download package from nuget, if no package found in nuget, then search devops public feeds if set.
     LogDebug "Downloading source: '$customPackageSource'. If it is empty, we default to use nuget gallery."
     if ($customPackageSource) {
-        dotnet nuget install $package --version $version --output $destination --ignore-failed-sources --no-dependencies --direct-download --fallbacksource $customPackageSource
+        nuget install -FallbackSource $customPackageSource $package -Version $version -DirectDownload -DependencyVersion Ignore -OutputDirectory $destination
     }
     else {
-        dotnet nuget install $package --version $version --output $destination --ignore-failed-sources --no-dependencies --direct-download
+        nuget install $package -Version $version -DirectDownload -DependencyVersion Ignore -OutputDirectory $destination
     }
 }
 
