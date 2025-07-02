@@ -16,15 +16,15 @@ using System.Xml;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HardwareSecurityModules
+namespace Azure.ResourceManager.Hardwaresecuritymodules
 {
     internal static class ModelSerializationExtensions
     {
         internal static readonly JsonDocumentOptions JsonDocumentOptions = new JsonDocumentOptions { MaxDepth = 256 };
         internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
         internal static readonly BinaryData SentinelValue = BinaryData.FromBytes("\"__EMPTY__\""u8.ToArray());
-        internal static readonly JsonSerializerOptions Options = new JsonSerializerOptions { Converters = { new JsonModelConverter(WireOptions, AzureResourceManagerHardwareSecurityModulesContext.Default) } };
-        internal static readonly JsonSerializerOptions OptionsUseManagedServiceIdentityV3 = new JsonSerializerOptions { Converters = { new JsonModelConverter(WireOptions, AzureResourceManagerHardwareSecurityModulesContext.Default), new ResourceManager.Models.ManagedServiceIdentityTypeV3Converter() } };
+        internal static readonly JsonSerializerOptions Options = new JsonSerializerOptions { Converters = { new JsonModelConverter(WireOptions, AzureResourceManagerHardwaresecuritymodulesContext.Default) } };
+        internal static readonly JsonSerializerOptions OptionsUseManagedServiceIdentityV3 = new JsonSerializerOptions { Converters = { new JsonModelConverter(WireOptions, AzureResourceManagerHardwaresecuritymodulesContext.Default), new ResourceManager.Models.ManagedServiceIdentityTypeV3Converter() } };
 
         public static object GetObject(this JsonElement element)
         {

@@ -9,33 +9,34 @@ using System.Threading;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Hardwaresecuritymodules.Models;
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
+namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    public partial class MockableHardwareSecurityModulesSubscriptionResource : ArmResource
+    public partial class MockableHardwaresecuritymodulesSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _cloudHsmClusterClientDiagnostics;
         private CloudHsmClustersRestOperations _cloudHsmClusterRestClient;
         private ClientDiagnostics _dedicatedHsmClientDiagnostics;
         private DedicatedHsmRestOperations _dedicatedHsmRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHardwareSecurityModulesSubscriptionResource"/> class for mocking. </summary>
-        protected MockableHardwareSecurityModulesSubscriptionResource()
+        /// <summary> Initializes a new instance of the <see cref="MockableHardwaresecuritymodulesSubscriptionResource"/> class for mocking. </summary>
+        protected MockableHardwaresecuritymodulesSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHardwareSecurityModulesSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableHardwaresecuritymodulesSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableHardwareSecurityModulesSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableHardwaresecuritymodulesSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics CloudHsmClusterClientDiagnostics => _cloudHsmClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
+        private ClientDiagnostics CloudHsmClusterClientDiagnostics => _cloudHsmClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hardwaresecuritymodules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
         private CloudHsmClustersRestOperations CloudHsmClusterRestClient => _cloudHsmClusterRestClient ??= new CloudHsmClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CloudHsmClusterResource.ResourceType));
-        private ClientDiagnostics DedicatedHsmClientDiagnostics => _dedicatedHsmClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", DedicatedHsmResource.ResourceType.Namespace, Diagnostics);
-        private DedicatedHsmRestOperations DedicatedHsmRestClient => _dedicatedHsmRestClient ??= new DedicatedHsmRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DedicatedHsmResource.ResourceType));
+        private ClientDiagnostics DedicatedHsmClientDiagnostics => _dedicatedHsmClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hardwaresecuritymodules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DedicatedHsmRestOperations DedicatedHsmRestClient => _dedicatedHsmRestClient ??= new DedicatedHsmRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_ListBySubscription</description>
+        /// <description>CloudHsmCluster_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CloudHsmClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudHsmClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), CloudHsmClusterClientDiagnostics, Pipeline, "MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), CloudHsmClusterClientDiagnostics, Pipeline, "MockableHardwaresecuritymodulesSubscriptionResource.GetCloudHsmClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_ListBySubscription</description>
+        /// <description>CloudHsmCluster_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CloudHsmClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudHsmClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skiptoken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), CloudHsmClusterClientDiagnostics, Pipeline, "MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), CloudHsmClusterClientDiagnostics, Pipeline, "MockableHardwaresecuritymodulesSubscriptionResource.GetCloudHsmClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -120,20 +121,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-03-31</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DedicatedHsmResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DedicatedHsmResource> GetDedicatedHsmsAsync(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DedicatedHsm"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DedicatedHsm> GetDedicatedHsmsBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DedicatedHsmResource(Client, DedicatedHsmData.DeserializeDedicatedHsmData(e)), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DedicatedHsm.DeserializeDedicatedHsm(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwaresecuritymodulesSubscriptionResource.GetDedicatedHsmsBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -151,20 +148,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-03-31</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DedicatedHsmResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DedicatedHsmResource> GetDedicatedHsms(int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DedicatedHsm"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DedicatedHsm> GetDedicatedHsmsBySubscription(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DedicatedHsmResource(Client, DedicatedHsmData.DeserializeDedicatedHsmData(e)), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsms", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DedicatedHsm.DeserializeDedicatedHsm(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwaresecuritymodulesSubscriptionResource.GetDedicatedHsmsBySubscription", "value", "nextLink", cancellationToken);
         }
     }
 }

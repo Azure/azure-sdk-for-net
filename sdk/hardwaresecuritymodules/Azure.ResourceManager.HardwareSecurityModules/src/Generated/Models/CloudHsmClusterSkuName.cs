@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Models
+namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
 {
     /// <summary> Sku name of the Cloud HSM Cluster. </summary>
     public enum CloudHsmClusterSkuName

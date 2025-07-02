@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Models
+namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
 {
     /// <summary> Status of the backup/restore operation. </summary>
     public readonly partial struct BackupRestoreOperationStatus : IEquatable<BackupRestoreOperationStatus>

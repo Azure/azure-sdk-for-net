@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Models
+namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
 {
     /// <summary> The Cloud HSM Properties. </summary>
     public partial class CloudHsmProperties
@@ -64,13 +64,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> FQDN of the Cloud HSM. </summary>
-        [WirePath("fqdn")]
         public string Fqdn { get; }
         /// <summary> The Cloud HSM State. Values are: Deploying, ConfiguringSlb, Starting, Starting, Failed, Failed, Deleting, DeletingSlbEntry, InitialProvisioning, Updating. </summary>
-        [WirePath("state")]
         public string State { get; }
         /// <summary> The Cloud HSM State message. </summary>
-        [WirePath("stateMessage")]
         public string StateMessage { get; }
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Models
+namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
 {
     /// <summary> Backup and Restore Common properties. </summary>
     public partial class BackupRestoreRequestBaseProperties
@@ -72,10 +72,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> The Azure blob storage container Uri which contains the backup. </summary>
-        [WirePath("azureStorageBlobContainerUri")]
         public Uri AzureStorageBlobContainerUri { get; }
         /// <summary> The SAS token pointing to an Azure blob storage container. This property is reserved for Azure Backup Service. </summary>
-        [WirePath("token")]
         public string Token { get; set; }
     }
 }

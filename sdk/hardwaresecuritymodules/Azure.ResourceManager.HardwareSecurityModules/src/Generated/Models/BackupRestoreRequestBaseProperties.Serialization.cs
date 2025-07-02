@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Models
+namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
 {
     public partial class BackupRestoreRequestBaseProperties : IUtf8JsonSerializable, IJsonModel<BackupRestoreRequestBaseProperties>
     {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwaresecuritymodulesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BackupRestoreRequestBaseProperties)} does not support writing '{options.Format}' format.");
             }

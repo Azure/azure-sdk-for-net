@@ -8,24 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.Hardwaresecuritymodules.Models;
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
+namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    public partial class MockableHardwareSecurityModulesResourceGroupResource : ArmResource
+    public partial class MockableHardwaresecuritymodulesResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHardwareSecurityModulesResourceGroupResource"/> class for mocking. </summary>
-        protected MockableHardwareSecurityModulesResourceGroupResource()
+        private ClientDiagnostics _dedicatedHsmClientDiagnostics;
+        private DedicatedHsmRestOperations _dedicatedHsmRestClient;
+
+        /// <summary> Initializes a new instance of the <see cref="MockableHardwaresecuritymodulesResourceGroupResource"/> class for mocking. </summary>
+        protected MockableHardwaresecuritymodulesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHardwareSecurityModulesResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableHardwaresecuritymodulesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableHardwareSecurityModulesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableHardwaresecuritymodulesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics DedicatedHsmClientDiagnostics => _dedicatedHsmClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hardwaresecuritymodules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DedicatedHsmRestOperations DedicatedHsmRestClient => _dedicatedHsmRestClient ??= new DedicatedHsmRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -49,7 +58,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Get</description>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -80,7 +89,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Get</description>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -102,11 +111,43 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             return GetCloudHsmClusters().Get(cloudHsmClusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DedicatedHsmResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DedicatedHsmResources and their operations over a DedicatedHsmResource. </returns>
-        public virtual DedicatedHsmCollection GetDedicatedHsms()
+        /// <summary>
+        /// Gets the specified Azure dedicated HSM.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHsm_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<Response<DedicatedHsm>> GetDedicatedHsmAsync(string name, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new DedicatedHsmCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.GetDedicatedHsm");
+            scope.Start();
+            try
+            {
+                var response = await DedicatedHsmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -124,24 +165,32 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <term>Default Api Version</term>
         /// <description>2025-03-31</description>
         /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DedicatedHsmResource>> GetDedicatedHsmAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<DedicatedHsm> GetDedicatedHsm(string name, CancellationToken cancellationToken = default)
         {
-            return await GetDedicatedHsms().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.GetDedicatedHsm");
+            scope.Start();
+            try
+            {
+                var response = DedicatedHsmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Gets the specified Azure dedicated HSM.
+        /// Create or Update a dedicated HSM in the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -149,26 +198,377 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DedicatedHsm_Get</description>
+        /// <description>DedicatedHsm_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2025-03-31</description>
         /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="dedicatedHsm"> Parameters to create or update the dedicated hsm. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dedicatedHsm"/> is null. </exception>
+        public virtual async Task<ArmOperation<DedicatedHsm>> CreateOrUpdateDedicatedHsmAsync(WaitUntil waitUntil, string name, DedicatedHsm dedicatedHsm, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(dedicatedHsm, nameof(dedicatedHsm));
+
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.CreateOrUpdateDedicatedHsm");
+            scope.Start();
+            try
+            {
+                var response = await DedicatedHsmRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, dedicatedHsm, cancellationToken).ConfigureAwait(false);
+                var operation = new HardwaresecuritymodulesArmOperation<DedicatedHsm>(new DedicatedHsmOperationSource(), DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, dedicatedHsm).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or Update a dedicated HSM in the specified subscription.
+        /// <list type="bullet">
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHsm_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="dedicatedHsm"> Parameters to create or update the dedicated hsm. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dedicatedHsm"/> is null. </exception>
+        public virtual ArmOperation<DedicatedHsm> CreateOrUpdateDedicatedHsm(WaitUntil waitUntil, string name, DedicatedHsm dedicatedHsm, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(dedicatedHsm, nameof(dedicatedHsm));
+
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.CreateOrUpdateDedicatedHsm");
+            scope.Start();
+            try
+            {
+                var response = DedicatedHsmRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, dedicatedHsm, cancellationToken);
+                var operation = new HardwaresecuritymodulesArmOperation<DedicatedHsm>(new DedicatedHsmOperationSource(), DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, dedicatedHsm).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a dedicated HSM in the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHsm_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="content"> Parameters to patch the dedicated HSM. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<DedicatedHsm>> UpdateDedicatedHsmAsync(WaitUntil waitUntil, string name, DedicatedHsmPatchContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.UpdateDedicatedHsm");
+            scope.Start();
+            try
+            {
+                var response = await DedicatedHsmRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new HardwaresecuritymodulesArmOperation<DedicatedHsm>(new DedicatedHsmOperationSource(), DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a dedicated HSM in the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHsm_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="content"> Parameters to patch the dedicated HSM. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<DedicatedHsm> UpdateDedicatedHsm(WaitUntil waitUntil, string name, DedicatedHsmPatchContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.UpdateDedicatedHsm");
+            scope.Start();
+            try
+            {
+                var response = DedicatedHsmRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken);
+                var operation = new HardwaresecuritymodulesArmOperation<DedicatedHsm>(new DedicatedHsmOperationSource(), DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specified Azure Dedicated HSM.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHsm_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteDedicatedHsmAsync(WaitUntil waitUntil, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.DeleteDedicatedHsm");
+            scope.Start();
+            try
+            {
+                var response = await DedicatedHsmRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                var operation = new HardwaresecuritymodulesArmOperation(DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specified Azure Dedicated HSM.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHsm_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual ArmOperation DeleteDedicatedHsm(WaitUntil waitUntil, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.DeleteDedicatedHsm");
+            scope.Start();
+            try
+            {
+                var response = DedicatedHsmRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
+                var operation = new HardwaresecuritymodulesArmOperation(DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The List operation gets information about the dedicated HSMs associated with the subscription and within the specified resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHsm_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> Maximum number of results to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DedicatedHsm"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DedicatedHsm> GetDedicatedHsmsByResourceGroupAsync(int? top = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DedicatedHsm.DeserializeDedicatedHsm(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwaresecuritymodulesResourceGroupResource.GetDedicatedHsmsByResourceGroup", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// The List operation gets information about the dedicated HSMs associated with the subscription and within the specified resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHsm_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> Maximum number of results to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DedicatedHsm"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DedicatedHsm> GetDedicatedHsmsByResourceGroup(int? top = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DedicatedHsm.DeserializeDedicatedHsm(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwaresecuritymodulesResourceGroupResource.GetDedicatedHsmsByResourceGroup", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified dedicated hsm resource. The operation returns properties of each egress endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}/outboundNetworkDependenciesEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHsms_ListOutboundNetworkDependenciesEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the dedicated Hsm. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DedicatedHsmResource> GetDedicatedHsm(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsDedicatedHsmsAsync(string name, CancellationToken cancellationToken = default)
         {
-            return GetDedicatedHsms().Get(name, cancellationToken);
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwaresecuritymodulesResourceGroupResource.GetOutboundNetworkDependenciesEndpointsDedicatedHsms", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified dedicated hsm resource. The operation returns properties of each egress endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}/outboundNetworkDependenciesEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DedicatedHsms_ListOutboundNetworkDependenciesEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the dedicated Hsm. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsDedicatedHsms(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwaresecuritymodulesResourceGroupResource.GetOutboundNetworkDependenciesEndpointsDedicatedHsms", "value", "nextLink", cancellationToken);
         }
     }
 }

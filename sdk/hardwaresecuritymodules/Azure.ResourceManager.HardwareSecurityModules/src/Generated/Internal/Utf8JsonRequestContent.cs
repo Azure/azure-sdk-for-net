@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.ResourceManager.HardwareSecurityModules
+namespace Azure.ResourceManager.Hardwaresecuritymodules
 {
     internal class Utf8JsonRequestContent : RequestContent
     {

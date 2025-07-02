@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Models
+namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
 {
     /// <summary> Backup and Restore operation common properties. </summary>
     public partial class BackupRestoreBaseResultProperties
@@ -70,22 +70,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Status of the backup/restore operation. </summary>
-        [WirePath("status")]
         public BackupRestoreOperationStatus? Status { get; }
         /// <summary> The status details of backup/restore operation. </summary>
-        [WirePath("statusDetails")]
         public string StatusDetails { get; }
         /// <summary> Error encountered, if any, during the backup/restore operation. </summary>
-        [WirePath("error")]
         public ResponseError Error { get; }
         /// <summary> The start time of the backup/restore operation in UTC. </summary>
-        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the backup/restore operation in UTC. </summary>
-        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> Identifier for the backup/restore operation. </summary>
-        [WirePath("jobId")]
         public string JobId { get; }
     }
 }

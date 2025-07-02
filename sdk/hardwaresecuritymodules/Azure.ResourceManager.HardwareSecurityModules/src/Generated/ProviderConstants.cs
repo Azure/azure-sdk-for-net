@@ -7,7 +7,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.HardwareSecurityModules
+namespace Azure.ResourceManager.Hardwaresecuritymodules
 {
     internal static class ProviderConstants
     {

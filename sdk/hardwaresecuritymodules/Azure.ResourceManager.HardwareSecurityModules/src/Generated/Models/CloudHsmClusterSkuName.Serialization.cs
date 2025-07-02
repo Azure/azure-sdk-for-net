@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Models
+namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
 {
     internal static partial class CloudHsmClusterSkuNameExtensions
     {

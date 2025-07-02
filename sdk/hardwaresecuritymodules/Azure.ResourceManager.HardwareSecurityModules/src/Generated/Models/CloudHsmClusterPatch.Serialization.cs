@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Models
+namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
 {
     public partial class CloudHsmClusterPatch : IUtf8JsonSerializable, IJsonModel<CloudHsmClusterPatch>
     {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwaresecuritymodulesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CloudHsmClusterPatch)} does not support writing '{options.Format}' format.");
             }

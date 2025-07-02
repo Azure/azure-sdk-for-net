@@ -13,10 +13,10 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.HardwareSecurityModules.Models;
+using Azure.ResourceManager.Hardwaresecuritymodules.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.HardwareSecurityModules
+namespace Azure.ResourceManager.Hardwaresecuritymodules
 {
     /// <summary>
     /// A Class representing a CloudHsmCluster along with the instance operations that can be performed on it.
@@ -38,12 +38,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         private readonly ClientDiagnostics _cloudHsmClusterClientDiagnostics;
         private readonly CloudHsmClustersRestOperations _cloudHsmClusterRestClient;
+        private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnectionsRestOperations _privateEndpointConnectionsRestClient;
         private readonly ClientDiagnostics _cloudHsmClusterPrivateLinkResourcesClientDiagnostics;
         private readonly CloudHsmClusterPrivateLinkResourcesRestOperations _cloudHsmClusterPrivateLinkResourcesRestClient;
         private readonly ClientDiagnostics _cloudHsmClusterBackupStatusClientDiagnostics;
         private readonly CloudHsmClusterBackupStatusRestOperations _cloudHsmClusterBackupStatusRestClient;
         private readonly ClientDiagnostics _cloudHsmClusterRestoreStatusClientDiagnostics;
         private readonly CloudHsmClusterRestoreStatusRestOperations _cloudHsmClusterRestoreStatusRestClient;
+        private readonly ClientDiagnostics _cloudHsmClusterPrivateEndpointConnectionsClientDiagnostics;
+        private readonly CloudHsmClusterPrivateEndpointConnectionsRestOperations _cloudHsmClusterPrivateEndpointConnectionsRestClient;
         private readonly CloudHsmClusterData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -68,15 +72,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CloudHsmClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cloudHsmClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
+            _cloudHsmClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hardwaresecuritymodules", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string cloudHsmClusterApiVersion);
             _cloudHsmClusterRestClient = new CloudHsmClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterApiVersion);
-            _cloudHsmClusterPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hardwaresecuritymodules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _cloudHsmClusterPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hardwaresecuritymodules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _cloudHsmClusterPrivateLinkResourcesRestClient = new CloudHsmClusterPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _cloudHsmClusterBackupStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _cloudHsmClusterBackupStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hardwaresecuritymodules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _cloudHsmClusterBackupStatusRestClient = new CloudHsmClusterBackupStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _cloudHsmClusterRestoreStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _cloudHsmClusterRestoreStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hardwaresecuritymodules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _cloudHsmClusterRestoreStatusRestClient = new CloudHsmClusterRestoreStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _cloudHsmClusterPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hardwaresecuritymodules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _cloudHsmClusterPrivateEndpointConnectionsRestClient = new CloudHsmClusterPrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -103,75 +111,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CloudHsmClusterPrivateEndpointConnectionResources in the CloudHsmCluster. </summary>
-        /// <returns> An object representing collection of CloudHsmClusterPrivateEndpointConnectionResources and their operations over a CloudHsmClusterPrivateEndpointConnectionResource. </returns>
-        public virtual CloudHsmClusterPrivateEndpointConnectionCollection GetCloudHsmClusterPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new CloudHsmClusterPrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the private endpoint connection for the Cloud Hsm Cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateEndpointConnections/{peConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterPrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudHsmClusterPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CloudHsmClusterPrivateEndpointConnectionResource>> GetCloudHsmClusterPrivateEndpointConnectionAsync(string peConnectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetCloudHsmClusterPrivateEndpointConnections().GetAsync(peConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the private endpoint connection for the Cloud Hsm Cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateEndpointConnections/{peConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterPrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudHsmClusterPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CloudHsmClusterPrivateEndpointConnectionResource> GetCloudHsmClusterPrivateEndpointConnection(string peConnectionName, CancellationToken cancellationToken = default)
-        {
-            return GetCloudHsmClusterPrivateEndpointConnections().Get(peConnectionName, cancellationToken);
-        }
-
         /// <summary>
         /// Gets the specified Cloud HSM Cluster
         /// <list type="bullet">
@@ -181,7 +120,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Get</description>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -221,7 +160,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Get</description>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -261,7 +200,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Delete</description>
+        /// <description>CloudHsmCluster_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -282,7 +221,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             try
             {
                 var response = await _cloudHsmClusterRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwareSecurityModulesArmOperation(_cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HardwaresecuritymodulesArmOperation(_cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -303,7 +242,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Delete</description>
+        /// <description>CloudHsmCluster_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -324,7 +263,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             try
             {
                 var response = _cloudHsmClusterRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HardwareSecurityModulesArmOperation(_cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HardwaresecuritymodulesArmOperation(_cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -345,7 +284,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Update</description>
+        /// <description>CloudHsmCluster_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -370,7 +309,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             try
             {
                 var response = await _cloudHsmClusterRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(new CloudHsmClusterOperationSource(Client), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new HardwaresecuritymodulesArmOperation<CloudHsmClusterResource>(new CloudHsmClusterOperationSource(Client), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -391,7 +330,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Update</description>
+        /// <description>CloudHsmCluster_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -416,7 +355,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             try
             {
                 var response = _cloudHsmClusterRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(new CloudHsmClusterOperationSource(Client), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new HardwaresecuritymodulesArmOperation<CloudHsmClusterResource>(new CloudHsmClusterOperationSource(Client), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -450,16 +389,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Backup Operation Required properties. </param>
+        /// <param name="backupRequestProperties"> Backup Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CloudHsmClusterBackupResult>> ValidateBackupPropertiesAsync(WaitUntil waitUntil, CloudHsmClusterBackupContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BackupResult>> ValidateBackupPropertiesAsync(WaitUntil waitUntil, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.ValidateBackupProperties");
             scope.Start();
             try
             {
-                var response = await _cloudHsmClusterRestClient.ValidateBackupPropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterBackupResult>(new CloudHsmClusterBackupResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateBackupPropertiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _cloudHsmClusterRestClient.ValidateBackupPropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new HardwaresecuritymodulesArmOperation<BackupResult>(new BackupResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateBackupPropertiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -493,16 +432,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Backup Operation Required properties. </param>
+        /// <param name="backupRequestProperties"> Backup Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CloudHsmClusterBackupResult> ValidateBackupProperties(WaitUntil waitUntil, CloudHsmClusterBackupContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BackupResult> ValidateBackupProperties(WaitUntil waitUntil, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.ValidateBackupProperties");
             scope.Start();
             try
             {
-                var response = _cloudHsmClusterRestClient.ValidateBackupProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterBackupResult>(new CloudHsmClusterBackupResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateBackupPropertiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _cloudHsmClusterRestClient.ValidateBackupProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties, cancellationToken);
+                var operation = new HardwaresecuritymodulesArmOperation<BackupResult>(new BackupResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateBackupPropertiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -536,16 +475,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Azure storage Resource Uri. </param>
+        /// <param name="backupRequestProperties"> Azure storage Resource Uri. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CloudHsmClusterBackupResult>> BackupAsync(WaitUntil waitUntil, CloudHsmClusterBackupContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BackupResult>> BackupAsync(WaitUntil waitUntil, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.Backup");
             scope.Start();
             try
             {
-                var response = await _cloudHsmClusterRestClient.BackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterBackupResult>(new CloudHsmClusterBackupResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _cloudHsmClusterRestClient.BackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new HardwaresecuritymodulesArmOperation<BackupResult>(new BackupResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -579,16 +518,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Azure storage Resource Uri. </param>
+        /// <param name="backupRequestProperties"> Azure storage Resource Uri. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CloudHsmClusterBackupResult> Backup(WaitUntil waitUntil, CloudHsmClusterBackupContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BackupResult> Backup(WaitUntil waitUntil, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.Backup");
             scope.Start();
             try
             {
-                var response = _cloudHsmClusterRestClient.Backup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterBackupResult>(new CloudHsmClusterBackupResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _cloudHsmClusterRestClient.Backup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties, cancellationToken);
+                var operation = new HardwaresecuritymodulesArmOperation<BackupResult>(new BackupResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -622,16 +561,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Optional Parameters to validate prior performing a restore operation. </param>
+        /// <param name="restoreRequestProperties"> Optional Parameters to validate prior performing a restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CloudHsmClusterRestoreResult>> ValidateRestorePropertiesAsync(WaitUntil waitUntil, CloudHsmClusterRestoreContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RestoreResult>> ValidateRestorePropertiesAsync(WaitUntil waitUntil, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.ValidateRestoreProperties");
             scope.Start();
             try
             {
-                var response = await _cloudHsmClusterRestClient.ValidateRestorePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterRestoreResult>(new CloudHsmClusterRestoreResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateRestorePropertiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _cloudHsmClusterRestClient.ValidateRestorePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new HardwaresecuritymodulesArmOperation<RestoreResult>(new RestoreResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateRestorePropertiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -665,16 +604,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Optional Parameters to validate prior performing a restore operation. </param>
+        /// <param name="restoreRequestProperties"> Optional Parameters to validate prior performing a restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CloudHsmClusterRestoreResult> ValidateRestoreProperties(WaitUntil waitUntil, CloudHsmClusterRestoreContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RestoreResult> ValidateRestoreProperties(WaitUntil waitUntil, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
         {
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.ValidateRestoreProperties");
             scope.Start();
             try
             {
-                var response = _cloudHsmClusterRestClient.ValidateRestoreProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterRestoreResult>(new CloudHsmClusterRestoreResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateRestorePropertiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _cloudHsmClusterRestClient.ValidateRestoreProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties, cancellationToken);
+                var operation = new HardwaresecuritymodulesArmOperation<RestoreResult>(new RestoreResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateValidateRestorePropertiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -708,19 +647,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Restore Operation Required properties. </param>
+        /// <param name="restoreRequestProperties"> Restore Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudHsmClusterRestoreResult>> RestoreAsync(WaitUntil waitUntil, CloudHsmClusterRestoreContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="restoreRequestProperties"/> is null. </exception>
+        public virtual async Task<ArmOperation<RestoreResult>> RestoreAsync(WaitUntil waitUntil, RestoreRequestProperties restoreRequestProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(restoreRequestProperties, nameof(restoreRequestProperties));
 
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.Restore");
             scope.Start();
             try
             {
-                var response = await _cloudHsmClusterRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterRestoreResult>(new CloudHsmClusterRestoreResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _cloudHsmClusterRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties, cancellationToken).ConfigureAwait(false);
+                var operation = new HardwaresecuritymodulesArmOperation<RestoreResult>(new RestoreResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -754,19 +693,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Restore Operation Required properties. </param>
+        /// <param name="restoreRequestProperties"> Restore Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<CloudHsmClusterRestoreResult> Restore(WaitUntil waitUntil, CloudHsmClusterRestoreContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="restoreRequestProperties"/> is null. </exception>
+        public virtual ArmOperation<RestoreResult> Restore(WaitUntil waitUntil, RestoreRequestProperties restoreRequestProperties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(restoreRequestProperties, nameof(restoreRequestProperties));
 
             using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterResource.Restore");
             scope.Start();
             try
             {
-                var response = _cloudHsmClusterRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterRestoreResult>(new CloudHsmClusterRestoreResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _cloudHsmClusterRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties, cancellationToken);
+                var operation = new HardwaresecuritymodulesArmOperation<RestoreResult>(new RestoreResultOperationSource(), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequestProperties).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -779,15 +718,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Gets the private link resources supported for the Cloud Hsm Cluster.
+        /// The List operation gets information about the private endpoint connections associated with the Cloud HSM Cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateLinkResources</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateEndpointConnections</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterPrivateLinkResources_ListByCloudHsmCluster</description>
+        /// <description>PrivateEndpointConnection_ListByCloudHsmCluster</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -796,12 +735,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudHsmClusterPrivateLinkData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CloudHsmClusterPrivateLinkData> GetCloudHsmClusterPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HardwaresecuritymodulesPrivateEndpointConnection"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HardwaresecuritymodulesPrivateEndpointConnection> GetPrivateEndpointConnectionsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CloudHsmClusterPrivateLinkData.DeserializeCloudHsmClusterPrivateLinkData(e), _cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointConnectionsRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateEndpointConnectionsRestClient.CreateListByCloudHsmClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => HardwaresecuritymodulesPrivateEndpointConnection.DeserializeHardwaresecuritymodulesPrivateEndpointConnection(e), _privateEndpointConnectionsClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetPrivateEndpointConnections", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// The List operation gets information about the private endpoint connections associated with the Cloud HSM Cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateEndpointConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_ListByCloudHsmCluster</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HardwaresecuritymodulesPrivateEndpointConnection"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HardwaresecuritymodulesPrivateEndpointConnection> GetPrivateEndpointConnections(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointConnectionsRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateEndpointConnectionsRestClient.CreateListByCloudHsmClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => HardwaresecuritymodulesPrivateEndpointConnection.DeserializeHardwaresecuritymodulesPrivateEndpointConnection(e), _privateEndpointConnectionsClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetPrivateEndpointConnections", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -813,7 +778,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterPrivateLinkResources_ListByCloudHsmCluster</description>
+        /// <description>CloudHsmClusters_ListByCloudHsmCluster</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -822,12 +787,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudHsmClusterPrivateLinkData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CloudHsmClusterPrivateLinkData> GetCloudHsmClusterPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HardwaresecuritymodulesPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HardwaresecuritymodulesPrivateLinkResourceData> GetCloudHsmClusterPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CloudHsmClusterPrivateLinkData.DeserializeCloudHsmClusterPrivateLinkData(e), _cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => HardwaresecuritymodulesPrivateLinkResourceData.DeserializeHardwaresecuritymodulesPrivateLinkResourceData(e), _cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the private link resources supported for the Cloud Hsm Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudHsmClusters_ListByCloudHsmCluster</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HardwaresecuritymodulesPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HardwaresecuritymodulesPrivateLinkResourceData> GetCloudHsmClusterPrivateLinkResources(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => HardwaresecuritymodulesPrivateLinkResourceData.DeserializeHardwaresecuritymodulesPrivateLinkResourceData(e), _cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -839,7 +830,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterBackupStatus_Get</description>
+        /// <description>CloudHsmClusters_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -847,20 +838,24 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id returned as part of the backup request. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="jobId"> Identifier for the backup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual async Task<Response<CloudHsmClusterBackupResult>> GetCloudHsmClusterBackupStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> GetAsync(WaitUntil waitUntil, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _cloudHsmClusterBackupStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterBackupStatus");
+            using var scope = _cloudHsmClusterBackupStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.Get");
             scope.Start();
             try
             {
                 var response = await _cloudHsmClusterBackupStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken).ConfigureAwait(false);
-                return response;
+                var operation = new HardwaresecuritymodulesArmOperation(_cloudHsmClusterBackupStatusClientDiagnostics, Pipeline, _cloudHsmClusterBackupStatusRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -878,7 +873,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterBackupStatus_Get</description>
+        /// <description>CloudHsmClusters_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -886,20 +881,24 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id returned as part of the backup request. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="jobId"> Identifier for the backup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual Response<CloudHsmClusterBackupResult> GetCloudHsmClusterBackupStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Get(WaitUntil waitUntil, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _cloudHsmClusterBackupStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterBackupStatus");
+            using var scope = _cloudHsmClusterBackupStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.Get");
             scope.Start();
             try
             {
                 var response = _cloudHsmClusterBackupStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken);
-                return response;
+                var operation = new HardwaresecuritymodulesArmOperation(_cloudHsmClusterBackupStatusClientDiagnostics, Pipeline, _cloudHsmClusterBackupStatusRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -917,7 +916,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterRestoreStatus_Get</description>
+        /// <description>CloudHsmClusters_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -925,20 +924,24 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id returned as part of the backup request. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="jobId"> Identifier for the restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual async Task<Response<CloudHsmClusterRestoreResult>> GetCloudHsmClusterRestoreStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> GetAsync(WaitUntil waitUntil, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _cloudHsmClusterRestoreStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterRestoreStatus");
+            using var scope = _cloudHsmClusterRestoreStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.Get");
             scope.Start();
             try
             {
                 var response = await _cloudHsmClusterRestoreStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken).ConfigureAwait(false);
-                return response;
+                var operation = new HardwaresecuritymodulesArmOperation(_cloudHsmClusterRestoreStatusClientDiagnostics, Pipeline, _cloudHsmClusterRestoreStatusRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -956,7 +959,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusterRestoreStatus_Get</description>
+        /// <description>CloudHsmClusters_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -964,20 +967,270 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id returned as part of the backup request. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="jobId"> Identifier for the restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual Response<CloudHsmClusterRestoreResult> GetCloudHsmClusterRestoreStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Get(WaitUntil waitUntil, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = _cloudHsmClusterRestoreStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterRestoreStatus");
+            using var scope = _cloudHsmClusterRestoreStatusClientDiagnostics.CreateScope("CloudHsmClusterResource.Get");
             scope.Start();
             try
             {
                 var response = _cloudHsmClusterRestoreStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken);
+                var operation = new HardwaresecuritymodulesArmOperation(_cloudHsmClusterRestoreStatusClientDiagnostics, Pipeline, _cloudHsmClusterRestoreStatusRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the private endpoint connection for the Cloud Hsm Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateEndpointConnections/{peConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
+        public virtual async Task<Response<HardwaresecuritymodulesPrivateEndpointConnection>> GetCloudHsmClusterPrivateEndpointConnectionAsync(string peConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+
+            using var scope = _cloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterPrivateEndpointConnection");
+            scope.Start();
+            try
+            {
+                var response = await _cloudHsmClusterPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, cancellationToken).ConfigureAwait(false);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the private endpoint connection for the Cloud Hsm Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateEndpointConnections/{peConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
+        public virtual Response<HardwaresecuritymodulesPrivateEndpointConnection> GetCloudHsmClusterPrivateEndpointConnection(string peConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+
+            using var scope = _cloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("CloudHsmClusterResource.GetCloudHsmClusterPrivateEndpointConnection");
+            scope.Start();
+            try
+            {
+                var response = _cloudHsmClusterPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates the private endpoint connection for the Cloud Hsm Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateEndpointConnections/{peConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
+        /// <param name="properties"> Parameters of the PrivateEndpointConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> or <paramref name="properties"/> is null. </exception>
+        public virtual async Task<Response<HardwaresecuritymodulesPrivateEndpointConnection>> CreateCloudHsmClusterPrivateEndpointConnectionAsync(string peConnectionName, HardwaresecuritymodulesPrivateEndpointConnection properties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            using var scope = _cloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("CloudHsmClusterResource.CreateCloudHsmClusterPrivateEndpointConnection");
+            scope.Start();
+            try
+            {
+                var response = await _cloudHsmClusterPrivateEndpointConnectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, properties, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates the private endpoint connection for the Cloud Hsm Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateEndpointConnections/{peConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
+        /// <param name="properties"> Parameters of the PrivateEndpointConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> or <paramref name="properties"/> is null. </exception>
+        public virtual Response<HardwaresecuritymodulesPrivateEndpointConnection> CreateCloudHsmClusterPrivateEndpointConnection(string peConnectionName, HardwaresecuritymodulesPrivateEndpointConnection properties, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            using var scope = _cloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("CloudHsmClusterResource.CreateCloudHsmClusterPrivateEndpointConnection");
+            scope.Start();
+            try
+            {
+                var response = _cloudHsmClusterPrivateEndpointConnectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, properties, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the private endpoint connection for the Cloud Hsm Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateEndpointConnections/{peConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
+        public virtual async Task<ArmOperation> DeleteCloudHsmClusterPrivateEndpointConnectionAsync(WaitUntil waitUntil, string peConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+
+            using var scope = _cloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("CloudHsmClusterResource.DeleteCloudHsmClusterPrivateEndpointConnection");
+            scope.Start();
+            try
+            {
+                var response = await _cloudHsmClusterPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, cancellationToken).ConfigureAwait(false);
+                var operation = new HardwaresecuritymodulesArmOperation(_cloudHsmClusterPrivateEndpointConnectionsClientDiagnostics, Pipeline, _cloudHsmClusterPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the private endpoint connection for the Cloud Hsm Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}/privateEndpointConnections/{peConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
+        public virtual ArmOperation DeleteCloudHsmClusterPrivateEndpointConnection(WaitUntil waitUntil, string peConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+
+            using var scope = _cloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("CloudHsmClusterResource.DeleteCloudHsmClusterPrivateEndpointConnection");
+            scope.Start();
+            try
+            {
+                var response = _cloudHsmClusterPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, cancellationToken);
+                var operation = new HardwaresecuritymodulesArmOperation(_cloudHsmClusterPrivateEndpointConnectionsClientDiagnostics, Pipeline, _cloudHsmClusterPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -995,7 +1248,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Get</description>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1057,7 +1310,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Get</description>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1119,7 +1372,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Get</description>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1176,7 +1429,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Get</description>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1233,7 +1486,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Get</description>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1293,7 +1546,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmClusters_Get</description>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -5,32 +5,26 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Hardwaresecuritymodules.Models;
 
-namespace Azure.ResourceManager.HardwareSecurityModules
+namespace Azure.ResourceManager.Hardwaresecuritymodules
 {
-    internal class DedicatedHsmOperationSource : IOperationSource<DedicatedHsmResource>
+    internal class DedicatedHsmOperationSource : IOperationSource<DedicatedHsm>
     {
-        private readonly ArmClient _client;
-
-        internal DedicatedHsmOperationSource(ArmClient client)
+        DedicatedHsm IOperationSource<DedicatedHsm>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            _client = client;
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return DedicatedHsm.DeserializeDedicatedHsm(document.RootElement);
         }
 
-        DedicatedHsmResource IOperationSource<DedicatedHsmResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        async ValueTask<DedicatedHsm> IOperationSource<DedicatedHsm>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DedicatedHsmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHardwareSecurityModulesContext.Default);
-            return new DedicatedHsmResource(_client, data);
-        }
-
-        async ValueTask<DedicatedHsmResource> IOperationSource<DedicatedHsmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            var data = ModelReaderWriter.Read<DedicatedHsmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHardwareSecurityModulesContext.Default);
-            return await Task.FromResult(new DedicatedHsmResource(_client, data)).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return DedicatedHsm.DeserializeDedicatedHsm(document.RootElement);
         }
     }
 }

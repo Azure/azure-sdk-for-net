@@ -11,9 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.HardwareSecurityModules.Models;
+using Azure.ResourceManager.Hardwaresecuritymodules.Models;
 
-namespace Azure.ResourceManager.HardwareSecurityModules
+namespace Azure.ResourceManager.Hardwaresecuritymodules
 {
     internal partial class CloudHsmClustersRestOperations
     {
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Initializes a new instance of CloudHsmClustersRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public CloudHsmClustersRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -34,6 +34,102 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2025-03-31";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
+            uri.AppendPath(cloudHsmClusterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
+            uri.AppendPath(cloudHsmClusterName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the specified Cloud HSM Cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CloudHsmClusterData>> GetAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, cloudHsmClusterName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CloudHsmClusterData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = CloudHsmClusterData.DeserializeCloudHsmClusterData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((CloudHsmClusterData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the specified Cloud HSM Cluster. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CloudHsmClusterData> Get(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, cloudHsmClusterName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        CloudHsmClusterData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = CloudHsmClusterData.DeserializeCloudHsmClusterData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((CloudHsmClusterData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterData data)
@@ -220,102 +316,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
-            uri.AppendPath(cloudHsmClusterName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/", false);
-            uri.AppendPath(cloudHsmClusterName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the specified Cloud HSM Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CloudHsmClusterData>> GetAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, cloudHsmClusterName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CloudHsmClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CloudHsmClusterData.DeserializeCloudHsmClusterData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((CloudHsmClusterData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the specified Cloud HSM Cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CloudHsmClusterData> Get(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, cloudHsmClusterName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CloudHsmClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CloudHsmClusterData.DeserializeCloudHsmClusterData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((CloudHsmClusterData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName)
         {
             var uri = new RawRequestUriBuilder();
@@ -409,11 +409,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (skiptoken != null)
             {
                 uri.AppendQuery("$skiptoken", skiptoken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -429,11 +429,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (skiptoken != null)
             {
                 uri.AppendQuery("$skiptoken", skiptoken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -503,11 +503,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (skiptoken != null)
             {
                 uri.AppendQuery("$skiptoken", skiptoken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -521,11 +521,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (skiptoken != null)
             {
                 uri.AppendQuery("$skiptoken", skiptoken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             }
         }
 
-        internal RequestUriBuilder CreateValidateBackupPropertiesRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterBackupContent content)
+        internal RequestUriBuilder CreateValidateBackupPropertiesRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             return uri;
         }
 
-        internal HttpMessage CreateValidateBackupPropertiesRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterBackupContent content)
+        internal HttpMessage CreateValidateBackupPropertiesRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -616,12 +616,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (content != null)
+            if (backupRequestProperties != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-                request.Content = content0;
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(backupRequestProperties, ModelSerializationExtensions.WireOptions);
+                request.Content = content;
             }
             _userAgent.Apply(message);
             return message;
@@ -631,22 +631,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
-        /// <param name="content"> Backup Operation Required properties. </param>
+        /// <param name="backupRequestProperties"> Backup Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateBackupPropertiesAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterBackupContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateBackupPropertiesAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreateValidateBackupPropertiesRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, content);
+            using var message = CreateValidateBackupPropertiesRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, backupRequestProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -657,29 +657,29 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
-        /// <param name="content"> Backup Operation Required properties. </param>
+        /// <param name="backupRequestProperties"> Backup Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateBackupProperties(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterBackupContent content = null, CancellationToken cancellationToken = default)
+        public Response ValidateBackupProperties(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreateValidateBackupPropertiesRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, content);
+            using var message = CreateValidateBackupPropertiesRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, backupRequestProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateBackupRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterBackupContent content)
+        internal RequestUriBuilder CreateBackupRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             return uri;
         }
 
-        internal HttpMessage CreateBackupRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterBackupContent content)
+        internal HttpMessage CreateBackupRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -711,12 +711,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (content != null)
+            if (backupRequestProperties != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-                request.Content = content0;
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(backupRequestProperties, ModelSerializationExtensions.WireOptions);
+                request.Content = content;
             }
             _userAgent.Apply(message);
             return message;
@@ -726,22 +726,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
-        /// <param name="content"> Azure storage Resource Uri. </param>
+        /// <param name="backupRequestProperties"> Azure storage Resource Uri. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> BackupAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterBackupContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> BackupAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreateBackupRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, content);
+            using var message = CreateBackupRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, backupRequestProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -752,29 +752,29 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
-        /// <param name="content"> Azure storage Resource Uri. </param>
+        /// <param name="backupRequestProperties"> Azure storage Resource Uri. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Backup(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterBackupContent content = null, CancellationToken cancellationToken = default)
+        public Response Backup(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, BackupRequestProperties backupRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreateBackupRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, content);
+            using var message = CreateBackupRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, backupRequestProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateValidateRestorePropertiesRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterRestoreContent content)
+        internal RequestUriBuilder CreateValidateRestorePropertiesRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             return uri;
         }
 
-        internal HttpMessage CreateValidateRestorePropertiesRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterRestoreContent content)
+        internal HttpMessage CreateValidateRestorePropertiesRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -806,12 +806,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (content != null)
+            if (restoreRequestProperties != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-                request.Content = content0;
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(restoreRequestProperties, ModelSerializationExtensions.WireOptions);
+                request.Content = content;
             }
             _userAgent.Apply(message);
             return message;
@@ -821,22 +821,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
-        /// <param name="content"> Optional Parameters to validate prior performing a restore operation. </param>
+        /// <param name="restoreRequestProperties"> Optional Parameters to validate prior performing a restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateRestorePropertiesAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterRestoreContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateRestorePropertiesAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreateValidateRestorePropertiesRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, content);
+            using var message = CreateValidateRestorePropertiesRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, restoreRequestProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -847,29 +847,29 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
-        /// <param name="content"> Optional Parameters to validate prior performing a restore operation. </param>
+        /// <param name="restoreRequestProperties"> Optional Parameters to validate prior performing a restore operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateRestoreProperties(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterRestoreContent content = null, CancellationToken cancellationToken = default)
+        public Response ValidateRestoreProperties(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using var message = CreateValidateRestorePropertiesRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, content);
+            using var message = CreateValidateRestorePropertiesRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, restoreRequestProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateRestoreRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterRestoreContent content)
+        internal RequestUriBuilder CreateRestoreRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             return uri;
         }
 
-        internal HttpMessage CreateRestoreRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterRestoreContent content)
+        internal HttpMessage CreateRestoreRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -902,9 +902,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(restoreRequestProperties, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -913,23 +913,23 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
-        /// <param name="content"> Restore Operation Required properties. </param>
+        /// <param name="restoreRequestProperties"> Restore Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="restoreRequestProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RestoreAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterRestoreContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> RestoreAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(restoreRequestProperties, nameof(restoreRequestProperties));
 
-            using var message = CreateRestoreRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, content);
+            using var message = CreateRestoreRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, restoreRequestProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -940,23 +940,23 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
-        /// <param name="content"> Restore Operation Required properties. </param>
+        /// <param name="restoreRequestProperties"> Restore Operation Required properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="restoreRequestProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Restore(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, CloudHsmClusterRestoreContent content, CancellationToken cancellationToken = default)
+        public Response Restore(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, RestoreRequestProperties restoreRequestProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(restoreRequestProperties, nameof(restoreRequestProperties));
 
-            using var message = CreateRestoreRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, content);
+            using var message = CreateRestoreRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, restoreRequestProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
+                case 200:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

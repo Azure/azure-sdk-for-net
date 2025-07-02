@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Models
+namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
 {
     /// <summary> Patchable properties of the Cloud HSM Cluster. </summary>
     public partial class CloudHsmClusterPatch
@@ -64,10 +64,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> The Cloud HSM Cluster's tags. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
-        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

@@ -9,10 +9,11 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Hardwaresecuritymodules.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Samples
+namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
@@ -20,8 +21,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCloudHsmClusters_CloudHsmClusterListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2025-03-31/examples/CloudHsmCluster_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-03-31/CloudHsmCluster_ListBySubscription_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudHsmCluster_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -49,9 +50,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetDedicatedHsms_ListDedicatedHSMDevicesInASubscription()
+        public async Task GetDedicatedHsmsBySubscription_ListDedicatedHSMDevicesInASubscription()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2025-03-31/examples/DedicatedHsm_ListBySubscription.json
+            // Generated from example definition: 2025-03-31/DedicatedHsm_ListBySubscription.json
             // this example is just showing the usage of "DedicatedHsm_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,13 +67,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DedicatedHsmResource item in subscriptionResource.GetDedicatedHsmsAsync())
+            await foreach (DedicatedHsm item in subscriptionResource.GetDedicatedHsmsBySubscriptionAsync())
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DedicatedHsmData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine("Succeeded");
@@ -80,9 +77,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetDedicatedHsms_ListDedicatedHSMDevicesInASubscriptionIncludingPaymentHSM()
+        public async Task GetDedicatedHsmsBySubscription_ListDedicatedHSMDevicesInASubscriptionIncludingPaymentHSM()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2025-03-31/examples/PaymentHsm_ListBySubscription.json
+            // Generated from example definition: 2025-03-31/PaymentHsm_ListBySubscription.json
             // this example is just showing the usage of "DedicatedHsm_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,13 +94,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DedicatedHsmResource item in subscriptionResource.GetDedicatedHsmsAsync())
+            await foreach (DedicatedHsm item in subscriptionResource.GetDedicatedHsmsBySubscriptionAsync())
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DedicatedHsmData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine("Succeeded");

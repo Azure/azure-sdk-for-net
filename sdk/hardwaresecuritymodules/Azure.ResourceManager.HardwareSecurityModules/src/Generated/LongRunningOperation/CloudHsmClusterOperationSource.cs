@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.ResourceManager.HardwareSecurityModules
+namespace Azure.ResourceManager.Hardwaresecuritymodules
 {
     internal class CloudHsmClusterOperationSource : IOperationSource<CloudHsmClusterResource>
     {
@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         CloudHsmClusterResource IOperationSource<CloudHsmClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CloudHsmClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHardwareSecurityModulesContext.Default);
+            var data = ModelReaderWriter.Read<CloudHsmClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHardwaresecuritymodulesContext.Default);
             return new CloudHsmClusterResource(_client, data);
         }
 
         async ValueTask<CloudHsmClusterResource> IOperationSource<CloudHsmClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CloudHsmClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHardwareSecurityModulesContext.Default);
+            var data = ModelReaderWriter.Read<CloudHsmClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHardwaresecuritymodulesContext.Default);
             return await Task.FromResult(new CloudHsmClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
