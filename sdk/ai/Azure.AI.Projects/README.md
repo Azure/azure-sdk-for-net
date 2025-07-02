@@ -33,6 +33,8 @@ See [full set of Agents samples](https://github.com/Azure/azure-sdk-for-net/tree
   - [Connections operations](#connections-operations)
   - [Dataset operations](#dataset-operations)
   - [Indexes operations](#indexes-operations)
+- [Tracing](#tracing)
+  - [Adding custom attributes](#adding-custom-attributes)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -358,6 +360,48 @@ foreach (var version in indexesClient.GetIndices())
 
 Console.WriteLine("Delete the Index version created above:");
 indexesClient.Delete(name: indexName, version: indexVersion);
+```
+
+## Tracing
+
+### Adding custom attributes
+
+You can enhance telemetry data by adding custom attributes to activities through implementing a custom processor. This allows you to enrich trace data with application-specific context.
+
+The following example demonstrates how to create a custom processor that:
+- Adds a `custom.session_id` attribute to all activities
+- Adds `custom.operation_type` and `custom.priority` attributes specifically to 'GetWeather' activities:
+```C# Snippet:AI_Projects_TelemetryCustomAttributeProcessor
+// Custom processor that adds attributes to spans
+public class CustomAttributeProcessor : BaseProcessor<Activity>
+{
+    public override void OnStart(Activity activity)
+    {
+        // Add custom attributes to all spans
+        activity.SetTag("custom.session_id", "session_123");
+
+        // Add specific attributes based on span name
+        if (activity.DisplayName == "GetWeather")
+        {
+            activity.SetTag("custom.operation_type", "weather_query");
+            activity.SetTag("custom.priority", "normal");
+        }
+
+        base.OnStart(activity);
+    }
+}
+```
+
+Configure the processor into use like so:
+```C# Snippet:AI_Projects_TelemetryAddCustomAttributeProcessor
+// Setup tracing to console with custom processor
+var tracerProvider = Sdk.CreateTracerProviderBuilder()
+    .AddSource("SimpleTracingSample")
+    .SetResourceBuilder(ResourceBuilder.CreateDefault()
+        .AddService("WeatherApp", "1.0.0"))
+    .AddProcessor(new CustomAttributeProcessor())
+    .AddConsoleExporter()
+    .Build();
 ```
 
 ## Troubleshooting
