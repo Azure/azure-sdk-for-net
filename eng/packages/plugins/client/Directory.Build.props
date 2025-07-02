@@ -5,6 +5,7 @@
     <IsShippingLibrary>false</IsShippingLibrary>
     <NoWarn>$(NoWarn);CS8002</NoWarn>
     <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
+    <IsGeneratorLibrary>true</IsGeneratorLibrary>
   </PropertyGroup>
   <!--
   Add any shared properties you want for the projects under this package directory that need to be set before the auto imported Directory.Build.props
