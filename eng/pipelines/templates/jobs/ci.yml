@@ -137,6 +137,9 @@ jobs:
         image: $(WINDOWSVMIMAGE)
         os: windows
       steps:
+        - checkout: self
+          fetchDepth: 1
+
         - task: UsePythonVersion@0
           displayName: "Use Python 3.11"
           inputs:
