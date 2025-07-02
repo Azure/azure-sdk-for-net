@@ -119,32 +119,32 @@ function parseResourceOperation(
     if (decorator.definition?.name === armResourceReadName) {
       return [
         ResourceOperationKind.Get,
-        getResourceModelId(sdkContext, decorator, program)
+        getResourceModelId(sdkContext, program, decorator)
       ];
     } else if (decorator.definition?.name == armResourceCreateOrUpdateName) {
       return [
         ResourceOperationKind.Create,
-        getResourceModelId(sdkContext, decorator, program)
+        getResourceModelId(sdkContext, program, decorator)
       ];
     } else if (decorator.definition?.name == armResourceUpdateName) {
       return [
         ResourceOperationKind.Update,
-        getResourceModelId(sdkContext, decorator, program)
+        getResourceModelId(sdkContext, program, decorator)
       ];
     } else if (decorator.definition?.name == armResourceDeleteName) {
       return [
         ResourceOperationKind.Delete,
-        getResourceModelId(sdkContext, decorator, program)
+        getResourceModelId(sdkContext, program, decorator)
       ];
     } else if (decorator.definition?.name == armResourceListName) {
       return [
         ResourceOperationKind.List,
-        getResourceModelId(sdkContext, decorator, program)
+        getResourceModelId(sdkContext, program, decorator)
       ];
     } else if (decorator.definition?.name == armResourceActionName) {
       return [
         ResourceOperationKind.Action,
-        getResourceModelId(sdkContext, decorator, program)
+        getResourceModelId(sdkContext, program, decorator)
       ];
     }
   }
@@ -160,13 +160,13 @@ function getParentResourceModelId(
   const parentResourceDecorator = decorators?.find(
     (d) => d.definition?.name == parentResourceName
   );
-  return getResourceModelId(sdkContext, parentResourceDecorator, program) ?? undefined;
+  return getResourceModelId(sdkContext, program, parentResourceDecorator) ?? undefined;
 }
 
 function getResourceModelId(
   sdkContext: SdkContext<AzureEmitterOptions, SdkHttpOperation>,
-  decorator?: DecoratorApplication,
-  program?: Program
+  program: Program,
+  decorator?: DecoratorApplication
 ): string | undefined {
   if (!decorator) return undefined;
   const model = getClientType(
@@ -176,14 +176,12 @@ function getResourceModelId(
   if (model) {
     return model.crossLanguageDefinitionId;
   } else {
-    if (program) {
       program.reportDiagnostic({
         code: "general-error",
         message: `Resource model not found for decorator ${decorator.decorator.name}`,
         target: NoTarget,
         severity: "error"
       });
-    }
     return undefined;
   }
 }
