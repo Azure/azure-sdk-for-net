@@ -20,13 +20,13 @@ namespace MgmtTypeSpec
     public static partial class MgmtTypeSpecExtensions
     {
         /// <param name="client"></param>
-        public static MockableMgmtTypeSpecArmClient GetMockableMgmtTypeSpecArmClient(ArmClient client)
+        private static MockableMgmtTypeSpecArmClient GetMockableMgmtTypeSpecArmClient(ArmClient client)
         {
             return client.GetCachedClient(client0 => new MockableMgmtTypeSpecArmClient(client0, ResourceIdentifier.Root));
         }
 
         /// <param name="resourceGroupResource"></param>
-        public static MockableMgmtTypeSpecResourceGroupResource GetMockableMgmtTypeSpecResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockableMgmtTypeSpecResourceGroupResource GetMockableMgmtTypeSpecResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
             return resourceGroupResource.GetCachedClient(client => new MockableMgmtTypeSpecResourceGroupResource(client, resourceGroupResource.Id));
         }
