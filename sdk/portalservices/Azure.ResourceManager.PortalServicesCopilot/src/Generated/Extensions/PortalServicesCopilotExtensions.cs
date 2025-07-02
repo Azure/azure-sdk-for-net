@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.PortalServicesCopilot
     public static partial class PortalServicesCopilotExtensions
     {
         /// <param name="client"></param>
-        public static MockablePortalServicesCopilotArmClient GetMockablePortalServicesCopilotArmClient(ArmClient client)
+        private static MockablePortalServicesCopilotArmClient GetMockablePortalServicesCopilotArmClient(ArmClient client)
         {
             return client.GetCachedClient(client0 => new MockablePortalServicesCopilotArmClient(client0, ResourceIdentifier.Root));
         }
 
         /// <param name="tenantResource"></param>
-        public static MockablePortalServicesCopilotTenantResource GetMockablePortalServicesCopilotTenantResource(TenantResource tenantResource)
+        private static MockablePortalServicesCopilotTenantResource GetMockablePortalServicesCopilotTenantResource(TenantResource tenantResource)
         {
             return tenantResource.GetCachedClient(client => new MockablePortalServicesCopilotTenantResource(client, tenantResource.Id));
         }

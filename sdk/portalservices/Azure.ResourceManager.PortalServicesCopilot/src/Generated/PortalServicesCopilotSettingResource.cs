@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PortalServicesCopilot.Models;
 
 namespace Azure.ResourceManager.PortalServicesCopilot
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         }
 
         /// <summary> Get a CopilotSettingsResource. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PortalServicesCopilotSettingResource> Get(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.Get");
@@ -106,7 +107,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         }
 
         /// <summary> Get a CopilotSettingsResource. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PortalServicesCopilotSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.GetAsync");
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <summary> Create a CopilotSettingsResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PortalServicesCopilotSettingResource> CreateOrUpdate(WaitUntil waitUntil, PortalServicesCopilotSettingData data, CancellationToken cancellationToken = default)
         {
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <summary> Create a CopilotSettingsResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PortalServicesCopilotSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PortalServicesCopilotSettingData data, CancellationToken cancellationToken = default)
         {
@@ -209,13 +210,12 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         }
 
         /// <summary> Update a CopilotSettingsResource. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="properties"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response<PortalServicesCopilotSettingResource> Update(RequestContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual Response<PortalServicesCopilotSettingResource> Update(CopilotSettingsResourceUpdate properties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.Update");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(content, context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(properties, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalServicesCopilotSettingData> response = Response.FromValue((PortalServicesCopilotSettingData)result, result);
                 if (response.Value == null)
@@ -243,13 +243,12 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         }
 
         /// <summary> Update a CopilotSettingsResource. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="properties"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<PortalServicesCopilotSettingResource>> UpdateAsync(RequestContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public virtual async Task<Response<PortalServicesCopilotSettingResource>> UpdateAsync(CopilotSettingsResourceUpdate properties, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.UpdateAsync");
             scope.Start();
@@ -260,7 +259,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(content, context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(properties, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalServicesCopilotSettingData> response = Response.FromValue((PortalServicesCopilotSettingData)result, result);
                 if (response.Value == null)
@@ -278,7 +277,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
 
         /// <summary> Delete a CopilotSettingsResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.Delete");
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
 
         /// <summary> Delete a CopilotSettingsResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.DeleteAsync");
