@@ -34,3 +34,5 @@ extends:
     TargetTags: 'UnitTest'
     PreTestSteps:
      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+       parameters:
+         EnableNuGetCache: false
