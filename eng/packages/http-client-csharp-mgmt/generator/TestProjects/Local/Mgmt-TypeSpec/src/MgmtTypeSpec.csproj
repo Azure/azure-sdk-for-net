@@ -17,7 +17,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/DiagnosticScope.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/TrimmingAttribute.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/NoValueResponseOfT.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/AsyncLockWithValue.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/FixedDelayWithNoJitterStrategy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/HttpPipelineExtensions.cs" LinkBase="Shared/Core" />
@@ -33,6 +32,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/SequentialDelayStrategy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/TaskExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/VoidValue.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/ForwardsClientCallsAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/NoValueResponseOfT.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/resourcemanager/Azure.ResourceManager/src/Shared/SharedExtensions.cs" LinkBase="Shared/Arm" />
   </ItemGroup>
 
   <ItemGroup>

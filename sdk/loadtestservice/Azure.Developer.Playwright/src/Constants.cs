@@ -134,6 +134,7 @@ internal class Constants
     internal static readonly string s_default_os = OSConstants.s_lINUX;
     internal static readonly string s_default_expose_network = "<loopback>";
     internal static readonly string s_pLAYWRIGHT_SERVICE_DEBUG = "Logging__LogLevel__AzurePlaywright";
+    internal static readonly string s_minimumSupportedPlaywrightVersion = "1.50.0";
 
     // Entra id access token constants
     internal static readonly int s_entra_access_token_lifetime_left_threshold_in_minutes_for_rotation = 15;
@@ -152,6 +153,8 @@ internal class Constants
     internal static readonly string s_invalid_service_endpoint_error_message = "The service endpoint provided is invalid. Please verify the endpoint URL and try again.";
     internal static readonly string s_playwright_service_runId_length_exceeded_error_message = "Error: The Run Id you provided exceeds 200 characters. Please provide a shorter Run ID.";
     internal static readonly string s_playwright_service_runName_truncated_warning = "WARNING: Run name exceeds the maximum limit of 200 characters and will be truncated.";
+    internal static readonly string s_playwright_Version_not_supported_error_message = "The Playwright version you are using does not support playwright workspaces. Please update to Playwright version 1.50.0 or higher.";
+    internal static readonly string s_playwright_Invalid_version = "The Playwright version you are using is not supported. See the list of supported versions at https://aka.ms/mpt/supported-versions.";
 
     // Internal environment variables
     internal static readonly string s_playwright_service_use_cloud_hosted_browsers_environment_variable = "_MPT_USE_CLOUD_HOSTED_BROWSERS";
