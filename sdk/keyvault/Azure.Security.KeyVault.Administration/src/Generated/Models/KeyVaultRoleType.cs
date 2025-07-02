@@ -29,6 +29,12 @@ namespace Azure.Security.KeyVault.Administration
             _value = value;
         }
 
+        /// <summary> Built in role. </summary>
+        public static KeyVaultRoleType BuiltInRole { get; } = new KeyVaultRoleType(BuiltInRoleValue);
+
+        /// <summary> Custom role. </summary>
+        public static KeyVaultRoleType CustomRole { get; } = new KeyVaultRoleType(CustomRoleValue);
+
         /// <summary> Determines if two <see cref="KeyVaultRoleType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

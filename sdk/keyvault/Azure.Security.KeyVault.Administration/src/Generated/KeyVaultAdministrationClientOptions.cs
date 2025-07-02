@@ -12,5 +12,6 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> Client options for <see cref="KeyVaultAccessControlClient"/>. </summary>
     public partial class KeyVaultAdministrationClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V7_6;
     }
 }
