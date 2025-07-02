@@ -13,15 +13,15 @@ import { azureSDKContextOptions } from "./sdk-context-options.js";
 import { updateClients } from "./resource-detection.js";
 
 export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {  
-
-  function updateCodeModel(codeModel: CodeModel, sdkContext: CSharpEmitterContext): CodeModel {
-    updateClients(codeModel, sdkContext);
-    return codeModel;
-  }
   context.options["generator-name"] ??= "ManagementClientGenerator";
   context.options["update-code-model"] = updateCodeModel;
   context.options["emitter-extension-path"] ??= import.meta.url;
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
   context.options["model-namespace"] ??= true;
   await $onAzureEmit(context);
+  
+  function updateCodeModel(codeModel: CodeModel, sdkContext: CSharpEmitterContext): CodeModel {
+    updateClients(codeModel, sdkContext);
+    return codeModel;
+  }
 }
