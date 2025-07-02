@@ -101,6 +101,5 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     singletonRegex,
     subscriptionResourceRegex,
     tenantResourceRegex,
-    useSystemTextJsonConverterRegex
   ]
 };
