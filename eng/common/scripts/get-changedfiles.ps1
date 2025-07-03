@@ -25,8 +25,8 @@
 #>
 [CmdletBinding()]
 param (
-  [string] $SourceCommittish = "HEAD^",
-  [string] $TargetCommittish = "HEAD",
+  [string] $SourceCommittish = "HEAD",
+  [string] $TargetCommittish = "HEAD^",
   [string] $DiffPath = "",
   [string] $DiffFilterType = 'd'
 )
