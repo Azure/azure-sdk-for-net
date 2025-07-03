@@ -17,7 +17,7 @@ namespace Azure.Generator.Management
     public class ManagementClientGenerator : AzureClientGenerator
     {
         private static ManagementClientGenerator? _instance;
-        internal static new ManagementClientGenerator Instance => _instance ?? throw new InvalidOperationException("ManagementClientGenerator is not loaded.");
+        internal static ManagementClientGenerator Instance => _instance ?? throw new InvalidOperationException("ManagementClientGenerator is not loaded.");
 
         /// <summary>
         /// The Azure management client generator to generate the Azure management client SDK.
@@ -53,8 +53,7 @@ namespace Azure.Generator.Management
             AddVisitor(new ResourceVisitor());
             AddVisitor(new InheritableSystemObjectModelVisitor());
             AddVisitor(new NameVisitor());
-            AddVisitor(new TypeFilterVisitor());
-            AddVisitor(new SerializationVisitor());
+            AddVisitor(new TypeFilterVisiter());
         }
     }
 }

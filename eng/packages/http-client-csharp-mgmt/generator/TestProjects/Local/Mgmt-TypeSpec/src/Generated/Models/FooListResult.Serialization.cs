@@ -167,7 +167,7 @@ namespace MgmtTypeSpec.Models
         string IPersistableModel<FooListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FooListResult"/> from. </param>
-        internal static FooListResult FromResponse(Response result)
+        public static explicit operator FooListResult(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);

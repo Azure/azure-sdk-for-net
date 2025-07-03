@@ -52,7 +52,7 @@ namespace MgmtTypeSpec
                 {
                     yield break;
                 }
-                PrivateLinkListResult responseWithType = PrivateLinkListResult.FromResponse(response);
+                PrivateLinkListResult responseWithType = (PrivateLinkListResult)response;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in responseWithType.Value)
                 {

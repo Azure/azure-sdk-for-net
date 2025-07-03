@@ -52,7 +52,7 @@ namespace MgmtTypeSpec
                 {
                     yield break;
                 }
-                PrivateLinkListResult responseWithType = PrivateLinkListResult.FromResponse(response);
+                PrivateLinkListResult responseWithType = (PrivateLinkListResult)response;
                 nextPage = responseWithType.NextLink;
                 yield return Page<PrivateLinkData>.FromValues((IReadOnlyList<PrivateLinkData>)responseWithType.Value, nextPage?.AbsoluteUri, response);
             }

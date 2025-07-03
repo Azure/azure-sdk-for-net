@@ -120,7 +120,7 @@ namespace Azure.Generator.Management.Snippets
                 new CSharpType(typeof(Response<>), responseGenericType),
                 Static(typeof(Response)).Invoke(
                     nameof(Response.FromValue),
-                    [Static(responseGenericType).Invoke(SerializationVisitor.FromResponseMethodName, [resultVariable]), resultVariable]),
+                    [resultVariable.CastTo(responseGenericType), resultVariable]),
                 out responseVariable);
             statements.Add(responseDeclaration);
 
