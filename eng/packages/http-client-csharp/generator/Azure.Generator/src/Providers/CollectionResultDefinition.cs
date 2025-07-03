@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.Providers.Abstraction;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -195,7 +196,7 @@ namespace Azure.Generator.Providers
             doWhileStatement.Add(new IfStatement(responseVariable.Is(Null)) { new YieldBreakStatement() });
 
             // Cast response to model type
-            doWhileStatement.Add(Declare("responseWithType", _responseType, responseVariable.CastTo(_responseType), out var responseWithTypeVariable));
+            doWhileStatement.Add(Declare("responseWithType", _responseType, responseVariable.ToApi<AzureResponseWIthTypeApi>().CastToType(_responseType), out var responseWithTypeVariable));
             var nextPageExpression = _paging.NextLink != null ? nextPageVariable.NullConditional().Property("AbsoluteUri") : nextPageVariable;
             if (_isProtocol)
             {

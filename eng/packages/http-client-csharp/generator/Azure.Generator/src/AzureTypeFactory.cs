@@ -16,13 +16,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator
 {
     /// <inheritdoc/>
     public class AzureTypeFactory : ScmTypeFactory
     {
+        /// <summary>
+        /// Abstraction for how to cast Azure responses to a specific type.
+        /// </summary>
+        public virtual IAzureResponseWithTypeApi AzureResponseWithTypeApi => AzureResponseWithTypeProvider.Instance;
+
         /// <inheritdoc/>
         public override IClientResponseApi ClientResponseApi => AzureClientResponseProvider.Instance;
 
