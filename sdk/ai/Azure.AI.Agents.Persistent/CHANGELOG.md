@@ -4,6 +4,12 @@
 
 ### Features Added
 
+- Added support for Deep Research.
+
+### Sample updates
+
+- Added sample for Deep Research.
+
 ### Breaking Changes
 
 ### Bugs Fixed

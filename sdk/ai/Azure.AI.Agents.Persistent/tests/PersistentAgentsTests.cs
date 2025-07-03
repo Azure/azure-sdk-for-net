@@ -13,7 +13,6 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
-using NUnit.Framework.Internal.Execution;
 
 namespace Azure.AI.Agents.Persistent.Tests
 {

@@ -247,6 +247,40 @@ namespace Azure.AI.Agents.Persistent
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.ConnectedAgentToolDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.ConnectedAgentToolDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DeepResearchBingGroundingConnection : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection>
+    {
+        public DeepResearchBingGroundingConnection(string connectionId) { }
+        public string ConnectionId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DeepResearchDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.DeepResearchDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.DeepResearchDetails>
+    {
+        public DeepResearchDetails(string deepResearchModel, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection> deepResearchBingGroundingConnections) { }
+        public System.Collections.Generic.IList<Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection> DeepResearchBingGroundingConnections { get { throw null; } }
+        public string DeepResearchModel { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.DeepResearchDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.DeepResearchDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.DeepResearchDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.DeepResearchDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.DeepResearchDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.DeepResearchDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.DeepResearchDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DeepResearchToolDefinition : Azure.AI.Agents.Persistent.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.DeepResearchToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.DeepResearchToolDefinition>
+    {
+        public DeepResearchToolDefinition(Azure.AI.Agents.Persistent.DeepResearchDetails deepResearch) { }
+        public Azure.AI.Agents.Persistent.DeepResearchDetails DeepResearch { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.DeepResearchToolDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.DeepResearchToolDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.DeepResearchToolDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.DeepResearchToolDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.DeepResearchToolDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.DeepResearchToolDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.DeepResearchToolDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DoneEvent : System.IEquatable<Azure.AI.Agents.Persistent.DoneEvent>
     {
@@ -1253,6 +1287,8 @@ namespace Azure.AI.Agents.Persistent
         public static Azure.AI.Agents.Persistent.RunStepCodeInterpreterLogOutput RunStepCodeInterpreterLogOutput(string logs = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall RunStepCodeInterpreterToolCall(string id, string input, System.Collections.Generic.IReadOnlyList<Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCallOutput> outputs) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepCompletionUsage RunStepCompletionUsage(long completionTokens = (long)0, long promptTokens = (long)0, long totalTokens = (long)0) { throw null; }
+        public static Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall RunStepDeepResearchToolCall(string id = null, Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails deepResearch = null) { throw null; }
+        public static Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails RunStepDeepResearchToolCallDetails(string input = null, string output = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDelta RunStepDelta(Azure.AI.Agents.Persistent.RunStepDeltaDetail stepDetails = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaChunk RunStepDeltaChunk(string id = null, Azure.AI.Agents.Persistent.RunStepDeltaChunkObject @object = default(Azure.AI.Agents.Persistent.RunStepDeltaChunkObject), Azure.AI.Agents.Persistent.RunStepDelta delta = null) { throw null; }
         public static Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterDetailItemObject RunStepDeltaCodeInterpreterDetailItemObject(string input = null, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterOutput> outputs = null) { throw null; }
@@ -1314,6 +1350,7 @@ namespace Azure.AI.Agents.Persistent
         public static Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType BingGrounding { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType CodeInterpreter { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType ConnectedAgent { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType DeepResearch { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType FileSearch { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType Function { get { throw null; } }
         public static Azure.AI.Agents.Persistent.PersistentAgentsNamedToolChoiceType MicrosoftFabric { get { throw null; } }
@@ -1767,6 +1804,29 @@ namespace Azure.AI.Agents.Persistent
         Azure.AI.Agents.Persistent.RunStepCompletionUsage System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepCompletionUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepCompletionUsage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepCompletionUsage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RunStepDeepResearchToolCall : Azure.AI.Agents.Persistent.RunStepToolCall, System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall>
+    {
+        internal RunStepDeepResearchToolCall() : base (default(string)) { }
+        public Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails DeepResearch { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RunStepDeepResearchToolCallDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails>
+    {
+        internal RunStepDeepResearchToolCallDetails() { }
+        public string Input { get { throw null; } }
+        public string Output { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDeepResearchToolCallDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RunStepDelta : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.RunStepDelta>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.RunStepDelta>
     {
