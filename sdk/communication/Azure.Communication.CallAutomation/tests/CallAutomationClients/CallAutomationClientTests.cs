@@ -13,16 +13,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
     public class CallAutomationClientTests : CallAutomationTestBase
     {
         private readonly MediaStreamingOptions _mediaStreamingConfiguration = new MediaStreamingOptions(
-            new Uri("https://websocket"),
-            MediaStreamingContent.Audio,
-            MediaStreamingAudioChannel.Mixed,
-            MediaStreamingTransport.Websocket);
+            MediaStreamingAudioChannel.Mixed)
+        { TransportUri = new Uri("https://websocket") };
 
         private readonly TranscriptionOptions _transcriptionConfiguration = new TranscriptionOptions(
-            new Uri("https://websocket"),
-            "en-CA",
-            true,
-            TranscriptionTransport.Websocket);
+            "en-CA")
+        {
+            TransportUri = new Uri("https://websocket"),
+            StartTranscription = true
+        };
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public async Task AnswerCallAsync_200OK(string incomingCallContext, Uri callbackUri)
@@ -277,44 +276,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
             Assert.NotNull(response.Value.CallConnectionProperties.MediaStreamingSubscription);
             Assert.NotNull(response.Value.CallConnectionProperties.TranscriptionSubscription);
-        }
-
-        [TestCaseSource(nameof(TestData_CreateCall))]
-        public async Task CreateCallWithTeamsAppSourceAsync_201Created(CallInvite target, Uri callbackUri)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayloadWithTeamsAppSource);
-            CreateCallOptions options = new CreateCallOptions(
-                callInvite: target,
-                callbackUri: callbackUri)
-            {
-                TeamsAppSource = new MicrosoftTeamsAppIdentifier("teamsAppId")
-            };
-
-            var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
-            CreateCallResult result = (CreateCallResult)response;
-            Assert.NotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
-            verifyOPSCallConnectionProperties(result.CallConnectionProperties);
-            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
-        }
-
-        [TestCaseSource(nameof(TestData_CreateCall))]
-        public void CreateCallWithTeamsAppSource_201Created(CallInvite target, Uri callbackUri)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayloadWithTeamsAppSource);
-            CreateCallOptions options = new CreateCallOptions(
-                callInvite: target,
-                callbackUri: callbackUri)
-            {
-                TeamsAppSource = new MicrosoftTeamsAppIdentifier("teamsAppId")
-            };
-
-            var response = callAutomationClient.CreateCall(options);
-            CreateCallResult result = (CreateCallResult)response;
-            Assert.NotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
-            verifyOPSCallConnectionProperties(result.CallConnectionProperties);
-            Assert.AreEqual(CallConnectionId, result.CallConnection.CallConnectionId);
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
