@@ -74,6 +74,20 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
+        [TestCase("/test/path=true@&#%", "/test/path%3Dtrue%40%26%23%25")]
+        [TestCase("/test/path%3Dtest%26", "/test/path%253Dtest%2526")]
+        [TestCase("C:\\test\\path=true@&#%", "C:/test/path%3Dtrue%40%26%23%25")]
+        [TestCase("C:\\test\\path%3Dtest%26", "C:/test/path%253Dtest%2526")]
+        [TestCase("C:\\test\\file with spaces", "C:/test/file%20with%20spaces")]
+        public void Ctor_String_Encoding(string path, string absolutePath)
+        {
+            LocalFileStorageResource storageResource = new(path);
+            Assert.That(storageResource.Uri.AbsolutePath, Is.EqualTo(absolutePath));
+            // LocalPath should equal original path
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path));
+        }
+
+        [Test]
         public void Ctor_Error()
         {
             Assert.Catch<ArgumentException>(() =>
