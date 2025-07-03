@@ -2867,14 +2867,7 @@
             "namespace": "MgmtTypeSpec",
             "crossLanguageDefinitionId": "MgmtTypeSpec.FooProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
-            "decorators": [
-              {
-                "name": "Azure.ClientGenerator.Core.@useSystemTextJsonConverter",
-                "arguments": {
-                  "scope": "csharp"
-                }
-              }
-            ],
+            "decorators": [],
             "properties": [
               {
                 "$id": "253",
