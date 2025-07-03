@@ -5,6 +5,7 @@ using Azure.Generator.Management.InputTransformation;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.Abstraction;
+using Azure.Generator.Providers.Abstraction;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -44,7 +45,10 @@ namespace Azure.Generator.Management
         }
 
         /// <inheritdoc/>
-        public override IClientPipelineApi ClientPipelineApi => MgmtHttpPipelineProvider.Instance;
+        public override IClientPipelineApi ClientPipelineApi => ManagementHttpPipelineProvider.Instance;
+
+        /// <inheritdoc/>
+        public override IAzureResponseWithTypeApi AzureResponseWithTypeApi => ManagementResponseWithTypeProvider.Instance;
 
         /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
