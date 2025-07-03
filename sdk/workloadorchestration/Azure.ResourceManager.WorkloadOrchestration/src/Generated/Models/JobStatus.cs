@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         private const string NotStartedValue = "NotStarted";
+
+        // cspell:ignore InProgress 
         private const string InProgressValue = "InProgress";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
