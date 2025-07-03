@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace Client.Plugin.Tests.TestHelpers
+namespace Visitors.Tests.TestHelpers
 {
     internal class MockHelpers
     {
@@ -98,7 +98,7 @@ namespace Client.Plugin.Tests.TestHelpers
         {
             modelProvider.GetType().BaseType!.GetField(
                     "_customCodeView",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?
+                    BindingFlags.NonPublic | BindingFlags.Instance)?
                 .SetValue(modelProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
         }
     }

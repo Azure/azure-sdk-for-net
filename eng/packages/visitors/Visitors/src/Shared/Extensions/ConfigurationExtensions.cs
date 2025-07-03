@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.TypeSpec.Generator;
 
-namespace Client.Plugin
+namespace Visitors.Extensions
 {
     internal static class ConfigurationExtensions
     {

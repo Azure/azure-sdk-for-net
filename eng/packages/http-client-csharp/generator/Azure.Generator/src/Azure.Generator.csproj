@@ -11,10 +11,6 @@
     <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\plugins\client\Client.Plugin\src\Client.Plugin.csproj" />
-  </ItemGroup>
-
 	<Target Name="CheckEmitterBuild" BeforeTargets="Build">
 		<!-- Check if the folder does not exist -->
 		<Error Condition="!Exists('..\..\..\node_modules\@typespec\http-client-csharp')" Text="Emitter has not been built please run `npm ci` from repo root folder, and followed by `npm run build` from ./eng/packages/http-client-csharp folder." />
@@ -59,6 +55,14 @@
       <LinkBase>Shared/Core</LinkBase>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-	</ItemGroup>
+  </ItemGroup>
+
+  <!-- Include shared Visitors code -->
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\visitors\Visitors\src\Shared\**\*.cs">
+      <LinkBase>Shared/Visitors</LinkBase>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
 
 </Project>

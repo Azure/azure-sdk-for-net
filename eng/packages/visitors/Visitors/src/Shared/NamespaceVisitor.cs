@@ -7,8 +7,9 @@ using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
+using Visitors.Extensions;
 
-namespace Client.Plugin.Visitors
+namespace Visitors
 {
     /// <summary>
     /// Visitor that updates the namespace and file paths for model and enum types.

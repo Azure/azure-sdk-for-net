@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System.Linq;
-using Client.Plugin.Tests.Common;
-using Client.Plugin.Tests.TestHelpers;
-using Client.Plugin.Visitors;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using Visitors.Tests.Common;
+using Visitors.Tests.TestHelpers;
 
-namespace Client.Plugin.Tests.Visitors
+namespace Visitors.Tests
 {
     public class ModelFactoryRenamerVisitorTests
     {

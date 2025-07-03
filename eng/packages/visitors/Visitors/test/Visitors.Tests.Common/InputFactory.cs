@@ -4,7 +4,7 @@
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 
-namespace Client.Plugin.Tests.Common
+namespace Visitors.Tests.Common
 {
     /// <summary>
     /// Provider methods to construct input test data

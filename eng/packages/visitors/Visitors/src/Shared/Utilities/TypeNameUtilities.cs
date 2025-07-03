@@ -4,7 +4,7 @@
 using Microsoft.TypeSpec.Generator;
 using System.Linq;
 
-namespace Client.Plugin.Utilities
+namespace Visitors.Utilities
 {
     internal static class TypeNameUtilities
     {

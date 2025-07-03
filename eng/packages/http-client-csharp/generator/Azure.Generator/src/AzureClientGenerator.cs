@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.ClientModel;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
+using Visitors;
 
 namespace Azure.Generator;
 
@@ -52,6 +53,11 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientGenerator).Assembly.Location)!, "Shared", "Core");
         AddSharedSourceDirectory(sharedSourceDirectory);
 
+        // Visitors that do any renaming must be added first so that any visitors relying on custom code view will have the CustomCodeView set.
+        AddVisitor(new ModelFactoryRenamerVisitor());
+
+        // Rest of the visitors can be added in any order.
+        AddVisitor(new NamespaceVisitor());
         AddVisitor(new DistributedTracingVisitor());
         AddVisitor(new PipelinePropertyVisitor());
         AddVisitor(new LroVisitor());

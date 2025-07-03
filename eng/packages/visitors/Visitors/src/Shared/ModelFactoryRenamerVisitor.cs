@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Client.Plugin.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Providers;
+using Visitors.Utilities;
 
-namespace Client.Plugin.Visitors
+namespace Visitors
 {
     internal class ModelFactoryRenamerVisitor : ScmLibraryVisitor
     {

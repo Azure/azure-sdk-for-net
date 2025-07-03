@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Client.Plugin.Visitors;
 using Microsoft.TypeSpec.Generator;
+using Visitors;
 
 namespace Client.Plugin
 {
     /// <summary>
     /// ClientPlugin is a generator plugin that applies several visitors to mutate the generated client library.
     /// </summary>
-    internal class ClientPlugin : GeneratorPlugin
+    internal sealed class ClientPlugin : GeneratorPlugin
     {
         /// <inheritdoc />
         public override void Apply(CodeModelGenerator generator)

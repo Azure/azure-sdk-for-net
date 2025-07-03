@@ -10,6 +10,13 @@
     <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\visitors\Visitors\src\Shared\**\*.cs">
+      <LinkBase>Shared/Visitors</LinkBase>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
   <!-- Copy output to package dist path  -->
   <Target Name="CopyForNpmPackage" AfterTargets="Build">
     <Message Text="Copying output to dist path" Importance="high" />
