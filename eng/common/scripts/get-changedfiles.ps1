@@ -25,8 +25,8 @@
 #>
 [CmdletBinding()]
 param (
-  [string] $SourceCommittish = "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}",
-  [string] $TargetCommittish = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/"),
+  [string] $SourceCommittish = "HEAD^",
+  [string] $TargetCommittish = "HEAD",
   [string] $DiffPath = "",
   [string] $DiffFilterType = 'd'
 )
