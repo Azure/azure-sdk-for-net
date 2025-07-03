@@ -301,6 +301,8 @@
     Test/Sample/Perf/Stress project dependencies
   -->
   <ItemGroup Condition="('$(IsTestProject)' == 'true') OR ('$(IsTestSupportProject)' == 'true') OR ('$(IsPerfProject)' == 'true') OR ('$(IsStressProject)' == 'true') OR ('$(IsSamplesProject)' == 'true')">
+    <PackageReference Update="Azure.Core.TestFramework" Version="1.0.1" />
+    <PackageReference Update="Azure.ResourceManager.TestFramework" Version="1.0.0" />
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Core" Version="1.46.2" />
