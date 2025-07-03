@@ -7,8 +7,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed an issue with Copy transfers where if the source file name contained certain special characters, the destination file name would incorrectly contain the encoded version of these characters.
-- Fixed an issue with Upload transfers where file names containing certain URL-encoded characters could cause the transfer to fail.
+- Fixed an issue with Copy transfers where if the source file/directory name contained certain special characters, the destination file name would incorrectly contain the encoded version of these characters.
+- Fixed an issue with Upload transfers where file/directory names containing certain URL-encoded characters could cause the transfer to fail.
 
 ### Other Changes
 
