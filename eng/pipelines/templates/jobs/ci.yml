@@ -138,7 +138,7 @@ jobs:
         os: windows
       steps:
         - checkout: self
-          fetchDepth: 1
+          fetchDepth: 2 # Need depth 2 in order to produce PR diffs
 
         - task: UsePythonVersion@0
           displayName: "Use Python 3.11"
