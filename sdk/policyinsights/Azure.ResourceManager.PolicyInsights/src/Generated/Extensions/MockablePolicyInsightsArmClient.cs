@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         private PolicyEventsRestOperations _policyEventsRestClient;
         private ClientDiagnostics _policyStatesClientDiagnostics;
         private PolicyStatesRestOperations _policyStatesRestClient;
+        private ClientDiagnostics _componentPolicyStatesClientDiagnostics;
+        private ComponentPolicyStatesRestOperations _componentPolicyStatesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockablePolicyInsightsArmClient"/> class for mocking. </summary>
         protected MockablePolicyInsightsArmClient()
@@ -47,6 +49,8 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         private PolicyEventsRestOperations PolicyEventsRestClient => _policyEventsRestClient ??= new PolicyEventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics PolicyStatesClientDiagnostics => _policyStatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PolicyStatesRestOperations PolicyStatesRestClient => _policyStatesRestClient ??= new PolicyStatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ComponentPolicyStatesClientDiagnostics => _componentPolicyStatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ComponentPolicyStatesRestOperations ComponentPolicyStatesRestClient => _componentPolicyStatesRestClient ??= new ComponentPolicyStatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -147,7 +151,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +183,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -275,7 +279,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,7 +311,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,7 +343,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,7 +375,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,7 +407,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -434,7 +438,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-10-01</description>
+        /// <description>2024-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -450,6 +454,68 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForResourceRequest(scope, policyStateSummaryType, policyQuerySettings);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.SummarizePolicyStates", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Queries component policy states for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComponentPolicyStates_ListQueryResultsForResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStatesAsync(ResourceIdentifier scope, ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForResourceRequest(scope, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply, options.Expand);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetQueryResultsForResourceComponentPolicyStates", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Queries component policy states for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ComponentPolicyStates_ListQueryResultsForResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStates(ResourceIdentifier scope, ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(options, nameof(options));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForResourceRequest(scope, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply, options.Expand);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetQueryResultsForResourceComponentPolicyStates", "value", null, cancellationToken);
         }
         /// <summary>
         /// Gets an object representing a <see cref="PolicyRemediationResource"/> along with the instance operations that can be performed on it but with no data.

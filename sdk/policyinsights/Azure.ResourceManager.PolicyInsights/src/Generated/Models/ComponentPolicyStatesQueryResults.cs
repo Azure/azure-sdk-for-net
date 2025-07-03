@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The filters that will be applied to determine which resources to remediate. </summary>
-    public partial class RemediationFilters
+    /// <summary> Query results. </summary>
+    internal partial class ComponentPolicyStatesQueryResults
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +45,30 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RemediationFilters"/>. </summary>
-        public RemediationFilters()
+        /// <summary> Initializes a new instance of <see cref="ComponentPolicyStatesQueryResults"/>. </summary>
+        internal ComponentPolicyStatesQueryResults()
         {
-            Locations = new ChangeTrackingList<AzureLocation>();
-            ResourceIds = new ChangeTrackingList<string>();
+            Value = new ChangeTrackingList<ComponentPolicyState>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RemediationFilters"/>. </summary>
-        /// <param name="locations"> The resource locations that will be remediated. </param>
-        /// <param name="resourceIds"> The IDs of the resources that will be remediated. Can specify at most 100 IDs. This filter cannot be used when ReEvaluateCompliance is set to ReEvaluateCompliance, and cannot be empty if provided. </param>
+        /// <summary> Initializes a new instance of <see cref="ComponentPolicyStatesQueryResults"/>. </summary>
+        /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
+        /// <param name="odataCount"> OData entity count; represents the number of policy state records returned. </param>
+        /// <param name="value"> Query results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemediationFilters(IList<AzureLocation> locations, IList<string> resourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComponentPolicyStatesQueryResults(string odataContext, int? odataCount, IReadOnlyList<ComponentPolicyState> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Locations = locations;
-            ResourceIds = resourceIds;
+            ODataContext = odataContext;
+            ODataCount = odataCount;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource locations that will be remediated. </summary>
-        public IList<AzureLocation> Locations { get; }
-        /// <summary> The IDs of the resources that will be remediated. Can specify at most 100 IDs. This filter cannot be used when ReEvaluateCompliance is set to ReEvaluateCompliance, and cannot be empty if provided. </summary>
-        public IList<string> ResourceIds { get; }
+        /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
+        public string ODataContext { get; }
+        /// <summary> OData entity count; represents the number of policy state records returned. </summary>
+        public int? ODataCount { get; }
+        /// <summary> Query results. </summary>
+        public IReadOnlyList<ComponentPolicyState> Value { get; }
     }
 }

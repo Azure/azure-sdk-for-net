@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The filters that will be applied to determine which resources to remediate. </summary>
-    public partial class RemediationFilters
+    /// <summary> Policy evaluation details. </summary>
+    public partial class ComponentPolicyEvaluationDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +45,26 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RemediationFilters"/>. </summary>
-        public RemediationFilters()
+        /// <summary> Initializes a new instance of <see cref="ComponentPolicyEvaluationDetails"/>. </summary>
+        internal ComponentPolicyEvaluationDetails()
         {
-            Locations = new ChangeTrackingList<AzureLocation>();
-            ResourceIds = new ChangeTrackingList<string>();
+            EvaluatedExpressions = new ChangeTrackingList<ComponentExpressionEvaluationDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RemediationFilters"/>. </summary>
-        /// <param name="locations"> The resource locations that will be remediated. </param>
-        /// <param name="resourceIds"> The IDs of the resources that will be remediated. Can specify at most 100 IDs. This filter cannot be used when ReEvaluateCompliance is set to ReEvaluateCompliance, and cannot be empty if provided. </param>
+        /// <summary> Initializes a new instance of <see cref="ComponentPolicyEvaluationDetails"/>. </summary>
+        /// <param name="evaluatedExpressions"> Details of the evaluated expressions. </param>
+        /// <param name="reason"> Additional textual reason for the evaluation outcome. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemediationFilters(IList<AzureLocation> locations, IList<string> resourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComponentPolicyEvaluationDetails(IReadOnlyList<ComponentExpressionEvaluationDetails> evaluatedExpressions, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Locations = locations;
-            ResourceIds = resourceIds;
+            EvaluatedExpressions = evaluatedExpressions;
+            Reason = reason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource locations that will be remediated. </summary>
-        public IList<AzureLocation> Locations { get; }
-        /// <summary> The IDs of the resources that will be remediated. Can specify at most 100 IDs. This filter cannot be used when ReEvaluateCompliance is set to ReEvaluateCompliance, and cannot be empty if provided. </summary>
-        public IList<string> ResourceIds { get; }
+        /// <summary> Details of the evaluated expressions. </summary>
+        public IReadOnlyList<ComponentExpressionEvaluationDetails> EvaluatedExpressions { get; }
+        /// <summary> Additional textual reason for the evaluation outcome. </summary>
+        public string Reason { get; }
     }
 }
