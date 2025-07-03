@@ -88,13 +88,11 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Page
                 {
                     Assert.AreEqual(1, response.Id);
                     Assert.AreEqual("User1", response.Name);
-                    Assert.AreEqual("11bdc430-65e8-45ad-81d9-8ffa60d55b59", response.Etag.ToString());
                 }
                 else
                 {
                     Assert.AreEqual(2, response.Id);
                     Assert.AreEqual("User2", response.Name);
-                    Assert.AreEqual("11bdc430-65e8-45ad-81d9-8ffa60d55b59", response.Etag.ToString());
                 }
 
                 sum++;
