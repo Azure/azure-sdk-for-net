@@ -46,6 +46,7 @@ interface Foos {
 }
 
 @singleton
+@tenantResource
 model FooSettings is ProxyResource<FooSettingsProperties> {
 @doc("The default Foo settings.")
 @segment("FooSettings")

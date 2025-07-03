@@ -31,6 +31,12 @@ namespace MgmtTypeSpec
             return resourceGroupResource.GetCachedClient(client => new MockableMgmtTypeSpecResourceGroupResource(client, resourceGroupResource.Id));
         }
 
+        /// <param name="tenantResource"></param>
+        private static MockableMgmtTypeSpecTenantResource GetMockableMgmtTypeSpecTenantResource(TenantResource tenantResource)
+        {
+            return tenantResource.GetCachedClient(client => new MockableMgmtTypeSpecTenantResource(client, tenantResource.Id));
+        }
+
         /// <summary> Gets an object representing a <see cref="PrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>

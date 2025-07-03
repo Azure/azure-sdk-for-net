@@ -67,6 +67,13 @@ namespace MgmtTypeSpec
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier()
+        {
+            string resourceId = $"/providers/MgmtTypeSpec/FooSettings/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
@@ -90,7 +97,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _foosettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _foosettingsRestClient.CreateGetRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooSettingsData> response = Response.FromValue((FooSettingsData)result, result);
                 if (response.Value == null)
@@ -119,7 +126,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _foosettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _foosettingsRestClient.CreateGetRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooSettingsData> response = Response.FromValue((FooSettingsData)result, result);
                 if (response.Value == null)
@@ -153,7 +160,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _foosettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, data, context);
+                HttpMessage message = _foosettingsRestClient.CreateCreateOrUpdateRequest(data, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooSettingsData> response = Response.FromValue((FooSettingsData)result, result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -190,7 +197,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _foosettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, data, context);
+                HttpMessage message = _foosettingsRestClient.CreateCreateOrUpdateRequest(data, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooSettingsData> response = Response.FromValue((FooSettingsData)result, result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -226,7 +233,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _foosettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, properties, context);
+                HttpMessage message = _foosettingsRestClient.CreateUpdateRequest(properties, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FooSettingsData> response = Response.FromValue((FooSettingsData)result, result);
                 if (response.Value == null)
@@ -259,7 +266,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _foosettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, properties, context);
+                HttpMessage message = _foosettingsRestClient.CreateUpdateRequest(properties, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FooSettingsData> response = Response.FromValue((FooSettingsData)result, result);
                 if (response.Value == null)
@@ -289,7 +296,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _foosettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _foosettingsRestClient.CreateDeleteRequest(context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -321,7 +328,7 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _foosettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+                HttpMessage message = _foosettingsRestClient.CreateDeleteRequest(context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

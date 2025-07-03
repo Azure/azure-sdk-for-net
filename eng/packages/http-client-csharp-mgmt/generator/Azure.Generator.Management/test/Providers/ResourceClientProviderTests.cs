@@ -10,6 +10,7 @@ using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System.Reflection;
 
 namespace Azure.Generator.Management.Tests.Providers
 {
@@ -128,6 +129,35 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method body
             var bodyStatements = constructor.BodyStatements?.ToDisplayString();
+            Assert.NotNull(bodyStatements);
+            var exptected = Helpers.GetExpectedFromFile();
+            Assert.AreEqual(exptected, bodyStatements);
+        }
+
+        [TestCase]
+        public void Verify_CreateResourceIdentifierMethod()
+        {
+            MethodProvider createResourceIdentifierMethod = GetResourceClientProviderMethodByName("CreateResourceIdentifier");
+
+            var signature = createResourceIdentifierMethod.Signature;
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Static, signature.Modifiers);
+            Assert.AreEqual(typeof(ResourceIdentifier), signature.ReturnType?.FrameworkType);
+
+            Assert.AreEqual(3, signature.Parameters.Count);
+
+            var subscriptionIdParam = signature.Parameters.FirstOrDefault(p => p.Name == "subscriptionId");
+            Assert.NotNull(subscriptionIdParam);
+            Assert.AreEqual(typeof(string), subscriptionIdParam!.Type.FrameworkType);
+
+            var resourceGroupParam = signature.Parameters.FirstOrDefault(p => p.Name == "resourceGroupName");
+            Assert.NotNull(resourceGroupParam);
+            Assert.AreEqual(typeof(string), resourceGroupParam!.Type.FrameworkType);
+
+            var testNameParam = signature.Parameters.FirstOrDefault(p => p.Name == "testName");
+            Assert.NotNull(testNameParam);
+            Assert.AreEqual(typeof(string), testNameParam!.Type.FrameworkType);
+
+            var bodyStatements = createResourceIdentifierMethod.BodyStatements?.ToDisplayString();
             Assert.NotNull(bodyStatements);
             var exptected = Helpers.GetExpectedFromFile();
             Assert.AreEqual(exptected, bodyStatements);
