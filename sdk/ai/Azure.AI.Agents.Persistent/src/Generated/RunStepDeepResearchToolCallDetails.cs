@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary>
-    /// An abstract representation of an input tool definition that an agent can use.
-    /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingCustomSearchToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="ConnectedAgentToolDefinition"/>, <see cref="DeepResearchToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
-    /// </summary>
-    public abstract partial class ToolDefinition
+    /// <summary> The detailed information about the deep research tasks performed by the model. </summary>
+    public partial class RunStepDeepResearchToolCallDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,37 @@ namespace Azure.AI.Agents.Persistent
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        protected ToolDefinition()
+        /// <summary> Initializes a new instance of <see cref="RunStepDeepResearchToolCallDetails"/>. </summary>
+        /// <param name="input"> The input provided by the model to the deep research tool. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        internal RunStepDeepResearchToolCallDetails(string input)
         {
+            Argument.AssertNotNull(input, nameof(input));
+
+            Input = input;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        /// <param name="type"> The object type. </param>
+        /// <summary> Initializes a new instance of <see cref="RunStepDeepResearchToolCallDetails"/>. </summary>
+        /// <param name="input"> The input provided by the model to the deep research tool. </param>
+        /// <param name="output"> The final output for the deep research tool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RunStepDeepResearchToolCallDetails(string input, string output, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            Input = input;
+            Output = output;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The object type. </summary>
-        internal string Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="RunStepDeepResearchToolCallDetails"/> for deserialization. </summary>
+        internal RunStepDeepResearchToolCallDetails()
+        {
+        }
+
+        /// <summary> The input provided by the model to the deep research tool. </summary>
+        public string Input { get; }
+        /// <summary> The final output for the deep research tool. </summary>
+        public string Output { get; }
     }
 }

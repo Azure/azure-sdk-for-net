@@ -217,7 +217,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="Persistent.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/> and <see cref="Persistent.RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepAzureAISearchToolCall"/>, <see cref="Persistent.RunStepBingCustomSearchToolCall"/>, <see cref="Persistent.RunStepBingGroundingToolCall"/>, <see cref="Persistent.RunStepCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeepResearchToolCall"/>, <see cref="Persistent.RunStepMicrosoftFabricToolCall"/>, <see cref="Persistent.RunStepFileSearchToolCall"/>, <see cref="Persistent.RunStepFunctionToolCall"/>, <see cref="Persistent.RunStepOpenAPIToolCall"/> and <see cref="Persistent.RunStepSharepointToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
@@ -366,6 +366,24 @@ namespace Azure.AI.Agents.Persistent
             openAPI ??= new Dictionary<string, string>();
 
             return new RunStepOpenAPIToolCall("openapi", id, serializedAdditionalRawData: null, openAPI);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeepResearchToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="deepResearch"> The detailed information about the automated browser tasks performed by the model. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeepResearchToolCall"/> instance for mocking. </returns>
+        public static RunStepDeepResearchToolCall RunStepDeepResearchToolCall(string id = null, RunStepDeepResearchToolCallDetails deepResearch = null)
+        {
+            return new RunStepDeepResearchToolCall("deep_research", id, serializedAdditionalRawData: null, deepResearch);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeepResearchToolCallDetails"/>. </summary>
+        /// <param name="input"> The input provided by the model to the deep research tool. </param>
+        /// <param name="output"> The final output for the deep research tool. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeepResearchToolCallDetails"/> instance for mocking. </returns>
+        public static RunStepDeepResearchToolCallDetails RunStepDeepResearchToolCallDetails(string input = null, string output = null)
+        {
+            return new RunStepDeepResearchToolCallDetails(input, output, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepError"/>. </summary>
