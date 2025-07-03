@@ -8,7 +8,6 @@
 using System;
 using System.ComponentModel;
 
-// cspell:ignore Undeployed
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Solution Instance State. </summary>
@@ -30,7 +29,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         private const string DeployingValue = "Deploying";
         private const string DeployedValue = "Deployed";
         private const string FailedValue = "Failed";
-        // cspell:ignore Undeployed
         private const string UndeployedValue = "Undeployed";
         private const string PendingExternalValidationValue = "PendingExternalValidation";
         private const string ExternalValidationFailedValue = "ExternalValidationFailed";
