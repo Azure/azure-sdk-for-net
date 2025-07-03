@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Azure.Search.Documents
@@ -12,6 +13,7 @@ namespace Azure.Search.Documents
     /// </summary>
     internal abstract class GeographyProxy
     {
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
         private readonly Type _type;
 
         /// <summary>

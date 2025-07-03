@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using Azure.Core;
@@ -21,6 +22,7 @@ namespace Azure.Search.Documents.Indexes
     public class FieldBuilder
     {
         private const string HelpLink = "https://aka.ms/azsdk/net/search/fieldbuilder";
+        private const string TrimmingMessage = "The default JsonSerializer used by this type is not compatible with trimming since it uses unsafe reflection to serialize. If ObjectSerializer is set to an AOT-safe serializer, this warning can be suppressed.";
 
         private static readonly IReadOnlyDictionary<Type, SearchFieldDataType> s_primitiveTypeMap =
             new ReadOnlyDictionary<Type, SearchFieldDataType>(
@@ -69,6 +71,8 @@ namespace Azure.Search.Documents.Indexes
         /// </param>
         /// <returns>A collection of fields.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="modelType"/>.</exception>
+        [RequiresUnreferencedCode(TrimmingMessage)]
+        [RequiresDynamicCode(TrimmingMessage)]
         public IList<SearchField> Build(Type modelType) =>
             BuildMapping(modelType).Values.ToList();
 
@@ -81,6 +85,8 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>A collection of fields.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="modelType"/>.</exception>
         /// <remarks>This overload is used to find the Key field of a SearchIndex so we can associate indexing failures with actions.</remarks>
+        [RequiresUnreferencedCode(TrimmingMessage)]
+        [RequiresDynamicCode(TrimmingMessage)]
         internal IDictionary<string, SearchField> BuildMapping(Type modelType)
         {
             Argument.AssertNotNull(modelType, nameof(modelType));
@@ -236,10 +242,13 @@ namespace Azure.Search.Documents.Indexes
                 .ToDictionary(pair => pair.Name, pair => pair.Item2);
         }
 
-        private static IDataTypeInfo GetDataTypeInfo(Type propertyType, IMemberNameConverter nameProvider)
+        private static IDataTypeInfo GetDataTypeInfo([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces |
+            DynamicallyAccessedMemberTypes.PublicFields |
+            DynamicallyAccessedMemberTypes.NonPublicFields |
+            DynamicallyAccessedMemberTypes.PublicProperties |
+            DynamicallyAccessedMemberTypes.NonPublicProperties)] Type propertyType, IMemberNameConverter nameProvider)
         {
-            static bool IsNullableType(Type type) =>
-                type.IsConstructedGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+            static bool IsNullableType(Type type) => type.IsConstructedGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
 
             if (s_primitiveTypeMap.TryGetValue(propertyType, out SearchFieldDataType searchFieldDataType))
             {
@@ -251,7 +260,8 @@ namespace Azure.Search.Documents.Indexes
             }
             else if (IsNullableType(propertyType))
             {
-                return GetDataTypeInfo(propertyType.GenericTypeArguments[0], nameProvider);
+                Type underlyingType = Nullable.GetUnderlyingType(propertyType);
+                return GetDataTypeInfo(underlyingType, nameProvider);
             }
             else if (TryGetEnumerableElementType(propertyType, out Type elementType))
             {
@@ -268,7 +278,7 @@ namespace Azure.Search.Documents.Indexes
             }
         }
 
-        private static bool TryGetEnumerableElementType(Type candidateType, out Type elementType)
+        private static bool TryGetEnumerableElementType([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces)] Type candidateType, out Type elementType)
         {
             static Type GetElementTypeIfIEnumerable(Type t) =>
                 t.IsConstructedGenericType && t.GetGenericTypeDefinition() == typeof(IEnumerable<>)
@@ -382,7 +392,10 @@ namespace Azure.Search.Documents.Indexes
                 Properties = properties;
             }
 
-            public static bool TryGet(Type type, IMemberNameConverter nameProvider, out ObjectInfo info)
+            public static bool TryGet([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties |
+                                       DynamicallyAccessedMemberTypes.NonPublicProperties |
+                                       DynamicallyAccessedMemberTypes.PublicFields |
+                                       DynamicallyAccessedMemberTypes.NonPublicFields)] Type type, IMemberNameConverter nameProvider, out ObjectInfo info)
             {
                 // Close approximation to Newtonsoft.Json.Serialization.DefaultContractResolver that was used in Microsoft.Azure.Search.
                 if (!type.IsPrimitive &&
@@ -455,6 +468,11 @@ namespace Azure.Search.Documents.Indexes
 
             public string SerializedName { get; }
 
+            [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces |
+            DynamicallyAccessedMemberTypes.PublicFields |
+            DynamicallyAccessedMemberTypes.NonPublicFields |
+            DynamicallyAccessedMemberTypes.PublicProperties |
+            DynamicallyAccessedMemberTypes.NonPublicProperties)]
             public Type PropertyType { get; }
 
             public static implicit operator MemberInfo(ObjectPropertyInfo property) =>
