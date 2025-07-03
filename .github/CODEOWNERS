@@ -183,7 +183,7 @@
 # ServiceOwners:                                                   @matthchr
 
 # ServiceLabel: %Billing
-# ServiceOwners:                                                   @amberbhargava @shilpigautam @ramaganesan-rg @anand-rengasamy
+# ServiceOwners:                                                   @amberbhargava @ramaganesan-rg @anand-rengasamy
 
 # ServiceLabel: %Blueprint
 # ServiceOwners:                                                   @alex-frankel @filizt
@@ -886,7 +886,7 @@
 # ServiceOwners:                                                   @atpham256
 
 # ServiceLabel: %Subscription
-# ServiceOwners:                                                   @anuragdalmia @shilpigautam @ramaganesan-rg
+# ServiceOwners:                                                   @anuragdalmia @ramaganesan-rg
 
 # ServiceLabel: %Support
 # ServiceOwners:                                                   @shahbj79 @mit2nil @aygoya @ganganarayanan
