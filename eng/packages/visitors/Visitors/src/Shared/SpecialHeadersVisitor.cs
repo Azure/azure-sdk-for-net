@@ -3,8 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
-using Azure.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -12,17 +10,17 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Statements;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
-namespace Azure.Generator.Visitors
+namespace Visitors
 {
     /// <summary>
-    /// Visitor to handle removing special header parameters from service methods and adding them to the request. Note,
-    /// "x-ms-client-request-id" is not added to the request as it is handled by the Azure.Core pipeline.
+    /// Visitor to handle removing special header parameters from service methods and adding them to the request.
     /// </summary>
     internal class SpecialHeadersVisitor : ScmLibraryVisitor
     {
         private const string ClientRequestIdParameterName = "client-request-id";
         private const string ReturnClientRequestIdParameterName = "return-client-request-id";
         private const string XMsClientRequestIdParameterName = "x-ms-client-request-id";
+
         protected override ScmMethodProviderCollection? Visit(
             InputServiceMethod serviceMethod,
             ClientProvider client,
@@ -66,18 +64,23 @@ namespace Azure.Generator.Visitors
                         })
                     {
                         var variable = declaration.Variable;
-                        if (variable.Type.Equals(typeof(Request)))
+                        if (variable.Type.Equals(variable.ToApi<HttpRequestApi>().Type))
                         {
                             requestVariable = variable;
                         }
                     }
                 }
 
-                if (clientRequestIdParameter != null)
+                // Only set the client-request-id header if the request type supports it
+                string? requestIdPropName = requestVariable?.ToApi<HttpRequestApi>().HttpRequestClientIdPropertyName;
+                if (requestIdPropName != null && clientRequestIdParameter != null)
                 {
                     // Set the client-request-id header
-                    newStatements.Add(requestVariable!.As<Request>().SetHeaderValue(
-                        clientRequestIdParameter.NameInRequest, requestVariable.Property(nameof(Request.ClientRequestId))));
+                    newStatements.Add(requestVariable!.ToApi<HttpRequestApi>().SetHeaders(
+                    [
+                        Literal(clientRequestIdParameter.NameInRequest),
+                        requestVariable!.Property(requestIdPropName)
+                    ]));
                 }
 
                 if (returnClientRequestIdParameter?.DefaultValue?.Value != null)
@@ -85,9 +88,11 @@ namespace Azure.Generator.Visitors
                     if (bool.TryParse(returnClientRequestIdParameter.DefaultValue.Value.ToString(), out bool value))
                     {
                         // Set the return-client-request-id header
-                        newStatements.Add(requestVariable!.As<Request>().SetHeaderValue(
-                            returnClientRequestIdParameter.NameInRequest,
-                            Literal(value.ToString().ToLowerInvariant())));
+                        newStatements.Add(requestVariable!.ToApi<HttpRequestApi>().SetHeaders(
+                        [
+                            Literal(returnClientRequestIdParameter.NameInRequest),
+                            Literal(value.ToString().ToLowerInvariant())
+                        ]));
                     }
                 }
 
