@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -102,6 +103,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             if (logRecord.SpanId != default)
             {
                 Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
+            }
+
+            var clientAddress = logRecord.Attributes?
+                .FirstOrDefault(kvp => kvp.Key == SemanticConventions.AttributeClientAddress).Value;
+            if (clientAddress != null)
+            {
+                Tags[ContextTagKeys.AiLocationIp.ToString()] = clientAddress.ToString();
             }
 
             InstrumentationKey = instrumentationKey;
