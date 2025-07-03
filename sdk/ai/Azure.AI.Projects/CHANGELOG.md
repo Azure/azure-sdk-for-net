@@ -3,6 +3,7 @@
 ## 1.0.0-beta.10 (Unreleased)
 
 ### Features Added
+* Support for generating embeddings through Azure OpenAI using `GetAzureOpenAIEmbeddingClient`.
 
 ### Breaking Changes
 * Name changes:

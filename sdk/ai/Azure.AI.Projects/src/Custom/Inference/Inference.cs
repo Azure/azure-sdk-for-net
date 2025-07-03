@@ -12,6 +12,7 @@ using Azure.Core.Pipeline;
 using Azure.Identity;
 using Azure.AI.OpenAI;
 using OpenAI.Chat;
+using OpenAI.Embeddings;
 
 namespace Azure.AI.Projects
 {
@@ -30,23 +31,44 @@ namespace Azure.AI.Projects
         /// <returns></returns>
         public ChatClient GetAzureOpenAIChatClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null)
         {
-            ChatClientKey chatClientKey = new();
+            ChatClientKey chatClientKey = new(deploymentName);
             AzureOpenAIClientKey openAIClientKey = new();
 
-            ChatClient chatClient = this.Subclients.GetClient(chatClientKey, () =>
+            ChatClient chatClient = Subclients.GetClient(chatClientKey, () =>
             {
-                AzureOpenAIClient aoaiClient = this.Subclients.GetClient(openAIClientKey, () => CreateAzureOpenAIClient(connectionName, apiVersion));
-                return this.CreateChatClient(aoaiClient, deploymentName);
+                AzureOpenAIClient aoaiClient = Subclients.GetClient(openAIClientKey, () => CreateAzureOpenAIClient(connectionName, apiVersion));
+                return CreateChatClient(aoaiClient, deploymentName);
             });
 
             return chatClient;
+        }
+
+        /// <summary>
+        /// Gets the OpenAI embedding client.
+        /// </summary>
+        /// <param name="connectionName"></param>
+        /// <param name="apiVersion"></param>
+        /// <param name="deploymentName"></param>
+        /// <returns></returns>
+        public EmbeddingClient GetAzureOpenAIEmbeddingClient(string? connectionName = null, string? apiVersion = null, string? deploymentName = null)
+        {
+            EmbeddingClientKey embeddingClientKey = new(deploymentName);
+            AzureOpenAIClientKey openAIClientKey = new();
+
+            EmbeddingClient embeddingClient = Subclients.GetClient(embeddingClientKey, () =>
+            {
+                AzureOpenAIClient aoaiClient = Subclients.GetClient(openAIClientKey , () => CreateAzureOpenAIClient(connectionName, apiVersion));
+                return CreateEmbeddingClient(aoaiClient, deploymentName);
+            });
+
+            return embeddingClient;
         }
 
         private AzureOpenAIClient CreateAzureOpenAIClient(string? connectionName = null, string? apiVersion = null)
         {
             if (!string.IsNullOrEmpty(connectionName))
             {
-                ConnectionProperties selectedConnection = this.GetConnectionsClient().Get(connectionName, includeCredentials: true);
+                ConnectionProperties selectedConnection = GetConnectionsClient().Get(connectionName, includeCredentials: true);
                 if (selectedConnection.Type != ConnectionType.AzureOpenAI)
                 {
                     throw new InvalidOperationException($"Connection '{connectionName}' is not of type AzureOpenAI.");
@@ -66,7 +88,7 @@ namespace Azure.AI.Projects
                 }
                 ;
             }
-            ClientConnection connection = this.GetConnection(typeof(AzureOpenAIClient).FullName!);
+            ClientConnection connection = GetConnection(typeof(AzureOpenAIClient).FullName!);
 
             if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
             {
@@ -95,13 +117,34 @@ namespace Azure.AI.Projects
 
         private ChatClient CreateChatClient(AzureOpenAIClient client, string? deploymentName = null)
         {
-            ClientConnection connection = this.GetConnection(typeof(ChatClient).FullName!);
+            ClientConnection connection = GetConnection(typeof(ChatClient).FullName!);
             ChatClient chat = client.GetChatClient(deploymentName ?? connection.Locator);
             return chat;
         }
 
+        private EmbeddingClient CreateEmbeddingClient(AzureOpenAIClient client, string? deploymentName = null)
+        {
+            ClientConnection connection = GetConnection(typeof(EmbeddingClient).FullName!);
+            EmbeddingClient embedding = client.GetEmbeddingClient(deploymentName ?? connection.Locator);
+            return embedding;
+        }
+
         private record AzureOpenAIClientKey();
-        private record ChatClientKey();
+        private class ChatClientKey
+        {
+            public string? DeploymentName { get; }
+            public ChatClientKey(string? deploymentName) => DeploymentName = deploymentName;
+            public override bool Equals(object? obj) => obj is ChatClientKey other && DeploymentName == other.DeploymentName;
+            public override int GetHashCode() => DeploymentName?.GetHashCode() ?? 0;
+        }
+
+        private class EmbeddingClientKey
+        {
+            public string? DeploymentName { get; }
+            public EmbeddingClientKey(string? deploymentName) => DeploymentName = deploymentName;
+            public override bool Equals(object? obj) => obj is EmbeddingClientKey other && DeploymentName == other.DeploymentName;
+            public override int GetHashCode() => DeploymentName?.GetHashCode() ?? 0;
+        }
         private class OverrideApiVersionPolicy : HttpPipelinePolicy
         {
             private string ApiVersion { get; }
