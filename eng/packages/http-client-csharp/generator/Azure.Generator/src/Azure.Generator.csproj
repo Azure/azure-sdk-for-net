@@ -55,6 +55,14 @@
       <LinkBase>Shared/Core</LinkBase>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-	</ItemGroup>
+  </ItemGroup>
+
+  <!-- Include shared Visitors code -->
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\visitors\Visitors\src\Shared\**\*.cs">
+      <LinkBase>Shared/Visitors</LinkBase>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
 
 </Project>

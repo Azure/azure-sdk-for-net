@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.ClientModel;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
+using Visitors;
 
 namespace Azure.Generator;
 
