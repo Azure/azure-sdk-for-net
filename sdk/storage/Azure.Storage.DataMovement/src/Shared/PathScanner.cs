@@ -109,10 +109,7 @@ namespace Azure.Storage.DataMovement
             // on disk.
             string[] pathParts = path.Split('/');
             List<string> encodedParts = [pathParts.First()];
-            foreach (string part in pathParts.Skip(1))
-            {
-                encodedParts.Add(Uri.EscapeDataString(part));
-            }
+            encodedParts.AddRange(pathParts.Skip(1).Select(Uri.EscapeDataString));
             string encodedPath = string.Join("/", encodedParts);
 
             UriBuilder uriBuilder = new()
