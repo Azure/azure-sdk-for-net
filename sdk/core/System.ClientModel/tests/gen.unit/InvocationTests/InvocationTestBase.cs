@@ -38,7 +38,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
             public TypeRef Context { get; }
         }
 
-        internal static readonly TypeRef s_localContext = new("LocalContext", "TestProject", "", "global::TestProject.LocalContext");
+        internal static readonly TypeRef s_localContext = new("LocalContext", "TestProject", "", "global::TestProject.LocalContext", null);
 
         internal static readonly Dictionary<string, ModelExpectation> s_modelExpectations = new()
         {
@@ -55,7 +55,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
                     "TestClientModelReaderWriterContext",
                     "System.ClientModel.Tests.ModelReaderWriterTests",
                     "",
-                    "global::System.ClientModel.Tests.ModelReaderWriterTests.TestClientModelReaderWriterContext")) },
+                    "global::System.ClientModel.Tests.ModelReaderWriterTests.TestClientModelReaderWriterContext",
+                    null)) },
             { BaseModel, new(
                 BaseModel,
                 "System.ClientModel.Tests.Client.ModelReaderWriterTests.Models",
@@ -64,7 +65,8 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
                     "TestClientModelReaderWriterContext",
                     "System.ClientModel.Tests.ModelReaderWriterTests",
                     "",
-                    "global::System.ClientModel.Tests.ModelReaderWriterTests.TestClientModelReaderWriterContext")) },
+                    "global::System.ClientModel.Tests.ModelReaderWriterTests.TestClientModelReaderWriterContext",
+                    null)) },
             { LocalBaseModel, new(
                 LocalBaseModel,
                 "TestProject",

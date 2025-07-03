@@ -504,10 +504,20 @@ namespace TestProject
             string source =
 $$"""
 using System.ClientModel.Primitives;
+using System;
+using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 
 namespace TestProject
 {
     {{modifier}} partial class LocalContext : ModelReaderWriterContext { }
+
+    public class Caller
+    {
+        public void Call()
+        {
+            ModelReaderWriter.Read(BinaryData.Empty, typeof(AvailabilitySetData), ModelReaderWriterOptions.Json, LocalContext.Default);
+        }
+    }
 }
 """;
 
@@ -517,17 +527,23 @@ namespace TestProject
                 [
                     MetadataReference.CreateFromFile(typeof(TestClientModelReaderWriterContext).Assembly.Location)
                 ]);
-            var result = CompilationHelper.RunSourceGenerator(compilation);
+            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
 
             Assert.IsNotNull(result.GenerationSpec);
             Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
             Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
             Assert.AreEqual(0, result.Diagnostics.Length);
             Assert.AreEqual(modifier, result.GenerationSpec!.Modifier);
-            Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual("TestClientModelReaderWriterContext", result.GenerationSpec.TypeBuilders[0].ContextType.Name);
+            Assert.AreEqual("AvailabilitySetData", result.GenerationSpec.TypeBuilders[0].Type.Name);
+            Assert.AreEqual("System.ClientModel.Tests.Client.Models.ResourceManager.Compute", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
             Assert.AreEqual(1, result.GenerationSpec.ReferencedContexts.Count);
             Assert.AreEqual("TestClientModelReaderWriterContext", result.GenerationSpec.ReferencedContexts[0].Name);
             Assert.AreEqual("System.ClientModel.Tests.ModelReaderWriterTests", result.GenerationSpec.ReferencedContexts[0].Namespace);
+
+            //we shouldn't make a builder just add the reference to forward to TestClientModelReaderWriterContext
+            Assert.IsNull(newCompilation.GetTypeByMetadataName($"{result.GenerationSpec.TypeBuilders[0].Type.TypeCaseName}Builder"));
         }
 
         [Test]
