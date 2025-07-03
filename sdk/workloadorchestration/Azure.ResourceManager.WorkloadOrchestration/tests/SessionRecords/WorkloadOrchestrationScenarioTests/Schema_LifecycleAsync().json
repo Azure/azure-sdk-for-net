@@ -1,0 +1,174 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/athrvuaj?api-version=2025-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "Content-Length": "42",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.WorkloadOrchestration/1.0.0-alpha.20250703.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "location": "eastus2euap",
+        "properties": {}
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "459",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 03 Jul 2025 06:38:57 GMT",
+        "ETag": "\"4300e7dc-0000-3300-0000-686625810000\"",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "dffba7f2-d1b0-45b0-b237-08b6044d5c7c",
+        "x-ms-operation-identifier": "tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47,objectId=b12b2079-2031-4146-9a67-f7637e660a5a/southindia/fa7c832b-3059-401d-bc9a-d9b602c0a038",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-global-writes": "11999",
+        "x-ms-ratelimit-remaining-subscription-writes": "799",
+        "x-ms-request-id": "a1a67879-f49f-4ae9-a29a-ed00af1e9db3",
+        "x-ms-routing-request-id": "SOUTHINDIA:20250703T063857Z:dffba7f2-d1b0-45b0-b237-08b6044d5c7c",
+        "X-MSEdge-Ref": "Ref A: B2B7E86136FD476398DEF83A787788E7 Ref B: MAA201060515051 Ref C: 2025-07-03T06:38:54Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/athrvuaj",
+        "name": "athrvuaj",
+        "type": "microsoft.edge/schemas",
+        "location": "eastus2euap",
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2025-07-03T06:38:55.7875959Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2025-07-03T06:38:56.796521Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/athrvuaj?api-version=2025-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-ResourceManager.WorkloadOrchestration/1.0.0-alpha.20250703.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "459",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 03 Jul 2025 06:38:59 GMT",
+        "ETag": "\"4300e7dc-0000-3300-0000-686625810000\"",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "03fbda59-3571-4894-ba29-c15723582db4",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "2784ec4d-3d5d-47b0-a218-74505096e2ff",
+        "x-ms-routing-request-id": "SOUTHINDIA:20250703T063859Z:03fbda59-3571-4894-ba29-c15723582db4",
+        "X-MSEdge-Ref": "Ref A: C55D16D73C914FECBC701D6626DDBA67 Ref B: MAA201060515051 Ref C: 2025-07-03T06:38:58Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/athrvuaj",
+        "name": "athrvuaj",
+        "type": "microsoft.edge/schemas",
+        "location": "eastus2euap",
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2025-07-03T06:38:55.7875959Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2025-07-03T06:38:56.796521Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/athrvuaj/versions/9.18.1751524730?api-version=2025-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1187",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-ResourceManager.WorkloadOrchestration/1.0.0-alpha.20250703.1 (.NET Framework 4.8.9300.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "value": "rules:\r\n  configs:\r\n      ErrorThreshold:\r\n        type: float\r\n        required: true\r\n        editableAt:\r\n          - factory\r\n        editableBy:\r\n          - OT\r\n      HealthCheckEndpoint:\r\n        type: string\r\n        required: false\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      EnableLocalLog:\r\n        type: boolean\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      AgentEndpoint:\r\n        type: string\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      HealthCheckEnabled:\r\n        type: boolean\r\n        required: false\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      ApplicationEndpoint:\r\n        type: string\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      TemperatureRangeMax:\r\n        type: float\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2024-06-01-preview, 2024-08-01-preview, 2025-01-01-preview, 2025-06-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "1647",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 03 Jul 2025 06:39:02 GMT",
+        "ETag": "\"1900e7dd-0000-3300-0000-686625860000\"",
+        "Expires": "-1",
+        "mise-correlation-id": "ce21fb84-de38-4033-aa56-30a17f64639a",
+        "Pragma": "no-cache",
+        "ServerTime": "1537 ms",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "71e471b5-9db3-40e8-af21-e4564848ae9d",
+        "x-ms-operation-identifier": "tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47,objectId=b12b2079-2031-4146-9a67-f7637e660a5a/southindia/6a21dfce-1952-4e6d-b7c5-d3305e6055cb",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-global-writes": "11999",
+        "x-ms-ratelimit-remaining-subscription-writes": "799",
+        "x-ms-request-id": "317b1325-b67d-4524-83fd-9149f59a04e4",
+        "x-ms-routing-request-id": "SOUTHINDIA:20250703T063902Z:71e471b5-9db3-40e8-af21-e4564848ae9d",
+        "X-MSEdge-Ref": "Ref A: F5AB8BBCDAD24A8584F44E43DB3CBEE8 Ref B: MAA201060515051 Ref C: 2025-07-03T06:38:59Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/athrvuaj/versions/9.18.1751524730",
+        "name": "9.18.1751524730",
+        "type": "microsoft.edge/schemas/versions",
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2025-07-03T06:38:59.8269939Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2025-07-03T06:38:59.8269939Z"
+        },
+        "properties": {
+          "value": "rules:\r\n  configs:\r\n      ErrorThreshold:\r\n        type: float\r\n        required: true\r\n        editableAt:\r\n          - factory\r\n        editableBy:\r\n          - OT\r\n      HealthCheckEndpoint:\r\n        type: string\r\n        required: false\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      EnableLocalLog:\r\n        type: boolean\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      AgentEndpoint:\r\n        type: string\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      HealthCheckEnabled:\r\n        type: boolean\r\n        required: false\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      ApplicationEndpoint:\r\n        type: string\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      TemperatureRangeMax:\r\n        type: float\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n",
+          "provisioningState": "Succeeded"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "806626533"
+  }
+}

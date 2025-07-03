@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core.TestFramework" />
     <PackageReference Include="Azure.ResourceManager.Resources" />
   </ItemGroup>
 </Project>
