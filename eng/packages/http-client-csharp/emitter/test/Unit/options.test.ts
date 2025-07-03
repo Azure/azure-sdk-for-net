@@ -177,9 +177,8 @@ describe("Configuration tests", async () => {
 
       strictEqual(program.diagnostics.length, 0);
       strictEqual(
-        context.options["sdk-context-options"]?.versioning?.previewStringRegex
-          ?.source,
-        "/-preview$/"
+        context.options["sdk-context-options"]?.versioning?.previewStringRegex?.source,
+        "-preview$"
       );
       deepStrictEqual(
         context.options["sdk-context-options"]?.additionalDecorators,
