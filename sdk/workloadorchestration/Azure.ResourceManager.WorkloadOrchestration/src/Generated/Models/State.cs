@@ -8,6 +8,7 @@
 using System;
 using System.ComponentModel;
 
+// cspell:ignore Undeployed
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Solution Instance State. </summary>

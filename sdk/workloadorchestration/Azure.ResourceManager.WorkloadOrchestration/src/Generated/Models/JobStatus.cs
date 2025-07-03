@@ -8,6 +8,8 @@
 using System;
 using System.ComponentModel;
 
+
+// cspell:ignore InProgress 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Status of a job or job step. </summary>
