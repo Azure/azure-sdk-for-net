@@ -8,6 +8,8 @@ namespace Azure.Core
     /// <summary>
     /// Context class used by <see cref="ModelReaderWriter"/> to read and write models in an AOT compatible way.
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(RehydrationToken))]
     public partial class AzureCoreContext : ModelReaderWriterContext
     {
     }

@@ -24,6 +24,8 @@ using System.ClientModel.Primitives;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+    [ModelReaderWriterBuildable(typeof(UnknownJsonModel))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class Caller
@@ -88,6 +90,7 @@ using System.ClientModel.Primitives;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(PersistableModel))]
     public partial class LocalContext : ModelReaderWriterContext
     {
     }
@@ -142,6 +145,8 @@ using System.Text.Json;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+    [ModelReaderWriterBuildable(typeof(TestProject2.JsonModel))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class JsonModel : IJsonModel<JsonModel>
@@ -197,6 +202,8 @@ using System.ClientModel.Primitives;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+    [ModelReaderWriterBuildable(typeof(UnknownJsonModel))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class Caller
@@ -244,6 +251,7 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Foo
 {
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class Foo
@@ -283,7 +291,7 @@ namespace _Type.Foo
         public void ValidateRoslynVersion()
         {
             Assembly roslynAssembly = typeof(Compilation).Assembly;
-            Version expectedVersion = new Version(4, 0, 0, 0);
+            Version expectedVersion = new Version(4, 3, 0, 0);
             Version? actualVersion = roslynAssembly.GetName().Version;
 
             //This version is required for the source generator to work correctly.
@@ -302,6 +310,7 @@ using System.Text.Json;
 
 namespace TestDependency
 {
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
     internal partial class LocalContext : ModelReaderWriterContext { }
 
     public class JsonModel : IJsonModel<JsonModel>
@@ -325,6 +334,7 @@ using TestDependency;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class MyLocalContext : ModelReaderWriterContext { }
 
     public class Caller
@@ -384,6 +394,7 @@ using TestDependency;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class Caller
@@ -420,6 +431,7 @@ using System.ClientModel.Primitives;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(Foo))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class Foo
@@ -462,13 +474,37 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
-            Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+            Assert.IsNull(result.GenerationSpec);
+        }
+
+        [Test]
+        public void NoBuildersWithJsonModel()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+using System;
+using System.Text.Json;
+
+namespace TestProject
+{
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var result = CompilationHelper.RunSourceGenerator(compilation);
+
+            Assert.IsNull(result.GenerationSpec);
         }
 
         [TestCase("public")]
@@ -481,6 +517,7 @@ using System.ClientModel.Primitives;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(int))]
     {{modifier}} partial class LocalContext : ModelReaderWriterContext { }
 }
 """;
@@ -509,6 +546,7 @@ using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(AvailabilitySetData))]
     {{modifier}} partial class LocalContext : ModelReaderWriterContext { }
 
     public class Caller
@@ -555,7 +593,9 @@ using System.ClientModel.Primitives;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(int))]
     public partial class LocalContext1 : ModelReaderWriterContext { }
+    [ModelReaderWriterBuildable(typeof(int))]
     public partial class LocalContext2 : ModelReaderWriterContext { }
 }
 """;
@@ -577,6 +617,7 @@ using System.ClientModel.Primitives;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(int))]
     public class LocalContext : ModelReaderWriterContext { }
 }
 """;
@@ -676,47 +717,6 @@ namespace TestProject
         }
 
         [Test]
-        public void ValidateDefaultExistsWithNoBuilders()
-        {
-            string source =
-$$"""
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text.Json;
-
-namespace TestProject
-{
-    public partial class LocalContext : ModelReaderWriterContext { }
-}
-""";
-
-            Compilation compilation = CompilationHelper.CreateCompilation(source);
-            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
-
-            Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
-            Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(0, result.Diagnostics.Length);
-
-            var localContextSymbol = newCompilation.GetTypeByMetadataName("TestProject.LocalContext");
-            Assert.IsNotNull(localContextSymbol);
-            var defaultProp = localContextSymbol!.GetMembers("Default")
-                .OfType<IPropertySymbol>()
-                .FirstOrDefault(p => p.IsStatic);
-
-            Assert.IsNotNull(defaultProp, "Default property should not be null.");
-
-            Assert.IsTrue(SymbolEqualityComparer.Default.Equals(defaultProp!.Type, localContextSymbol));
-
-            Assert.AreEqual(1, localContextSymbol.Constructors.Length);
-            var ctor = localContextSymbol.Constructors[0];
-            Assert.AreEqual(Accessibility.Private, ctor.DeclaredAccessibility);
-        }
-
-        [Test]
         public void DepHasJsonModelAndContext()
         {
             string depSource =
@@ -727,6 +727,7 @@ using System.Text.Json;
 
 namespace TestDependency
 {
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class JsonModel : IJsonModel<JsonModel>
@@ -758,6 +759,7 @@ using TestDependency;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class MyLocalContext : ModelReaderWriterContext { }
 
     public class Caller
@@ -820,6 +822,9 @@ using System.Text.Json;
 
 namespace TestProject
 {
+#pragma warning disable CS0618 // Type or member is obsolete
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+#pragma warning restore CS0618 // Type or member is obsolete
     public partial class LocalContext : ModelReaderWriterContext { }
 
     [Obsolete("This is obsolete", {{isError.ToString().ToCamelCase()}})]
@@ -833,9 +838,9 @@ namespace TestProject
     }
 }
 """;
-
-            Compilation compilation = CompilationHelper.CreateCompilation(source);
-            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
+            HashSet<string>? additionalSuppress = isError ? ["CS0619"] : null;
+            Compilation compilation = CompilationHelper.CreateCompilation(source, additionalSuppress: additionalSuppress);
+            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation, additionalSuppress: additionalSuppress);
 
             Assert.IsNotNull(result.GenerationSpec);
             Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
@@ -876,6 +881,9 @@ using System.Text.Json;
 
 namespace TestProject
 {
+#pragma warning disable CS0618 // Type or member is obsolete
+    [ModelReaderWriterBuildable(typeof({{collectionType}}))]
+#pragma warning restore CS0618 // Type or member is obsolete
     public partial class LocalContext : ModelReaderWriterContext { }
 
     [Obsolete("This is obsolete", {{isError.ToString().ToCamelCase()}})]
@@ -919,45 +927,50 @@ namespace TestProject
 
             if (!isError)
             {
-                Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
-                Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
-                Assert.AreEqual("internal", result.GenerationSpec.TypeBuilders[0].Modifier);
-                Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[0].Type.ObsoleteLevel);
+                var dict = result.GenerationSpec.TypeBuilders.ToDictionary(t => t.Type.Name, t => t);
 
-                Assert.AreEqual(collectionType, result.GenerationSpec.TypeBuilders[1].Type.Name);
+                Assert.IsTrue(dict.TryGetValue("JsonModel", out var jsonModelBuilder));
+                Assert.AreEqual("JsonModel", jsonModelBuilder!.Type.Name);
+                Assert.AreEqual("TestProject", jsonModelBuilder.Type.Namespace);
+                Assert.AreEqual("internal", jsonModelBuilder.Modifier);
+                Assert.AreEqual(ObsoleteLevel.Warning, jsonModelBuilder.Type.ObsoleteLevel);
+
+                Assert.IsTrue(dict.TryGetValue(collectionType, out var collectionBuilder));
+                Assert.AreEqual(collectionType, collectionBuilder!.Type.Name);
                 if (collectionType == "JsonModel[]" || collectionType == "JsonModel[,]" || collectionType == "JsonModel[][]")
                 {
-                    Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[1].Type.Namespace);
+                    Assert.AreEqual("TestProject", collectionBuilder.Type.Namespace);
                 }
                 else if (collectionType == "ReadOnlyMemory<JsonModel>")
                 {
-                    Assert.AreEqual("System", result.GenerationSpec.TypeBuilders[1].Type.Namespace);
+                    Assert.AreEqual("System", collectionBuilder.Type.Namespace);
                 }
                 else
                 {
-                    Assert.AreEqual("System.Collections.Generic", result.GenerationSpec.TypeBuilders[1].Type.Namespace);
+                    Assert.AreEqual("System.Collections.Generic", collectionBuilder.Type.Namespace);
                 }
-                Assert.AreEqual("internal", result.GenerationSpec.TypeBuilders[1].Modifier);
-                Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[1].Type.ObsoleteLevel);
+                Assert.AreEqual("internal", collectionBuilder.Modifier);
+                Assert.AreEqual(ObsoleteLevel.Warning, collectionBuilder.Type.ObsoleteLevel);
                 if (collectionType == "JsonModel[][]")
                 {
-                    Assert.AreEqual("JsonModel[]", result.GenerationSpec.TypeBuilders[1].Type.ItemType!.Name);
-                    Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[1].Type.ItemType!.Namespace);
+                    Assert.AreEqual("JsonModel[]", collectionBuilder.Type.ItemType!.Name);
+                    Assert.AreEqual("TestProject", collectionBuilder.Type.ItemType!.Namespace);
 
-                    Assert.AreEqual("JsonModel[]", result.GenerationSpec.TypeBuilders[2].Type.Name);
-                    Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[2].Type.Namespace);
-                    Assert.AreEqual("internal", result.GenerationSpec.TypeBuilders[2].Modifier);
-                    Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[2].Type.ObsoleteLevel);
+                    Assert.IsTrue(dict.TryGetValue("JsonModel[]", out var jsonModelArrayBuilder));
+                    Assert.AreEqual("JsonModel[]", jsonModelArrayBuilder!.Type.Name);
+                    Assert.AreEqual("TestProject", jsonModelArrayBuilder.Type.Namespace);
+                    Assert.AreEqual("internal", jsonModelArrayBuilder.Modifier);
+                    Assert.AreEqual(ObsoleteLevel.Warning, jsonModelArrayBuilder.Type.ObsoleteLevel);
 
-                    Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[2].Type.ItemType!.Name);
-                    Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[2].Type.ItemType!.Namespace);
-                    Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[2].Type.ItemType!.ObsoleteLevel);
+                    Assert.AreEqual("JsonModel", jsonModelArrayBuilder.Type.ItemType!.Name);
+                    Assert.AreEqual("TestProject", jsonModelArrayBuilder.Type.ItemType!.Namespace);
+                    Assert.AreEqual(ObsoleteLevel.Warning, jsonModelArrayBuilder.Type.ItemType!.ObsoleteLevel);
                 }
                 else
                 {
-                    Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[1].Type.ItemType!.Name);
-                    Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[1].Type.ItemType!.Namespace);
-                    Assert.AreEqual(ObsoleteLevel.Warning, result.GenerationSpec.TypeBuilders[1].Type.ItemType!.ObsoleteLevel);
+                    Assert.AreEqual("JsonModel", collectionBuilder.Type.ItemType!.Name);
+                    Assert.AreEqual("TestProject", collectionBuilder.Type.ItemType!.Namespace);
+                    Assert.AreEqual(ObsoleteLevel.Warning, collectionBuilder.Type.ItemType!.ObsoleteLevel);
                 }
             }
         }
@@ -974,6 +987,9 @@ using System.Text.Json;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+    [ModelReaderWriterBuildable(typeof(Jsonmodel))]
+    [ModelReaderWriterBuildable(typeof(JsonmodeL))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class JsonModel : IJsonModel<JsonModel>
@@ -1040,6 +1056,7 @@ using System.Text.Json;
 
 namespace TestProject
 {
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class JsonModel : IJsonModel<JsonModel>

@@ -227,16 +227,6 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
                 TypeValidations);
 
         [Test, Combinatorial]
-        public void Read_NonGeneric_NoInitializerSyntax([ValueSource(nameof(Types))] string type, [ValueSource(nameof(AddedContexts))] bool contextAdded)
-            => RunInvocationTest(
-                type,
-                string.Empty,
-                contextAdded,
-                LocalNoInitCall,
-                TypeValidations,
-                false);
-
-        [Test, Combinatorial]
         public void Read_NonGeneric_Parenthesized([ValueSource(nameof(Types))] string type, [ValueSource(nameof(AddedContexts))] bool contextAdded)
             => RunInvocationTest(
                 type,
@@ -244,16 +234,6 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
                 contextAdded,
                 LocalCall,
                 TypeValidations);
-
-        [Test, Combinatorial]
-        public void Read_NonGeneric_Parameter([ValueSource(nameof(Types))] string type, [ValueSource(nameof(AddedContexts))] bool contextAdded)
-            => RunInvocationTest(
-                type,
-                string.Empty,
-                contextAdded,
-                ParameterCall,
-                TypeValidations,
-                false);
 
         [Test, Combinatorial]
         public void Write_NonGeneric([ValueSource(nameof(Types))] string type, [ValueSource(nameof(AddedContexts))] bool contextAdded)
@@ -276,7 +256,7 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit.InvocationTests
                 LocalCall,
                 TypeValidations);
 
-        internal static void RunInvocationTest(
+        internal void RunInvocationTest(
             string type,
             string invocation,
             bool contextAdded,
@@ -309,6 +289,31 @@ namespace TestProject
                 source +=
 $$"""
 
+    [ModelReaderWriterBuildable(typeof({{string.Format(TypeStringFormat, type)}}))]
+""";
+                if (dupeModel)
+                {
+                    source +=
+$$"""
+    [ModelReaderWriterBuildable(typeof({{string.Format(TypeStringFormat, $"TestProject1.{type}")}}))]
+""";
+                }
+                if (type == LocalBaseModel)
+                {
+                    source +=
+$$"""
+    [ModelReaderWriterBuildable(typeof(UnknownLocalBaseModel))]
+""";
+                    if (dupeModel)
+                    {
+                        source +=
+$$"""
+    [ModelReaderWriterBuildable(typeof(TestProject1.UnknownLocalBaseModel))]
+""";
+                    }
+                }
+                source +=
+$$"""
     public partial class LocalContext : ModelReaderWriterContext { }
 """;
             }
@@ -422,14 +427,27 @@ namespace TestProject1
 
         private string AttributeCall(bool contextAdded, string type, string invocation)
         {
-            return
+            string result =
 $$"""
 
     [ModelReaderWriterBuildable(typeof({{string.Format(TypeStringFormat, type)}}))]
+""";
+
+            if (type == LocalBaseModel)
+            {
+                result +=
+$$"""
+    [ModelReaderWriterBuildable(typeof(UnknownLocalBaseModel))]
+""";
+            }
+
+            result +=
+$$"""
     public partial class LocalContext : ModelReaderWriterContext
     {
     }
 """;
+        return result;
         }
 
         private string LocalCall(bool contextAdded, string type, string invocation)
@@ -499,45 +517,6 @@ $$"""
 """;
 
             return code;
-        }
-
-        private string ParameterCall(bool contextAdded, string type, string invocation)
-        {
-            return
-$$"""
-
-    public class Caller
-    {
-        public void Invoke()
-        {
-            Call(typeof({{string.Format(TypeStringFormat, type)}}));
-        }
-
-        public void Call(Type type)
-        {
-            ModelReaderWriter.Read(BinaryData.Empty, type, ModelReaderWriterOptions.Json, LocalContext.Default);
-        }
-    }
-""";
-        }
-
-        private string LocalNoInitCall(bool contextAdded, string type, string invocation)
-        {
-            return
-$$"""
-
-    public class Caller
-    {
-        public void Call()
-        {
-            object obj = typeof({{string.Format(TypeStringFormat, type)}});
-            if (obj is Type type)
-            {
-                ModelReaderWriter.Read(BinaryData.Empty, type, ModelReaderWriterOptions.Json, LocalContext.Default);
-            }
-        }
-    }
-""";
         }
 
         internal static void AssertTestProject1JsonModelBuilder(TypeBuilderSpec jsonModel)
