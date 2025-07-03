@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetDhcp()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetDhcp.json
-            // this example is just showing the usage of "WorkloadNetworks_GetDhcp" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetDhcp.json
+            // this example is just showing the usage of "WorkloadNetworkDhcp_GetDhcp" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_WorkloadNetworksDeleteDhcp()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_DeleteDhcp.json
-            // this example is just showing the usage of "WorkloadNetworks_DeleteDhcp" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_DeleteDhcp.json
+            // this example is just showing the usage of "WorkloadNetworkDhcp_DeleteDhcp" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_WorkloadNetworksUpdateDhcp()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_UpdateDhcp.json
-            // this example is just showing the usage of "WorkloadNetworks_UpdateDhcp" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_UpdateDhcp.json
+            // this example is just showing the usage of "WorkloadNetworkDhcp_UpdateDhcp" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

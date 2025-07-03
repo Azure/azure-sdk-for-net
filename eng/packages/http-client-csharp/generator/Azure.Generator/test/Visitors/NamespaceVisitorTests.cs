@@ -15,7 +15,7 @@ namespace Azure.Generator.Tests.Visitors
         [Test]
         public void UpdatesNamespaceForModel()
         {
-            MockHelpers.LoadMockPlugin(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": true }");
+            MockHelpers.LoadMockGenerator(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": true }");
             var visitor = new TestNamespaceVisitor();
             var inputType = InputFactory.Model("TestModel", "Samples");
             var model = new ModelProvider(inputType);
@@ -28,7 +28,7 @@ namespace Azure.Generator.Tests.Visitors
         [Test]
         public void DoesNotUseModelsNamespaceIfConfigSetToFalse()
         {
-            MockHelpers.LoadMockPlugin(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": false }");
+            MockHelpers.LoadMockGenerator(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": false }");
             var visitor = new TestNamespaceVisitor();
             var inputType = InputFactory.Model("TestModel", "Samples");
             var model = new ModelProvider(inputType);
@@ -39,9 +39,25 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
+        public void DoesNotChangeNamespaceOfCustomizedModel()
+        {
+            MockHelpers.LoadMockGenerator(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": true }");
+            var visitor = new TestNamespaceVisitor();
+            var inputType = InputFactory.Model("TestModel", "Samples");
+            var model = new ModelProvider(inputType);
+
+            // simulate a customized model
+            MockHelpers.SetCustomCodeView(model, new TestTypeProvider());
+            var updatedModel = visitor.InvokePreVisitModel(inputType, model);
+
+            Assert.IsNotNull(updatedModel);
+            Assert.AreEqual("Samples", updatedModel!.Type.Namespace);
+        }
+
+        [Test]
         public void DoesNotUseModelsNamespaceIfConfigNotSet()
         {
-            MockHelpers.LoadMockPlugin();
+            MockHelpers.LoadMockGenerator();
             var visitor = new TestNamespaceVisitor();
             var inputType = InputFactory.Model("TestModel", "Samples");
             var model = new ModelProvider(inputType);
@@ -57,6 +73,15 @@ namespace Azure.Generator.Tests.Visitors
             {
                 return base.PreVisitModel(inputType, type);
             }
+        }
+
+        private class TestTypeProvider : TypeProvider
+        {
+            protected override string BuildNamespace() => "Samples";
+
+            protected override string BuildRelativeFilePath() => $"{Name}.cs";
+
+            protected override string BuildName() => "TestModel";
         }
     }
 }

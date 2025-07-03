@@ -1,0 +1,24 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/connectedcache/ci.mgmt.yml
+    - sdk/connectedcache/Azure.ResourceManager.ConnectedCache/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: connectedcache
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.ConnectedCache
+      safeName: AzureResourceManagerConnectedCache

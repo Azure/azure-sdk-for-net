@@ -54,17 +54,12 @@ namespace BasicTypeSpec
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextListWithNextLinkRequest(nextLink, _context) : _client.CreateListWithNextLinkRequest(_context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetWithNextLinkRequest(nextLink, _context) : _client.CreateGetWithNextLinkRequest(_context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithNextLink");
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

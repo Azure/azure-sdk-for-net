@@ -22,8 +22,13 @@ namespace System.ClientModel
     public abstract partial class BinaryContent : System.IDisposable
     {
         protected BinaryContent() { }
+        public string? MediaType { get { throw null; } protected set { } }
         public static System.ClientModel.BinaryContent Create(System.BinaryData value) { throw null; }
         public static System.ClientModel.BinaryContent Create(System.IO.Stream stream) { throw null; }
+        public static System.ClientModel.BinaryContent CreateJson(string jsonString, bool validate = false) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("JSON serialization and deserialization might require types that cannot be statically analyzed and might need runtime code generation.")]
+        public static System.ClientModel.BinaryContent CreateJson<T>(T jsonSerializable, System.Text.Json.JsonSerializerOptions? options = null) { throw null; }
+        public static System.ClientModel.BinaryContent CreateJson<T>(T jsonSerializable, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> jsonTypeInfo) { throw null; }
         public static System.ClientModel.BinaryContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
@@ -96,7 +101,7 @@ namespace System.ClientModel.Primitives
     public partial class AuthenticationToken
     {
         public AuthenticationToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
-        public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.DateTimeOffset? RefreshOn { get { throw null; } }
         public string TokenType { get { throw null; } }
         public string TokenValue { get { throw null; } }

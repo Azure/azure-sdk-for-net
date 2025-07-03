@@ -49,7 +49,7 @@ namespace Samples
                 {
                     items.Add(global::System.BinaryData.FromObjectAsJson(item));
                 }
-                nextPage = response.Headers.TryGetValue("nextCat", out string value) ? value : null;
+                nextPage = response.Headers.TryGetValue("nextCat", out string value) ? new global::System.Uri(value) : null;
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
             }
             while ((nextPage != null));
@@ -65,12 +65,7 @@ namespace Samples
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, this.CancellationToken).ConfigureAwait(false);
-                if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
-                {
-                    throw new global::Azure.RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (global::System.Exception e)
             {

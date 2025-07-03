@@ -44,6 +44,16 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagementCluster))
@@ -201,6 +211,7 @@ namespace Azure.ResourceManager.Avs
             }
             AvsSku sku = default;
             ManagedServiceIdentity identity = default;
+            IList<string> zones = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -245,6 +256,20 @@ namespace Azure.ResourceManager.Avs
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -503,8 +528,6 @@ namespace Azure.ResourceManager.Avs
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku,
-                identity,
                 managementCluster,
                 internet,
                 identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>(),
@@ -527,6 +550,9 @@ namespace Azure.ResourceManager.Avs
                 nsxPublicIPQuotaRaised,
                 virtualNetworkId,
                 dnsZoneType,
+                sku,
+                identity,
+                zones ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 

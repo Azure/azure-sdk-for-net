@@ -1,5 +1,25 @@
 # Release History
 
+## 1.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.4 (2025-06-25)
+
+### Features Added
+
+- Included new api-versions
+
+### Bugs Fixed
+
+- Fixed bicep path for some properties.
+
 ## 1.0.0-beta.3 (2025-06-16)
 
 ### Features Added
