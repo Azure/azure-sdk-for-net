@@ -59,7 +59,7 @@ namespace Azure.Generator.Management.Providers
 
         private protected ResourceClientProvider(InputModelType model, ResourceMetadata resourceMetadata)
         {
-            IsSingleton = resourceMetadata.IsSingleton;
+            IsSingleton = resourceMetadata.singletonResourceName != null;
             ResourceScope = resourceMetadata.ResourceScope;
             var resourceType = resourceMetadata.ResourceType;
             _hasGetMethod = resourceMetadata.Methods.Any(m => m.Kind == OperationKind.Get);

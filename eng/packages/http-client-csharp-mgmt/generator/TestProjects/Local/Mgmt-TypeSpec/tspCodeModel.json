@@ -1472,7 +1472,6 @@
                 {
                   "name": "Azure.ClientGenerator.Core.@resourceSchema",
                   "arguments": {
-                    "isSingleton": false,
                     "resourceType": "MgmtTypeSpec/privateLinkResources",
                     "resourceScope": "ResourceGroup",
                     "methods": [
@@ -2742,7 +2741,6 @@
         {
           "name": "Azure.ClientGenerator.Core.@resourceSchema",
           "arguments": {
-            "isSingleton": false,
             "resourceType": "MgmtTypeSpec/foos",
             "resourceScope": "ResourceGroup",
             "methods": [
@@ -3208,7 +3206,6 @@
         {
           "name": "Azure.ClientGenerator.Core.@resourceSchema",
           "arguments": {
-            "isSingleton": true,
             "resourceType": "MgmtTypeSpec/FooSettings",
             "resourceScope": "ResourceGroup",
             "methods": [
@@ -3232,7 +3229,8 @@
                 "id": "MgmtTypeSpec.FooSettingsOperations.delete",
                 "kind": "Delete"
               }
-            ]
+            ],
+            "singletonResourceName": "default"
           }
         }
       ],
@@ -3433,7 +3431,6 @@
         {
           "name": "Azure.ClientGenerator.Core.@resourceSchema",
           "arguments": {
-            "isSingleton": true,
             "resourceType": "MgmtTypeSpec/settings",
             "resourceScope": "Tenant",
             "methods": [
@@ -3457,7 +3454,8 @@
                 "id": "MgmtTypeSpec.Settings.delete",
                 "kind": "Delete"
               }
-            ]
+            ],
+            "singletonResourceName": "default"
           }
         }
       ],
