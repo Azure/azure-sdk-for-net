@@ -376,7 +376,7 @@ namespace Azure.Generator.Management.Providers
                         // TODO: need to revisit the filter here
                         var contentInputParameter = operation.Parameters.First(p => !ImplicitParameterNames.Contains(p.Name) && p.Kind == InputParameterKind.Method && p.Type is not InputPrimitiveType);
                         var resource = methodParameters.Single(p => p.Name == "data" || p.Name == contentInputParameter.Name);
-                        arguments.Add(resource);
+                        arguments.Add(Static(resource.Type).Invoke(SerializationVisitor.ToRequestContentMethodName, [resource]));
                     }
                 }
                 else if (parameter.Type.Equals(typeof(RequestContext)))

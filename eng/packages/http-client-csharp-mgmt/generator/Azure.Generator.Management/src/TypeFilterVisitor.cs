@@ -6,7 +6,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator.Management
 {
-    internal class TypeFilterVisiter : ScmLibraryVisitor
+    internal class TypeFilterVisitor : ScmLibraryVisitor
     {
         /// <inheritdoc/>
         protected override TypeProvider? VisitType(TypeProvider type)
