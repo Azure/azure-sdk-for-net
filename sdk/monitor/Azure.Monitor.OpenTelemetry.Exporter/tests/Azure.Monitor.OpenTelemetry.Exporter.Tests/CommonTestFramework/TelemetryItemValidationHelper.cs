@@ -19,6 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             IDictionary<string, string> expectedMessageProperties,
             string? expectedSpanId,
             string? expectedTraceId,
+            string? expectedClientIp = null,
             string expectedCloudRole = "[testNamespace]/testName",
             string expectedCloudInstance = "testInstance",
             string expectedApplicationVersion = "testVersion")
@@ -36,6 +37,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
                 Assert.Equal(expectedSpanId, telemetryItem.Tags["ai.operation.parentId"]);
                 Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
+            }
+
+            if (expectedClientIp != null)
+            {
+                expectedTagsCount += 1;
+                Assert.Equal(expectedClientIp, telemetryItem.Tags["ai.location.ip"]);
             }
 
             Assert.Equal(expectedTagsCount, telemetryItem.Tags.Count);
@@ -69,6 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             IDictionary<string, string> expectedProperties,
             string? expectedSpanId,
             string? expectedTraceId,
+            string? expectedClientIp = null,
             string expectedCloudRole = "[testNamespace]/testName",
             string expectedCloudInstance = "testInstance",
             string expectedApplicationVersion = "testVersion")
@@ -86,6 +94,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
                 Assert.Equal(expectedSpanId, telemetryItem.Tags["ai.operation.parentId"]);
                 Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
+            }
+
+            if (expectedClientIp != null)
+            {
+                expectedTagsCount += 1;
+                Assert.Equal(expectedClientIp, telemetryItem.Tags["ai.location.ip"]);
             }
 
             Assert.Equal(expectedTagsCount, telemetryItem.Tags.Count);
