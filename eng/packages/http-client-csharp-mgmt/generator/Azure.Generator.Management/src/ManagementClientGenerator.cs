@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
@@ -55,6 +56,7 @@ namespace Azure.Generator.Management
             AddVisitor(new NameVisitor());
             AddVisitor(new TypeFilterVisitor());
             AddVisitor(new SerializationVisitor());
+            AddVisitor(new PaginationVisitor());
         }
     }
 }
