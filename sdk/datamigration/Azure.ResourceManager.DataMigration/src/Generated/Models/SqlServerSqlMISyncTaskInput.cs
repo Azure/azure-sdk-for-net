@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="storageResourceId"> Fully qualified resourceId of storage. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
         /// <param name="targetConnectionInfo"> Connection information for Azure SQL Database Managed Instance. </param>
-        /// <param name="azureApp"> Azure Active Directory Application the DMS instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
+        /// <param name="azureApp"> Azure Active Directory Application the DMS (classic) instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="selectedDatabases"/>, <paramref name="storageResourceId"/>, <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/> or <paramref name="azureApp"/> is null. </exception>
         public SqlServerSqlMISyncTaskInput(IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, string storageResourceId, SqlConnectionInfo sourceConnectionInfo, MISqlConnectionInfo targetConnectionInfo, AzureActiveDirectoryApp azureApp)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="storageResourceId"> Fully qualified resourceId of storage. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
         /// <param name="targetConnectionInfo"> Connection information for Azure SQL Database Managed Instance. </param>
-        /// <param name="azureApp"> Azure Active Directory Application the DMS instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
+        /// <param name="azureApp"> Azure Active Directory Application the DMS (classic) instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SqlServerSqlMISyncTaskInput(IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, FileShare backupFileShare, string storageResourceId, SqlConnectionInfo sourceConnectionInfo, MISqlConnectionInfo targetConnectionInfo, AzureActiveDirectoryApp azureApp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public SqlConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary> Connection information for Azure SQL Database Managed Instance. </summary>
         public MISqlConnectionInfo TargetConnectionInfo { get; set; }
-        /// <summary> Azure Active Directory Application the DMS instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </summary>
+        /// <summary> Azure Active Directory Application the DMS (classic) instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </summary>
         public AzureActiveDirectoryApp AzureApp { get; set; }
     }
 }

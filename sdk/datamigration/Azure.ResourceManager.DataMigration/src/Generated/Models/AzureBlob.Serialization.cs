@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -34,6 +35,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 throw new FormatException($"The model {nameof(AzureBlob)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(AuthType))
+            {
+                writer.WritePropertyName("authType"u8);
+                writer.WriteStringValue(AuthType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+            }
             if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
@@ -86,6 +98,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
+            AuthType? authType = default;
+            ManagedServiceIdentity identity = default;
             string storageAccountResourceId = default;
             string accountKey = default;
             string blobContainerName = default;
@@ -93,6 +107,25 @@ namespace Azure.ResourceManager.DataMigration.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("authType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authType = property.Value.GetString().ToAuthType();
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    continue;
+                }
                 if (property.NameEquals("storageAccountResourceId"u8))
                 {
                     storageAccountResourceId = property.Value.GetString();
@@ -114,7 +147,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureBlob(storageAccountResourceId, accountKey, blobContainerName, serializedAdditionalRawData);
+            return new AzureBlob(
+                authType,
+                identity,
+                storageAccountResourceId,
+                accountKey,
+                blobContainerName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureBlob>.Write(ModelReaderWriterOptions options)

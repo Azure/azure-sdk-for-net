@@ -86,19 +86,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             SqlConnectionInformation targetSqlConnection = default;
             SqlDBOfflineConfiguration offlineConfiguration = default;
             IList<string> tableList = default;
-            ResourceType kind = default;
-            string scope = default;
-            string provisioningState = default;
-            string migrationStatus = default;
-            DateTimeOffset? startedOn = default;
-            DateTimeOffset? endedOn = default;
             SqlConnectionInformation sourceSqlConnection = default;
             string sourceDatabaseName = default;
             string sourceServerName = default;
-            string migrationService = default;
+            string targetDatabaseCollation = default;
+            ResourceType kind = default;
+            string scope = default;
+            ProvisioningState? provisioningState = default;
+            string migrationStatus = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            ResourceIdentifier migrationService = default;
             string migrationOperationId = default;
             ErrorInfo migrationFailureError = default;
-            string targetDatabaseCollation = default;
             string provisioningError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -145,6 +145,30 @@ namespace Azure.ResourceManager.DataMigration.Models
                     tableList = array;
                     continue;
                 }
+                if (property.NameEquals("sourceSqlConnection"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("sourceDatabaseName"u8))
+                {
+                    sourceDatabaseName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceServerName"u8))
+                {
+                    sourceServerName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetDatabaseCollation"u8))
+                {
+                    targetDatabaseCollation = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new ResourceType(property.Value.GetString());
@@ -157,7 +181,11 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("provisioningState"u8))
                 {
-                    provisioningState = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new ProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("migrationStatus"u8))
@@ -183,28 +211,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                     endedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("sourceSqlConnection"u8))
+                if (property.NameEquals("migrationService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceSqlConnection = SqlConnectionInformation.DeserializeSqlConnectionInformation(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("sourceDatabaseName"u8))
-                {
-                    sourceDatabaseName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sourceServerName"u8))
-                {
-                    sourceServerName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("migrationService"u8))
-                {
-                    migrationService = property.Value.GetString();
+                    migrationService = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("migrationOperationId"u8))
@@ -219,11 +232,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                         continue;
                     }
                     migrationFailureError = ErrorInfo.DeserializeErrorInfo(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("targetDatabaseCollation"u8))
-                {
-                    targetDatabaseCollation = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("provisioningError"u8))
@@ -244,15 +252,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 migrationStatus,
                 startedOn,
                 endedOn,
-                sourceSqlConnection,
-                sourceDatabaseName,
-                sourceServerName,
                 migrationService,
                 migrationOperationId,
                 migrationFailureError,
-                targetDatabaseCollation,
                 provisioningError,
                 serializedAdditionalRawData,
+                sourceSqlConnection,
+                sourceDatabaseName,
+                sourceServerName,
+                targetDatabaseCollation,
                 migrationStatusDetails,
                 targetSqlConnection,
                 offlineConfiguration,

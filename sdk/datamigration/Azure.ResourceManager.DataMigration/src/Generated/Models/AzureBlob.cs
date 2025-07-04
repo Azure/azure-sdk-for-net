@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -51,18 +52,26 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlob"/>. </summary>
+        /// <param name="authType"> Authentication type used for accessing Azure Blob Storage. </param>
+        /// <param name="identity"> Identity details for authentication using a Managed Identity. </param>
         /// <param name="storageAccountResourceId"> Resource Id of the storage account where backups are stored. </param>
         /// <param name="accountKey"> Storage Account Key. </param>
         /// <param name="blobContainerName"> Blob container name where backups are stored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlob(string storageAccountResourceId, string accountKey, string blobContainerName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureBlob(AuthType? authType, ManagedServiceIdentity identity, string storageAccountResourceId, string accountKey, string blobContainerName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            AuthType = authType;
+            Identity = identity;
             StorageAccountResourceId = storageAccountResourceId;
             AccountKey = accountKey;
             BlobContainerName = blobContainerName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Authentication type used for accessing Azure Blob Storage. </summary>
+        public AuthType? AuthType { get; set; }
+        /// <summary> Identity details for authentication using a Managed Identity. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource Id of the storage account where backups are stored. </summary>
         public string StorageAccountResourceId { get; set; }
         /// <summary> Storage Account Key. </summary>
