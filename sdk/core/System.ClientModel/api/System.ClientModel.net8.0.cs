@@ -257,7 +257,7 @@ namespace System.ClientModel.Primitives
         public JsonModelConverter(System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public JsonModelConverter(System.ClientModel.Primitives.ModelReaderWriterOptions options, System.ClientModel.Primitives.ModelReaderWriterContext context) { }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
-        public override System.ClientModel.Primitives.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override System.ClientModel.Primitives.IJsonModel<object>? Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
     }
     public partial class MessageLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy

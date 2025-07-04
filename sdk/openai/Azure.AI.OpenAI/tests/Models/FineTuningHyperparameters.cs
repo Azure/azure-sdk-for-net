@@ -55,7 +55,7 @@ public class FineTuningHyperparameters : IJsonModel<FineTuningHyperparameters>
         }
     }
 
-    FineTuningHyperparameters IJsonModel<FineTuningHyperparameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+    FineTuningHyperparameters? IJsonModel<FineTuningHyperparameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
     {
         var dict = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(ref reader);
         FineTuningHyperparameters instance = new();
@@ -63,7 +63,7 @@ public class FineTuningHyperparameters : IJsonModel<FineTuningHyperparameters>
         return instance;
     }
 
-    FineTuningHyperparameters IPersistableModel<FineTuningHyperparameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+    FineTuningHyperparameters? IPersistableModel<FineTuningHyperparameters>.Create(BinaryData data, ModelReaderWriterOptions options)
     {
         ReadOnlyMemory<byte> rawData = data.ToMemory();
         var reader = new Utf8JsonReader(rawData.Span);
