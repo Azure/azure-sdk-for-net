@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A class representing the DataMigrationService data model.
-    /// A Database Migration Service resource
+    /// An Azure Database Migration Service (classic) resource
     /// </summary>
     public partial class DataMigrationServiceData : TrackedResourceData
     {
