@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2025-07-04)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+This package is the first stable release of the Microsoft Carbon Optimization management client library.
 
 ## 1.0.0-beta.1 (2025-05-15)
 
