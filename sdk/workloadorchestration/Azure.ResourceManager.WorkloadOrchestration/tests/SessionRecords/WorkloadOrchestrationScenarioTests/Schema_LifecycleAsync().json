@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/athrvuaj?api-version=2025-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/schema-test?api-version=2025-06-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -19,37 +19,37 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "460",
+        "Content-Length": "466",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 04 Jul 2025 05:46:41 GMT",
-        "ETag": "\"5000f3d8-0000-3300-0000-68676ac10000\"",
+        "Date": "Fri, 04 Jul 2025 06:44:10 GMT",
+        "ETag": "\"5100cb6b-0000-3300-0000-6867783a0000\"",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "2792c811-3c25-49e9-91a4-b27ecf0014dc",
-        "x-ms-operation-identifier": "tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47,objectId=b12b2079-2031-4146-9a67-f7637e660a5a/centralindia/e9516272-0dc0-446f-8824-31b481188b7e",
+        "x-ms-correlation-request-id": "c69a2b5c-4a0c-40b8-8c90-e79cd4db47c1",
+        "x-ms-operation-identifier": "tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47,objectId=b12b2079-2031-4146-9a67-f7637e660a5a/southindia/6dab1a86-0e30-4769-bc56-1584b00cf83c",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-global-writes": "11999",
         "x-ms-ratelimit-remaining-subscription-writes": "799",
-        "x-ms-request-id": "6dc41d10-8cb1-4ecc-91e6-f085f7f0761e",
-        "x-ms-routing-request-id": "CENTRALINDIA:20250704T054642Z:2792c811-3c25-49e9-91a4-b27ecf0014dc",
-        "X-MSEdge-Ref": "Ref A: 24E8D3B3E8784DA8ADF20EA86A128109 Ref B: MAA201060516011 Ref C: 2025-07-04T05:46:39Z"
+        "x-ms-request-id": "1fac8ad9-fb2a-4a7a-84d7-4f0eb1c52024",
+        "x-ms-routing-request-id": "SOUTHINDIA:20250704T064411Z:c69a2b5c-4a0c-40b8-8c90-e79cd4db47c1",
+        "X-MSEdge-Ref": "Ref A: 2F029EE0C43D477F9AF096CE134D7290 Ref B: MAA201060513035 Ref C: 2025-07-04T06:44:10Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/athrvuaj",
-        "name": "athrvuaj",
+        "id": "/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/schema-test",
+        "name": "schema-test",
         "type": "microsoft.edge/schemas",
         "location": "eastus2euap",
         "systemData": {
           "createdBy": "Sanitized",
           "createdByType": "User",
-          "createdAt": "2025-07-03T06:38:55.7875959Z",
+          "createdAt": "2025-07-04T06:42:42.5434877Z",
           "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "User",
-          "lastModifiedAt": "2025-07-04T05:46:41.1407359Z"
+          "lastModifiedAt": "2025-07-04T06:44:10.6971097Z"
         },
         "properties": {
           "provisioningState": "Succeeded"
@@ -57,7 +57,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/athrvuaj?api-version=2025-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/schema-test?api-version=2025-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -70,36 +70,36 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "460",
+        "Content-Length": "466",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 04 Jul 2025 05:46:42 GMT",
-        "ETag": "\"5000f3d8-0000-3300-0000-68676ac10000\"",
+        "Date": "Fri, 04 Jul 2025 06:44:11 GMT",
+        "ETag": "\"5100cb6b-0000-3300-0000-6867783a0000\"",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "5f5062d4-924b-4f99-9995-c1b0334c22d8",
+        "x-ms-correlation-request-id": "b097ebd2-6fe4-4386-860b-cd45d11fa10a",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
         "x-ms-ratelimit-remaining-subscription-reads": "1099",
-        "x-ms-request-id": "8a39ea0c-1456-418c-9b86-9becfa2696b2",
-        "x-ms-routing-request-id": "CENTRALINDIA:20250704T054643Z:5f5062d4-924b-4f99-9995-c1b0334c22d8",
-        "X-MSEdge-Ref": "Ref A: 14CBD071466E44F8AC7C68A80133A3C7 Ref B: MAA201060516011 Ref C: 2025-07-04T05:46:42Z"
+        "x-ms-request-id": "a1fc5adc-3da6-408d-a88c-fc058d573f87",
+        "x-ms-routing-request-id": "SOUTHINDIA:20250704T064412Z:b097ebd2-6fe4-4386-860b-cd45d11fa10a",
+        "X-MSEdge-Ref": "Ref A: C150158AF84E4E6B8984EC87640A0A3E Ref B: MAA201060513035 Ref C: 2025-07-04T06:44:11Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/athrvuaj",
-        "name": "athrvuaj",
+        "id": "/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/schema-test",
+        "name": "schema-test",
         "type": "microsoft.edge/schemas",
         "location": "eastus2euap",
         "systemData": {
           "createdBy": "Sanitized",
           "createdByType": "User",
-          "createdAt": "2025-07-03T06:38:55.7875959Z",
+          "createdAt": "2025-07-04T06:42:42.5434877Z",
           "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "User",
-          "lastModifiedAt": "2025-07-04T05:46:41.1407359Z"
+          "lastModifiedAt": "2025-07-04T06:44:10.6971097Z"
         },
         "properties": {
           "provisioningState": "Succeeded"
@@ -107,7 +107,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/athrvuaj/versions/9.18.1751607989?api-version=2025-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/schema-test/versions/1.9.3?api-version=2025-06-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -127,38 +127,38 @@
       "ResponseHeaders": {
         "api-supported-versions": "2024-06-01-preview, 2024-08-01-preview, 2025-01-01-preview, 2025-06-01",
         "Cache-Control": "no-cache",
-        "Content-Length": "1647",
+        "Content-Length": "1630",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 04 Jul 2025 05:46:45 GMT",
-        "ETag": "\"2200ad95-0000-3300-0000-68676ac60000\"",
+        "Date": "Fri, 04 Jul 2025 06:44:15 GMT",
+        "ETag": "\"220045fd-0000-3300-0000-6867783f0000\"",
         "Expires": "-1",
-        "mise-correlation-id": "6b77c61f-c23d-4450-911a-99325d254905",
+        "mise-correlation-id": "90f1cff5-aedc-4f15-bdeb-28530bfc2c1b",
         "Pragma": "no-cache",
-        "ServerTime": "1333 ms",
+        "ServerTime": "1122 ms",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "116d5ea3-0149-402a-9c85-85f78b55ebd7",
-        "x-ms-operation-identifier": "tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47,objectId=b12b2079-2031-4146-9a67-f7637e660a5a/centralindia/beda17e5-63ab-46ff-ac10-8d7408c48559",
+        "x-ms-correlation-request-id": "83ff9252-553e-4499-80ed-692f7b93d2f5",
+        "x-ms-operation-identifier": "tenantId=72f988bf-86f1-41af-91ab-2d7cd011db47,objectId=b12b2079-2031-4146-9a67-f7637e660a5a/southindia/068d1dc8-ade3-4aeb-8ba7-cc004dcd0f30",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-global-writes": "11999",
         "x-ms-ratelimit-remaining-subscription-writes": "799",
-        "x-ms-request-id": "f714e107-5da4-4be9-b751-e8718522d34f",
-        "x-ms-routing-request-id": "CENTRALINDIA:20250704T054646Z:116d5ea3-0149-402a-9c85-85f78b55ebd7",
-        "X-MSEdge-Ref": "Ref A: 25BC2A58EB964B5C9128093CDC369840 Ref B: MAA201060516011 Ref C: 2025-07-04T05:46:43Z"
+        "x-ms-request-id": "c7e69b1f-6632-4142-9ca5-e6f2f351a8e5",
+        "x-ms-routing-request-id": "SOUTHINDIA:20250704T064415Z:83ff9252-553e-4499-80ed-692f7b93d2f5",
+        "X-MSEdge-Ref": "Ref A: 8754B6A863E64EC1B1D942B5C83CEF0A Ref B: MAA201060513035 Ref C: 2025-07-04T06:44:12Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/athrvuaj/versions/9.18.1751607989",
-        "name": "9.18.1751607989",
+        "id": "/subscriptions/973d15c6-6c57-447e-b9c6-6d79b5b784ab/resourceGroups/audapurerg/providers/Microsoft.Edge/schemas/schema-test/versions/1.9.3",
+        "name": "1.9.3",
         "type": "microsoft.edge/schemas/versions",
         "systemData": {
           "createdBy": "Sanitized",
           "createdByType": "User",
-          "createdAt": "2025-07-04T05:46:44.3379307Z",
+          "createdAt": "2025-07-04T06:44:13.2969035Z",
           "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "User",
-          "lastModifiedAt": "2025-07-04T05:46:44.3379307Z"
+          "lastModifiedAt": "2025-07-04T06:44:13.2969035Z"
         },
         "properties": {
           "value": "rules:\r\n  configs:\r\n      ErrorThreshold:\r\n        type: float\r\n        required: true\r\n        editableAt:\r\n          - factory\r\n        editableBy:\r\n          - OT\r\n      HealthCheckEndpoint:\r\n        type: string\r\n        required: false\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      EnableLocalLog:\r\n        type: boolean\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      AgentEndpoint:\r\n        type: string\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      HealthCheckEnabled:\r\n        type: boolean\r\n        required: false\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      ApplicationEndpoint:\r\n        type: string\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      TemperatureRangeMax:\r\n        type: float\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n",
@@ -168,6 +168,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1681256409"
+    "RandomSeed": "1675648217"
   }
 }

@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Tests
     [RecordedTest]
     public async Task Schema_LifecycleAsync()
     {
-      string schemaName = "athrvuaj";
-      string schemaVersionName = $"9.18.{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+      string schemaName = "schema-test";
+      string schemaVersionName = $"9.9.3";
 
       // Get client and resource group from test base
       ArmClient client = GetArmClient();
