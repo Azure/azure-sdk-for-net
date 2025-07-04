@@ -261,8 +261,7 @@ namespace Azure.Generator.Management.Providers
 
                 if (isConstant)
                 {
-                    formatBuilder.Append('/');
-                    formatBuilder.Append(segment);
+                    formatBuilder.Append($"/{segment}");
                 }
                 else
                 {
@@ -287,7 +286,7 @@ namespace Azure.Generator.Management.Providers
 
             var bodyStatements = new MethodBodyStatement[]
             {
-                Declare("resourceId", typeof(string), new FormattableStringExpression(formatBuilder.ToString(), parameters.Select(p => p.As<ValueExpression>()).ToArray()), out var resourceIdVar),
+                Declare("resourceId", typeof(string), new FormattableStringExpression(formatBuilder.ToString(), parameters.Select(p => p.AsExpression()).ToArray()), out var resourceIdVar),
                 Return(New.Instance(typeof(ResourceIdentifier), resourceIdVar))
             };
 
