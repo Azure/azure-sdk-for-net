@@ -70,6 +70,14 @@ namespace Azure.AI.Inference
             {
                 writer.WritePropertyName("stream"u8);
                 writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
+                if (InternalShouldStreamResponse.Value)
+                {
+                    writer.WritePropertyName("stream_options"u8);
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("include_usage"u8);
+                    writer.WriteBooleanValue(true);
+                    writer.WriteEndObject();
+                }
             }
             if (Optional.IsDefined(Seed))
             {
