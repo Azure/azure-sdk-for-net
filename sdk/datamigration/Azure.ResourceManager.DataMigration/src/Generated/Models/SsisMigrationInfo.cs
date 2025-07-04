@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SsisMigrationInfo"/>. </summary>
-        /// <param name="ssisStoreType"> The SSIS store type of source, only SSIS catalog is supported now in DMS. </param>
+        /// <param name="ssisStoreType"> The SSIS store type of source, only SSIS catalog is supported now in DMS (classic). </param>
         /// <param name="projectOverwriteOption"> The overwrite option for the SSIS project migration. </param>
         /// <param name="environmentOverwriteOption"> The overwrite option for the SSIS environment migration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The SSIS store type of source, only SSIS catalog is supported now in DMS. </summary>
+        /// <summary> The SSIS store type of source, only SSIS catalog is supported now in DMS (classic). </summary>
         public SsisStoreType? SsisStoreType { get; set; }
         /// <summary> The overwrite option for the SSIS project migration. </summary>
         public SsisMigrationOverwriteOption? ProjectOverwriteOption { get; set; }
