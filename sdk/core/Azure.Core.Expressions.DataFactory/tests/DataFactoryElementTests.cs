@@ -4,7 +4,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using NUnit.Framework;
@@ -1063,11 +1062,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         private string GetSerializedString<T>(DataFactoryElement<T> payload) => ModelReaderWriter.Write(payload).ToString();
 
         private ModelReaderWriterOptions s_options = new ModelReaderWriterOptions("W");
-        private DataFactoryElement<T> Deserialize<T>(string json)
-        {
-            var instance = new DataFactoryElement<T>(default);
-            return ((IJsonModel<DataFactoryElement<T>>)instance).Create(BinaryData.FromString($"{json}"), s_options);
-        }
+        private DataFactoryElement<T> Deserialize<T>(string json) => ModelReaderWriter.Read<DataFactoryElement<T>>(BinaryData.FromString(json), s_options, DataFactoryContext.Default)!;
 
         [Test]
         public void SerializationFromJsonConverterForInt()
