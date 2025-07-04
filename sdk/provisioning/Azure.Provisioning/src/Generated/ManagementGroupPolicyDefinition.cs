@@ -169,6 +169,7 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _description = DefineProperty<string>("Description", ["properties", "description"]);
         _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"]);

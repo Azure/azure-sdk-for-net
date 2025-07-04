@@ -130,6 +130,7 @@ public partial class Tenant : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _country = DefineProperty<string>("Country", ["country"], isOutput: true);
         _countryCode = DefineProperty<string>("CountryCode", ["countryCode"], isOutput: true);
         _defaultDomain = DefineProperty<string>("DefaultDomain", ["defaultDomain"], isOutput: true);
