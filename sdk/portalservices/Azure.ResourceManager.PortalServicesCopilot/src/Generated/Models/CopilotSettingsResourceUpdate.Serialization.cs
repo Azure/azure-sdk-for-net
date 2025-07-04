@@ -9,21 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.PortalServicesCopilot;
 
 namespace Azure.ResourceManager.PortalServicesCopilot.Models
 {
-    /// <summary> The Copilot Settings properties. </summary>
-    public partial class PortalServicesCopilotSettingsProperties : IJsonModel<PortalServicesCopilotSettingsProperties>
+    /// <summary> The type used for update operations of the CopilotSettingsResource. </summary>
+    public partial class CopilotSettingsResourceUpdate : IJsonModel<CopilotSettingsResourceUpdate>
     {
-        /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingsProperties"/> for deserialization. </summary>
-        internal PortalServicesCopilotSettingsProperties()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PortalServicesCopilotSettingsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CopilotSettingsResourceUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,17 +30,15 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PortalServicesCopilotSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopilotSettingsResourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PortalServicesCopilotSettingsProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CopilotSettingsResourceUpdate)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("accessControlEnabled"u8);
-            writer.WriteBooleanValue(AccessControlEnabled);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -65,46 +59,40 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PortalServicesCopilotSettingsProperties IJsonModel<PortalServicesCopilotSettingsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CopilotSettingsResourceUpdate IJsonModel<CopilotSettingsResourceUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PortalServicesCopilotSettingsProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CopilotSettingsResourceUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PortalServicesCopilotSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopilotSettingsResourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PortalServicesCopilotSettingsProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CopilotSettingsResourceUpdate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePortalServicesCopilotSettingsProperties(document.RootElement, options);
+            return DeserializeCopilotSettingsResourceUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PortalServicesCopilotSettingsProperties DeserializePortalServicesCopilotSettingsProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static CopilotSettingsResourceUpdate DeserializeCopilotSettingsResourceUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool accessControlEnabled = default;
-            PortalServicesResourceProvisioningState? provisioningState = default;
+            CopilotSettingsResourceUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("accessControlEnabled"u8))
-                {
-                    accessControlEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new PortalServicesResourceProvisioningState(prop.Value.GetString());
+                    properties = CopilotSettingsResourceUpdateProperties.DeserializeCopilotSettingsResourceUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,47 +100,59 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PortalServicesCopilotSettingsProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties);
+            return new CopilotSettingsResourceUpdate(properties, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PortalServicesCopilotSettingsProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CopilotSettingsResourceUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PortalServicesCopilotSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopilotSettingsResourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPortalServicesCopilotContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PortalServicesCopilotSettingsProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopilotSettingsResourceUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PortalServicesCopilotSettingsProperties IPersistableModel<PortalServicesCopilotSettingsProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CopilotSettingsResourceUpdate IPersistableModel<CopilotSettingsResourceUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PortalServicesCopilotSettingsProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CopilotSettingsResourceUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PortalServicesCopilotSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopilotSettingsResourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializePortalServicesCopilotSettingsProperties(document.RootElement, options);
+                        return DeserializeCopilotSettingsResourceUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PortalServicesCopilotSettingsProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopilotSettingsResourceUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PortalServicesCopilotSettingsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CopilotSettingsResourceUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="copilotSettingsResourceUpdate"> The <see cref="CopilotSettingsResourceUpdate"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(CopilotSettingsResourceUpdate copilotSettingsResourceUpdate)
+        {
+            if (copilotSettingsResourceUpdate == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(copilotSettingsResourceUpdate, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }
