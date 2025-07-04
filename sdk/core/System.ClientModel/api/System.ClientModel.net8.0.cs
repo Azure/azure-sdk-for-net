@@ -290,6 +290,11 @@ namespace System.ClientModel.Primitives
         public bool TryGetTypeBuilder(System.Type type, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
         protected virtual bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
     }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Assembly)]
+    public partial class ModelReaderWriterContextNameAttribute : System.Attribute
+    {
+        public ModelReaderWriterContextNameAttribute(System.Type contextType) { }
+    }
     public partial class ModelReaderWriterOptions
     {
         public ModelReaderWriterOptions(string format) { }
