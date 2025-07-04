@@ -10,7 +10,6 @@ using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
-using System.Reflection;
 
 namespace Azure.Generator.Management.Tests.Providers
 {
