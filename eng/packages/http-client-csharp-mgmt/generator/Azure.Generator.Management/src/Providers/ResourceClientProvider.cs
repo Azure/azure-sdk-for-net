@@ -56,6 +56,7 @@ namespace Azure.Generator.Management.Providers
 
         private RequestPath _requestPath;
         private ResourceMetadata _resourceMetadata;
+        private InputOperation _inputOperationForRequestPath;
 
         protected ClientProvider _restClientProvider;
         protected FieldProvider _clientDiagnosticsField;
@@ -65,6 +66,7 @@ namespace Azure.Generator.Management.Providers
         {
             IsSingleton = resourceMetadata.IsSingleton;
             _resourceMetadata = resourceMetadata;
+            _inputOperationForRequestPath = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(_resourceMetadata.Methods.First().Id)!.Operation;
             ResourceScope = resourceMetadata.ResourceScope;
             var resourceType = resourceMetadata.ResourceType;
             _hasGetMethod = resourceMetadata.Methods.Any(m => m.Kind == OperationKind.Get);
@@ -75,7 +77,7 @@ namespace Azure.Generator.Management.Providers
             SpecName = model.Name.ToIdentifierName();
 
             // We should be able to assume that all operations in the resource client are for the same resource
-            _requestPath = new RequestPath(InputOperationForRequestPath.Path);
+            _requestPath = new RequestPath(_inputOperationForRequestPath.Path);
             _resourceServiceMethods = resourceMetadata.Methods.Select(m => (m.Kind, ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!));
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
 
@@ -94,7 +96,7 @@ namespace Azure.Generator.Management.Providers
 
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
 
-        private InputOperation InputOperationForRequestPath => ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(_resourceMetadata.Methods.First().Id)!.Operation;
+        private InputOperation InputOperationForRequestPath => _inputOperationForRequestPath;
 
         private IReadOnlyList<string> GetContextualParameters(string contextualRequestPath)
         {
@@ -242,47 +244,35 @@ namespace Azure.Generator.Management.Providers
             return parameterName switch
             {
                 "subscriptionId" when csharpType.Equals(typeof(Guid)) => typeof(string),
-                "location" when csharpType.Equals(typeof(string)) => typeof(AzureLocation),
                 // Cases will be added later
                 _ => csharpType
             };
         }
 
-        protected MethodProvider BuildCreateResourceIdentifierMethod()
+        private MethodProvider BuildCreateResourceIdentifierMethod()
         {
             var parameters = new List<ParameterProvider>();
             var formatBuilder = new StringBuilder();
-            var first = true;
             var refCount = 0;
+
             foreach (var segment in _requestPath)
             {
                 bool isConstant = RequestPath.IsSegmentConstant(segment);
-                if (!isConstant)
-                {
-                    var trimmed = RequestPath.TrimSegment(segment);
-                    var parameter = new ParameterProvider(trimmed, $"The {trimmed}", GetPathParameterType(trimmed));
-                    parameters.Add(parameter);
-                }
-
-                if (first)
-                {
-                    first = false;
-                    if (isConstant)
-                    {
-                        formatBuilder.Append('/');
-                    }
-                }
-                else
-                {
-                    formatBuilder.Append('/');
-                }
 
                 if (isConstant)
                 {
+                    formatBuilder.Append('/');
                     formatBuilder.Append(segment);
                 }
                 else
                 {
+                    if (formatBuilder.Length > 0)
+                    {
+                        formatBuilder.Append('/');
+                    }
+                    var trimmed = RequestPath.TrimSegment(segment);
+                    var parameter = new ParameterProvider(trimmed, $"The {trimmed}", GetPathParameterType(trimmed));
+                    parameters.Add(parameter);
                     formatBuilder.Append($"{{{refCount++}}}");
                 }
             }
