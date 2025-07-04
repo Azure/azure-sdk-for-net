@@ -144,7 +144,7 @@ namespace MgmtTypeSpec.Models
         string IPersistableModel<FooSettingsUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="fooSettingsUpdate"> The <see cref="FooSettingsUpdate"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(FooSettingsUpdate fooSettingsUpdate)
+        internal static RequestContent ToRequestContent(FooSettingsUpdate fooSettingsUpdate)
         {
             if (fooSettingsUpdate == null)
             {

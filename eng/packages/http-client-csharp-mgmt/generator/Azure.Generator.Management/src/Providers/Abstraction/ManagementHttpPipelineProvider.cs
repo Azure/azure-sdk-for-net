@@ -8,12 +8,12 @@ using Microsoft.TypeSpec.Generator.Expressions;
 
 namespace Azure.Generator.Management.Providers.Abstraction
 {
-    internal record MgmtHttpPipelineProvider : HttpPipelineProvider
+    internal record ManagementHttpPipelineProvider : HttpPipelineProvider
     {
         private static ClientPipelineApi? _instance;
-        internal static ClientPipelineApi Instance => _instance ??= new MgmtHttpPipelineProvider(Empty);
+        internal static ClientPipelineApi Instance => _instance ??= new ManagementHttpPipelineProvider(Empty);
 
-        protected MgmtHttpPipelineProvider(ValueExpression original) : base(original)
+        protected ManagementHttpPipelineProvider(ValueExpression original) : base(original)
         {
         }
 
@@ -22,6 +22,6 @@ namespace Azure.Generator.Management.Providers.Abstraction
 
         /// <inheritdoc/>
         public override ClientPipelineApi FromExpression(ValueExpression expression)
-            => new MgmtHttpPipelineProvider(expression);
+            => new ManagementHttpPipelineProvider(expression);
     }
 }

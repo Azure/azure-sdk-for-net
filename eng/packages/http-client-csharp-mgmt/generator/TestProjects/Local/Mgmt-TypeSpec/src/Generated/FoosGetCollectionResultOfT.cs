@@ -52,7 +52,7 @@ namespace MgmtTypeSpec
                 {
                     yield break;
                 }
-                FooListResult responseWithType = (FooListResult)response;
+                FooListResult responseWithType = FooListResult.FromResponse(response);
                 nextPage = responseWithType.NextLink;
                 yield return Page<FooData>.FromValues((IReadOnlyList<FooData>)responseWithType.Value, nextPage?.AbsoluteUri, response);
             }

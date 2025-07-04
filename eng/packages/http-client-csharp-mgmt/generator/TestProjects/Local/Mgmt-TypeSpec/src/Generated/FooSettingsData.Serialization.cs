@@ -165,7 +165,7 @@ namespace MgmtTypeSpec
         string IPersistableModel<FooSettingsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="fooSettingsData"> The <see cref="FooSettingsData"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(FooSettingsData fooSettingsData)
+        internal static RequestContent ToRequestContent(FooSettingsData fooSettingsData)
         {
             if (fooSettingsData == null)
             {
@@ -177,7 +177,7 @@ namespace MgmtTypeSpec
         }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FooSettingsData"/> from. </param>
-        public static explicit operator FooSettingsData(Response result)
+        internal static FooSettingsData FromResponse(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);

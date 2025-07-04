@@ -52,7 +52,7 @@ namespace MgmtTypeSpec
                 {
                     yield break;
                 }
-                FooListResult responseWithType = (FooListResult)response;
+                FooListResult responseWithType = FooListResult.FromResponse(response);
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in responseWithType.Value)
                 {

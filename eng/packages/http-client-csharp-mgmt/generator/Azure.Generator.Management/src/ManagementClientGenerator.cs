@@ -53,7 +53,8 @@ namespace Azure.Generator.Management
             AddVisitor(new ResourceVisitor());
             AddVisitor(new InheritableSystemObjectModelVisitor());
             AddVisitor(new NameVisitor());
-            AddVisitor(new TypeFilterVisiter());
+            AddVisitor(new TypeFilterVisitor());
+            AddVisitor(new SerializationVisitor());
         }
     }
 }
