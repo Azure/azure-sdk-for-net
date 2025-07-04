@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql
 {
+    [Obsolete]
     internal class SqlServerCommunicationLinkOperationSource : IOperationSource<SqlServerCommunicationLinkResource>
     {
         private readonly ArmClient _client;

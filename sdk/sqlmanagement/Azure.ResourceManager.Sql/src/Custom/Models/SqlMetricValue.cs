@@ -11,6 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents database metrics. </summary>
+    [Obsolete]
     public partial class SqlMetricValue
     {
         /// <summary>

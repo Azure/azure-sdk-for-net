@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Sql
     /// Each <see cref="SqlServerCommunicationLinkResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
     /// To get a <see cref="SqlServerCommunicationLinkCollection"/> instance call the GetSqlServerCommunicationLinks method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
+    [Obsolete]
     public partial class SqlServerCommunicationLinkCollection : ArmCollection, IEnumerable<SqlServerCommunicationLinkResource>, IAsyncEnumerable<SqlServerCommunicationLinkResource>
     {
         private readonly ClientDiagnostics _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics;

@@ -10,6 +10,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A database metric definition. </summary>
+    [Obsolete]
     public partial class SqlMetricDefinition
     {
         /// <summary>

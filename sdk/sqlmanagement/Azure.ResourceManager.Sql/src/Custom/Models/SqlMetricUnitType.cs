@@ -9,6 +9,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The unit of the metric. </summary>
+    [Obsolete]
     public readonly partial struct SqlMetricUnitType : IEquatable<SqlMetricUnitType>
     {
         private readonly string _value;

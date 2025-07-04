@@ -9,6 +9,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of server communication links. </summary>
+    [Obsolete]
     internal partial class ServerCommunicationLinkListResult
     {
         /// <summary>
