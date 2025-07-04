@@ -48,9 +48,6 @@ namespace Azure.Generator.Management
         public override IClientPipelineApi ClientPipelineApi => ManagementHttpPipelineProvider.Instance;
 
         /// <inheritdoc/>
-        public override IAzureResponseWithTypeApi AzureResponseWithTypeApi => ManagementResponseWithTypeProvider.Instance;
-
-        /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
             [
                 new("Azure.Core"),
