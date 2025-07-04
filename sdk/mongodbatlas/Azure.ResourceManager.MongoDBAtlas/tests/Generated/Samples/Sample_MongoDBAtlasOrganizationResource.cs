@@ -94,28 +94,29 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
             MongoDBAtlasOrganizationResource mongoDBAtlasOrganization = client.GetMongoDBAtlasOrganizationResource(mongoDBAtlasOrganizationResourceId);
 
             // invoke the operation
-            MongoDBAtlasOrganizationData data = new MongoDBAtlasOrganizationData(default)
+            MongoDBAtlasOrganizationPatch patch = new MongoDBAtlasOrganizationPatch
             {
-                Properties = new MongoDBAtlasOrganizationProperties(null, new MongoDBAtlasUserDetails("btyhwmlbzzihjfimviefebg", "xx", ".K_@e7N-g1.xjqnbPs")
+                Identity = new ManagedServiceIdentity("None")
                 {
-                    Upn = "mxtbogd",
-                    PhoneNumber = "isvc",
-                    CompanyName = "oztteysco",
-                })
+                    UserAssignedIdentities = { },
+                },
+                Tags = { },
+                Properties = new MongoDBAtlasOrganizationUpdateProperties
                 {
+                    User = new MongoDBAtlasUserDetails("btyhwmlbzzihjfimviefebg", "xx", ".K_@e7N-g1.xjqnbPs")
+                    {
+                        Upn = "mxtbogd",
+                        PhoneNumber = "isvc",
+                        CompanyName = "oztteysco",
+                    },
                     PartnerProperties = new MongoDBAtlasPartnerProperties("U.1-:7")
                     {
                         OrganizationId = "vugtqrobendjkinziswxlqueouo",
                         RedirectUri = "cbxwtehraetlluocdihfgchvjzockn",
                     },
                 },
-                Identity = new ManagedServiceIdentity("None")
-                {
-                    UserAssignedIdentities = { },
-                },
-                Tags = { },
             };
-            ArmOperation<MongoDBAtlasOrganizationResource> lro = await mongoDBAtlasOrganization.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<MongoDBAtlasOrganizationResource> lro = await mongoDBAtlasOrganization.UpdateAsync(WaitUntil.Completed, patch);
             MongoDBAtlasOrganizationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
