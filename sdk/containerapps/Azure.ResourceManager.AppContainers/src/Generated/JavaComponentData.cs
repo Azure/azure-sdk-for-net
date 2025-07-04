@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="properties">
         /// Java Component resource specific properties
         /// Please note <see cref="JavaComponentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SpringBootAdminComponent"/>, <see cref="SpringCloudConfigComponent"/> and <see cref="SpringCloudEurekaComponent"/>.
+        /// The available derived classes include <see cref="NacosComponent"/>, <see cref="SpringBootAdminComponent"/>, <see cref="SpringCloudConfigComponent"/>, <see cref="SpringCloudEurekaComponent"/> and <see cref="SpringCloudGatewayComponent"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal JavaComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JavaComponentProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary>
         /// Java Component resource specific properties
         /// Please note <see cref="JavaComponentProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SpringBootAdminComponent"/>, <see cref="SpringCloudConfigComponent"/> and <see cref="SpringCloudEurekaComponent"/>.
+        /// The available derived classes include <see cref="NacosComponent"/>, <see cref="SpringBootAdminComponent"/>, <see cref="SpringCloudConfigComponent"/>, <see cref="SpringCloudEurekaComponent"/> and <see cref="SpringCloudGatewayComponent"/>.
         /// </summary>
         [WirePath("properties")]
         public JavaComponentProperties Properties { get; set; }
