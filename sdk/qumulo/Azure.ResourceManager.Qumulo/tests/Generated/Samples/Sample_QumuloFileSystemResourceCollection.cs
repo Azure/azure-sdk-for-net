@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Qumulo.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -44,17 +43,6 @@ namespace Azure.ResourceManager.Qumulo.Samples
             string fileSystemName = "hfcmtgaes";
             QumuloFileSystemResourceData data = new QumuloFileSystemResourceData(new AzureLocation("pnb"))
             {
-                Properties = new QumuloFileSystemResourceProperties(new MarketplaceDetails("fwtpz", "s")
-                {
-                    MarketplaceSubscriptionId = "xaqtkloiyovmexqhn",
-                    PublisherId = "czxcfrwodazyaft",
-                    TermUnit = "cfwwczmygsimcyvoclcw",
-                }, "yhyzby", new QumuloUserDetails("aqsnzyroo"), "jykmxrf", "fakeTestSecretPlaceholder")
-                {
-                    ClusterLoginUri = "ykaynsjvhihdthkkvvodjrgc",
-                    PrivateIPs = { "gzken" },
-                    AvailabilityZone = "eqdvbdiuwmhhzqzmksmwllpddqquwt",
-                },
                 Identity = new ManagedServiceIdentity("None")
                 {
                     UserAssignedIdentities =
@@ -101,13 +89,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 
             // invoke the operation
             string fileSystemName = "aaaaaaaa";
-            QumuloFileSystemResourceData data = new QumuloFileSystemResourceData(new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaa"))
-            {
-                Properties = new QumuloFileSystemResourceProperties(new MarketplaceDetails("aaaaaa", "aaaaaaaaaaaaaaaaaaaaaaaaa")
-                {
-                    MarketplaceSubscriptionId = "aaaaaaaaaaaaa",
-                }, "Standard", new QumuloUserDetails("viptslwulnpaupfljvnjeq"), "aaaaaaaaaa", "fakeTestSecretPlaceholder"),
-            };
+            QumuloFileSystemResourceData data = new QumuloFileSystemResourceData(new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaa"));
             ArmOperation<QumuloFileSystemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fileSystemName, data);
             QumuloFileSystemResource result = lro.Value;
 

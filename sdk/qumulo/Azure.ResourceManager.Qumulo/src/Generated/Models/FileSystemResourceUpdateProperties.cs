@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="userDetails"> User Details. </param>
         /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileSystemResourceUpdateProperties(MarketplaceDetails marketplaceDetails, QumuloUserDetails userDetails, string delegatedSubnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileSystemResourceUpdateProperties(QumuloMarketplaceDetails marketplaceDetails, QumuloUserDetails userDetails, string delegatedSubnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceDetails = marketplaceDetails;
             UserDetails = userDetails;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         }
 
         /// <summary> Marketplace details. </summary>
-        public MarketplaceDetails MarketplaceDetails { get; set; }
+        public QumuloMarketplaceDetails MarketplaceDetails { get; set; }
         /// <summary> User Details. </summary>
         internal QumuloUserDetails UserDetails { get; set; }
         /// <summary> User Email. </summary>

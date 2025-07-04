@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> MarketplaceDetails of Qumulo FileSystem resource. </summary>
-    public partial class MarketplaceDetails
+    public partial class QumuloMarketplaceDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QumuloMarketplaceDetails"/>. </summary>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="planId"/> or <paramref name="offerId"/> is null. </exception>
-        public MarketplaceDetails(string planId, string offerId)
+        public QumuloMarketplaceDetails(string planId, string offerId)
         {
             Argument.AssertNotNull(planId, nameof(planId));
             Argument.AssertNotNull(offerId, nameof(offerId));
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             OfferId = offerId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QumuloMarketplaceDetails"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="termUnit"> Term Unit. </param>
         /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceDetails(string marketplaceSubscriptionId, string planId, string offerId, string publisherId, string termUnit, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QumuloMarketplaceDetails(string marketplaceSubscriptionId, string planId, string offerId, string publisherId, string termUnit, QumuloMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
             PlanId = planId;
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Qumulo.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/> for deserialization. </summary>
-        internal MarketplaceDetails()
+        /// <summary> Initializes a new instance of <see cref="QumuloMarketplaceDetails"/> for deserialization. </summary>
+        internal QumuloMarketplaceDetails()
         {
         }
 
@@ -93,6 +93,6 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <summary> Term Unit. </summary>
         public string TermUnit { get; set; }
         /// <summary> Marketplace subscription status. </summary>
-        public MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
+        public QumuloMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
     }
 }

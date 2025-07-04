@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Qumulo.Samples
 },
                 Properties = new FileSystemResourceUpdateProperties
                 {
-                    MarketplaceDetails = new MarketplaceDetails("fwtpz", "s")
+                    MarketplaceDetails = new QumuloMarketplaceDetails("fwtpz", "s")
                     {
                         MarketplaceSubscriptionId = "xaqtkloiyovmexqhn",
                         PublisherId = "czxcfrwodazyaft",

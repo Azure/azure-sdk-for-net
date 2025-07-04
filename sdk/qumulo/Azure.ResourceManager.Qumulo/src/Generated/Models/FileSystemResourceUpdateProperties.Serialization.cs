@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             {
                 return null;
             }
-            MarketplaceDetails marketplaceDetails = default;
+            QumuloMarketplaceDetails marketplaceDetails = default;
             QumuloUserDetails userDetails = default;
             string delegatedSubnetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     {
                         continue;
                     }
-                    marketplaceDetails = MarketplaceDetails.DeserializeMarketplaceDetails(property.Value, options);
+                    marketplaceDetails = QumuloMarketplaceDetails.DeserializeQumuloMarketplaceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userDetails"u8))
