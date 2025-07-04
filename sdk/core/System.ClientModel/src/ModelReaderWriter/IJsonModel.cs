@@ -29,6 +29,6 @@ public interface IJsonModel<out T> : IPersistableModel<T>
     /// <returns>A <typeparamref name="T"/> representation of the JSON value.</returns>
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-    T Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options);
+    T? Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options);
 #pragma warning restore AZC0014 // Avoid using banned types in public API
 }

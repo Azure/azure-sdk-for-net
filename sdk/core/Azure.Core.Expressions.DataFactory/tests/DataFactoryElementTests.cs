@@ -1066,7 +1066,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         private DataFactoryElement<T> Deserialize<T>(string json)
         {
             var instance = new DataFactoryElement<T>(default);
-            return ((IJsonModel<DataFactoryElement<T>>)instance).Create(BinaryData.FromString($"{json}"), s_options);
+            return ((IJsonModel<DataFactoryElement<T>>)instance).Create(BinaryData.FromString($"{json}"), s_options)!;
         }
 
         [Test]
