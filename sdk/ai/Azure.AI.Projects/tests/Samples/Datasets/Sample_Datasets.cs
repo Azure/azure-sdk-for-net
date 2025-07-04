@@ -4,18 +4,23 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
-using System.Threading.Tasks;
-using Azure.AI.Inference;
-using Azure.Core.TestFramework;
-using System.IO;
-using System.Reflection;
 
 namespace Azure.AI.Projects.Tests
 {
     public class Sample_Datasets : SamplesBase<AIProjectsTestEnvironment>
     {
+        private static string GetPath(string target, [CallerFilePath] string pth = "")
+        {
+            var dirName = Path.GetDirectoryName(pth) ?? "";
+            return Path.Combine(dirName, target);
+        }
+
         [Test]
         [SyncOnly]
         public void DatasetsExample()
@@ -28,24 +33,24 @@ namespace Azure.AI.Projects.Tests
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var datasetName = TestEnvironment.DATASETNAME;
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = new(new Uri(endpoint), new AzureCliCredential());
             Datasets datasets = projectClient.GetDatasetsClient();
 
             Console.WriteLine("Uploading a single file to create Dataset version '1'...");
-            var datasetResponse = datasets.UploadFile(
+            FileDatasetVersion datasetResponse = datasets.UploadFile(
                 name: datasetName,
                 version: "1",
-                filePath: "sample_folder/sample_file1.txt"
+                filePath: GetPath(target: "sample_folder/sample_file1.txt")
                 );
             Console.WriteLine(datasetResponse);
 
             Console.WriteLine("Uploading folder to create Dataset version '2'...");
-            datasetResponse = datasets.UploadFolder(
+            FolderDatasetVersion folderDatasetResponse = datasets.UploadFolder(
                 name: datasetName,
                 version: "2",
-                folderPath: "sample_folder"
+                folderPath: GetPath(target: "sample_folder")
             );
-            Console.WriteLine(datasetResponse);
+            Console.WriteLine(folderDatasetResponse);
 
             Console.WriteLine("Retrieving Dataset version '1'...");
             DatasetVersion dataset = datasets.GetDataset(datasetName, "1");
@@ -85,20 +90,20 @@ namespace Azure.AI.Projects.Tests
             Datasets datasets = projectClient.GetDatasetsClient();
 
             Console.WriteLine("Uploading a single file to create Dataset version '1'...");
-            var datasetResponse = datasets.UploadFile(
+            FileDatasetVersion datasetResponse = datasets.UploadFile(
                 name: datasetName,
                 version: "1",
-                filePath: "sample_folder/sample_file1.txt"
+                filePath: GetPath(target: "sample_folder/sample_file1.txt")
                 );
             Console.WriteLine(datasetResponse);
 
             Console.WriteLine("Uploading folder to create Dataset version '2'...");
-            datasetResponse = datasets.UploadFolder(
+            FolderDatasetVersion folderDatasetResponse = datasets.UploadFolder(
                 name: datasetName,
                 version: "2",
-                folderPath: "sample_folder"
+                folderPath: GetPath(target: "sample_folder")
             );
-            Console.WriteLine(datasetResponse);
+            Console.WriteLine(folderDatasetResponse);
 
             Console.WriteLine("Retrieving Dataset version '1'...");
             DatasetVersion dataset = await datasets.GetDatasetAsync(datasetName, "1");

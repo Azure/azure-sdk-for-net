@@ -34,14 +34,17 @@ namespace Azure.AI.Projects
             //    throw new InvalidOperationException("Invalid blob reference for consumption.");
             //}
 
-            var containerClient = new BlobContainerClient(new Uri(pendingUploadResponse.Value.BlobReference.BlobUri));
+            var containerClient = new BlobContainerClient(
+                blobContainerUri: new Uri(pendingUploadResponse.Value.BlobReference.BlobUri),
+                credential: _tokenCredential,
+                options: null);
             return (containerClient, outputVersion);
         }
 
         /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
-        public Response UploadFile(string name, string version, string filePath)
+        public Response<FileDatasetVersion> UploadFile(string name, string version, string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -51,26 +54,29 @@ namespace Azure.AI.Projects
 
             var (containerClient, outputVersion) = CreateDatasetAndGetContainerClient(name, version);
 
-            using (var fileStream = File.OpenRead(filePath))
+            using (FileStream fileStream = File.OpenRead(filePath))
             {
                 var blobName = Path.GetFileName(filePath);
                 var blobClient = containerClient.GetBlobClient(blobName);
                 blobClient.Upload(fileStream);
 
-                RequestContent content = RequestContent.Create(new FileDatasetVersion(dataUri: blobClient.Uri.AbsoluteUri));
+                RequestContent content = (new FileDatasetVersion(dataUri: blobClient.Uri.AbsoluteUri)).ToRequestContent();
 
-                return CreateOrUpdate(
+                Response response = CreateOrUpdate(
                     name,
                     outputVersion,
-                    content
+                    content,
+                    new RequestContext()
                 );
+
+                return Response.FromValue(FileDatasetVersion.FromResponse(response), response);
             }
         }
 
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public Response UploadFolder(string name, string version, string folderPath)
+        public Response<FolderDatasetVersion> UploadFolder(string name, string version, string folderPath)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -83,7 +89,7 @@ namespace Azure.AI.Projects
             var filesUploaded = false;
             foreach (var filePath in Directory.EnumerateFiles(folderPath, "*", SearchOption.AllDirectories))
             {
-                var relativePath = GetRelativePath(folderPath, filePath);
+                string relativePath = GetRelativePath(folderPath, filePath);
                 using (var fileStream = File.OpenRead(filePath))
                 {
                     var blobClient = containerClient.GetBlobClient(relativePath);
@@ -97,12 +103,13 @@ namespace Azure.AI.Projects
                 throw new ArgumentException("The provided folder is empty.");
             }
 
-            RequestContent content = RequestContent.Create(new FolderDatasetVersion(dataUri: containerClient.Uri.AbsoluteUri));
-            return CreateOrUpdate(
+            RequestContent content = (new FolderDatasetVersion(dataUri: containerClient.Uri.AbsoluteUri)).ToRequestContent();
+            Response response = CreateOrUpdate(
                 name,
                 outputVersion,
                 content
             );
+            return Response.FromValue(FolderDatasetVersion.FromResponse(response), response);
         }
         public static string GetRelativePath(string folderPath, string filePath)
         {
@@ -111,14 +118,14 @@ namespace Azure.AI.Projects
             if (string.IsNullOrEmpty(filePath))
                 throw new ArgumentNullException(nameof(filePath));
 
-            Uri folderUri = new Uri(folderPath);
-            Uri fileUri = new Uri(filePath);
+            Uri folderUri = new(folderPath);
+            Uri fileUri = new(filePath);
 
             if (folderUri.Scheme != fileUri.Scheme)
             { return filePath; } // path can't be made relative.
 
             Uri relativeUri = folderUri.MakeRelativeUri(fileUri);
-            string relativePath = Uri.UnescapeDataString(relativeUri.AbsoluteUri);
+            string relativePath = Uri.UnescapeDataString(relativeUri.OriginalString);
 
             if (fileUri.Scheme.Equals("file", StringComparison.InvariantCultureIgnoreCase))
             {
