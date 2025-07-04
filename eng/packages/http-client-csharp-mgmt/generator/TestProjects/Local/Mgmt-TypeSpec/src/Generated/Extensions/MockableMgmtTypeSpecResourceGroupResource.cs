@@ -12,8 +12,9 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using MgmtTypeSpec;
 
-namespace MgmtTypeSpec
+namespace MgmtTypeSpec.Mocking
 {
     /// <summary></summary>
     public partial class MockableMgmtTypeSpecResourceGroupResource : ArmResource
@@ -30,6 +31,13 @@ namespace MgmtTypeSpec
         {
         }
 
+        /// <summary> Gets a collection of PrivateLinks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PrivateLinks and their operations over a PrivateLinkResource. </returns>
+        public virtual PrivateLinkCollection GetPrivateLinks()
+        {
+            return GetCachedClient(client => new PrivateLinkCollection(client, Id));
+        }
+
         /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of Foos and their operations over a FooResource. </returns>
         public virtual FooCollection GetFoos()
@@ -39,7 +47,7 @@ namespace MgmtTypeSpec
 
         /// <summary> Get a Foo. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<FooResource> GetFoo(string fooName, CancellationToken cancellationToken = default)
@@ -51,7 +59,7 @@ namespace MgmtTypeSpec
 
         /// <summary> Get a Foo. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<FooResource>> GetFooAsync(string fooName, CancellationToken cancellationToken = default)

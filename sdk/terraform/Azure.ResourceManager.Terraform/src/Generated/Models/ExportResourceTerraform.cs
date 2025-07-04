@@ -31,12 +31,14 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
+        /// <param name="azureResourcesToExclude"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
+        /// <param name="terraformResourcesToExclude"> Exclude resources from being exported based on the Terraform resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceIds"> The id of the resource to be exported. </param>
         /// <param name="resourceName"> The Terraform resource name. Only works when `resourceIds` contains only one item. </param>
         /// <param name="resourceType"> The Terraform resource type. Only works when `resourceIds` contains only one item. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
-        internal ExportResourceTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ResourceIdentifier> resourceIds, string resourceName, string resourceType, string namePattern) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, serializedAdditionalRawData)
+        internal ExportResourceTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ResourceIdentifier> resourceIds, string resourceName, string resourceType, string namePattern) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, azureResourcesToExclude, terraformResourcesToExclude, serializedAdditionalRawData)
         {
             ResourceIds = resourceIds;
             ResourceName = resourceName;

@@ -17,6 +17,12 @@
 - `VisualStudioCredential` throws `CredentialUnavailableException` for all failures except for OperationCancelledException due to cancellation being requested for a `CancellationToken`. This ensures that it falls through for most failures when part of a chained credential.
 - Removed `AzureApplicationCredential`. For context, see issue [49781](https://github.com/Azure/azure-sdk-for-net/issues/49781).
 
+## 1.14.1 (2025-06-24)
+
+### Bugs Fixed
+
+- Added support in `AzurePowerShellCredential` for the `Az.Accounts` 5.0.0+ (Az 14.0.0+) breaking change where `Get-AzAccessToken` returns `PSSecureAccessToken` with a `SecureString` Token property instead of plaintext.
+
 ## 1.14.0 (2025-05-13)
 
 ### Other Changes

@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string InboundValue = "inbound";
         private const string OutboundValue = "outbound";
 
-        /// <summary> inbound. </summary>
+        /// <summary> Inbound direction. </summary>
         public static ServiceFabricManagedNetworkSecurityRuleDirection Inbound { get; } = new ServiceFabricManagedNetworkSecurityRuleDirection(InboundValue);
-        /// <summary> outbound. </summary>
+        /// <summary> Outbound direction. </summary>
         public static ServiceFabricManagedNetworkSecurityRuleDirection Outbound { get; } = new ServiceFabricManagedNetworkSecurityRuleDirection(OutboundValue);
         /// <summary> Determines if two <see cref="ServiceFabricManagedNetworkSecurityRuleDirection"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedNetworkSecurityRuleDirection left, ServiceFabricManagedNetworkSecurityRuleDirection right) => left.Equals(right);
