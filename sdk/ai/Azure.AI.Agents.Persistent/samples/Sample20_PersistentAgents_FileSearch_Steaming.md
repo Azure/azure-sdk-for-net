@@ -70,6 +70,7 @@ FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
 // Create an agent with toolResources and process agent run
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = client.Administration.CreateAgent(
         model: modelDeploymentName,
         name: "SDK Test Agent - Retrieval",
@@ -84,6 +85,7 @@ FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
 // Create an agent with toolResources and process agent run
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
         model: modelDeploymentName,
         name: "SDK Test Agent - Retrieval",
@@ -202,6 +204,7 @@ await foreach (StreamingUpdate streamingUpdate in stream)
 
 Synchronous sample:
 ```C# Snippet:AgentsFilesSearchExampleSteaming_Cleanup_Sync
+// NOTE: Comment out these four lines if you plan to reuse the agent later.
 client.VectorStores.DeleteVectorStore(vectorStore.Id);
 client.Files.DeleteFile(uploadedAgentFile.Id);
 client.Threads.DeleteThread(thread.Id);
@@ -210,6 +213,7 @@ client.Administration.DeleteAgent(agent.Id);
 
 Asynchronous sample:
 ```C# Snippet:AgentsFilesSearchExampleSteaming_Cleanup
+// NOTE: Comment out these four lines if you plan to reuse the agent later.
 await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
 await client.Files.DeleteFileAsync(uploadedAgentFile.Id);
 await client.Threads.DeleteThreadAsync(thread.Id);

@@ -55,6 +55,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
         FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
         List<ToolDefinition> tools = [new FileSearchToolDefinition()];
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelName,
             name: "my-agent",
@@ -96,6 +97,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
         #endregion
 
         #region Snippet:AgentsVectorStoreBatchFileSearchAsyncCleanup
+        // NOTE: Comment out this code block if you plan to reuse the agent later.
         bool delTask = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
         if (delTask)
         {
@@ -143,6 +145,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
         FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
         List<ToolDefinition> tools = [new FileSearchToolDefinition()];
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = client.Administration.CreateAgent(
             model: modelName,
             name: "my-agent",
@@ -185,6 +188,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
         #endregion
 
         #region Snippet:AgentsVectorStoreBatchFileSearchCleanup
+        // NOTE: Comment out this code block if you plan to reuse the agent later.
         bool delTask = client.VectorStores.DeleteVectorStore(vectorStore.Id);
         if (delTask)
         {
