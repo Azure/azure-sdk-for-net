@@ -11,13 +11,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
+namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    internal partial class HardwaresecuritymodulesPrivateEndpointConnectionListResult : IUtf8JsonSerializable, IJsonModel<HardwaresecuritymodulesPrivateEndpointConnectionListResult>
+    internal partial class HardwareSecurityModulesPrivateEndpointConnectionListResult : IUtf8JsonSerializable, IJsonModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwaresecuritymodulesPrivateEndpointConnectionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HardwaresecuritymodulesPrivateEndpointConnectionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HardwaresecuritymodulesPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwaresecuritymodulesPrivateEndpointConnectionListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareSecurityModulesPrivateEndpointConnectionListResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
             }
         }
 
-        HardwaresecuritymodulesPrivateEndpointConnectionListResult IJsonModel<HardwaresecuritymodulesPrivateEndpointConnectionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HardwareSecurityModulesPrivateEndpointConnectionListResult IJsonModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HardwaresecuritymodulesPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwaresecuritymodulesPrivateEndpointConnectionListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareSecurityModulesPrivateEndpointConnectionListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHardwaresecuritymodulesPrivateEndpointConnectionListResult(document.RootElement, options);
+            return DeserializeHardwareSecurityModulesPrivateEndpointConnectionListResult(document.RootElement, options);
         }
 
-        internal static HardwaresecuritymodulesPrivateEndpointConnectionListResult DeserializeHardwaresecuritymodulesPrivateEndpointConnectionListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HardwareSecurityModulesPrivateEndpointConnectionListResult DeserializeHardwareSecurityModulesPrivateEndpointConnectionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
             {
                 return null;
             }
-            IReadOnlyList<HardwaresecuritymodulesPrivateEndpointConnection> value = default;
+            IReadOnlyList<CloudHsmClusterPrivateEndpointConnection> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<HardwaresecuritymodulesPrivateEndpointConnection> array = new List<HardwaresecuritymodulesPrivateEndpointConnection>();
+                    List<CloudHsmClusterPrivateEndpointConnection> array = new List<CloudHsmClusterPrivateEndpointConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HardwaresecuritymodulesPrivateEndpointConnection.DeserializeHardwaresecuritymodulesPrivateEndpointConnection(item, options));
+                        array.Add(CloudHsmClusterPrivateEndpointConnection.DeserializeCloudHsmClusterPrivateEndpointConnection(item, options));
                     }
                     value = array;
                     continue;
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HardwaresecuritymodulesPrivateEndpointConnectionListResult(value, nextLink, serializedAdditionalRawData);
+            return new HardwareSecurityModulesPrivateEndpointConnectionListResult(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HardwaresecuritymodulesPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HardwaresecuritymodulesPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwaresecuritymodulesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HardwaresecuritymodulesPrivateEndpointConnectionListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareSecurityModulesPrivateEndpointConnectionListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HardwaresecuritymodulesPrivateEndpointConnectionListResult IPersistableModel<HardwaresecuritymodulesPrivateEndpointConnectionListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HardwareSecurityModulesPrivateEndpointConnectionListResult IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HardwaresecuritymodulesPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHardwaresecuritymodulesPrivateEndpointConnectionListResult(document.RootElement, options);
+                        return DeserializeHardwareSecurityModulesPrivateEndpointConnectionListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HardwaresecuritymodulesPrivateEndpointConnectionListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareSecurityModulesPrivateEndpointConnectionListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HardwaresecuritymodulesPrivateEndpointConnectionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -13,10 +13,10 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules
+namespace Azure.ResourceManager.HardwareSecurityModules
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class HardwaresecuritymodulesArmOperation<T> : ArmOperation<T>
+    internal class HardwareSecurityModulesArmOperation<T> : ArmOperation<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal<T> _operation;
@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly string _operationId;
 
-        /// <summary> Initializes a new instance of HardwaresecuritymodulesArmOperation for mocking. </summary>
-        protected HardwaresecuritymodulesArmOperation()
+        /// <summary> Initializes a new instance of HardwareSecurityModulesArmOperation for mocking. </summary>
+        protected HardwareSecurityModulesArmOperation()
         {
         }
 
-        internal HardwaresecuritymodulesArmOperation(Response<T> response, RehydrationToken? rehydrationToken = null)
+        internal HardwareSecurityModulesArmOperation(Response<T> response, RehydrationToken? rehydrationToken = null)
         {
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
             _completeRehydrationToken = rehydrationToken;
             _operationId = GetOperationId(rehydrationToken);
         }
 
-        internal HardwaresecuritymodulesArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
+        internal HardwareSecurityModulesArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationValue)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
                 _completeRehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia);
                 _operationId = GetOperationId(_completeRehydrationToken);
             }
-            _operation = new OperationInternal<T>(NextLinkOperationImplementation.Create(source, nextLinkOperation), clientDiagnostics, response, "HardwaresecuritymodulesArmOperation", fallbackStrategy: new SequentialDelayStrategy());
+            _operation = new OperationInternal<T>(NextLinkOperationImplementation.Create(source, nextLinkOperation), clientDiagnostics, response, "HardwareSecurityModulesArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         private string GetOperationId(RehydrationToken? rehydrationToken)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
             {
                 return null;
             }
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerHardwaresecuritymodulesContext.Default).ToObjectFromJson<Dictionary<string, string>>();
+            var lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerHardwareSecurityModulesContext.Default).ToObjectFromJson<Dictionary<string, string>>();
             return lroDetails["id"];
         }
         /// <inheritdoc />

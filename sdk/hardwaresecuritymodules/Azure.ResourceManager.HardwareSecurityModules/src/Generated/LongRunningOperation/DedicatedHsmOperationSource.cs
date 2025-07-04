@@ -9,9 +9,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Hardwaresecuritymodules.Models;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules
+namespace Azure.ResourceManager.HardwareSecurityModules
 {
     internal class DedicatedHsmOperationSource : IOperationSource<DedicatedHsm>
     {

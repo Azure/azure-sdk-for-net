@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
+namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> Patchable properties of the dedicated HSM. </summary>
     public partial class DedicatedHsmPatchContent

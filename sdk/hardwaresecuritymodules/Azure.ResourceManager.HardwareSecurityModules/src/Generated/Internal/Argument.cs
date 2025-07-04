@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules
+namespace Azure.ResourceManager.HardwareSecurityModules
 {
     internal static class Argument
     {

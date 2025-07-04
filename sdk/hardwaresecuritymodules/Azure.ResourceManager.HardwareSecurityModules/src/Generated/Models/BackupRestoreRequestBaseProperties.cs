@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
+namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> Backup and Restore Common properties. </summary>
     public partial class BackupRestoreRequestBaseProperties

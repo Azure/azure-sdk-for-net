@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules
+namespace Azure.ResourceManager.HardwareSecurityModules
 {
     /// <summary>
     /// A class representing a collection of <see cref="CloudHsmClusterResource"/> and their operations.
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CloudHsmClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cloudHsmClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hardwaresecuritymodules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
+            _cloudHsmClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CloudHsmClusterResource.ResourceType, out string cloudHsmClusterApiVersion);
             _cloudHsmClusterRestClient = new CloudHsmClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterApiVersion);
 #if DEBUG
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
             try
             {
                 var response = await _cloudHsmClusterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwaresecuritymodulesArmOperation<CloudHsmClusterResource>(new CloudHsmClusterOperationSource(Client), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(new CloudHsmClusterOperationSource(Client), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
             try
             {
                 var response = _cloudHsmClusterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, data, cancellationToken);
-                var operation = new HardwaresecuritymodulesArmOperation<CloudHsmClusterResource>(new CloudHsmClusterOperationSource(Client), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(new CloudHsmClusterOperationSource(Client), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

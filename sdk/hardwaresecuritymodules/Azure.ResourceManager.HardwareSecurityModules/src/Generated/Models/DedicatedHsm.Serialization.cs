@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
+namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     public partial class DedicatedHsm : IUtf8JsonSerializable, IJsonModel<DedicatedHsm>
     {
@@ -49,33 +49,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkProfile))
-            {
-                writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
-            }
-            if (Optional.IsDefined(ManagementNetworkProfile))
-            {
-                writer.WritePropertyName("managementNetworkProfile"u8);
-                writer.WriteObjectValue(ManagementNetworkProfile, options);
-            }
-            if (Optional.IsDefined(StampId))
-            {
-                writer.WritePropertyName("stampId"u8);
-                writer.WriteStringValue(StampId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
-            {
-                writer.WritePropertyName("statusMessage"u8);
-                writer.WriteStringValue(StatusMessage);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Properties, options);
         }
 
         DedicatedHsm IJsonModel<DedicatedHsm>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -98,26 +72,22 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
             {
                 return null;
             }
-            HardwaresecuritymodulesSku sku = default;
+            DedicatedHsmSku sku = default;
             IList<string> zones = default;
+            DedicatedHsmProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            NetworkProfile networkProfile = default;
-            NetworkProfile managementNetworkProfile = default;
-            string stampId = default;
-            string statusMessage = default;
-            JsonWebKeyType? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = HardwaresecuritymodulesSku.DeserializeHardwaresecuritymodulesSku(property.Value, options);
+                    sku = DedicatedHsmSku.DeserializeDedicatedHsmSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -132,6 +102,11 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
                         array.Add(item.GetString());
                     }
                     zones = array;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = DedicatedHsmProperties.DeserializeDedicatedHsmProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -177,55 +152,6 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("networkProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("managementNetworkProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            managementNetworkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("stampId"u8))
-                        {
-                            stampId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("statusMessage"u8))
-                        {
-                            statusMessage = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new JsonWebKeyType(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -241,11 +167,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
                 location,
                 sku,
                 zones ?? new ChangeTrackingList<string>(),
-                networkProfile,
-                managementNetworkProfile,
-                stampId,
-                statusMessage,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 
@@ -256,7 +178,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwaresecuritymodulesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DedicatedHsm)} does not support writing '{options.Format}' format.");
             }

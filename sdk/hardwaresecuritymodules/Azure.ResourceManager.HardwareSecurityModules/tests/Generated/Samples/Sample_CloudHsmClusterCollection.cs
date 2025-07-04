@@ -9,12 +9,12 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Hardwaresecuritymodules.Models;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
+namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 {
     public partial class Sample_CloudHsmClusterCollection
     {
@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
             string cloudHsmClusterName = "chsm1";
             CloudHsmClusterData data = new CloudHsmClusterData(new AzureLocation("eastus2"))
             {
+                Properties = new CloudHsmClusterProperties
+                {
+                    PublicNetworkAccess = CloudHsmClusterPublicNetworkAccess.Disabled,
+                },
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =

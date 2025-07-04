@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
+namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> Cloud Hsm Cluster SKU information. </summary>
     public partial class CloudHsmClusterSku

@@ -9,11 +9,11 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Hardwaresecuritymodules.Models;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
+namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 {
     public partial class Sample_CloudHsmClusterResource
     {
@@ -141,12 +141,12 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
             CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
 
             // invoke the operation
-            BackupRequestProperties backupRequestProperties = new BackupRequestProperties(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"))
+            CloudHsmClusterBackupContent content = new CloudHsmClusterBackupContent(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"))
             {
                 Token = "se=2018-02-01T00%3A00Z&spr=https&sv=2017-04-17&sr=b&sig=REDACTED",
             };
-            ArmOperation<BackupResult> lro = await cloudHsmCluster.ValidateBackupPropertiesAsync(WaitUntil.Completed, backupRequestProperties: backupRequestProperties);
-            BackupResult result = lro.Value;
+            ArmOperation<CloudHsmClusterBackupResult> lro = await cloudHsmCluster.ValidateBackupPropertiesAsync(WaitUntil.Completed, content: content);
+            CloudHsmClusterBackupResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
             CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
 
             // invoke the operation
-            BackupRequestProperties backupRequestProperties = new BackupRequestProperties(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"))
+            CloudHsmClusterBackupContent content = new CloudHsmClusterBackupContent(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"))
             {
                 Token = "se=2018-02-01T00%3A00Z&spr=https&sv=2017-04-17&sr=b&sig=REDACTED",
             };
-            ArmOperation<BackupResult> lro = await cloudHsmCluster.BackupAsync(WaitUntil.Completed, backupRequestProperties: backupRequestProperties);
-            BackupResult result = lro.Value;
+            ArmOperation<CloudHsmClusterBackupResult> lro = await cloudHsmCluster.BackupAsync(WaitUntil.Completed, content: content);
+            CloudHsmClusterBackupResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -203,9 +203,9 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
             CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
 
             // invoke the operation
-            RestoreRequestProperties restoreRequestProperties = new RestoreRequestProperties(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"), "backupId");
-            ArmOperation<RestoreResult> lro = await cloudHsmCluster.ValidateRestorePropertiesAsync(WaitUntil.Completed, restoreRequestProperties: restoreRequestProperties);
-            RestoreResult result = lro.Value;
+            CloudHsmClusterRestoreContent content = new CloudHsmClusterRestoreContent(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"), "backupId");
+            ArmOperation<CloudHsmClusterRestoreResult> lro = await cloudHsmCluster.ValidateRestorePropertiesAsync(WaitUntil.Completed, content: content);
+            CloudHsmClusterRestoreResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -231,9 +231,9 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
             CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
 
             // invoke the operation
-            RestoreRequestProperties restoreRequestProperties = new RestoreRequestProperties(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"), "backupId");
-            ArmOperation<RestoreResult> lro = await cloudHsmCluster.RestoreAsync(WaitUntil.Completed, restoreRequestProperties);
-            RestoreResult result = lro.Value;
+            CloudHsmClusterRestoreContent content = new CloudHsmClusterRestoreContent(new Uri("https://myaccount.blob.core.windows.net/sascontainer/sasContainer"), "backupId");
+            ArmOperation<CloudHsmClusterRestoreResult> lro = await cloudHsmCluster.RestoreAsync(WaitUntil.Completed, content);
+            CloudHsmClusterRestoreResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
             CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (HardwaresecuritymodulesPrivateEndpointConnection item in cloudHsmCluster.GetPrivateEndpointConnectionsAsync())
+            await foreach (CloudHsmClusterPrivateEndpointConnection item in cloudHsmCluster.GetPrivateEndpointConnectionsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -288,64 +288,10 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
             CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (HardwaresecuritymodulesPrivateLinkResourceData item in cloudHsmCluster.GetCloudHsmClusterPrivateLinkResourcesAsync())
+            await foreach (CloudHsmClusterPrivateLinkData item in cloudHsmCluster.GetCloudHsmClusterPrivateLinkResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_CloudHsmClusterGetBackupStatusMaximumSetGen()
-        {
-            // Generated from example definition: 2025-03-31/CloudHsmCluster_Backup_Pending_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusters_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudHsmClusterResource created on azure
-            // for more information of creating CloudHsmClusterResource, please refer to the document of CloudHsmClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rgcloudhsm";
-            string cloudHsmClusterName = "chsm1";
-            ResourceIdentifier cloudHsmClusterResourceId = CloudHsmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudHsmClusterName);
-            CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
-
-            // invoke the operation
-            string jobId = "572a45927fc240e1ac075de27371680b";
-            await cloudHsmCluster.GetAsync(WaitUntil.Completed, jobId);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_CloudHsmClusterGetRestoreStatusMaximumSetGen()
-        {
-            // Generated from example definition: 2025-03-31/CloudHsmCluster_Restore_Pending_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusters_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudHsmClusterResource created on azure
-            // for more information of creating CloudHsmClusterResource, please refer to the document of CloudHsmClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rgcloudhsm";
-            string cloudHsmClusterName = "chsm1";
-            ResourceIdentifier cloudHsmClusterResourceId = CloudHsmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudHsmClusterName);
-            CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
-
-            // invoke the operation
-            string jobId = "572a45927fc240e1ac075de27371680b";
-            await cloudHsmCluster.GetAsync(WaitUntil.Completed, jobId);
 
             Console.WriteLine("Succeeded");
         }
@@ -372,7 +318,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
 
             // invoke the operation
             string peConnectionName = "sample-pec";
-            HardwaresecuritymodulesPrivateEndpointConnection result = await cloudHsmCluster.GetCloudHsmClusterPrivateEndpointConnectionAsync(peConnectionName);
+            CloudHsmClusterPrivateEndpointConnection result = await cloudHsmCluster.GetCloudHsmClusterPrivateEndpointConnectionAsync(peConnectionName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -399,8 +345,15 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
 
             // invoke the operation
             string peConnectionName = "sample-pec";
-            HardwaresecuritymodulesPrivateEndpointConnection properties = new HardwaresecuritymodulesPrivateEndpointConnection();
-            HardwaresecuritymodulesPrivateEndpointConnection result = await cloudHsmCluster.CreateCloudHsmClusterPrivateEndpointConnectionAsync(peConnectionName, properties);
+            CloudHsmClusterPrivateEndpointConnection properties = new CloudHsmClusterPrivateEndpointConnection
+            {
+                Properties = new CloudHsmClusterPrivateEndpointConnectionProperties(new CloudHsmClusterPrivateLinkServiceConnectionState
+                {
+                    Status = CloudHsmClusterPrivateEndpointServiceConnectionStatus.Approved,
+                    Description = "My name is Joe and I'm approving this.",
+                }),
+            };
+            CloudHsmClusterPrivateEndpointConnection result = await cloudHsmCluster.CreateCloudHsmClusterPrivateEndpointConnectionAsync(peConnectionName, properties);
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
+namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     internal partial class DedicatedHsmListResult : IUtf8JsonSerializable, IJsonModel<DedicatedHsmListResult>
     {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwaresecuritymodulesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DedicatedHsmListResult)} does not support writing '{options.Format}' format.");
             }

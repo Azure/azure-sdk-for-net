@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules
+namespace Azure.ResourceManager.HardwareSecurityModules
 {
     internal partial class CloudHsmClusterRestoreStatusRestOperations
     {
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string jobId)
+        internal RequestUriBuilder CreateGetCloudHsmClusterRestoreStatusRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string jobId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +52,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string jobId)
+        internal HttpMessage CreateGetCloudHsmClusterRestoreStatusRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string jobId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -80,20 +82,26 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string jobId, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudHsmClusterRestoreResult>> GetCloudHsmClusterRestoreStatusAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, jobId);
+            using var message = CreateGetCloudHsmClusterRestoreStatusRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, jobId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
+                    {
+                        CloudHsmClusterRestoreResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = CloudHsmClusterRestoreResult.DeserializeCloudHsmClusterRestoreResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 case 202:
-                    return message.Response;
+                    return Response.FromValue((CloudHsmClusterRestoreResult)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -107,20 +115,26 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Get(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string jobId, CancellationToken cancellationToken = default)
+        public Response<CloudHsmClusterRestoreResult> GetCloudHsmClusterRestoreStatus(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, jobId);
+            using var message = CreateGetCloudHsmClusterRestoreStatusRequest(subscriptionId, resourceGroupName, cloudHsmClusterName, jobId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
+                    {
+                        CloudHsmClusterRestoreResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = CloudHsmClusterRestoreResult.DeserializeCloudHsmClusterRestoreResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 case 202:
-                    return message.Response;
+                    return Response.FromValue((CloudHsmClusterRestoreResult)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

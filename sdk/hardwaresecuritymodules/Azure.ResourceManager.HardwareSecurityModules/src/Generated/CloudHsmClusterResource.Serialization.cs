@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules
+namespace Azure.ResourceManager.HardwareSecurityModules
 {
     public partial class CloudHsmClusterResource : IJsonModel<CloudHsmClusterData>
     {
@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
 
         CloudHsmClusterData IJsonModel<CloudHsmClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudHsmClusterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudHsmClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudHsmClusterData>(Data, options, AzureResourceManagerHardwaresecuritymodulesContext.Default);
+        BinaryData IPersistableModel<CloudHsmClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudHsmClusterData>(Data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
 
-        CloudHsmClusterData IPersistableModel<CloudHsmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudHsmClusterData>(data, options, AzureResourceManagerHardwaresecuritymodulesContext.Default);
+        CloudHsmClusterData IPersistableModel<CloudHsmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudHsmClusterData>(data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
 
         string IPersistableModel<CloudHsmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudHsmClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }

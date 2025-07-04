@@ -11,13 +11,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
+namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    internal partial class HardwaresecuritymodulesPrivateLinkResourceListResult : IUtf8JsonSerializable, IJsonModel<HardwaresecuritymodulesPrivateLinkResourceListResult>
+    internal partial class HardwareSecurityModulesPrivateLinkResourceListResult : IUtf8JsonSerializable, IJsonModel<HardwareSecurityModulesPrivateLinkResourceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwaresecuritymodulesPrivateLinkResourceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwareSecurityModulesPrivateLinkResourceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HardwaresecuritymodulesPrivateLinkResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HardwareSecurityModulesPrivateLinkResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HardwaresecuritymodulesPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareSecurityModulesPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwaresecuritymodulesPrivateLinkResourceListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareSecurityModulesPrivateLinkResourceListResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Value))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
             }
         }
 
-        HardwaresecuritymodulesPrivateLinkResourceListResult IJsonModel<HardwaresecuritymodulesPrivateLinkResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HardwareSecurityModulesPrivateLinkResourceListResult IJsonModel<HardwareSecurityModulesPrivateLinkResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HardwaresecuritymodulesPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareSecurityModulesPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwaresecuritymodulesPrivateLinkResourceListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareSecurityModulesPrivateLinkResourceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHardwaresecuritymodulesPrivateLinkResourceListResult(document.RootElement, options);
+            return DeserializeHardwareSecurityModulesPrivateLinkResourceListResult(document.RootElement, options);
         }
 
-        internal static HardwaresecuritymodulesPrivateLinkResourceListResult DeserializeHardwaresecuritymodulesPrivateLinkResourceListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HardwareSecurityModulesPrivateLinkResourceListResult DeserializeHardwareSecurityModulesPrivateLinkResourceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
             {
                 return null;
             }
-            IReadOnlyList<HardwaresecuritymodulesPrivateLinkResourceData> value = default;
+            IReadOnlyList<CloudHsmClusterPrivateLinkData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
                     {
                         continue;
                     }
-                    List<HardwaresecuritymodulesPrivateLinkResourceData> array = new List<HardwaresecuritymodulesPrivateLinkResourceData>();
+                    List<CloudHsmClusterPrivateLinkData> array = new List<CloudHsmClusterPrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HardwaresecuritymodulesPrivateLinkResourceData.DeserializeHardwaresecuritymodulesPrivateLinkResourceData(item, options));
+                        array.Add(CloudHsmClusterPrivateLinkData.DeserializeCloudHsmClusterPrivateLinkData(item, options));
                     }
                     value = array;
                     continue;
@@ -121,38 +121,38 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HardwaresecuritymodulesPrivateLinkResourceListResult(value ?? new ChangeTrackingList<HardwaresecuritymodulesPrivateLinkResourceData>(), nextLink, serializedAdditionalRawData);
+            return new HardwareSecurityModulesPrivateLinkResourceListResult(value ?? new ChangeTrackingList<CloudHsmClusterPrivateLinkData>(), nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HardwaresecuritymodulesPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HardwareSecurityModulesPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HardwaresecuritymodulesPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareSecurityModulesPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwaresecuritymodulesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HardwaresecuritymodulesPrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareSecurityModulesPrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HardwaresecuritymodulesPrivateLinkResourceListResult IPersistableModel<HardwaresecuritymodulesPrivateLinkResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HardwareSecurityModulesPrivateLinkResourceListResult IPersistableModel<HardwareSecurityModulesPrivateLinkResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HardwaresecuritymodulesPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareSecurityModulesPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHardwaresecuritymodulesPrivateLinkResourceListResult(document.RootElement, options);
+                        return DeserializeHardwareSecurityModulesPrivateLinkResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HardwaresecuritymodulesPrivateLinkResourceListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareSecurityModulesPrivateLinkResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HardwaresecuritymodulesPrivateLinkResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HardwareSecurityModulesPrivateLinkResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

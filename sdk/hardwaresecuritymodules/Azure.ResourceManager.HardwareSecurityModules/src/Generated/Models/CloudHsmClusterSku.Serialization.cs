@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
+namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     public partial class CloudHsmClusterSku : IUtf8JsonSerializable, IJsonModel<CloudHsmClusterSku>
     {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwaresecuritymodulesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CloudHsmClusterSku)} does not support writing '{options.Format}' format.");
             }

@@ -9,28 +9,28 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Hardwaresecuritymodules.Mocking;
-using Azure.ResourceManager.Hardwaresecuritymodules.Models;
+using Azure.ResourceManager.HardwareSecurityModules.Mocking;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules
+namespace Azure.ResourceManager.HardwareSecurityModules
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.Hardwaresecuritymodules. </summary>
-    public static partial class HardwaresecuritymodulesExtensions
+    /// <summary> A class to add extension methods to Azure.ResourceManager.HardwareSecurityModules. </summary>
+    public static partial class HardwareSecurityModulesExtensions
     {
-        private static MockableHardwaresecuritymodulesArmClient GetMockableHardwaresecuritymodulesArmClient(ArmClient client)
+        private static MockableHardwareSecurityModulesArmClient GetMockableHardwareSecurityModulesArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableHardwaresecuritymodulesArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableHardwareSecurityModulesArmClient(client0));
         }
 
-        private static MockableHardwaresecuritymodulesResourceGroupResource GetMockableHardwaresecuritymodulesResourceGroupResource(ArmResource resource)
+        private static MockableHardwareSecurityModulesResourceGroupResource GetMockableHardwareSecurityModulesResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MockableHardwaresecuritymodulesResourceGroupResource(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableHardwareSecurityModulesResourceGroupResource(client, resource.Id));
         }
 
-        private static MockableHardwaresecuritymodulesSubscriptionResource GetMockableHardwaresecuritymodulesSubscriptionResource(ArmResource resource)
+        private static MockableHardwareSecurityModulesSubscriptionResource GetMockableHardwareSecurityModulesSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MockableHardwaresecuritymodulesSubscriptionResource(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableHardwareSecurityModulesSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// You can use <see cref="CloudHsmClusterResource.CreateResourceIdentifier" /> to create a <see cref="CloudHsmClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesArmClient.GetCloudHsmClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesArmClient.GetCloudHsmClusterResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHardwaresecuritymodulesArmClient(client).GetCloudHsmClusterResource(id);
+            return GetMockableHardwareSecurityModulesArmClient(client).GetCloudHsmClusterResource(id);
         }
 
         /// <summary>
         /// Gets a collection of CloudHsmClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.GetCloudHsmClusters()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetCloudHsmClusters()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).GetCloudHsmClusters();
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetCloudHsmClusters();
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.GetCloudHsmClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetCloudHsmClusterAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).GetCloudHsmClusterAsync(cloudHsmClusterName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetCloudHsmClusterAsync(cloudHsmClusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.GetCloudHsmCluster(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetCloudHsmCluster(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).GetCloudHsmCluster(cloudHsmClusterName, cancellationToken);
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetCloudHsmCluster(cloudHsmClusterName, cancellationToken);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.GetDedicatedHsm(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetDedicatedHsm(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).GetDedicatedHsmAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetDedicatedHsmAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.GetDedicatedHsm(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetDedicatedHsm(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).GetDedicatedHsm(name, cancellationToken);
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetDedicatedHsm(name, cancellationToken);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.CreateOrUpdateDedicatedHsm(WaitUntil,string,DedicatedHsm,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.CreateOrUpdateDedicatedHsm(WaitUntil,string,DedicatedHsm,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).CreateOrUpdateDedicatedHsmAsync(waitUntil, name, dedicatedHsm, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).CreateOrUpdateDedicatedHsmAsync(waitUntil, name, dedicatedHsm, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.CreateOrUpdateDedicatedHsm(WaitUntil,string,DedicatedHsm,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.CreateOrUpdateDedicatedHsm(WaitUntil,string,DedicatedHsm,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).CreateOrUpdateDedicatedHsm(waitUntil, name, dedicatedHsm, cancellationToken);
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).CreateOrUpdateDedicatedHsm(waitUntil, name, dedicatedHsm, cancellationToken);
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.UpdateDedicatedHsm(WaitUntil,string,DedicatedHsmPatchContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.UpdateDedicatedHsm(WaitUntil,string,DedicatedHsmPatchContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).UpdateDedicatedHsmAsync(waitUntil, name, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).UpdateDedicatedHsmAsync(waitUntil, name, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.UpdateDedicatedHsm(WaitUntil,string,DedicatedHsmPatchContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.UpdateDedicatedHsm(WaitUntil,string,DedicatedHsmPatchContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).UpdateDedicatedHsm(waitUntil, name, content, cancellationToken);
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).UpdateDedicatedHsm(waitUntil, name, content, cancellationToken);
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.DeleteDedicatedHsm(WaitUntil,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.DeleteDedicatedHsm(WaitUntil,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).DeleteDedicatedHsmAsync(waitUntil, name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).DeleteDedicatedHsmAsync(waitUntil, name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.DeleteDedicatedHsm(WaitUntil,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.DeleteDedicatedHsm(WaitUntil,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).DeleteDedicatedHsm(waitUntil, name, cancellationToken);
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).DeleteDedicatedHsm(waitUntil, name, cancellationToken);
         }
 
         /// <summary>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.GetDedicatedHsmsByResourceGroup(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetDedicatedHsmsByResourceGroup(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).GetDedicatedHsmsByResourceGroupAsync(top, cancellationToken);
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetDedicatedHsmsByResourceGroupAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.GetDedicatedHsmsByResourceGroup(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetDedicatedHsmsByResourceGroup(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).GetDedicatedHsmsByResourceGroup(top, cancellationToken);
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetDedicatedHsmsByResourceGroup(top, cancellationToken);
         }
 
         /// <summary>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.GetOutboundNetworkDependenciesEndpointsDedicatedHsms(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetOutboundNetworkDependenciesEndpointsDedicatedHsms(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -511,12 +511,12 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsDedicatedHsmsAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DedicatedHsmEgressEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DedicatedHsmEgressEndpoint> GetOutboundNetworkDependenciesEndpointsDedicatedHsmsAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).GetOutboundNetworkDependenciesEndpointsDedicatedHsmsAsync(name, cancellationToken);
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetOutboundNetworkDependenciesEndpointsDedicatedHsmsAsync(name, cancellationToken);
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesResourceGroupResource.GetOutboundNetworkDependenciesEndpointsDedicatedHsms(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesResourceGroupResource.GetOutboundNetworkDependenciesEndpointsDedicatedHsms(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -545,12 +545,12 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
-        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsDedicatedHsms(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DedicatedHsmEgressEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DedicatedHsmEgressEndpoint> GetOutboundNetworkDependenciesEndpointsDedicatedHsms(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHardwaresecuritymodulesResourceGroupResource(resourceGroupResource).GetOutboundNetworkDependenciesEndpointsDedicatedHsms(name, cancellationToken);
+            return GetMockableHardwareSecurityModulesResourceGroupResource(resourceGroupResource).GetOutboundNetworkDependenciesEndpointsDedicatedHsms(name, cancellationToken);
         }
 
         /// <summary>
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesSubscriptionResource.GetCloudHsmClusters(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHardwaresecuritymodulesSubscriptionResource(subscriptionResource).GetCloudHsmClustersAsync(skiptoken, cancellationToken);
+            return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetCloudHsmClustersAsync(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesSubscriptionResource.GetCloudHsmClusters(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHardwaresecuritymodulesSubscriptionResource(subscriptionResource).GetCloudHsmClusters(skiptoken, cancellationToken);
+            return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetCloudHsmClusters(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesSubscriptionResource.GetDedicatedHsmsBySubscription(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsmsBySubscription(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHardwaresecuritymodulesSubscriptionResource(subscriptionResource).GetDedicatedHsmsBySubscriptionAsync(top, cancellationToken);
+            return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetDedicatedHsmsBySubscriptionAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHardwaresecuritymodulesSubscriptionResource.GetDedicatedHsmsBySubscription(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHardwareSecurityModulesSubscriptionResource.GetDedicatedHsmsBySubscription(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHardwaresecuritymodulesSubscriptionResource(subscriptionResource).GetDedicatedHsmsBySubscription(top, cancellationToken);
+            return GetMockableHardwareSecurityModulesSubscriptionResource(subscriptionResource).GetDedicatedHsmsBySubscription(top, cancellationToken);
         }
     }
 }

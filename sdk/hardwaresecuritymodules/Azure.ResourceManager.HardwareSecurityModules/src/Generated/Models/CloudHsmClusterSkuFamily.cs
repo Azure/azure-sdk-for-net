@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
+namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> Sku family of the Cloud HSM Cluster. </summary>
     public readonly partial struct CloudHsmClusterSkuFamily : IEquatable<CloudHsmClusterSkuFamily>

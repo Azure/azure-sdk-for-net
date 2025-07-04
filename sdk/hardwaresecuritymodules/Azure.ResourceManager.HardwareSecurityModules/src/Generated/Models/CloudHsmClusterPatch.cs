@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Models
+namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> Patchable properties of the Cloud HSM Cluster. </summary>
     public partial class CloudHsmClusterPatch

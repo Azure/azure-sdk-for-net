@@ -9,11 +9,11 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Hardwaresecuritymodules.Models;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
+namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
@@ -116,9 +116,20 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
 
             // invoke the operation
             string name = "hsm1";
-            DedicatedHsm dedicatedHsm = new DedicatedHsm(new AzureLocation("westus"), new HardwaresecuritymodulesSku
+            DedicatedHsm dedicatedHsm = new DedicatedHsm(new AzureLocation("westus"), new DedicatedHsmSku
             {
-                Name = HardwaresecuritymodulesSkuName.SafeNetLunaNetworkHSMA790,
+                Name = DedicatedHsmSkuName.SafeNetLunaNetworkHsmA790,
+            }, new DedicatedHsmProperties
+            {
+                NetworkProfile = new DedicatedHsmNetworkProfile
+                {
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
+                    NetworkInterfaces = {new DedicatedHsmNetworkInterface
+{
+PrivateIPAddress = "1.0.0.1",
+}},
+                },
+                StampId = "stamp01",
             })
             {
                 Tags =
@@ -154,9 +165,20 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
 
             // invoke the operation
             string name = "hsm1";
-            DedicatedHsm dedicatedHsm = new DedicatedHsm(new AzureLocation("westus"), new HardwaresecuritymodulesSku
+            DedicatedHsm dedicatedHsm = new DedicatedHsm(new AzureLocation("westus"), new DedicatedHsmSku
             {
-                Name = HardwaresecuritymodulesSkuName.PayShield10KLMK1CPS60,
+                Name = DedicatedHsmSkuName.PayShield10KLmk1Cps60,
+            }, new DedicatedHsmProperties
+            {
+                NetworkProfile = new DedicatedHsmNetworkProfile
+                {
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
+                    NetworkInterfaces = {new DedicatedHsmNetworkInterface
+{
+PrivateIPAddress = "1.0.0.1",
+}},
+                },
+                StampId = "stamp01",
             })
             {
                 Tags =
@@ -192,9 +214,28 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
 
             // invoke the operation
             string name = "hsm1";
-            DedicatedHsm dedicatedHsm = new DedicatedHsm(new AzureLocation("westus"), new HardwaresecuritymodulesSku
+            DedicatedHsm dedicatedHsm = new DedicatedHsm(new AzureLocation("westus"), new DedicatedHsmSku
             {
-                Name = HardwaresecuritymodulesSkuName.PayShield10KLMK1CPS60,
+                Name = DedicatedHsmSkuName.PayShield10KLmk1Cps60,
+            }, new DedicatedHsmProperties
+            {
+                NetworkProfile = new DedicatedHsmNetworkProfile
+                {
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
+                    NetworkInterfaces = {new DedicatedHsmNetworkInterface
+{
+PrivateIPAddress = "1.0.0.1",
+}},
+                },
+                ManagementNetworkProfile = new DedicatedHsmNetworkProfile
+                {
+                    SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
+                    NetworkInterfaces = {new DedicatedHsmNetworkInterface
+{
+PrivateIPAddress = "1.0.0.2",
+}},
+                },
+                StampId = "stamp01",
             })
             {
                 Tags =
@@ -384,7 +425,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
 
             // invoke the operation and iterate over the result
             string name = "hsm1";
-            await foreach (OutboundEnvironmentEndpoint item in resourceGroupResource.GetOutboundNetworkDependenciesEndpointsDedicatedHsmsAsync(name))
+            await foreach (DedicatedHsmEgressEndpoint item in resourceGroupResource.GetOutboundNetworkDependenciesEndpointsDedicatedHsmsAsync(name))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

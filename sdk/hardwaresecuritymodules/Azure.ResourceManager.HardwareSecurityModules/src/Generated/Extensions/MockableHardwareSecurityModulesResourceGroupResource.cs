@@ -11,29 +11,29 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Hardwaresecuritymodules.Models;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
+namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    public partial class MockableHardwaresecuritymodulesResourceGroupResource : ArmResource
+    public partial class MockableHardwareSecurityModulesResourceGroupResource : ArmResource
     {
         private ClientDiagnostics _dedicatedHsmClientDiagnostics;
         private DedicatedHsmRestOperations _dedicatedHsmRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHardwaresecuritymodulesResourceGroupResource"/> class for mocking. </summary>
-        protected MockableHardwaresecuritymodulesResourceGroupResource()
+        /// <summary> Initializes a new instance of the <see cref="MockableHardwareSecurityModulesResourceGroupResource"/> class for mocking. </summary>
+        protected MockableHardwareSecurityModulesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHardwaresecuritymodulesResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableHardwareSecurityModulesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableHardwaresecuritymodulesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableHardwareSecurityModulesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DedicatedHsmClientDiagnostics => _dedicatedHsmClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hardwaresecuritymodules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DedicatedHsmClientDiagnostics => _dedicatedHsmClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DedicatedHsmRestOperations DedicatedHsmRestClient => _dedicatedHsmRestClient ??= new DedicatedHsmRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.GetDedicatedHsm");
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwareSecurityModulesResourceGroupResource.GetDedicatedHsm");
             scope.Start();
             try
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.GetDedicatedHsm");
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwareSecurityModulesResourceGroupResource.GetDedicatedHsm");
             scope.Start();
             try
             {
@@ -217,12 +217,12 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(dedicatedHsm, nameof(dedicatedHsm));
 
-            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.CreateOrUpdateDedicatedHsm");
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwareSecurityModulesResourceGroupResource.CreateOrUpdateDedicatedHsm");
             scope.Start();
             try
             {
                 var response = await DedicatedHsmRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, dedicatedHsm, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwaresecuritymodulesArmOperation<DedicatedHsm>(new DedicatedHsmOperationSource(), DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, dedicatedHsm).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HardwareSecurityModulesArmOperation<DedicatedHsm>(new DedicatedHsmOperationSource(), DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, dedicatedHsm).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -262,12 +262,12 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(dedicatedHsm, nameof(dedicatedHsm));
 
-            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.CreateOrUpdateDedicatedHsm");
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwareSecurityModulesResourceGroupResource.CreateOrUpdateDedicatedHsm");
             scope.Start();
             try
             {
                 var response = DedicatedHsmRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, dedicatedHsm, cancellationToken);
-                var operation = new HardwaresecuritymodulesArmOperation<DedicatedHsm>(new DedicatedHsmOperationSource(), DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, dedicatedHsm).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HardwareSecurityModulesArmOperation<DedicatedHsm>(new DedicatedHsmOperationSource(), DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, dedicatedHsm).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -307,12 +307,12 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.UpdateDedicatedHsm");
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwareSecurityModulesResourceGroupResource.UpdateDedicatedHsm");
             scope.Start();
             try
             {
                 var response = await DedicatedHsmRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwaresecuritymodulesArmOperation<DedicatedHsm>(new DedicatedHsmOperationSource(), DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HardwareSecurityModulesArmOperation<DedicatedHsm>(new DedicatedHsmOperationSource(), DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -352,12 +352,12 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.UpdateDedicatedHsm");
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwareSecurityModulesResourceGroupResource.UpdateDedicatedHsm");
             scope.Start();
             try
             {
                 var response = DedicatedHsmRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken);
-                var operation = new HardwaresecuritymodulesArmOperation<DedicatedHsm>(new DedicatedHsmOperationSource(), DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new HardwareSecurityModulesArmOperation<DedicatedHsm>(new DedicatedHsmOperationSource(), DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -395,12 +395,12 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.DeleteDedicatedHsm");
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwareSecurityModulesResourceGroupResource.DeleteDedicatedHsm");
             scope.Start();
             try
             {
                 var response = await DedicatedHsmRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
-                var operation = new HardwaresecuritymodulesArmOperation(DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HardwareSecurityModulesArmOperation(DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -438,12 +438,12 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwaresecuritymodulesResourceGroupResource.DeleteDedicatedHsm");
+            using var scope = DedicatedHsmClientDiagnostics.CreateScope("MockableHardwareSecurityModulesResourceGroupResource.DeleteDedicatedHsm");
             scope.Start();
             try
             {
                 var response = DedicatedHsmRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
-                var operation = new HardwaresecuritymodulesArmOperation(DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, name).Request, response, OperationFinalStateVia.Location);
+                var operation = new HardwareSecurityModulesArmOperation(DedicatedHsmClientDiagnostics, Pipeline, DedicatedHsmRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DedicatedHsm.DeserializeDedicatedHsm(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwaresecuritymodulesResourceGroupResource.GetDedicatedHsmsByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DedicatedHsm.DeserializeDedicatedHsm(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwareSecurityModulesResourceGroupResource.GetDedicatedHsmsByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DedicatedHsm.DeserializeDedicatedHsm(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwaresecuritymodulesResourceGroupResource.GetDedicatedHsmsByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DedicatedHsm.DeserializeDedicatedHsm(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwareSecurityModulesResourceGroupResource.GetDedicatedHsmsByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -530,14 +530,14 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsDedicatedHsmsAsync(string name, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DedicatedHsmEgressEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DedicatedHsmEgressEndpoint> GetOutboundNetworkDependenciesEndpointsDedicatedHsmsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwaresecuritymodulesResourceGroupResource.GetOutboundNetworkDependenciesEndpointsDedicatedHsms", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DedicatedHsmEgressEndpoint.DeserializeDedicatedHsmEgressEndpoint(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwareSecurityModulesResourceGroupResource.GetOutboundNetworkDependenciesEndpointsDedicatedHsms", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -561,14 +561,14 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsDedicatedHsms(string name, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DedicatedHsmEgressEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DedicatedHsmEgressEndpoint> GetOutboundNetworkDependenciesEndpointsDedicatedHsms(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwaresecuritymodulesResourceGroupResource.GetOutboundNetworkDependenciesEndpointsDedicatedHsms", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DedicatedHsmEgressEndpoint.DeserializeDedicatedHsmEgressEndpoint(e), DedicatedHsmClientDiagnostics, Pipeline, "MockableHardwareSecurityModulesResourceGroupResource.GetOutboundNetworkDependenciesEndpointsDedicatedHsms", "value", "nextLink", cancellationToken);
         }
     }
 }

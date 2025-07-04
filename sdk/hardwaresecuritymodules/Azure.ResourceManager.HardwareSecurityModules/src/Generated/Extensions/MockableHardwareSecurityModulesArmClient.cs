@@ -7,24 +7,24 @@
 
 using Azure.Core;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Mocking
+namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
 {
     /// <summary> A class to add extension methods to ArmClient. </summary>
-    public partial class MockableHardwaresecuritymodulesArmClient : ArmResource
+    public partial class MockableHardwareSecurityModulesArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHardwaresecuritymodulesArmClient"/> class for mocking. </summary>
-        protected MockableHardwaresecuritymodulesArmClient()
+        /// <summary> Initializes a new instance of the <see cref="MockableHardwareSecurityModulesArmClient"/> class for mocking. </summary>
+        protected MockableHardwareSecurityModulesArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHardwaresecuritymodulesArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableHardwareSecurityModulesArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableHardwaresecuritymodulesArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableHardwareSecurityModulesArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableHardwaresecuritymodulesArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
+        internal MockableHardwareSecurityModulesArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
         {
         }
 

@@ -11,9 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Hardwaresecuritymodules.Models;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules
+namespace Azure.ResourceManager.HardwareSecurityModules
 {
     internal partial class CloudHsmClusterPrivateEndpointConnectionsRestOperations
     {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="peConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HardwaresecuritymodulesPrivateEndpointConnection>> GetAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudHsmClusterPrivateEndpointConnection>> GetAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
             {
                 case 200:
                     {
-                        HardwaresecuritymodulesPrivateEndpointConnection value = default;
+                        CloudHsmClusterPrivateEndpointConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = HardwaresecuritymodulesPrivateEndpointConnection.DeserializeHardwaresecuritymodulesPrivateEndpointConnection(document.RootElement);
+                        value = CloudHsmClusterPrivateEndpointConnection.DeserializeCloudHsmClusterPrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="peConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HardwaresecuritymodulesPrivateEndpointConnection> Get(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, CancellationToken cancellationToken = default)
+        public Response<CloudHsmClusterPrivateEndpointConnection> Get(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
             {
                 case 200:
                     {
-                        HardwaresecuritymodulesPrivateEndpointConnection value = default;
+                        CloudHsmClusterPrivateEndpointConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = HardwaresecuritymodulesPrivateEndpointConnection.DeserializeHardwaresecuritymodulesPrivateEndpointConnection(document.RootElement);
+                        value = CloudHsmClusterPrivateEndpointConnection.DeserializeCloudHsmClusterPrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, HardwaresecuritymodulesPrivateEndpointConnection properties)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, CloudHsmClusterPrivateEndpointConnection properties)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, HardwaresecuritymodulesPrivateEndpointConnection properties)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, CloudHsmClusterPrivateEndpointConnection properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/>, <paramref name="peConnectionName"/> or <paramref name="properties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HardwaresecuritymodulesPrivateEndpointConnection>> CreateAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, HardwaresecuritymodulesPrivateEndpointConnection properties, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudHsmClusterPrivateEndpointConnection>> CreateAsync(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, CloudHsmClusterPrivateEndpointConnection properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
             {
                 case 200:
                     {
-                        HardwaresecuritymodulesPrivateEndpointConnection value = default;
+                        CloudHsmClusterPrivateEndpointConnection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = HardwaresecuritymodulesPrivateEndpointConnection.DeserializeHardwaresecuritymodulesPrivateEndpointConnection(document.RootElement);
+                        value = CloudHsmClusterPrivateEndpointConnection.DeserializeCloudHsmClusterPrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/>, <paramref name="peConnectionName"/> or <paramref name="properties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudHsmClusterName"/> or <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HardwaresecuritymodulesPrivateEndpointConnection> Create(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, HardwaresecuritymodulesPrivateEndpointConnection properties, CancellationToken cancellationToken = default)
+        public Response<CloudHsmClusterPrivateEndpointConnection> Create(string subscriptionId, string resourceGroupName, string cloudHsmClusterName, string peConnectionName, CloudHsmClusterPrivateEndpointConnection properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -234,9 +234,9 @@ namespace Azure.ResourceManager.Hardwaresecuritymodules
             {
                 case 200:
                     {
-                        HardwaresecuritymodulesPrivateEndpointConnection value = default;
+                        CloudHsmClusterPrivateEndpointConnection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = HardwaresecuritymodulesPrivateEndpointConnection.DeserializeHardwaresecuritymodulesPrivateEndpointConnection(document.RootElement);
+                        value = CloudHsmClusterPrivateEndpointConnection.DeserializeCloudHsmClusterPrivateEndpointConnection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

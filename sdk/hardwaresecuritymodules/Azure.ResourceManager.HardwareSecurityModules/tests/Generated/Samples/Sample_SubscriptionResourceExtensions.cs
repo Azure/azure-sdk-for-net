@@ -9,11 +9,11 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Hardwaresecuritymodules.Models;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Hardwaresecuritymodules.Samples
+namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
