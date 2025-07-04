@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ElasticSan
         public Azure.Core.ResourceIdentifier ManagedByResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState? ProvisioningState { get { throw null; } }
         public long SizeGiB { get { throw null; } set { } }
-        public Azure.ResourceManager.ElasticSan.Models.IscsiTargetInfo StorageTarget { get { throw null; } }
+        public Azure.ResourceManager.ElasticSan.Models.IscsiTargetInfo StorageTarget { get { throw null; } set { } }
         public System.Guid? VolumeId { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ElasticSan.ElasticSanVolumeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.ElasticSanVolumeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -889,9 +889,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
     }
     public partial class IscsiTargetInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ElasticSan.Models.IscsiTargetInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ElasticSan.Models.IscsiTargetInfo>
     {
-        internal IscsiTargetInfo() { }
+        public IscsiTargetInfo() { }
         public Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.ElasticSan.Models.ResourceOperationalStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.ElasticSan.Models.ResourceOperationalStatus? Status { get { throw null; } set { } }
         public string TargetIqn { get { throw null; } }
         public string TargetPortalHostname { get { throw null; } }
         public int? TargetPortalPort { get { throw null; } }

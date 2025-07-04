@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Volume size. </summary>
         public long SizeGiB { get; set; }
         /// <summary> Storage target information. </summary>
-        public IscsiTargetInfo StorageTarget { get; }
+        public IscsiTargetInfo StorageTarget { get; set; }
         /// <summary> Parent resource information. </summary>
         internal ManagedByInfo ManagedBy { get; set; }
         /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>

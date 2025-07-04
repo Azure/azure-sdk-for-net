@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ElasticSan
             long? totalVolumeSizeGiB = default;
             long? volumeGroupCount = default;
             long? totalIops = default;
-            long? totalMbps = default;
+            long? totalMBps = default;
             long? totalSizeTiB = default;
             IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
             ElasticSanPublicNetworkAccess? publicNetworkAccess = default;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            totalMbps = property0.Value.GetInt64();
+                            totalMBps = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("totalSizeTiB"u8))
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ElasticSan
                 totalVolumeSizeGiB,
                 volumeGroupCount,
                 totalIops,
-                totalMbps,
+                totalMBps,
                 totalSizeTiB,
                 privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
                 publicNetworkAccess,
