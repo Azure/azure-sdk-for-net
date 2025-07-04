@@ -13,6 +13,7 @@ PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCreden
 
 Synchronous sample:
 ```C# Snippet:AgentsConnectedAgent_CreateSubAgent
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
 PersistentAgent subAgent = agentClient.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "math-helper",
@@ -21,6 +22,7 @@ PersistentAgent subAgent = agentClient.Administration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsConnectedAgentAsync_CreateSubAgent
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
 PersistentAgent subAgent = await agentClient.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "math-helper",
@@ -43,6 +45,7 @@ ConnectedAgentToolDefinition connectedAgentTool = new(
 
 Synchronous sample:
 ```C# Snippet:AgentsConnectedAgent_CreateAgent
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
 PersistentAgent agent = agentClient.Administration.CreateAgent(
    model: modelDeploymentName,
    name: "main-agent",
@@ -52,6 +55,7 @@ PersistentAgent agent = agentClient.Administration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsConnectedAgentAsync_CreateAgent
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
 PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "main-agent",
@@ -169,6 +173,7 @@ await foreach (PersistentThreadMessage threadMessage in messages)
 
 Synchronous sample:
 ```C# Snippet:AgentsConnectedAgentCleanup
+// NOTE: Comment out these three lines if you plan to reuse the agent later.
 agentClient.Threads.DeleteThread(threadId: thread.Id);
 agentClient.Administration.DeleteAgent(agentId: agent.Id);
 agentClient.Administration.DeleteAgent(agentId: subAgent.Id);
@@ -176,6 +181,7 @@ agentClient.Administration.DeleteAgent(agentId: subAgent.Id);
 
 Asynchronous sample:
 ```C# Snippet:AgentsConnectedAgentCleanupAsync
+// NOTE: Comment out these three lines if you plan to reuse the agent later.
 await agentClient.Threads.DeleteThreadAsync(threadId: thread.Id);
 await agentClient.Administration.DeleteAgentAsync(agentId: agent.Id);
 await agentClient.Administration.DeleteAgentAsync(agentId: subAgent.Id);

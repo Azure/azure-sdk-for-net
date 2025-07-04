@@ -26,6 +26,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
             #endregion
             #region Snippet:AgentsStreamingAsync_CreateAgent
+            // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: modelDeploymentName,
                 name: "My Friendly Test Agent",
@@ -59,6 +60,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             #endregion
             #region Snippet:AgentsStreamingAsync_Cleanup
+            // NOTE: Comment out these two lines if you plan to reuse the agent later.
             await client.Threads.DeleteThreadAsync(thread.Id);
             await client.Administration.DeleteAgentAsync(agent.Id);
             #endregion
@@ -77,6 +79,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 #endif
             PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
             #region Snippet:AgentsStreaming_CreateAgent
+            // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
             PersistentAgent agent = client.Administration.CreateAgent(
                 model: modelDeploymentName,
                 name: "My Friendly Test Agent",
@@ -110,6 +113,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             #endregion
             #region Snippet:AgentsStreaming_Cleanup
+            // NOTE: Comment out these two lines if you plan to reuse the agent later.
             client.Threads.DeleteThread(thread.Id);
             client.Administration.DeleteAgent(agent.Id);
             #endregion
