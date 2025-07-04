@@ -18,6 +18,7 @@
 
 ### Bugs Fixed
 * Fix getting model deployed on the Azure Open AI resource, if the resource is authenticated using Entra ID. [see GitHub issue 49064](https://github.com/Azure/azure-sdk-for-net/issues/49064)
+* Fix dataset uploading datasets.
 
 ### Other Changes
 
