@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Initializes a new instance of PrivateLinkResourcesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public PrivateLinkResourcesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> Gets the private link resources that need to be created for a elastic San. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> Gets the private link resources that need to be created for a elastic San. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

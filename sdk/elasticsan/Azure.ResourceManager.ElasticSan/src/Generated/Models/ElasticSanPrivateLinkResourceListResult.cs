@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -46,9 +47,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateLinkResourceListResult"/>. </summary>
-        internal ElasticSanPrivateLinkResourceListResult()
+        /// <param name="value"> Array of private link resources. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ElasticSanPrivateLinkResourceListResult(IEnumerable<ElasticSanPrivateLinkResource> value)
         {
-            Value = new ChangeTrackingList<ElasticSanPrivateLinkResource>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateLinkResourceListResult"/>. </summary>
@@ -60,6 +65,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateLinkResourceListResult"/> for deserialization. </summary>
+        internal ElasticSanPrivateLinkResourceListResult()
+        {
         }
 
         /// <summary> Array of private link resources. </summary>
