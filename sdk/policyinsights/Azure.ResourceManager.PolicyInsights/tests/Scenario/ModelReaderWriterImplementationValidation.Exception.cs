@@ -10,6 +10,12 @@ namespace Azure.ResourceManager.TestFramework
             ExceptionList = new[]
             {
                 "Azure.ResourceManager.PolicyInsights.Models.PolicyQuerySettings",
+                "Azure.ResourceManager.PolicyInsights.Models.ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions",
+                "Azure.ResourceManager.PolicyInsights.Models.ResourceGroupResourceGetQueryResultsForResourceGroupComponentPolicyStatesOptions",
+                "Azure.ResourceManager.PolicyInsights.Models.ResourceGroupResourceGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesOptions",
+                "Azure.ResourceManager.PolicyInsights.Models.SubscriptionResourceGetQueryResultsForPolicyDefinitionComponentPolicyStatesOptions",
+                "Azure.ResourceManager.PolicyInsights.Models.SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions",
+                "Azure.ResourceManager.PolicyInsights.Models.SubscriptionResourceGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesOptions"
             };
         }
     }
