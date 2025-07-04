@@ -160,6 +160,7 @@ rename-mapping:
   RemediationDeployment.resourceLocation: -|azure-location
   TrackedResourceModificationDetails.deploymentId: -|arm-id
   PolicyTrackedResourcesResourceType: PolicyTrackedResourceType
+  PolicyEvaluationResult.evaluationDetails: CheckRestrictionEvaluationDetails
 
 models-to-treat-empty-string-as-null:
   - PolicyAssignmentSummary
