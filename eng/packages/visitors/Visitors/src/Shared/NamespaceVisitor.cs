@@ -2,13 +2,18 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
+using Visitors.Extensions;
 
-namespace Azure.Generator.Visitors
+namespace Visitors
 {
+    /// <summary>
+    /// Visitor that updates the namespace and file paths for model and enum types.
+    /// </summary>
     internal class NamespaceVisitor : ScmLibraryVisitor
     {
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
@@ -52,14 +57,14 @@ namespace Azure.Generator.Visitors
 
         private static void UpdateModelsNamespace(TypeProvider type)
         {
-            if (AzureClientGenerator.Instance.Configuration.UseModelNamespace())
+            if (CodeModelGenerator.Instance.Configuration.UseModelNamespace())
             {
                 // If the type is customized, then we don't want to override the namespace.
                 if (type.CustomCodeView == null)
                 {
                     type.Update(
-                        @namespace: AzureClientGenerator.Instance.TypeFactory.GetCleanNameSpace(
-                            $"{AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace}.Models"));
+                        @namespace: CodeModelGenerator.Instance.TypeFactory.GetCleanNameSpace(
+                            $"{CodeModelGenerator.Instance.TypeFactory.PrimaryNamespace}.Models"));
                 }
             }
             else
