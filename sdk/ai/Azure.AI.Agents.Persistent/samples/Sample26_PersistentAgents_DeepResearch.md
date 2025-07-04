@@ -16,8 +16,8 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 ```C# Snippet:DeepResearch_CreateTools
 DeepResearchToolDefinition deepResearch = new(
     new DeepResearchDetails(
-        deepResearchModel: deepResearchModelDeploymentName,
-        deepResearchBingGroundingConnections: [
+        model: deepResearchModelDeploymentName,
+        bingGroundingConnections: [
             new DeepResearchBingGroundingConnection(connectionId)
         ]
     )
@@ -28,6 +28,7 @@ DeepResearchToolDefinition deepResearch = new(
 
 Synchronous sample:
 ```C# Snippet:DeepResearchSync_CreateAgent
+// NOTE: To reuse existing agent, fetch it with get_agent(agent_id)
 PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "Science Tutor",
@@ -38,6 +39,7 @@ PersistentAgent agent = client.Administration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:DeepResearch_CreateAgent
+// NOTE: To reuse existing agent, fetch it with get_agent(agent_id)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "Science Tutor",
@@ -53,7 +55,10 @@ Synchronous sample:
 PersistentAgentThreadCreationOptions threadOp = new();
 threadOp.Messages.Add(new ThreadMessageOptions(
         role: MessageRole.User,
-        content: "Research the current state of studies on orca intelligence and orca language, including what is currently known about orcas' cognitive capabilities and communication systems."
+        content: "Research the current state of studies on orca intelligence and orca language, " +
+        "including what is currently known about orcas' cognitive capabilities, " +
+        "communication systems and problem-solving reflected in recent publications in top thier scientific " +
+        "journals like Science, Nature and PNAS."
     ));
 ThreadAndRunOptions opts = new()
 {
@@ -64,6 +69,7 @@ ThreadRun run = client.CreateThreadAndRun(
     options: opts
 );
 
+Console.WriteLine("Start processing the message... this may take a few minutes to finish. Be patient!");
 do
 {
     Thread.Sleep(TimeSpan.FromMilliseconds(500));
@@ -82,7 +88,10 @@ Asynchronous sample:
 PersistentAgentThreadCreationOptions threadOp = new();
 threadOp.Messages.Add(new ThreadMessageOptions(
         role: MessageRole.User,
-        content: "Research the current state of studies on orca intelligence and orca language, including what is currently known about orcas' cognitive capabilities and communication systems."
+        content: "Research the current state of studies on orca intelligence and orca language, " +
+        "including what is currently known about orcas' cognitive capabilities, " +
+        "communication systems and problem-solving reflected in recent publications in top thier scientific " +
+        "journals like Science, Nature and PNAS."
     ));
 ThreadAndRunOptions opts = new()
 {
@@ -93,6 +102,7 @@ ThreadRun run = await client.CreateThreadAndRunAsync(
     options: opts
 );
 
+Console.WriteLine("Start processing the message... this may take a few minutes to finish. Be patient!");
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -176,12 +186,14 @@ PrintMessagesAndSaveSummary(await messages.ToListAsync(), "research_summary.md")
 
 Synchronous sample:
 ```C# Snippet:DeepResearchSync_Cleanup
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 client.Threads.DeleteThread(threadId: run.ThreadId);
 client.Administration.DeleteAgent(agentId: agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:DeepResearch_Cleanup
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 await client.Threads.DeleteThreadAsync(threadId: run.ThreadId);
 await client.Administration.DeleteAgentAsync(agentId: agent.Id);
 ```

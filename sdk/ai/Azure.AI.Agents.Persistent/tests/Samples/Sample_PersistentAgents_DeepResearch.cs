@@ -5,8 +5,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,8 +41,8 @@ public partial class Sample_PersistentAgents_DeepResearch : SamplesBase<AIAgents
         #region Snippet:DeepResearch_CreateTools
         DeepResearchToolDefinition deepResearch = new(
             new DeepResearchDetails(
-                deepResearchModel: deepResearchModelDeploymentName,
-                deepResearchBingGroundingConnections: [
+                model: deepResearchModelDeploymentName,
+                bingGroundingConnections: [
                     new DeepResearchBingGroundingConnection(connectionId)
                 ]
             )
@@ -49,6 +51,7 @@ public partial class Sample_PersistentAgents_DeepResearch : SamplesBase<AIAgents
 
         // Step 1: Create an agent
         #region Snippet:DeepResearch_CreateAgent
+        // NOTE: To reuse existing agent, fetch it with get_agent(agent_id)
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "Science Tutor",
@@ -62,7 +65,10 @@ public partial class Sample_PersistentAgents_DeepResearch : SamplesBase<AIAgents
         PersistentAgentThreadCreationOptions threadOp = new();
         threadOp.Messages.Add(new ThreadMessageOptions(
                 role: MessageRole.User,
-                content: "Research the current state of studies on orca intelligence and orca language, including what is currently known about orcas' cognitive capabilities and communication systems."
+                content: "Research the current state of studies on orca intelligence and orca language, " +
+                "including what is currently known about orcas' cognitive capabilities, " +
+                "communication systems and problem-solving reflected in recent publications in top thier scientific " +
+                "journals like Science, Nature and PNAS."
             ));
         ThreadAndRunOptions opts = new()
         {
@@ -73,6 +79,7 @@ public partial class Sample_PersistentAgents_DeepResearch : SamplesBase<AIAgents
             options: opts
         );
 
+        Console.WriteLine("Start processing the message... this may take a few minutes to finish. Be patient!");
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
@@ -94,6 +101,7 @@ public partial class Sample_PersistentAgents_DeepResearch : SamplesBase<AIAgents
         PrintMessagesAndSaveSummary(await messages.ToListAsync(), "research_summary.md");
         #endregion
         #region Snippet:DeepResearch_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         await client.Threads.DeleteThreadAsync(threadId: run.ThreadId);
         await client.Administration.DeleteAgentAsync(agentId: agent.Id);
         #endregion
@@ -118,8 +126,8 @@ public partial class Sample_PersistentAgents_DeepResearch : SamplesBase<AIAgents
 
         DeepResearchToolDefinition deepResearch = new(
             new DeepResearchDetails(
-                deepResearchModel: deepResearchModelDeploymentName,
-                deepResearchBingGroundingConnections: [
+                model: deepResearchModelDeploymentName,
+                bingGroundingConnections: [
                     new DeepResearchBingGroundingConnection(connectionId)
                 ]
             )
@@ -127,6 +135,7 @@ public partial class Sample_PersistentAgents_DeepResearch : SamplesBase<AIAgents
 
         // Step 1: Create an agent
         #region Snippet:DeepResearchSync_CreateAgent
+        // NOTE: To reuse existing agent, fetch it with get_agent(agent_id)
         PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "Science Tutor",
@@ -140,7 +149,10 @@ public partial class Sample_PersistentAgents_DeepResearch : SamplesBase<AIAgents
         PersistentAgentThreadCreationOptions threadOp = new();
         threadOp.Messages.Add(new ThreadMessageOptions(
                 role: MessageRole.User,
-                content: "Research the current state of studies on orca intelligence and orca language, including what is currently known about orcas' cognitive capabilities and communication systems."
+                content: "Research the current state of studies on orca intelligence and orca language, " +
+                "including what is currently known about orcas' cognitive capabilities, " +
+                "communication systems and problem-solving reflected in recent publications in top thier scientific " +
+                "journals like Science, Nature and PNAS."
             ));
         ThreadAndRunOptions opts = new()
         {
@@ -151,6 +163,7 @@ public partial class Sample_PersistentAgents_DeepResearch : SamplesBase<AIAgents
             options: opts
         );
 
+        Console.WriteLine("Start processing the message... this may take a few minutes to finish. Be patient!");
         do
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(500));
@@ -172,6 +185,7 @@ public partial class Sample_PersistentAgents_DeepResearch : SamplesBase<AIAgents
         #endregion
 
         #region Snippet:DeepResearchSync_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         client.Threads.DeleteThread(threadId: run.ThreadId);
         client.Administration.DeleteAgent(agentId: agent.Id);
         #endregion

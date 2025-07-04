@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
@@ -1523,6 +1524,72 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
         }
 
+        [RecordedTest]
+        public async Task TestDeepResearchTool()
+        {
+            PersistentAgentsClient client = GetClient();
+            DeepResearchToolDefinition deepResearch = new(
+                new DeepResearchDetails(
+                    model: TestEnvironment.DEEP_RESEARCH_MODEL_DEPLOYMENT_NAME,
+                    bingGroundingConnections: [
+                        new DeepResearchBingGroundingConnection(TestEnvironment.BING_CONNECTION_ID)
+                    ]
+                )
+            );
+            string instruction = "You are a helpful Agent that assists in researching scientific topics.";
+            PersistentAgent agent = await GetAgent(client: client, instruction:instruction, model: "gpt-4o", tools: [deepResearch]);
+            PersistentAgentThreadCreationOptions threadOp = new();
+            threadOp.Messages.Add(new ThreadMessageOptions(
+                role: MessageRole.User,
+                content: "Research the current state of studies on orca intelligence and orca language, " +
+                "including what is currently known about orcas' cognitive capabilities, " +
+                "communication systems and problem-solving reflected in recent publications in top thier scientific " +
+                "journals like Science, Nature and PNAS."
+            ));
+            ThreadAndRunOptions opts = new()
+            {
+                ThreadOptions = threadOp,
+            };
+            ThreadRun run = await client.CreateThreadAndRunAsync(
+                assistantId: agent.Id,
+                options: opts
+            );
+            run = await WaitForRun(client, run);
+            Assert.AreEqual(RunStatus.Completed, run.Status);
+            List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(run.ThreadId, run.Id).ToListAsync();
+            Assert.GreaterOrEqual(messages.Count, 1);
+            bool annotationFound = false;
+            foreach (PersistentThreadMessage msg in messages)
+            {
+                if (msg.Role != MessageRole.Agent)
+                    continue;
+                foreach (MessageContent contentItem in msg.ContentItems)
+                {
+                    if (contentItem is MessageTextContent textItem)
+                    {
+                        // Console.WriteLine(textItem.Text);
+                        if (textItem.Annotations != null)
+                        {
+                            foreach (MessageTextAnnotation annotation in textItem.Annotations)
+                            {
+                                if (annotation is MessageTextUriCitationAnnotation uriAnnotation)
+                                {
+                                    annotationFound = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (annotationFound)
+                        break;
+                }
+                if (annotationFound)
+                    break;
+            }
+            // Note sometimes this assumption fails because agent asks additional question.
+            Assert.That(annotationFound, "Annotations were not found, the data are not grounded.");
+        }
+
         #region Helpers
 
         private static string CreateTempDirMayBe()
@@ -1570,12 +1637,13 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.IsTrue(resp.Value);
         }
 
-        private static async Task<PersistentAgent> GetAgent(PersistentAgentsClient client, string agentName=AGENT_NAME, string instruction= "You are helpful agent.")
+        private static async Task<PersistentAgent> GetAgent(PersistentAgentsClient client, string agentName = AGENT_NAME, string instruction = "You are helpful agent.", string model="gpt-4", IEnumerable<ToolDefinition> tools=null)
         {
             return await client.Administration.CreateAgentAsync(
-                model: "gpt-4",
+                model: model,
                 name: agentName,
-                instructions: instruction
+                instructions: instruction,
+                tools: tools
             );
         }
 
@@ -1613,14 +1681,10 @@ namespace Azure.AI.Agents.Persistent.Tests
         private async Task<ThreadRun> WaitForRun(PersistentAgentsClient client, ThreadRun run)
         {
             double delay = 500;
-            if (Mode == RecordedTestMode.Playback)
-            {
-                // No need to wait during playback.
-                delay = 1;
-            }
             do
             {
-                await Task.Delay(TimeSpan.FromMilliseconds(delay));
+                if (Mode != RecordedTestMode.Playback)
+                    await Task.Delay(TimeSpan.FromMilliseconds(delay));
                 run = await client.Runs.GetRunAsync(run.ThreadId, run.Id);
             }
             while (run.Status == RunStatus.Queued

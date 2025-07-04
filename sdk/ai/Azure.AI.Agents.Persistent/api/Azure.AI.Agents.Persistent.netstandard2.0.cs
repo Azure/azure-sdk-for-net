@@ -260,9 +260,9 @@ namespace Azure.AI.Agents.Persistent
     }
     public partial class DeepResearchDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.DeepResearchDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.DeepResearchDetails>
     {
-        public DeepResearchDetails(string deepResearchModel, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection> deepResearchBingGroundingConnections) { }
-        public System.Collections.Generic.IList<Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection> DeepResearchBingGroundingConnections { get { throw null; } }
-        public string DeepResearchModel { get { throw null; } set { } }
+        public DeepResearchDetails(string model, System.Collections.Generic.IEnumerable<Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection> bingGroundingConnections) { }
+        public System.Collections.Generic.IList<Azure.AI.Agents.Persistent.DeepResearchBingGroundingConnection> BingGroundingConnections { get { throw null; } }
+        public string Model { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.DeepResearchDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.DeepResearchDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.DeepResearchDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

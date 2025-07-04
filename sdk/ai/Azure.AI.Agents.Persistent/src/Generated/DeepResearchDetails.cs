@@ -47,26 +47,26 @@ namespace Azure.AI.Agents.Persistent
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeepResearchDetails"/>. </summary>
-        /// <param name="deepResearchModel"> The deep research model deployment name. </param>
-        /// <param name="deepResearchBingGroundingConnections"> The array containing Bing grounding connection IDs to enhance deep research capabilities. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deepResearchModel"/> or <paramref name="deepResearchBingGroundingConnections"/> is null. </exception>
-        public DeepResearchDetails(string deepResearchModel, IEnumerable<DeepResearchBingGroundingConnection> deepResearchBingGroundingConnections)
+        /// <param name="model"> The deep research model deployment name. </param>
+        /// <param name="bingGroundingConnections"> The array containing Bing grounding connection IDs to enhance deep research capabilities. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="model"/> or <paramref name="bingGroundingConnections"/> is null. </exception>
+        public DeepResearchDetails(string model, IEnumerable<DeepResearchBingGroundingConnection> bingGroundingConnections)
         {
-            Argument.AssertNotNull(deepResearchModel, nameof(deepResearchModel));
-            Argument.AssertNotNull(deepResearchBingGroundingConnections, nameof(deepResearchBingGroundingConnections));
+            Argument.AssertNotNull(model, nameof(model));
+            Argument.AssertNotNull(bingGroundingConnections, nameof(bingGroundingConnections));
 
-            DeepResearchModel = deepResearchModel;
-            DeepResearchBingGroundingConnections = deepResearchBingGroundingConnections.ToList();
+            Model = model;
+            BingGroundingConnections = bingGroundingConnections.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeepResearchDetails"/>. </summary>
-        /// <param name="deepResearchModel"> The deep research model deployment name. </param>
-        /// <param name="deepResearchBingGroundingConnections"> The array containing Bing grounding connection IDs to enhance deep research capabilities. </param>
+        /// <param name="model"> The deep research model deployment name. </param>
+        /// <param name="bingGroundingConnections"> The array containing Bing grounding connection IDs to enhance deep research capabilities. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeepResearchDetails(string deepResearchModel, IList<DeepResearchBingGroundingConnection> deepResearchBingGroundingConnections, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeepResearchDetails(string model, IList<DeepResearchBingGroundingConnection> bingGroundingConnections, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DeepResearchModel = deepResearchModel;
-            DeepResearchBingGroundingConnections = deepResearchBingGroundingConnections;
+            Model = model;
+            BingGroundingConnections = bingGroundingConnections;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,8 +76,8 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> The deep research model deployment name. </summary>
-        public string DeepResearchModel { get; set; }
+        public string Model { get; set; }
         /// <summary> The array containing Bing grounding connection IDs to enhance deep research capabilities. </summary>
-        public IList<DeepResearchBingGroundingConnection> DeepResearchBingGroundingConnections { get; }
+        public IList<DeepResearchBingGroundingConnection> BingGroundingConnections { get; }
     }
 }

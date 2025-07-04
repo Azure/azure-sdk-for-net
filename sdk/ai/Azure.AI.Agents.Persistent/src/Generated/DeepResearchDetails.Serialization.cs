@@ -35,10 +35,10 @@ namespace Azure.AI.Agents.Persistent
             }
 
             writer.WritePropertyName("deep_research_model"u8);
-            writer.WriteStringValue(DeepResearchModel);
+            writer.WriteStringValue(Model);
             writer.WritePropertyName("bing_grounding_connections"u8);
             writer.WriteStartArray();
-            foreach (var item in DeepResearchBingGroundingConnections)
+            foreach (var item in BingGroundingConnections)
             {
                 writer.WriteObjectValue(item, options);
             }
