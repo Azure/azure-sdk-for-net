@@ -64,7 +64,7 @@ namespace Azure.Generator.Management.Providers
 
         private protected ResourceClientProvider(InputModelType model, ResourceMetadata resourceMetadata)
         {
-            IsSingleton = resourceMetadata.IsSingleton;
+            IsSingleton = resourceMetadata.singletonResourceName != null;
             _resourceMetadata = resourceMetadata;
             _inputOperationForRequestPath = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(_resourceMetadata.Methods.First().Id)!.Operation;
             ResourceScope = resourceMetadata.ResourceScope;

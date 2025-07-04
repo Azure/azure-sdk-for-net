@@ -31,6 +31,12 @@ namespace MgmtTypeSpec
             return resourceGroupResource.GetCachedClient(client => new MockableMgmtTypeSpecResourceGroupResource(client, resourceGroupResource.Id));
         }
 
+        /// <param name="tenantResource"></param>
+        private static MockableMgmtTypeSpecTenantResource GetMockableMgmtTypeSpecTenantResource(TenantResource tenantResource)
+        {
+            return tenantResource.GetCachedClient(client => new MockableMgmtTypeSpecTenantResource(client, tenantResource.Id));
+        }
+
         /// <summary> Gets an object representing a <see cref="PrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -65,6 +71,18 @@ namespace MgmtTypeSpec
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMgmtTypeSpecArmClient(client).GetFooSettingsResource(id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SettingsResourceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SettingsResourceResource"/> object. </returns>
+        public static SettingsResourceResource GetSettingsResourceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetSettingsResourceResource(id);
         }
 
         /// <summary> Gets a collection of PrivateLinks in the <see cref="ResourceGroupResource"/>. </summary>

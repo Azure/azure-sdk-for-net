@@ -146,5 +146,48 @@ namespace MgmtTypeSpec.Models
         {
             return new FooSettingsUpdateProperties(accessControlEnabled, additionalBinaryDataProperties: null);
         }
+
+        /// <summary> The settings tenant resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name"> The default settings, applying to entire tenant. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.SettingsResourceData"/> instance for mocking. </returns>
+        public static SettingsResourceData SettingsResourceData(ResourceIdentifier id = default, string @type = default, SystemData systemData = default, SettingsProperties properties = default, string name = default)
+        {
+            return new SettingsResourceData(
+                id,
+                @type,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                name);
+        }
+
+        /// <summary> The Settings properties. </summary>
+        /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for settings in this tenant. </param>
+        /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
+        /// <returns> A new <see cref="Models.SettingsProperties"/> instance for mocking. </returns>
+        public static SettingsProperties SettingsProperties(bool accessControlEnabled = default, ResourceProvisioningState? provisioningState = default)
+        {
+            return new SettingsProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the SettingsResource. </summary>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.SettingsResourceUpdate"/> instance for mocking. </returns>
+        public static SettingsResourceUpdate SettingsResourceUpdate(SettingsResourceUpdateProperties properties = default)
+        {
+            return new SettingsResourceUpdate(properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The updatable properties of the SettingsResource. </summary>
+        /// <param name="accessControlEnabled"> Boolean indicating if role-based access control is enabled for settings in this tenant. </param>
+        /// <returns> A new <see cref="Models.SettingsResourceUpdateProperties"/> instance for mocking. </returns>
+        public static SettingsResourceUpdateProperties SettingsResourceUpdateProperties(bool? accessControlEnabled = default)
+        {
+            return new SettingsResourceUpdateProperties(accessControlEnabled, additionalBinaryDataProperties: null);
+        }
     }
 }
