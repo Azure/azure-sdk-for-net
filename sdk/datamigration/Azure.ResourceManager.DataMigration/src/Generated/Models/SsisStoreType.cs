@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> An enumeration of supported source SSIS store type in DMS. </summary>
+    /// <summary> An enumeration of supported source SSIS store type in DMS (classic). </summary>
     public readonly partial struct SsisStoreType : IEquatable<SsisStoreType>
     {
         private readonly string _value;

@@ -9,7 +9,7 @@ csharp: true
 library-name: DataMigration
 namespace: Azure.ResourceManager.DataMigration
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/2f28b5026a4b44adefd0237087acb0c48cfe31a6/specification/datamigration/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/86c6306649b02e542117adb46c61e8019dbd78e9/specification/datamigration/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -69,4 +69,10 @@ directive:
       $.DatabaseMigrationPropertiesSqlMi['x-ms-client-name'] = 'DatabaseMigrationSqlMIProperties';
       $.DatabaseMigrationPropertiesSqlVm['x-ms-client-name'] = 'DatabaseMigrationSqlVmProperties';
       $.DatabaseMigrationPropertiesSqlDb['x-ms-client-name'] = 'DatabaseMigrationSqlDBProperties';
+  - remove-operation-match: /^DatabaseMigrationsMongoToCosmosDbRUMongo_.*/i
+  - remove-operation-match: /^DatabaseMigrationsMongoToCosmosDbvCoreMongo_.*/i
+  - remove-operation-match: /^MigrationServices_.*/i
+  - remove-model: DatabaseMigrationCosmosDbMongoListResult
+  - remove-model: DatabaseMigrationCosmosDbMongo
+  - remove-model: DatabaseMigrationPropertiesCosmosDbMongo
 ```
