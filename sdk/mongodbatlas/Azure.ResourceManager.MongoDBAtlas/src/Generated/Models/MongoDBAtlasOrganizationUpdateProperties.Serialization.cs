@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
-    public partial class OrganizationResourceUpdateProperties : IUtf8JsonSerializable, IJsonModel<OrganizationResourceUpdateProperties>
+    public partial class MongoDBAtlasOrganizationUpdateProperties : IUtf8JsonSerializable, IJsonModel<MongoDBAtlasOrganizationUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrganizationResourceUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBAtlasOrganizationUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OrganizationResourceUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoDBAtlasOrganizationUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasOrganizationUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrganizationResourceUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasOrganizationUpdateProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(User))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             }
         }
 
-        OrganizationResourceUpdateProperties IJsonModel<OrganizationResourceUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoDBAtlasOrganizationUpdateProperties IJsonModel<MongoDBAtlasOrganizationUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasOrganizationUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrganizationResourceUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasOrganizationUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOrganizationResourceUpdateProperties(document.RootElement, options);
+            return DeserializeMongoDBAtlasOrganizationUpdateProperties(document.RootElement, options);
         }
 
-        internal static OrganizationResourceUpdateProperties DeserializeOrganizationResourceUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoDBAtlasOrganizationUpdateProperties DeserializeMongoDBAtlasOrganizationUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OrganizationResourceUpdateProperties(user, partnerProperties, serializedAdditionalRawData);
+            return new MongoDBAtlasOrganizationUpdateProperties(user, partnerProperties, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OrganizationResourceUpdateProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoDBAtlasOrganizationUpdateProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasOrganizationUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoDBAtlasContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OrganizationResourceUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasOrganizationUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OrganizationResourceUpdateProperties IPersistableModel<OrganizationResourceUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoDBAtlasOrganizationUpdateProperties IPersistableModel<MongoDBAtlasOrganizationUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OrganizationResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasOrganizationUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOrganizationResourceUpdateProperties(document.RootElement, options);
+                        return DeserializeMongoDBAtlasOrganizationUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrganizationResourceUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasOrganizationUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OrganizationResourceUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoDBAtlasOrganizationUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

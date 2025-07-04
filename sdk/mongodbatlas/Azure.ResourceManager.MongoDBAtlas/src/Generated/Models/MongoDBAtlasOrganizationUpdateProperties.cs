@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> The updatable properties of the OrganizationResource. </summary>
-    public partial class OrganizationResourceUpdateProperties
+    public partial class MongoDBAtlasOrganizationUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourceUpdateProperties"/>. </summary>
-        public OrganizationResourceUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasOrganizationUpdateProperties"/>. </summary>
+        public MongoDBAtlasOrganizationUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourceUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasOrganizationUpdateProperties"/>. </summary>
         /// <param name="user"> Details of the user. </param>
         /// <param name="partnerProperties"> MongoDB properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationResourceUpdateProperties(MongoDBAtlasUserDetails user, MongoDBAtlasPartnerProperties partnerProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoDBAtlasOrganizationUpdateProperties(MongoDBAtlasUserDetails user, MongoDBAtlasPartnerProperties partnerProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             User = user;
             PartnerProperties = partnerProperties;

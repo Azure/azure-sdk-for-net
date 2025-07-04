@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             }
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
-            OrganizationResourceUpdateProperties properties = default;
+            MongoDBAtlasOrganizationUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                     {
                         continue;
                     }
-                    properties = OrganizationResourceUpdateProperties.DeserializeOrganizationResourceUpdateProperties(property.Value, options);
+                    properties = MongoDBAtlasOrganizationUpdateProperties.DeserializeMongoDBAtlasOrganizationUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

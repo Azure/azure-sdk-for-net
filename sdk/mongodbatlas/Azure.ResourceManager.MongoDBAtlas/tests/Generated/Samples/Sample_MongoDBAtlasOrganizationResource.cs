@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
                     UserAssignedIdentities = { },
                 },
                 Tags = { },
-                Properties = new OrganizationResourceUpdateProperties
+                Properties = new MongoDBAtlasOrganizationUpdateProperties
                 {
                     User = new MongoDBAtlasUserDetails("btyhwmlbzzihjfimviefebg", "xx", ".K_@e7N-g1.xjqnbPs")
                     {

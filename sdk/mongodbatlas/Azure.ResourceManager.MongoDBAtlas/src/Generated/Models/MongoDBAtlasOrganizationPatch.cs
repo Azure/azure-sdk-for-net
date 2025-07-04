@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoDBAtlasOrganizationPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, OrganizationResourceUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoDBAtlasOrganizationPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, MongoDBAtlasOrganizationUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Tags = tags;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>
-        public OrganizationResourceUpdateProperties Properties { get; set; }
+        public MongoDBAtlasOrganizationUpdateProperties Properties { get; set; }
     }
 }
