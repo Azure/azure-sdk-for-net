@@ -64,10 +64,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> The Cloud HSM Cluster's tags. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
-        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

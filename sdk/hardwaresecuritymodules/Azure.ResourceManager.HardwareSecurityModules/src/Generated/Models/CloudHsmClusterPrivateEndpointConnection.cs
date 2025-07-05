@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> List of private endpoint connections associated with the specified resource. </summary>
-    internal partial class CloudHsmClusterPrivateEndpointConnectionListResult
+    /// <summary> The private endpoint connection resource. </summary>
+    public partial class CloudHsmClusterPrivateEndpointConnection : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +47,29 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointConnectionListResult"/>. </summary>
-        internal CloudHsmClusterPrivateEndpointConnectionListResult()
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointConnection"/>. </summary>
+        public CloudHsmClusterPrivateEndpointConnection()
         {
-            Value = new ChangeTrackingList<CloudHsmClusterPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value"> Array of private endpoint connections. </param>
-        /// <param name="nextLink"> The URL to get the next set of private endpoint connections. </param>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointConnection"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudHsmClusterPrivateEndpointConnectionListResult(IReadOnlyList<CloudHsmClusterPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudHsmClusterPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudHsmClusterPrivateEndpointConnectionProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Properties = properties;
+            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of private endpoint connections. </summary>
-        public IReadOnlyList<CloudHsmClusterPrivateEndpointConnectionData> Value { get; }
-        /// <summary> The URL to get the next set of private endpoint connections. </summary>
-        public string NextLink { get; }
+        /// <summary> Resource properties. </summary>
+        public CloudHsmClusterPrivateEndpointConnectionProperties Properties { get; set; }
+        /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
+        public ETag? ETag { get; set; }
     }
 }

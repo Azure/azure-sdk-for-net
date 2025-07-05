@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SafeNetLunaNetworkHsmA790Value = "SafeNet_Luna_Network_HSM_A790";
+        private const string SafeNetLunaNetworkHsmA790Value = "SafeNet Luna Network HSM A790";
         private const string PayShield10KLmk1Cps60Value = "payShield10K_LMK1_CPS60";
         private const string PayShield10KLmk1Cps250Value = "payShield10K_LMK1_CPS250";
         private const string PayShield10KLmk1Cps2500Value = "payShield10K_LMK1_CPS2500";

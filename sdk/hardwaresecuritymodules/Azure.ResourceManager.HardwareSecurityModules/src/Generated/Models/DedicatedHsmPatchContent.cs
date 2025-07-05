@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Cloud Hsm Cluster SKU information. </summary>
-    public partial class CloudHsmClusterSku
+    /// <summary> Patchable properties of the dedicated HSM. </summary>
+    public partial class DedicatedHsmPatchContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,38 +45,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSku"/>. </summary>
-        /// <param name="family"> Sku family of the Cloud HSM Cluster. </param>
-        /// <param name="name"> Sku name of the Cloud HSM Cluster. </param>
-        public CloudHsmClusterSku(CloudHsmClusterSkuFamily family, CloudHsmClusterSkuName name)
+        /// <summary> Initializes a new instance of <see cref="DedicatedHsmPatchContent"/>. </summary>
+        public DedicatedHsmPatchContent()
         {
-            Family = family;
-            Name = name;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSku"/>. </summary>
-        /// <param name="family"> Sku family of the Cloud HSM Cluster. </param>
-        /// <param name="name"> Sku name of the Cloud HSM Cluster. </param>
-        /// <param name="capacity"> Sku capacity. </param>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHsmPatchContent"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudHsmClusterSku(CloudHsmClusterSkuFamily family, CloudHsmClusterSkuName name, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DedicatedHsmPatchContent(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Family = family;
-            Name = name;
-            Capacity = capacity;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterSku"/> for deserialization. </summary>
-        internal CloudHsmClusterSku()
-        {
-        }
-
-        /// <summary> Sku family of the Cloud HSM Cluster. </summary>
-        public CloudHsmClusterSkuFamily Family { get; set; }
-        /// <summary> Sku name of the Cloud HSM Cluster. </summary>
-        public CloudHsmClusterSkuName Name { get; set; }
-        /// <summary> Sku capacity. </summary>
-        public int? Capacity { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

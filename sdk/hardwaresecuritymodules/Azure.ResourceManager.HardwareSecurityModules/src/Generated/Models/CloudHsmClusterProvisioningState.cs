@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         private const string ProvisioningValue = "Provisioning";
         private const string SucceededValue = "Succeeded";
+        private const string UpdatingValue = "Updating";
         private const string FailedValue = "Failed";
         private const string DeletingValue = "Deleting";
         private const string CanceledValue = "Canceled";
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static CloudHsmClusterProvisioningState Provisioning { get; } = new CloudHsmClusterProvisioningState(ProvisioningValue);
         /// <summary> Succeeded. </summary>
         public static CloudHsmClusterProvisioningState Succeeded { get; } = new CloudHsmClusterProvisioningState(SucceededValue);
+        /// <summary> Updating. </summary>
+        public static CloudHsmClusterProvisioningState Updating { get; } = new CloudHsmClusterProvisioningState(UpdatingValue);
         /// <summary> Failed. </summary>
         public static CloudHsmClusterProvisioningState Failed { get; } = new CloudHsmClusterProvisioningState(FailedValue);
         /// <summary> Deleting. </summary>
