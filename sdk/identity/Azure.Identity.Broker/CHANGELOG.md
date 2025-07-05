@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Support Microsoft Broker on MacOS.
+
 ### Breaking Changes
 
 ### Bugs Fixed

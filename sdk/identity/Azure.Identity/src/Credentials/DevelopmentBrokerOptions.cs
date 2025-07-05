@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
@@ -37,5 +38,17 @@ namespace Azure.Identity
         }
 
         Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient => _beforeBuildClient;
+
+        internal override T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
+        {
+            var clone = base.Clone<T>();
+
+            if (clone is DevelopmentBrokerOptions dboClone)
+            {
+                dboClone.IsLegacyMsaPassthroughEnabled = IsLegacyMsaPassthroughEnabled;
+                dboClone.UseDefaultBrokerAccount = UseDefaultBrokerAccount;
+            }
+            return clone;
+        }
     }
 }
