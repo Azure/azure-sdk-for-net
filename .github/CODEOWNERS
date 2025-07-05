@@ -452,8 +452,8 @@
 # ServiceLabel: %Data Lake
 # ServiceOwners:                                                   @seanmcc-msft
 
-# ServiceLabel: %Data Lake Storage Gen2
-# ServiceOwners:                                                   @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
+# ServiceLabel: %Data Lake Storage Gen
+# ServiceOwners:                                                   @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft
 
 # ServiceLabel: %Data Lake Analytics
 # ServiceOwners:                                                   @idear1203
@@ -865,16 +865,16 @@
 # ServiceOwners:                                                   @azureSQLGitHub
 
 # PRLabel: %Storage
-/sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
+/sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft
 
 # PRLabel: %Storage
-/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
+/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft
 
 # PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc @jalauzon-msft @nickliu-msft
+/sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc @jalauzon-msft
 
 # ServiceLabel: %Storage
-# ServiceOwners:                                                   @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
+# ServiceOwners:                                                   @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft
 
 # PRLabel: %Storage
 /sdk/storagesync/                                                  @ankushbindlish2 @anpint
@@ -981,10 +981,10 @@
 # ServiceOwners:                                                   @sahilarora92 @rahuls-microsoft
 
 # PRLael: %Container Orchestrator Runtime
-/sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @ddadaal
+/sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @ArthurMa1978
 
 # ServiceLabel: %Container Orchestrator Runtime
-# ServiceOwners:                                                   @ddadaal
+# ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %Database Watcher
 /sdk/databasewatcher/Azure.ResourceManager.*/                      @Renyx1219
