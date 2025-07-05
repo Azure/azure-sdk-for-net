@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    public partial class MarketplaceDetails : IUtf8JsonSerializable, IJsonModel<MarketplaceDetails>
+    public partial class QumuloMarketplaceDetails : IUtf8JsonSerializable, IJsonModel<QumuloMarketplaceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QumuloMarketplaceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MarketplaceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QumuloMarketplaceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QumuloMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QumuloMarketplaceDetails)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(MarketplaceSubscriptionId))
@@ -43,12 +43,20 @@ namespace Azure.ResourceManager.Qumulo.Models
             writer.WriteStringValue(PlanId);
             writer.WritePropertyName("offerId"u8);
             writer.WriteStringValue(OfferId);
-            writer.WritePropertyName("publisherId"u8);
-            writer.WriteStringValue(PublisherId);
+            if (Optional.IsDefined(PublisherId))
+            {
+                writer.WritePropertyName("publisherId"u8);
+                writer.WriteStringValue(PublisherId);
+            }
+            if (Optional.IsDefined(TermUnit))
+            {
+                writer.WritePropertyName("termUnit"u8);
+                writer.WriteStringValue(TermUnit);
+            }
             if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
-                writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToSerialString());
+                writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -67,19 +75,19 @@ namespace Azure.ResourceManager.Qumulo.Models
             }
         }
 
-        MarketplaceDetails IJsonModel<MarketplaceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QumuloMarketplaceDetails IJsonModel<QumuloMarketplaceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QumuloMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QumuloMarketplaceDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMarketplaceDetails(document.RootElement, options);
+            return DeserializeQumuloMarketplaceDetails(document.RootElement, options);
         }
 
-        internal static MarketplaceDetails DeserializeMarketplaceDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static QumuloMarketplaceDetails DeserializeQumuloMarketplaceDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,7 +99,8 @@ namespace Azure.ResourceManager.Qumulo.Models
             string planId = default;
             string offerId = default;
             string publisherId = default;
-            MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
+            string termUnit = default;
+            QumuloMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,13 +125,18 @@ namespace Azure.ResourceManager.Qumulo.Models
                     publisherId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("termUnit"u8))
+                {
+                    termUnit = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("marketplaceSubscriptionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marketplaceSubscriptionStatus = property.Value.GetString().ToMarketplaceSubscriptionStatus();
+                    marketplaceSubscriptionStatus = new QumuloMarketplaceSubscriptionStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -131,44 +145,45 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MarketplaceDetails(
+            return new QumuloMarketplaceDetails(
                 marketplaceSubscriptionId,
                 planId,
                 offerId,
                 publisherId,
+                termUnit,
                 marketplaceSubscriptionStatus,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MarketplaceDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<QumuloMarketplaceDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QumuloMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerQumuloContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QumuloMarketplaceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MarketplaceDetails IPersistableModel<MarketplaceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        QumuloMarketplaceDetails IPersistableModel<QumuloMarketplaceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QumuloMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMarketplaceDetails(document.RootElement, options);
+                        return DeserializeQumuloMarketplaceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QumuloMarketplaceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MarketplaceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QumuloMarketplaceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    public partial class QumuloUserDetails : IUtf8JsonSerializable, IJsonModel<QumuloUserDetails>
+    internal partial class QumuloUserDetails : IUtf8JsonSerializable, IJsonModel<QumuloUserDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QumuloUserDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -34,11 +34,8 @@ namespace Azure.ResourceManager.Qumulo.Models
                 throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Email))
-            {
-                writer.WritePropertyName("email"u8);
-                writer.WriteStringValue(Email);
-            }
+            writer.WritePropertyName("email"u8);
+            writer.WriteStringValue(Email);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

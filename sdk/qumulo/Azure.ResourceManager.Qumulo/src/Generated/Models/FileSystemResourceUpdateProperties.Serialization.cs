@@ -49,21 +49,6 @@ namespace Azure.ResourceManager.Qumulo.Models
                 writer.WritePropertyName("delegatedSubnetId"u8);
                 writer.WriteStringValue(DelegatedSubnetId);
             }
-            if (Optional.IsDefined(ClusterLoginUri))
-            {
-                writer.WritePropertyName("clusterLoginUrl"u8);
-                writer.WriteStringValue(ClusterLoginUri.AbsoluteUri);
-            }
-            if (Optional.IsCollectionDefined(PrivateIPs))
-            {
-                writer.WritePropertyName("privateIPs"u8);
-                writer.WriteStartArray();
-                foreach (var item in PrivateIPs)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -101,11 +86,9 @@ namespace Azure.ResourceManager.Qumulo.Models
             {
                 return null;
             }
-            MarketplaceDetails marketplaceDetails = default;
+            QumuloMarketplaceDetails marketplaceDetails = default;
             QumuloUserDetails userDetails = default;
-            ResourceIdentifier delegatedSubnetId = default;
-            Uri clusterLoginUrl = default;
-            IList<string> privateIPs = default;
+            string delegatedSubnetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +99,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     {
                         continue;
                     }
-                    marketplaceDetails = MarketplaceDetails.DeserializeMarketplaceDetails(property.Value, options);
+                    marketplaceDetails = QumuloMarketplaceDetails.DeserializeQumuloMarketplaceDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userDetails"u8))
@@ -130,34 +113,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
                 if (property.NameEquals("delegatedSubnetId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    delegatedSubnetId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("clusterLoginUrl"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    clusterLoginUrl = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("privateIPs"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    privateIPs = array;
+                    delegatedSubnetId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -166,13 +122,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FileSystemResourceUpdateProperties(
-                marketplaceDetails,
-                userDetails,
-                delegatedSubnetId,
-                clusterLoginUrl,
-                privateIPs ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+            return new FileSystemResourceUpdateProperties(marketplaceDetails, userDetails, delegatedSubnetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileSystemResourceUpdateProperties>.Write(ModelReaderWriterOptions options)
