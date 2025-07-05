@@ -1,14 +1,15 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2025-06-30)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-2021-06-10' to 'package-2025-05-25'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/69eadf978055e646bc6b0ef1fa92fdac394eaab2/specification/healthbot/resource-manager/readme.md.
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.45.0 to 1.46.2
+- Upgraded Azure.ResourceManager from 1.13.0 to 1.13.1
 
 ## 1.1.1 (2025-03-11)
 
