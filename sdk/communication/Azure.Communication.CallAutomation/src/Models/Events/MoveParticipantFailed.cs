@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
             CorrelationId = internalEvent.CorrelationId;
             OperationContext = internalEvent.OperationContext;
             FromCall = internalEvent.FromCall;
-            Participant = CommunicationIdentifierSerializer.Deserialize(internalEvent.Participant);
+            Participant = CommunicationIdentifierSerializer_2025_06_30.Deserialize(internalEvent.Participant);
             ResultInformation = internalEvent.ResultInformation;
         }
         /// <summary>

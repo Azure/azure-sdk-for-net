@@ -7,9 +7,8 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The MediaStreamingFailed event.
+    /// The media streaming failed event.
     /// </summary>
-
     [CodeGenModel("MediaStreamingFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class MediaStreamingFailed : CallAutomationEventBase
     {

@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Hold Audio Paused event. </summary>
+    /// <summary> The HoldAudioPaused. </summary>
     public partial class HoldAudioPaused
     {
         /// <summary> Initializes a new instance of <see cref="HoldAudioPaused"/>. </summary>
