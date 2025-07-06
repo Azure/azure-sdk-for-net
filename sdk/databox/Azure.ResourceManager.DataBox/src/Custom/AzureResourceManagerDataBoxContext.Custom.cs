@@ -8,7 +8,9 @@ namespace Azure.ResourceManager.DataBox;
 
 [ModelReaderWriterBuildable(typeof(DataBoxJobData))]
 [ModelReaderWriterBuildable(typeof(DataBoxJobResource))]
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(DataboxJobSecrets))]
+#pragma warning restore CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(DataBoxJobStage))]
 [ModelReaderWriterBuildable(typeof(DataBoxManagedIdentity))]
 [ModelReaderWriterBuildable(typeof(DataBoxOrderPreferences))]
