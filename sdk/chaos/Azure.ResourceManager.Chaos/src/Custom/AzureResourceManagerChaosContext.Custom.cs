@@ -6,11 +6,19 @@ using System.ClientModel.Primitives;
 
 namespace Azure.ResourceManager.Chaos;
 
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(ChaosCapabilityTypeData))]
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(ChaosCapabilityTypeResource))]
+#pragma warning restore CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(ChaosTargetData))]
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(ChaosTargetTypeData))]
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(ChaosTargetTypeResource))]
+#pragma warning restore CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(ChaosCapabilityData))]
 [ModelReaderWriterBuildable(typeof(ChaosCapabilityMetadataData))]
 [ModelReaderWriterBuildable(typeof(ChaosCapabilityMetadataResource))]
@@ -22,7 +30,9 @@ namespace Azure.ResourceManager.Chaos;
 [ModelReaderWriterBuildable(typeof(ChaosTargetMetadataData))]
 [ModelReaderWriterBuildable(typeof(ChaosTargetMetadataResource))]
 [ModelReaderWriterBuildable(typeof(ChaosTargetResource))]
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(ChaosCapabilityTypeRuntimeProperties))]
+#pragma warning restore CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(ChaosTargetSelector))]
 [ModelReaderWriterBuildable(typeof(CapabilityListResult))]
 [ModelReaderWriterBuildable(typeof(CapabilityTypeListResult))]
