@@ -452,7 +452,7 @@
 # ServiceLabel: %Data Lake
 # ServiceOwners:                                                   @seanmcc-msft
 
-# ServiceLabel: %Data Lake Storage Gen
+# ServiceLabel: %Data Lake Storage Gen2
 # ServiceOwners:                                                   @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft
 
 # ServiceLabel: %Data Lake Analytics
