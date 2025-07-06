@@ -669,7 +669,6 @@ namespace Azure.ResourceManager.Network;
 [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterLinkReferenceListResult))]
 [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterListResult))]
 [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterLoggingConfigurationListResult))]
-[ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterLoggingConfigurationProperties))]
 [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterPatch))]
 [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterProfileListResult))]
 [ModelReaderWriterBuildable(typeof(NetworkSecurityRulesEvaluationResult))]
