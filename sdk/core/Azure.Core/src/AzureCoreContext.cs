@@ -10,9 +10,7 @@ namespace Azure.Core
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RehydrationToken))]
-[ModelReaderWriterBuildable(typeof(ResponseError))]
-[ModelReaderWriterBuildable(typeof(ResponseInnerError))]
-[ModelReaderWriterBuildable(typeof(RehydrationToken))]
+    [ModelReaderWriterBuildable(typeof(ResponseInnerError))]
     public partial class AzureCoreContext : ModelReaderWriterContext
     {
     }
