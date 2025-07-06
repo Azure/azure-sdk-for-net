@@ -6,10 +6,18 @@ using System.ClientModel.Primitives;
 
 namespace Azure.ResourceManager.ServiceNetworking;
 
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(AssociationData))]
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(AssociationResource))]
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(FrontendData))]
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(FrontendResource))]
+#pragma warning restore CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(TrafficControllerData))]
 [ModelReaderWriterBuildable(typeof(TrafficControllerResource))]
 [ModelReaderWriterBuildable(typeof(ApplicationGatewayForContainersSecurityPolicyData))]
@@ -18,8 +26,12 @@ namespace Azure.ResourceManager.ServiceNetworking;
 [ModelReaderWriterBuildable(typeof(TrafficControllerAssociationResource))]
 [ModelReaderWriterBuildable(typeof(TrafficControllerFrontendData))]
 [ModelReaderWriterBuildable(typeof(TrafficControllerFrontendResource))]
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(AssociationPatch))]
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(FrontendPatch))]
+#pragma warning restore CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(ApplicationGatewayForContainersSecurityPolicyPatch))]
 [ModelReaderWriterBuildable(typeof(AssociationListResult))]
 [ModelReaderWriterBuildable(typeof(FrontendListResult))]
