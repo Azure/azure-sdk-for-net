@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
@@ -10,6 +10,9 @@ namespace Azure.Core
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RehydrationToken))]
+[ModelReaderWriterBuildable(typeof(ResponseError))]
+[ModelReaderWriterBuildable(typeof(ResponseInnerError))]
+[ModelReaderWriterBuildable(typeof(RehydrationToken))]
     public partial class AzureCoreContext : ModelReaderWriterContext
     {
     }
