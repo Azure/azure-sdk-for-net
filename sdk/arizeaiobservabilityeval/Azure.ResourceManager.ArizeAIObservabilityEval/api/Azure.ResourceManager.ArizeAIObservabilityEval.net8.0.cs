@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.ArizeAIObservabilityEvalOrganizationResource))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalMarketplaceDetails))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOfferPartnerProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationPatch))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalOrganizationProperties))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.ArizeAIObservabilityEval.Models.ArizeAIObservabilityEvalSingleSignOnPropertiesV2))]
