@@ -17,6 +17,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.BrokerProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.FailedLockToken))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.ReceiveDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.ReceiveResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.RejectResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.ReleaseResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.Messaging.EventGrid.Namespaces.RenewLocksResult))]
     public partial class AzureMessagingEventGridNamespacesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureMessagingEventGridNamespacesContext() { }

@@ -1,5 +1,14 @@
 namespace Azure.ResourceManager.WeightsAndBiases
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesOfferDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnPropertiesV2))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WeightsAndBiases.WeightsAndBiasesInstanceData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.WeightsAndBiases.WeightsAndBiasesInstanceResource))]
     public partial class AzureResourceManagerWeightsAndBiasesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerWeightsAndBiasesContext() { }

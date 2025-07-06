@@ -1,5 +1,30 @@
 namespace Azure.ResourceManager.TrafficManager
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.ExpectedStatusCodeRangeInfo))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerDnsConfig))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointCustomHeaderInfo))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerEndpointSubnetInfo))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapEndpoint))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapQueryExperience))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerHeatMapTrafficFlow))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfig))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerMonitorConfigCustomHeaderInfo))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerProxyResourceData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerRegion))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerResourceData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.Models.TrafficManagerTrackedResourceData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerEndpointData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerProfileData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource))]
     public partial class AzureResourceManagerTrafficManagerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerTrafficManagerContext() { }

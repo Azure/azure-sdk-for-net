@@ -1,5 +1,8 @@
 namespace Azure.ResourceManager.MarketplaceOrdering
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MarketplaceOrdering.MarketplaceAgreementTermResource))]
     public partial class AzureResourceManagerMarketplaceOrderingContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMarketplaceOrderingContext() { }

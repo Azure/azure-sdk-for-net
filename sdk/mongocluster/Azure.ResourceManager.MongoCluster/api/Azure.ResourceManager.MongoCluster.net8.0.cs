@@ -1,5 +1,30 @@
 namespace Azure.ResourceManager.MongoCluster
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterAdministratorProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterConnectionString))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterConnectionStringsResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterFirewallRuleProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterNameAvailabilityContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterNameAvailabilityResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnection))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkResourceData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkResourceProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkServiceConnectionState))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterReplica))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicaContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterReplicationProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterRestoreContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.MongoClusterUpdateProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.Models.PromoteReplicaContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.MongoClusterData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.MongoClusterFirewallRuleData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.MongoClusterFirewallRuleResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.MongoClusterPrivateEndpointConnectionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.MongoClusterPrivateEndpointConnectionResourceData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoCluster.MongoClusterResource))]
     public partial class AzureResourceManagerMongoClusterContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMongoClusterContext() { }

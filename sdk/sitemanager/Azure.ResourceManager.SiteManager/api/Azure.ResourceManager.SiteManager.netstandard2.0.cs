@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.SiteManager
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SiteManager.EdgeSiteData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SiteManager.EdgeSiteResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SiteManager.Models.EdgeSitePatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SiteManager.Models.EdgeSitePatchProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.SiteManager.Models.SiteAddressProperties))]
     public partial class AzureResourceManagerSiteManagerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerSiteManagerContext() { }
