@@ -149,9 +149,14 @@ namespace Azure.Generator.Management.Models
 
         public static bool IsSegmentConstant(string segment)
         {
-            var trimmed = segment.TrimStart('{').TrimEnd('}');
+            var trimmed = TrimSegment(segment);
             var isScope = trimmed == "scope";
             return !isScope && !segment.StartsWith('{');
+        }
+
+        public static string TrimSegment(string segment)
+        {
+            return segment.TrimStart('{').TrimEnd('}');
         }
     }
 }

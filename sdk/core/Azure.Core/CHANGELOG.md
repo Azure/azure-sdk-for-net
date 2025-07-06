@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `RequestContent.Create<T>(T model, ModelReaderWriterOptions? options = null)` overload that accepts `IPersistableModel<T>` types for improved performance and API consistency with `BinaryContent`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
