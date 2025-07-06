@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.Avs;
 [ModelReaderWriterBuildable(typeof(AvsSubscriptionTrialAvailabilityResult))]
 [ModelReaderWriterBuildable(typeof(CloudLinkList))]
 [ModelReaderWriterBuildable(typeof(ClusterList))]
-[ModelReaderWriterBuildable(typeof(ClusterZoneList))]
 [ModelReaderWriterBuildable(typeof(CustomerManagedEncryption))]
 [ModelReaderWriterBuildable(typeof(DatastoreList))]
 [ModelReaderWriterBuildable(typeof(DiskPoolVolume))]
