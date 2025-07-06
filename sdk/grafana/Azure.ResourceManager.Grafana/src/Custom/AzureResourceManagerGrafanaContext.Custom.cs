@@ -20,7 +20,9 @@ namespace Azure.ResourceManager.Grafana;
 [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointModelResource))]
 [ModelReaderWriterBuildable(typeof(ManagedGrafanaPatchProperties))]
 [ModelReaderWriterBuildable(typeof(ManagedGrafanaProperties))]
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(Smtp))]
+#pragma warning restore CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(EnterpriseConfigurations))]
 [ModelReaderWriterBuildable(typeof(EnterpriseDetails))]
 [ModelReaderWriterBuildable(typeof(GrafanaAvailablePlugin))]
