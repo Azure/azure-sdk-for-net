@@ -30,14 +30,22 @@ namespace Azure.ResourceManager.Hci;
 [ModelReaderWriterBuildable(typeof(HciEdgeDeviceResource))]
 [ModelReaderWriterBuildable(typeof(HciSkuData))]
 [ModelReaderWriterBuildable(typeof(HciSkuResource))]
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(ExtensionInstanceViewStatus))]
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(ExtensionUpgradeContent))]
+#pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(HciExtensionInstanceView))]
+#pragma warning restore CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(HciPackageVersionInfo))]
 [ModelReaderWriterBuildable(typeof(HciUpdateStep))]
 [ModelReaderWriterBuildable(typeof(PerNodeExtensionState))]
 [ModelReaderWriterBuildable(typeof(SoftwareAssuranceProperties))]
+#pragma warning disable CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(UpdatePrerequisite))]
+#pragma warning restore CS0618 // Type or member is obsolete
 [ModelReaderWriterBuildable(typeof(ArcDefaultExtensionDetails))]
 [ModelReaderWriterBuildable(typeof(ArcExtensionInstanceView))]
 [ModelReaderWriterBuildable(typeof(ArcExtensionInstanceViewStatus))]
