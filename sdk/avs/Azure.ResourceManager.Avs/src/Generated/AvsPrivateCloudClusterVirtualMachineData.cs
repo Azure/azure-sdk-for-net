@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="displayName"> Display name of the VM. </param>
-        /// <param name="moRefId"> Virtual machine managed object reference id. </param>
+        /// <param name="moRefId"> vCenter managed object reference ID of the virtual machine. </param>
         /// <param name="folderPath"> Path to virtual machine's folder starting from datacenter virtual machine folder. </param>
         /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Avs
         public AvsVirtualMachineProvisioningState? ProvisioningState { get; }
         /// <summary> Display name of the VM. </summary>
         public string DisplayName { get; }
-        /// <summary> Virtual machine managed object reference id. </summary>
+        /// <summary> vCenter managed object reference ID of the virtual machine. </summary>
         public string MoRefId { get; }
         /// <summary> Path to virtual machine's folder starting from datacenter virtual machine folder. </summary>
         public string FolderPath { get; }
