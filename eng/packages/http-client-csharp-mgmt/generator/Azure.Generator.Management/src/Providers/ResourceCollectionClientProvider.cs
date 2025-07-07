@@ -70,7 +70,7 @@ namespace Azure.Generator.Management.Providers
         protected override FieldProvider[] BuildFields() => [_clientDiagnosticsField, _clientField];
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
+            => [ConstructorProviderHelpers.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
 
         // TODO -- we need to change this type to its parent resource type.
         private ScopedApi<ResourceType>? _resourceTypeExpression;

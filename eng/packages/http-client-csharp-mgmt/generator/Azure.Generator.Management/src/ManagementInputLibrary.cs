@@ -16,7 +16,7 @@ namespace Azure.Generator.Management
         private const string ResourceMetadataDecoratorName = "Azure.ClientGenerator.Core.@resourceSchema";
         private const string ResourceIdPattern = "resourceIdPattern";
         private const string ResourceType = "resourceType";
-        private const string IsSingleton = "isSingleton";
+        private const string SingletonResourceName = "singletonResourceName";
         private const string ResourceScope = "resourceScope";
         private const string Methods = "methods";
         private const string ParentResource = "parentResource";
@@ -100,7 +100,7 @@ namespace Azure.Generator.Management
                 var args = decorator.Arguments ?? throw new InvalidOperationException();
                 string? resourceIdPattern = null;
                 string? resourceType = null;
-                bool isSingleton = false;
+                string? singletonResourceName = null;
                 ResourceScope? resourceScope = null;
                 var methods = new List<ResourceMethod>();
                 string? parentResource = null;
@@ -113,9 +113,9 @@ namespace Azure.Generator.Management
                     resourceType = resourceTypeData.ToObjectFromJson<string>();
                 }
 
-                if (args.TryGetValue(IsSingleton, out var isSingletonData))
+                if (args.TryGetValue(SingletonResourceName, out var singletonResourceData))
                 {
-                    isSingleton = isSingletonData.ToObjectFromJson<bool>();
+                    singletonResourceName = singletonResourceData.ToObjectFromJson<string>();
                 }
 
                 if (args.TryGetValue(ResourceScope, out var scopeData))
@@ -167,9 +167,9 @@ namespace Azure.Generator.Management
                 return new(
                     resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null"),
                     resourceType ?? throw new InvalidOperationException("resourceType cannot be null"),
-                    isSingleton,
                     resourceScope ?? throw new InvalidOperationException("resourceScope cannot be null"),
                     methods,
+                    singletonResourceName,
                     parentResource);
             }
         }

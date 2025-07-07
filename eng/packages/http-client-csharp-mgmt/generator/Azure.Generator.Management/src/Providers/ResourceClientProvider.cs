@@ -62,12 +62,9 @@ namespace Azure.Generator.Management.Providers
 
         private protected ResourceClientProvider(InputModelType model, ResourceMetadata resourceMetadata)
         {
-            IsSingleton = resourceMetadata.IsSingleton;
             _resourceMetadata = resourceMetadata;
-            ResourceScope = resourceMetadata.ResourceScope;
-            var resourceType = resourceMetadata.ResourceType;
             _hasGetMethod = resourceMetadata.Methods.Any(m => m.Kind == ResourceOperationKind.Get);
-            _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
+            _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
             _shouldGenerateTagMethods = ShouldGenerateTagMethods(model);
 
             // TODO -- the name of a resource is not always the name of its model. Maybe the resource metadata should have a property for the name of the resource?
@@ -89,7 +86,7 @@ namespace Azure.Generator.Management.Providers
             _clientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, _restClientProvider.Type, $"_{SpecName.ToLower()}RestClient", this);
         }
 
-        internal ResourceScope ResourceScope { get; }
+        internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
 
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
 
@@ -116,7 +113,9 @@ namespace Azure.Generator.Management.Providers
         internal string SpecName { get; }
         internal IEnumerable<(ResourceOperationKind Kind, InputServiceMethod Method)> ResourceServiceMethods => _resourceServiceMethods;
 
-        public bool IsSingleton { get; }
+        internal string? SingletonResourceName => _resourceMetadata.singletonResourceName;
+
+        public bool IsSingleton => SingletonResourceName is not null;
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
@@ -153,7 +152,7 @@ namespace Azure.Generator.Management.Providers
         protected override TypeProvider[] BuildSerializationProviders() => [new ResourceSerializationProvider(this)];
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceDataConstructor(), BuildResourceIdentifierConstructor()];
+            => [ConstructorProviderHelpers.BuildMockingConstructor(this), BuildResourceDataConstructor(), BuildResourceIdentifierConstructor()];
 
         private ConstructorProvider BuildResourceDataConstructor()
         {
@@ -309,6 +308,8 @@ namespace Azure.Generator.Management.Providers
 
             return new MethodProvider(signature, bodyStatements, this);
         }
+
+        internal string ResourceTypeValue => _resourceMetadata.ResourceType;
 
         protected virtual ScopedApi<ResourceType> ResourceTypeExpression => _resourceTypeField.As<ResourceType>();
 

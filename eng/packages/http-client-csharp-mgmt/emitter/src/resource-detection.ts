@@ -62,7 +62,9 @@ export async function updateClients(
       {
         resourceIdPattern: "", // this will be populated later
         resourceType: "", // this will be populated later
-        isSingleton: m.decorators?.some((d) => d.name == singleton) ?? false,
+        singletonResourceName: getSingletonResource(
+          m.decorators?.find((d) => d.name == singleton)
+        ),
         resourceScope: getResourceScope(m),
         methods: [],
         parentResource: getParentResourceModelId(
@@ -245,6 +247,16 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
     }
   }
   return resourceModels;
+}
+
+function getSingletonResource(
+  decorator: DecoratorInfo | undefined
+): string | undefined {
+  if (!decorator) return undefined;
+  const singletonResource = decorator.arguments["keyValue"] as
+    | string
+    | undefined;
+  return singletonResource ?? "default";
 }
 
 function getResourceScope(model: InputModelType): ResourceScope {

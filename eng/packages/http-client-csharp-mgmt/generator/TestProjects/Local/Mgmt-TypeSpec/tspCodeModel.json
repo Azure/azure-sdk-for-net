@@ -2655,7 +2655,6 @@
                 "kind": "List"
               }
             ],
-            "isSingleton": false,
             "resourceScope": "ResourceGroup"
           }
         }
@@ -3124,8 +3123,8 @@
                 "kind": "Delete"
               }
             ],
-            "isSingleton": true,
-            "resourceScope": "ResourceGroup"
+            "resourceScope": "ResourceGroup",
+            "singletonResourceName": "default"
           }
         }
       ],
