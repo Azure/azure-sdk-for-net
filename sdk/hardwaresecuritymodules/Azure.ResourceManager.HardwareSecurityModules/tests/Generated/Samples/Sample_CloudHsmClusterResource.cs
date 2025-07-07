@@ -240,35 +240,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetPrivateEndpointConnections_CloudHsmClusterPrivateEndpointConnectionListByResourceMaximumSetGen()
-        {
-            // Generated from example definition: 2025-03-31/CloudHsmClusterPrivateEndpointConnection_ListByCloudHsmCluster_MaximumSet_Gen.json
-            // this example is just showing the usage of "PrivateEndpointConnection_ListByCloudHsmCluster" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudHsmClusterResource created on azure
-            // for more information of creating CloudHsmClusterResource, please refer to the document of CloudHsmClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rgcloudhsm";
-            string cloudHsmClusterName = "chsm1";
-            ResourceIdentifier cloudHsmClusterResourceId = CloudHsmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudHsmClusterName);
-            CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CloudHsmClusterPrivateEndpointConnection item in cloudHsmCluster.GetPrivateEndpointConnectionsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetCloudHsmClusterPrivateLinkResources_CloudHsmClusterPrivateLinkResourcesListByResourceMaximumSetGen()
         {
             // Generated from example definition: 2025-03-31/CloudHsmClusterPrivateLinkResource_ListByCloudHsmCluster_MaximumSet_Gen.json
@@ -292,95 +263,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetCloudHsmClusterPrivateEndpointConnection_CloudHsmClusterPrivateEndpointConnectionGetMaximumSetGen()
-        {
-            // Generated from example definition: 2025-03-31/CloudHsmClusterPrivateEndpointConnection_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "PrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudHsmClusterResource created on azure
-            // for more information of creating CloudHsmClusterResource, please refer to the document of CloudHsmClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rgcloudhsm";
-            string cloudHsmClusterName = "chsm1";
-            ResourceIdentifier cloudHsmClusterResourceId = CloudHsmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudHsmClusterName);
-            CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
-
-            // invoke the operation
-            string peConnectionName = "sample-pec";
-            CloudHsmClusterPrivateEndpointConnection result = await cloudHsmCluster.GetCloudHsmClusterPrivateEndpointConnectionAsync(peConnectionName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateCloudHsmClusterPrivateEndpointConnection_CloudHsmClusterPrivateEndpointConnectionCreateMaximumSetGen()
-        {
-            // Generated from example definition: 2025-03-31/CloudHsmClusterPrivateEndpointConnection_Create_MaximumSet_Gen.json
-            // this example is just showing the usage of "PrivateEndpointConnection_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudHsmClusterResource created on azure
-            // for more information of creating CloudHsmClusterResource, please refer to the document of CloudHsmClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rgcloudhsm";
-            string cloudHsmClusterName = "chsm1";
-            ResourceIdentifier cloudHsmClusterResourceId = CloudHsmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudHsmClusterName);
-            CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
-
-            // invoke the operation
-            string peConnectionName = "sample-pec";
-            CloudHsmClusterPrivateEndpointConnection properties = new CloudHsmClusterPrivateEndpointConnection
-            {
-                Properties = new CloudHsmClusterPrivateEndpointConnectionProperties(new CloudHsmClusterPrivateLinkServiceConnectionState
-                {
-                    Status = CloudHsmClusterPrivateEndpointServiceConnectionStatus.Approved,
-                    Description = "My name is Joe and I'm approving this.",
-                }),
-            };
-            CloudHsmClusterPrivateEndpointConnection result = await cloudHsmCluster.CreateCloudHsmClusterPrivateEndpointConnectionAsync(peConnectionName, properties);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task DeleteCloudHsmClusterPrivateEndpointConnection_CloudHsmClusterPrivateEndpointConnectionDeleteMaximumSetGen()
-        {
-            // Generated from example definition: 2025-03-31/CloudHsmClusterPrivateEndpointConnection_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "PrivateEndpointConnection_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudHsmClusterResource created on azure
-            // for more information of creating CloudHsmClusterResource, please refer to the document of CloudHsmClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rgcloudhsm";
-            string cloudHsmClusterName = "chsm1";
-            ResourceIdentifier cloudHsmClusterResourceId = CloudHsmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudHsmClusterName);
-            CloudHsmClusterResource cloudHsmCluster = client.GetCloudHsmClusterResource(cloudHsmClusterResourceId);
-
-            // invoke the operation
-            string peConnectionName = "sample-pec";
-            await cloudHsmCluster.DeleteCloudHsmClusterPrivateEndpointConnectionAsync(WaitUntil.Completed, peConnectionName);
 
             Console.WriteLine("Succeeded");
         }

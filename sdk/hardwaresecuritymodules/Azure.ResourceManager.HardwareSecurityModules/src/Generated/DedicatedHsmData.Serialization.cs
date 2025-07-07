@@ -10,15 +10,16 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Models
+namespace Azure.ResourceManager.HardwareSecurityModules
 {
-    public partial class DedicatedHsm : IUtf8JsonSerializable, IJsonModel<DedicatedHsm>
+    public partial class DedicatedHsmData : IUtf8JsonSerializable, IJsonModel<DedicatedHsmData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHsm>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHsmData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DedicatedHsm>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DedicatedHsmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +30,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsm>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHsm)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -52,19 +53,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             writer.WriteObjectValue(Properties, options);
         }
 
-        DedicatedHsm IJsonModel<DedicatedHsm>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DedicatedHsmData IJsonModel<DedicatedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsm>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHsm)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDedicatedHsm(document.RootElement, options);
+            return DeserializeDedicatedHsmData(document.RootElement, options);
         }
 
-        internal static DedicatedHsm DeserializeDedicatedHsm(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DedicatedHsmData DeserializeDedicatedHsmData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DedicatedHsm(
+            return new DedicatedHsmData(
                 id,
                 name,
                 type,
@@ -171,35 +172,35 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DedicatedHsm>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DedicatedHsmData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsm>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHsm)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DedicatedHsm IPersistableModel<DedicatedHsm>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DedicatedHsmData IPersistableModel<DedicatedHsmData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsm>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDedicatedHsm(document.RootElement, options);
+                        return DeserializeDedicatedHsmData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHsm)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHsmData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DedicatedHsm>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DedicatedHsmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> The private endpoint connection resource. </summary>
-    public partial class CloudHsmClusterPrivateEndpointConnection : ResourceData
+    /// <summary> Patchable properties of the dedicated HSM. </summary>
+    public partial class DedicatedHsmPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,29 +45,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointConnection"/>. </summary>
-        public CloudHsmClusterPrivateEndpointConnection()
+        /// <summary> Initializes a new instance of <see cref="DedicatedHsmPatch"/>. </summary>
+        public DedicatedHsmPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Resource properties. </param>
-        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHsmPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudHsmClusterPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudHsmClusterPrivateEndpointConnectionProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DedicatedHsmPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
-            ETag = etag;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource properties. </summary>
-        public CloudHsmClusterPrivateEndpointConnectionProperties Properties { get; set; }
-        /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
-        public ETag? ETag { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

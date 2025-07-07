@@ -45,5 +45,29 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
             CloudHsmClusterResource.ValidateResourceId(id);
             return new CloudHsmClusterResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CloudHsmClusterPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudHsmClusterPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="CloudHsmClusterPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CloudHsmClusterPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual CloudHsmClusterPrivateEndpointConnectionResource GetCloudHsmClusterPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            CloudHsmClusterPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new CloudHsmClusterPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DedicatedHsmResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DedicatedHsmResource.CreateResourceIdentifier" /> to create a <see cref="DedicatedHsmResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DedicatedHsmResource"/> object. </returns>
+        public virtual DedicatedHsmResource GetDedicatedHsmResource(ResourceIdentifier id)
+        {
+            DedicatedHsmResource.ValidateResourceId(id);
+            return new DedicatedHsmResource(Client, id);
+        }
     }
 }

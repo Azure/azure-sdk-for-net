@@ -5,26 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.HardwareSecurityModules.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
-    internal class DedicatedHsmOperationSource : IOperationSource<DedicatedHsm>
+    internal class DedicatedHsmOperationSource : IOperationSource<DedicatedHsmResource>
     {
-        DedicatedHsm IOperationSource<DedicatedHsm>.CreateResult(Response response, CancellationToken cancellationToken)
+        private readonly ArmClient _client;
+
+        internal DedicatedHsmOperationSource(ArmClient client)
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return DedicatedHsm.DeserializeDedicatedHsm(document.RootElement);
+            _client = client;
         }
 
-        async ValueTask<DedicatedHsm> IOperationSource<DedicatedHsm>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        DedicatedHsmResource IOperationSource<DedicatedHsmResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return DedicatedHsm.DeserializeDedicatedHsm(document.RootElement);
+            var data = ModelReaderWriter.Read<DedicatedHsmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHardwareSecurityModulesContext.Default);
+            return new DedicatedHsmResource(_client, data);
+        }
+
+        async ValueTask<DedicatedHsmResource> IOperationSource<DedicatedHsmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            var data = ModelReaderWriter.Read<DedicatedHsmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHardwareSecurityModulesContext.Default);
+            return await Task.FromResult(new DedicatedHsmResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

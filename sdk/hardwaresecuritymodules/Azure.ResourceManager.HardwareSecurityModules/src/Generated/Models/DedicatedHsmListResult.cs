@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmListResult"/>. </summary>
         /// <param name="value"> The DedicatedHsm items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DedicatedHsmListResult(IEnumerable<DedicatedHsm> value)
+        internal DedicatedHsmListResult(IEnumerable<DedicatedHsmData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="value"> The DedicatedHsm items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHsmListResult(IReadOnlyList<DedicatedHsm> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DedicatedHsmListResult(IReadOnlyList<DedicatedHsmData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> The DedicatedHsm items on this page. </summary>
-        public IReadOnlyList<DedicatedHsm> Value { get; }
+        public IReadOnlyList<DedicatedHsmData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

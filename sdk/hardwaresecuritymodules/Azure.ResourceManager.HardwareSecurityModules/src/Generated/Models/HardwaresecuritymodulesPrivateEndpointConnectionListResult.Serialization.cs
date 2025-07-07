@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            IReadOnlyList<CloudHsmClusterPrivateEndpointConnection> value = default;
+            IReadOnlyList<CloudHsmClusterPrivateEndpointConnectionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CloudHsmClusterPrivateEndpointConnection> array = new List<CloudHsmClusterPrivateEndpointConnection>();
+                    List<CloudHsmClusterPrivateEndpointConnectionData> array = new List<CloudHsmClusterPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudHsmClusterPrivateEndpointConnection.DeserializeCloudHsmClusterPrivateEndpointConnection(item, options));
+                        array.Add(CloudHsmClusterPrivateEndpointConnectionData.DeserializeCloudHsmClusterPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

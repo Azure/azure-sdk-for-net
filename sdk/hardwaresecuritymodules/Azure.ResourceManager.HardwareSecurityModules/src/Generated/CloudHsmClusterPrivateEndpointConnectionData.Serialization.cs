@@ -10,15 +10,16 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HardwareSecurityModules.Models
+namespace Azure.ResourceManager.HardwareSecurityModules
 {
-    public partial class CloudHsmClusterPrivateEndpointConnection : IUtf8JsonSerializable, IJsonModel<CloudHsmClusterPrivateEndpointConnection>
+    public partial class CloudHsmClusterPrivateEndpointConnectionData : IUtf8JsonSerializable, IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudHsmClusterPrivateEndpointConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CloudHsmClusterPrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +30,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmClusterPrivateEndpointConnection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmClusterPrivateEndpointConnectionData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -48,19 +49,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
         }
 
-        CloudHsmClusterPrivateEndpointConnection IJsonModel<CloudHsmClusterPrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CloudHsmClusterPrivateEndpointConnectionData IJsonModel<CloudHsmClusterPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmClusterPrivateEndpointConnection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmClusterPrivateEndpointConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCloudHsmClusterPrivateEndpointConnection(document.RootElement, options);
+            return DeserializeCloudHsmClusterPrivateEndpointConnectionData(document.RootElement, options);
         }
 
-        internal static CloudHsmClusterPrivateEndpointConnection DeserializeCloudHsmClusterPrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CloudHsmClusterPrivateEndpointConnectionData DeserializeCloudHsmClusterPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CloudHsmClusterPrivateEndpointConnection(
+            return new CloudHsmClusterPrivateEndpointConnectionData(
                 id,
                 name,
                 type,
@@ -136,35 +137,35 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CloudHsmClusterPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterPrivateEndpointConnection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmClusterPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CloudHsmClusterPrivateEndpointConnection IPersistableModel<CloudHsmClusterPrivateEndpointConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CloudHsmClusterPrivateEndpointConnectionData IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCloudHsmClusterPrivateEndpointConnection(document.RootElement, options);
+                        return DeserializeCloudHsmClusterPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterPrivateEndpointConnection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmClusterPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CloudHsmClusterPrivateEndpointConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CloudHsmClusterPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

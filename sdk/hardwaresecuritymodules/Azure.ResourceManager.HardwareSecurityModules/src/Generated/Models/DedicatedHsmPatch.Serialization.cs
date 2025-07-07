@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    public partial class DedicatedHsmPatchContent : IUtf8JsonSerializable, IJsonModel<DedicatedHsmPatchContent>
+    public partial class DedicatedHsmPatch : IUtf8JsonSerializable, IJsonModel<DedicatedHsmPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHsmPatchContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHsmPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DedicatedHsmPatchContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DedicatedHsmPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmPatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHsmPatchContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHsmPatch)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Tags))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
         }
 
-        DedicatedHsmPatchContent IJsonModel<DedicatedHsmPatchContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DedicatedHsmPatch IJsonModel<DedicatedHsmPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmPatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHsmPatchContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHsmPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDedicatedHsmPatchContent(document.RootElement, options);
+            return DeserializeDedicatedHsmPatch(document.RootElement, options);
         }
 
-        internal static DedicatedHsmPatchContent DeserializeDedicatedHsmPatchContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DedicatedHsmPatch DeserializeDedicatedHsmPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DedicatedHsmPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new DedicatedHsmPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DedicatedHsmPatchContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DedicatedHsmPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmPatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHsmPatchContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHsmPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DedicatedHsmPatchContent IPersistableModel<DedicatedHsmPatchContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DedicatedHsmPatch IPersistableModel<DedicatedHsmPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmPatchContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDedicatedHsmPatchContent(document.RootElement, options);
+                        return DeserializeDedicatedHsmPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHsmPatchContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHsmPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DedicatedHsmPatchContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DedicatedHsmPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

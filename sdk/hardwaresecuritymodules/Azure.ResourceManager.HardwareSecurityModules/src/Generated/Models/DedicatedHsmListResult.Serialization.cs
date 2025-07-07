@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            IReadOnlyList<DedicatedHsm> value = default;
+            IReadOnlyList<DedicatedHsmData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DedicatedHsm> array = new List<DedicatedHsm>();
+                    List<DedicatedHsmData> array = new List<DedicatedHsmData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHsm.DeserializeDedicatedHsm(item, options));
+                        array.Add(DedicatedHsmData.DeserializeDedicatedHsmData(item, options));
                     }
                     value = array;
                     continue;
