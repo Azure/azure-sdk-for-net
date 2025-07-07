@@ -167,7 +167,7 @@ namespace MgmtTypeSpec.Models
         string IPersistableModel<PrivateLinkListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PrivateLinkListResult"/> from. </param>
-        public static explicit operator PrivateLinkListResult(Response result)
+        internal static PrivateLinkListResult FromResponse(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
