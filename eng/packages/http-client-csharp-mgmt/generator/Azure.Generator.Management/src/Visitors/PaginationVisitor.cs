@@ -2,26 +2,44 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Providers;
-using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Linq;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors
 {
     internal class PaginationVisitor : ScmLibraryVisitor
     {
-        protected override TypeProvider? VisitType(TypeProvider type)
+        protected override MethodBodyStatement? VisitStatements(MethodBodyStatements statements, MethodProvider method)
         {
-            if (type is not null && type.Name.AsSpan().Contains("CollectionResult".AsSpan(), StringComparison.Ordinal))
+            if (method.EnclosingType.Name.AsSpan().Contains("CollectionResult".AsSpan(), StringComparison.Ordinal) && method.Signature.Name.Equals("AsPages"))
             {
-                var asPagesMethod = type.Methods.Single(m => m.Signature.Name.Equals("AsPages"));
-                var bodyStatements = asPagesMethod.BodyStatements!.AsStatement();
-                foreach (var statement in bodyStatements)
+                var doWhileStatement = statements.OfType<DoWhileStatement>().FirstOrDefault();
+                if (doWhileStatement is not null)
                 {
+                    var body = doWhileStatement.Body;
+
+                    // get the response to model casting expression
+                    var responseToModelStatement = body.Skip(2).Take(1).Single() as ExpressionStatement;
+                    if (responseToModelStatement is not null)
+                    {
+                        responseToModelStatement.Update(ConstructFromResponseExpression(responseToModelStatement));
+                    }
                 }
             }
-            return type;
+            return base.VisitStatements(statements, method);
+        }
+
+        private static AssignmentExpression ConstructFromResponseExpression(ExpressionStatement responseToModelStatement)
+        {
+            var assignmentExpression = responseToModelStatement.Expression as AssignmentExpression;
+            var castExpression = assignmentExpression?.Value as CastExpression;
+            var value = Static(castExpression?.Type!).Invoke("FromResponse", [castExpression?.Inner!]);
+            var variable = assignmentExpression!.Variable;
+            return variable.Assign(value);
         }
     }
 }
