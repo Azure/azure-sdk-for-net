@@ -30,7 +30,6 @@ namespace Samples
                 request.Headers.SetValue("some-other-parameter", someOtherParameter);
             }
             request.Headers.SetValue("client-request-id", request.ClientRequestId);
-            request.Headers.SetValue("return-client-request-id", "true");
             return message;
         }
     }
