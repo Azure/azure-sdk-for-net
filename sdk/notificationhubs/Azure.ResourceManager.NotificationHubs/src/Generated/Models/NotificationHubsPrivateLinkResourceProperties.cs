@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubsPrivateLinkResourceProperties"/>. </summary>
-        public NotificationHubsPrivateLinkResourceProperties()
+        internal NotificationHubsPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();

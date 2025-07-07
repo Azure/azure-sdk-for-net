@@ -87,6 +87,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SharedAccessAuthorizationRuleProperties"/> for deserialization. </summary>
+        internal SharedAccessAuthorizationRuleProperties()
+        {
+        }
+
         /// <summary> Gets or sets the rights associated with the rule. </summary>
         public IList<AuthorizationRuleAccessRightExt> AccessRights { get; }
         /// <summary>

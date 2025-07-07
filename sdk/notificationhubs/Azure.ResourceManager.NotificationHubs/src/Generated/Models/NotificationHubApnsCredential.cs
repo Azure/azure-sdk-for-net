@@ -87,6 +87,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NotificationHubApnsCredential"/> for deserialization. </summary>
+        internal NotificationHubApnsCredential()
+        {
+        }
+
         /// <summary> Gets or sets the APNS certificate. </summary>
         public string ApnsCertificate { get; set; }
         /// <summary> Gets or sets the certificate key. </summary>

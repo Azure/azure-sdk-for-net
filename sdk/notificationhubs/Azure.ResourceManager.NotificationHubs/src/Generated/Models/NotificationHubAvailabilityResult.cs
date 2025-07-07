@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a CheckAvailability resource. </summary>
-    public partial class NotificationHubAvailabilityResult : TrackedResourceData
+    public partial class NotificationHubAvailabilityResult : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubAvailabilityResult"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public NotificationHubAvailabilityResult(AzureLocation location) : base(location)
+        internal NotificationHubAvailabilityResult()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubAvailabilityResult"/>. </summary>
@@ -58,32 +58,33 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="isAvailiable">
         /// Gets or sets true if the name is available and can be used to
         /// create new Namespace/NotificationHub. Otherwise false.
         /// </param>
+        /// <param name="location"> Deprecated - only for compatibility. </param>
+        /// <param name="tags"> Deprecated - only for compatibility. </param>
         /// <param name="sku"> The Sku description for a namespace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubAvailabilityResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, bool? isAvailiable, NotificationHubSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubAvailabilityResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAvailiable, string location, IReadOnlyDictionary<string, string> tags, NotificationHubSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsAvailiable = isAvailiable;
+            Location = location;
+            Tags = tags;
             Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NotificationHubAvailabilityResult"/> for deserialization. </summary>
-        internal NotificationHubAvailabilityResult()
-        {
         }
 
         /// <summary>
         /// Gets or sets true if the name is available and can be used to
         /// create new Namespace/NotificationHub. Otherwise false.
         /// </summary>
-        public bool? IsAvailiable { get; set; }
+        public bool? IsAvailiable { get; }
+        /// <summary> Deprecated - only for compatibility. </summary>
+        public string Location { get; }
+        /// <summary> Deprecated - only for compatibility. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> The Sku description for a namespace. </summary>
-        public NotificationHubSku Sku { get; set; }
+        public NotificationHubSku Sku { get; }
     }
 }

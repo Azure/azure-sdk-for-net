@@ -65,8 +65,6 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> The Sku description for a namespace. </param>
-        /// <param name="notificationHubName"> Gets or sets the NotificationHub name. </param>
         /// <param name="registrationTtl"> Gets or sets the RegistrationTtl of the created NotificationHub. </param>
         /// <param name="authorizationRules"> Gets or sets the AuthorizationRules of the created NotificationHub. </param>
         /// <param name="apnsCredential"> Description of a NotificationHub ApnsCredential. </param>
@@ -79,11 +77,10 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="xiaomiCredential"> Description of a NotificationHub XiaomiCredential. </param>
         /// <param name="fcmV1Credential"> Description of a NotificationHub FcmV1Credential. </param>
         /// <param name="dailyMaxActiveDevices"></param>
+        /// <param name="sku"> The Sku description for a namespace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NotificationHubSku sku, string notificationHubName, TimeSpan? registrationTtl, IList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, BrowserCredential browserCredential, XiaomiCredential xiaomiCredential, FcmV1Credential fcmV1Credential, long? dailyMaxActiveDevices, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NotificationHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string registrationTtl, IReadOnlyList<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, BrowserCredential browserCredential, XiaomiCredential xiaomiCredential, FcmV1Credential fcmV1Credential, long? dailyMaxActiveDevices, NotificationHubSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Sku = sku;
-            NotificationHubName = notificationHubName;
             RegistrationTtl = registrationTtl;
             AuthorizationRules = authorizationRules;
             ApnsCredential = apnsCredential;
@@ -96,6 +93,7 @@ namespace Azure.ResourceManager.NotificationHubs
             XiaomiCredential = xiaomiCredential;
             FcmV1Credential = fcmV1Credential;
             DailyMaxActiveDevices = dailyMaxActiveDevices;
+            Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -104,14 +102,10 @@ namespace Azure.ResourceManager.NotificationHubs
         {
         }
 
-        /// <summary> The Sku description for a namespace. </summary>
-        public NotificationHubSku Sku { get; set; }
-        /// <summary> Gets or sets the NotificationHub name. </summary>
-        public string NotificationHubName { get; set; }
         /// <summary> Gets or sets the RegistrationTtl of the created NotificationHub. </summary>
-        public TimeSpan? RegistrationTtl { get; set; }
+        public string RegistrationTtl { get; set; }
         /// <summary> Gets or sets the AuthorizationRules of the created NotificationHub. </summary>
-        public IList<SharedAccessAuthorizationRuleProperties> AuthorizationRules { get; }
+        public IReadOnlyList<SharedAccessAuthorizationRuleProperties> AuthorizationRules { get; }
         /// <summary> Description of a NotificationHub ApnsCredential. </summary>
         public NotificationHubApnsCredential ApnsCredential { get; set; }
         /// <summary> Description of a NotificationHub WnsCredential. </summary>
@@ -132,5 +126,7 @@ namespace Azure.ResourceManager.NotificationHubs
         public FcmV1Credential FcmV1Credential { get; set; }
         /// <summary> Gets the daily max active devices. </summary>
         public long? DailyMaxActiveDevices { get; }
+        /// <summary> The Sku description for a namespace. </summary>
+        public NotificationHubSku Sku { get; set; }
     }
 }

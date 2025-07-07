@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NotificationHubGcmCredential"/> for deserialization. </summary>
+        internal NotificationHubGcmCredential()
+        {
+        }
+
         /// <summary> Gets or sets the GCM endpoint. </summary>
         public Uri GcmEndpoint { get; set; }
         /// <summary> Gets or sets the Google API key. </summary>

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> The response of the List Namespace operation. </summary>
+    /// <summary> Paged collection of NamespaceResource items. </summary>
     internal partial class NotificationHubNamespaceListResult
     {
         /// <summary>
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceListResult"/>. </summary>
-        internal NotificationHubNamespaceListResult()
+        /// <param name="value"> The NamespaceResource items on this page. </param>
+        internal NotificationHubNamespaceListResult(IEnumerable<NotificationHubNamespaceData> value)
         {
-            Value = new ChangeTrackingList<NotificationHubNamespaceData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceListResult"/>. </summary>
-        /// <param name="value"> Gets or sets result of the List AuthorizationRules operation. </param>
-        /// <param name="nextLink"> Gets or sets link to the next set of results. </param>
+        /// <param name="value"> The NamespaceResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubNamespaceListResult(IReadOnlyList<NotificationHubNamespaceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubNamespaceListResult(IReadOnlyList<NotificationHubNamespaceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets result of the List AuthorizationRules operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubNamespaceListResult"/> for deserialization. </summary>
+        internal NotificationHubNamespaceListResult()
+        {
+        }
+
+        /// <summary> The NamespaceResource items on this page. </summary>
         public IReadOnlyList<NotificationHubNamespaceData> Value { get; }
-        /// <summary> Gets or sets link to the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

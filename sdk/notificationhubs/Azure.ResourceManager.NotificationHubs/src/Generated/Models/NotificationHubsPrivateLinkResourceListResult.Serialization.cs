@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 throw new FormatException($"The model {nameof(NotificationHubsPrivateLinkResourceListResult)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,29 +86,29 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            IReadOnlyList<NotificationHubsPrivateLinkResourceData> value = default;
-            string nextLink = default;
+            IReadOnlyList<NotificationHubsPrivateLinkResourceDataData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<NotificationHubsPrivateLinkResourceData> array = new List<NotificationHubsPrivateLinkResourceData>();
+                    List<NotificationHubsPrivateLinkResourceDataData> array = new List<NotificationHubsPrivateLinkResourceDataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationHubsPrivateLinkResourceData.DeserializeNotificationHubsPrivateLinkResourceData(item, options));
+                        array.Add(NotificationHubsPrivateLinkResourceDataData.DeserializeNotificationHubsPrivateLinkResourceDataData(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NotificationHubsPrivateLinkResourceListResult(value ?? new ChangeTrackingList<NotificationHubsPrivateLinkResourceData>(), nextLink, serializedAdditionalRawData);
+            return new NotificationHubsPrivateLinkResourceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubsPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

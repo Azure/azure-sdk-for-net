@@ -41,11 +41,6 @@ namespace Azure.ResourceManager.NotificationHubs
             writer.WriteObjectValue(Sku, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamespaceName))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(NamespaceName);
-            }
             if (Optional.IsDefined(OperationProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -56,22 +51,22 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(NamespaceStatus.Value.ToString());
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(IsCritical))
+            if (options.Format != "W" && Optional.IsDefined(IsCritical))
             {
                 writer.WritePropertyName("critical"u8);
                 writer.WriteBooleanValue(IsCritical.Value);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(Region))
+            if (options.Format != "W" && Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
@@ -81,12 +76,12 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("metricId"u8);
                 writer.WriteStringValue(MetricId);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
@@ -116,7 +111,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("pnsCredentials"u8);
                 writer.WriteObjectValue(PnsCredentials, options);
             }
-            if (Optional.IsDefined(ServiceBusEndpoint))
+            if (options.Format != "W" && Optional.IsDefined(ServiceBusEndpoint))
             {
                 writer.WritePropertyName("serviceBusEndpoint"u8);
                 writer.WriteStringValue(ServiceBusEndpoint.AbsoluteUri);
@@ -176,7 +171,6 @@ namespace Azure.ResourceManager.NotificationHubs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string name0 = default;
             OperationProvisioningState? provisioningState = default;
             NotificationHubNamespaceStatus? status = default;
             bool? enabled = default;
@@ -257,11 +251,6 @@ namespace Azure.ResourceManager.NotificationHubs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("name"u8))
-                        {
-                            name0 = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -435,7 +424,6 @@ namespace Azure.ResourceManager.NotificationHubs
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 sku,
-                name0,
                 provisioningState,
                 status,
                 enabled,
