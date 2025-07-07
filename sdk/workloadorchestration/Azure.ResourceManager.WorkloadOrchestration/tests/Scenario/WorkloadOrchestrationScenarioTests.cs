@@ -22,11 +22,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Tests
         public static IEnumerable<object[]> TestData => new[] { new object[] { false }, new object[] { true } };
 
     [TestCase]
-    [RecordedTest]
     public async Task Schema_LifecycleAsync()
     {
-      string schemaName = Recording.GenerateAssetName("schem6a");
-      string schemaVersionName = Recording.GenerateAssetName("1.0.0");
+      string schemaName = Recording.GenerateAssetName("schema");
+      string schemaVersionName = $"{Recording.Random.Next(1, 10)}.{Recording.Random.Next(0, 99)}.{Recording.Random.Next(0, 99)}";
 
       // Get client and resource group from test base
       ArmClient client = GetArmClient();
