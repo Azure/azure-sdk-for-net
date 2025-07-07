@@ -133,8 +133,8 @@ Total: 114
 | provisioning | Azure.Provisioning | sdk/provisioning/Azure.Provisioning |
 | provisioning | Azure.Provisioning.AppConfiguration | sdk/provisioning/Azure.Provisioning.AppConfiguration |
 | provisioning | Azure.Provisioning.AppContainers | sdk/provisioning/Azure.Provisioning.AppContainers |
-| provisioning | Azure.Provisioning.AppService | sdk/provisioning/Azure.Provisioning.AppService |
 | provisioning | Azure.Provisioning.ApplicationInsights | sdk/provisioning/Azure.Provisioning.ApplicationInsights |
+| provisioning | Azure.Provisioning.AppService | sdk/provisioning/Azure.Provisioning.AppService |
 | provisioning | Azure.Provisioning.CognitiveServices | sdk/provisioning/Azure.Provisioning.CognitiveServices |
 | provisioning | Azure.Provisioning.Communication | sdk/provisioning/Azure.Provisioning.Communication |
 | provisioning | Azure.Provisioning.ContainerRegistry | sdk/provisioning/Azure.Provisioning.ContainerRegistry |
