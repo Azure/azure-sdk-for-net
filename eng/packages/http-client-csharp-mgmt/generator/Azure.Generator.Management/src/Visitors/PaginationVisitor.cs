@@ -23,7 +23,7 @@ namespace Azure.Generator.Management.Visitors
                     var body = doWhileStatement.Body;
 
                     // get the response to model casting expression
-                    var responseToModelStatement = body.Skip(2).Take(1).Single() as ExpressionStatement;
+                    var responseToModelStatement = body.OfType<ExpressionStatement>().FirstOrDefault();
                     if (responseToModelStatement is not null)
                     {
                         responseToModelStatement.Update(ConstructFromResponseExpression(responseToModelStatement));
