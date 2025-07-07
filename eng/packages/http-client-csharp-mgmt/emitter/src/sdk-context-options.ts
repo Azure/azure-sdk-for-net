@@ -100,6 +100,6 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     resourceGroupResourceRegex,
     singletonRegex,
     subscriptionResourceRegex,
-    tenantResourceRegex,
+    tenantResourceRegex
   ]
 };
