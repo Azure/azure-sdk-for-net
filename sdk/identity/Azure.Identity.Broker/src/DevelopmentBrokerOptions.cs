@@ -36,7 +36,7 @@ namespace Azure.Identity.Broker
             // Set default value for UseDefaultBrokerAccount on macOS
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                RedirectUri = new("msauth.com.msauth.unsignedapp://auth");
+                RedirectUri = new(Constants.MacBrokerRedirectUri);
             }
         }
 
