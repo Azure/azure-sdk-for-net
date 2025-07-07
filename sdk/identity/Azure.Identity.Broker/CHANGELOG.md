@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Support Microsoft Broker on MacOS.
+- Support Microsoft Broker on macOS.
 
 ### Breaking Changes
 

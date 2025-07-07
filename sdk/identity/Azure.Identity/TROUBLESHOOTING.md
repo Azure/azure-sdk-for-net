@@ -360,11 +360,11 @@ You may also log in another MSA account by selecting "Microsoft account":
 
 ![Microsoft account](./images/MSA4.png)
 
-### Common errors for broker on MacOS
+### Common errors for broker on macOS
 
 | Error Message |Description| Mitigation |
 |---|---|---|
-|0xffffffffffff5bf0 - Application's teamId is missing, and redirectUri is not matching unsigned format|For console applications using the broker on MacOS, the following `RedirectUri` should be set: `msauth.com.msauth.unsignedapp://auth`|
+|0xffffffffffff5bf0 - Application's teamId is missing, and redirectUri is not matching unsigned format|For console applications using the broker on macOS, the following `RedirectUri` should be set: `msauth.com.msauth.unsignedapp://auth`|
 
 ## Troubleshoot AzurePipelinesCredential authentication issues
 
