@@ -50,6 +50,7 @@ namespace MgmtTypeSpec.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
         public virtual Response<FooResource> GetFoo(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
@@ -62,11 +63,19 @@ namespace MgmtTypeSpec.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<FooResource>> GetFooAsync(string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
             return await GetFoos().GetAsync(fooName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
+        public virtual FooSettingsResource GetFooSettings()
+        {
+            return null;
         }
     }
 }

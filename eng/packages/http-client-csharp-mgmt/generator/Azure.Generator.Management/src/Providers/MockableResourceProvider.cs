@@ -6,6 +6,7 @@ using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Humanizer;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -70,12 +71,27 @@ namespace Azure.Generator.Management.Providers
             return [.. methods];
         }
 
+        //private static ValueExpression BuildSingletonResourceIdentifier()
+        //{
+        //    return Null;
+        //}
+
         private IEnumerable<MethodProvider> BuildMethodsForResource(ResourceClientProvider resource)
         {
             if (resource.IsSingleton)
             {
-                // TODO -- not implemented yet.
-                yield break;
+                var resourceMethodSignature = new MethodSignature(
+                    $"Get{resource.SpecName}",
+                    $"Gets an object representing a {resource.Type:C} along with the instance operations that can be performed on it in the {ArmCoreType:C}.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                    resource.Type,
+                    $"Returns a {resource.Type:C} object.",
+                    []
+                    );
+                yield return new MethodProvider(
+                    resourceMethodSignature,
+                    Return(Null),
+                    this);
             }
             else
             {
@@ -91,10 +107,7 @@ namespace Azure.Generator.Management.Providers
                     []
                     );
 
-                var bodyStatement = new MethodBodyStatement[]
-                {
-                    Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(collection.Type, client, This.As<ArmResource>().Id())))
-                };
+                var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(collection.Type, client, This.As<ArmResource>().Id())));
                 yield return new MethodProvider(
                     collectionMethodSignature,
                     bodyStatement,
@@ -106,44 +119,31 @@ namespace Azure.Generator.Management.Providers
                 if (getMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    var getResourceMethodSignature = new MethodSignature(
-                        $"Get{collection.SpecName}",
-                        getMethod.Signature.Description,
-                        getMethod.Signature.Modifiers,
-                        getMethod.Signature.ReturnType,
-                        getMethod.Signature.ReturnDescription,
-                        getMethod.Signature.Parameters);
-                    // TODO -- we need to add the ForwardsClientCallsAttribute attribute when the hook to add more shared source is available
-                    // Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
-
-                    yield return new MethodProvider(
-                        getResourceMethodSignature,
-                        new MethodBodyStatement[]
-                        {
-                            Return(This.Invoke(collectionMethodSignature).Invoke(getMethod.Signature))
-                        },
-                        this);
+                    yield return BuildGetMethod(this, getMethod, collectionMethodSignature, $"Get{collection.SpecName}");
                 }
 
                 if (getAsyncMethod is not null)
                 {
                     // we should be sure that this would never be null, but this null check here is just ensuring that we never crash
-                    var getResourceAsyncMethodSignature = new MethodSignature(
-                        $"Get{collection.SpecName}Async",
-                        getAsyncMethod.Signature.Description,
-                        getAsyncMethod.Signature.Modifiers,
-                        getAsyncMethod.Signature.ReturnType,
-                        getAsyncMethod.Signature.ReturnDescription,
-                        getAsyncMethod.Signature.Parameters);
-                    // TODO -- we need to add the ForwardsClientCallsAttribute attribute when the hook to add more shared source is available
-                    // Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
-                    yield return new MethodProvider(
-                        getResourceAsyncMethodSignature,
-                        new MethodBodyStatement[]
-                        {
-                            Return(This.Invoke(collectionMethodSignature).Invoke(getAsyncMethod.Signature))
-                        },
-                        this);
+                    yield return BuildGetMethod(this, getAsyncMethod, collectionMethodSignature, $"Get{collection.SpecName}Async");
+                }
+
+                static MethodProvider BuildGetMethod(TypeProvider enclosingType, MethodProvider resourceGetMethod, MethodSignature collectionGetSignature, string methodName)
+                {
+                    var signature = new MethodSignature(
+                        methodName,
+                        resourceGetMethod.Signature.Description,
+                        resourceGetMethod.Signature.Modifiers,
+                        resourceGetMethod.Signature.ReturnType,
+                        resourceGetMethod.Signature.ReturnDescription,
+                        resourceGetMethod.Signature.Parameters,
+                        Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
+
+                    return new MethodProvider(
+                        signature,
+                        // invoke on a MethodSignature would handle the async extra calls and keyword automatically
+                        Return(This.Invoke(collectionGetSignature).Invoke(resourceGetMethod.Signature)),
+                        enclosingType);
                 }
             }
         }
