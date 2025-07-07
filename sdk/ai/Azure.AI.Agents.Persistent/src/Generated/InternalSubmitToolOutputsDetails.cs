@@ -50,7 +50,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// The list of tool calls that must be resolved for the agent thread run to continue.
         /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RequiredFunctionToolCall"/>.
+        /// The available derived classes include <see cref="RequiredFunctionToolCall"/> and <see cref="RequiredMcpToolCall"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolCalls"/> is null. </exception>
         internal InternalSubmitToolOutputsDetails(IEnumerable<RequiredToolCall> toolCalls)
@@ -64,7 +64,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// The list of tool calls that must be resolved for the agent thread run to continue.
         /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RequiredFunctionToolCall"/>.
+        /// The available derived classes include <see cref="RequiredFunctionToolCall"/> and <see cref="RequiredMcpToolCall"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InternalSubmitToolOutputsDetails(IReadOnlyList<RequiredToolCall> toolCalls, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -81,7 +81,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>
         /// The list of tool calls that must be resolved for the agent thread run to continue.
         /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RequiredFunctionToolCall"/>.
+        /// The available derived classes include <see cref="RequiredFunctionToolCall"/> and <see cref="RequiredMcpToolCall"/>.
         /// </summary>
         public IReadOnlyList<RequiredToolCall> ToolCalls { get; }
     }
