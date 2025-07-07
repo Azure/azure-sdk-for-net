@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Snippets;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -14,5 +15,17 @@ namespace Azure.Generator.Management.Snippets
 
         public static ScopedApi<ResourceType> ResourceType(this ScopedApi<ResourceIdentifier> resourceIdentifier)
             => resourceIdentifier.Property(nameof(ResourceIdentifier.ResourceType)).As<ResourceType>();
+
+        public static ScopedApi<ResourceIdentifier> AppendProviderResource(
+            this ScopedApi<ResourceIdentifier> resourceIdentifier,
+            ValueExpression providerNamespace,
+            ValueExpression resourceType,
+            ValueExpression resourceName)
+        {
+            return resourceIdentifier.Invoke(
+                nameof(ResourceIdentifier.AppendProviderResource),
+                [providerNamespace, resourceType, resourceName])
+                .As<ResourceIdentifier>();
+        }
     }
 }

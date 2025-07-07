@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
-using Azure.Generator.Management.Primitives;
 using Azure.Generator.Tests.Common;
 using Microsoft.TypeSpec.Generator.Input;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Azure.Generator.Management.Tests.Common
 {
@@ -14,6 +15,7 @@ namespace Azure.Generator.Management.Tests.Common
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
+            var decorators = new List<InputDecoratorInfo>() { };
             var responseModel = InputFactory.Model(ResourceModelName,
                         usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
                         properties:
@@ -22,35 +24,38 @@ namespace Azure.Generator.Management.Tests.Common
                             InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
                             InputFactory.Property("name", InputFactory.Primitive.String(), isReadOnly: true),
                         ],
-                        decorators: [new InputDecoratorInfo(KnownDecorators.ArmResourceInternal, null)]);
+                        decorators: decorators);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
-            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: [new InputDecoratorInfo(KnownDecorators.ArmResourceRead, null)]);
-            var decorators = new List<InputDecoratorInfo>()
-            {
-                new InputDecoratorInfo(KnownDecorators.ArmProviderNamespace, new Dictionary<string, BinaryData>())
-            };
+            var subscriptionIdParameter = InputFactory.Parameter("subscriptionId", InputPrimitiveType.String, location: InputRequestLocation.Path, kind: InputParameterKind.Client);
+            var resourceGroupParameter = InputFactory.Parameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path, kind: InputParameterKind.Client);
+            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/a/test/{testName}");
+            var crossLanguageDefinitionId = Guid.NewGuid().ToString();
             var client = InputFactory.Client(
                 TestClientName,
-                methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter])],
-                crossLanguageDefinitionId: $"Test.{TestClientName}",
-                decorators: decorators);
-            decorators.Add(BuildResourceMetadata(responseModel, client, "a/test", false, ResourceScope.ResourceGroup));
+                methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: crossLanguageDefinitionId)],
+                crossLanguageDefinitionId: $"Test.{TestClientName}");
+            decorators.Add(BuildResourceMetadata(responseModel, client, "a/test", false, ResourceScope.ResourceGroup, [new ResourceMethod(crossLanguageDefinitionId, OperationKind.Get)]));
             return (client, [responseModel]);
         }
 
-        private static InputDecoratorInfo BuildResourceMetadata(InputModelType resourceModel, InputClient resourceClient, string resourceType, bool isSingleton, ResourceScope resourceScope)
+        private static InputDecoratorInfo BuildResourceMetadata(InputModelType resourceModel, InputClient resourceClient, string resourceType, bool isSingleton, ResourceScope resourceScope, IReadOnlyList<ResourceMethod> methods)
         {
-            var arguments = new Dictionary<string, BinaryData>
+            var options = new JsonSerializerOptions
             {
-                [KnownDecorators.ResourceModel] = FromLiteralString(resourceModel.CrossLanguageDefinitionId),
-                [KnownDecorators.ResourceClient] = FromLiteralString(resourceClient.CrossLanguageDefinitionId),
-                [KnownDecorators.ResourceType] = FromLiteralString(resourceType),
-                [KnownDecorators.IsSingleton] = BinaryData.FromObjectAsJson<bool>(isSingleton),
-                [KnownDecorators.ResourceScope] = FromLiteralString(resourceScope.ToString()),
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
             };
 
-            return new InputDecoratorInfo(KnownDecorators.ResourceMetadata, arguments);
+            var arguments = new Dictionary<string, BinaryData>
+            {
+                ["resourceType"] = FromLiteralString(resourceType),
+                ["isSingleton"] = BinaryData.FromObjectAsJson(isSingleton, options),
+                ["resourceScope"] = FromLiteralString(resourceScope.ToString()),
+                ["methods"] = BinaryData.FromObjectAsJson(methods, options),
+            };
+
+            return new InputDecoratorInfo("Azure.ClientGenerator.Core.@resourceSchema", arguments);
 
             static BinaryData FromLiteralString(string literal)
                 => BinaryData.FromString($"\"{literal}\"");
