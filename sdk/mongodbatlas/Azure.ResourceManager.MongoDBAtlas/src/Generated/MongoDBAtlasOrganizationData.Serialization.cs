@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 return null;
             }
             ResourceIdentifier id = default;
-            string @type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
             }
             return new MongoDBAtlasOrganizationData(
                 id,
-                @type,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         string IPersistableModel<MongoDBAtlasOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="mongoDBAtlasOrganizationData"> The <see cref="MongoDBAtlasOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(MongoDBAtlasOrganizationData mongoDBAtlasOrganizationData)
+        internal static RequestContent ToRequestContent(MongoDBAtlasOrganizationData mongoDBAtlasOrganizationData)
         {
             if (mongoDBAtlasOrganizationData == null)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="MongoDBAtlasOrganizationData"/> from. </param>
-        public static explicit operator MongoDBAtlasOrganizationData(Response result)
+        internal static MongoDBAtlasOrganizationData FromResponse(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);

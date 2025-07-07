@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     yield break;
                 }
-                OrganizationResourceListResult responseWithType = (OrganizationResourceListResult)response;
+                OrganizationResourceListResult responseWithType = OrganizationResourceListResult.FromResponse(response);
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in responseWithType.Value)
                 {

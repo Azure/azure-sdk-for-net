@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _mongodbatlasorganizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, data, context);
+                HttpMessage message = _mongodbatlasorganizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MongoDBAtlasOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource>(
                     new MongoDBAtlasOrganizationOperationSource(Client),
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _mongodbatlasorganizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, data, context);
+                HttpMessage message = _mongodbatlasorganizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MongoDBAtlasOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource>(
                     new MongoDBAtlasOrganizationOperationSource(Client),
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 ;
                 HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MongoDBAtlasOrganizationData> response = Response.FromValue((MongoDBAtlasOrganizationData)result, result);
+                Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 ;
                 HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MongoDBAtlasOrganizationData> response = Response.FromValue((MongoDBAtlasOrganizationData)result, result);
+                Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 ;
                 HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MongoDBAtlasOrganizationData> response = Response.FromValue((MongoDBAtlasOrganizationData)result, result);
+                Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 ;
                 HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MongoDBAtlasOrganizationData> response = Response.FromValue((MongoDBAtlasOrganizationData)result, result);
+                Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 ;
                 HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MongoDBAtlasOrganizationData> response = Response.FromValue((MongoDBAtlasOrganizationData)result, result);
+                Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     return new NoValueResponse<MongoDBAtlasOrganizationResource>(response.GetRawResponse());
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 ;
                 HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MongoDBAtlasOrganizationData> response = Response.FromValue((MongoDBAtlasOrganizationData)result, result);
+                Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     return new NoValueResponse<MongoDBAtlasOrganizationResource>(response.GetRawResponse());

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <summary> The resource model definition for an Azure Organization. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="name"> Name of the Organization resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasOrganizationData"/> instance for mocking. </returns>
-        public static MongoDBAtlasOrganizationData MongoDBAtlasOrganizationData(ResourceIdentifier id = default, string @type = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, MongoDBAtlasOrganizationProperties properties = default, string name = default, ManagedServiceIdentity identity = default)
+        public static MongoDBAtlasOrganizationData MongoDBAtlasOrganizationData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, MongoDBAtlasOrganizationProperties properties = default, string name = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new MongoDBAtlasOrganizationData(
                 id,
-                @type,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
                 tags,

@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         string IPersistableModel<OrganizationResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="OrganizationResourceListResult"/> from. </param>
-        public static explicit operator OrganizationResourceListResult(Response result)
+        internal static OrganizationResourceListResult FromResponse(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
