@@ -76,7 +76,7 @@ namespace System.ClientModel.SourceGeneration
         {
             foreach (var attribute in assembly.GetAttributes())
             {
-                if (attribute.AttributeClass?.ToDisplayString() == "System.ClientModel.Primitives.ModelReaderWriterContextNameAttribute")
+                if (attribute.AttributeClass?.ToDisplayString() == "System.ClientModel.Primitives.ModelReaderWriterContextTypeAttribute")
                 {
                     if (attribute.ConstructorArguments.Length > 0 &&
                         attribute.ConstructorArguments[0].Value is ITypeSymbol typeSymbol)

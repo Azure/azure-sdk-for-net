@@ -7,13 +7,13 @@ namespace System.ClientModel.Primitives;
 /// Attribute to specify the context type for this assemblies <see cref="ModelReaderWriterContext"/> for source generation.
 /// </summary>
 [AttributeUsage(AttributeTargets.Assembly)]
-public class ModelReaderWriterContextNameAttribute : Attribute
+public class ModelReaderWriterContextTypeAttribute : Attribute
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ModelReaderWriterContextNameAttribute"/> class.
+    /// Initializes a new instance of the <see cref="ModelReaderWriterContextTypeAttribute"/> class.
     /// </summary>
-    /// <param name="contextType">The <see cref="ModelReaderWriterContextNameAttribute"/> type in this assembly.</param>
-    public ModelReaderWriterContextNameAttribute(Type contextType)
+    /// <param name="contextType">The <see cref="ModelReaderWriterContextTypeAttribute"/> type in this assembly.</param>
+    public ModelReaderWriterContextTypeAttribute(Type contextType)
     {
         ContextType = contextType;
     }

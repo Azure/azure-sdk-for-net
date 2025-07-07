@@ -291,9 +291,9 @@ namespace System.ClientModel.Primitives
         protected virtual bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Assembly)]
-    public partial class ModelReaderWriterContextNameAttribute : System.Attribute
+    public partial class ModelReaderWriterContextTypeAttribute : System.Attribute
     {
-        public ModelReaderWriterContextNameAttribute(System.Type contextType) { }
+        public ModelReaderWriterContextTypeAttribute(System.Type contextType) { }
     }
     public partial class ModelReaderWriterOptions
     {

@@ -7,7 +7,7 @@ using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.ClientModel.Tests.ModelReaderWriterTests;
 
-[assembly: ModelReaderWriterContextName(typeof(TestClientModelReaderWriterContext))]
+[assembly: ModelReaderWriterContextType(typeof(TestClientModelReaderWriterContext))]
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {

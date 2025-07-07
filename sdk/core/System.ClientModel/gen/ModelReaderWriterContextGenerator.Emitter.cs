@@ -45,7 +45,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             }
             builder.AppendLine();
 
-            builder.AppendLine(indent, $"[assembly: global::System.ClientModel.Primitives.ModelReaderWriterContextName(typeof({contextGenerationSpec.Type.FullyQualifiedName}))]");
+            builder.AppendLine(indent, $"[assembly: global::System.ClientModel.Primitives.ModelReaderWriterContextType(typeof({contextGenerationSpec.Type.FullyQualifiedName}))]");
             builder.AppendLine();
 
             builder.AppendLine(indent, $"namespace {contextGenerationSpec.Type.Namespace};");

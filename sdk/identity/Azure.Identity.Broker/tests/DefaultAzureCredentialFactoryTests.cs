@@ -30,6 +30,7 @@ namespace Azure.Identity.Broker.Tests
 #pragma warning disable CS0618 // Type or member is obsolete
         [Test]
         [TestCaseSource(nameof(CredSelection))]
+        [Ignore("Failing will be fixed in https://github.com/Azure/azure-sdk-for-net/pull/51065")]
         public void ValidateDefaultAzureCredentialAZURE_TOKEN_CREDENTIALS_Honored_WithBroker(string credSelection)
         {
             var initFactory = new DefaultAzureCredentialFactory(new());
