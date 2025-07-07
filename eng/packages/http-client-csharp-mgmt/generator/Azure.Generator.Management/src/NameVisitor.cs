@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -21,46 +22,35 @@ namespace Azure.Generator.Management
                 type.Update(name: newName);
             }
 
-            foreach (var property in model.Properties)
-            {
-                if (property is InputModelProperty modelProperty && TryTransformUrlToUri(property.Name, out var newPropertyName))
-                {
-                    modelProperty.Update(name: newPropertyName);
-                }
-
-                // rename "Type" property to "ResourceType" in input models so that the docs will be generated correctly
-                if (property.Name.Equals("Type", StringComparison.OrdinalIgnoreCase) && property is InputModelProperty typeProperty)
-                {
-                    typeProperty.Update(name: ResourceTypeName);
-                }
-            }
-            return base.PreVisitModel(model, type);
-        }
-
-        protected override TypeProvider? VisitType(TypeProvider type)
-        {
-            if (type is ModelProvider model)
+            // rename "Type" property to "ResourceType" in Azure.ResourceManager.CommonTypes.Resource
+            bool typePropertyRenamed = false;
+            if (model.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ArmResource))
             {
                 foreach (var property in model.Properties)
                 {
-                    if (property.Name.Equals(ResourceTypeName, StringComparison.OrdinalIgnoreCase))
+                    if (!typePropertyRenamed && property.Type is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var knownType)
+                        && knownType.Equals(typeof(ResourceType)) && property is InputModelProperty typeProperty)
                     {
-                        property.Update(type: typeof(ResourceType));
+                        typePropertyRenamed = true;
+                        typeProperty.Update(name: ResourceTypeName, isRequired: true);
                     }
-                }
-
-                foreach (var constructor in model.Constructors)
-                {
-                    foreach (var param in constructor.Signature.Parameters)
+                    if (property is InputModelProperty modelProperty && TryTransformUrlToUri(property.Name, out var newPropertyName))
                     {
-                        if (param.Name.Equals(ResourceTypeName, StringComparison.OrdinalIgnoreCase))
-                        {
-                            param.Update(type: typeof(ResourceType));
-                        }
+                        modelProperty.Update(name: newPropertyName);
                     }
                 }
             }
-            return base.VisitType(type);
+            else
+            {
+                foreach (var property in model.Properties)
+                {
+                    if (property is InputModelProperty modelProperty && TryTransformUrlToUri(property.Name, out var newPropertyName))
+                    {
+                        modelProperty.Update(name: newPropertyName);
+                    }
+                }
+            }
+            return base.PreVisitModel(model, type);
         }
 
         private bool TryTransformUrlToUri(string name, [MaybeNullWhen(false)] out string newName)

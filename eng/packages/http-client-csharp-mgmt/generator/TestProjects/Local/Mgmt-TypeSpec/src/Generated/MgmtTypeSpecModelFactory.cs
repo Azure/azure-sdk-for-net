@@ -27,7 +27,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="name"> The name of the private link associated with the Azure resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="MgmtTypeSpec.PrivateLinkData"/> instance for mocking. </returns>
-        public static PrivateLinkData PrivateLinkData(ResourceIdentifier id = default, string resourceType = default, SystemData systemData = default, PrivateLinkResourceProperties properties = default, string name = default, ManagedServiceIdentity identity = default)
+        public static PrivateLinkData PrivateLinkData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, PrivateLinkResourceProperties properties = default, string name = default, ManagedServiceIdentity identity = default)
         {
             return new PrivateLinkData(
                 id,
@@ -70,7 +70,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="name"> The name of the Foo. </param>
         /// <param name="extendedLocation"></param>
         /// <returns> A new <see cref="MgmtTypeSpec.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, string name = default, ExtendedLocation extendedLocation = default)
+        public static FooData FooData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, string name = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -111,7 +111,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="name"> The default Foo settings. </param>
         /// <returns> A new <see cref="MgmtTypeSpec.FooSettingsData"/> instance for mocking. </returns>
-        public static FooSettingsData FooSettingsData(ResourceIdentifier id = default, string resourceType = default, SystemData systemData = default, FooSettingsProperties properties = default, string name = default)
+        public static FooSettingsData FooSettingsData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, FooSettingsProperties properties = default, string name = default)
         {
             return new FooSettingsData(
                 id,
