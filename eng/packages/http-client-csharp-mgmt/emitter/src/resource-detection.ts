@@ -60,7 +60,9 @@ export async function updateClients(
       m.crossLanguageDefinitionId,
       {
         resourceType: "",
-        isSingleton: m.decorators?.some((d) => d.name == singleton) ?? false,
+        singletonResourceName: getSingletonResource(
+          m.decorators?.find((d) => d.name == singleton)
+        ),
         resourceScope: getResourceScope(m),
         methods: [],
         parentResource: getParentResourceModelId(
@@ -231,6 +233,16 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   return resourceModels;
 }
 
+function getSingletonResource(
+  decorator: DecoratorInfo | undefined
+): string | undefined {
+  if (!decorator) return undefined;
+  const singletonResource = decorator.arguments["keyValue"] as
+    | string
+    | undefined;
+  return singletonResource ?? "default";
+}
+
 function getResourceScope(model: InputModelType): ResourceScope {
   const decorators = model.decorators;
   if (decorators?.some((d) => d.name == tenantResource)) {
@@ -250,11 +262,11 @@ function addResourceMetadata(
   const resourceMetadataDecorator: DecoratorInfo = {
     name: resourceMetadata,
     arguments: {
-      isSingleton: metadata.isSingleton,
       resourceType: metadata.resourceType,
       resourceScope: metadata.resourceScope,
       methods: metadata.methods,
-      parentResource: metadata.parentResource
+      parentResource: metadata.parentResource,
+      singletonResourceName: metadata.singletonResourceName
     }
   };
 

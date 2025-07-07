@@ -144,7 +144,7 @@ namespace MgmtTypeSpec.Models
         string IPersistableModel<StartRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="startRequest"> The <see cref="StartRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(StartRequest startRequest)
+        internal static RequestContent ToRequestContent(StartRequest startRequest)
         {
             if (startRequest == null)
             {

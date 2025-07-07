@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Expose the `GetVectorStoreFileBatchFiles` and `GetVectorStoreFileBatchFilesAsync` methods.
+
 ### Breaking Changes
 
 ### Bugs Fixed

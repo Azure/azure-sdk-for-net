@@ -44,7 +44,7 @@ namespace Azure.Generator.Management
         }
 
         /// <inheritdoc/>
-        public override IClientPipelineApi ClientPipelineApi => MgmtHttpPipelineProvider.Instance;
+        public override IClientPipelineApi ClientPipelineApi => ManagementHttpPipelineProvider.Instance;
 
         /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
@@ -71,6 +71,10 @@ namespace Azure.Generator.Management
             {
                 return replacedType;
             }
+            else if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var csharpType))
+            {
+                return csharpType;
+            }
             return base.CreateCSharpTypeCore(inputType);
         }
 
@@ -91,6 +95,12 @@ namespace Azure.Generator.Management
             {
                 return Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Serialize), [value]).Terminate();
             }
+
+            if (KnownManagementTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression))
+            {
+                return serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
+            }
+
             return base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
         }
 
@@ -103,6 +113,12 @@ namespace Azure.Generator.Management
             {
                 return Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Deserialize), [element], [valueType], false);
             }
+
+            if (KnownManagementTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression))
+            {
+                return deserializationExpression(valueType, element, format);
+            }
+
             return base.DeserializeJsonValue(valueType, element, format);
         }
 
