@@ -358,4 +358,3 @@ stages:
               SparseCheckoutPaths:
                 - /api/overview/azure/
                 - /metadata/
-
