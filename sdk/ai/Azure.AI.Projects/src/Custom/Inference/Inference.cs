@@ -86,7 +86,10 @@ namespace Azure.AI.Projects
                     string apiKey = apiKeyCreds.ApiKey;
                     return new AzureOpenAIClient(new Uri(endpoint), new ApiKeyCredential(apiKey));
                 }
-                ;
+                else if (selectedConnection.Credentials is EntraIDCredentials)
+                {
+                    return new AzureOpenAIClient(new Uri(endpoint), this._tokenCredential);
+                }
             }
             ClientConnection connection = GetConnection(typeof(AzureOpenAIClient).FullName!);
 

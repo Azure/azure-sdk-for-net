@@ -17,6 +17,7 @@
 * Replacing `GetConnectionsClient`, `GetDatasetsClient`, `GetDeploymentsClient`, and`GetIndexesClient` with `Connections`, `Datasets`, `Deployments`, and `Indexes` properties.
 
 ### Bugs Fixed
+* Fix getting model deployed on the Azure Open AI resource, if the resource is authenticated using Entra ID. [see GitHub issue 49064](https://github.com/Azure/azure-sdk-for-net/issues/49064)
 
 ### Other Changes
 
@@ -49,7 +50,7 @@ AI models deployed to the Project's AI Services.
 * New sample added for connected agent tool.
 
 ### Bugs Fixed
-* Fix for filtering of messages by run ID [see GitHub issue issue 49513](https://github.com/Azure/azure-sdk-for-net/issues/49513).
+* Fix for filtering of messages by run ID [see GitHub issue 49513](https://github.com/Azure/azure-sdk-for-net/issues/49513).
 
 ## 1.0.0-beta.7 (2025-04-18)
 

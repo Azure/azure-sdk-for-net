@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
@@ -17,7 +18,7 @@ namespace Azure.Generator.Management
     public class ManagementClientGenerator : AzureClientGenerator
     {
         private static ManagementClientGenerator? _instance;
-        internal static ManagementClientGenerator Instance => _instance ?? throw new InvalidOperationException("ManagementClientGenerator is not loaded.");
+        internal static new ManagementClientGenerator Instance => _instance ?? throw new InvalidOperationException("ManagementClientGenerator is not loaded.");
 
         /// <summary>
         /// The Azure management client generator to generate the Azure management client SDK.
@@ -52,6 +53,10 @@ namespace Azure.Generator.Management
             AddVisitor(new RestClientVisitor());
             AddVisitor(new ResourceVisitor());
             AddVisitor(new InheritableSystemObjectModelVisitor());
+            AddVisitor(new NameVisitor());
+            AddVisitor(new TypeFilterVisitor());
+            AddVisitor(new SerializationVisitor());
+            AddVisitor(new PaginationVisitor());
         }
     }
 }

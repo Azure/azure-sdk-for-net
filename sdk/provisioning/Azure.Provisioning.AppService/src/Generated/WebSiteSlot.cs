@@ -221,6 +221,32 @@ public partial class WebSiteSlot : ProvisionableResource
     private BicepValue<bool>? _isClientAffinityEnabled;
 
     /// <summary>
+    /// &lt;code&gt;true&lt;/code&gt; to enable client affinity partitioning
+    /// using CHIPS cookies, this will add the
+    /// &lt;code&gt;partitioned&lt;/code&gt; property to the affinity cookies;
+    /// &lt;code&gt;false&lt;/code&gt; to stop sending partitioned affinity
+    /// cookies. Default is &lt;code&gt;false&lt;/code&gt;.
+    /// </summary>
+    public BicepValue<bool> IsClientAffinityPartitioningEnabled 
+    {
+        get { Initialize(); return _isClientAffinityPartitioningEnabled!; }
+        set { Initialize(); _isClientAffinityPartitioningEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isClientAffinityPartitioningEnabled;
+
+    /// <summary>
+    /// &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain
+    /// with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt;
+    /// to use default domain. Default is &lt;code&gt;false&lt;/code&gt;.
+    /// </summary>
+    public BicepValue<bool> IsClientAffinityProxyEnabled 
+    {
+        get { Initialize(); return _isClientAffinityProxyEnabled!; }
+        set { Initialize(); _isClientAffinityProxyEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isClientAffinityProxyEnabled;
+
+    /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; to enable client certificate
     /// authentication (TLS mutual authentication); otherwise,
     /// &lt;code&gt;false&lt;/code&gt;. Default is
@@ -312,6 +338,16 @@ public partial class WebSiteSlot : ProvisionableResource
         set { Initialize(); _isScmSiteAlsoStopped!.Assign(value); }
     }
     private BicepValue<bool>? _isScmSiteAlsoStopped;
+
+    /// <summary>
+    /// Whether to enable ssh access.
+    /// </summary>
+    public BicepValue<bool> IsSshEnabled 
+    {
+        get { Initialize(); return _isSshEnabled!; }
+        set { Initialize(); _isSshEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isSshEnabled;
 
     /// <summary>
     /// Checks if Customer provided storage account is required.
@@ -409,6 +445,17 @@ public partial class WebSiteSlot : ProvisionableResource
     private BicepValue<string>? _managedEnvironmentId;
 
     /// <summary>
+    /// Property to configure various outbound traffic routing options over
+    /// virtual network for a site.
+    /// </summary>
+    public OutboundVnetRouting OutboundVnetRouting 
+    {
+        get { Initialize(); return _outboundVnetRouting!; }
+        set { Initialize(); AssignOrReplace(ref _outboundVnetRouting, value); }
+    }
+    private OutboundVnetRouting? _outboundVnetRouting;
+
+    /// <summary>
     /// Property to allow or block all public traffic. Allowed Values:
     /// &apos;Enabled&apos;, &apos;Disabled&apos; or an empty string.
     /// </summary>
@@ -440,7 +487,9 @@ public partial class WebSiteSlot : ProvisionableResource
     private FunctionAppResourceConfig? _resourceConfig;
 
     /// <summary>
-    /// Configuration of the app.
+    /// Configuration of an App Service app. This property is not returned in
+    /// response to normal create and read requests since it may contain
+    /// sensitive information.
     /// </summary>
     public SiteConfigProperties SiteConfig 
     {
@@ -731,6 +780,8 @@ public partial class WebSiteSlot : ProvisionableResource
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _iPMode = DefineProperty<AppServiceIPMode>("IPMode", ["properties", "ipMode"]);
         _isClientAffinityEnabled = DefineProperty<bool>("IsClientAffinityEnabled", ["properties", "clientAffinityEnabled"]);
+        _isClientAffinityPartitioningEnabled = DefineProperty<bool>("IsClientAffinityPartitioningEnabled", ["properties", "clientAffinityPartitioningEnabled"]);
+        _isClientAffinityProxyEnabled = DefineProperty<bool>("IsClientAffinityProxyEnabled", ["properties", "clientAffinityProxyEnabled"]);
         _isClientCertEnabled = DefineProperty<bool>("IsClientCertEnabled", ["properties", "clientCertEnabled"]);
         _isEnabled = DefineProperty<bool>("IsEnabled", ["properties", "enabled"]);
         _isEndToEndEncryptionEnabled = DefineProperty<bool>("IsEndToEndEncryptionEnabled", ["properties", "endToEndEncryptionEnabled"]);
@@ -739,6 +790,7 @@ public partial class WebSiteSlot : ProvisionableResource
         _isHyperV = DefineProperty<bool>("IsHyperV", ["properties", "hyperV"]);
         _isReserved = DefineProperty<bool>("IsReserved", ["properties", "reserved"]);
         _isScmSiteAlsoStopped = DefineProperty<bool>("IsScmSiteAlsoStopped", ["properties", "scmSiteAlsoStopped"]);
+        _isSshEnabled = DefineProperty<bool>("IsSshEnabled", ["properties", "sshEnabled"]);
         _isStorageAccountRequired = DefineProperty<bool>("IsStorageAccountRequired", ["properties", "storageAccountRequired"]);
         _isVnetBackupRestoreEnabled = DefineProperty<bool>("IsVnetBackupRestoreEnabled", ["properties", "vnetBackupRestoreEnabled"]);
         _isVnetContentShareEnabled = DefineProperty<bool>("IsVnetContentShareEnabled", ["properties", "vnetContentShareEnabled"]);
@@ -748,6 +800,7 @@ public partial class WebSiteSlot : ProvisionableResource
         _keyVaultReferenceIdentity = DefineProperty<string>("KeyVaultReferenceIdentity", ["properties", "keyVaultReferenceIdentity"]);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _managedEnvironmentId = DefineProperty<string>("ManagedEnvironmentId", ["properties", "managedEnvironmentId"]);
+        _outboundVnetRouting = DefineModelProperty<OutboundVnetRouting>("OutboundVnetRouting", ["properties", "outboundVnetRouting"]);
         _publicNetworkAccess = DefineProperty<string>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
         _redundancyMode = DefineProperty<RedundancyMode>("RedundancyMode", ["properties", "redundancyMode"]);
         _resourceConfig = DefineModelProperty<FunctionAppResourceConfig>("ResourceConfig", ["properties", "resourceConfig"]);

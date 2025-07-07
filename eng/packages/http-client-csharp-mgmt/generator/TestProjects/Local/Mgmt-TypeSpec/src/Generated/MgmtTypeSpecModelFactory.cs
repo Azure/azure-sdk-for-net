@@ -19,23 +19,64 @@ namespace MgmtTypeSpec.Models
     public static partial class MgmtTypeSpecModelFactory
     {
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name"> The name of the private link associated with the Azure resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.PrivateLinkData"/> instance for mocking. </returns>
+        public static PrivateLinkData PrivateLinkData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, PrivateLinkResourceProperties properties = default, string name = default, ManagedServiceIdentity identity = default)
+        {
+            return new PrivateLinkData(
+                id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                name,
+                identity);
+        }
+
+        /// <summary> Properties of a private link resource. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.PrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static PrivateLinkResourceProperties PrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new PrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Start SAP instance(s) request body. </summary>
+        /// <param name="startVm"> The boolean value indicates whether to start the virtual machines before starting the SAP instances. </param>
+        /// <returns> A new <see cref="Models.StartRequest"/> instance for mocking. </returns>
+        public static StartRequest StartRequest(bool? startVm = default)
+        {
+            return new StartRequest(startVm, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="name"> The name of the Foo. </param>
         /// <param name="extendedLocation"></param>
-        /// <returns> A new <see cref="Models.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string @type = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, string name = default, ExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="MgmtTypeSpec.FooData"/> instance for mocking. </returns>
+        public static FooData FooData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, string name = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FooData(
                 id,
-                @type,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
                 tags,
@@ -46,21 +87,64 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The FooProperties. </summary>
-        /// <param name="serviceUrl"> the service url. </param>
+        /// <param name="serviceUri"> the service url. </param>
         /// <param name="something"> something. </param>
         /// <param name="boolValue"> boolean value. </param>
         /// <param name="floatValue"> float value. </param>
         /// <param name="doubleValue"> double value. </param>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUrl = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default)
+        public static FooProperties FooProperties(Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default)
         {
             return new FooProperties(
-                serviceUrl,
+                serviceUri,
                 something,
                 boolValue,
                 floatValue,
                 doubleValue,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name"> The default Foo settings. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.FooSettingsData"/> instance for mocking. </returns>
+        public static FooSettingsData FooSettingsData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, FooSettingsProperties properties = default, string name = default)
+        {
+            return new FooSettingsData(
+                id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                name);
+        }
+
+        /// <summary> The FooSettingsProperties. </summary>
+        /// <param name="accessControlEnabled"></param>
+        /// <param name="provisioningState"></param>
+        /// <returns> A new <see cref="Models.FooSettingsProperties"/> instance for mocking. </returns>
+        public static FooSettingsProperties FooSettingsProperties(bool accessControlEnabled = default, ResourceProvisioningState? provisioningState = default)
+        {
+            return new FooSettingsProperties(accessControlEnabled, provisioningState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The type used for update operations of the FooSettings. </summary>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.FooSettingsUpdate"/> instance for mocking. </returns>
+        public static FooSettingsUpdate FooSettingsUpdate(FooSettingsUpdateProperties properties = default)
+        {
+            return new FooSettingsUpdate(properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The updatable properties of the FooSettings. </summary>
+        /// <param name="accessControlEnabled"></param>
+        /// <returns> A new <see cref="Models.FooSettingsUpdateProperties"/> instance for mocking. </returns>
+        public static FooSettingsUpdateProperties FooSettingsUpdateProperties(bool? accessControlEnabled = default)
+        {
+            return new FooSettingsUpdateProperties(accessControlEnabled, additionalBinaryDataProperties: null);
         }
     }
 }

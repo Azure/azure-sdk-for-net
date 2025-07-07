@@ -8,12 +8,12 @@ using System.IO;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.Extensions;
-using Azure.Generator.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
+using Visitors.Utilities;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
@@ -23,12 +23,12 @@ namespace Azure.Generator.Providers
     /// </summary>
     internal class ClientBuilderExtensionsDefinition : TypeProvider
     {
-        private readonly IEnumerable<ClientProvider> _clients;
+        private readonly IEnumerable<ClientProvider> _publicClients;
         private readonly string _resourceProviderName;
 
-        public ClientBuilderExtensionsDefinition(IEnumerable<ClientProvider> clients)
+        public ClientBuilderExtensionsDefinition(IEnumerable<ClientProvider> publicClients)
         {
-            _clients = clients;
+            _publicClients = publicClients;
             _resourceProviderName = TypeNameUtilities.GetResourceProviderName();
             AzureClientGenerator.Instance.AddTypeToKeep(this);
         }
@@ -47,7 +47,7 @@ namespace Azure.Generator.Providers
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>();
-            foreach (var client in _clients)
+            foreach (var client in _publicClients)
             {
                 if (client.ClientOptionsParameter == null)
                 {

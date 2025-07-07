@@ -288,6 +288,7 @@ namespace Azure.Generator.Tests.Common
         /// <param name="parameters"></param>
         /// <param name="response"></param>
         /// <param name="exception"></param>
+        /// <param name="crossLanguageDefinitionId"></param>
         /// <returns></returns>
         public static InputBasicServiceMethod BasicServiceMethod(
             string name,
@@ -295,7 +296,8 @@ namespace Azure.Generator.Tests.Common
             string access = "public",
             IReadOnlyList<InputParameter>? parameters = null,
             InputServiceMethodResponse? response = null,
-            InputServiceMethodResponse? exception = null)
+            InputServiceMethodResponse? exception = null,
+            string? crossLanguageDefinitionId = null)
         {
             return new InputBasicServiceMethod(
                 name,
@@ -310,7 +312,7 @@ namespace Azure.Generator.Tests.Common
                 false,
                 true,
                 true,
-                string.Empty);
+                crossLanguageDefinitionId ?? string.Empty);
         }
 
         /// <summary>
@@ -542,11 +544,11 @@ namespace Azure.Generator.Tests.Common
             return new InputArrayType("list", "list", elementType);
         }
 
-        public static InputPagingServiceMetadata NextLinkPagingMetadata(string itemPropertyName, string nextLinkName, InputResponseLocation nextLinkLocation)
+        public static InputPagingServiceMetadata NextLinkPagingMetadata(string itemPropertyName, string nextLinkName, InputResponseLocation nextLinkLocation, IReadOnlyList<InputParameter>? reinjectedParameters = null)
         {
             return PagingMetadata(
                 [itemPropertyName],
-                new InputNextLink(null, [nextLinkName], nextLinkLocation),
+                new InputNextLink(null, [nextLinkName], nextLinkLocation, reinjectedParameters),
                 null);
         }
     }

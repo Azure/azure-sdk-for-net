@@ -17,7 +17,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -29,27 +28,28 @@ namespace Azure.Generator.Management.Providers
         private InputServiceMethod? _create;
         private InputServiceMethod? _get;
 
-        internal ResourceCollectionClientProvider(InputClient inputClient, ResourceMetadata resourceMetadata, ResourceClientProvider resource) : base(inputClient, resourceMetadata)
+        internal ResourceCollectionClientProvider(InputModelType model, ResourceMetadata resourceMetadata, ResourceClientProvider resource) : base(model, resourceMetadata)
         {
             _resource = resource;
 
-            foreach (var method in inputClient.Methods)
+            foreach (var method in resourceMetadata.Methods)
             {
-                var operation = method.Operation;
-                if (operation.HttpMethod == HttpMethod.Get.ToString())
+                if (_getAll is not null && _create is not null && _get is not null)
                 {
-                    if (operation.Name == "list")
-                    {
-                        _getAll = method;
-                    }
-                    else if (operation.Name == "get")
-                    {
-                        _get = method;
-                    }
+                    break; // we already have all methods we need
                 }
-                if (operation.HttpMethod == HttpMethod.Put.ToString() && operation.Name == "createOrUpdate")
+
+                if (method.Kind == OperationKind.Get)
                 {
-                    _create = method;
+                    _get = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
+                }
+                if (method.Kind == OperationKind.List)
+                {
+                    _getAll = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
+                }
+                if (method.Kind == OperationKind.Create)
+                {
+                    _create = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
                 }
             }
         }
@@ -70,11 +70,11 @@ namespace Azure.Generator.Management.Providers
         protected override FieldProvider[] BuildFields() => [_clientDiagnosticsField, _clientField];
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
+            => [ConstructorProviderHelpers.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
 
         // TODO -- we need to change this type to its parent resource type.
         private ScopedApi<ResourceType>? _resourceTypeExpression;
-        protected override ScopedApi<ResourceType> ResourceTypeExpression => _resourceTypeExpression??= BuildCollectionResourceTypeExpression();
+        protected override ScopedApi<ResourceType> ResourceTypeExpression => _resourceTypeExpression ??= BuildCollectionResourceTypeExpression();
 
         private ScopedApi<ResourceType> BuildCollectionResourceTypeExpression()
         {
@@ -148,7 +148,7 @@ namespace Azure.Generator.Management.Providers
                 return result;
             }
 
-            foreach (var isAsync in new List<bool> { true, false})
+            foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_create!.Operation, isAsync);
                 result.Add(new ResourceOperationMethodProvider(this, _create, convenienceMethod, isAsync));
@@ -171,7 +171,7 @@ namespace Azure.Generator.Management.Providers
                 return result;
             }
 
-            foreach (var isAsync in new List<bool> { true, false})
+            foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
                 result.Add(new ResourceOperationMethodProvider(this, _get, convenienceMethod, isAsync));
@@ -188,7 +188,7 @@ namespace Azure.Generator.Management.Providers
                 return result;
             }
 
-            foreach (var isAsync in new List<bool> { true, false})
+            foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
                 var existsMethodProvider = new ExistsOperationMethodProvider(this, _get, convenienceMethod, isAsync);
@@ -206,7 +206,7 @@ namespace Azure.Generator.Management.Providers
                 return result;
             }
 
-            foreach (var isAsync in new List<bool> { true, false})
+            foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
                 var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _get, convenienceMethod, isAsync);
@@ -220,7 +220,21 @@ namespace Azure.Generator.Management.Providers
         /// Gets the collection of parameter names that should be excluded from method parameters.
         /// For collection clients, this excludes all contextual parameters except the last one (typically the resource name).
         /// </summary>
-        internal override IReadOnlyList<string> ImplicitParameterNames =>
-            ContextualParameters == null ? [] : ContextualParameters.Take(ContextualParameters.Count - 1).ToList();
+        internal override IReadOnlyList<string> ImplicitParameterNames
+        {
+            get
+            {
+                if (ContextualParameters is null)
+                    return [];
+
+                // resourceGroupName and subscriptionId are always included in the parameters for collection clients.
+                if (ContextualParameters.Count > 2)
+                {
+                    return ContextualParameters.Take(ContextualParameters.Count - 1).ToList();
+                }
+
+                return ContextualParameters;
+            }
+    }
     }
 }
