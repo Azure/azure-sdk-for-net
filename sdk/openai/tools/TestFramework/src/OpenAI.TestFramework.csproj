@@ -19,7 +19,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="System.ValueTuple" />
-    <ProjectReference Include="../../../../core/System.ClientModel/src/System.ClientModel.csproj" />
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup>
