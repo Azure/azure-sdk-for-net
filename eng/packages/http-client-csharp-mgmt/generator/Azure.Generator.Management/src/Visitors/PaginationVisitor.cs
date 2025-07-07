@@ -23,7 +23,7 @@ internal class PaginationVisitor : ScmLibraryVisitor
                 var body = doWhileStatement.Body;
 
                 // get the response to model casting expression
-                var responseToModelStatement = body.OfType<ExpressionStatement>().FirstOrDefault();
+                var responseToModelStatement = body.OfType<ExpressionStatement>().Skip(1).FirstOrDefault();
                 if (responseToModelStatement is not null)
                 {
                     responseToModelStatement.Update(ConstructFromResponseExpression(responseToModelStatement));
