@@ -3,7 +3,7 @@
 
 namespace Azure.Generator.Management.Models
 {
-    internal enum OperationKind
+    internal enum ResourceOperationKind
     {
         Action,
         Create,

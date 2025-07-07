@@ -3,5 +3,5 @@
 
 namespace Azure.Generator.Management.Models
 {
-    internal record ResourceMethod(string Id, OperationKind Kind);
+    internal record ResourceMethod(string Id, ResourceOperationKind Kind);
 }

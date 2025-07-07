@@ -14,6 +14,7 @@ namespace Azure.Generator.Management
     public class ManagementInputLibrary : InputLibrary
     {
         private const string ResourceMetadataDecoratorName = "Azure.ClientGenerator.Core.@resourceSchema";
+        private const string ResourceIdPattern = "resourceIdPattern";
         private const string ResourceType = "resourceType";
         private const string IsSingleton = "isSingleton";
         private const string ResourceScope = "resourceScope";
@@ -97,11 +98,16 @@ namespace Azure.Generator.Management
             ResourceMetadata BuildResourceMetadata(InputDecoratorInfo decorator)
             {
                 var args = decorator.Arguments ?? throw new InvalidOperationException();
+                string? resourceIdPattern = null;
                 string? resourceType = null;
                 bool isSingleton = false;
                 ResourceScope? resourceScope = null;
                 var methods = new List<ResourceMethod>();
                 string? parentResource = null;
+                if (args.TryGetValue(ResourceIdPattern, out var resourceIdPatternData))
+                {
+                    resourceIdPattern = resourceIdPatternData.ToObjectFromJson<string>();
+                }
                 if (args.TryGetValue(ResourceType, out var resourceTypeData))
                 {
                     resourceType = resourceTypeData.ToObjectFromJson<string>();
@@ -132,7 +138,7 @@ namespace Azure.Generator.Management
                     foreach (var item in element.EnumerateArray())
                     {
                         string? id = null;
-                        OperationKind? operationKind = null;
+                        ResourceOperationKind? operationKind = null;
                         if (item.ValueKind != JsonValueKind.Object)
                         {
                             throw new InvalidOperationException($"Expected an object in the array for {Methods}, but got {item.ValueKind}.");
@@ -143,7 +149,7 @@ namespace Azure.Generator.Management
                         }
                         if (item.TryGetProperty("kind", out var kindData) && kindData.GetString() is string kindString)
                         {
-                            if (Enum.TryParse<OperationKind>(kindString, true, out var kind))
+                            if (Enum.TryParse<ResourceOperationKind>(kindString, true, out var kind))
                             {
                                 operationKind = kind;
                             }
@@ -159,6 +165,7 @@ namespace Azure.Generator.Management
 
                 // TODO -- I know we should never throw the exception, but here we just put it here and refine it later
                 return new(
+                    resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null"),
                     resourceType ?? throw new InvalidOperationException("resourceType cannot be null"),
                     isSingleton,
                     resourceScope ?? throw new InvalidOperationException("resourceScope cannot be null"),

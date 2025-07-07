@@ -9,22 +9,21 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace MgmtTypeSpec.Models
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class PrivateLinkData : ResourceData
+    internal partial class PrivateLink : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkData"/>. </summary>
-        internal PrivateLinkData()
+        /// <summary> Initializes a new instance of <see cref="PrivateLink"/>. </summary>
+        internal PrivateLink()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLink"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
@@ -32,7 +31,7 @@ namespace MgmtTypeSpec
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="name"> The name of the private link associated with the Azure resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal PrivateLinkData(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkResourceProperties properties, string name, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        internal PrivateLink(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkResourceProperties properties, string name, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

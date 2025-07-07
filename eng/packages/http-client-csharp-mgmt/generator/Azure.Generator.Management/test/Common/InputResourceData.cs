@@ -35,7 +35,7 @@ namespace Azure.Generator.Management.Tests.Common
                 TestClientName,
                 methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: crossLanguageDefinitionId)],
                 crossLanguageDefinitionId: $"Test.{TestClientName}");
-            decorators.Add(BuildResourceMetadata(responseModel, client, "a/test", false, ResourceScope.ResourceGroup, [new ResourceMethod(crossLanguageDefinitionId, OperationKind.Get)]));
+            decorators.Add(BuildResourceMetadata(responseModel, client, "a/test", false, ResourceScope.ResourceGroup, [new ResourceMethod(crossLanguageDefinitionId, ResourceOperationKind.Get)]));
             return (client, [responseModel]);
         }
 

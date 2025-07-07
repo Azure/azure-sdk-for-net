@@ -9,6 +9,7 @@ import {
 } from "@typespec/http-client-csharp";
 import {
   calculateResourceTypeFromPath,
+  convertResourceMetadataToArguments,
   ResourceMetadata,
   ResourceOperationKind,
   ResourceScope
@@ -59,7 +60,8 @@ export async function updateClients(
     resourceModels.map((m) => [
       m.crossLanguageDefinitionId,
       {
-        resourceType: "",
+        resourceIdPattern: "", // this will be populated later
+        resourceType: "", // this will be populated later
         isSingleton: m.decorators?.some((d) => d.name == singleton) ?? false,
         resourceScope: getResourceScope(m),
         methods: [],
@@ -95,6 +97,9 @@ export async function updateClients(
             method.operation.path
           );
         }
+        if (entry && !entry.resourceIdPattern && isCRUDKind(kind)) {
+          entry.resourceIdPattern = method.operation.path;
+        }
       }
     }
   }
@@ -103,9 +108,18 @@ export async function updateClients(
   for (const model of resourceModels) {
     const metadata = resourceModelMap.get(model.crossLanguageDefinitionId);
     if (metadata) {
-      addResourceMetadata(model, metadata);
+      addResourceMetadata(sdkContext, model, metadata);
     }
   }
+}
+
+function isCRUDKind(kind: ResourceOperationKind): boolean {
+  return [
+    ResourceOperationKind.Get,
+    ResourceOperationKind.Create,
+    ResourceOperationKind.Update,
+    ResourceOperationKind.Delete
+  ].includes(kind);
 }
 
 function parseResourceOperation(
@@ -174,9 +188,11 @@ function getResourceModelId(
   } else {
     sdkContext.logger.reportDiagnostic({
       code: "general-error",
-      message: `Resource model not found for decorator ${decorator.decorator.name}`,
+      messageId: "default",
+      format: {
+        message: `Resource model not found for decorator ${decorator.decorator.name}`
+      },
       target: NoTarget,
-      severity: "error"
     });
     return undefined;
   }
@@ -244,18 +260,25 @@ function getResourceScope(model: InputModelType): ResourceScope {
 }
 
 function addResourceMetadata(
+  sdkContext: CSharpEmitterContext,
   model: InputModelType,
   metadata: ResourceMetadata
 ) {
+  if (metadata.resourceIdPattern === "") {
+    sdkContext.logger.reportDiagnostic({
+      code: "general-warning", // TODO -- later maybe we could define a specific code for resource hierarchy issues
+      messageId: "default",
+      format: {
+        message: `Cannot figure out resourceIdPatternResource from model ${model.name}.`
+      },
+      target: NoTarget, // TODO -- we need a method to find the raw target from the crossLanguageDefinitionId of this model
+    });
+    return;
+  }
+
   const resourceMetadataDecorator: DecoratorInfo = {
     name: resourceMetadata,
-    arguments: {
-      isSingleton: metadata.isSingleton,
-      resourceType: metadata.resourceType,
-      resourceScope: metadata.resourceScope,
-      methods: metadata.methods,
-      parentResource: metadata.parentResource
-    }
+    arguments: convertResourceMetadataToArguments(metadata)
   };
 
   if (!model.decorators) {

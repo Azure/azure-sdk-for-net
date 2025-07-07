@@ -39,15 +39,15 @@ namespace Azure.Generator.Management.Providers
                     break; // we already have all methods we need
                 }
 
-                if (method.Kind == OperationKind.Get)
+                if (method.Kind == ResourceOperationKind.Get)
                 {
                     _get = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
                 }
-                if (method.Kind == OperationKind.List)
+                if (method.Kind == ResourceOperationKind.List)
                 {
                     _getAll = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
                 }
-                if (method.Kind == OperationKind.Create)
+                if (method.Kind == ResourceOperationKind.Create)
                 {
                     _create = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
                 }

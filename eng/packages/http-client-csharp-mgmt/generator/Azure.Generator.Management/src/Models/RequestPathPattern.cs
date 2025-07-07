@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Azure.Generator.Management.Models
 {
-    internal class RequestPath : IEquatable<RequestPath>, IReadOnlyList<string>
+    internal class RequestPathPattern : IEquatable<RequestPathPattern>, IReadOnlyList<string>
     {
         private const string ProviderPath = "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";
         private const string FeaturePath = "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features";
@@ -20,22 +20,22 @@ namespace Azure.Generator.Management.Models
         public const string TenantScopePrefix = "/tenants";
         public const string Providers = "/providers";
 
-        public static readonly RequestPath ManagementGroup = new("/providers/Microsoft.Management/managementGroups/{managementGroupId}");
-        public static readonly RequestPath ResourceGroup = new("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
-        public static readonly RequestPath Subscription = new("/subscriptions/{subscriptionId}");
-        public static readonly RequestPath Tenant = new(string.Empty);
+        public static readonly RequestPathPattern ManagementGroup = new("/providers/Microsoft.Management/managementGroups/{managementGroupId}");
+        public static readonly RequestPathPattern ResourceGroup = new("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+        public static readonly RequestPathPattern Subscription = new("/subscriptions/{subscriptionId}");
+        public static readonly RequestPathPattern Tenant = new(string.Empty);
 
         private string _path;
         private IReadOnlyList<string> _segments;
 
-        public RequestPath(string path)
+        public RequestPathPattern(string path)
         {
             _path = path;
             _segments = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
             IndexOfLastProviders = _path.LastIndexOf(Providers);
         }
 
-        public RequestPath(IEnumerable<string> segments)
+        public RequestPathPattern(IEnumerable<string> segments)
         {
             _segments = segments.ToArray();
             _path = string.Join("/", _segments);
@@ -50,12 +50,12 @@ namespace Azure.Generator.Management.Models
         public string this[int index] => _segments[index];
 
         /// <summary>
-        /// Check if this <see cref="RequestPath"/> is a prefix path of the other request path.
+        /// Check if this <see cref="RequestPathPattern"/> is a prefix path of the other request path.
         /// Note that this.IsAncestorOf(this) will return false which indicates that this method is testing the "proper ancestor" like a proper subset.
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool IsAncestorOf(RequestPath other)
+        public bool IsAncestorOf(RequestPathPattern other)
         {
             // To be the parent of other, you must at least be shorter than other.
             if (other.Count <= Count)
@@ -73,14 +73,14 @@ namespace Azure.Generator.Management.Models
         }
 
         /// <summary>
-        /// Trim this from the other and return the <see cref="RequestPath"/>that remain.
+        /// Trim this from the other and return the <see cref="RequestPathPattern"/>that remain.
         /// The result is "other - this" by removing this as a prefix of other.
         /// If this == other, return empty request path
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">if this.IsAncestorOf(other) is false</exception>
-        public RequestPath TrimAncestorFrom(RequestPath other)
+        public RequestPathPattern TrimAncestorFrom(RequestPathPattern other)
         {
             if (TryTrimAncestorFrom(other, out var diff))
                 return diff;
@@ -88,7 +88,7 @@ namespace Azure.Generator.Management.Models
             throw new InvalidOperationException($"Request path {this} is not parent of {other}");
         }
 
-        private bool TryTrimAncestorFrom(RequestPath other, [MaybeNullWhen(false)] out RequestPath diff)
+        private bool TryTrimAncestorFrom(RequestPathPattern other, [MaybeNullWhen(false)] out RequestPathPattern diff)
         {
             diff = default;
             if (this == other)
@@ -98,19 +98,19 @@ namespace Azure.Generator.Management.Models
             }
             if (IsAncestorOf(other))
             {
-                diff = new RequestPath(string.Join("", other._segments.Skip(Count)));
+                diff = new RequestPathPattern(string.Join("", other._segments.Skip(Count)));
                 return true;
             }
             // Handle the special case of trim provider from feature
             else if (_path == ProviderPath && other._path.StartsWith(FeaturePath))
             {
-                diff = new RequestPath(string.Join("", other._segments.Skip(Count + 2)));
+                diff = new RequestPathPattern(string.Join("", other._segments.Skip(Count + 2)));
                 return true;
             }
             return false;
         }
 
-        public bool Equals(RequestPath? other)
+        public bool Equals(RequestPathPattern? other)
         {
             if (Count != other?.Count)
                 return false;
@@ -122,27 +122,27 @@ namespace Azure.Generator.Management.Models
             return true;
         }
 
-        public override bool Equals(object? obj) => obj is RequestPath other && Equals(other);
+        public override bool Equals(object? obj) => obj is RequestPathPattern other && Equals(other);
 
         public override int GetHashCode() => _path.GetHashCode();
 
         public override string ToString() => _path;
 
-        public IEnumerator<String> GetEnumerator() => _segments.GetEnumerator();
+        public IEnumerator<string> GetEnumerator() => _segments.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => _segments.GetEnumerator();
 
-        public static bool operator ==(RequestPath left, RequestPath right)
+        public static bool operator ==(RequestPathPattern left, RequestPathPattern right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(RequestPath left, RequestPath right)
+        public static bool operator !=(RequestPathPattern left, RequestPathPattern right)
         {
             return !(left == right);
         }
 
-        public static implicit operator string(RequestPath requestPath)
+        public static implicit operator string(RequestPathPattern requestPath)
         {
             return requestPath._path;
         }
