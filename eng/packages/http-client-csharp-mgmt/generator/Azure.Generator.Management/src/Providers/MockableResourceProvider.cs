@@ -38,7 +38,7 @@ namespace Azure.Generator.Management.Providers
         protected override CSharpType? GetBaseType() => typeof(ArmResource);
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
+            => [ConstructorProviderHelpers.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
 
         private ConstructorProvider BuildResourceIdentifierConstructor()
         {
@@ -71,10 +71,27 @@ namespace Azure.Generator.Management.Providers
             return [.. methods];
         }
 
-        //private static ValueExpression BuildSingletonResourceIdentifier()
-        //{
-        //    return Null;
-        //}
+        private static ValueExpression BuildSingletonResourceIdentifier(string resourceType, string resourceName)
+        {
+            var segments = resourceType.Split('/');
+            if (segments.Length < 2)
+            {
+                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    "general-error",
+                    $"ResourceType {resourceType} is malformed.");
+                return Null.CastTo(typeof(ResourceIdentifier));
+            }
+            if (segments.Length > 3)
+            {
+                // TODO -- for single resource which is not a direct child of this extension, we did not really implement it yet.
+                // Leave this here for future refinement.
+                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    "general-warning",
+                    $"Tuple singleton resource type is not implemented yet.");
+                return Null.CastTo(typeof(ResourceIdentifier));
+            }
+            return This.As<ArmResource>().Id().AppendProviderResource(Literal(segments[0]), Literal(segments[1]), Literal(resourceName));
+        }
 
         private IEnumerable<MethodProvider> BuildMethodsForResource(ResourceClientProvider resource)
         {
@@ -88,9 +105,14 @@ namespace Azure.Generator.Management.Providers
                     $"Returns a {resource.Type:C} object.",
                     []
                     );
+                var bodyStatement = Return(
+                    New.Instance(
+                        resource.Type,
+                        This.As<ArmResource>().Client(),
+                        BuildSingletonResourceIdentifier(resource.ResourceTypeValue, resource.SingletonResourceName!)));
                 yield return new MethodProvider(
                     resourceMethodSignature,
-                    Return(Null),
+                    bodyStatement,
                     this);
             }
             else

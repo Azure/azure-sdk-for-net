@@ -7,7 +7,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 
 namespace Azure.Generator.Management.Utilities
 {
-    internal static class ConstructorProviderHelper
+    internal static class ConstructorProviderHelpers
     {
         /// <summary>
         /// Builds a constructor for the enclosing type for mocking purposes.

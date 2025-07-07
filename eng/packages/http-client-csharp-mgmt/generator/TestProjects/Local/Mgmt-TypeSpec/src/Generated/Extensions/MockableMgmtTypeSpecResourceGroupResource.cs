@@ -75,7 +75,7 @@ namespace MgmtTypeSpec.Mocking
         /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
         public virtual FooSettingsResource GetFooSettings()
         {
-            return null;
+            return new FooSettingsResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "FooSettings", "default"));
         }
     }
 }
