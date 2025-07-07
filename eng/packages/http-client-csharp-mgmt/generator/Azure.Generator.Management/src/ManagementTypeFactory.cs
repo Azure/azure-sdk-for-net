@@ -44,7 +44,7 @@ namespace Azure.Generator.Management
         }
 
         /// <inheritdoc/>
-        public override IClientPipelineApi ClientPipelineApi => MgmtHttpPipelineProvider.Instance;
+        public override IClientPipelineApi ClientPipelineApi => ManagementHttpPipelineProvider.Instance;
 
         /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
