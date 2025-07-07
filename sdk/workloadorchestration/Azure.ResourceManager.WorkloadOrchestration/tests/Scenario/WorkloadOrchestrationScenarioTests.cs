@@ -62,58 +62,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Tests
       SchemaVersionData versionData = new SchemaVersionData
       {
         Properties = new SchemaVersionProperties(
-@"rules:
-  configs:
-      ErrorThreshold:
-        type: float
-        required: true
-        editableAt:
-          - factory
-        editableBy:
-          - OT
-      HealthCheckEndpoint:
-        type: string
-        required: false
-        editableAt:
-          - line
-        editableBy:
-          - OT
-      EnableLocalLog:
-        type: boolean
-        required: true
-        editableAt:
-          - line
-        editableBy:
-          - OT
-      AgentEndpoint:
-        type: string
-        required: true
-        editableAt:
-          - line
-        editableBy:
-          - OT
-      HealthCheckEnabled:
-        type: boolean
-        required: false
-        editableAt:
-          - line
-        editableBy:
-          - OT
-      ApplicationEndpoint:
-        type: string
-        required: true
-        editableAt:
-          - line
-        editableBy:
-          - OT
-      TemperatureRangeMax:
-        type: float
-        required: true
-        editableAt:
-          - line
-        editableBy:
-          - OT
-"
+"rules:\r\n  configs:\r\n      ErrorThreshold:\r\n        type: float\r\n        required: true\r\n        editableAt:\r\n          - factory\r\n        editableBy:\r\n          - OT\r\n      HealthCheckEndpoint:\r\n        type: string\r\n        required: false\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      EnableLocalLog:\r\n        type: boolean\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      AgentEndpoint:\r\n        type: string\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      HealthCheckEnabled:\r\n        type: boolean\r\n        required: false\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      ApplicationEndpoint:\r\n        type: string\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n      TemperatureRangeMax:\r\n        type: float\r\n        required: true\r\n        editableAt:\r\n          - line\r\n        editableBy:\r\n          - OT\r\n"
           )
       };
 
