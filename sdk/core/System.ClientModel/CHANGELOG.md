@@ -6,6 +6,11 @@
 
 ### Breaking Changes
 
+- **Source Breaking Change**: Updated `IJsonModel<T>.Create` and `IPersistableModel<T>.Create` method return types from `T` to `T?` to allow returning `null` when deserialization fails. This change only affects code with nullable reference types enabled. To fix compilation errors, either:
+  - Use null-conditional operators (`?.`) when calling these methods, or  
+  - Add null-forgiving operators (`!`) if you're certain the result won't be null, or
+  - Add explicit null checks before using the returned value
+
 ### Bugs Fixed
 
 ### Other Changes
