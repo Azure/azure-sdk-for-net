@@ -71,28 +71,6 @@ namespace Azure.Generator.Management.Providers
             return [.. methods];
         }
 
-        private static ValueExpression BuildSingletonResourceIdentifier(string resourceType, string resourceName)
-        {
-            var segments = resourceType.Split('/');
-            if (segments.Length < 2)
-            {
-                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                    "general-error",
-                    $"ResourceType {resourceType} is malformed.");
-                return Null.CastTo(typeof(ResourceIdentifier));
-            }
-            if (segments.Length > 3)
-            {
-                // TODO -- for single resource which is not a direct child of this extension, we did not really implement it yet.
-                // Leave this here for future refinement.
-                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                    "general-warning",
-                    $"Tuple singleton resource type is not implemented yet.");
-                return Null.CastTo(typeof(ResourceIdentifier));
-            }
-            return This.As<ArmResource>().Id().AppendProviderResource(Literal(segments[0]), Literal(segments[1]), Literal(resourceName));
-        }
-
         private IEnumerable<MethodProvider> BuildMethodsForResource(ResourceClientProvider resource)
         {
             if (resource.IsSingleton)
@@ -168,6 +146,29 @@ namespace Azure.Generator.Management.Providers
                         enclosingType);
                 }
             }
+        }
+
+        // TODO -- when we have the ability to get parent resources, we might move this to a more generic place and make it a helper method.
+        private static ValueExpression BuildSingletonResourceIdentifier(string resourceType, string resourceName)
+        {
+            var segments = resourceType.Split('/');
+            if (segments.Length < 2)
+            {
+                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    "general-error",
+                    $"ResourceType {resourceType} is malformed.");
+                return Null.CastTo(typeof(ResourceIdentifier));
+            }
+            if (segments.Length > 3)
+            {
+                // TODO -- for single resource which is not a direct child of this extension, we did not really implement it yet.
+                // Leave this here for future refinement.
+                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    "general-warning",
+                    $"Tuple singleton resource type is not implemented yet.");
+                return Null.CastTo(typeof(ResourceIdentifier));
+            }
+            return This.As<ArmResource>().Id().AppendProviderResource(Literal(segments[0]), Literal(segments[1]), Literal(resourceName));
         }
     }
 }
