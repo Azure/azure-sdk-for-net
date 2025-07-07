@@ -85,9 +85,11 @@ namespace Azure.Search.Documents.Indexes
         /// <returns>A collection of fields.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="modelType"/>.</exception>
         /// <remarks>This overload is used to find the Key field of a SearchIndex so we can associate indexing failures with actions.</remarks>
-        [RequiresUnreferencedCode(TrimmingMessage)]
-        [RequiresDynamicCode(TrimmingMessage)]
-        internal IDictionary<string, SearchField> BuildMapping(Type modelType)
+        internal IDictionary<string, SearchField> BuildMapping([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces |
+            DynamicallyAccessedMemberTypes.PublicFields |
+            DynamicallyAccessedMemberTypes.NonPublicFields |
+            DynamicallyAccessedMemberTypes.PublicProperties |
+            DynamicallyAccessedMemberTypes.NonPublicProperties)] Type modelType)
         {
             Argument.AssertNotNull(modelType, nameof(modelType));
 
@@ -100,7 +102,7 @@ namespace Azure.Search.Documents.Indexes
                 throw new ArgumentException(errorMessage, nameof(modelType));
             }
 
-            Serializer ??= new JsonObjectSerializer();
+            SetDefaultSerializer();
             IMemberNameConverter nameProvider = Serializer as IMemberNameConverter ?? DefaultSerializedNameProvider.Shared;
 
             if (ObjectInfo.TryGet(modelType, nameProvider, out ObjectInfo info))
@@ -115,6 +117,15 @@ namespace Azure.Search.Documents.Indexes
             }
 
             throw FailOnNonObjectDataType();
+        }
+
+        [UnconditionalSuppressMessage("Trimming", "IL2026",
+            Justification = "Warning to callers is surfaced in public API")]
+        [UnconditionalSuppressMessage("Trimming", "IL3050",
+            Justification = "Warning to callers is surfaced in public API")]
+        private void SetDefaultSerializer()
+        {
+            Serializer ??= new JsonObjectSerializer();
         }
 
         private static IDictionary<string, SearchField> Build(

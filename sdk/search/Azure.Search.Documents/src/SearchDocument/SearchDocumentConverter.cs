@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -11,6 +12,8 @@ namespace Azure.Search.Documents.Models
     /// <summary>
     /// Convert JSON to and from a SearchDocument.
     /// </summary>
+    [RequiresUnreferencedCode("JSON serialization may require types that cannot be statically analyzed.")]
+    [RequiresDynamicCode("JSON serialization may require types that cannot be statically analyzed and might need runtime code generation.")]
     internal class SearchDocumentConverter : JsonConverter<SearchDocument>
     {
         public static SearchDocumentConverter Shared { get; } =

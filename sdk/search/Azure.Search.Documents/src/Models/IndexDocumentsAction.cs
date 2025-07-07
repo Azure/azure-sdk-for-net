@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -57,9 +58,9 @@ namespace Azure.Search.Documents.Models
             Document = doc;
         }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
-        #pragma warning disable CA1801 // Not all parameters are used depending on feature flags
-        #pragma warning disable CS1998 // Won't await depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CA1801 // Not all parameters are used depending on feature flags
+#pragma warning disable CS1998 // Won't await depending on feature flags
         /// <summary>
         /// Serialize the document write action.
         /// </summary>
@@ -75,6 +76,8 @@ namespace Azure.Search.Documents.Models
         /// that the operation should be canceled.
         /// </param>
         /// <returns>A task representing the serialization.</returns>
+        [RequiresUnreferencedCode("T is not known at compile time, so this method must use unsafe reflection for default serialization. If an AOT-safe serializer is passed in, this warning can be suppressed.")]
+        [RequiresDynamicCode("T is not known at compile time, so this method must use unsafe reflection for default serialization. If an AOT-safe serializer is passed in, this warning can be suppressed.")]
         internal async Task SerializeAsync(
             Utf8JsonWriter writer,
             ObjectSerializer serializer,
@@ -108,6 +111,7 @@ namespace Azure.Search.Documents.Models
             }
             else
             {
+                options.TypeInfoResolver = JsonSerializationContext.Default;
                 json = JsonSerializer.SerializeToUtf8Bytes<T>(Document, options);
             }
             using JsonDocument nested = JsonDocument.Parse(json);

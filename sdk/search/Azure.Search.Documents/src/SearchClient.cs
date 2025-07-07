@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,6 +22,9 @@ namespace Azure.Search.Documents
     /// </summary>
     public class SearchClient
     {
+        internal const string RequiresUnreferencedCodeMessage = "The default JSON serialization and deserialization may require types that cannot be statically analyzed. Use the non-generic overloads instead or ensure all of the required types to map to are preserved.";
+        internal const string RequiresDynamicCodeMessage = "The default JSON serialization and deserialization might require types that cannot be staticallt analyzed and might need runtime code generation. Use the non-generic overloads instead or ensure all of the required types to map to are preserved.";
+        internal const string InternalTrimmingMessage = "Default serialization uses unsafe reflection because T is unknown at compile time.";
         private readonly HttpPipeline _pipeline;
         private string _serviceName;
 
@@ -443,6 +447,8 @@ namespace Azure.Search.Documents
         /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
         /// for more information.
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual Response<T> GetDocument<T>(
             string key,
             GetDocumentOptions options = null,
@@ -658,6 +664,8 @@ namespace Azure.Search.Documents
         /// </item>
         /// </list>
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual async Task<Response<T>> GetDocumentAsync<T>(
             string key,
             GetDocumentOptions options = null,
@@ -715,6 +723,8 @@ namespace Azure.Search.Documents
         /// <see cref="GetDocumentAsync{T}(string, string, GetDocumentOptions, CancellationToken)"/>
         /// for more information.
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual Response<T> GetDocument<T>(
             string key,
             string querySourceAuthorization,
@@ -934,6 +944,8 @@ namespace Azure.Search.Documents
         /// </item>
         /// </list>
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual async Task<Response<T>> GetDocumentAsync<T>(
             string key,
             string querySourceAuthorization,
@@ -947,6 +959,8 @@ namespace Azure.Search.Documents
                 cancellationToken)
                 .ConfigureAwait(false);
 
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         private async Task<Response<T>> GetDocumentInternal<T>(
             string key,
             string querySourceAuthorization,
@@ -1745,6 +1759,8 @@ namespace Azure.Search.Documents
         /// <see cref="AggregateException"/> that's thrown on partial failure.
         /// </para>
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual Response<IndexDocumentsResult> IndexDocuments<T>(
             IndexDocumentsBatch<T> batch,
             IndexDocumentsOptions options = null,
@@ -1799,6 +1815,8 @@ namespace Azure.Search.Documents
         /// <see cref="AggregateException"/> that's thrown on partial failure.
         /// </para>
         /// </remarks>>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public async virtual Task<Response<IndexDocumentsResult>> IndexDocumentsAsync<T>(
             IndexDocumentsBatch<T> batch,
             IndexDocumentsOptions options = null,
@@ -1810,6 +1828,8 @@ namespace Azure.Search.Documents
                 cancellationToken)
                 .ConfigureAwait(false);
 
+        [RequiresUnreferencedCode(InternalTrimmingMessage)]
+        [RequiresDynamicCode(InternalTrimmingMessage)]
         private async Task<Response<IndexDocumentsResult>> IndexDocumentsInternal<T>(
             IndexDocumentsBatch<T> batch,
             IndexDocumentsOptions options,
@@ -1953,6 +1973,8 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual Response<IndexDocumentsResult> UploadDocuments<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
@@ -2012,6 +2034,8 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual async Task<Response<IndexDocumentsResult>> UploadDocumentsAsync<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
@@ -2072,6 +2096,8 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual Response<IndexDocumentsResult> MergeDocuments<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
@@ -2131,6 +2157,8 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual async Task<Response<IndexDocumentsResult>> MergeDocumentsAsync<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
@@ -2191,6 +2219,8 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual Response<IndexDocumentsResult> MergeOrUploadDocuments<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
@@ -2250,6 +2280,8 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual async Task<Response<IndexDocumentsResult>> MergeOrUploadDocumentsAsync<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
@@ -2310,6 +2342,8 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual Response<IndexDocumentsResult> DeleteDocuments<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
@@ -2369,6 +2403,8 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual async Task<Response<IndexDocumentsResult>> DeleteDocumentsAsync<T>(
             IEnumerable<T> documents,
             IndexDocumentsOptions options = null,
@@ -2424,6 +2460,8 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual Response<IndexDocumentsResult> DeleteDocuments(
             string keyName,
             IEnumerable<string> keyValues,
@@ -2479,6 +2517,8 @@ namespace Azure.Search.Documents
         /// exceptions thrown on partial failure.
         /// </para>
         /// </remarks>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public virtual async Task<Response<IndexDocumentsResult>> DeleteDocumentsAsync(
             string keyName,
             IEnumerable<string> keyValues,

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -25,7 +26,11 @@ namespace Azure.Search.Documents
     /// type can be retrieved as documents from the index. You can use
     /// <see cref="SearchDocument"/> for dynamic documents.
     /// </typeparam>
-    public class SearchIndexingBufferedSender<T> : IDisposable, IAsyncDisposable
+    public class SearchIndexingBufferedSender<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields |
+        DynamicallyAccessedMemberTypes.NonPublicFields |
+        DynamicallyAccessedMemberTypes.PublicProperties |
+        DynamicallyAccessedMemberTypes.NonPublicProperties |
+        DynamicallyAccessedMemberTypes.Interfaces)] T> : IDisposable, IAsyncDisposable
     {
         /// <summary>
         /// Flag indicating whether the sender has been disposed.

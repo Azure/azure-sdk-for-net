@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -15,6 +16,8 @@ namespace Azure.Search.Documents.Models
     /// Represents an untyped document returned from a search or document
     /// lookup.  It can be accessed as either a dynamic object or a dictionary.
     /// </summary>
+    [RequiresUnreferencedCode("JSON serialization may require types that cannot be statically analyzed.")]
+    [RequiresDynamicCode("JSON serialization may require types that cannot be statically analyzed and might need runtime code generation.")]
     [JsonConverter(typeof(SearchDocumentConverter))]
     public partial class SearchDocument
 #if EXPERIMENTAL_DYNAMIC

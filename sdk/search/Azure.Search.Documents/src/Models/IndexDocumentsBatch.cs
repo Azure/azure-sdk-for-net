@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +25,8 @@ namespace Azure.Search.Documents.Models
     /// </summary>
     public partial class IndexDocumentsBatch<T>
     {
+        internal const string TrimmingMessage = "Default serialization uses unsafe reflection because T is unknown at compile time.";
+
         /// <summary>
         /// The actions in the batch.
         /// </summary>
@@ -57,7 +60,7 @@ namespace Azure.Search.Documents.Models
             }
         }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Serialize the document batch.
         /// </summary>
@@ -73,6 +76,8 @@ namespace Azure.Search.Documents.Models
         /// that the operation should be canceled.
         /// </param>
         /// <returns>A task representing the serialization.</returns>
+        [RequiresUnreferencedCode(TrimmingMessage)]
+        [RequiresDynamicCode(TrimmingMessage)]
         internal async Task SerializeAsync(
             Utf8JsonWriter writer,
             ObjectSerializer serializer,
