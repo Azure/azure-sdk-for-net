@@ -38,7 +38,6 @@ namespace Azure.Generator.Providers
             => Original.Property("Uri").Assign(value).Terminate();
 
         public override HttpRequestApi ToExpression() => this;
-        public override string? HttpRequestClientIdPropertyName => nameof(Request.ClientRequestId);
 
         private ValueExpression CreateRequestMethod(string httpMethod)
         {
