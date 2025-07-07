@@ -75,7 +75,7 @@ namespace Azure.Generator.Visitors
                 createRequestMethod.Update(bodyStatements: newStatements);
             }
 
-            return base.Visit(serviceMethod, client, methods);
+            return methods;
         }
     }
 }
