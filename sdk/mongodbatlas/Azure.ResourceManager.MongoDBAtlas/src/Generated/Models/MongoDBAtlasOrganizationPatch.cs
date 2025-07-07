@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
-    /// <summary> List of Subscription Quota Items. </summary>
-    internal partial class SubscriptionQuotaItemList
+    /// <summary> The type used for update operations of the OrganizationResource. </summary>
+    public partial class MongoDBAtlasOrganizationPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +46,30 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
-        internal SubscriptionQuotaItemList()
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasOrganizationPatch"/>. </summary>
+        public MongoDBAtlasOrganizationPatch()
         {
-            Value = new ChangeTrackingList<NetAppSubscriptionQuotaItem>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
-        /// <param name="value"> A list of SubscriptionQuotaItems. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasOrganizationPatch"/>. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionQuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoDBAtlasOrganizationPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, MongoDBAtlasOrganizationUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Identity = identity;
+            Tags = tags;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of SubscriptionQuotaItems. </summary>
-        public IReadOnlyList<NetAppSubscriptionQuotaItem> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public MongoDBAtlasOrganizationUpdateProperties Properties { get; set; }
     }
 }
