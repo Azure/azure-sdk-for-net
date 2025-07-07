@@ -94,11 +94,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
             throw new InvalidOperationException($"Either {typeToConvert.ToFriendlyName()} or the PersistableModelProxyAttribute defined needs to implement IJsonModel.");
         }
         var result = iJsonModel.Create(ref reader, _options);
-        if (result is null)
-        {
-            return null;
-        }
-        return (IJsonModel<object>)result;
+        return result as IJsonModel<object>;
     }
 
     /// <inheritdoc/>
