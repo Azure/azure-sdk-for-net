@@ -38,11 +38,6 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TeamsPhoneCallDetails))
-            {
-                writer.WritePropertyName("teamsPhoneCallDetails"u8);
-                writer.WriteObjectValue(TeamsPhoneCallDetails);
-            }
             writer.WriteEndObject();
         }
 
@@ -54,7 +49,6 @@ namespace Azure.Communication.CallAutomation
             }
             IDictionary<string, string> voipHeaders = default;
             IDictionary<string, string> sipHeaders = default;
-            TeamsPhoneCallDetailsInternal teamsPhoneCallDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("voipHeaders"u8))
@@ -85,17 +79,8 @@ namespace Azure.Communication.CallAutomation
                     sipHeaders = dictionary;
                     continue;
                 }
-                if (property.NameEquals("teamsPhoneCallDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    teamsPhoneCallDetails = TeamsPhoneCallDetailsInternal.DeserializeTeamsPhoneCallDetailsInternal(property.Value);
-                    continue;
-                }
             }
-            return new CustomCallingContextInternal(voipHeaders ?? new ChangeTrackingDictionary<string, string>(), sipHeaders ?? new ChangeTrackingDictionary<string, string>(), teamsPhoneCallDetails);
+            return new CustomCallingContextInternal(voipHeaders ?? new ChangeTrackingDictionary<string, string>(), sipHeaders ?? new ChangeTrackingDictionary<string, string>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
