@@ -180,3 +180,6 @@ TempTypeSpecFiles/
 
 # Common toolchain intermediate files
 temp
+
+# Generator migration temporary files
+doc/GeneratorMigration/Library_Inventory.json
