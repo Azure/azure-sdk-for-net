@@ -3,14 +3,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Monitor.Query.Models;
 
 namespace Azure.Monitor.Query
 {
+    [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+    [RequiresDynamicCode(RequiresDynamicCodeMessage)]
     internal class RowBinder: TypeBinder<LogsTableRow>
     {
         internal static RowBinder Shared = new();
+
         internal IReadOnlyList<T> BindResults<T>(IReadOnlyList<LogsTable> tables)
         {
             List<T> results = new List<T>();

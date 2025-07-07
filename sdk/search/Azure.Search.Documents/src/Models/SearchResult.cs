@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -28,6 +29,8 @@ namespace Azure.Search.Documents.Models
     /// </typeparam>
     public class SearchResult<T>
     {
+        internal const string ReqUnreferencedCodeMessage = "The default serializer uses JSON serialization and deserialization that may require types that cannot be statically analyzed. If you pass in an ObjectSerializer that you are certain is AOT safe, you can suppress this warning.";
+        internal const string ReqDynamicCodeMessage = "The default serializer uses JSON serialization and deserialization that may require types that cannot be statically analyzed and might need runtime code generation. If you pass in an ObjectSerializer that you are certain is AOT safe, you can suppress this warning.";
         /// <summary>
         /// The relevance score of the document compared to other documents
         /// returned by the query.
@@ -61,7 +64,7 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         internal SearchResult() { }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Deserialize a SearchResult and its model.
         /// </summary>
@@ -77,6 +80,8 @@ namespace Azure.Search.Documents.Models
         /// that the operation should be canceled.
         /// </param>
         /// <returns>Deserialized SearchResults.</returns>
+        [RequiresUnreferencedCode(ReqUnreferencedCodeMessage)]
+        [RequiresDynamicCode(ReqDynamicCodeMessage)]
         internal static async Task<SearchResult<T>> DeserializeAsync(
             JsonElement element,
             ObjectSerializer serializer,

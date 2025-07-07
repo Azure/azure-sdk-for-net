@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
@@ -30,6 +31,8 @@ namespace Azure.Search.Documents
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be canceled.
         /// </param>
+        [RequiresUnreferencedCode("SearchDocument is not compatible with AOT.")]
+        [RequiresDynamicCode("SearchDocument is not compatible with AOT.")]
         public static void DeleteDocuments(
             this SearchIndexingBufferedSender<SearchDocument> indexer,
             string keyFieldName,
@@ -60,6 +63,8 @@ namespace Azure.Search.Documents
         /// A task that completes when the indexing actions have been added but
         /// not yet sent.
         /// </returns>
+        [RequiresUnreferencedCode("SearchDocument is not compatible with AOT.")]
+        [RequiresDynamicCode("SearchDocument is not compatible with AOT.")]
         public static async Task DeleteDocumentsAsync(
             this SearchIndexingBufferedSender<SearchDocument> indexer,
             string keyFieldName,
@@ -73,6 +78,8 @@ namespace Azure.Search.Documents
                 cancellationToken)
                 .ConfigureAwait(false);
 
+        [RequiresUnreferencedCode("SearchDocument is not compatible with AOT.")]
+        [RequiresDynamicCode("SearchDocument is not compatible with AOT.")]
         private static async Task DeleteDocumentsInternal(
             SearchIndexingBufferedSender<SearchDocument> indexer,
             string keyFieldName,

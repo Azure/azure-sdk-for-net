@@ -14,6 +14,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
 using Azure.Core.GeoJson;
 using Azure.Search.Documents.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Search.Documents
 {
@@ -55,14 +56,22 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Default JsonSerializerOptions to use.
         /// </summary>
-        public static JsonSerializerOptions SerializerOptions { get; } =
-            new JsonSerializerOptions().AddSearchConverters();
+        [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "getter is marked RUC")]
+        [UnconditionalSuppressMessage("AOT", "IL3050:Calling members annotated with 'RequiresDynamicCodeAttribute' may break functionality when AOT compiling.", Justification = "getter is marked RDC")]
+        public static JsonSerializerOptions SerializerOptions
+        {
+            [RequiresUnreferencedCode("Some custom JSON converters for search are not compatible with AOT.")]
+            [RequiresDynamicCode("Some custom JSON converters for search are not compatible with AOT.")]
+            get;
+        } = new JsonSerializerOptions().AddSearchConverters();
 
         /// <summary>
         /// Add all of the Search JsonConverters.
         /// </summary>
         /// <param name="options">Serialization options.</param>
         /// <returns>Serialization options.</returns>
+        [RequiresUnreferencedCode("Some custom JSON converters for search are not compatible with AOT.")]
+        [RequiresDynamicCode("Some custom JSON converters for search are not compatible with AOT.")]
         public static JsonSerializerOptions AddSearchConverters(this JsonSerializerOptions options)
         {
             options ??= new JsonSerializerOptions();
@@ -221,6 +230,8 @@ namespace Azure.Search.Documents
         /// references.
         /// </param>
         /// <returns>A deserialized SearchDocument.</returns>
+        [RequiresUnreferencedCode("SearchDocument is not compatible with AOT.")]
+        [RequiresDynamicCode("SearchDocument is not compatible with AOT.")]
         public static SearchDocument ReadSearchDocument(
             ref Utf8JsonReader reader,
             Type typeToConvert,
@@ -284,7 +295,11 @@ namespace Azure.Search.Documents
                         Utf8JsonReader clone = reader;
                         try
                         {
+#pragma warning disable IL2026 // converter is AOT safe
+#pragma warning disable IL3050 // converter is AOT safe
                             GeoPoint point = JsonSerializer.Deserialize<GeoPoint>(ref clone);
+#pragma warning restore IL2026
+#pragma warning restore IL3050
                             if (point != null)
                             {
                                 reader = clone;
@@ -329,6 +344,8 @@ namespace Azure.Search.Documents
         /// <param name="writer">JSON writer.</param>
         /// <param name="document">The document.</param>
         /// <param name="options">Serialization options.</param>
+        [RequiresUnreferencedCode("JSON serialization may require types that cannot be statically analyzed.")]
+        [RequiresDynamicCode("JSON serialization may require types that cannot be statically analyzed and might need runtime code generation.")]
         public static void WriteSearchDocument(
             Utf8JsonWriter writer,
             SearchDocument document,
@@ -355,7 +372,7 @@ namespace Azure.Search.Documents
             writer.WriteEndObject();
         }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Deserialize a JSON stream.
         /// </summary>
@@ -373,6 +390,8 @@ namespace Azure.Search.Documents
         /// that the operation should be canceled.
         /// </param>
         /// <returns>A deserialized object.</returns>
+        [RequiresUnreferencedCode(SearchClient.RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(SearchClient.RequiresDynamicCodeMessage)]
         public static async Task<T> DeserializeAsync<T>(
             this Stream json,
             ObjectSerializer serializer,

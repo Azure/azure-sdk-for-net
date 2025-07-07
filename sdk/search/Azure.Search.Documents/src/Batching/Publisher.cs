@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -147,6 +148,8 @@ namespace Azure.Search.Documents.Batching
         /// <param name="publisherCancellationToken">
         /// A <see cref="CancellationToken"/> to use when publishing.
         /// </param>
+        [RequiresUnreferencedCode("uses unsafe serialization")]
+        [RequiresDynamicCode("uses unsafe serialization")]
         public Publisher(
             bool autoFlush,
             TimeSpan? autoFlushInterval,
@@ -245,6 +248,8 @@ namespace Azure.Search.Documents.Batching
         /// <returns>
         /// A Task that will run for the lifetime of the publisher.
         /// </returns>
+        [RequiresUnreferencedCode("uses unsafe serialization")]
+        [RequiresDynamicCode("uses unsafe serialization")]
         private async Task ProcessMessagesAsync()
         {
             CancellationToken cancellationToken = PublisherCancellationToken;
@@ -279,6 +284,8 @@ namespace Azure.Search.Documents.Batching
         /// <param name="documents">The documents to publish.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Task for processing the added documents.</returns>
+        [RequiresUnreferencedCode("uses unsafe serialization")]
+        [RequiresDynamicCode("uses unsafe serialization")]
         protected virtual async Task OnDocumentsAddedAsync(IEnumerable<T> documents, CancellationToken cancellationToken)
         {
             // Add all of the documents to our queue
@@ -315,6 +322,8 @@ namespace Azure.Search.Documents.Batching
         /// </summary>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Task for flushing.</returns>
+        [RequiresUnreferencedCode("uses unsafe serialization")]
+        [RequiresDynamicCode("uses unsafe serialization")]
         protected virtual async Task OnFlushedAsync(CancellationToken cancellationToken)
         {
             await PublishAsync(flush: true, cancellationToken).ConfigureAwait(false);
@@ -394,6 +403,8 @@ namespace Azure.Search.Documents.Batching
         /// <param name="flush">Whether we're flushing.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>A task that represents the operation.</returns>
+        [RequiresUnreferencedCode("uses unsafe serialization")]
+        [RequiresDynamicCode("uses unsafe serialization")]
         private async Task PublishAsync(bool flush, CancellationToken cancellationToken)
         {
             // There's no need to let the timer keep running since we're
@@ -465,6 +476,8 @@ namespace Azure.Search.Documents.Batching
         /// <param name="batch">The batch of actions to submit.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>Whether the submission was throttled.</returns>
+        [RequiresUnreferencedCode("Uses unsafe serialization")]
+        [RequiresDynamicCode("Uses unsafe serialization")]
         protected async Task SubmitBatchAsync(IList<PublisherAction<T>> batch, CancellationToken cancellationToken)
         {
             // If Submit is called before our last retry delay elapsed, we'll
@@ -485,6 +498,8 @@ namespace Azure.Search.Documents.Batching
         /// <param name="batch">The batch of actions to submit.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>Whether the submission was throttled.</returns>
+        [RequiresUnreferencedCode("Uses unsafe serialization.")]
+        [RequiresDynamicCode("Uses unsafe serialization.")]
         protected abstract Task<bool> OnSubmitBatchAsync(IList<PublisherAction<T>> batch, CancellationToken cancellationToken);
 
         /// <summary>

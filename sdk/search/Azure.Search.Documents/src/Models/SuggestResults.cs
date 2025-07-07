@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -43,7 +44,7 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         internal SuggestResults() { }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Deserialize the SuggestResults.
         /// </summary>
@@ -58,6 +59,8 @@ namespace Azure.Search.Documents.Models
         /// that the operation should be canceled.
         /// </param>
         /// <returns>Deserialized SuggestResults.</returns>
+        [RequiresUnreferencedCode("TODO find default serializer message")]
+        [RequiresDynamicCode("TODO find default serializer message")]
         internal static async Task<SuggestResults<T>> DeserializeAsync(
             Stream json,
             ObjectSerializer serializer,

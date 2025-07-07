@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 using System.Text.Json;
@@ -145,6 +146,8 @@ namespace Azure.Monitor.Query
         /// <remarks>
         /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
         /// </remarks>
+        [RequiresUnreferencedCode(LogsBatchQueryResultCollection.RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(LogsBatchQueryResultCollection.RequiresDynamicCodeMessage)]
         public virtual Response<IReadOnlyList<T>> QueryWorkspace<T>(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = QueryWorkspace(workspaceId, query, timeRange, options, cancellationToken);
@@ -184,7 +187,9 @@ namespace Azure.Monitor.Query
         /// <remarks>
         /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
         /// </remarks>
-        public virtual async Task<Response<IReadOnlyList<T>>> QueryWorkspaceAsync<T>(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        [RequiresUnreferencedCode(LogsBatchQueryResultCollection.RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(LogsBatchQueryResultCollection.RequiresDynamicCodeMessage)]
+        public virtual async Task<Response<IReadOnlyList<T>>> QueryWorkspaceAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(string workspaceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = await QueryWorkspaceAsync(workspaceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
 
@@ -385,7 +390,9 @@ namespace Azure.Monitor.Query
         /// <param name="options">The <see cref="LogsQueryOptions"/> to configure the query.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns>The logs matching the query.</returns>
-        public virtual Response<IReadOnlyList<T>> QueryResource<T>(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        [RequiresUnreferencedCode(LogsBatchQueryResultCollection.RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(LogsBatchQueryResultCollection.RequiresDynamicCodeMessage)]
+        public virtual Response<IReadOnlyList<T>> QueryResource<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = QueryResource(resourceId, query, timeRange, options, cancellationToken);
 
@@ -427,7 +434,9 @@ namespace Azure.Monitor.Query
         /// <remarks>
         /// When the <paramref name="timeRange"/> argument is <see cref="QueryTimeRange.All"/> and the <paramref name="query"/> argument contains a time range filter, the underlying service uses the time range specified in <paramref name="query"/>.
         /// </remarks>
-        public virtual async Task<Response<IReadOnlyList<T>>> QueryResourceAsync<T>(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
+        [RequiresUnreferencedCode(LogsBatchQueryResultCollection.RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(LogsBatchQueryResultCollection.RequiresDynamicCodeMessage)]
+        public virtual async Task<Response<IReadOnlyList<T>>> QueryResourceAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] T>(ResourceIdentifier resourceId, string query, QueryTimeRange timeRange, LogsQueryOptions options = null, CancellationToken cancellationToken = default)
         {
             Response<LogsQueryResult> response = await QueryResourceAsync(resourceId, query, timeRange, options, cancellationToken).ConfigureAwait(false);
 
