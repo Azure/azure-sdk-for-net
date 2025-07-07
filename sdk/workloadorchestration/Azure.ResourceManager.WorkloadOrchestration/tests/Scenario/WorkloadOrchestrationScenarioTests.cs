@@ -15,18 +15,23 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Tests
 {
   public class WorkloadOrchestrationScenarioTests : WorkloadOrchestrationTestBase
   {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WorkloadOrchestrationScenarioTests"/> class.
+    /// </summary>
+    /// <param name="isAsync">A flag indicating whether the test should run asynchronously.</param>
+    /// <param name="mode">The recording mode for the test. If null, uses the default mode.</param>
     public WorkloadOrchestrationScenarioTests(bool isAsync) : base(isAsync)
     {
     }
 
     public static IEnumerable<object[]> TestData => new[] { new object[] { false }, new object[] { true } };
 
-    [TestCase]
+    [Test]
     [RecordedTest]
     public async Task Schema_LifecycleAsync()
     {
-      string schemaName = Recording.GenerateAssetName("schema");
-      string schemaVersionName = "1.23.4";
+      string schemaName = Recording.GenerateAssetName("schema88");
+      string schemaVersionName = Recording.GenerateAssetName("1.0.0");
 
       // Get client and resource group from test base
       ArmClient client = GetArmClient();
