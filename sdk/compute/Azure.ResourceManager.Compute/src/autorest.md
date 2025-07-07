@@ -11,7 +11,6 @@ azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
 require: https://github.com/Azure/azure-rest-api-specs/blob/7f6e17564770ef938595a0c7c9929753fa51047d/specification/compute/resource-manager/readme.md
-#tag: package-2025-02-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -425,37 +424,11 @@ directive:
     where: $.definitions.VMSizeProperties
     transform: >
       $.additionalProperties = true;
-  # Enable AnyZone Capability, this is a temporary change, will be removed after service team update the spec
   - from: ComputeRP.json
-    where: $.definitions
+    where: $.definitions.Placement.properties.zonePlacementPolicy
     transform: >
-      $.Placement = {
-              "properties": {
-                "zonePlacementPolicy": {
-                  "type": "string",
-                  "description": "Specifies policy for auto zone placement."
-                },
-                "includeZones": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "description": "List of zones to include for auto zone placement."
-                },
-                "excludeZones": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "description": "List of zones to exclude for auto zone placement."
-                }
-              },
-              "description": "The virtual machine automatic zone placement feature."
-            };
-      $.VirtualMachine.properties.placement = {
-              "$ref": "#/definitions/Placement",
-              "description": "The virtual machine automatic zone placement feature."
-            };
+      delete $["$ref"];
+      $["type"] = "string";
   - from: ComputeRP.json
     where: $.definitions
     transform: delete $["Expand"]

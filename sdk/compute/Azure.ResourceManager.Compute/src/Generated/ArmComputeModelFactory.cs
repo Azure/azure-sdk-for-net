@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
         /// <param name="managedBy"> ManagedBy is set to Virtual Machine Scale Set(VMSS) flex ARM resourceID, if the VM is part of the VMSS. This property is used by platform for internal resource group delete optimization. </param>
         /// <param name="etag"> Etag is property returned in Create/Update/Get response of the VM, so that customer can supply it in the header to ensure optimistic updates. </param>
-        /// <param name="placement"> The virtual machine automatic zone placement feature. </param>
+        /// <param name="placement"> Placement section specifies the user-defined constraints for virtual machine hardware placement. This property cannot be changed once VM is provisioned. Minimum api-version: 2024-11-01. </param>
         /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
         /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
