@@ -67,6 +67,13 @@ namespace MgmtTypeSpec
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier()
+        {
+            string resourceId = $"/providers/MgmtTypeSpec/settings/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
