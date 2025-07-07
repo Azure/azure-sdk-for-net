@@ -34,7 +34,7 @@ Microsoft accounts (MSA) are personal accounts created by users to access Micros
 
 ## Redirect URIs
 
-Microsoft Entra applications rely on redirect URIs to determine where to send the authentication response after a user has logged in. To enable brokered authentication through WAM, a redirect URI matching the following pattern should be registered to the application:
+Microsoft Entra applications rely on redirect URIs to determine where to send the authentication response after a user has logged in. To enable brokered authentication, a redirect URI matching the following pattern should be registered to the application:
 
 | Platform    | Redirect URI                                                                                                          |
 |-------------|-----------------------------------------------------------------------------------------------------------------------|
