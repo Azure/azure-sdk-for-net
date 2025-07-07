@@ -1,6 +1,6 @@
-# Sample using `Azure.AI.OpenAI` Extension in Azure.AI.Projects
+# Sample using `Azure.AI.OpenAI` Chat Extension in Azure.AI.Projects
 
-This sample demonstrates how to use the synchronous and asynchronous `Azure OpenAI` methods.
+This sample demonstrates how to use the synchronous and asynchronous `Azure OpenAI` chat completion methods.
 
 ## Prerequisites
 
@@ -8,27 +8,32 @@ This sample demonstrates how to use the synchronous and asynchronous `Azure Open
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
   - `MODEL_DEPLOYMENT_NAME`: The name of the deployment to retrieve.
+  - `CONNECTION_NAME`: (Optional) The name of the Azure OpenAI connection to use.
 
 ## Synchronous Sample
 
-```C# Snippet:AI_Projects_AzureOpenAISync
+```C# Snippet:AI_Projects_AzureOpenAIChatSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
+Console.WriteLine("Create the Azure OpenAI chat client");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
 
+Console.WriteLine("Complete a chat");
 ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
 Console.WriteLine(result.Content[0].Text);
 ```
 
 ## Asynchronous Sample
-```C# Snippet:AI_Projects_AzureOpenAIAsync
+```C# Snippet:AI_Projects_AzureOpenAIChatAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+Console.WriteLine("Create the Azure OpenAI chat client");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: null, apiVersion: null);
 
+Console.WriteLine("Complete a chat");
 ChatCompletion result = await chatClient.CompleteChatAsync("List all the rainbow colors");
 Console.WriteLine(result.Content[0].Text);
 ```

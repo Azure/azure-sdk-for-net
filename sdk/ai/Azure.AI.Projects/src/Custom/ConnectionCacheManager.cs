@@ -64,6 +64,7 @@ namespace Azure.AI.Projects
                 case "Azure.AI.Agents.Persistent.PersistentAgentsClient":
                 case "OpenAI.Chat.ChatClient":
                 case "OpenAI.Embeddings.EmbeddingClient":
+                case "OpenAI.Images.ImageClient":
                     return ConnectionType.AzureOpenAI;
 
                 // AzureAISearch
