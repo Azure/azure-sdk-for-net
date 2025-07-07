@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -38,12 +39,24 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [TestCase("/test/path=true@&#%", "/test/path%3Dtrue%40%26%23%25")]
-        [TestCase("/test/path%3Dtest%26", "/test/path%253Dtest%2526")]
+        [RunOnlyOnPlatforms(Windows = true)]
         [TestCase("C:\\test\\path=true@&#%", "C:/test/path%3Dtrue%40%26%23%25")]
         [TestCase("C:\\test\\path%3Dtest%26", "C:/test/path%253Dtest%2526")]
         [TestCase("C:\\test\\folder with spaces", "C:/test/folder%20with%20spaces")]
-        public void Ctor_String_Encoding(string path, string absolutePath)
+        public void Ctor_String_Encoding_Windows(string path, string absolutePath)
+        {
+            LocalDirectoryStorageResourceContainer storageResource = new(path);
+            Assert.That(storageResource.Uri.AbsolutePath, Is.EqualTo(absolutePath));
+            // LocalPath should equal original path
+            Assert.That(storageResource.Uri.LocalPath, Is.EqualTo(path));
+        }
+
+        [Test]
+        [RunOnlyOnPlatforms(Linux = true, OSX = true)]
+        [TestCase("/test/path=true@&#%", "/test/path%3Dtrue%40%26%23%25")]
+        [TestCase("/test/path%3Dtest%26", "/test/path%253Dtest%2526")]
+        [TestCase("/test/folder with spaces", "/test/folder%20with%20spaces")]
+        public void Ctor_String_Encoding_Unix(string path, string absolutePath)
         {
             LocalDirectoryStorageResourceContainer storageResource = new(path);
             Assert.That(storageResource.Uri.AbsolutePath, Is.EqualTo(absolutePath));
@@ -155,27 +168,33 @@ namespace Azure.Storage.DataMovement.Tests
         {
             List<(string Start, string Append)> tests =
             [
-                ("C:\\Users\\user1\\Documents\\directory", "path=true@&#%"),
-                ("C:\\Users\\user1\\Documents\\directory", "path%3Dtest%26"),
-                ("C:\\Users\\user1\\Documents\\directory", "with space"),
-                ("C:\\Users\\user1\\Documents\\directory=true@%", "path=true@&#%"),
-                ("C:\\Users\\user1\\Documents\\directory=true@%", "path%3Dtest%26"),
-                ("C:\\Users\\user1\\Documents\\directory=true@%", "with space"),
-                ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "path=true@&#%"),
-                ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "path%3Dtest%26"),
-                ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "with space"),
                 ("/home/user1/directory", "path=true@&#%"),
                 ("/home/user1/directory", "path%3Dtest%26"),
                 ("/home/user1/directory", "with space"),
             ];
+            // Windows paths only supported on Windows
+            if (Azure.Core.TestFramework.TestEnvironment.IsWindows)
+            {
+                tests.AddRange([
+                    ("C:\\Users\\user1\\Documents\\directory", "path=true@&#%"),
+                    ("C:\\Users\\user1\\Documents\\directory", "path%3Dtest%26"),
+                    ("C:\\Users\\user1\\Documents\\directory", "with space"),
+                    ("C:\\Users\\user1\\Documents\\directory=true@%", "path=true@&#%"),
+                    ("C:\\Users\\user1\\Documents\\directory=true@%", "path%3Dtest%26"),
+                    ("C:\\Users\\user1\\Documents\\directory=true@%", "with space"),
+                    ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "path=true@&#%"),
+                    ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "path%3Dtest%26"),
+                    ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "with space"),
+                ]);
+            }
 
             foreach ((string Start, string Append) test in tests)
             {
                 StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(test.Start);
                 StorageResourceItem resource = containerResource.GetStorageResourceReference(test.Append, default);
 
-                char seperator = test.Start[0] == '/' ? '/' : '\\';
-                string combined = test.Start + seperator + test.Append;
+                char separator = test.Start[0] == '/' ? '/' : '\\';
+                string combined = test.Start + separator + test.Append;
                 Assert.That(resource.Uri.LocalPath, Is.EqualTo(combined));
             }
         }
@@ -200,19 +219,25 @@ namespace Azure.Storage.DataMovement.Tests
         {
             List<(string Start, string Append)> tests =
             [
-                ("C:\\Users\\user1\\Documents\\directory", "path=true@&#%"),
-                ("C:\\Users\\user1\\Documents\\directory", "path%3Dtest%26"),
-                ("C:\\Users\\user1\\Documents\\directory", "with space"),
-                ("C:\\Users\\user1\\Documents\\directory=true@%", "path=true@&#%"),
-                ("C:\\Users\\user1\\Documents\\directory=true@%", "path%3Dtest%26"),
-                ("C:\\Users\\user1\\Documents\\directory=true@%", "with space"),
-                ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "path=true@&#%"),
-                ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "path%3Dtest%26"),
-                ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "with space"),
                 ("/home/user1/directory", "path=true@&#%"),
                 ("/home/user1/directory", "path%3Dtest%26"),
                 ("/home/user1/directory", "with space"),
             ];
+            // Windows paths only supported on Windows
+            if (Azure.Core.TestFramework.TestEnvironment.IsWindows)
+            {
+                tests.AddRange([
+                    ("C:\\Users\\user1\\Documents\\directory", "path=true@&#%"),
+                    ("C:\\Users\\user1\\Documents\\directory", "path%3Dtest%26"),
+                    ("C:\\Users\\user1\\Documents\\directory", "with space"),
+                    ("C:\\Users\\user1\\Documents\\directory=true@%", "path=true@&#%"),
+                    ("C:\\Users\\user1\\Documents\\directory=true@%", "path%3Dtest%26"),
+                    ("C:\\Users\\user1\\Documents\\directory=true@%", "with space"),
+                    ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "path=true@&#%"),
+                    ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "path%3Dtest%26"),
+                    ("C:\\Users\\user1\\Documents\\directory%3Dtrue%26", "with space"),
+                ]);
+            }
 
             foreach ((string Start, string Append) test in tests)
             {
