@@ -10,20 +10,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/PlanetaryComputer/ci.mgmt.yml
-    - sdk/PlanetaryComputer/Azure.ResourceManager.PlanetaryComputer/
-
-/ci.mgmt.yml
-    - sdk/PlanetaryComputer
-/Azure.ResourceManager.PlanetaryComputer
-/
-
+    - sdk/planetarycomputer/ci.mgmt.yml
+    - sdk/planetarycomputer/Azure.ResourceManager.PlanetaryComputer/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: PlanetaryComputer
-    ArtifactName: packages
+    ServiceDirectory: planetarycomputer
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.PlanetaryComputer
