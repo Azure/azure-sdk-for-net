@@ -1,8 +1,10 @@
 # Release History
 
-## 1.5.0-beta.2 (Unreleased)
+## 1.5.0 (2025-07-03)
 
 ### Features Added
+
+- Added the following types for 3rd-party Authentication support: `AuthenticationTokenProvider`, `GetTokenOptions`, `AuthenticationToken`, `AuthenticationPolicy`, and `BearerTokenPolicy`.
 
 ### Breaking Changes
 
@@ -12,10 +14,6 @@
     - Add null-forgiving operators (`!`) if you're certain the result won't be null, or
     - Add explicit null checks before using the returned value
   - **For implementers of these interfaces**: Update method signatures in your models to return `T?` instead of `T`, and decide whether to return `null` or throw exceptions in error scenarios
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.5.0-beta.1 (2025-06-13)
 
