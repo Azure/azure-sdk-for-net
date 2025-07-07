@@ -11,8 +11,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PlanetaryComputer.Models
 {
-    /// <summary> The template for adding optional properties. </summary>
-    public partial class ManagedServiceIdentityUpdate
+    /// <summary> The properties of a GeoCatalog that can be updated. </summary>
+    public partial class PlanetaryComputerGeoCatalogPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +46,26 @@ namespace Azure.ResourceManager.PlanetaryComputer.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityUpdate"/>. </summary>
-        public ManagedServiceIdentityUpdate()
+        /// <summary> Initializes a new instance of <see cref="PlanetaryComputerGeoCatalogPatch"/>. </summary>
+        public PlanetaryComputerGeoCatalogPatch()
         {
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityUpdate"/>. </summary>
-        /// <param name="type"> The type of managed identity assigned to this resource. </param>
-        /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
+        /// <summary> Initializes a new instance of <see cref="PlanetaryComputerGeoCatalogPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identity properties to update. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedServiceIdentityUpdate(ManagedServiceIdentityType? type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlanetaryComputerGeoCatalogPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
-            UserAssignedIdentities = userAssignedIdentities;
+            Tags = tags;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of managed identity assigned to this resource. </summary>
-        public ManagedServiceIdentityType? Type { get; set; }
-        /// <summary> The identities assigned to this resource by the user. </summary>
-        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> The managed service identity properties to update. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

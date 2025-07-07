@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockablePlanetaryComputerSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _geoCatalogClientDiagnostics;
-        private GeoCatalogsRestOperations _geoCatalogRestClient;
+        private ClientDiagnostics _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics;
+        private GeoCatalogsRestOperations _planetaryComputerGeoCatalogGeoCatalogsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockablePlanetaryComputerSubscriptionResource"/> class for mocking. </summary>
         protected MockablePlanetaryComputerSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         {
         }
 
-        private ClientDiagnostics GeoCatalogClientDiagnostics => _geoCatalogClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer", GeoCatalogResource.ResourceType.Namespace, Diagnostics);
-        private GeoCatalogsRestOperations GeoCatalogRestClient => _geoCatalogRestClient ??= new GeoCatalogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(GeoCatalogResource.ResourceType));
+        private ClientDiagnostics PlanetaryComputerGeoCatalogGeoCatalogsClientDiagnostics => _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer", PlanetaryComputerGeoCatalogResource.ResourceType.Namespace, Diagnostics);
+        private GeoCatalogsRestOperations PlanetaryComputerGeoCatalogGeoCatalogsRestClient => _planetaryComputerGeoCatalogGeoCatalogsRestClient ??= new GeoCatalogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PlanetaryComputerGeoCatalogResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GeoCatalogResource> GetGeoCatalogsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PlanetaryComputerGeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PlanetaryComputerGeoCatalogResource> GetPlanetaryComputerGeoCatalogsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => GeoCatalogRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GeoCatalogRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GeoCatalogResource(Client, GeoCatalogData.DeserializeGeoCatalogData(e)), GeoCatalogClientDiagnostics, Pipeline, "MockablePlanetaryComputerSubscriptionResource.GetGeoCatalogs", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PlanetaryComputerGeoCatalogGeoCatalogsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlanetaryComputerGeoCatalogGeoCatalogsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PlanetaryComputerGeoCatalogResource(Client, PlanetaryComputerGeoCatalogData.DeserializePlanetaryComputerGeoCatalogData(e)), PlanetaryComputerGeoCatalogGeoCatalogsClientDiagnostics, Pipeline, "MockablePlanetaryComputerSubscriptionResource.GetPlanetaryComputerGeoCatalogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GeoCatalogResource> GetGeoCatalogs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PlanetaryComputerGeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PlanetaryComputerGeoCatalogResource> GetPlanetaryComputerGeoCatalogs(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => GeoCatalogRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => GeoCatalogRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GeoCatalogResource(Client, GeoCatalogData.DeserializeGeoCatalogData(e)), GeoCatalogClientDiagnostics, Pipeline, "MockablePlanetaryComputerSubscriptionResource.GetGeoCatalogs", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PlanetaryComputerGeoCatalogGeoCatalogsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlanetaryComputerGeoCatalogGeoCatalogsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PlanetaryComputerGeoCatalogResource(Client, PlanetaryComputerGeoCatalogData.DeserializePlanetaryComputerGeoCatalogData(e)), PlanetaryComputerGeoCatalogGeoCatalogsClientDiagnostics, Pipeline, "MockablePlanetaryComputerSubscriptionResource.GetPlanetaryComputerGeoCatalogs", "value", "nextLink", cancellationToken);
         }
     }
 }

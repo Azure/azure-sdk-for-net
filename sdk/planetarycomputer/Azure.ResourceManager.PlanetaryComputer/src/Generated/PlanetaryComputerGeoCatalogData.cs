@@ -14,10 +14,10 @@ using Azure.ResourceManager.PlanetaryComputer.Models;
 namespace Azure.ResourceManager.PlanetaryComputer
 {
     /// <summary>
-    /// A class representing the GeoCatalog data model.
+    /// A class representing the PlanetaryComputerGeoCatalog data model.
     /// A Microsoft Planetary Computer Pro GeoCatalog resource
     /// </summary>
-    public partial class GeoCatalogData : TrackedResourceData
+    public partial class PlanetaryComputerGeoCatalogData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GeoCatalogData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlanetaryComputerGeoCatalogData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public GeoCatalogData(AzureLocation location) : base(location)
+        public PlanetaryComputerGeoCatalogData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GeoCatalogData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlanetaryComputerGeoCatalogData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,20 +67,20 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GeoCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GeoCatalogProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PlanetaryComputerGeoCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PlanetaryComputerGeoCatalogProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GeoCatalogData"/> for deserialization. </summary>
-        internal GeoCatalogData()
+        /// <summary> Initializes a new instance of <see cref="PlanetaryComputerGeoCatalogData"/> for deserialization. </summary>
+        internal PlanetaryComputerGeoCatalogData()
         {
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public GeoCatalogProperties Properties { get; set; }
+        public PlanetaryComputerGeoCatalogProperties Properties { get; set; }
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }

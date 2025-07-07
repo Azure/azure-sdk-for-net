@@ -15,11 +15,11 @@ using Azure.ResourceManager.PlanetaryComputer.Models;
 
 namespace Azure.ResourceManager.PlanetaryComputer
 {
-    public partial class GeoCatalogData : IUtf8JsonSerializable, IJsonModel<GeoCatalogData>
+    public partial class PlanetaryComputerGeoCatalogData : IUtf8JsonSerializable, IJsonModel<PlanetaryComputerGeoCatalogData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GeoCatalogData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlanetaryComputerGeoCatalogData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GeoCatalogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PlanetaryComputerGeoCatalogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlanetaryComputerGeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeoCatalogData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PlanetaryComputerGeoCatalogData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.PlanetaryComputer
             }
         }
 
-        GeoCatalogData IJsonModel<GeoCatalogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PlanetaryComputerGeoCatalogData IJsonModel<PlanetaryComputerGeoCatalogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlanetaryComputerGeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeoCatalogData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PlanetaryComputerGeoCatalogData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGeoCatalogData(document.RootElement, options);
+            return DeserializePlanetaryComputerGeoCatalogData(document.RootElement, options);
         }
 
-        internal static GeoCatalogData DeserializeGeoCatalogData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PlanetaryComputerGeoCatalogData DeserializePlanetaryComputerGeoCatalogData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
             {
                 return null;
             }
-            GeoCatalogProperties properties = default;
+            PlanetaryComputerGeoCatalogProperties properties = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                     {
                         continue;
                     }
-                    properties = GeoCatalogProperties.DeserializeGeoCatalogProperties(property.Value, options);
+                    properties = PlanetaryComputerGeoCatalogProperties.DeserializePlanetaryComputerGeoCatalogProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GeoCatalogData(
+            return new PlanetaryComputerGeoCatalogData(
                 id,
                 name,
                 type,
@@ -162,35 +162,35 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GeoCatalogData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PlanetaryComputerGeoCatalogData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlanetaryComputerGeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GeoCatalogData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlanetaryComputerGeoCatalogData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GeoCatalogData IPersistableModel<GeoCatalogData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PlanetaryComputerGeoCatalogData IPersistableModel<PlanetaryComputerGeoCatalogData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlanetaryComputerGeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGeoCatalogData(document.RootElement, options);
+                        return DeserializePlanetaryComputerGeoCatalogData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GeoCatalogData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlanetaryComputerGeoCatalogData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GeoCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PlanetaryComputerGeoCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

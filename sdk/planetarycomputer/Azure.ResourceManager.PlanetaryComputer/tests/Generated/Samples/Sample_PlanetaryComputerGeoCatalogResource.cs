@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.PlanetaryComputer.Samples
 {
-    public partial class Sample_GeoCatalogResource
+    public partial class Sample_PlanetaryComputerGeoCatalogResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.PlanetaryComputer.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GeoCatalogResource created on azure
-            // for more information of creating GeoCatalogResource, please refer to the document of GeoCatalogResource
+            // this example assumes you already have this PlanetaryComputerGeoCatalogResource created on azure
+            // for more information of creating PlanetaryComputerGeoCatalogResource, please refer to the document of PlanetaryComputerGeoCatalogResource
             string subscriptionId = "cd9b6cdf-dcf0-4dca-ab19-82be07b74704";
             string resourceGroupName = "MyResourceGroup";
             string catalogName = "MyCatalog";
-            ResourceIdentifier geoCatalogResourceId = GeoCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, catalogName);
-            GeoCatalogResource geoCatalog = client.GetGeoCatalogResource(geoCatalogResourceId);
+            ResourceIdentifier planetaryComputerGeoCatalogResourceId = PlanetaryComputerGeoCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, catalogName);
+            PlanetaryComputerGeoCatalogResource planetaryComputerGeoCatalog = client.GetPlanetaryComputerGeoCatalogResource(planetaryComputerGeoCatalogResourceId);
 
             // invoke the operation
-            GeoCatalogResource result = await geoCatalog.GetAsync();
+            PlanetaryComputerGeoCatalogResource result = await planetaryComputerGeoCatalog.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GeoCatalogData resourceData = result.Data;
+            PlanetaryComputerGeoCatalogData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.PlanetaryComputer.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GeoCatalogResource created on azure
-            // for more information of creating GeoCatalogResource, please refer to the document of GeoCatalogResource
+            // this example assumes you already have this PlanetaryComputerGeoCatalogResource created on azure
+            // for more information of creating PlanetaryComputerGeoCatalogResource, please refer to the document of PlanetaryComputerGeoCatalogResource
             string subscriptionId = "cd9b6cdf-dcf0-4dca-ab19-82be07b74704";
             string resourceGroupName = "MyResourceGroup";
             string catalogName = "MyCatalog";
-            ResourceIdentifier geoCatalogResourceId = GeoCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, catalogName);
-            GeoCatalogResource geoCatalog = client.GetGeoCatalogResource(geoCatalogResourceId);
+            ResourceIdentifier planetaryComputerGeoCatalogResourceId = PlanetaryComputerGeoCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, catalogName);
+            PlanetaryComputerGeoCatalogResource planetaryComputerGeoCatalog = client.GetPlanetaryComputerGeoCatalogResource(planetaryComputerGeoCatalogResourceId);
 
             // invoke the operation
-            await geoCatalog.DeleteAsync(WaitUntil.Completed);
+            await planetaryComputerGeoCatalog.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -85,36 +85,35 @@ namespace Azure.ResourceManager.PlanetaryComputer.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GeoCatalogResource created on azure
-            // for more information of creating GeoCatalogResource, please refer to the document of GeoCatalogResource
+            // this example assumes you already have this PlanetaryComputerGeoCatalogResource created on azure
+            // for more information of creating PlanetaryComputerGeoCatalogResource, please refer to the document of PlanetaryComputerGeoCatalogResource
             string subscriptionId = "cd9b6cdf-dcf0-4dca-ab19-82be07b74704";
             string resourceGroupName = "MyResourceGroup";
             string catalogName = "MyCatalog";
-            ResourceIdentifier geoCatalogResourceId = GeoCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, catalogName);
-            GeoCatalogResource geoCatalog = client.GetGeoCatalogResource(geoCatalogResourceId);
+            ResourceIdentifier planetaryComputerGeoCatalogResourceId = PlanetaryComputerGeoCatalogResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, catalogName);
+            PlanetaryComputerGeoCatalogResource planetaryComputerGeoCatalog = client.GetPlanetaryComputerGeoCatalogResource(planetaryComputerGeoCatalogResourceId);
 
             // invoke the operation
-            GeoCatalogPatch patch = new GeoCatalogPatch
+            PlanetaryComputerGeoCatalogPatch patch = new PlanetaryComputerGeoCatalogPatch
             {
                 Tags =
 {
 ["MyTag"] = "MyValue"
 },
-                Identity = new ManagedServiceIdentityUpdate
+                Identity = new ManagedServiceIdentity("UserAssigned")
                 {
-                    Type = Models.ManagedServiceIdentityType.UserAssigned,
                     UserAssignedIdentities =
 {
-["/subscriptions/cd9b6cdf-dcf0-4dca-ab19-82be07b74704/resourceGroups/MyResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyManagedIdentity"] = new UserAssignedIdentity()
+[new ResourceIdentifier("/subscriptions/cd9b6cdf-dcf0-4dca-ab19-82be07b74704/resourceGroups/MyResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyManagedIdentity")] = new UserAssignedIdentity()
 },
                 },
             };
-            ArmOperation<GeoCatalogResource> lro = await geoCatalog.UpdateAsync(WaitUntil.Completed, patch);
-            GeoCatalogResource result = lro.Value;
+            ArmOperation<PlanetaryComputerGeoCatalogResource> lro = await planetaryComputerGeoCatalog.UpdateAsync(WaitUntil.Completed, patch);
+            PlanetaryComputerGeoCatalogResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            GeoCatalogData resourceData = result.Data;
+            PlanetaryComputerGeoCatalogData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

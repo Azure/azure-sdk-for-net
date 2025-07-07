@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of GeoCatalogResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of GeoCatalogResources and their operations over a GeoCatalogResource. </returns>
-        public virtual GeoCatalogCollection GetGeoCatalogs()
+        /// <summary> Gets a collection of PlanetaryComputerGeoCatalogResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PlanetaryComputerGeoCatalogResources and their operations over a PlanetaryComputerGeoCatalogResource. </returns>
+        public virtual PlanetaryComputerGeoCatalogCollection GetPlanetaryComputerGeoCatalogs()
         {
-            return GetCachedClient(client => new GeoCatalogCollection(client, Id));
+            return GetCachedClient(client => new PlanetaryComputerGeoCatalogCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GeoCatalogResource>> GetGeoCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlanetaryComputerGeoCatalogResource>> GetPlanetaryComputerGeoCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
         {
-            return await GetGeoCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
+            return await GetPlanetaryComputerGeoCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GeoCatalogResource> GetGeoCatalog(string catalogName, CancellationToken cancellationToken = default)
+        public virtual Response<PlanetaryComputerGeoCatalogResource> GetPlanetaryComputerGeoCatalog(string catalogName, CancellationToken cancellationToken = default)
         {
-            return GetGeoCatalogs().Get(catalogName, cancellationToken);
+            return GetPlanetaryComputerGeoCatalogs().Get(catalogName, cancellationToken);
         }
     }
 }

@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.PlanetaryComputer.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GeoCatalogResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GeoCatalogResource.CreateResourceIdentifier" /> to create a <see cref="GeoCatalogResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PlanetaryComputerGeoCatalogResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PlanetaryComputerGeoCatalogResource.CreateResourceIdentifier" /> to create a <see cref="PlanetaryComputerGeoCatalogResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GeoCatalogResource"/> object. </returns>
-        public virtual GeoCatalogResource GetGeoCatalogResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PlanetaryComputerGeoCatalogResource"/> object. </returns>
+        public virtual PlanetaryComputerGeoCatalogResource GetPlanetaryComputerGeoCatalogResource(ResourceIdentifier id)
         {
-            GeoCatalogResource.ValidateResourceId(id);
-            return new GeoCatalogResource(Client, id);
+            PlanetaryComputerGeoCatalogResource.ValidateResourceId(id);
+            return new PlanetaryComputerGeoCatalogResource(Client, id);
         }
     }
 }

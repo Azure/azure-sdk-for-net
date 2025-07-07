@@ -19,28 +19,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PlanetaryComputer
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GeoCatalogResource"/> and their operations.
-    /// Each <see cref="GeoCatalogResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="GeoCatalogCollection"/> instance call the GetGeoCatalogs method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="PlanetaryComputerGeoCatalogResource"/> and their operations.
+    /// Each <see cref="PlanetaryComputerGeoCatalogResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="PlanetaryComputerGeoCatalogCollection"/> instance call the GetPlanetaryComputerGeoCatalogs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class GeoCatalogCollection : ArmCollection, IEnumerable<GeoCatalogResource>, IAsyncEnumerable<GeoCatalogResource>
+    public partial class PlanetaryComputerGeoCatalogCollection : ArmCollection, IEnumerable<PlanetaryComputerGeoCatalogResource>, IAsyncEnumerable<PlanetaryComputerGeoCatalogResource>
     {
-        private readonly ClientDiagnostics _geoCatalogClientDiagnostics;
-        private readonly GeoCatalogsRestOperations _geoCatalogRestClient;
+        private readonly ClientDiagnostics _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics;
+        private readonly GeoCatalogsRestOperations _planetaryComputerGeoCatalogGeoCatalogsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="GeoCatalogCollection"/> class for mocking. </summary>
-        protected GeoCatalogCollection()
+        /// <summary> Initializes a new instance of the <see cref="PlanetaryComputerGeoCatalogCollection"/> class for mocking. </summary>
+        protected PlanetaryComputerGeoCatalogCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GeoCatalogCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PlanetaryComputerGeoCatalogCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal GeoCatalogCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PlanetaryComputerGeoCatalogCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _geoCatalogClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer", GeoCatalogResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GeoCatalogResource.ResourceType, out string geoCatalogApiVersion);
-            _geoCatalogRestClient = new GeoCatalogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, geoCatalogApiVersion);
+            _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer", PlanetaryComputerGeoCatalogResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PlanetaryComputerGeoCatalogResource.ResourceType, out string planetaryComputerGeoCatalogGeoCatalogsApiVersion);
+            _planetaryComputerGeoCatalogGeoCatalogsRestClient = new GeoCatalogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, planetaryComputerGeoCatalogGeoCatalogsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<GeoCatalogResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string catalogName, GeoCatalogData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PlanetaryComputerGeoCatalogResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string catalogName, PlanetaryComputerGeoCatalogData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _geoCatalogClientDiagnostics.CreateScope("GeoCatalogCollection.CreateOrUpdate");
+            using var scope = _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics.CreateScope("PlanetaryComputerGeoCatalogCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _geoCatalogRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, catalogName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PlanetaryComputerArmOperation<GeoCatalogResource>(new GeoCatalogOperationSource(Client), _geoCatalogClientDiagnostics, Pipeline, _geoCatalogRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _planetaryComputerGeoCatalogGeoCatalogsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, catalogName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource>(new PlanetaryComputerGeoCatalogOperationSource(Client), _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics, Pipeline, _planetaryComputerGeoCatalogGeoCatalogsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<GeoCatalogResource> CreateOrUpdate(WaitUntil waitUntil, string catalogName, GeoCatalogData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PlanetaryComputerGeoCatalogResource> CreateOrUpdate(WaitUntil waitUntil, string catalogName, PlanetaryComputerGeoCatalogData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _geoCatalogClientDiagnostics.CreateScope("GeoCatalogCollection.CreateOrUpdate");
+            using var scope = _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics.CreateScope("PlanetaryComputerGeoCatalogCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _geoCatalogRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, catalogName, data, cancellationToken);
-                var operation = new PlanetaryComputerArmOperation<GeoCatalogResource>(new GeoCatalogOperationSource(Client), _geoCatalogClientDiagnostics, Pipeline, _geoCatalogRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _planetaryComputerGeoCatalogGeoCatalogsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, catalogName, data, cancellationToken);
+                var operation = new PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource>(new PlanetaryComputerGeoCatalogOperationSource(Client), _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics, Pipeline, _planetaryComputerGeoCatalogGeoCatalogsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,18 +175,18 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
-        public virtual async Task<Response<GeoCatalogResource>> GetAsync(string catalogName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlanetaryComputerGeoCatalogResource>> GetAsync(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _geoCatalogClientDiagnostics.CreateScope("GeoCatalogCollection.Get");
+            using var scope = _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics.CreateScope("PlanetaryComputerGeoCatalogCollection.Get");
             scope.Start();
             try
             {
-                var response = await _geoCatalogRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken).ConfigureAwait(false);
+                var response = await _planetaryComputerGeoCatalogGeoCatalogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GeoCatalogResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlanetaryComputerGeoCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,18 +220,18 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
-        public virtual Response<GeoCatalogResource> Get(string catalogName, CancellationToken cancellationToken = default)
+        public virtual Response<PlanetaryComputerGeoCatalogResource> Get(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _geoCatalogClientDiagnostics.CreateScope("GeoCatalogCollection.Get");
+            using var scope = _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics.CreateScope("PlanetaryComputerGeoCatalogCollection.Get");
             scope.Start();
             try
             {
-                var response = _geoCatalogRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken);
+                var response = _planetaryComputerGeoCatalogGeoCatalogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GeoCatalogResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlanetaryComputerGeoCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -257,17 +257,17 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GeoCatalogResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PlanetaryComputerGeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PlanetaryComputerGeoCatalogResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _geoCatalogRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _geoCatalogRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GeoCatalogResource(Client, GeoCatalogData.DeserializeGeoCatalogData(e)), _geoCatalogClientDiagnostics, Pipeline, "GeoCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _planetaryComputerGeoCatalogGeoCatalogsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _planetaryComputerGeoCatalogGeoCatalogsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PlanetaryComputerGeoCatalogResource(Client, PlanetaryComputerGeoCatalogData.DeserializePlanetaryComputerGeoCatalogData(e)), _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics, Pipeline, "PlanetaryComputerGeoCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -287,17 +287,17 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GeoCatalogResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PlanetaryComputerGeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PlanetaryComputerGeoCatalogResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _geoCatalogRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _geoCatalogRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GeoCatalogResource(Client, GeoCatalogData.DeserializeGeoCatalogData(e)), _geoCatalogClientDiagnostics, Pipeline, "GeoCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _planetaryComputerGeoCatalogGeoCatalogsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _planetaryComputerGeoCatalogGeoCatalogsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PlanetaryComputerGeoCatalogResource(Client, PlanetaryComputerGeoCatalogData.DeserializePlanetaryComputerGeoCatalogData(e)), _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics, Pipeline, "PlanetaryComputerGeoCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,11 +329,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _geoCatalogClientDiagnostics.CreateScope("GeoCatalogCollection.Exists");
+            using var scope = _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics.CreateScope("PlanetaryComputerGeoCatalogCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _geoCatalogRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _planetaryComputerGeoCatalogGeoCatalogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _geoCatalogClientDiagnostics.CreateScope("GeoCatalogCollection.Exists");
+            using var scope = _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics.CreateScope("PlanetaryComputerGeoCatalogCollection.Exists");
             scope.Start();
             try
             {
-                var response = _geoCatalogRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken: cancellationToken);
+                var response = _planetaryComputerGeoCatalogGeoCatalogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,18 +411,18 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
-        public virtual async Task<NullableResponse<GeoCatalogResource>> GetIfExistsAsync(string catalogName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<PlanetaryComputerGeoCatalogResource>> GetIfExistsAsync(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _geoCatalogClientDiagnostics.CreateScope("GeoCatalogCollection.GetIfExists");
+            using var scope = _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics.CreateScope("PlanetaryComputerGeoCatalogCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _geoCatalogRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _planetaryComputerGeoCatalogGeoCatalogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<GeoCatalogResource>(response.GetRawResponse());
-                return Response.FromValue(new GeoCatalogResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<PlanetaryComputerGeoCatalogResource>(response.GetRawResponse());
+                return Response.FromValue(new PlanetaryComputerGeoCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GeoCatalogResource"/></description>
+        /// <description><see cref="PlanetaryComputerGeoCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,18 +456,18 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
-        public virtual NullableResponse<GeoCatalogResource> GetIfExists(string catalogName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<PlanetaryComputerGeoCatalogResource> GetIfExists(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using var scope = _geoCatalogClientDiagnostics.CreateScope("GeoCatalogCollection.GetIfExists");
+            using var scope = _planetaryComputerGeoCatalogGeoCatalogsClientDiagnostics.CreateScope("PlanetaryComputerGeoCatalogCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _geoCatalogRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken: cancellationToken);
+                var response = _planetaryComputerGeoCatalogGeoCatalogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<GeoCatalogResource>(response.GetRawResponse());
-                return Response.FromValue(new GeoCatalogResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<PlanetaryComputerGeoCatalogResource>(response.GetRawResponse());
+                return Response.FromValue(new PlanetaryComputerGeoCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
             }
         }
 
-        IEnumerator<GeoCatalogResource> IEnumerable<GeoCatalogResource>.GetEnumerator()
+        IEnumerator<PlanetaryComputerGeoCatalogResource> IEnumerable<PlanetaryComputerGeoCatalogResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<GeoCatalogResource> IAsyncEnumerable<GeoCatalogResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PlanetaryComputerGeoCatalogResource> IAsyncEnumerable<PlanetaryComputerGeoCatalogResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
