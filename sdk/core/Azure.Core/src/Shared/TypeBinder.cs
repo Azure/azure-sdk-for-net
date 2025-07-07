@@ -14,8 +14,8 @@ namespace Azure.Core
 {
     internal abstract class TypeBinder<TExchange>
     {
-        public const string RequiresUnreferencedCodeMessage = "TypeBinder uses MakeGenericType() to construct generic types at runtime. The resulting types and their members may be trimmed. This can be suppressed if the target type T is a primitive.";
-        public const string RequiresDynamicCodeMessage = "TypeBinder uses MakeGenericType() to construct generic types at runtime. This can be suppressed if the target type T is a primitive.";
+        public const string RequiresUnreferencedCodeMessage = "TypeBinder uses MakeGenericType() to construct generic types at runtime. The resulting types and their members may be trimmed. This can be suppressed if the target type to bind to is always a primitive.";
+        public const string RequiresDynamicCodeMessage = "TypeBinder uses MakeGenericType() to construct generic types at runtime. This can be suppressed if the target type to bind to is always a primitive.";
         private readonly ConcurrentDictionary<Type, BoundTypeInfo> _cache = new();
         private readonly Func<Type, BoundTypeInfo> _valueFactory;
 
