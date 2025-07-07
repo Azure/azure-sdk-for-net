@@ -11,8 +11,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\visitors\Visitors\src\Shared\**\*.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\http-client-csharp\generator\Azure.Generator\src\Visitors\NamespaceVisitor.cs">
       <LinkBase>Shared/Visitors</LinkBase>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\http-client-csharp\generator\Azure.Generator\src\Visitors\SpecialHeadersVisitor.cs">
+      <LinkBase>Shared/Visitors</LinkBase>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\http-client-csharp\generator\Azure.Generator\src\Visitors\ModelFactoryRenamerVisitor.cs">
+      <LinkBase>Shared/Visitors</LinkBase>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\http-client-csharp\generator\Azure.Generator\src\Visitors\Extensions\ConfigurationExtensions.cs">
+      <LinkBase>Shared/Visitors/Extensions</LinkBase>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\http-client-csharp\generator\Azure.Generator\src\Visitors\Utilities\TypeNameUtilities.cs">
+      <LinkBase>Shared/Visitors/Utilities</LinkBase>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
