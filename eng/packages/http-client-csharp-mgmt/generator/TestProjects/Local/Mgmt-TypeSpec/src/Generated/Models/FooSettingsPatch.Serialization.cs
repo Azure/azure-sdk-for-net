@@ -15,11 +15,11 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The type used for update operations of the FooSettings. </summary>
-    public partial class FooSettingsUpdate : IJsonModel<FooSettingsUpdate>
+    public partial class FooSettingsPatch : IJsonModel<FooSettingsPatch>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FooSettingsUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FooSettingsPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace MgmtTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FooSettingsUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FooSettingsPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -59,24 +59,24 @@ namespace MgmtTypeSpec.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FooSettingsUpdate IJsonModel<FooSettingsUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FooSettingsPatch IJsonModel<FooSettingsPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FooSettingsUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FooSettingsPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FooSettingsUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FooSettingsPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFooSettingsUpdate(document.RootElement, options);
+            return DeserializeFooSettingsPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FooSettingsUpdate DeserializeFooSettingsUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static FooSettingsPatch DeserializeFooSettingsPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,58 +100,58 @@ namespace MgmtTypeSpec.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FooSettingsUpdate(properties, additionalBinaryDataProperties);
+            return new FooSettingsPatch(properties, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FooSettingsUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FooSettingsPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FooSettingsUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FooSettingsPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FooSettingsUpdate IPersistableModel<FooSettingsUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FooSettingsPatch IPersistableModel<FooSettingsPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FooSettingsUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FooSettingsPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FooSettingsPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeFooSettingsUpdate(document.RootElement, options);
+                        return DeserializeFooSettingsPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FooSettingsUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FooSettingsPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FooSettingsUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FooSettingsPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="fooSettingsUpdate"> The <see cref="FooSettingsUpdate"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(FooSettingsUpdate fooSettingsUpdate)
+        /// <param name="patch"> The <see cref="FooSettingsPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(FooSettingsPatch patch)
         {
-            if (fooSettingsUpdate == null)
+            if (patch == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(fooSettingsUpdate, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

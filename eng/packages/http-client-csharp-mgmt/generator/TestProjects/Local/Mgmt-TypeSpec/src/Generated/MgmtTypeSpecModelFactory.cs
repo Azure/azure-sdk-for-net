@@ -92,10 +92,10 @@ namespace MgmtTypeSpec.Models
 
         /// <summary> The type used for update operations of the FooSettings. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.FooSettingsUpdate"/> instance for mocking. </returns>
-        public static FooSettingsUpdate FooSettingsUpdate(FooSettingsUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.FooSettingsPatch"/> instance for mocking. </returns>
+        public static FooSettingsPatch FooSettingsPatch(FooSettingsUpdateProperties properties = default)
         {
-            return new FooSettingsUpdate(properties, additionalBinaryDataProperties: null);
+            return new FooSettingsPatch(properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The updatable properties of the FooSettings. </summary>
