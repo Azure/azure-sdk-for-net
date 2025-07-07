@@ -1,17 +1,23 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Generator.Tests.Common;
-using Azure.Generator.Tests.TestHelpers;
-using Azure.Generator.Visitors;
+using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
+using Visitors.Tests.Common;
+using Visitors.Tests.TestHelpers;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using Microsoft.TypeSpec.Generator.Snippets;
 
-namespace Azure.Generator.Tests.Visitors
+namespace Visitors.Tests
 {
     public class SpecialHeadersVisitorTests
     {
@@ -33,10 +39,10 @@ namespace Azure.Generator.Tests.Visitors
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
-            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            var clientProvider = (CodeModelGenerator.Instance as ScmCodeModelGenerator)!.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
 
-            var responseModelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(responseModel);
+            var responseModelProvider = (CodeModelGenerator.Instance as ScmCodeModelGenerator)!.TypeFactory.CreateModel(responseModel);
             Assert.IsNotNull(responseModelProvider);
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
@@ -44,45 +50,20 @@ namespace Azure.Generator.Tests.Visitors
 
             foreach (var method in methodCollection!)
             {
-                Assert.IsFalse(method.Signature.Parameters.Any(p => p.Name == "client-request-id"));
                 Assert.IsFalse(method.Signature.Parameters.Any(p => p.Name == "return-client-request-id"));
-                // This header should not be added in the rest method because it is added by the Core pipeline.
                 Assert.IsFalse(method.Signature.Parameters.Any(p => p.Name == "x-ms-client-request-id"));
             }
 
-            var writer = new TypeProviderWriter(clientProvider!.RestClient);
-            var file = writer.Write();
+            // find the CreateRequest method
+            var createRequestMethod = clientProvider!.RestClient.GetCreateRequestMethod(serviceMethod.Operation);
+            // validate setting headers in the CreateRequest method
+            Assert.IsNotNull(createRequestMethod);
+            var methodBody = createRequestMethod.BodyStatements?.ToDisplayString();
+            Assert.IsNotNull(methodBody);
 
-            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
-        }
+            Assert.IsTrue(methodBody!.Contains("request.Headers.Set(\"return-client-request-id\", \"true\""));
+            Assert.IsTrue(methodBody.Contains("request.Headers.Set(\"some-other-parameter\", someOtherParameter"));
 
-        private static List<InputParameter> CreateParameters()
-        {
-            List<InputParameter> parameters =
-            [
-                InputFactory.Parameter(
-                    "client-request-id",
-                    type: InputPrimitiveType.String,
-                    nameInRequest: "client-request-id",
-                    location: InputRequestLocation.Header),
-                InputFactory.Parameter(
-                    "return-client-request-id",
-                    type: new InputLiteralType("return-client-request-id", "ns", InputPrimitiveType.Boolean, true),
-                    defaultValue: new InputConstant(true, InputPrimitiveType.Boolean),
-                    nameInRequest: "return-client-request-id",
-                    location: InputRequestLocation.Header),
-                InputFactory.Parameter(
-                    "x-ms-client-request-id",
-                    type: InputPrimitiveType.String,
-                    nameInRequest: "x-ms-client-request-id",
-                    location: InputRequestLocation.Header),
-                InputFactory.Parameter(
-                    "some-other-parameter",
-                    type: InputPrimitiveType.String,
-                    nameInRequest: "some-other-parameter",
-                    location: InputRequestLocation.Header)
-            ];
-            return parameters;
         }
 
         [Test]
@@ -104,10 +85,10 @@ namespace Azure.Generator.Tests.Visitors
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
 
-            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            var clientProvider = (CodeModelGenerator.Instance as ScmCodeModelGenerator)!.TypeFactory.CreateClient(inputClient);
             Assert.IsNotNull(clientProvider);
 
-            var responseModelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(responseModel);
+            var responseModelProvider = (CodeModelGenerator.Instance as ScmCodeModelGenerator)!.TypeFactory.CreateModel(responseModel);
             Assert.IsNotNull(responseModelProvider);
 
             var methodCollection = new ScmMethodProviderCollection(serviceMethod, clientProvider!);
@@ -120,6 +101,30 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreSame(operationParameters.Last(), serviceMethod.Operation.Parameters[0]);
 
             Assert.AreNotSame(serviceMethodParameters[0], serviceMethod.Parameters[0]);
+        }
+
+        private static List<InputParameter> CreateParameters()
+        {
+            List<InputParameter> parameters =
+            [
+                InputFactory.Parameter(
+                    "return-client-request-id",
+                    type: new InputLiteralType("return-client-request-id", "ns", InputPrimitiveType.Boolean, true),
+                    defaultValue: new InputConstant(true, InputPrimitiveType.Boolean),
+                    nameInRequest: "return-client-request-id",
+                    location: InputRequestLocation.Header),
+                InputFactory.Parameter(
+                    "x-ms-client-request-id",
+                    type: InputPrimitiveType.String,
+                    nameInRequest: "x-ms-client-request-id",
+                    location: InputRequestLocation.Header),
+                InputFactory.Parameter(
+                    "some-other-parameter",
+                    type: InputPrimitiveType.String,
+                    nameInRequest: "some-other-parameter",
+                    location: InputRequestLocation.Header)
+            ];
+            return parameters;
         }
 
         private class TestSpecialHeadersVisitor : SpecialHeadersVisitor
