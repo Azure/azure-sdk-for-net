@@ -30,6 +30,7 @@ AI models deployed to the Project's AI Services.
 * Property `scope` on `AIProjectClient` is removed.
 * Evaluator Ids are available using the class `EvaluatorIDs` and no longer require `Azure.AI.Evaluation` package to be installed.
 * Property `Id` on Evaluation is replaced with `name`.
+* Please see the [agents migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/AGENTS_MIGRATION_GUIDE.md) on how to use the new `azure-ai-projects` with `azure-ai-agents` package.
 
 ### Sample Updates
 * All samples have been updated. New ones have been added for Deployments, Datasets, and Indexes.

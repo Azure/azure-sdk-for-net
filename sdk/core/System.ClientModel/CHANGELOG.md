@@ -1,10 +1,19 @@
 # Release History
 
-## 1.5.0 (2025-07-03)
+## 1.5.0 (2025-07-07)
 
 ### Features Added
 
 - Added the following types for 3rd-party Authentication support: `AuthenticationTokenProvider`, `GetTokenOptions`, `AuthenticationToken`, `AuthenticationPolicy`, and `BearerTokenPolicy`.
+
+### Breaking Changes
+
+- **Source Breaking Change**: Updated `IJsonModel<T>.Create` and `IPersistableModel<T>.Create` method return types from `T` to `T?` to allow returning `null` when deserialization fails. This change only affects code with nullable reference types enabled.
+  - **For consumers calling these methods**: To fix compilation errors, either:
+    - Use null-conditional operators (`?.`) when calling these methods, or
+    - Add null-forgiving operators (`!`) if you're certain the result won't be null, or
+    - Add explicit null checks before using the returned value
+  - **For implementers of these interfaces**: Update method signatures in your models to return `T?` instead of `T`, and decide whether to return `null` or throw exceptions in error scenarios
 
 ## 1.5.0-beta.1 (2025-06-13)
 
@@ -70,7 +79,7 @@
 ### Features Added
 
 - Added extensions to `System.Diagnostics.Activity` and `System.Diagnostics.ActivitySource` to simplify instrumentation of client libraries
-- Added new overloads to `System.ClientModel.ModelReaderWriter` which take in a new 
+- Added new overloads to `System.ClientModel.ModelReaderWriter` which take in a new
 [ModelReaderWriterContext](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md)
 which allows reading and writing of collections of `IPersistableModel<>`.  In addition any calls to the new overloads are AOT compatible.
 

@@ -9,6 +9,7 @@ using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Providers.TagMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
+using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -64,13 +65,10 @@ namespace Azure.Generator.Management.Providers
 
         private protected ResourceClientProvider(InputModelType model, ResourceMetadata resourceMetadata)
         {
-            IsSingleton = resourceMetadata.IsSingleton;
             _resourceMetadata = resourceMetadata;
             _inputOperationForRequestPath = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(_resourceMetadata.Methods.First().Id)!.Operation;
-            ResourceScope = resourceMetadata.ResourceScope;
-            var resourceType = resourceMetadata.ResourceType;
             _hasGetMethod = resourceMetadata.Methods.Any(m => m.Kind == OperationKind.Get);
-            _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
+            _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
             _shouldGenerateTagMethods = ShouldGenerateTagMethods(model);
 
             // TODO -- the name of a resource is not always the name of its model. Maybe the resource metadata should have a property for the name of the resource?
@@ -92,7 +90,7 @@ namespace Azure.Generator.Management.Providers
             _clientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, _restClientProvider.Type, $"_{SpecName.ToLower()}RestClient", this);
         }
 
-        internal ResourceScope ResourceScope { get; }
+        internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
 
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
 
@@ -121,7 +119,9 @@ namespace Azure.Generator.Management.Providers
         internal string SpecName { get; }
         internal IEnumerable<(OperationKind Kind, InputServiceMethod Method)> ResourceServiceMethods => _resourceServiceMethods;
 
-        public bool IsSingleton { get; }
+        internal string? SingletonResourceName => _resourceMetadata.singletonResourceName;
+
+        public bool IsSingleton => SingletonResourceName is not null;
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
@@ -158,7 +158,7 @@ namespace Azure.Generator.Management.Providers
         protected override TypeProvider[] BuildSerializationProviders() => [new ResourceSerializationProvider(this)];
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceDataConstructor(), BuildResourceIdentifierConstructor()];
+            => [ConstructorProviderHelpers.BuildMockingConstructor(this), BuildResourceDataConstructor(), BuildResourceIdentifierConstructor()];
 
         private ConstructorProvider BuildResourceDataConstructor()
         {
@@ -292,6 +292,8 @@ namespace Azure.Generator.Management.Providers
 
             return new MethodProvider(signature, bodyStatements, this);
         }
+
+        internal string ResourceTypeValue => _resourceMetadata.ResourceType;
 
         protected virtual ScopedApi<ResourceType> ResourceTypeExpression => _resourceTypeField.As<ResourceType>();
 
@@ -445,7 +447,7 @@ namespace Azure.Generator.Management.Providers
                         // TODO: need to revisit the filter here
                         var contentInputParameter = operation.Parameters.First(p => !ImplicitParameterNames.Contains(p.Name) && p.Kind == InputParameterKind.Method && p.Type is not InputPrimitiveType);
                         var resource = methodParameters.Single(p => p.Name == "data" || p.Name == contentInputParameter.Name);
-                        arguments.Add(resource);
+                        arguments.Add(Static(resource.Type).Invoke(SerializationVisitor.ToRequestContentMethodName, [resource]));
                     }
                 }
                 else if (parameter.Type.Equals(typeof(RequestContext)))

@@ -39,9 +39,9 @@ export enum ResourceScope {
 export interface ResourceMetadata {
   resourceType: string;
   methods: ResourceMethod[];
-  isSingleton: boolean;
   resourceScope: ResourceScope;
   parentResource?: string;
+  singletonResourceName?: string;
   // TODO -- add parent resource support in the same RP case
 }
 
