@@ -114,5 +114,26 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         {
             return new MongoDBAtlasPartnerProperties(organizationId, redirectUri, organizationName, additionalBinaryDataProperties: null);
         }
+
+        /// <summary> The type used for update operations of the OrganizationResource. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.OrganizationResourceUpdate"/> instance for mocking. </returns>
+        public static OrganizationResourceUpdate OrganizationResourceUpdate(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, OrganizationResourceUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OrganizationResourceUpdate(identity, tags, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The updatable properties of the OrganizationResource. </summary>
+        /// <param name="user"> Details of the user. </param>
+        /// <param name="partnerProperties"> MongoDB properties. </param>
+        /// <returns> A new <see cref="Models.OrganizationResourceUpdateProperties"/> instance for mocking. </returns>
+        public static OrganizationResourceUpdateProperties OrganizationResourceUpdateProperties(MongoDBAtlasUserDetails user = default, MongoDBAtlasPartnerProperties partnerProperties = default)
+        {
+            return new OrganizationResourceUpdateProperties(user, partnerProperties, additionalBinaryDataProperties: null);
+        }
     }
 }
