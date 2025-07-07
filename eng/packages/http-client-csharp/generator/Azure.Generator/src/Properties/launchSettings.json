@@ -35,6 +35,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-azure-core-basic": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/core/basic -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-azure-core-lro-rpc": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/core/lro/rpc -g AzureStubGenerator",
       "commandName": "Executable",
@@ -47,6 +52,11 @@
     },
     "http-azure-core-model": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/core/model -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
+    "http-azure-core-page": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/core/page -g AzureStubGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
