@@ -28,17 +28,17 @@ namespace Azure.Communication.CallAutomation
         /// Text in the phrase.
         /// </summary>
         [JsonPropertyName("text")]
-        public string Text { get; set; }
+        public string Text { get; }
         /// <summary>
         /// The word's position within the phrase.
         /// </summary>
         [JsonPropertyName("offset")]
-        public TimeSpan Offset { get; set; }
+        public TimeSpan Offset { get; }
 
         /// <summary>
         /// Duration in ticks. 1 tick = 100 nanoseconds.
         /// </summary>
         [JsonPropertyName("duration")]
-        public TimeSpan Duration { get; set; }
+        public TimeSpan Duration { get; }
     }
 }

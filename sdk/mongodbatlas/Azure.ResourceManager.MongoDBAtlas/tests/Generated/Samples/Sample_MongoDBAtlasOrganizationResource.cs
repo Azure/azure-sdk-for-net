@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_OrganizationsGetMaximumSet()
         {
-            // Generated from example definition: 2024-11-18-preview/Organizations_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Organizations_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_OrganizationsDeleteMaximumSet()
         {
-            // Generated from example definition: 2024-11-18-preview/Organizations_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Organizations_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_OrganizationsUpdateMaximumSet()
         {
-            // Generated from example definition: 2024-11-18-preview/Organizations_Update_MaximumSet_Gen.json
+            // Generated from example definition: 2025-06-01/Organizations_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "OrganizationResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,28 +94,29 @@ namespace Azure.ResourceManager.MongoDBAtlas.Samples
             MongoDBAtlasOrganizationResource mongoDBAtlasOrganization = client.GetMongoDBAtlasOrganizationResource(mongoDBAtlasOrganizationResourceId);
 
             // invoke the operation
-            MongoDBAtlasOrganizationData data = new MongoDBAtlasOrganizationData(default)
+            MongoDBAtlasOrganizationPatch patch = new MongoDBAtlasOrganizationPatch
             {
-                Properties = new MongoDBAtlasOrganizationProperties(null, new MongoDBAtlasUserDetails("btyhwmlbzzihjfimviefebg", "xx", ".K_@e7N-g1.xjqnbPs")
+                Identity = new ManagedServiceIdentity("None")
                 {
-                    Upn = "mxtbogd",
-                    PhoneNumber = "isvc",
-                    CompanyName = "oztteysco",
-                })
+                    UserAssignedIdentities = { },
+                },
+                Tags = { },
+                Properties = new MongoDBAtlasOrganizationUpdateProperties
                 {
+                    User = new MongoDBAtlasUserDetails("btyhwmlbzzihjfimviefebg", "xx", ".K_@e7N-g1.xjqnbPs")
+                    {
+                        Upn = "mxtbogd",
+                        PhoneNumber = "isvc",
+                        CompanyName = "oztteysco",
+                    },
                     PartnerProperties = new MongoDBAtlasPartnerProperties("U.1-:7")
                     {
                         OrganizationId = "vugtqrobendjkinziswxlqueouo",
                         RedirectUri = "cbxwtehraetlluocdihfgchvjzockn",
                     },
                 },
-                Identity = new ManagedServiceIdentity("None")
-                {
-                    UserAssignedIdentities = { },
-                },
-                Tags = { },
             };
-            ArmOperation<MongoDBAtlasOrganizationResource> lro = await mongoDBAtlasOrganization.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<MongoDBAtlasOrganizationResource> lro = await mongoDBAtlasOrganization.UpdateAsync(WaitUntil.Completed, patch);
             MongoDBAtlasOrganizationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

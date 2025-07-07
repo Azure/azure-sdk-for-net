@@ -15,24 +15,10 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("transportUrl"u8);
-            writer.WriteStringValue(TransportUrl);
             writer.WritePropertyName("transportType"u8);
             writer.WriteStringValue(TransportType.ToString());
             writer.WritePropertyName("locale"u8);
             writer.WriteStringValue(Locale);
-            if (Optional.IsDefined(SpeechModelEndpointId))
-            {
-                writer.WritePropertyName("speechModelEndpointId"u8);
-                writer.WriteStringValue(SpeechModelEndpointId);
-            }
-            writer.WritePropertyName("startTranscription"u8);
-            writer.WriteBooleanValue(StartTranscription);
-            if (Optional.IsDefined(EnableIntermediateResults))
-            {
-                writer.WritePropertyName("enableIntermediateResults"u8);
-                writer.WriteBooleanValue(EnableIntermediateResults.Value);
-            }
             writer.WriteEndObject();
         }
 

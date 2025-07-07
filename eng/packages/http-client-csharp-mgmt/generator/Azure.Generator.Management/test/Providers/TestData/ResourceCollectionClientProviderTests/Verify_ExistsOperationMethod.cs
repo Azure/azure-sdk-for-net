@@ -7,9 +7,9 @@ try
         CancellationToken = cancellationToken
     }
     ;
-    global::Azure.Core.HttpMessage message = _responsetypeRestClient.CreateGetRequest(this.Id.Name, context);
+    global::Azure.Core.HttpMessage message = _responsetypeRestClient.CreateGetRequest(this.Id.Name, global::System.Guid.Parse(this.Id.SubscriptionId), context);
     global::Azure.Response result = this.Pipeline.ProcessMessage(message, context);
-    global::Azure.Response<global::Samples.Models.ResponseTypeData> response = global::Azure.Response.FromValue(((global::Samples.Models.ResponseTypeData)result), result);
+    global::Azure.Response<global::Samples.Models.ResponseTypeData> response = global::Azure.Response.FromValue(global::Samples.Models.ResponseTypeData.FromResponse(result), result);
     return global::Azure.Response.FromValue((response.Value != null), response.GetRawResponse());
 }
 catch (global::System.Exception e)

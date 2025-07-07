@@ -28,6 +28,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             projectEndpoint,
             new DefaultAzureCredential());
 
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
         PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "Math Tutor",
@@ -85,6 +86,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
         }
         #endregion
         #region Snippet:Sample_PersistentAgent_Multiple_Messages_CleanupAsync
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         await agentClient.Threads.DeleteThreadAsync(thread.Id);
         await agentClient.Administration.DeleteAgentAsync(agent.Id);
         #endregion
@@ -106,6 +108,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             projectEndpoint,
             new DefaultAzureCredential());
 
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
         PersistentAgent agent = agentClient.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "Math Tutor",
@@ -163,6 +166,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
         }
         #endregion
         #region Snippet:Sample_PersistentAgent_Multiple_Messages_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         agentClient.Threads.DeleteThread(thread.Id);
         agentClient.Administration.DeleteAgent(agent.Id);
         #endregion

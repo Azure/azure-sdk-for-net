@@ -20,7 +20,6 @@ namespace Azure.Communication.CallAutomation
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
-            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: new Dictionary<string, string>(), teamsPhoneCallDetails: null);
         }
 
         /// <summary>
@@ -57,10 +56,5 @@ namespace Azure.Communication.CallAutomation
         /// The operation context.
         /// </summary>
         public string OperationContext { get; set; }
-
-        /// <summary>
-        /// The Custom Context which contains SIP and voip headers.
-        /// </summary>
-        public CustomCallingContext CustomCallingContext { get; }
     }
 }

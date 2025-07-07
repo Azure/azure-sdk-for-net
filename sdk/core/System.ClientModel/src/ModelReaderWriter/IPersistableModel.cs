@@ -25,7 +25,7 @@ public interface IPersistableModel<out T>
     /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
     /// <returns>A <typeparamref name="T"/> representation of the data.</returns>
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
-    T Create(BinaryData data, ModelReaderWriterOptions options);
+    T? Create(BinaryData data, ModelReaderWriterOptions options);
 
     /// <summary>
     /// Gets the data interchange format (JSON, Xml, etc) that the model uses when communicating with the service.
