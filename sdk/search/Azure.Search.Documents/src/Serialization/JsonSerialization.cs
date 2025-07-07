@@ -56,14 +56,22 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Default JsonSerializerOptions to use.
         /// </summary>
-        public static JsonSerializerOptions SerializerOptions { get; } =
-            new JsonSerializerOptions().AddSearchConverters();
+        [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code", Justification = "getter is marked RUC")]
+        [UnconditionalSuppressMessage("AOT", "IL3050:Calling members annotated with 'RequiresDynamicCodeAttribute' may break functionality when AOT compiling.", Justification = "getter is marked RDC")]
+        public static JsonSerializerOptions SerializerOptions
+        {
+            [RequiresUnreferencedCode("Some custom JSON converters for search are not compatible with AOT.")]
+            [RequiresDynamicCode("Some custom JSON converters for search are not compatible with AOT.")]
+            get;
+        } = new JsonSerializerOptions().AddSearchConverters();
 
         /// <summary>
         /// Add all of the Search JsonConverters.
         /// </summary>
         /// <param name="options">Serialization options.</param>
         /// <returns>Serialization options.</returns>
+        [RequiresUnreferencedCode("Some custom JSON converters for search are not compatible with AOT.")]
+        [RequiresDynamicCode("Some custom JSON converters for search are not compatible with AOT.")]
         public static JsonSerializerOptions AddSearchConverters(this JsonSerializerOptions options)
         {
             options ??= new JsonSerializerOptions();
@@ -222,6 +230,8 @@ namespace Azure.Search.Documents
         /// references.
         /// </param>
         /// <returns>A deserialized SearchDocument.</returns>
+        [RequiresUnreferencedCode("SearchDocument is not compatible with AOT.")]
+        [RequiresDynamicCode("SearchDocument is not compatible with AOT.")]
         public static SearchDocument ReadSearchDocument(
             ref Utf8JsonReader reader,
             Type typeToConvert,

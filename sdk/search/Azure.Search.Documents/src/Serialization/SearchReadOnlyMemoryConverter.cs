@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -12,6 +13,8 @@ namespace Azure.Search.Documents
     /// <summary>
     /// Custom JSON converter for handling serialization and deserialization of ReadOnlyMemory&lt;T&gt;.
     /// </summary>
+    [RequiresUnreferencedCode("Uses unsafe serialization.")]
+    [RequiresDynamicCode("Uses unsafe serialization.")]
     internal class SearchReadOnlyMemoryConverter<T> : JsonConverter<ReadOnlyMemory<T>>
     {
         public static SearchReadOnlyMemoryConverter<T> Shared { get; } =

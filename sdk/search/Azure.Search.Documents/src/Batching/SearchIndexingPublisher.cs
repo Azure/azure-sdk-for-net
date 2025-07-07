@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +21,11 @@ namespace Azure.Search.Documents.Batching
     /// type can be retrieved as documents from the index. You can use
     /// <see cref="SearchDocument"/> for dynamic documents.
     /// </typeparam>
-    internal class SearchIndexingPublisher<T> : Publisher<IndexDocumentsAction<T>>
+    internal class SearchIndexingPublisher<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields |
+        DynamicallyAccessedMemberTypes.NonPublicFields |
+        DynamicallyAccessedMemberTypes.PublicProperties |
+        DynamicallyAccessedMemberTypes.NonPublicProperties |
+        DynamicallyAccessedMemberTypes.Interfaces)] T> : Publisher<IndexDocumentsAction<T>>
     {
         /// <summary>
         /// The sender, which we mostly use for raising events.
@@ -113,6 +118,8 @@ namespace Azure.Search.Documents.Batching
         /// <param name="batch">The batch of actions to submit.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
         /// <returns>Whether the submission was throttled.</returns>
+        [RequiresUnreferencedCode("Uses unsafe serialization.")]
+        [RequiresDynamicCode("Uses unsafe serialization.")]
         protected override async Task<bool> OnSubmitBatchAsync(IList<PublisherAction<IndexDocumentsAction<T>>> batch, CancellationToken cancellationToken)
         {
             // Bail early if someone sent an empty batch

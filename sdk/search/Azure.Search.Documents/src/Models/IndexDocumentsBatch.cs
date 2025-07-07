@@ -181,6 +181,8 @@ namespace Azure.Search.Documents.Models
         /// <returns>
         /// An <see cref="IndexDocumentsBatch{SearchDocument}"/> to delete.
         /// </returns>
+        [RequiresUnreferencedCode("SearchDocument is not compatible with AOT.")]
+        [RequiresDynamicCode("SearchDocument is not compatible with AOT.")]
         public static IndexDocumentsBatch<SearchDocument> Delete(string keyName, IEnumerable<string> keyValues)
         {
             IndexDocumentsBatch<SearchDocument> batch = new IndexDocumentsBatch<SearchDocument>();

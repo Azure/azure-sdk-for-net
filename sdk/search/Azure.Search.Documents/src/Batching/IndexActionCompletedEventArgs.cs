@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure.Core;
 
@@ -15,7 +16,11 @@ namespace Azure.Search.Documents.Models
     /// can be retrieved as documents from the index.  You can use
     /// <see cref="SearchDocument"/> for dynamic documents.
     /// </typeparam>
-    public class IndexActionCompletedEventArgs<T> : IndexActionEventArgs<T>
+    public class IndexActionCompletedEventArgs<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields |
+        DynamicallyAccessedMemberTypes.NonPublicFields |
+        DynamicallyAccessedMemberTypes.PublicProperties |
+        DynamicallyAccessedMemberTypes.NonPublicProperties |
+        DynamicallyAccessedMemberTypes.Interfaces)] T> : IndexActionEventArgs<T>
     {
         /// <summary>
         /// Gets the <see cref="IndexingResult"/> of an action that was

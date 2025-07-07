@@ -198,6 +198,8 @@ namespace Azure.Search.Documents.Models
         /// <returns>
         /// An <see cref="IndexDocumentsAction{SearchDocument}"/> to delete.
         /// </returns>
+        [RequiresUnreferencedCode("Using SearchDocument is not compatible with AOT, because it has a custom JSON converter that uses unsafe code when serializing, deserializing, or when ToString is called.")]
+        [RequiresDynamicCode("Using SearchDocument is not compatible with AOT, because it has a custom JSON converter that uses unsafe code when serializing, deserializing, or when ToString is called.")]
         public static IndexDocumentsAction<SearchDocument> Delete(string keyName, string keyValue)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));

@@ -220,6 +220,8 @@ namespace Azure.Search.Documents
         /// <param name="async">Whether to run sync or async.</param>
         /// <param name="cancellationToken">The Cancellation token.</param>
         /// <returns>A task that will complete after we've checked.</returns>
+        [RequiresUnreferencedCode("uses unsafe linq expression")]
+        [RequiresDynamicCode("uses unsafe linq expression")]
         private async Task EnsureKeyFieldAccessorAsync(bool async, CancellationToken cancellationToken)
         {
             // Skip initialization if we already have one
@@ -251,6 +253,8 @@ namespace Azure.Search.Documents
         /// <param name="async">Whether to run sync or async.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A Task representing the operation.</returns>
+        [RequiresUnreferencedCode("uses unsafe linq expression")]
+        [RequiresDynamicCode("uses unsafe linq expression")]
         private async Task GetKeyFieldAccessorAsync(bool async, CancellationToken cancellationToken)
         {
             // Case 1: The user provided an explicit accessor and we're done
@@ -483,6 +487,8 @@ namespace Azure.Search.Documents
         /// <returns>
         /// A Task that will complete after the batch is added.
         /// </returns>
+        [RequiresUnreferencedCode("uses unsafe linq expression")]
+        [RequiresDynamicCode("uses unsafe linq expression")]
         private async Task AddIndexingActionsInternal(
             IndexDocumentsBatch<T> batch,
             bool async,
@@ -509,6 +515,8 @@ namespace Azure.Search.Documents
         /// Optional <see cref="CancellationToken"/> to propagate notifications
         /// that the operation should be canceled.
         /// </param>
+        [RequiresUnreferencedCode("uses unsafe linq expression")]
+        [RequiresDynamicCode("uses unsafe linq expression")]
         public virtual void IndexDocuments(
             IndexDocumentsBatch<T> batch,
             CancellationToken cancellationToken = default) =>
@@ -527,6 +535,8 @@ namespace Azure.Search.Documents
         /// A task that completes when the indexing actions have been added but
         /// not yet sent.
         /// </returns>
+        [RequiresUnreferencedCode("uses unsafe linq expression")]
+        [RequiresDynamicCode("uses unsafe linq expression")]
         public virtual async Task IndexDocumentsAsync(
             IndexDocumentsBatch<T> batch,
             CancellationToken cancellationToken = default) =>

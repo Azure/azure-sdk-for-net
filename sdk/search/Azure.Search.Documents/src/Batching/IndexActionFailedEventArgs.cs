@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
 namespace Azure.Search.Documents.Models
@@ -15,7 +16,11 @@ namespace Azure.Search.Documents.Models
     /// can be retrieved as documents from the index.  You can use
     /// <see cref="SearchDocument"/> for dynamic documents.
     /// </typeparam>
-    public class IndexActionFailedEventArgs<T> : IndexActionEventArgs<T>
+    public class IndexActionFailedEventArgs<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields |
+        DynamicallyAccessedMemberTypes.NonPublicFields |
+        DynamicallyAccessedMemberTypes.PublicProperties |
+        DynamicallyAccessedMemberTypes.NonPublicProperties |
+        DynamicallyAccessedMemberTypes.Interfaces)] T> : IndexActionEventArgs<T>
     {
         /// <summary>
         /// Gets the <see cref="IndexingResult"/> of an action that failed to

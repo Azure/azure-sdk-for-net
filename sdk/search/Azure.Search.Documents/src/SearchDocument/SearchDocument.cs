@@ -16,8 +16,8 @@ namespace Azure.Search.Documents.Models
     /// Represents an untyped document returned from a search or document
     /// lookup.  It can be accessed as either a dynamic object or a dictionary.
     /// </summary>
-    [RequiresUnreferencedCode("JSON serialization may require types that cannot be statically analyzed.")]
-    [RequiresDynamicCode("JSON serialization may require types that cannot be statically analyzed and might need runtime code generation.")]
+    [RequiresUnreferencedCode("SearchDocument uses a custom JSON converter that may require types that cannot be statically analyzed when serializing, deserializing, or calling ToString.")]
+    [RequiresDynamicCode("SearchDocument uses a custom JSON converter that may require types that cannot be statically analyzed and might need runtime code generation when serializing, deserializing, or calling ToString.")]
     [JsonConverter(typeof(SearchDocumentConverter))]
     public partial class SearchDocument
 #if EXPERIMENTAL_DYNAMIC

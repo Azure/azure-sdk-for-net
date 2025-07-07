@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -42,7 +43,7 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         internal SearchSuggestion() { }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Deserialize a SearchSuggestion and its model.
         /// </summary>
@@ -58,6 +59,8 @@ namespace Azure.Search.Documents.Models
         /// that the operation should be canceled.
         /// </param>
         /// <returns>Deserialized SearchSuggestion.</returns>
+        [RequiresUnreferencedCode("TODO find default serializer message")]
+        [RequiresDynamicCode("TODO find default serializer message")]
         internal static async Task<SearchSuggestion<T>> DeserializeAsync(
             JsonElement element,
             ObjectSerializer serializer,
