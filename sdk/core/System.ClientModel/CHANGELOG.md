@@ -15,10 +15,6 @@
     - Add explicit null checks before using the returned value
   - **For implementers of these interfaces**: Update method signatures in your models to return `T?` instead of `T`, and decide whether to return `null` or throw exceptions in error scenarios
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.5.0-beta.1 (2025-06-13)
 
 ### Features Added
