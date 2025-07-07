@@ -15,7 +15,7 @@ namespace Azure.Generator.Management.Visitors
 
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
-            if (type is not null && IsUpdatePatchModel(model))
+            if (type is not null && IsResourceUpdateModel(model))
             {
                 // Find new name from cache first, if not hit calculate the new name
                 if (!_nameCache.TryGetValue(type.Name, out var newName))
@@ -56,7 +56,7 @@ namespace Azure.Generator.Management.Visitors
             return base.VisitMethod(method);
         }
 
-        protected static bool IsUpdatePatchModel(InputModelType model)
+        protected static bool IsResourceUpdateModel(InputModelType model)
         {
             const string ResourceUpdateModelId = "Azure.ResourceManager.Foundations.ResourceUpdateModel";
 
