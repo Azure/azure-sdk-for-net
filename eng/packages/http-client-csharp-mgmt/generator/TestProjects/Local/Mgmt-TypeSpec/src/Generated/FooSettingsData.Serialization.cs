@@ -71,7 +71,7 @@ namespace MgmtTypeSpec
                 return null;
             }
             ResourceIdentifier id = default;
-            string @type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             FooSettingsProperties properties = default;
@@ -89,7 +89,7 @@ namespace MgmtTypeSpec
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -117,7 +117,7 @@ namespace MgmtTypeSpec
             }
             return new FooSettingsData(
                 id,
-                @type,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 properties,
