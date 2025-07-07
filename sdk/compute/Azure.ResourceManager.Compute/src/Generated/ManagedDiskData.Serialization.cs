@@ -245,6 +245,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("LastOwnershipUpdateTime"u8);
                 writer.WriteStringValue(LastOwnershipUpdateOn.Value, "O");
             }
+            if (Optional.IsDefined(AvailabilityPolicy))
+            {
+                writer.WritePropertyName("availabilityPolicy"u8);
+                writer.WriteObjectValue(AvailabilityPolicy, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -311,6 +316,7 @@ namespace Azure.ResourceManager.Compute
             DataAccessAuthMode? dataAccessAuthMode = default;
             bool? optimizedForFrequentAttach = default;
             DateTimeOffset? lastOwnershipUpdateTime = default;
+            AvailabilityPolicy availabilityPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -710,6 +716,15 @@ namespace Azure.ResourceManager.Compute
                             lastOwnershipUpdateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("availabilityPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            availabilityPolicy = AvailabilityPolicy.DeserializeAvailabilityPolicy(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -763,6 +778,7 @@ namespace Azure.ResourceManager.Compute
                 dataAccessAuthMode,
                 optimizedForFrequentAttach,
                 lastOwnershipUpdateTime,
+                availabilityPolicy,
                 serializedAdditionalRawData);
         }
 

@@ -368,21 +368,15 @@ directive:
             }
           }
         };
-  - from: virtualMachine.json
+  - from: ComputeRP.json
     where: $.definitions
     transform: >
       $.VirtualMachineInstallPatchesParameters.properties.maximumDuration["format"] = "duration";
-  - from: virtualMachineImage.json
+  - from: ComputeRP.json
     where: $.definitions
     transform: >
       $.VirtualMachineImageProperties.properties.dataDiskImages.description = "The list of data disk images information.";
-# resolve the duplicate schema issue
-  - from: diskRPCommon.json
-    where: $.definitions
-    transform: >
-      $.PurchasePlan["x-ms-client-name"] = "DiskPurchasePlan";
-      $.GrantAccessData.properties.access.description = "The Access Level, accepted values include None, Read, Write.";
-  - from: disk.json
+  - from: DiskRP.json
     where: $.definitions
     transform: >
       $.Disk.properties.managedByExtended.items["x-ms-format"] = "arm-id";
@@ -398,7 +392,7 @@ directive:
       $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
       $.LoadBalancerFrontendIpConfiguration.properties.properties["x-ms-client-flatten"] = true;
   # this makes the name in VirtualMachineScaleSetExtension to be readonly so that our inheritance chooser could properly make it inherit from Azure.ResourceManager.ResourceData. We have some customized code to add the setter for name back (as in constructor)
-  - from: virtualMachineScaleSet.json
+  - from: ComputeRP.json
     where: $.definitions.VirtualMachineScaleSetExtension.properties.name
     transform: $["readOnly"] = true;
   # add a json converter to this model
@@ -406,11 +400,11 @@ directive:
     where: $.definitions.KeyVaultSecretReference
     transform: $["x-csharp-usage"] = "converter";
   # TODO -- to be removed. This is a temporary workaround because the rename-mapping configuration is not working properly on arrays.
-  - from: restorePoint.json
+  - from: ComputeRP.json
     where: $.definitions.RestorePointSourceVMStorageProfile.properties.dataDisks
     transform: $["x-ms-client-name"] = "DataDiskList";
   # Add a dummy property because generator tries to flatten automaticallyApprove in both UserInitiatedRedeploy and UserInitiatedReboot
-  - from: computeRPCommon.json
+  - from: ComputeRP.json
     where: $.definitions.UserInitiatedRedeploy.properties
     transform: >
       $.dummyProperty = {
@@ -418,7 +412,7 @@ directive:
         "description": "This is a dummy property to prevent flattening."
       };
   # add additionalproperties to a few models to support private properties supported by the service
-  - from: virtualMachineScaleSet.json
+  - from: ComputeRP.json
     where: $.definitions
     transform: >
       $.VirtualMachineScaleSetProperties.additionalProperties = true;
@@ -427,12 +421,12 @@ directive:
       $.VirtualMachineScaleSetVM.properties.properties["x-ms-client-flatten"] = false;
       $.VirtualMachineScaleSetVMProperties.additionalProperties = true;
       $.UpgradePolicy.additionalProperties = true;
-  - from: computeRPCommon.json
+  - from: ComputeRP.json
     where: $.definitions.VMSizeProperties
     transform: >
       $.additionalProperties = true;
   # Enable AnyZone Capability, this is a temporary change, will be removed after service team update the spec
-  - from: virtualMachine.json
+  - from: ComputeRP.json
     where: $.definitions
     transform: >
       $.Placement = {
@@ -462,4 +456,17 @@ directive:
               "$ref": "#/definitions/Placement",
               "description": "The virtual machine automatic zone placement feature."
             };
+  - from: ComputeRP.json
+    where: $.definitions
+    transform: delete $["Expand"]
+  - from: ComputeRP.json
+    where: $.definitions.VirtualMachineScaleSetStorageProfile.properties.diskControllerType
+    transform: >
+      delete $["$ref"];
+      $["type"] = "string";
+  - from: ComputeRP.json
+    where: $.definitions.VirtualMachineScaleSetUpdateStorageProfile.properties.diskControllerType
+    transform: >
+      delete $["$ref"];
+      $["type"] = "string";
 ```

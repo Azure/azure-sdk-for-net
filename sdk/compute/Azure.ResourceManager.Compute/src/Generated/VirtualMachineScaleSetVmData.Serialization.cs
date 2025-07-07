@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.Compute
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(InstanceId))
             {
                 writer.WritePropertyName("instanceId"u8);
@@ -46,11 +51,6 @@ namespace Azure.ResourceManager.Compute
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
-            }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(Plan))
             {
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
+            VirtualMachineScaleSetVmProperties properties = default;
             string instanceId = default;
             ComputeSku sku = default;
-            VirtualMachineScaleSetVmProperties properties = default;
             ComputePlan plan = default;
             IReadOnlyList<VirtualMachineExtensionData> resources = default;
             IReadOnlyList<string> zones = default;
@@ -127,6 +127,15 @@ namespace Azure.ResourceManager.Compute
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = VirtualMachineScaleSetVmProperties.DeserializeVirtualMachineScaleSetVmProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("instanceId"u8))
                 {
                     instanceId = property.Value.GetString();
@@ -139,15 +148,6 @@ namespace Azure.ResourceManager.Compute
                         continue;
                     }
                     sku = ComputeSku.DeserializeComputeSku(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = VirtualMachineScaleSetVmProperties.DeserializeVirtualMachineScaleSetVmProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -257,9 +257,9 @@ namespace Azure.ResourceManager.Compute
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 instanceId,
                 sku,
-                properties,
                 plan,
                 resources ?? new ChangeTrackingList<VirtualMachineExtensionData>(),
                 zones ?? new ChangeTrackingList<string>(),

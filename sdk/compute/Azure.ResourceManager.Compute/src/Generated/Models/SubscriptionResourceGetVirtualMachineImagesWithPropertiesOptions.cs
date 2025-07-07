@@ -14,17 +14,18 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions
     {
         /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions"/>. </summary>
-        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
-        public SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions(AzureLocation location, string publisherName, string offer, string skus, GetVirtualMachineImagesWithPropertiesExpand expand)
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="expand"/> is null. </exception>
+        public SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions(AzureLocation location, string publisherName, string offer, string skus, string expand)
         {
             Argument.AssertNotNull(publisherName, nameof(publisherName));
             Argument.AssertNotNull(offer, nameof(offer));
             Argument.AssertNotNull(skus, nameof(skus));
+            Argument.AssertNotNull(expand, nameof(expand));
 
             Location = location;
             PublisherName = publisherName;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        /// <summary> The name of a supported Azure region. </summary>
+        /// <summary> The name of Azure region. </summary>
         public AzureLocation Location { get; }
         /// <summary> A valid image publisher. </summary>
         public string PublisherName { get; }
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A valid image SKU. </summary>
         public string Skus { get; }
         /// <summary> The expand expression to apply on the operation. </summary>
-        public GetVirtualMachineImagesWithPropertiesExpand Expand { get; }
+        public string Expand { get; }
         /// <summary> The top. </summary>
         public int? Top { get; set; }
         /// <summary> The orderby. </summary>

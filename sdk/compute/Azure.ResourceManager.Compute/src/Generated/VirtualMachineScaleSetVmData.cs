@@ -66,20 +66,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="properties"> Describes the properties of a virtual machine scale set virtual machine. </param>
         /// <param name="instanceId"> The virtual machine instance ID. </param>
         /// <param name="sku"> The virtual machine SKU. </param>
-        /// <param name="properties"> Describes the properties of a virtual machine scale set virtual machine. </param>
         /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </param>
         /// <param name="resources"> The virtual machine child extension resources. </param>
         /// <param name="zones"> The virtual machine zones. </param>
         /// <param name="identity"> The identity of the virtual machine, if configured. </param>
         /// <param name="etag"> Etag is property returned in Update/Get response of the VMSS VM, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, VirtualMachineScaleSetVmProperties properties, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, ManagedServiceIdentity identity, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualMachineScaleSetVmProperties properties, string instanceId, ComputeSku sku, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, ManagedServiceIdentity identity, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             InstanceId = instanceId;
             Sku = sku;
-            Properties = properties;
             Plan = plan;
             Resources = resources;
             Zones = zones;
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
+        /// <summary> Describes the properties of a virtual machine scale set virtual machine. </summary>
+        public VirtualMachineScaleSetVmProperties Properties { get; set; }
         /// <summary> The virtual machine instance ID. </summary>
         public string InstanceId { get; }
         /// <summary> The virtual machine SKU. </summary>
         public ComputeSku Sku { get; }
-        /// <summary> Describes the properties of a virtual machine scale set virtual machine. </summary>
-        public VirtualMachineScaleSetVmProperties Properties { get; set; }
         /// <summary> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </summary>
         public ComputePlan Plan { get; set; }
         /// <summary> The virtual machine child extension resources. </summary>

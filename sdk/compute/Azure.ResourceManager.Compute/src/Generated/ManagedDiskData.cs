@@ -105,8 +105,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
         /// <param name="isOptimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
         /// <param name="lastOwnershipUpdateOn"> The UTC time when the ownership state of the disk was last changed i.e., the time the disk was last attached or detached from a VM or the time when the VM to which the disk was attached was deallocated or started. </param>
+        /// <param name="availabilityPolicy"> Determines how platform treats disk failures. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier managedBy, IReadOnlyList<ResourceIdentifier> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsGroup encryptionSettingsGroup, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, DateTimeOffset? burstingEnabledOn, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach, DateTimeOffset? lastOwnershipUpdateOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedDiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier managedBy, IReadOnlyList<ResourceIdentifier> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsGroup encryptionSettingsGroup, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, DiskEncryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, DateTimeOffset? burstingEnabledOn, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, bool? isOptimizedForFrequentAttach, DateTimeOffset? lastOwnershipUpdateOn, AvailabilityPolicy availabilityPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
@@ -145,6 +146,7 @@ namespace Azure.ResourceManager.Compute
             DataAccessAuthMode = dataAccessAuthMode;
             IsOptimizedForFrequentAttach = isOptimizedForFrequentAttach;
             LastOwnershipUpdateOn = lastOwnershipUpdateOn;
+            AvailabilityPolicy = availabilityPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -233,5 +235,18 @@ namespace Azure.ResourceManager.Compute
         public bool? IsOptimizedForFrequentAttach { get; set; }
         /// <summary> The UTC time when the ownership state of the disk was last changed i.e., the time the disk was last attached or detached from a VM or the time when the VM to which the disk was attached was deallocated or started. </summary>
         public DateTimeOffset? LastOwnershipUpdateOn { get; }
+        /// <summary> Determines how platform treats disk failures. </summary>
+        internal AvailabilityPolicy AvailabilityPolicy { get; set; }
+        /// <summary> Determines on how to handle disks with slow I/O. </summary>
+        public AvailabilityPolicyDiskDelay? AvailabilityActionOnDiskDelay
+        {
+            get => AvailabilityPolicy is null ? default : AvailabilityPolicy.ActionOnDiskDelay;
+            set
+            {
+                if (AvailabilityPolicy is null)
+                    AvailabilityPolicy = new AvailabilityPolicy();
+                AvailabilityPolicy.ActionOnDiskDelay = value;
+            }
+        }
     }
 }
