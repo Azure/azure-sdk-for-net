@@ -229,6 +229,7 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(signature, bodyStatements, this);
         }
 
+        // TODO -- this is temporary. We should change this to find the corresponding parameters in ContextualParameters after it is refactored to consume parent resources.
         private CSharpType GetPathParameterType(string parameterName)
         {
             foreach (var (kind, method) in _resourceServiceMethods)
@@ -403,16 +404,13 @@ namespace Azure.Generator.Management.Providers
             {
                 foreach (var property in currentModel.Properties)
                 {
-                    if (property.Name == "tags" && property.Type is not null)
+                    if (property.SerializedName == "tags" && property.Type is InputDictionaryType
+                        {
+                            KeyType: InputPrimitiveType { Kind: InputPrimitiveTypeKind.String },
+                            ValueType: InputPrimitiveType { Kind: InputPrimitiveTypeKind.String }
+                        })
                     {
-                       if (property.Type is InputDictionaryType dictType)
-                       {
-                            if (dictType.KeyType is InputPrimitiveType kt && kt.Kind == InputPrimitiveTypeKind.String &&
-                                dictType.ValueType is InputPrimitiveType vt && vt.Kind == InputPrimitiveTypeKind.String)
-                            {
-                                return true;
-                            }
-                       }
+                        return true;
                     }
                 }
                 currentModel = currentModel.BaseModel;

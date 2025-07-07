@@ -173,7 +173,7 @@ function getParentResourceModelId(
   const parentResourceDecorator = decorators?.find(
     (d) => d.definition?.name == parentResourceName
   );
-  return getResourceModelId(sdkContext, parentResourceDecorator) ?? undefined;
+  return getResourceModelId(sdkContext, parentResourceDecorator);
 }
 
 function getResourceModelId(
