@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using ProviderParameterProvider = Microsoft.TypeSpec.Generator.Providers.ParameterProvider;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using Azure.Generator.Management.Visitors;
 
 namespace Azure.Generator.Management.Snippets
 {

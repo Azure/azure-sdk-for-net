@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.Generator.Management.Visitors;
 using Azure.Generator.Tests.Common;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;

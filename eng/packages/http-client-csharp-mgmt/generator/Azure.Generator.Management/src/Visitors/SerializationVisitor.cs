@@ -6,38 +6,37 @@ using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 
-namespace Azure.Generator.Management
-{
-    internal class SerializationVisitor : ScmLibraryVisitor
-    {
-        internal const string ToRequestContentMethodName = "ToRequestContent";
-        internal const string FromResponseMethodName = "FromResponse";
+namespace Azure.Generator.Management.Visitors;
 
-        /// <inheritdoc/>
-        protected override TypeProvider? VisitType(TypeProvider type)
+internal class SerializationVisitor : ScmLibraryVisitor
+{
+    internal const string ToRequestContentMethodName = "ToRequestContent";
+    internal const string FromResponseMethodName = "FromResponse";
+
+    /// <inheritdoc/>
+    protected override TypeProvider? VisitType(TypeProvider type)
+    {
+        if (type is MrwSerializationTypeDefinition serializationTypeDefinition)
         {
-            if (type is MrwSerializationTypeDefinition serializationTypeDefinition)
+            foreach (var method in serializationTypeDefinition.Methods)
             {
-                foreach (var method in serializationTypeDefinition.Methods)
+                if (method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator))
                 {
-                    if (method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator))
+                    var modifiers = method.Signature.Modifiers & ~MethodSignatureModifiers.Operator & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal;
+                    if (modifiers.HasFlag(MethodSignatureModifiers.Implicit))
                     {
-                        var modifiers = method.Signature.Modifiers & ~MethodSignatureModifiers.Operator & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal;
-                        if (modifiers.HasFlag(MethodSignatureModifiers.Implicit))
-                        {
-                            modifiers &= ~MethodSignatureModifiers.Implicit;
-                            method.Signature.Update(modifiers: modifiers, name: ToRequestContentMethodName);
-                        }
-                        else if (modifiers.HasFlag(MethodSignatureModifiers.Explicit))
-                        {
-                            modifiers &= ~MethodSignatureModifiers.Explicit;
-                            method.Signature.Update(modifiers: modifiers, name: FromResponseMethodName);
-                        }
+                        modifiers &= ~MethodSignatureModifiers.Implicit;
+                        method.Signature.Update(modifiers: modifiers, name: ToRequestContentMethodName);
+                    }
+                    else if (modifiers.HasFlag(MethodSignatureModifiers.Explicit))
+                    {
+                        modifiers &= ~MethodSignatureModifiers.Explicit;
+                        method.Signature.Update(modifiers: modifiers, name: FromResponseMethodName);
                     }
                 }
-                return type;
             }
-            return base.VisitType(type);
+            return type;
         }
+        return base.VisitType(type);
     }
 }
