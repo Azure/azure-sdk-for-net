@@ -76,7 +76,24 @@ namespace System.ClientModel.SourceGeneration
         {
             foreach (var attribute in assembly.GetAttributes())
             {
-                if (attribute.AttributeClass?.ToDisplayString() == "System.ClientModel.Primitives.ModelReaderWriterContextTypeAttribute")
+                if (attribute.AttributeClass is
+                    {
+                        Name: "ModelReaderWriterContextTypeAttribute",
+                        ContainingType: null,
+                        ContainingNamespace:
+                        {
+                            Name: "Primitives",
+                            ContainingNamespace:
+                            {
+                                Name: "ClientModel",
+                                ContainingNamespace:
+                                {
+                                    Name: "System",
+                                    ContainingNamespace.IsGlobalNamespace: true
+                                }
+                            }
+                        }
+                    })
                 {
                     if (attribute.ConstructorArguments.Length > 0 &&
                         attribute.ConstructorArguments[0].Value is ITypeSymbol typeSymbol)
@@ -92,7 +109,16 @@ namespace System.ClientModel.SourceGeneration
         {
             foreach (var attribute in typeSymbol.GetAttributes())
             {
-                if (attribute.AttributeClass?.ToDisplayString() == "System.ObsoleteAttribute")
+                if (attribute.AttributeClass is
+                    {
+                        Name: "ObsoleteAttribute",
+                        ContainingType: null,
+                        ContainingNamespace:
+                        {
+                            Name: "System",
+                            ContainingNamespace.IsGlobalNamespace: true
+                        }
+                    })
                 {
                     if (attribute.ConstructorArguments.Length == 2 &&
                                     attribute.ConstructorArguments[1].Kind == TypedConstantKind.Primitive &&
