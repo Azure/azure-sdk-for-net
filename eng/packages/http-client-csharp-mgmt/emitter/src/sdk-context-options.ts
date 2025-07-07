@@ -9,6 +9,7 @@ const armProviderNamespaceRegex =
 
 // https://github.com/microsoft/typespec/blob/main/packages/rest/README.md#parentresource
 export const parentResource = "TypeSpec.Rest.@parentResource";
+export const parentResourceName = "@parentResource";
 const parentResourceRegex = "TypeSpec\\.Rest\\.@parentResource";
 
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armresourceoperations
@@ -17,19 +18,45 @@ export const armResourceOperations =
 const armResourceOperationsRegex =
   "Azure\\.ResourceManager\\.@armResourceOperations";
 
+// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#singleton
+export const singleton = "Azure.ResourceManager.@singleton";
+const singletonRegex = "Azure\\.ResourceManager\\.@singleton";
+
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceRead
 export const armResourceRead = "Azure.ResourceManager.@armResourceRead";
+export const armResourceReadName = "@armResourceRead";
 const armResourceReadRegex = "Azure\\.ResourceManager\\.@armResourceRead";
 
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armresourcecreateorupdate
 export const armResourceCreateOrUpdate =
   "Azure.ResourceManager.@armResourceCreateOrUpdate";
+export const armResourceCreateOrUpdateName = "@armResourceCreateOrUpdate";
 const armResourceCreateOrUpdateRegex =
   "Azure\\.ResourceManager\\.@armResourceCreateOrUpdate";
-// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#singleton
-export const singleton = "Azure.ResourceManager.@singleton";
-const singletonRegex = "Azure\\.ResourceManager\\.@singleton";
 
+// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceAction
+export const armResourceAction = "Azure.ResourceManager.@armResourceAction";
+export const armResourceActionName = "@armResourceAction";
+const armResourceActionRegex = "Azure\\.ResourceManager\\.@armResourceAction";
+
+// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceList
+export const armResourceList = "Azure.ResourceManager.@armResourceList";
+export const armResourceListName = "@armResourceList";
+const armResourceListRegex = "Azure\\.ResourceManager\\.@armResourceList";
+
+// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceDelete
+export const armResourceDelete = "Azure.ResourceManager.@armResourceDelete";
+export const armResourceDeleteName = "@armResourceDelete";
+const armResourceDeleteRegex = "Azure\\.ResourceManager\\.@armResourceDelete";
+
+// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceUpdate
+export const armResourceUpdate = "Azure.ResourceManager.@armResourceUpdate";
+export const armResourceUpdateName = "@armResourceUpdate";
+const armResourceUpdateRegex = "Azure\\.ResourceManager\\.@armResourceUpdate";
+
+export const armResourceInternal =
+  "Azure.ResourceManager.Private.@armResourceInternal";
+export const armResourceInternalName = "@armResourceInternal";
 const armResourceInternalRegex =
   "Azure\\.ResourceManager\\.Private\\.@armResourceInternal";
 
@@ -61,14 +88,18 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
   additionalDecorators: [
     resourceMetadataRegex,
     armProviderNamespaceRegex,
-    armResourceOperationsRegex,
+    armResourceActionRegex,
     armResourceCreateOrUpdateRegex,
+    armResourceDeleteRegex,
+    armResourceInternalRegex,
+    armResourceListRegex,
+    armResourceOperationsRegex,
+    armResourceUpdateRegex,
     armResourceReadRegex,
     parentResourceRegex,
-    singletonRegex,
-    armResourceInternalRegex,
-    subscriptionResourceRegex,
     resourceGroupResourceRegex,
+    singletonRegex,
+    subscriptionResourceRegex,
     tenantResourceRegex
   ]
 };

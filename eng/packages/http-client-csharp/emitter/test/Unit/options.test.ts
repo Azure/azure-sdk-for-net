@@ -85,7 +85,6 @@ describe("Configuration tests", async () => {
     strictEqual(context.options["package-name"], "Test.Package");
   });
 
-  // New tests for additional decorators logic
   describe("Additional decorators configuration", () => {
     it("adds default decorator when sdk-context-options is not set", async () => {
       const context = createEmitterContext(program);
@@ -131,7 +130,10 @@ describe("Configuration tests", async () => {
     it("merges with existing decorators when additionalDecorators is an array", async () => {
       const options: AzureEmitterOptions = {
         "sdk-context-options": {
-          additionalDecorators: ["Existing.Decorator.One", "Existing.Decorator.Two"]
+          additionalDecorators: [
+            "Existing.Decorator.One",
+            "Existing.Decorator.Two"
+          ]
         }
       };
       const context = createEmitterContext(program, options);
@@ -162,7 +164,8 @@ describe("Configuration tests", async () => {
         context.options["sdk-context-options"]?.additionalDecorators,
         ["Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter"]
       );
-    });    it("preserves existing properties in sdk-context-options", async () => {
+    });
+    it("preserves existing properties in sdk-context-options", async () => {
       const options: AzureEmitterOptions = {
         "sdk-context-options": {
           versioning: { previewStringRegex: /-preview$/ },
@@ -171,12 +174,18 @@ describe("Configuration tests", async () => {
       };
       const context = createEmitterContext(program, options);
       await $onEmit(context);
-      
+
       strictEqual(program.diagnostics.length, 0);
-      strictEqual(context.options["sdk-context-options"]?.versioning?.previewStringRegex?.source, "/-preview$/");
+      strictEqual(
+        context.options["sdk-context-options"]?.versioning?.previewStringRegex?.source,
+        "-preview$"
+      );
       deepStrictEqual(
         context.options["sdk-context-options"]?.additionalDecorators,
-        ["Existing.Decorator", "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter"]
+        [
+          "Existing.Decorator",
+          "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter"
+        ]
       );
     });
   });

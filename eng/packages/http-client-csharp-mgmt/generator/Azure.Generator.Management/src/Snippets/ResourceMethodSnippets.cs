@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using ProviderParameterProvider = Microsoft.TypeSpec.Generator.Providers.ParameterProvider;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using Azure.Generator.Management.Visitors;
 
 namespace Azure.Generator.Management.Snippets
 {
@@ -72,6 +73,16 @@ namespace Azure.Generator.Management.Snippets
             return Declare("context", typeof(RequestContext), New.Instance(typeof(RequestContext), requestContextParams), out contextVariable);
         }
 
+        public static MethodBodyStatement CreateUriFromMessage(VariableExpression messageVariable, out VariableExpression uriVariable)
+        {
+            // Uri uri = message.Request.Uri;
+            return Declare(
+                "uri",
+                typeof(RequestUriBuilder),
+                messageVariable.Property("Request").Property("Uri"),
+                out uriVariable);
+        }
+
         public static MethodBodyStatement CreateHttpMessage(
             ResourceClientProvider resourceClientProvider,
             string methodName,
@@ -110,7 +121,7 @@ namespace Azure.Generator.Management.Snippets
                 new CSharpType(typeof(Response<>), responseGenericType),
                 Static(typeof(Response)).Invoke(
                     nameof(Response.FromValue),
-                    [resultVariable.CastTo(responseGenericType), resultVariable]),
+                    [Static(responseGenericType).Invoke(SerializationVisitor.FromResponseMethodName, [resultVariable]), resultVariable]),
                 out responseVariable);
             statements.Add(responseDeclaration);
 

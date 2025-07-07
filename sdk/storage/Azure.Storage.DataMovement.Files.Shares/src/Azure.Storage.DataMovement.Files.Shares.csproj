@@ -47,6 +47,7 @@
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceCheckpointDetailsInternal.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceItemInternal.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceContainerInternal.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)DataMovementUserAgentPolicy.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Shared\ShareModelExtensions.cs" />

@@ -14,7 +14,7 @@ using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
 {
-    internal partial class PrivateLinksGetAllPrivateLinkResourcesCollectionResultOfT : Pageable<PrivateLinkResourceData>
+    internal partial class PrivateLinksGetAllPrivateLinkResourcesCollectionResultOfT : Pageable<PrivateLinkData>
     {
         private readonly PrivateLinks _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace MgmtTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PrivateLinksGetAllPrivateLinkResourcesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<PrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<PrivateLinkData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             do
@@ -52,9 +52,9 @@ namespace MgmtTypeSpec
                 {
                     yield break;
                 }
-                PrivateLinkResourceListResult responseWithType = (PrivateLinkResourceListResult)response;
+                PrivateLinkListResult responseWithType = PrivateLinkListResult.FromResponse(response);
                 nextPage = responseWithType.NextLink;
-                yield return Page<PrivateLinkResourceData>.FromValues((IReadOnlyList<PrivateLinkResourceData>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PrivateLinkData>.FromValues((IReadOnlyList<PrivateLinkData>)responseWithType.Value, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);
         }
