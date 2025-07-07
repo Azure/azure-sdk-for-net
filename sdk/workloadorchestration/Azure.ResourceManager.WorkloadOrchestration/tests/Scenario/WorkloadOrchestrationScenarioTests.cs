@@ -13,19 +13,20 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Tests
 {
-    public class WorkloadOrchestrationScenarioTests : WorkloadOrchestrationTestBase
+  public class WorkloadOrchestrationScenarioTests : WorkloadOrchestrationTestBase
+  {
+    public WorkloadOrchestrationScenarioTests(bool isAsync) : base(isAsync)
     {
-        public WorkloadOrchestrationScenarioTests(bool isAsync) : base(isAsync)
-        {
-        }
+    }
 
-        public static IEnumerable<object[]> TestData => new[] { new object[] { false }, new object[] { true } };
+    public static IEnumerable<object[]> TestData => new[] { new object[] { false }, new object[] { true } };
 
     [TestCase]
+    [RecordedTest]
     public async Task Schema_LifecycleAsync()
     {
       string schemaName = Recording.GenerateAssetName("schema");
-      string schemaVersionName = $"{Recording.Random.Next(1, 10)}.{Recording.Random.Next(0, 99)}.{Recording.Random.Next(0, 99)}";
+      string schemaVersionName = "1.23.4";
 
       // Get client and resource group from test base
       ArmClient client = GetArmClient();
@@ -117,5 +118,5 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Tests
       Assert.NotNull(createdVersion, "Created schema version should not be null");
       Assert.That(createdVersion.Data.Name, Is.EqualTo(schemaVersionName));
     }
-    }
+  }
 }
