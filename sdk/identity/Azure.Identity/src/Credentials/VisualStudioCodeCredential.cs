@@ -4,7 +4,6 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -86,86 +85,14 @@ namespace Azure.Identity
             try
             {
                 var content = _fileSystem.ReadAllText(authRecordPath);
-                var authRecord = ParseAuthenticationRecordFromJson(content);
+                var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(content));
+                var authRecord = AuthenticationRecord.Deserialize(stream);
                 if (authRecord != null && !string.IsNullOrEmpty(authRecord.TenantId) && !string.IsNullOrEmpty(authRecord.HomeAccountId))
                 {
                     return authRecord;
                 }
             }
             catch (IOException) { }
-            return null;
-        }
-
-        /// <summary>
-        /// Parses JSON content into an AuthenticationRecord object.
-        /// </summary>
-        /// <param name="jsonContent">The JSON content to parse.</param>
-        /// <returns>An AuthenticationRecord if parsing succeeds, null otherwise.</returns>
-        private static AuthenticationRecord ParseAuthenticationRecordFromJson(string jsonContent)
-        {
-            if (string.IsNullOrEmpty(jsonContent))
-            {
-                return null;
-            }
-
-            try
-            {
-                var jsonBytes = System.Text.Encoding.UTF8.GetBytes(jsonContent);
-                var reader = new Utf8JsonReader(jsonBytes);
-
-                string username = null;
-                string authority = null;
-                string homeAccountId = null;
-                string tenantId = null;
-                string clientId = null;
-
-                if (reader.Read() && reader.TokenType == JsonTokenType.StartObject)
-                {
-                    while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
-                    {
-                        if (reader.TokenType == JsonTokenType.PropertyName)
-                        {
-                            var propertyName = reader.GetString();
-                            reader.Read(); // Move to the value
-
-                            switch (propertyName)
-                            {
-                                case "username":
-                                    username = reader.GetString();
-                                    break;
-                                case "authority":
-                                    authority = reader.GetString();
-                                    break;
-                                case "homeAccountId":
-                                    homeAccountId = reader.GetString();
-                                    break;
-                                case "tenantId":
-                                    tenantId = reader.GetString();
-                                    break;
-                                case "clientId":
-                                    clientId = reader.GetString();
-                                    break;
-                                    // Skip other properties like "datetime"
-                            }
-                        }
-                    }
-                }
-
-                // Validate that we have all required fields
-                if (!string.IsNullOrEmpty(username) &&
-                    !string.IsNullOrEmpty(authority) &&
-                    !string.IsNullOrEmpty(homeAccountId) &&
-                    !string.IsNullOrEmpty(tenantId) &&
-                    !string.IsNullOrEmpty(clientId))
-                {
-                    return new AuthenticationRecord(username, authority, homeAccountId, tenantId, clientId);
-                }
-            }
-            catch (JsonException)
-            {
-                // Return null if JSON parsing fails
-            }
-
             return null;
         }
     }
