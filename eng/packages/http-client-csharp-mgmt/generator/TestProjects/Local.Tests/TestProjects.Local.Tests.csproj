@@ -47,6 +47,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/TypeFormatters.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/RequestHeaderExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/NoValueResponseOfT.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/resourcemanager/Azure.ResourceManager/src/Shared/SharedExtensions.cs" LinkBase="Shared/Arm" />
   </ItemGroup>
 
 </Project>

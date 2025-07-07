@@ -1,4 +1,4 @@
-﻿﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -17,6 +17,34 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAvsModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="clusterSize"> The cluster size. </param>
+        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
+        /// <param name="clusterId"> The identity. </param>
+        /// <param name="hosts"> The hosts. </param>
+        /// <param name="vsanDatastoreName"> Name of the vsan datastore associated with the cluster. </param>
+        /// <returns> A new <see cref="Avs.AvsPrivateCloudClusterData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsPrivateCloudClusterData AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsSku sku, int? clusterSize = null, AvsPrivateCloudClusterProvisioningState? provisioningState = null, int? clusterId = null, IEnumerable<string> hosts = null, string vsanDatastoreName = null)
+        {
+            return AvsPrivateCloudClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                clusterSize,
+                provisioningState,
+                clusterId,
+                hosts?.ToList(),
+                vsanDatastoreName,
+                sku);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -242,11 +270,11 @@ namespace Azure.ResourceManager.Avs.Models
             IEnumerable<string> hosts)
         {
             return AvsPrivateCloudClusterData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                sku: sku != null ? new AvsSku(sku) : null,
+                id,
+                name,
+                resourceType,
+                systemData,
+                sku != null ? new AvsSku(sku) : null,
                 clusterSize: clusterSize,
                 provisioningState: provisioningState,
                 clusterId: clusterId,

@@ -26,6 +26,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     internal readonly PlaywrightServiceBrowserClientOptions _options;
     internal readonly ClientUtilities _clientUtility;
     internal readonly ILogger? _logger;
+    internal readonly IPlaywrightVersion _playwrightVersion;
     internal Timer? RotationTimer { get; set; }
 
     /// <summary>
@@ -79,7 +80,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         // No-op
     }
 
-    internal PlaywrightServiceBrowserClient(IEnvironment? environment = null, IEntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, ILogger? logger = null, ClientUtilities? clientUtility = null, PlaywrightServiceBrowserClientOptions? options = null, TokenCredential? tokenCredential = null)
+    internal PlaywrightServiceBrowserClient(IEnvironment? environment = null, IEntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, ILogger? logger = null, ClientUtilities? clientUtility = null, PlaywrightServiceBrowserClientOptions? options = null, TokenCredential? tokenCredential = null, IPlaywrightVersion? playwrightVersion = null)
     {
         _environment = environment ?? new EnvironmentHandler();
         _clientUtility = clientUtility ?? new ClientUtilities(_environment);
@@ -87,7 +88,8 @@ public class PlaywrightServiceBrowserClient : IDisposable
         _logger = logger ?? _options.Logger;
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
         _entraLifecycle = entraLifecycle ?? new EntraLifecycle(jsonWebTokenHandler: _jsonWebTokenHandler, logger: _logger, environment: _environment, tokenCredential: tokenCredential);
-
+        _playwrightVersion = playwrightVersion ?? new PlaywrightVersion();
+        _playwrightVersion.ValidatePlaywrightVersion();
         // Call getters to set default environment variables if not already set before
         _ = _options.OS;
         _ = _options.RunId;

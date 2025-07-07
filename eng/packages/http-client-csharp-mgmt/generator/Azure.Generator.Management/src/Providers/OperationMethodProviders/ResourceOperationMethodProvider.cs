@@ -37,6 +37,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly CSharpType? _responseGenericType;
         private readonly bool _isGeneric;
         private readonly bool _isLongRunningOperation;
+        private readonly bool _isFakeLongRunningOperation;
 
         public ResourceOperationMethodProvider(
             ResourceClientProvider resourceClientProvider,
@@ -51,6 +52,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _responseGenericType = _serviceMethod.GetResponseBodyType();
             _isGeneric = _responseGenericType != null;
             _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
+            _isFakeLongRunningOperation = _serviceMethod.IsFakeLongRunningOperation();
             _clientDiagnosticsField = resourceClientProvider.GetClientDiagnosticsField();
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
@@ -94,7 +96,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private TryExpression BuildTryExpression()
         {
-            var cancellationTokenParameter = _convenienceMethod.Signature.Parameters.FirstOrDefault(p => p.Type.Equals(typeof(CancellationToken))) ?? KnownParameters.CancellationTokenParameter;
+            var cancellationTokenParameter = KnownParameters.CancellationTokenParameter;
 
             var requestMethod = _resourceClientProvider.GetClientProvider().GetRequestMethodByOperation(_serviceMethod.Operation);
             var tryStatements = new List<MethodBodyStatement>
@@ -103,19 +105,18 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
 
             // Populate arguments for the REST client method call
-            var arguments = _resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _convenienceMethod);
+            var arguments = _resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _serviceMethod.Operation);
 
             tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_resourceClientProvider, requestMethod.Signature.Name, arguments, out var messageVariable));
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (_isLongRunningOperation)
+            if (_isLongRunningOperation || _isFakeLongRunningOperation)
             {
                 tryStatements.AddRange(
-                BuildLroHandling(
-                    messageVariable,
-                    responseVariable,
-                    cancellationTokenParameter));
+                    _isFakeLongRunningOperation ?
+                    BuildFakeLroHandling(messageVariable,responseVariable,cancellationTokenParameter) :
+                    BuildLroHandling(messageVariable,responseVariable,cancellationTokenParameter));
             }
             else
             {
@@ -146,6 +147,43 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                     _isAsync,
                     out responseVariable);
             }
+        }
+
+        private IReadOnlyList<MethodBodyStatement> BuildFakeLroHandling(
+            VariableExpression messageVariable,
+            VariableExpression responseVariable,
+            ParameterProvider cancellationTokenParameter)
+        {
+            var statements = new List<MethodBodyStatement>();
+
+            var armOperationType = _isGeneric
+                ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type
+                    .MakeGenericType([_resourceClientProvider.ResourceClientCSharpType])
+                : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
+
+            var uriDeclaration = ResourceMethodSnippets.CreateUriFromMessage(messageVariable, out var uriVariable);
+            statements.Add(uriDeclaration);
+            var rehydrationTokenDeclaration = NextLinkOperationImplementationSnippets.CreateRehydrationToken(uriVariable.As<RequestUriBuilder>(), _serviceMethod.Operation.HttpMethod, out var rehydrationTokenVariable);
+            statements.Add(rehydrationTokenDeclaration);
+
+            var responseFromValueExpression = Static(typeof(Response)).Invoke(
+                nameof(Response.FromValue),
+                New.Instance(
+                    _resourceClientProvider.ResourceClientCSharpType,
+                    This.Property("Client"),
+                    responseVariable.Property("Value")),
+                responseVariable.Invoke("GetRawResponse"));
+
+            ValueExpression[] armOperationArguments = _isGeneric ? [responseFromValueExpression, rehydrationTokenVariable] : [responseVariable, rehydrationTokenVariable];
+            var operationDeclaration = Declare(
+                "operation",
+                armOperationType,
+                New.Instance(armOperationType, armOperationArguments),
+                out var operationVariable);
+            statements.Add(operationDeclaration);
+
+            AddWaitCompletionLogic(statements, operationVariable, cancellationTokenParameter);
+            return statements;
         }
 
         private IReadOnlyList<MethodBodyStatement> BuildLroHandling(
@@ -184,6 +222,16 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 out var operationVariable);
             statements.Add(operationDeclaration);
 
+            AddWaitCompletionLogic(statements, operationVariable, cancellationTokenParameter);
+
+            return statements;
+        }
+
+        private void AddWaitCompletionLogic(
+            List<MethodBodyStatement> statements,
+            VariableExpression operationVariable,
+            ParameterProvider cancellationTokenParameter)
+        {
             var waitMethod = _isGeneric
                 ? (_isAsync ? "WaitForCompletionAsync" : "WaitForCompletion")
                 : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
@@ -200,7 +248,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
             statements.Add(waitIfCompletedStatement);
             statements.Add(Return(operationVariable));
-            return statements;
         }
 
         // TODO: re-examine if this method need to be virtual or not after tags related method providers are implmented.
@@ -235,25 +282,42 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            var result = new List<ParameterProvider>();
-            if (_serviceMethod.IsLongRunningOperation())
+            var requiredParameters = new List<ParameterProvider>();
+            var optionalParameters = new List<ParameterProvider>();
+            if (_serviceMethod.IsLongRunningOperation() || _serviceMethod.IsFakeLongRunningOperation())
             {
-                result.Add(KnownAzureParameters.WaitUntil);
+                requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }
 
-            foreach (var parameter in _convenienceMethod.Signature.Parameters)
+            foreach (var parameter in _serviceMethod.Operation.Parameters)
             {
-                if (parameter.Type.Equals(typeof(RequestContext)))
+                if (parameter.Kind != InputParameterKind.Method)
                 {
-                    result.Add(KnownParameters.CancellationTokenParameter);
+                    continue;
                 }
-                else if (!_resourceClientProvider.ImplicitParameterNames.Contains(parameter.Name))
+
+                if (!_resourceClientProvider.ImplicitParameterNames.Contains(parameter.Name))
                 {
-                    result.Add(parameter);
+                    var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
+                    if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
+                    {
+                        outputParameter.Update(name: "data");
+                    }
+
+                    if (parameter.IsRequired)
+                    {
+                        requiredParameters.Add(outputParameter);
+                    }
+                    else
+                    {
+                        optionalParameters.Add(outputParameter);
+                    }
                 }
             }
 
-            return result;
+            optionalParameters.Add(KnownParameters.CancellationTokenParameter);
+
+            return requiredParameters.Concat(optionalParameters).ToList();
         }
     }
 }

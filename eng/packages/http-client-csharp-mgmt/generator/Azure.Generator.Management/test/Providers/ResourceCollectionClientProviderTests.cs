@@ -37,11 +37,11 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
-            Assert.IsTrue(signature.Parameters.Count == 2);
-            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(string)));
-            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
-            Assert.AreEqual(signature.ReturnType?.FrameworkType, typeof(Response<>));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, signature.Modifiers);
+            Assert.AreEqual(2, signature.Parameters.Count);
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.AreEqual(typeof(Response<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
@@ -57,11 +57,11 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
-            Assert.IsTrue(signature.Parameters.Count == 2);
-            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(string)));
-            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
-            Assert.AreEqual(signature.ReturnType?.FrameworkType, typeof(Task<>));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async, signature.Modifiers);
+            Assert.AreEqual(2, signature.Parameters.Count);
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
@@ -77,11 +77,11 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
-            Assert.IsTrue(signature.Parameters.Count == 2);
-            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(string)));
-            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
-            Assert.AreEqual(signature.ReturnType?.FrameworkType, typeof(Response<>));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, signature.Modifiers);
+            Assert.AreEqual(2, signature.Parameters.Count);
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.AreEqual(typeof(Response<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
@@ -97,11 +97,11 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
-            Assert.IsTrue(signature.Parameters.Count == 2);
-            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(string)));
-            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
-            Assert.AreEqual(signature.ReturnType?.FrameworkType, typeof(Task<>));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async, signature.Modifiers);
+            Assert.AreEqual(2, signature.Parameters.Count);
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
@@ -117,11 +117,11 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
-            Assert.IsTrue(signature.Parameters.Count == 2);
-            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(string)));
-            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
-            Assert.AreEqual(signature.ReturnType?.FrameworkType, typeof(NullableResponse<>));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, signature.Modifiers);
+            Assert.AreEqual(2, signature.Parameters.Count);
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.AreEqual(typeof(NullableResponse<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
@@ -137,11 +137,11 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
-            Assert.IsTrue(signature.Parameters.Count == 2);
-            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(string)));
-            Assert.IsTrue(signature.Parameters[1].Type.FrameworkType.Equals(typeof(CancellationToken)));
-            Assert.AreEqual(signature.ReturnType?.FrameworkType, typeof(Task<>));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async, signature.Modifiers);
+            Assert.AreEqual(2, signature.Parameters.Count);
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
