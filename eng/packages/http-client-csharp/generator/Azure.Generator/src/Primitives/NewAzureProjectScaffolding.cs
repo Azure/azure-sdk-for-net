@@ -129,7 +129,7 @@ namespace Azure.Generator.Primitives
             {
                 return $"$(AzureCoreSharedSources){fileName}";
             }
-            
+
             return $"{MSBuildThisFileDirectory}{string.Concat(Enumerable.Repeat(ParentDirectory, GetPathSegmentCount()))}{relativeSegment}{fileName}";
         }
 
