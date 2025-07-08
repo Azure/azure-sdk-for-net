@@ -15,6 +15,8 @@ namespace Azure.Generator.Management.Visitors
 {
     internal class SafeFlattenVisitor : ScmLibraryVisitor
     {
+        private HashSet<PropertyProvider> _flattenedProperties = new HashSet<PropertyProvider>();
+
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
             var flattenedProperties = new List<PropertyProvider>();
@@ -23,11 +25,11 @@ namespace Azure.Generator.Management.Visitors
                 var propertyType = property.Type;
                 if (propertyType is InputModelType propertyModelType)
                 {
-                    var propertyTypeProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(propertyModelType);
-                    if (propertyTypeProvider?.Properties.Count == 1)
+                    var propertyTypeProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(propertyModelType)!;
+                    if (IsFlattenModel(propertyTypeProvider))
                     {
-                        // If the property is a flattened model with only one property, we can safely flatten it.
-                        var singleProperty = propertyTypeProvider.Properties.Single();
+                        // If the property is a flattened model with only one public property, we can safely flatten it.
+                        var singleProperty = propertyTypeProvider.Properties.Where(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public)).Single();
 
                         // make the current property internal
                         var internalSingleProperty = type!.Properties.Single(p => p.Type == propertyTypeProvider.Type);
@@ -48,6 +50,7 @@ namespace Azure.Generator.Management.Visitors
                             });
                         var flattenedProperty = new PropertyProvider(singleProperty.Description, singleProperty.Modifiers, singleProperty.Type, flattenPropertyName, flattenPropertyBody, type, singleProperty.ExplicitInterface, singleProperty.WireInfo, singleProperty.Attributes);
                         flattenedProperties.Add(flattenedProperty);
+                        _flattenedProperties.Add(flattenedProperty);
                     }
                 }
             }
@@ -57,6 +60,28 @@ namespace Azure.Generator.Management.Visitors
                 type?.Update(properties: [.. type.Properties, .. flattenedProperties]);
             }
             return base.PreVisitModel(model, type);
+        }
+
+        private bool IsFlattenModel(ModelProvider? propertyTypeProvider)
+        {
+            // If the model has a single property, we can safely flatten it
+            if (propertyTypeProvider?.Properties.Count == 1)
+            {
+                return true;
+            }
+
+            // If the model has two properties, one internal property and one public flattened property, we can safely flatten it
+            if (propertyTypeProvider?.Properties.Count == 2)
+            {
+                var internalProperty = propertyTypeProvider.Properties.SingleOrDefault(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Internal));
+                var publicProperty = propertyTypeProvider.Properties.SingleOrDefault(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                if (internalProperty is not null && publicProperty is not null && _flattenedProperties.Contains(publicProperty))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -15,13 +15,15 @@ namespace Azure.Generator.Mgmt.Tests
         private const string TestModelName = "TestModel";
         private const string TestPropertyName = "TestProperty";
         private const string InnerModelPropertyName = "InnerModelProperty";
+        private const string OuterModelPropertyName = "OuterModelProperty";
         private const string InnerModelName = "InnerModel";
+        private const string InnerPropertyName = "InnerProperty";
 
         [Test]
         public void TestSinglePropertyModelSafeFlatten()
         {
             var modelProperty = InputFactory.Property(TestPropertyName, InputPrimitiveType.String, serializedName: "testName", isRequired: true);
-            var innerModel = InputFactory.Model(InnerModelName, properties: [InputFactory.Property("InnerProperty", InputPrimitiveType.String)]);
+            var innerModel = InputFactory.Model(InnerModelName, properties: [InputFactory.Property(InnerPropertyName, InputPrimitiveType.String)]);
             var innerModelProperty = InputFactory.Property(InnerModelPropertyName, innerModel, isRequired: true);
             var model = InputFactory.Model(TestModelName, properties: [modelProperty, innerModelProperty]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
@@ -42,13 +44,47 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.NotNull(outputInnerModelProperty);
             Assert.That(outputInnerModelProperty!.Modifiers.HasFlag(MethodSignatureModifiers.Internal));
 
-            var flattenedProperty = outputModel.Properties.FirstOrDefault(p => p.Name == $"{InnerModelName}InnerProperty");
+            var flattenedProperty = outputModel.Properties.FirstOrDefault(p => p.Name == $"{InnerModelName}{InnerPropertyName}");
             Assert.NotNull(flattenedProperty);
             Assert.That(flattenedProperty!.Modifiers.HasFlag(MethodSignatureModifiers.Public));
             var flattenPropertyBody = flattenedProperty.Body as MethodPropertyBody;
             Assert.NotNull(flattenPropertyBody);
             Assert.AreEqual("return (this.InnerModelProperty is null) ? default : InnerModelProperty.InnerProperty;\n", flattenPropertyBody!.Getter?.ToDisplayString());
             Assert.AreEqual("if ((this.InnerModelProperty is null))\n{\n    InnerModelProperty = new global::Samples.Models.InnerModel();\n}\nthis.InnerModelProperty.InnerProperty = value;\n", flattenPropertyBody!.Setter?.ToDisplayString());
+        }
+
+        [Test]
+        public void TestMultipleLayerModelOfSinglePropertySafeFlatten()
+        {
+            var innerModel = InputFactory.Model(InnerModelName, properties: [InputFactory.Property(InnerPropertyName, InputPrimitiveType.String)]);
+            var innerModelProperty = InputFactory.Property(InnerModelPropertyName, innerModel, isRequired: true);
+            var model = InputFactory.Model(TestModelName, properties: [innerModelProperty]);
+            var outerModel = InputFactory.Model("OuterModel", properties: [InputFactory.Property(OuterModelPropertyName, model, isRequired: true)]);
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: outerModel);
+            var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
+            var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}", decorators: []);
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [InputFactory.BasicServiceMethod("Get", operation, parameters: [testNameParameter])],
+                crossLanguageDefinitionId: $"Test.{TestClientName}",
+                decorators: []);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model], clients: () => [client]);
+            var outputModel = plugin.Object.TypeFactory.CreateModel(outerModel);
+            Assert.NotNull(outputModel);
+
+            var outputInnerModelProperty = outputModel!.Properties.FirstOrDefault(p => p.Name == OuterModelPropertyName);
+            Assert.NotNull(outputInnerModelProperty);
+            Assert.That(outputInnerModelProperty!.Modifiers.HasFlag(MethodSignatureModifiers.Internal));
+
+            var flattenedProperty = outputModel.Properties.FirstOrDefault(p => p.Name == $"{TestModelName}{InnerModelName}{InnerPropertyName}");
+            Assert.NotNull(flattenedProperty);
+            Assert.That(flattenedProperty!.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            var flattenPropertyBody = flattenedProperty.Body as MethodPropertyBody;
+            Assert.NotNull(flattenPropertyBody);
+            Assert.AreEqual("return (this.OuterModelProperty is null) ? default : OuterModelProperty.InnerModelInnerProperty;\n", flattenPropertyBody!.Getter?.ToDisplayString());
+            Assert.AreEqual("if ((this.OuterModelProperty is null))\n{\n    OuterModelProperty = new global::Samples.Models.TestModel();\n}\nthis.OuterModelProperty.InnerModelInnerProperty = value;\n", flattenPropertyBody!.Setter?.ToDisplayString());
         }
     }
 }
