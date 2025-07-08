@@ -15,28 +15,36 @@ namespace Azure.Generator.Management.Visitors
 {
     internal class SafeFlattenVisitor : ScmLibraryVisitor
     {
-        private HashSet<PropertyProvider> _flattenedProperties = new HashSet<PropertyProvider>();
+        private Dictionary<ModelProvider, (HashSet<PropertyProvider> FlattenedProperties, HashSet<PropertyProvider> InternalizedProperties)> _flattenedModels = new();
 
+        // TODO: we can't check property count of property types in VisitType since we don't have TypeProvider from CSharpType.
+        // Once we have CSharpType to TypeProvider mapping, we can remove this and have this logic in VisitType instead
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
-            var flattenedProperties = new List<PropertyProvider>();
+            if (type is null)
+            {
+                return null;
+            }
+
+            var flattenedProperties = new HashSet<PropertyProvider>();
+            var internalizedProperties = new HashSet<PropertyProvider>();
+            var internalizedPropertyTypes = new HashSet<CSharpType>();
             foreach (var property in model.Properties)
             {
                 var propertyType = property.Type;
                 if (propertyType is InputModelType propertyModelType)
                 {
+                    // If the property type is a model with only one property, we can safely flatten it.
                     var propertyTypeProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(propertyModelType)!;
-                    if (IsFlattenModel(propertyTypeProvider))
+                    if (propertyTypeProvider.Properties.Count == 1)
                     {
-                        // If the property is a flattened model with only one public property, we can safely flatten it.
-                        var singleProperty = propertyTypeProvider.Properties.Where(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public)).Single();
+                        var singleProperty = propertyTypeProvider.Properties.Single();
 
                         // make the current property internal
-                        var internalSingleProperty = type!.Properties.Single(p => p.Type == propertyTypeProvider.Type);
-                        internalSingleProperty.Update(modifiers: internalSingleProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
+                        var internalSingleProperty = type!.Properties.Single(p => p.Type.AreNamesEqual(propertyTypeProvider.Type)); // type equal not working here, so we use AreNamesEqual
 
                         // flatten the single property to public and associate it with the internal property
-                        var flattenPropertyName = $"{internalSingleProperty.Type.Name}{singleProperty.Name}"; // TODO: handle name conflicts
+                        var flattenPropertyName = $"{singleProperty.Name}"; // TODO: handle name conflicts
                         var checkNullExpression = This.Property(internalSingleProperty.Name).Is(Null);
                         var flattenPropertyBody = new MethodPropertyBody(
                             Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalSingleProperty, singleProperty.Name))),
@@ -50,38 +58,39 @@ namespace Azure.Generator.Management.Visitors
                             });
                         var flattenedProperty = new PropertyProvider(singleProperty.Description, singleProperty.Modifiers, singleProperty.Type, flattenPropertyName, flattenPropertyBody, type, singleProperty.ExplicitInterface, singleProperty.WireInfo, singleProperty.Attributes);
                         flattenedProperties.Add(flattenedProperty);
-                        _flattenedProperties.Add(flattenedProperty);
                     }
                 }
             }
             if (flattenedProperties.Count > 0)
             {
-                // Update the model with the flattened properties
-                type?.Update(properties: [.. type.Properties, .. flattenedProperties]);
+                _flattenedModels[type!] = (flattenedProperties, internalizedProperties);
             }
             return base.PreVisitModel(model, type);
         }
 
-        private bool IsFlattenModel(ModelProvider? propertyTypeProvider)
+        protected override TypeProvider? VisitType(TypeProvider type)
         {
-            // If the model has a single property, we can safely flatten it
-            if (propertyTypeProvider?.Properties.Count == 1)
+            if (type is ModelProvider model && _flattenedModels.TryGetValue(model, out var value))
             {
-                return true;
-            }
-
-            // If the model has two properties, one internal property and one public flattened property, we can safely flatten it
-            if (propertyTypeProvider?.Properties.Count == 2)
-            {
-                var internalProperty = propertyTypeProvider.Properties.SingleOrDefault(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Internal));
-                var publicProperty = propertyTypeProvider.Properties.SingleOrDefault(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-                if (internalProperty is not null && publicProperty is not null && _flattenedProperties.Contains(publicProperty))
+                var (flattenedProperties, internalizedProperties) = value;
+                type.Update(properties: [.. type.Properties, .. flattenedProperties]);
+                foreach (var internalProperty in internalizedProperties)
                 {
-                    return true;
+                    // make the internalized properties internal
+                    internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
                 }
             }
 
-            return false;
+            var internalizedModelTypes = _flattenedModels.Values.Select(v => v.InternalizedProperties).SelectMany(p => p).Select(x => x.Type).ToHashSet();
+            if (internalizedModelTypes.Contains(type.Type))
+            {
+                type.Update(modifiers: type.DeclarationModifiers & ~TypeSignatureModifiers.Internal | TypeSignatureModifiers.Public);
+                foreach (var serialization in type.SerializationProviders)
+                {
+                    serialization.Update(modifiers: serialization.DeclarationModifiers & ~TypeSignatureModifiers.Internal | TypeSignatureModifiers.Public);
+                }
+            }
+            return base.VisitType(type);
         }
     }
 }
