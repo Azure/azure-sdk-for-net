@@ -1,5 +1,20 @@
 # Release History
 
+## 12.23.0 (2025-07-08)
+
+### Features Added
+- Includes all features from 12.23.0-beta.1
+
+### Other Changes
+- Please note that this version was initally released to https://dev.azure.com/azure-sdk/public/_artifacts/feed/storage-staging, and will be promoted to NuGet.org once the 2025-07-05 version has fully rolled out in the storage service.  Please see https://learn.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services for more info.
+
+## 12.24.0-beta.1 (2025-06-09)
+
+### Features Added
+- Added support for service version 2025-11-05.
+- Added `ShareErrorCode.ShareSnapshotNotFound`.
+- Added more useful error message when the SDK encounters an x-ms-version mis-match issue.
+
 ## 12.23.0-beta.1 (2025-05-06)
 
 ### Features Added
