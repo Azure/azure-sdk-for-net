@@ -126,7 +126,7 @@ public class TelemetryPolicy : PipelinePolicy
     /// </summary>
     /// <param name="productInfo">The ProductInfo portion of the user agent</param>
     /// <returns>The escaped product information string.</returns>
-    public static string EscapeProductInformation(string productInfo)
+    private static string EscapeProductInformation(string productInfo)
     {
         // If the string is already valid, we don't need to escape anything
         bool success = false;
@@ -188,7 +188,7 @@ public class TelemetryPolicy : PipelinePolicy
     /// </summary>
     /// <param name="value">The string to check.</param>
     /// <returns>True if the string contains non-ASCII characters, false otherwise.</returns>
-    public static bool ContainsNonAscii(string value)
+    private static bool ContainsNonAscii(string value)
     {
         foreach (char c in value)
         {

@@ -441,8 +441,6 @@ namespace System.ClientModel.Primitives
         public TelemetryPolicy(System.Reflection.Assembly assembly, string? applicationId = null) { }
         public string? ApplicationId { get { throw null; } }
         public System.Reflection.Assembly Assembly { get { throw null; } }
-        public static bool ContainsNonAscii(string value) { throw null; }
-        public static string EscapeProductInformation(string productInfo) { throw null; }
         public static string GenerateUserAgentString(System.Reflection.Assembly clientAssembly, string? applicationId = null) { throw null; }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
