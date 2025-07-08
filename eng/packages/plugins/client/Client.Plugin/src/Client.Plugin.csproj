@@ -22,21 +22,11 @@
   </ItemDefinitionGroup>
 
   <ItemGroup>
-    <SharedVisitorSource Include="$(VisitorsBasePath)\NamespaceVisitor.cs">
-      <LinkBase>Shared/Visitors</LinkBase>
-    </SharedVisitorSource>
-    <SharedVisitorSource Include="$(VisitorsBasePath)\SpecialHeadersVisitor.cs">
-      <LinkBase>Shared/Visitors</LinkBase>
-    </SharedVisitorSource>
-    <SharedVisitorSource Include="$(VisitorsBasePath)\ModelFactoryRenamerVisitor.cs">
-      <LinkBase>Shared/Visitors</LinkBase>
-    </SharedVisitorSource>
-    <SharedVisitorSource Include="$(VisitorsBasePath)\Extensions\ConfigurationExtensions.cs">
-      <LinkBase>Shared/Visitors/Extensions</LinkBase>
-    </SharedVisitorSource>
-    <SharedVisitorSource Include="$(VisitorsBasePath)\Utilities\TypeNameUtilities.cs">
-      <LinkBase>Shared/Visitors/Utilities</LinkBase>
-    </SharedVisitorSource>
+    <SharedVisitorSource Include="$(VisitorsBasePath)\NamespaceVisitor.cs" LinkBase="Shared/Visitors" />
+    <SharedVisitorSource Include="$(VisitorsBasePath)\SpecialHeadersVisitor.cs" LinkBase="Shared/Visitors" />
+    <SharedVisitorSource Include="$(VisitorsBasePath)\ModelFactoryRenamerVisitor.cs" LinkBase="Shared/Visitors" />
+    <SharedVisitorSource Include="$(VisitorsBasePath)\Extensions\ConfigurationExtensions.cs" LinkBase="Shared/Visitors/Extensions" />
+    <SharedVisitorSource Include="$(VisitorsBasePath)\Utilities\TypeNameUtilities.cs" LinkBase="Shared/Visitors/Utilities" />
   </ItemGroup>
 
   <ItemGroup>
