@@ -1,0 +1,16 @@
+# This template serves as a place to upload artifacts intended to be used by LLMs
+# that handle data from the pipeline (for example github copilot).
+
+steps:
+  - pwsh: |
+      $artifactsDirectory = "$(Build.ArtifactStagingDirectory)/llm-artifacts"
+      New-Item $artifactsDirectory -ItemType directory -Force
+      foreach($testResultsFile in (Get-ChildItem -Path $(TestTargetFramework)*.trx -Recurse -File))
+      {
+        $fileFullName = $testResultsFile.FullName
+        $fileName = $testResultsFile.Name
+        Move-Item -Path $fileFullName -Destination $artifactsDirectory/$fileName -ErrorAction SilentlyContinue
+        Write-Host "##vso[task.setvariable variable=uploadTestResults]true"
+      }
+    condition: always()
+    displayName: Copy test results files to llm artifacts staging directory
