@@ -74,7 +74,8 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
 
         ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
-            agent.Id
+            agent.Id,
+            toolResources: null
         );
 
         do
@@ -162,7 +163,8 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_File_Search : Sa
 
         ThreadRun run = client.Runs.CreateRun(
             thread.Id,
-            agent.Id
+            agent.Id,
+            toolResources: null
         );
 
         do

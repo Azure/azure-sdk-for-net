@@ -134,7 +134,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             MessageRole.User,
             "Hello, tell me a joke");
 
-        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
 
         while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || run.Status == RunStatus.RequiresAction)
         {
@@ -190,7 +190,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             MessageRole.User,
             "Hello, tell me a joke");
 
-        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
 
         while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || run.Status == RunStatus.RequiresAction)
         {
@@ -352,7 +352,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             MessageRole.User,
             "Hello, tell me a joke");
 
-        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
 
         while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || run.Status == RunStatus.RequiresAction)
         {
@@ -539,6 +539,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
             agent.Id,
+            toolResources: null,
             additionalInstructions: "Please address the user as J. Doe. The user has a premium account.");
 
         while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || run.Status == RunStatus.RequiresAction)
@@ -799,6 +800,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
             agent.Id,
+            toolResources: null,
             additionalInstructions: "Please address the user as J. Doe. The user has a premium account.");
 
         while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || run.Status == RunStatus.RequiresAction)

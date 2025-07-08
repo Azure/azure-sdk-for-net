@@ -65,7 +65,8 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
 
         ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
-            agent.Id
+            agent.Id,
+            toolResources: null
         );
 
         do
@@ -163,7 +164,8 @@ public partial class Sample_PersistentAgents_Enterprise_File_Search : SamplesBas
 
         ThreadRun run = client.Runs.CreateRun(
             thread.Id,
-            agent.Id
+            agent.Id,
+            toolResources: null
         );
 
         do

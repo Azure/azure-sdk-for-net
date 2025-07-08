@@ -138,7 +138,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
             MessageRole.User,
             "What's the weather like in my favorite city?");
 
-        ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
         #endregion
         #region Snippet:AgentsFunctionsHandlePollingWithRequiredAction
         do
@@ -311,7 +311,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
             MessageRole.User,
             "What's the weather like in my favorite city?");
 
-        ThreadRun run = client.Runs.CreateRun(thread, agent);
+        ThreadRun run = client.Runs.CreateRun(thread.Id, agent.Id, toolResources: null);
         #endregion
         #region Snippet:AgentsFunctionsSyncHandlePollingWithRequiredAction
         do
@@ -327,7 +327,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
                 {
                     toolOutputs.Add(GetResolvedToolOutput(toolCall));
                 }
-                run = client.Runs.SubmitToolOutputsToRun(run, toolOutputs);
+                run = client.Runs.SubmitToolOutputsToRun(run, toolOutputs, null);
             }
         }
         while (run.Status == RunStatus.Queued

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.Identity;
 
 namespace Azure.AI.Agents.Persistent.Tests;
 
@@ -30,7 +31,7 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         var mcpServerUrl = "https://gitmcp.io/Azure/azure-rest-api-specs";
         var mcpServerLabel = "github";
 #endif
-        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
+        PersistentAgentsClient agentClient = new(projectEndpoint, new AzureCliCredential());
         #endregion
 
         #region Snippet:AgentsMCP_CreateMCPTool
@@ -148,7 +149,7 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         var mcpServerUrl = "https://gitmcp.io/Azure/azure-rest-api-specs";
         var mcpServerLabel = "github";
 #endif
-        PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
+        PersistentAgentsClient agentClient = new(projectEndpoint, new AzureCliCredential());
 
         // Create MCP tool definition
         MCPToolDefinition mcpTool = new(mcpServerLabel, mcpServerUrl);

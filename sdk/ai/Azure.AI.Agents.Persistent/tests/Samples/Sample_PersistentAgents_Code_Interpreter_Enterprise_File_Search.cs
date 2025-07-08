@@ -64,7 +64,8 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
 
         ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
-            agent.Id
+            agent.Id,
+            toolResources: null
         );
         do
         {
@@ -138,7 +139,8 @@ public partial class Sample_PersistentAgents_Code_Interpreter_Enterprise_File_Se
 
         ThreadRun run = client.Runs.CreateRun(
             thread.Id,
-            agent.Id
+            agent.Id,
+            toolResources: null
         );
         do
         {

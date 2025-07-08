@@ -62,7 +62,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
             "What is the temperature rating of the cozynights sleeping bag?");
 
         // Run the agent
-        ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
 
         do
         {
@@ -170,7 +170,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
             "What is the temperature rating of the cozynights sleeping bag?");
 
         // Run the agent
-        Response<ThreadRun> runResponse = client.Runs.CreateRun(thread, agent);
+        Response<ThreadRun> runResponse = client.Runs.CreateRun(thread.Id, agent.Id, toolResources: null);
 
         do
         {
