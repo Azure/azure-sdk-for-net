@@ -45,6 +45,7 @@ PersistentThreadMessage message = agentClient.Messages.CreateMessage(
 ThreadRun agentRun = agentClient.Runs.CreateRun(
     threadId: thread.Id,
     agent.Id,
+    toolResources: null,
     additionalMessages: [
         new ThreadMessageOptions(
             role: MessageRole.Agent,
@@ -77,6 +78,7 @@ PersistentThreadMessage message = await agentClient.Messages.CreateMessageAsync(
 ThreadRun agentRun = await agentClient.Runs.CreateRunAsync(
     threadId: thread.Id,
     agent.Id,
+    toolResources: null,
     additionalMessages: [
         new ThreadMessageOptions(
             role: MessageRole.Agent,

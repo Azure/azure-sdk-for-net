@@ -83,7 +83,8 @@ Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachmentSync_CreateRun
 ThreadRun run = client.Runs.CreateRun(
     thread.Id,
-    agent.Id
+    agent.Id,
+    toolResources: null
 );
 
 do
@@ -103,7 +104,8 @@ Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterFileAttachment_CreateRun
 ThreadRun run = await client.Runs.CreateRunAsync(
     thread.Id,
-    agent.Id
+    agent.Id,
+    toolResources: null
 );
 
 do

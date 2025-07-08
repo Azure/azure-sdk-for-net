@@ -8,7 +8,7 @@ var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOIN
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var mcpServerUrl = System.Environment.GetEnvironmentVariable("MCP_SERVER_URL");
 var mcpServerLabel = System.Environment.GetEnvironmentVariable("MCP_SERVER_LABEL");
-PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
+PersistentAgentsClient agentClient = new(projectEndpoint, new AzureCliCredential());
 ```
 
 2. We will create the MCP tool definition and configure allowed tools.
@@ -71,7 +71,7 @@ while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || r
     if (run.Status == RunStatus.RequiresAction && run.RequiredAction is SubmitToolApprovalAction toolApprovalAction)
     {
         var toolApprovals = new List<ToolApproval>();
-        foreach (var toolCall in toolApprovalAction.SubmitToolApproval)
+        foreach (var toolCall in toolApprovalAction.SubmitToolApproval.ToolCalls)
         {
             if (toolCall is RequiredMcpToolCall mcpToolCall)
             {
@@ -122,7 +122,7 @@ while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || r
     if (run.Status == RunStatus.RequiresAction && run.RequiredAction is SubmitToolApprovalAction toolApprovalAction)
     {
         var toolApprovals = new List<ToolApproval>();
-        foreach (var toolCall in toolApprovalAction.SubmitToolApproval)
+        foreach (var toolCall in toolApprovalAction.SubmitToolApproval.ToolCalls)
         {
             if (toolCall is RequiredMcpToolCall mcpToolCall)
             {
