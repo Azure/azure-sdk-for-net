@@ -166,12 +166,12 @@
 
     <!-- CDK -->
     <PackageReference Update="Azure.Provisioning" Version="1.2.0" />
+    <PackageReference Update="Azure.Provisioning.AppService" Version="1.2.0" />
     <PackageReference Update="Azure.Provisioning.CognitiveServices" Version="1.1.0" />
     <PackageReference Update="Azure.Provisioning.EventGrid" Version="1.1.0" />
     <PackageReference Update="Azure.Provisioning.KeyVault" Version="1.1.0" />
     <PackageReference Update="Azure.Provisioning.ServiceBus" Version="1.0.0" />
     <PackageReference Update="Azure.Provisioning.Storage" Version="1.1.1" />
-    <PackageReference Update="Azure.Provisioning.AppService" Version="1.2.0" />
     <PackageReference Update="Microsoft.Bcl.Numerics" Version="8.0.0" />
 
     <!-- Other approved packages -->
