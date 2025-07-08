@@ -1,10 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator;
 using System.Linq;
 
-namespace Visitors.Utilities
+namespace Azure.Generator.Visitors.Utilities
 {
     internal static class TypeNameUtilities
     {

@@ -1,11 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using Microsoft.TypeSpec.Generator;
 
-namespace Visitors.Extensions
+namespace Azure.Generator.Visitors.Extensions
 {
     internal static class ConfigurationExtensions
     {

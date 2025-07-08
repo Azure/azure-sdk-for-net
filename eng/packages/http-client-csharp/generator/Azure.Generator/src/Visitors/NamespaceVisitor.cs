@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.IO;
@@ -7,9 +7,9 @@ using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
-using Visitors.Extensions;
+using Azure.Generator.Visitors.Extensions;
 
-namespace Visitors
+namespace Azure.Generator.Visitors
 {
     /// <summary>
     /// Visitor that updates the namespace and file paths for model and enum types.
