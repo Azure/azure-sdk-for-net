@@ -498,6 +498,7 @@ namespace Azure.AI.Agents.Persistent
     }
     public partial class MCPToolResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.MCPToolResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolResource>
     {
+        public MCPToolResource(string serverLabel) { }
         public MCPToolResource(string serverLabel, System.Collections.Generic.IDictionary<string, string> headers) { }
         public System.Collections.Generic.IDictionary<string, string> Headers { get { throw null; } }
         public Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval? RequireApproval { get { throw null; } set { } }
@@ -508,6 +509,8 @@ namespace Azure.AI.Agents.Persistent
         Azure.AI.Agents.Persistent.MCPToolResource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.MCPToolResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public Azure.AI.Agents.Persistent.ToolResources ToToolResources() { throw null; }
+        public void UpdateHeader(string key, string value) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MCPToolResourceRequireApproval : System.IEquatable<Azure.AI.Agents.Persistent.MCPToolResourceRequireApproval>
