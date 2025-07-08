@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.Monitor.Query.Models
@@ -13,6 +14,9 @@ namespace Azure.Monitor.Query.Models
     /// </summary>
     public class LogsBatchQueryResultCollection : ReadOnlyCollection<LogsBatchQueryResult>
     {
+        internal const string RequiresUnreferencedCodeMessage = "Mapping query results to open generic types may require types and members that could be trimmed. This message can be suppressed if you are certain calls will only ever attempt to map results to primitive types.";
+        internal const string RequiresDynamicCodeMessage = "Mapping query results to open generic types is not supported with AOT compilation. This message can be suppressed if you are certain calls will only ever attempt to map results to primitive types.";
+
         /// <summary>
         /// Gets or sets the query used to produce this result object.
         /// </summary>
@@ -78,6 +82,8 @@ namespace Azure.Monitor.Query.Models
         /// <returns>Query results mapped to a type <typeparamref name="T"/>.</returns>
         /// <exception cref="ArgumentException">When the query with <paramref name="queryId"/> was not part of the batch.</exception>
         /// <exception cref="RequestFailedException">When the query <paramref name="queryId"/> failed.</exception>
+        [RequiresUnreferencedCode(RequiresUnreferencedCodeMessage)]
+        [RequiresDynamicCode(RequiresDynamicCodeMessage)]
         public IReadOnlyList<T> GetResult<T>(string queryId)
         {
             return RowBinder.Shared.BindResults<T>(GetResult(queryId).AllTables);

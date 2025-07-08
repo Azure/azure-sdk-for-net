@@ -6,6 +6,8 @@ Invoke-Pester -Output Detailed $PSScriptRoot\Toc-Generation.Tests.ps1
 
 Import-Module Pester
 
+$nugetAvailable = Get-Command nuget -ErrorAction SilentlyContinue
+
 BeforeAll {
     . $PSScriptRoot/../Docs-ToC.ps1
     . $PSScriptRoot/logging.ps1
@@ -21,7 +23,7 @@ AfterAll {
 # 2. Tests on Fetch-NamespacesFromNupkg from public feeds. 
 # 3. Tests on Get-Toc-Children for latest
 # 4. Tests on Get-Toc-Children for preview
-Describe "Fetch-NamespacesFromNupkg-Nuget" -Tag "UnitTest" {
+Describe "Fetch-NamespacesFromNupkg-Nuget" -Tag "UnitTest" -Skip:(!$nugetAvailable) {
     # Passed cases
     It "Fetch namespaces from package downloads from nuget" -TestCases @(
         @{ package = "Azure.Core"; version="1.24.0"; expectNamespaces = @('Azure', 'Azure.Core', 'Azure.Core.Cryptography', 'Azure.Core.Diagnostics', 'Azure.Core.Extensions', 'Azure.Core.GeoJson', 'Azure.Core.Pipeline', 'Azure.Core.Serialization', 'Azure.Messaging') }
@@ -44,7 +46,7 @@ Describe "Fetch-NamespacesFromNupkg-Nuget" -Tag "UnitTest" {
     }
 }
 
-Describe "Fetch-NamespacesFromNupkg-PublicFeeds" -Tag "UnitTest" {
+Describe "Fetch-NamespacesFromNupkg-PublicFeeds" -Tag "UnitTest" -Skip:(!$nugetAvailable) {
     BeforeAll {
         Set-Variable -Name 'PackageSourceOverride' -Value "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json" -ErrorAction 'Ignore'
     }
