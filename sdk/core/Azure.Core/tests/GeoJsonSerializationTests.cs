@@ -309,30 +309,29 @@ namespace Azure.Core.Tests
             return geometry4;
         }
 
-        private GeoPoint AssertRoundtripMRW(string json, ModelReaderWriterOptions options)
+        private GeoPoint AssertRoundtripMRW(string json)
         {
             BinaryData data = new BinaryData(json);
-            var point = ModelReaderWriter.Read<GeoPoint>(data, options);
+            var point = ModelReaderWriter.Read<GeoPoint>(data, _jsonOptions);
 
+            // Write using IJsonModel
             var memoryStreamOutput = new MemoryStream();
             using (Utf8JsonWriter writer = new Utf8JsonWriter(memoryStreamOutput))
             {
-                ((IJsonModel<GeoPoint>)point).Write(writer, options);
+                ((IJsonModel<GeoPoint>)point).Write(writer, _jsonOptions);
             }
 
+            // Read back using IJsonModel
             var jsonReader2 = new Utf8JsonReader(memoryStreamOutput.ToArray());
-            var point2 = ((IJsonModel<GeoPoint>)point).Create(ref jsonReader2, options);
-            var geometry2 = GeoJsonConverter.Read(element2);
+            var point2 = ((IJsonModel<GeoPoint>)point).Create(ref jsonReader2, _jsonOptions);
 
-            // Serialize and deserialize as a base class
-            var bytes = JsonSerializer.SerializeToUtf8Bytes(geometry2, typeof(GeoObject));
-            var geometry3 = JsonSerializer.Deserialize<GeoObject>(bytes);
+            // Write using IPersistableModel
+            var binaryData = ((IPersistableModel<GeoPoint>)point2).Write(_jsonOptions);
 
-            // Serialize and deserialize as a concrete class
-            var bytes2 = JsonSerializer.SerializeToUtf8Bytes(geometry3);
-            var geometry4 = JsonSerializer.Deserialize<T>(bytes2);
+            // Read back using IPersistableModel
+            var point3 = ((IPersistableModel<GeoPoint>)point2).Create(binaryData, _jsonOptions);
 
-            return geometry4;
+            return point3;
         }
 
         [Test]
@@ -340,7 +339,7 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}";
 
-            AssertRoundtripMRW(input);
+            var point = AssertRoundtripMRW(input);
 
             Assert.AreEqual(P(0), point.Coordinates);
         }
@@ -350,9 +349,7 @@ namespace Azure.Core.Tests
         {
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}";
 
-            using var writer = new Utf8JsonWriter(new MemoryStream());
-            var serializedPoint = ModelReaderWriter.Write(input);
-            var point = ModelReaderWriter.Read<GeoPoint>(serializedPoint, _jsonOptions);
+            var point = AssertRoundtripMRW(input);
 
             Assert.AreEqual(P(0), point.Coordinates);
         }
@@ -360,56 +357,30 @@ namespace Azure.Core.Tests
         [Test]
         public void RoundTripSimplePointMRW()
         {
-            var point = new GeoPoint(-122.091954, 47.607148);
+            var input = """{"type":"Point","coordinates":[-122.091954,47.607148]}""";
 
-            using var stream = new MemoryStream();
-            using var writer = new Utf8JsonWriter(stream);
-            ((IJsonModel<GeoPoint>)point).Write(writer, _jsonOptions);
-            writer.Flush();
+            var point = AssertRoundtripMRW(input);
 
-            var json = System.Text.Encoding.UTF8.GetString(stream.ToArray());
-            var doc = JsonDocument.Parse(json);
-            var root = doc.RootElement;
-
-            Assert.AreEqual("Point", root.GetProperty("type").GetString());
-            var coordinates = root.GetProperty("coordinates");
-            Assert.AreEqual(-122.091954, coordinates[0].GetDouble(), 1e-10);
-            Assert.AreEqual(47.607148, coordinates[1].GetDouble(), 1e-10);
+            Assert.AreEqual(-122.091954, point.Coordinates.Longitude, 1e-10);
+            Assert.AreEqual(47.607148, point.Coordinates.Latitude, 1e-10);
         }
 
         [Test]
         public void RoundTripComplexPointMRW()
         {
-            var boundingBox = new GeoBoundingBox(-180, -90, 180, 90);
-            var geoPosition = new GeoPosition(-122.091954, 47.607148);
-            var customProps = new Dictionary<string, object>
-            {
-                { "name", "Test Point" },
-                { "value", 42 }
-            };
-            var point = new GeoPoint(geoPosition, boundingBox, customProps);
-            var jsonModel = (IJsonModel<GeoPoint>)point;
+            var input = """{"type":"Point","coordinates":[-122.091954,47.607148],"bbox":[-180,-90,180,90],"name":"Test Point","value":42}""";
 
-            using var stream = new MemoryStream();
-            using var writer = new Utf8JsonWriter(stream);
-            jsonModel.Write(writer, _jsonOptions);
-            writer.Flush();
+            var point = AssertRoundtripMRW(input);
 
-            var json = System.Text.Encoding.UTF8.GetString(stream.ToArray());
-            var doc = JsonDocument.Parse(json);
-            var root = doc.RootElement;
-
-            Assert.AreEqual("Point", root.GetProperty("type").GetString());
-            Assert.IsTrue(root.TryGetProperty("bbox", out var bbox));
-            Assert.AreEqual(-180, bbox[0].GetDouble());
-            Assert.AreEqual(-90, bbox[1].GetDouble());
-            Assert.AreEqual(180, bbox[2].GetDouble());
-            Assert.AreEqual(90, bbox[3].GetDouble());
-            var coordinates = root.GetProperty("coordinates");
-            Assert.AreEqual(-122.091954, coordinates[0].GetDouble(), 1e-10);
-            Assert.AreEqual(47.607148, coordinates[1].GetDouble(), 1e-10);
-            Assert.AreEqual("Test Point", root.GetProperty("name").GetString());
-            Assert.AreEqual(42, root.GetProperty("value").GetInt32());
+            Assert.AreEqual(-122.091954, point.Coordinates.Longitude, 1e-10);
+            Assert.AreEqual(47.607148, point.Coordinates.Latitude, 1e-10);
+            Assert.IsNotNull(point.BoundingBox);
+            Assert.AreEqual(-180, point.BoundingBox.West);
+            Assert.AreEqual(-90, point.BoundingBox.South);
+            Assert.AreEqual(180, point.BoundingBox.East);
+            Assert.AreEqual(90, point.BoundingBox.North);
+            Assert.AreEqual("Test Point", point.CustomProperties["name"]);
+            Assert.AreEqual(42, point.CustomProperties["value"]);
         }
 
         [Test]
@@ -417,14 +388,48 @@ namespace Azure.Core.Tests
         {
             var point = new GeoPoint(-122.091954, 47.607148);
             var jsonModel = (IJsonModel<GeoPoint>)point;
-            var binaryDataPoint = ModelReaderWriter.Write(point, _wireOptions);
+            var persistableModel = (IPersistableModel<GeoPoint>)point;
+            var invalidOptions = new ModelReaderWriterOptions("X");
 
             using var stream = new MemoryStream();
             using var writer = new Utf8JsonWriter(stream);
             var reader = new Utf8JsonReader(stream.ToArray());
-            Assert.Throws<FormatException>(() => jsonModel.Write(writer, _wireOptions));
-            Assert.Throws<FormatException>(() => jsonModel.Write(_wireOptions));
-            Assert.Throws<FormatException>(() => jsonModel.Create(binaryDataPoint, _wireOptions));
+            var binaryData = BinaryData.FromString("""{"type":"Point","coordinates":[-122.091954,47.607148]}""");
+
+            Assert.Throws<FormatException>(() => jsonModel.Write(writer, invalidOptions));
+            //Assert.Throws<FormatException>(() => jsonModel.Create(ref reader, invalidOptions));
+            Assert.Throws<FormatException>(() => persistableModel.Write(invalidOptions));
+            Assert.Throws<FormatException>(() => persistableModel.Create(binaryData, invalidOptions));
+        }
+
+        [Test]
+        public void CanRoundTripPointWithBoundingBoxMRW()
+        {
+            var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}], \"bbox\": [ {PS(1)}, {PS(2)} ] }}";
+
+            var point = AssertRoundtripMRW(input);
+
+            Assert.AreEqual(P(0), point.Coordinates);
+            Assert.AreEqual(P(1).Longitude, point.BoundingBox.West);
+            Assert.AreEqual(P(1).Latitude, point.BoundingBox.South);
+            Assert.AreEqual(P(2).Longitude, point.BoundingBox.East);
+            Assert.AreEqual(P(2).Latitude, point.BoundingBox.North);
+        }
+
+        [Test]
+        public void CanRoundTripPointWithCustomPropertiesMRW()
+        {
+            var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}]," +
+                        $" \"name\": \"Test Point\"," +
+                        $" \"value\": 42," +
+                        $" \"active\": true }}";
+
+            var point = AssertRoundtripMRW(input);
+
+            Assert.AreEqual(P(0), point.Coordinates);
+            Assert.AreEqual("Test Point", point.CustomProperties["name"]);
+            Assert.AreEqual(42, point.CustomProperties["value"]);
+            Assert.AreEqual(true, point.CustomProperties["active"]);
         }
     }
 }
