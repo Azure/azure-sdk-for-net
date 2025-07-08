@@ -37,6 +37,18 @@ namespace Azure.AI.Projects
 
             string outputVersion = inputVersion;
 
+            return (GetContainerClientOrRaise(pendingUploadResponse), outputVersion);
+        }
+
+        /// <summary>
+        /// The convenience method to get the container client.
+        /// </summary>
+        /// <param name="pendingUploadResponse">The pending upload request.</param>
+        /// <returns></returns>
+        private BlobContainerClient GetContainerClientOrRaise(PendingUploadResponse pendingUploadResponse)
+        {
+            bool isSasEmpty = false;
+
             if (pendingUploadResponse.BlobReference == null)
             {
                 throw new InvalidOperationException("Blob reference is not present.");
@@ -47,17 +59,28 @@ namespace Azure.AI.Projects
             }
             if (pendingUploadResponse.BlobReference.Credential.SasUri == null)
             {
-                throw new InvalidOperationException("SAS URI is missing or empty.");
+                isSasEmpty = true;
             }
 
-            var containerClient = new BlobContainerClient(pendingUploadResponse.BlobReference.Credential.SasUri);
-            return (containerClient, outputVersion);
+            BlobContainerClient containerClient;
+            if (isSasEmpty)
+            {
+                containerClient = new BlobContainerClient(
+                    blobContainerUri: pendingUploadResponse.BlobReference.BlobUri,
+                    credential: _tokenCredential,
+                    options: null);
+            }
+            else
+            {
+                containerClient = new BlobContainerClient(pendingUploadResponse.BlobReference.Credential.SasUri);
+            }
+            return containerClient;
         }
 
         /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
-        public DatasetVersion UploadFile(string name, string version, string filePath, string? connectionName = null)
+        public Response<FileDatasetVersion> UploadFile(string name, string version, string filePath, string? connectionName = null)
         {
             if (!File.Exists(filePath))
             {
@@ -78,16 +101,16 @@ namespace Azure.AI.Projects
 
                 RequestContent content = new FileDatasetVersion(dataUri: dataUri).ToRequestContent();
 
-                CreateOrUpdate(name, outputVersion, content);
+                Response response = CreateOrUpdate(name, outputVersion, content);
 
-                return GetDataset(name, outputVersion);
+                return Response.FromValue(FileDatasetVersion.FromResponse(response), response);
             }
         }
 
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public DatasetVersion UploadFolder(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
+        public Response<FolderDatasetVersion> UploadFolder(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -123,9 +146,9 @@ namespace Azure.AI.Projects
             Uri dataUri = uriBuilder.Uri;
 
             RequestContent content = new FolderDatasetVersion(dataUri: dataUri).ToRequestContent();
-            CreateOrUpdate(name, outputVersion, content);
+            Response response = CreateOrUpdate(name, outputVersion, content);
 
-            return GetDataset(name, outputVersion);
+            return Response.FromValue(FolderDatasetVersion.FromResponse(response), response);
         }
 
         /// <summary>
@@ -133,7 +156,7 @@ namespace Azure.AI.Projects
         /// </summary>
         private async Task<(BlobContainerClient ContainerClient, string OutputVersion)> CreateDatasetAndGetContainerClientAsync(string name, string inputVersion, string? connectionName = null)
         {
-            var pendingUploadRequest = new PendingUploadRequest(
+            PendingUploadRequest pendingUploadRequest = new(
                 pendingUploadId: null,
                 connectionName: connectionName,
                 pendingUploadType: PendingUploadType.BlobReference,
@@ -147,27 +170,13 @@ namespace Azure.AI.Projects
 
             string outputVersion = inputVersion;
 
-            if (pendingUploadResponse.BlobReference == null)
-            {
-                throw new InvalidOperationException("Blob reference is not present.");
-            }
-            if (pendingUploadResponse.BlobReference.Credential == null)
-            {
-                throw new InvalidOperationException("SAS credential is not present.");
-            }
-            if (pendingUploadResponse.BlobReference.Credential.SasUri == null)
-            {
-                throw new InvalidOperationException("SAS URI is missing or empty.");
-            }
-
-            var containerClient = new BlobContainerClient(pendingUploadResponse.BlobReference.Credential.SasUri);
-            return (containerClient, outputVersion);
+            return (GetContainerClientOrRaise(pendingUploadResponse), outputVersion);
         }
 
         /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
-        public async Task<DatasetVersion> UploadFileAsync(string name, string version, string filePath, string? connectionName = null)
+        public async Task<FileDatasetVersion> UploadFileAsync(string name, string version, string filePath, string? connectionName = null)
         {
             if (!File.Exists(filePath))
             {
@@ -187,16 +196,16 @@ namespace Azure.AI.Projects
 
                 RequestContent content = new FileDatasetVersion(dataUri: dataUri).ToRequestContent();
 
-                await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
+                Response response = await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
 
-                return await GetDatasetAsync(name, outputVersion).ConfigureAwait(false);
+                return Response.FromValue(FileDatasetVersion.FromResponse(response), response);
             }
         }
 
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public async Task<DatasetVersion> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
+        public async Task<FolderDatasetVersion> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -232,9 +241,9 @@ namespace Azure.AI.Projects
             Uri dataUri = uriBuilder.Uri;
 
             RequestContent content = new FolderDatasetVersion(dataUri: dataUri).ToRequestContent();
-            await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
+            Response response = await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
 
-            return await GetDatasetAsync(name, outputVersion).ConfigureAwait(false);
+            return Response.FromValue(FolderDatasetVersion.FromResponse(response), response);
         }
     }
 }
