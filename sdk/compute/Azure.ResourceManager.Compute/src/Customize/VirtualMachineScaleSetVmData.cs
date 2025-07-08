@@ -182,5 +182,19 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DateTimeOffset? TimeCreated => Properties?.TimeCreated;
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        internal VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, VirtualMachineScaleSetVmProperties properties, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, ManagedServiceIdentity identity, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        {
+            InstanceId = instanceId;
+            Sku = sku;
+            Properties = properties;
+            Plan = plan;
+            Resources = resources;
+            Zones = zones;
+            Identity = identity;
+            ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
     }
 }
