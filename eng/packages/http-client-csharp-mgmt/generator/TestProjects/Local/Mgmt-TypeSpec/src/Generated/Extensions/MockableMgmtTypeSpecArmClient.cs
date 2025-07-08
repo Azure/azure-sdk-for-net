@@ -34,5 +34,14 @@ namespace MgmtTypeSpec.Mocking
             FooResource.ValidateResourceId(id);
             return new FooResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
+        public virtual FooSettingsResource GetFooSettingsResource(ResourceIdentifier id)
+        {
+            FooSettingsResource.ValidateResourceId(id);
+            return new FooSettingsResource(Client, id);
+        }
     }
 }

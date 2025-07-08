@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -44,12 +45,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
         #region ctors
         /// <summary>
         /// <para>
-        /// Constructs this provider to use no credentials when making a new Blob Storage
+        /// Constructs this provider to use no credentials when making a new Share File Storage
         /// <see cref="StorageResource"/>.
         /// </para>
         /// <para>
         /// This instance will NOT use any credential when constructing the underlying
-        /// Azure.Storage.Blobs client, e.g. <see cref="ShareFileClient(Uri, ShareClientOptions)"/>.
+        /// Azure.Storage.Files.Shares client, e.g. <see cref="ShareFileClient(Uri, ShareClientOptions)"/>.
         /// This is for the purpose of either anonymous access when constructing the client.
         /// </para>
         /// </summary>
@@ -280,15 +281,20 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            ShareClientOptions clientOptions = GetUserAgentClientOptions();
+
+            ShareDirectoryClient CreateTokenClient()
+            {
+                clientOptions.ShareTokenIntent = ShareTokenIntent.Backup;
+                return new ShareDirectoryClient(directoryUri, _tokenCredential, clientOptions);
+            }
+
             ShareDirectoryClient client = _credentialType switch
             {
-                CredentialType.None => new ShareDirectoryClient(directoryUri),
-                CredentialType.SharedKey => new ShareDirectoryClient(directoryUri, await _getStorageSharedKeyCredential(directoryUri, cancellationToken).ConfigureAwait(false)),
-                CredentialType.Token => new ShareDirectoryClient(
-                    directoryUri,
-                    _tokenCredential,
-                    new ShareClientOptions { ShareTokenIntent = ShareTokenIntent.Backup }),
-                CredentialType.Sas => new ShareDirectoryClient(directoryUri, await _getAzureSasCredential(directoryUri, cancellationToken).ConfigureAwait(false)),
+                CredentialType.None => new ShareDirectoryClient(directoryUri, clientOptions),
+                CredentialType.SharedKey => new ShareDirectoryClient(directoryUri, await _getStorageSharedKeyCredential(directoryUri, cancellationToken).ConfigureAwait(false), clientOptions),
+                CredentialType.Token => CreateTokenClient(),
+            CredentialType.Sas => new ShareDirectoryClient(directoryUri, await _getAzureSasCredential(directoryUri, cancellationToken).ConfigureAwait(false), clientOptions),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new ShareDirectoryStorageResourceContainer(client, options);
@@ -316,15 +322,20 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            ShareClientOptions clientOptions = GetUserAgentClientOptions();
+
+            ShareFileClient CreateTokenClient()
+            {
+                clientOptions.ShareTokenIntent = ShareTokenIntent.Backup;
+                return new ShareFileClient(fileUri, _tokenCredential, clientOptions);
+            }
+
             ShareFileClient client = _credentialType switch
             {
-                CredentialType.None => new ShareFileClient(fileUri),
-                CredentialType.SharedKey => new ShareFileClient(fileUri, await _getStorageSharedKeyCredential(fileUri, cancellationToken).ConfigureAwait(false)),
-                CredentialType.Token => new ShareFileClient(
-                    fileUri,
-                    _tokenCredential,
-                    new ShareClientOptions { ShareTokenIntent = ShareTokenIntent.Backup }),
-                CredentialType.Sas => new ShareFileClient(fileUri, await _getAzureSasCredential(fileUri, cancellationToken).ConfigureAwait(false)),
+                CredentialType.None => new ShareFileClient(fileUri, clientOptions),
+                CredentialType.SharedKey => new ShareFileClient(fileUri, await _getStorageSharedKeyCredential(fileUri, cancellationToken).ConfigureAwait(false), clientOptions),
+                CredentialType.Token => CreateTokenClient(),
+                CredentialType.Sas => new ShareFileClient(fileUri, await _getAzureSasCredential(fileUri, cancellationToken).ConfigureAwait(false), clientOptions),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new ShareFileStorageResource(client, options);
@@ -378,5 +389,24 @@ namespace Azure.Storage.DataMovement.Files.Shares
         private static ArgumentException BadCredentialTypeException(CredentialType credentialType)
             => new ArgumentException(
                 $"No support for credential type {Enum.GetName(typeof(CredentialType), credentialType)}.");
+
+        private static ShareClientOptions GetUserAgentClientOptions()
+        {
+            ShareClientOptions options = new ShareClientOptions();
+
+            // We grab the assembly of ShareFilesStorageResourceProvider which is Azure.Storage.DataMovement.Files.Shares.
+            // From there we can grab the version of the Assembly.
+            Assembly assembly = typeof(ShareFilesStorageResourceProvider).Assembly;
+            AssemblyInformationalVersionAttribute versionAttribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            if (versionAttribute == null)
+            {
+                throw Azure.Storage.Errors.RequiredVersionClientAssembly(assembly, versionAttribute);
+            }
+            // Now using a policy, update the user agent string with the version and add the policy
+            // to the client options.
+            DataMovementUserAgentPolicy policy = new(versionAttribute.InformationalVersion);
+            options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+            return options;
+        }
     }
 }

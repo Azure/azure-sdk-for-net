@@ -37,6 +37,7 @@ public partial class Sample_PersistentAgents_Sharepoint : SamplesBase<AIAgentsTe
         );
         #endregion
         #region Snippet:AgentsSharepointAsync_CreateAgent
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
         PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
            model: modelDeploymentName,
            name: "my-agent",
@@ -103,6 +104,7 @@ public partial class Sample_PersistentAgents_Sharepoint : SamplesBase<AIAgentsTe
         }
         #endregion
         #region Snippet:AgentsSharepointAsync_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         await agentClient.Threads.DeleteThreadAsync(threadId: thread.Id);
         await agentClient.Administration.DeleteAgentAsync(agentId: agent.Id);
         #endregion
@@ -128,6 +130,7 @@ public partial class Sample_PersistentAgents_Sharepoint : SamplesBase<AIAgentsTe
             )
         );
         #region Snippet:AgentsSharepoint_CreateAgent
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
         PersistentAgent agent = agentClient.Administration.CreateAgent(
            model: modelDeploymentName,
            name: "my-agent",
@@ -194,6 +197,7 @@ public partial class Sample_PersistentAgents_Sharepoint : SamplesBase<AIAgentsTe
         }
         #endregion
         #region Snippet:AgentsSharepoint_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         agentClient.Threads.DeleteThread(threadId: thread.Id);
         agentClient.Administration.DeleteAgent(agentId: agent.Id);
         #endregion

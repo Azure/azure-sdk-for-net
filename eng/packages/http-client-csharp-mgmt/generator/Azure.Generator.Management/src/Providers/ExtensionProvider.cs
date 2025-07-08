@@ -64,7 +64,7 @@ namespace Azure.Generator.Management.Providers
             var methodSignature = new MethodSignature(
                 $"Get{mockableResource.Name}",
                 null,
-                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                MethodSignatureModifiers.Private | MethodSignatureModifiers.Static,
                 mockableResource.Type,
                 null,
                 [parameter]);

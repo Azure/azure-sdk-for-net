@@ -128,6 +128,7 @@ public partial class RoleManagementPolicyAssignment : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _policyId = DefineProperty<ResourceIdentifier>("PolicyId", ["properties", "policyId"]);
         _roleDefinitionId = DefineProperty<ResourceIdentifier>("RoleDefinitionId", ["properties", "roleDefinitionId"]);

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater in length than 128 characters and a value no greater in length than 256 characters. </param>
         /// <param name="properties"> Properties of the storage task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, StorageTaskProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, StorageTaskUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Tags = tags;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <summary> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater in length than 128 characters and a value no greater in length than 256 characters. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Properties of the storage task. </summary>
-        public StorageTaskProperties Properties { get; set; }
+        public StorageTaskUpdateProperties Properties { get; set; }
     }
 }
