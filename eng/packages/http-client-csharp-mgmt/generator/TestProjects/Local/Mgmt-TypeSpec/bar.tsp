@@ -41,3 +41,21 @@ interface Bars {
 
   list is ArmResourceListByParent<Bar>;
 }
+
+@singleton("current")
+@parentResource(Bar)
+model BarSettings is ProxyResource<BarSettingsProperties> {
+  ...ResourceNameParameter<BarSettings, SegmentName = "settings">;
+}
+
+model BarSettingsProperties {
+  /** enabled */
+  isEnabled?: boolean;
+}
+
+@armResourceOperations
+interface BarSettingsOperations {
+  createOrUpdate is ArmResourceCreateOrUpdateAsync<BarSettings>;
+  
+  get is ArmResourceRead<BarSettings>;
+}

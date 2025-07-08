@@ -147,5 +147,31 @@ namespace MgmtTypeSpec.Models
                 doubleValue,
                 additionalBinaryDataProperties: null);
         }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name"> The name of the BarSettings. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsData"/> instance for mocking. </returns>
+        public static BarSettingsData BarSettingsData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, BarSettingsProperties properties = default, string name = default)
+        {
+            return new BarSettingsData(
+                id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                name);
+        }
+
+        /// <summary> The BarSettingsProperties. </summary>
+        /// <param name="isEnabled"> enabled. </param>
+        /// <returns> A new <see cref="Models.BarSettingsProperties"/> instance for mocking. </returns>
+        public static BarSettingsProperties BarSettingsProperties(bool? isEnabled = default)
+        {
+            return new BarSettingsProperties(isEnabled, additionalBinaryDataProperties: null);
+        }
     }
 }

@@ -90,6 +90,9 @@ namespace Azure.Generator.Management.Providers
 
         protected override PropertyProvider[] BuildProperties() => [];
 
+        private protected override IReadOnlyList<ResourceClientProvider> BuildChildResources()
+            => []; // collections should not have child resources.
+
         protected override FieldProvider[] BuildFields() => [_clientDiagnosticsField, _clientField];
 
         protected override ConstructorProvider[] BuildConstructors()

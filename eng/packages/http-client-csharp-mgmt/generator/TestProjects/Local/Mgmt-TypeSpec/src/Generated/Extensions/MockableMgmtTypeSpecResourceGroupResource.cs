@@ -103,5 +103,12 @@ namespace MgmtTypeSpec.Mocking
 
             return await GetBars().GetAsync(barName, cancellationToken).ConfigureAwait(false);
         }
+
+        /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
+        public virtual BarSettingsResource GetBarSettings()
+        {
+            return new BarSettingsResource(Client, (ResourceIdentifier)null);
+        }
     }
 }

@@ -544,5 +544,12 @@ namespace MgmtTypeSpec
                 throw;
             }
         }
+
+        /// <summary> Gets an object representing a BarSettings along with the instance operations that can be performed on it in the Bar. </summary>
+        /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
+        public virtual BarSettingsResource GetBarSettings()
+        {
+            return new BarSettingsResource(Client, Id.AppendChildResource("settings", "current"));
+        }
     }
 }

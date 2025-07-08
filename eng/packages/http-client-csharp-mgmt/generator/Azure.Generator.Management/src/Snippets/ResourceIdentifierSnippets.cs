@@ -42,5 +42,16 @@ namespace Azure.Generator.Management.Snippets
                 [providerNamespace, resourceType, resourceName])
                 .As<ResourceIdentifier>();
         }
+
+        public static ScopedApi<ResourceIdentifier> AppendChildResource(
+            this ScopedApi<ResourceIdentifier> resourceIdentifier,
+            ValueExpression childResourceType,
+            ValueExpression childResourceName)
+        {
+            return resourceIdentifier.Invoke(
+                nameof(ResourceIdentifier.AppendChildResource),
+                [childResourceType, childResourceName])
+                .As<ResourceIdentifier>();
+        }
     }
 }

@@ -67,6 +67,18 @@ namespace MgmtTypeSpec
             return GetMockableMgmtTypeSpecArmClient(client).GetBarResource(id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
+        public static BarSettingsResource GetBarSettingsResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetBarSettingsResource(id);
+        }
+
         /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
@@ -154,6 +166,17 @@ namespace MgmtTypeSpec
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
 
             return await GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetBarAsync(barName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
+        public static BarSettingsResource GetBarSettings(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetBarSettings();
         }
     }
 }

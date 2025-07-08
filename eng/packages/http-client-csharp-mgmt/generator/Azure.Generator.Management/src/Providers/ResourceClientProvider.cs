@@ -11,6 +11,7 @@ using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
+using Humanizer;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -35,7 +36,7 @@ namespace Azure.Generator.Management.Providers
     /// </summary>
     internal class ResourceClientProvider : TypeProvider
     {
-        public static ResourceClientProvider Create(InputModelType model, ResourceMetadata resourceMetadata)
+        internal static ResourceClientProvider Create(InputModelType model, ResourceMetadata resourceMetadata)
         {
             var resource = new ResourceClientProvider(model, resourceMetadata);
             if (!resource.IsSingleton)
@@ -108,6 +109,29 @@ namespace Azure.Generator.Management.Providers
         public bool IsSingleton => SingletonResourceName is not null;
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
+
+        private IReadOnlyList<ResourceClientProvider>? _childResources;
+        public IReadOnlyList<ResourceClientProvider> ChildResources => _childResources ??= BuildChildResources();
+
+        private protected virtual IReadOnlyList<ResourceClientProvider> BuildChildResources()
+        {
+            // first we find all the resources from the output library
+            var allResources = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                // we have to do this because the ResourceCollectionClientProvider inherits ResourceClientProvider, but they are not resources.
+                .Where(r => r is not ResourceCollectionClientProvider);
+
+            var childResources = new List<ResourceClientProvider>();
+            foreach (var candidate in allResources)
+            {
+                // check if the request path of this resource, is the same as the parent resource request path of the candidate.
+                if (_resourceMetadata.ResourceIdPattern == candidate._resourceMetadata.ParentResourceId)
+                {
+                    childResources.Add(candidate);
+                }
+            }
+            return childResources;
+        }
 
         protected override FieldProvider[] BuildFields() => [_clientDiagnosticsField, _clientField, _dataField, _resourceTypeField];
 
@@ -373,9 +397,45 @@ namespace Azure.Generator.Management.Providers
                 ]);
             }
 
-            // TODO -- add method to get the child resource collection from the current resource.
+            // add method to get the child resource collection from the current resource.
+            foreach (var childResource in ChildResources)
+            {
+                methods.Add(BuildGetChildResourceMethod(childResource));
+            }
 
             return [.. methods];
+        }
+
+        private MethodProvider BuildGetChildResourceMethod(ResourceClientProvider childResource)
+        {
+            var thisResource = This.As<ArmResource>();
+            if (childResource.IsSingleton)
+            {
+                var signature = new MethodSignature(
+                    $"Get{childResource.SpecName}",
+                    $"Gets an object representing a {childResource.SpecName} along with the instance operations that can be performed on it in the {SpecName}.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                    childResource.Type,
+                    $"Returns a {childResource.Type:C} object.",
+                    []);
+                var lastSegment = childResource.ResourceTypeValue.Split('/')[^1];
+                var bodyStatement = Return(New.Instance(childResource.Type, thisResource.Client(), thisResource.Id().AppendChildResource(Literal(lastSegment), Literal(childResource.SingletonResourceName!))));
+                return new MethodProvider(signature, bodyStatement, this);
+            }
+            else
+            {
+                Debug.Assert(childResource.ResourceCollection is not null, "Child resource collection should not be null for non-singleton resources.");
+                var pluralChildResourceName = childResource.SpecName.Pluralize();
+                var signature = new MethodSignature(
+                    $"Get{pluralChildResourceName}",
+                    $"Gets a collection of {pluralChildResourceName} in the {SpecName}.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                    childResource.ResourceCollection.Type,
+                    $"An object representing collection of {pluralChildResourceName} and their operations over a {SpecName}.",
+                    []);
+                var bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(childResource.ResourceCollection.Type, client, thisResource.Id())));
+                return new MethodProvider(signature, bodyStatement, this);
+            }
         }
 
         private bool ShouldGenerateTagMethods(InputModelType model)
