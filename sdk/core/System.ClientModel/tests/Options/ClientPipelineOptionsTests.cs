@@ -193,25 +193,6 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
             => options.ClientLoggingOptions.EnableLogging = true);
         Assert.Throws<InvalidOperationException>(()
             => options.EnableDistributedTracing = true);
-        Assert.Throws<InvalidOperationException>(()
-            => options.EnableUserAgentTelemetry = true);
-    }
-
-    [Test]
-    public void CanSetEnableUserAgentTelemetry()
-    {
-        ClientPipelineOptions options = new();
-
-        // Default value should be false
-        Assert.IsFalse(options.EnableUserAgentTelemetry);
-
-        // Should be able to set to true
-        options.EnableUserAgentTelemetry = true;
-        Assert.IsTrue(options.EnableUserAgentTelemetry);
-
-        // Should be able to set back to false
-        options.EnableUserAgentTelemetry = false;
-        Assert.IsFalse(options.EnableUserAgentTelemetry);
     }
 
     #region Helpers

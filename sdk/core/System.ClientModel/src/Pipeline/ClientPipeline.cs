@@ -117,7 +117,6 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
-        pipelineLength += options.EnableUserAgentTelemetry ? 1 : 0; // for telemetry policy
         pipelineLength += options.AddMessageLoggingPolicy ? 1 : 0; // for message logging policy
         pipelineLength++; // for transport
 
@@ -151,12 +150,6 @@ public sealed partial class ClientPipeline
         }
 
         int perTryIndex = index;
-
-        // Add telemetry policy if enabled.
-        if (options.EnableUserAgentTelemetry)
-        {
-            policies[index++] = ClientPipeline.CreateTelemetryPolicy(options);
-        }
 
         // Add logging policy just before the transport.
 
@@ -280,14 +273,6 @@ public sealed partial class ClientPipeline
 
         IEnumerator IEnumerable.GetEnumerator()
             => GetEnumerator();
-    }
-
-    // internal for testing
-    internal static TelemetryPolicy CreateTelemetryPolicy(ClientPipelineOptions options)
-    {
-        var type = options.GetType();
-        var telemetryDetails = new ClientTelemetryDetails(type.Assembly);
-        return new TelemetryPolicy(telemetryDetails);
     }
 
     private class PolicyEnumerator : IEnumerator<PipelinePolicy>

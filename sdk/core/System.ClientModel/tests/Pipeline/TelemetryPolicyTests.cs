@@ -18,7 +18,7 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task UserAgentTelemetryDisabledByDefault()
+    public async Task UserAgentTelemetryNotIncludedByDefault()
     {
         ClientPipelineOptions options = new()
         {
@@ -32,12 +32,12 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        // User-Agent header should not be present when telemetry is disabled
+        // User-Agent header should not be present when telemetry policy is not added
         Assert.IsFalse(message.Request.Headers.TryGetValue("User-Agent", out _));
     }
 
     [Test]
-    public async Task UserAgentTelemetryAddsHeaderWhenEnabled()
+    public async Task UserAgentTelemetryAddsHeaderWhenPolicyIncluded()
     {
         MockPipelineTransport transport = new("Transport", 200);
         PipelineRequest? capturedRequest = null;
@@ -49,9 +49,13 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
 
         ClientPipelineOptions options = new()
         {
-            EnableUserAgentTelemetry = true,
             Transport = transport
         };
+
+        // Library author explicitly adds telemetry policy
+        var telemetryDetails = new ClientTelemetryDetails(Assembly.GetExecutingAssembly());
+        var telemetryPolicy = new TelemetryPolicy(telemetryDetails);
+        options.AddPolicy(telemetryPolicy, PipelinePosition.PerTry);
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
         PipelineMessage message = pipeline.CreateMessage();
@@ -60,13 +64,13 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        // User-Agent header should be present when telemetry is enabled
+        // User-Agent header should be present when telemetry policy is included
         Assert.IsNotNull(capturedRequest);
         Assert.IsTrue(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent));
         Assert.IsNotNull(userAgent);
 
         // Should contain assembly name and version
-        Assert.That(userAgent, Does.Contain("System.ClientModel"));
+        Assert.That(userAgent, Does.Contain("ClientModel.Tests"));
     }
 
     [Test]
@@ -82,9 +86,13 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
 
         ClientPipelineOptions options = new()
         {
-            EnableUserAgentTelemetry = true,
             Transport = transport
         };
+
+        // Library author explicitly adds telemetry policy
+        var telemetryDetails = new ClientTelemetryDetails(Assembly.GetExecutingAssembly());
+        var telemetryPolicy = new TelemetryPolicy(telemetryDetails);
+        options.AddPolicy(telemetryPolicy, PipelinePosition.PerTry);
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
         PipelineMessage message = pipeline.CreateMessage();
