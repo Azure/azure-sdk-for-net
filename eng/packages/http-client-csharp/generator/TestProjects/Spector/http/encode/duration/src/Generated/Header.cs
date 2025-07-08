@@ -16,9 +16,11 @@ namespace Encode.Duration._Header
 {
     public partial class Header
     {
-        protected Header() => throw null;
+        public Header() 
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => null;
 
         public virtual Response Default(TimeSpan duration, RequestContext context) => throw null;
 

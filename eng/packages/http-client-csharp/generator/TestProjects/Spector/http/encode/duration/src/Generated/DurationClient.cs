@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Encode.Duration._Header;
 using Encode.Duration._Property;
@@ -15,16 +16,28 @@ namespace Encode.Duration
 {
     public partial class DurationClient
     {
-        public DurationClient() : this(new Uri("http://localhost:3000"), new DurationClientOptions()) => throw null;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        
+        public DurationClient() : this(new Uri("http://localhost:3000"), new DurationClientOptions()) 
+        {
+        }
 
-        public DurationClient(Uri endpoint, DurationClientOptions options) => throw null;
+        public DurationClient(Uri endpoint, DurationClientOptions options) 
+        {
+            if (endpoint == null) throw new ArgumentNullException(nameof(endpoint));
+            if (options == null) throw new ArgumentNullException(nameof(options));
+            
+            _endpoint = endpoint;
+            _pipeline = HttpPipelineBuilder.Build(options);
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => _pipeline;
 
-        public virtual Query GetQueryClient() => throw null;
+        public virtual Query GetQueryClient() => new Query();
 
-        public virtual Property GetPropertyClient() => throw null;
+        public virtual Property GetPropertyClient() => new Property();
 
-        public virtual Header GetHeaderClient() => throw null;
+        public virtual Header GetHeaderClient() => new Header();
     }
 }

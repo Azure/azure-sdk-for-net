@@ -15,13 +15,27 @@ namespace Encode.Duration._Property
 {
     public partial class FloatSecondsDurationProperty : IJsonModel<FloatSecondsDurationProperty>
     {
-        internal FloatSecondsDurationProperty() => throw null;
+        internal FloatSecondsDurationProperty() 
+        {
+        }
 
-        void IJsonModel<FloatSecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<FloatSecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) 
+        {
+            JsonModelWriteCore(writer, options);
+        }
 
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) 
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteNumberValue((float)Value.TotalSeconds);
+            writer.WriteEndObject();
+        }
 
-        FloatSecondsDurationProperty IJsonModel<FloatSecondsDurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        FloatSecondsDurationProperty IJsonModel<FloatSecondsDurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) 
+        {
+            return JsonModelCreateCore(ref reader, options);
+        }
 
         protected virtual FloatSecondsDurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
