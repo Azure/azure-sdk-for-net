@@ -206,6 +206,10 @@
     <PackageReference Update="NUnit" Version="3.13.2" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.AI.Agents.Persistent'))">
+    <PackageReference Update="Microsoft.Extensions.AI.Abstractions" Version="9.6.0"/>
+  </ItemGroup>
+
   <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.Projects'))">
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.6.0"/>
     <PackageReference Update="Azure.Provisioning.Deployment" Version="1.0.0-beta.2"/>

@@ -3,7 +3,7 @@
 
 namespace Azure.AI.Agents.Persistent
 {
-    internal class PersistantAgensConstants
+    internal class PersistentAgentsConstants
     {
         public const string UseOldConnectionString = "Azure.AI.Agents.Persistent.Internal.UseConnectionString";
         public const string UseOldConnectionStringEnvVar = "_IS_TEST_RUN";
