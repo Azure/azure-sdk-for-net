@@ -16,6 +16,18 @@ namespace Azure.Generator.Management.Snippets
         public static ScopedApi<ResourceType> ResourceType(this ScopedApi<ResourceIdentifier> resourceIdentifier)
             => resourceIdentifier.Property(nameof(ResourceIdentifier.ResourceType)).As<ResourceType>();
 
+        public static ScopedApi<string> SubscriptionId(this ScopedApi<ResourceIdentifier> resourceIdentifier)
+            => resourceIdentifier.Property(nameof(ResourceIdentifier.SubscriptionId)).As<string>();
+
+        public static ScopedApi<string> ResourceGroupName(this ScopedApi<ResourceIdentifier> resourceIdentifier)
+            => resourceIdentifier.Property(nameof(ResourceIdentifier.ResourceGroupName)).As<string>();
+
+        public static ScopedApi<string> Name(this ScopedApi<ResourceIdentifier> resourceIdentifier)
+            => resourceIdentifier.Property(nameof(ResourceIdentifier.Name)).As<string>();
+
+        public static ScopedApi<ResourceIdentifier> Parent(this ScopedApi<ResourceIdentifier> resourceIdentifier)
+            => resourceIdentifier.Property(nameof(ResourceIdentifier.Parent)).As<ResourceIdentifier>();
+
         public static ScopedApi<ResourceIdentifier> AppendProviderResource(
             this ScopedApi<ResourceIdentifier> resourceIdentifier,
             ValueExpression providerNamespace,

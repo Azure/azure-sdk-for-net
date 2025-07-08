@@ -19,6 +19,7 @@ namespace Azure.Generator.Management.Models
         public const string SubscriptionScopePrefix = "/subscriptions";
         public const string TenantScopePrefix = "/tenants";
         public const string Providers = "/providers";
+        private const string ProvidersKey = "providers";
 
         public static readonly RequestPathPattern ManagementGroup = new("/providers/Microsoft.Management/managementGroups/{managementGroupId}");
         public static readonly RequestPathPattern ResourceGroup = new("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
@@ -113,6 +114,30 @@ namespace Azure.Generator.Management.Models
                 return true;
             }
             return false;
+        }
+
+        public RequestPathPattern GetParent()
+        {
+            // if the request path has 0 or 1 segment, we call its parent the Tenant.
+            if (Count < 2)
+            {
+                return Tenant;
+            }
+
+            // otherwise, we try to remove its last two segments
+            if (Count < 4)
+            {
+                // if there are no more 4 segments, we trim off the last two segments as its parent
+                return new RequestPathPattern(_segments.Take(Count - 2));
+            }
+            // if there are 4 or more segments, we need to check if we trim off the last two segments, we get a `providers` segment pair
+            // if so, we trim 4 segments instead of 2.
+            if (_segments[^4].IsConstant && _segments[^4].Value == ProvidersKey)
+            {
+                return new RequestPathPattern(_segments.Take(Count - 4));
+            }
+            // otherwise, we return the parent by removing its last two segments
+            return new RequestPathPattern(_segments.Take(Count - 2));
         }
 
         public bool Equals(RequestPathPattern? other)

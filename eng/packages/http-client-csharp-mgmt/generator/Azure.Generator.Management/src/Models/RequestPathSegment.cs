@@ -26,6 +26,12 @@ namespace Azure.Generator.Management.Models
         }
 
         /// <summary>
+        /// Returns the literal value of this segment.
+        /// For a variable, it would return a string with the curly braces.
+        /// </summary>
+        public string Value => _value;
+
+        /// <summary>
         /// Returns true if this segment is a constant segment (i.e., it is not enclosed in curly braces).
         /// </summary>
         public bool IsConstant => _isConstant;

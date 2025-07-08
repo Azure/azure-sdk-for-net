@@ -80,8 +80,6 @@ namespace Azure.Generator.Management.Providers
             var inputClients = resourceMetadata.Methods.Select(m => ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!)!).Distinct();
             _restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClients.First())!;
 
-            ContextualParameters = GetContextualParameters(_resourceIdPattern);
-
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
             _clientDiagnosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), $"_{SpecName.ToLower()}ClientDiagnostics", this);
             _clientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, _restClientProvider.Type, $"_{SpecName.ToLower()}RestClient", this);
@@ -90,20 +88,6 @@ namespace Azure.Generator.Management.Providers
         internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
 
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
-
-        private IReadOnlyList<string> GetContextualParameters(string contextualRequestPath)
-        {
-            var contextualParametersList = new List<string>();
-            var contextualSegments = new RequestPathPattern(contextualRequestPath);
-            foreach (var segment in contextualSegments)
-            {
-                if (!segment.IsConstant)
-                {
-                    contextualParametersList.Add(segment.VariableName);
-                }
-            }
-            return contextualParametersList;
-        }
 
         protected override string BuildName() => $"{SpecName}Resource";
 
@@ -318,13 +302,30 @@ namespace Azure.Generator.Management.Providers
         internal ScopedApi<ClientDiagnostics> GetClientDiagnosticsField() => _clientDiagnosticsField.As<ClientDiagnostics>();
         internal ValueExpression GetRestClientField() => _clientField;
         internal ClientProvider GetClientProvider() => _restClientProvider;
-        internal IReadOnlyList<string> ContextualParameters { get; }
+
+        private IReadOnlyList<string>? _contextualParameters;
+
+        internal IReadOnlyList<string> ContextualParameters => _contextualParameters ??= BuildContextualParameters(_resourceIdPattern);
+
+        private protected virtual IReadOnlyList<string> BuildContextualParameters(string contextualRequestPath)
+        {
+            var contextualParametersList = new List<string>();
+            var contextualSegments = new RequestPathPattern(contextualRequestPath);
+            foreach (var segment in contextualSegments)
+            {
+                if (!segment.IsConstant)
+                {
+                    contextualParametersList.Add(segment.VariableName);
+                }
+            }
+            return contextualParametersList;
+        }
 
         /// <summary>
         /// Gets the collection of parameter names that are implicitly available from the resource context
         /// and should be excluded from method parameters.
         /// </summary>
-        internal virtual IReadOnlyList<string> ImplicitParameterNames => ContextualParameters;
+        internal virtual IReadOnlyList<string> ImplicitParameterNames => ContextualParameters; // TODO -- collection just need to override the `BuildContextualParameters` method.
 
         protected override CSharpType? GetBaseType() => typeof(ArmResource);
 

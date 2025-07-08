@@ -235,6 +235,6 @@ namespace Azure.Generator.Management.Providers
 
                 return ContextualParameters;
             }
-    }
+        }
     }
 }
