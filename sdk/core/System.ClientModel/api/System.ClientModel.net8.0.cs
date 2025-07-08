@@ -205,13 +205,7 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class ClientTelemetryDetails
-    {
-        public ClientTelemetryDetails(System.Reflection.Assembly assembly, string? applicationId = null) { }
-        public string? ApplicationId { get { throw null; } }
-        public System.Reflection.Assembly Assembly { get { throw null; } }
-        public override string ToString() { throw null; }
-    }
+
     public abstract partial class CollectionResult
     {
         protected CollectionResult() { }
@@ -447,7 +441,9 @@ namespace System.ClientModel.Primitives
     }
     public partial class TelemetryPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public TelemetryPolicy(System.ClientModel.Primitives.ClientTelemetryDetails telemetryDetails) { }
+        public TelemetryPolicy(System.Reflection.Assembly assembly, string? applicationId = null) { }
+        public string? ApplicationId { get { throw null; } }
+        public System.Reflection.Assembly Assembly { get { throw null; } }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }

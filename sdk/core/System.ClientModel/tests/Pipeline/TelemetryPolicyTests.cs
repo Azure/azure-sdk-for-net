@@ -53,8 +53,7 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
         };
 
         // Library author explicitly adds telemetry policy
-        var telemetryDetails = new ClientTelemetryDetails(Assembly.GetExecutingAssembly());
-        var telemetryPolicy = new TelemetryPolicy(telemetryDetails);
+        var telemetryPolicy = new TelemetryPolicy(Assembly.GetExecutingAssembly());
         options.AddPolicy(telemetryPolicy, PipelinePosition.PerTry);
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -74,13 +73,36 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void ClientTelemetryDetailsGeneratesValidUserAgent()
+    public void TelemetryPolicyGeneratesValidUserAgent()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
-        ClientTelemetryDetails telemetryDetails = new(assembly);
+        TelemetryPolicy telemetryPolicy = new(assembly);
 
-        string userAgent = telemetryDetails.ToString();
+        // Create a mock transport and add telemetry policy to verify behavior
+        MockPipelineTransport transport = new("Transport", 200);
+        PipelineRequest? capturedRequest = null;
 
+        transport.OnSendingRequest = (message) =>
+        {
+            capturedRequest = message.Request;
+        };
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = transport
+        };
+        options.AddPolicy(telemetryPolicy, PipelinePosition.PerTry);
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Uri = new Uri("https://example.com");
+        message.Request.Method = "GET";
+
+        // Send through pipeline to test telemetry functionality
+        pipeline.Send(message);
+
+        Assert.IsNotNull(capturedRequest);
+        Assert.IsTrue(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent));
         Assert.IsNotNull(userAgent);
         Assert.IsNotEmpty(userAgent);
 
@@ -94,29 +116,54 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void ClientTelemetryDetailsWithApplicationId()
+    public void TelemetryPolicyWithApplicationId()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
         string applicationId = "TestApp/2.0";
-        ClientTelemetryDetails telemetryDetails = new(assembly, applicationId);
+        TelemetryPolicy telemetryPolicy = new(assembly, applicationId);
 
-        string userAgent = telemetryDetails.ToString();
+        // Verify the application ID is used by checking the properties
+        Assert.AreEqual(applicationId, telemetryPolicy.ApplicationId);
 
+        // Also verify by processing a message and checking the header through the pipeline
+        MockPipelineTransport transport = new("Transport", 200);
+        PipelineRequest? capturedRequest = null;
+
+        transport.OnSendingRequest = (message) =>
+        {
+            capturedRequest = message.Request;
+        };
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = transport
+        };
+        options.AddPolicy(telemetryPolicy, PipelinePosition.PerTry);
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Uri = new Uri("https://example.com");
+        message.Request.Method = "GET";
+
+        pipeline.Send(message);
+
+        Assert.IsNotNull(capturedRequest);
+        Assert.IsTrue(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent));
         Assert.That(userAgent, Does.StartWith(applicationId));
     }
 
     [Test]
-    public void ClientTelemetryDetailsThrowsForLongApplicationId()
+    public void TelemetryPolicyThrowsForLongApplicationId()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
         string longApplicationId = new string('a', 30); // More than 24 characters
 
-        Assert.Throws<ArgumentOutOfRangeException>(() => new ClientTelemetryDetails(assembly, longApplicationId));
+        Assert.Throws<ArgumentOutOfRangeException>(() => new TelemetryPolicy(assembly, longApplicationId));
     }
 
     [Test]
-    public void ClientTelemetryDetailsThrowsForNullAssembly()
+    public void TelemetryPolicyThrowsForNullAssembly()
     {
-        Assert.Throws<ArgumentNullException>(() => new ClientTelemetryDetails(null!));
+        Assert.Throws<ArgumentNullException>(() => new TelemetryPolicy(null!));
     }
 }
