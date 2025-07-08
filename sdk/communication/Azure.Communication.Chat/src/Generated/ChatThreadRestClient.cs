@@ -876,7 +876,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateUpdateChatThreadPropertiesRequest(string chatThreadId, string topic, IDictionary<string, string> metadata, ChatRetentionPolicy retentionPolicy)
+        internal HttpMessage CreateUpdateChatThreadPropertiesRequest(string chatThreadId, string topic, IDictionary<string, string> metadata, ChatRetentionPolicyInternal retentionPolicy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -915,7 +915,7 @@ namespace Azure.Communication.Chat
         /// <param name="retentionPolicy"> Data retention policy for auto deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response> UpdateChatThreadPropertiesAsync(string chatThreadId, string topic = null, IDictionary<string, string> metadata = null, ChatRetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateChatThreadPropertiesAsync(string chatThreadId, string topic = null, IDictionary<string, string> metadata = null, ChatRetentionPolicyInternal retentionPolicy = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -940,7 +940,7 @@ namespace Azure.Communication.Chat
         /// <param name="retentionPolicy"> Data retention policy for auto deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public Response UpdateChatThreadProperties(string chatThreadId, string topic = null, IDictionary<string, string> metadata = null, ChatRetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)
+        public Response UpdateChatThreadProperties(string chatThreadId, string topic = null, IDictionary<string, string> metadata = null, ChatRetentionPolicyInternal retentionPolicy = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {

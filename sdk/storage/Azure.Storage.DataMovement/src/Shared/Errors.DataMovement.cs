@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace Azure.Storage
 {
@@ -118,5 +119,9 @@ namespace Azure.Storage
 
         public static InvalidOperationException SingleItemContainerNoGetProperties()
             => new InvalidOperationException("SingleItemStorageResourceContainer does not support GetPropertiesAsync");
+
+        public static InvalidOperationException RequiredVersionClientAssembly(Assembly assembly, AssemblyInformationalVersionAttribute attribute)
+            => new InvalidOperationException(
+                    $"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{assembly.FullName}'.");
     }
 }

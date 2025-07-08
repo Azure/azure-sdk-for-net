@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0-beta.3 (Unreleased)
+## 2.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.3 (2025-06-23)
+
+### Features Added
+
+- Added AI Conversation Analyze feature
+- Added support for analyze-conversation API Versions
+  - 2025-05-15-preview
 
 ## 2.0.0-beta.2 (2025-02-03)
 

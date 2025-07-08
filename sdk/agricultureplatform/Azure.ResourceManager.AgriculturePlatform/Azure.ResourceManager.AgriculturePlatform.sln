@@ -7,8 +7,6 @@ Project("{1EF4A380-C4BD-4259-A8EA-9489EDA8F220}") = "Azure.ResourceManager.Agric
 EndProject
 Project("{1EF4A380-C4BD-4259-A8EA-9489EDA8F220}") = "Azure.ResourceManager.AgriculturePlatform.Tests", "tests\Azure.ResourceManager.AgriculturePlatform.Tests.csproj", "{69207EE6-C513-4C3E-B4F1-3C54513BC194}"
 EndProject
-Project("{1EF4A380-C4BD-4259-A8EA-9489EDA8F220}") = "Azure.ResourceManager.AgriculturePlatform.Samples", "samples\Azure.ResourceManager.AgriculturePlatform.Samples.csproj", "{D13A90DB-89BD-4F64-9C2C-43A1C6C50AFF}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

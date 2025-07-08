@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations
     /// <summary> Client options for ConversationAnalysisClient. </summary>
     public partial class ConversationsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_15_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_15_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
@@ -28,6 +28,8 @@ namespace Azure.AI.Language.Conversations
             V2024_11_01 = 4,
             /// <summary> Service version "2024-11-15-preview". </summary>
             V2024_11_15_Preview = 5,
+            /// <summary> Service version "2025-05-15-preview". </summary>
+            V2025_05_15_Preview = 6,
         }
 
         internal string Version { get; }
@@ -42,6 +44,7 @@ namespace Azure.AI.Language.Conversations
                 ServiceVersion.V2024_05_01 => "2024-05-01",
                 ServiceVersion.V2024_11_01 => "2024-11-01",
                 ServiceVersion.V2024_11_15_Preview => "2024-11-15-preview",
+                ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
                 _ => throw new NotSupportedException()
             };
         }

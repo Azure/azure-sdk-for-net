@@ -49,6 +49,7 @@ namespace Azure.Generator.Providers
             new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
 
         private readonly bool _isProtocol;
+        private readonly PropertyProvider? _nextPageProperty;
 
         public CollectionResultDefinition(ClientProvider client, InputPagingServiceMethod serviceMethod, CSharpType? itemModelType, bool isAsync)
         {
@@ -116,9 +117,9 @@ namespace Azure.Generator.Providers
             // Use the canonical view in case the property was customized.
             if (_nextPageLocation == InputResponseLocation.Body)
             {
-                _nextPagePropertyName =
-                    responseModel.CanonicalView.Properties.FirstOrDefault(
-                        p => p.WireInfo?.SerializedName == nextPagePropertyName)?.Name;
+                _nextPageProperty = responseModel.CanonicalView.Properties.FirstOrDefault(
+                    p => p.WireInfo?.SerializedName == nextPagePropertyName);
+                _nextPagePropertyName = _nextPageProperty?.Name;
             }
             else if (_nextPageLocation == InputResponseLocation.Header)
             {
@@ -202,7 +203,7 @@ namespace Azure.Generator.Providers
                 doWhileStatement.Add(ConvertItemsToListOfBinaryData(responseWithTypeVariable, out var itemsVariable));
 
                 // Extract next page
-                doWhileStatement.Add(nextPageVariable.Assign(_nextPagePropertyName is null ? Null : BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
+                doWhileStatement.Add(nextPageVariable.Assign(BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
 
                 // Create and yield the page
                 doWhileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable, nextPageExpression, responseVariable])));
@@ -210,7 +211,7 @@ namespace Azure.Generator.Providers
             else
             {
                 // Extract next page
-                doWhileStatement.Add(nextPageVariable.Assign(_nextPagePropertyName is null ? Null : BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
+                doWhileStatement.Add(nextPageVariable.Assign(BuildGetNextPage(responseWithTypeVariable, responseVariable)).Terminate());
 
                 // Create and yield the page
                 doWhileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [responseWithTypeVariable.Property(_itemsPropertyName).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), nextPageExpression, responseVariable])));
@@ -263,18 +264,42 @@ namespace Azure.Generator.Providers
                 return Null;
             }
 
-            switch (_nextPageLocation)
+            return _nextPageLocation switch
             {
-                case InputResponseLocation.Body:
-                    return responseWithTypeVariable.Property(_nextPagePropertyName);
-                case InputResponseLocation.Header:
-                    return new TernaryConditionalExpression(
-                        responseVariable.Property("Headers").Invoke("TryGetValue", Literal(_nextPagePropertyName), new DeclarationExpression(typeof(string), "value", out var nextLinkHeader, isOut: true)).As<bool>(),
-                        nextLinkHeader,
-                        Null);
-                default:
-                    // Invalid location is logged by the emitter.
-                    return Null;
+                InputResponseLocation.Body => NeedsConversionToUri() ?
+                    new TernaryConditionalExpression(
+                        responseWithTypeVariable.Property(_nextPagePropertyName).NotEqual(Null),
+                        New.Instance<Uri>(responseWithTypeVariable.Property(_nextPagePropertyName)),
+                            Null)
+                    : responseWithTypeVariable.Property(_nextPagePropertyName),
+                InputResponseLocation.Header => new TernaryConditionalExpression(
+                    responseVariable.Property("Headers")
+                        .Invoke("TryGetValue", Literal(_nextPagePropertyName),
+                            new DeclarationExpression(typeof(string), "value", out var nextLinkHeader, isOut: true))
+                        .As<bool>(),
+                     NeedsConversionToUri() ? New.Instance<Uri>(nextLinkHeader) : nextLinkHeader,
+                    Null),
+                _ => Null
+            };
+
+            bool NeedsConversionToUri()
+            {
+                if (_paging.NextLink == null)
+                {
+                    return false;
+                }
+                if (_nextPageLocation == InputResponseLocation.Body &&
+                    _nextPageProperty?.Type.Equals(typeof(string)) == true)
+                {
+                    return true;
+                }
+
+                if (_nextPageLocation == InputResponseLocation.Header)
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
 
