@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary>
-    /// Mode that describes whether the LUN has to be mounted as a datastore or
-    /// attached as a LUN
-    /// </summary>
+    /// <summary> mount option. </summary>
     public readonly partial struct LunMountMode : IEquatable<LunMountMode>
     {
         private readonly string _value;

@@ -73,6 +73,7 @@ private FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
 
 Synchronous sample:
 ```C# Snippet:StreamingWithAutoFunctionCall_CreateAgent
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "SDK Test Agent - Functions",
@@ -85,6 +86,7 @@ PersistentAgent agent = client.Administration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:StreamingWithAutoFunctionCallAsync_CreateAgent
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "SDK Test Agent - Functions",
@@ -174,12 +176,14 @@ await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreaming
 
 Synchronous sample:
 ```C# Snippet:StreamingWithAutoFunctionCall_Cleanup
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 client.Threads.DeleteThread(thread.Id);
 client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:StreamingWithAutoFunctionCallAsync_Cleanup
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 await client.Threads.DeleteThreadAsync(thread.Id);
 await client.Administration.DeleteAgentAsync(agent.Id);
 ```

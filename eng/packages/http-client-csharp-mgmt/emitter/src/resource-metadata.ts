@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { InputClient, InputModelType } from "@typespec/http-client-csharp";
-
 const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
 const SubscriptionScopePrefix = "/subscriptions";
@@ -39,10 +37,39 @@ export enum ResourceScope {
 }
 
 export interface ResourceMetadata {
+  resourceIdPattern: string;
   resourceType: string;
-  resourceModel: InputModelType;
-  resourceClient: InputClient;
-  isSingleton: boolean;
+  methods: ResourceMethod[];
   resourceScope: ResourceScope;
+  parentResource?: string;
+  singletonResourceName?: string;
   // TODO -- add parent resource support in the same RP case
+}
+
+export function convertResourceMetadataToArguments(
+  metadata: ResourceMetadata
+): Record<string, any> {
+  return {
+    resourceIdPattern: metadata.resourceIdPattern,
+    resourceType: metadata.resourceType,
+    methods: metadata.methods,
+    resourceScope: metadata.resourceScope,
+    parentResource: metadata.parentResource,
+    singletonResourceName: metadata.singletonResourceName
+  };
+}
+
+export interface ResourceMethod {
+  id: string;
+  kind: ResourceOperationKind;
+}
+
+export enum ResourceOperationKind {
+  Action = "Action",
+  Create = "Create",
+  Delete = "Delete",
+  Get = "Get",
+  List = "List",
+  Update = "Update"
+  // ListBySubscription = "ListBySubscription",
 }

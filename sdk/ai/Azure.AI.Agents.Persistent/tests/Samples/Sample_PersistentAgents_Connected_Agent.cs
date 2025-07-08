@@ -29,6 +29,7 @@ public partial class Sample_PersistentAgents_Connected_Agent : SamplesBase<AIAge
         #endregion
         // Create a sub-agent first
         #region Snippet:AgentsConnectedAgentAsync_CreateSubAgent
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
         PersistentAgent subAgent = await agentClient.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "math-helper",
@@ -44,6 +45,7 @@ public partial class Sample_PersistentAgents_Connected_Agent : SamplesBase<AIAge
         );
         #endregion
         #region Snippet:AgentsConnectedAgentAsync_CreateAgent
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
         PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
            model: modelDeploymentName,
            name: "main-agent",
@@ -100,6 +102,7 @@ public partial class Sample_PersistentAgents_Connected_Agent : SamplesBase<AIAge
         }
         #endregion
         #region Snippet:AgentsConnectedAgentCleanupAsync
+        // NOTE: Comment out these three lines if you plan to reuse the agent later.
         await agentClient.Threads.DeleteThreadAsync(threadId: thread.Id);
         await agentClient.Administration.DeleteAgentAsync(agentId: agent.Id);
         await agentClient.Administration.DeleteAgentAsync(agentId: subAgent.Id);
@@ -120,6 +123,7 @@ public partial class Sample_PersistentAgents_Connected_Agent : SamplesBase<AIAge
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         // Create a sub-agent first
         #region Snippet:AgentsConnectedAgent_CreateSubAgent
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
         PersistentAgent subAgent = agentClient.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "math-helper",
@@ -133,6 +137,7 @@ public partial class Sample_PersistentAgents_Connected_Agent : SamplesBase<AIAge
             )
         );
         #region Snippet:AgentsConnectedAgent_CreateAgent
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
         PersistentAgent agent = agentClient.Administration.CreateAgent(
            model: modelDeploymentName,
            name: "main-agent",
@@ -189,6 +194,7 @@ public partial class Sample_PersistentAgents_Connected_Agent : SamplesBase<AIAge
         }
         #endregion
         #region Snippet:AgentsConnectedAgentCleanup
+        // NOTE: Comment out these three lines if you plan to reuse the agent later.
         agentClient.Threads.DeleteThread(threadId: thread.Id);
         agentClient.Administration.DeleteAgent(agentId: agent.Id);
         agentClient.Administration.DeleteAgent(agentId: subAgent.Id);

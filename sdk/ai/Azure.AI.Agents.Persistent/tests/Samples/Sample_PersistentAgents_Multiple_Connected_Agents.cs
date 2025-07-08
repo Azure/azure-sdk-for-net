@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -21,22 +22,30 @@ public partial class Sample_PersistentAgents_Multiple_Connected_Agents : Samples
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var storageQueueUri = System.Environment.GetEnvironmentVariable("STORAGE_QUEUE_URI");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var storageQueueUri = TestEnvironment.STORAGE_QUEUE_URI;
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
         #region Snippet:AgentsMultipleConnectedAgentsAsync_CreateSubAgents
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
+        PersistentAgent weatherAgent = await agentClient.Administration.CreateAgentAsync(
+            model: modelDeploymentName,
+            name: "weather-bot",
+            instructions: "Your job is to get the weather for a given location. " +
+                          "Use the provided function to get the weather in the given location.",
+            tools: [GetAzureFunction(storageQueueUri)]
+        );
+
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
         PersistentAgent stockPriceAgent = await agentClient.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "stock-price-bot",
             instructions: "Your job is to get the stock price of a company. If asked for the Microsoft stock price, always return $350.");
 
-        PersistentAgent weatherAgent = await agentClient.Administration.CreateAgentAsync(
-            model: modelDeploymentName,
-            name: "weather-bot",
-            instructions: "Your job is to get the weather for a given location. If asked for the weather in Seattle, always return 60 degrees and cloudy.");
         #endregion
         #region Snippet:AgentsMultipleConnectedAgents_GetConnectedAgents
         ConnectedAgentToolDefinition stockPriceConnectedAgentTool = new(
@@ -56,6 +65,7 @@ public partial class Sample_PersistentAgents_Multiple_Connected_Agents : Samples
         );
         #endregion
         #region Snippet:AgentsMultipleConnectedAgentsAsync_CreateAgent
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
         PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
            model: modelDeploymentName,
            name: "my-assistant",
@@ -112,6 +122,7 @@ public partial class Sample_PersistentAgents_Multiple_Connected_Agents : Samples
         }
         #endregion
         #region Snippet:AgentsMultipleConnectedAgentsCleanupAsync
+        // NOTE: Comment out these four lines if you plan to reuse the agent later.
         await agentClient.Threads.DeleteThreadAsync(threadId: thread.Id);
         await agentClient.Administration.DeleteAgentAsync(agentId: agent.Id);
         await agentClient.Administration.DeleteAgentAsync(agentId: stockPriceAgent.Id);
@@ -126,21 +137,28 @@ public partial class Sample_PersistentAgents_Multiple_Connected_Agents : Samples
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var storageQueueUri = System.Environment.GetEnvironmentVariable("STORAGE_QUEUE_URI");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var storageQueueUri = TestEnvironment.STORAGE_QUEUE_URI;
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         #region Snippet:AgentsMultipleConnectedAgents_CreateSubAgents
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
+        PersistentAgent weatherAgent = agentClient.Administration.CreateAgent(
+            model: modelDeploymentName,
+            name: "weather-bot",
+            instructions: "Your job is to get the weather for a given location. " +
+                          "Use the provided function to get the weather in the given location.",
+            tools: [GetAzureFunction(storageQueueUri)]
+        );
+
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
         PersistentAgent stockPriceAgent = agentClient.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "stock-price-bot",
             instructions: "Your job is to get the stock price of a company. If asked for the Microsoft stock price, always return $350.");
-
-        PersistentAgent weatherAgent = agentClient.Administration.CreateAgent(
-            model: modelDeploymentName,
-            name: "weather-bot",
-            instructions: "Your job is to get the weather for a given location. If asked for the weather in Seattle, always return 60 degrees and cloudy.");
         #endregion
         ConnectedAgentToolDefinition stockPriceConnectedAgentTool = new(
             new ConnectedAgentDetails(
@@ -158,6 +176,7 @@ public partial class Sample_PersistentAgents_Multiple_Connected_Agents : Samples
             )
         );
         #region Snippet:AgentsMultipleConnectedAgents_CreateAgent
+        // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
         PersistentAgent agent = agentClient.Administration.CreateAgent(
            model: modelDeploymentName,
            name: "my-assistant",
@@ -214,10 +233,48 @@ public partial class Sample_PersistentAgents_Multiple_Connected_Agents : Samples
         }
         #endregion
         #region Snippet:AgentsMultipleConnectedAgentsCleanup
+        // NOTE: Comment out these four lines if you plan to reuse the agent later.
         agentClient.Threads.DeleteThread(threadId: thread.Id);
         agentClient.Administration.DeleteAgent(agentId: agent.Id);
         agentClient.Administration.DeleteAgent(agentId: stockPriceAgent.Id);
         agentClient.Administration.DeleteAgent(agentId: weatherAgent.Id);
         #endregion
     }
+
+    #region Snippet:AgentsMultipleConnectedAgents_AzureFunction
+    private static AzureFunctionToolDefinition GetAzureFunction(string storageQueueUri)
+    {
+        return new AzureFunctionToolDefinition(
+            name: "GetWeather",
+            description: "Get answers from the weather bot.",
+            inputBinding: new AzureFunctionBinding(
+                new AzureFunctionStorageQueue(
+                    queueName: "weather-input",
+                    storageServiceEndpoint: storageQueueUri
+                )
+            ),
+            outputBinding: new AzureFunctionBinding(
+                new AzureFunctionStorageQueue(
+                    queueName: "weather-output",
+                    storageServiceEndpoint: storageQueueUri
+                )
+            ),
+            parameters: BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        Type = "object",
+                        Properties = new
+                        {
+                            Location = new
+                            {
+                                Type = "string",
+                                Description = "The location to get the weather for.",
+                            }
+                        },
+                    },
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+            )
+        );
+    }
+    #endregion
 }

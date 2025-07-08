@@ -18,8 +18,10 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
+        /// <param name="azureResourcesToExclude"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
+        /// <param name="terraformResourcesToExclude"> Exclude resources from being exported based on the Terraform resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCommonExportProperties(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, serializedAdditionalRawData)
+        internal UnknownCommonExportProperties(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, azureResourcesToExclude, terraformResourcesToExclude, serializedAdditionalRawData)
         {
             Type = type;
         }
