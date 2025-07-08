@@ -4,7 +4,7 @@
     <AssemblyTitle>SDK Code Generation Microsoft.ClientModel.TestFramework</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Microsoft.ClientModel.TestFramework</PackageTags>
-    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <NoWarn>AZC0015;AZC0007</NoWarn>
@@ -12,12 +12,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- <PackageReference Include="System.ClientModel" /> -->
+     <PackageReference Include="System.ClientModel" /> 
     <PackageReference Include="NUnit" />
     <PackageReference Include="Moq" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../System.ClientModel/src/System.ClientModel.csproj" />
+    <Folder Include="SyncAsync\" />
   </ItemGroup>
 </Project>

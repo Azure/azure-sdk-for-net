@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Microsoft.ClientModel.TestFramework;
 
-public partial class UriRegexSanitizer
+internal partial class UriRegexSanitizer
 {
     /// <summary>
     /// TODO.

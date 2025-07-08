@@ -17,7 +17,7 @@ public class MockPipelineRequest : PipelineRequest
     private BinaryContent? _content;
     private readonly MockPipelineRequestHeaders _headers = new();
 
-    private bool _disposed;
+    //private bool _disposed;
 
     /// <summary>
     /// Initializes a new instance of <see cref="MockPipelineRequest"/> with default values.
@@ -53,9 +53,11 @@ public class MockPipelineRequest : PipelineRequest
         set => _uri = value;
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// TODO.
+    /// </summary>
     public sealed override void Dispose()
     {
-        _disposed = true;
+        //_disposed = true;
     }
 }

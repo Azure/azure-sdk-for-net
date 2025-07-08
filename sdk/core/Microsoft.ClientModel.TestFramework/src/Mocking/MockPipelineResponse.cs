@@ -125,7 +125,10 @@ public class MockPipelineResponse : PipelineResponse
         GC.SuppressFinalize(this);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="disposing"></param>
     protected void Dispose(bool disposing)
     {
         if (disposing && !_disposed)

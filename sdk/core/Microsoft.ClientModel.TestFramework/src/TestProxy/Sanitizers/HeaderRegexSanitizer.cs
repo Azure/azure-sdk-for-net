@@ -1,10 +1,13 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Microsoft.ClientModel.TestFramework;
 
-public partial class HeaderRegexSanitizer
+internal partial class HeaderRegexSanitizer
 {
     /// <summary>
     /// TODO.

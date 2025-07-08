@@ -20,30 +20,25 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy;
 /// via the TestProxyRestClient.
 /// <seealso href="https://github.com/Azure/azure-sdk-tools/tree/main/tools/test-proxy"/>
 /// </summary>
-public class TestProxy
+public class TestProxyProcess
 {
     private static readonly string s_dotNetExe;
-
-    // for some reason using localhost instead of the ip address causes slowness when combined with SSL callback being specified
-    public const string IpAddress = "127.0.0.1";
-
-    public int? ProxyPortHttp => _proxyPortHttp;
-
-    public int? ProxyPortHttps => _proxyPortHttps;
-
     private readonly int? _proxyPortHttp;
     private readonly int? _proxyPortHttps;
     private readonly Process _testProxyProcess;
-    internal TestProxyRestClient Client { get; }
     private readonly StringBuilder _errorBuffer = new();
     private static readonly object _lock = new();
-    private static TestProxy _shared;
+    private static TestProxyProcess? _shared;
     private readonly StringBuilder _output = new();
     private static readonly bool s_enableDebugProxyLogging;
 
-    static TestProxy()
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <exception cref="InvalidOperationException"></exception>
+    static TestProxyProcess()
     {
-        string installDir = Environment.GetEnvironmentVariable("DOTNET_INSTALL_DIR");
+        string? installDir = Environment.GetEnvironmentVariable("DOTNET_INSTALL_DIR") ?? string.Empty;
         var dotNetExeName = "dotnet" + (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "");
         if (!HasDotNetExe(installDir))
         {
@@ -58,10 +53,10 @@ public class TestProxy
         s_dotNetExe = Path.Combine(installDir, dotNetExeName);
 
         bool HasDotNetExe(string dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, dotNetExeName));
-        s_enableDebugProxyLogging = TestEnvironment.EnableTestProxyDebugLogs;
+        s_enableDebugProxyLogging = false; // TODO - TestEnvironment.EnableTestProxyDebugLogs;
     }
 
-    private TestProxy(string proxyPath, bool debugMode = false)
+    private TestProxyProcess(string proxyPath, bool debugMode = false)
     {
         bool.TryParse(Environment.GetEnvironmentVariable("PROXY_DEBUG_MODE"), out bool environmentDebugMode);
 
@@ -75,15 +70,15 @@ public class TestProxy
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             EnvironmentVariables =
-            {
-                ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
-                ["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = s_enableDebugProxyLogging ? "Debug" : "Error",
-                ["Logging__LogLevel__Default"] = "Error",
-                ["Logging__LogLevel__Microsoft.AspNetCore"] = s_enableDebugProxyLogging ? "Information" : "Error",
-                ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
-                ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath,
-                ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
-            }
+                {
+                    ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
+                    ["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = s_enableDebugProxyLogging ? "Debug" : "Error",
+                    ["Logging__LogLevel__Default"] = "Error",
+                    ["Logging__LogLevel__Microsoft.AspNetCore"] = s_enableDebugProxyLogging ? "Information" : "Error",
+                    ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
+                    ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath,
+                    ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
+                }
         };
 
         _testProxyProcess = Process.Start(testProxyProcessInfo);
@@ -151,90 +146,25 @@ public class TestProxy
             });
     }
 
+    internal TestProxyClient Client { get; }
+
     /// <summary>
-    /// Starts the test proxy
+    /// TODO.
     /// </summary>
-    /// <param name="debugMode">If true, the proxy will be configured to look for port 5000 and 5001, which is the default used when running the proxy locally in debug mode.</param>
-    /// <returns>The started TestProxy instance.</returns>
-    public static TestProxy Start(bool debugMode = false)
-    {
-        if (_shared != null)
-        {
-            return _shared;
-        }
+    public const string IpAddress = "127.0.0.1"; // using localhost instead of the ip address causes slowness when combined with SSL callback being specified
 
-        lock (_lock)
-        {
-            var shared = _shared;
-            if (shared == null)
-            {
-                shared = new TestProxy(typeof(TestProxy)
-                    .Assembly
-                    .GetCustomAttributes<AssemblyMetadataAttribute>()
-                    .Single(a => a.Key == "TestProxyPath")
-                    .Value,
-                    debugMode);
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public const string TestProxyProcessLocation { get; }
 
-                AppDomain.CurrentDomain.DomainUnload += (_, _) =>
-                {
-                    shared._testProxyProcess?.Kill();
-                };
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public int? ProxyPortHttp => _proxyPortHttp;
 
-                _shared = shared;
-            }
-
-            return shared;
-        }
-    }
-
-    private static bool TryParsePort(string output, string scheme, out int? port)
-    {
-        if (output == null)
-        {
-            TestContext.Progress.WriteLine("output was null");
-            port = null;
-            return false;
-        }
-        string nowListeningOn = "Now listening on: ";
-        int nowListeningOnLength = nowListeningOn.Length;
-        var index = output.IndexOf($"{nowListeningOn}{scheme}:", StringComparison.CurrentCultureIgnoreCase);
-        if (index > -1)
-        {
-            var start = index + nowListeningOnLength;
-            var uri = output.Substring(start, output.Length - start).Trim();
-            port = new Uri(uri).Port;
-            return true;
-        }
-
-        port = null;
-        return false;
-    }
-
-    public async Task CheckProxyOutputAsync()
-    {
-        if (s_enableDebugProxyLogging)
-        {
-            // add a small delay to allow the log output for the just finished test to be collected into the _output StringBuilder
-            await Task.Delay(20);
-
-            // lock to avoid any race conditions caused by appending to the StringBuilder while calling ToString
-            lock (_output)
-            {
-                TestContext.Out.WriteLine(_output.ToString());
-                _output.Clear();
-            }
-        }
-
-        CheckForErrors();
-    }
-
-    private void CheckForErrors()
-    {
-        if (_errorBuffer.Length > 0)
-        {
-            var error = _errorBuffer.ToString();
-            _errorBuffer.Clear();
-            throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
-        }
-    }
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public int? ProxyPortHttps => _proxyPortHttps;
 }
