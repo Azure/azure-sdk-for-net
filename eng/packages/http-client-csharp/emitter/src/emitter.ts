@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { EmitContext, NoTarget } from "@typespec/compiler";
+import { EmitContext, NoTarget, resolvePath } from "@typespec/compiler";
 
 import { $onEmit as $onMTGEmit } from "@typespec/http-client-csharp";
 import { AzureEmitterOptions } from "./options.js";
@@ -34,5 +34,21 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
     });
   }
 
+  // Generate metadata.json if emit-metadata option is enabled
+  if (context.options["emit-metadata"]) {
+    await generateMetadataFile(context);
+  }
+
   await $onMTGEmit(context);
+}
+
+async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): Promise<void> {
+  const apiVersion = context.options["api-version"];
+  
+  const metadata = {
+    "api-version": apiVersion || "not-specified"
+  };
+
+  const outputPath = resolvePath(context.emitterOutputDir, "Generated", "metadata.json");
+  await context.program.host.writeFile(outputPath, JSON.stringify(metadata, null, 2));
 }

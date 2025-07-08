@@ -10,6 +10,7 @@ import {
 export interface AzureEmitterOptions extends CSharpEmitterOptions {
   namespace?: string;
   "model-namespace"?: boolean;
+  "emit-metadata"?: boolean;
 }
 
 export const AzureEmitterOptionsSchema: JSONSchemaType<AzureEmitterOptions> = {
@@ -29,6 +30,13 @@ export const AzureEmitterOptionsSchema: JSONSchemaType<AzureEmitterOptions> = {
       description:
         "Whether to put models under a separate 'Models' sub-namespace. This only applies if the 'namespace' option is set. " +
         " The default value is 'false'."
+    },
+    "emit-metadata": {
+      type: "boolean",
+      nullable: true,
+      description:
+        "Whether to emit a metadata.json file containing information like the api-version. " +
+        "The default value is 'false'."
     }
   },
   required: []
