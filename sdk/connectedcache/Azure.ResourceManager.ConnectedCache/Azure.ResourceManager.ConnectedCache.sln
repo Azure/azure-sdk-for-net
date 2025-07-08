@@ -7,8 +7,6 @@ Project("{AC8CF66F-B9AE-4DA8-BD00-4F7494135345}") = "Azure.ResourceManager.Conne
 EndProject
 Project("{AC8CF66F-B9AE-4DA8-BD00-4F7494135345}") = "Azure.ResourceManager.ConnectedCache.Tests", "tests\Azure.ResourceManager.ConnectedCache.Tests.csproj", "{8E894647-EA2B-4E80-9451-C29874748003}"
 EndProject
-Project("{AC8CF66F-B9AE-4DA8-BD00-4F7494135345}") = "Azure.ResourceManager.ConnectedCache.Samples", "samples\Azure.ResourceManager.ConnectedCache.Samples.csproj", "{BEB16E5F-56DB-4FBA-BBC8-83932C681D96}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

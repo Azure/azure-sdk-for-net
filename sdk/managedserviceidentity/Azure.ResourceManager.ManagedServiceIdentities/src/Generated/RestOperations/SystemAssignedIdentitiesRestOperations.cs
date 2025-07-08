@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-01-31";
+            _apiVersion = apiVersion ?? "2024-11-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

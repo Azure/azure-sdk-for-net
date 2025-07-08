@@ -7,8 +7,6 @@ Project("{7E83D8BB-DCA4-425E-93A5-B41D71E835A6}") = "Azure.ResourceManager.Fabri
 EndProject
 Project("{7E83D8BB-DCA4-425E-93A5-B41D71E835A6}") = "Azure.ResourceManager.Fabric.Tests", "tests\Azure.ResourceManager.Fabric.Tests.csproj", "{2E184395-27A4-451E-90BA-BFEF9D56ACD3}"
 EndProject
-Project("{7E83D8BB-DCA4-425E-93A5-B41D71E835A6}") = "Azure.ResourceManager.Fabric.Samples", "samples\Azure.ResourceManager.Fabric.Samples.csproj", "{6DAF4C0F-4B83-44C0-A185-50D8CEBFDE70}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,7 +20,7 @@ namespace Azure.Generator.Tests
         [SetUp]
         public void SetUp()
         {
-            MockHelpers.LoadMockPlugin();
+            MockHelpers.LoadMockGenerator();
         }
 
         [TestCase(typeof(Guid), ExpectedResult = "writer.WriteStringValue(value);\n")]
