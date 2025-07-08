@@ -6,7 +6,7 @@
 - Includes all features from 12.23.0-beta.1
 
 ### Other Changes
-- Please note that this version was initally released to https://dev.azure.com/azure-sdk/public/_artifacts/feed/storage-staging, and will be promoted to NuGet.org once the 2025-07-05 version has fully rolled out in the storage service.  Please see https://learn.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services for more info.
+- Please note that this version was initally released to https://dev.azure.com/azure-sdk/public/_artifacts/feed/storage-staging, and will be promoted to NuGet.org once the 2025-07-05 version has fully rolled out in the storage service.  Please see https://learn.microsoft.com/rest/api/storageservices/versioning-for-the-azure-storage-services for more info.
 
 ## 12.24.0-beta.1 (2025-06-09)
 
