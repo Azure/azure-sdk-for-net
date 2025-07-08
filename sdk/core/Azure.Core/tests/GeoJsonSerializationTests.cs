@@ -16,7 +16,7 @@ namespace Azure.Core.Tests
     public class GeoJsonSerializationTests
     {
         private readonly ModelReaderWriterOptions _jsonOptions = new("J");
-        private readonly ModelReaderWriterOptions _wireOptions = new("W");
+        private readonly ModelReaderWriterOptions _xmlOptions = new("X");
         private readonly int _points;
 
         public GeoJsonSerializationTests(int points)
@@ -335,16 +335,6 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanRoundTripPointBinaryDataMRW()
-        {
-            var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}";
-
-            var point = AssertRoundtripMRW(input);
-
-            Assert.AreEqual(P(0), point.Coordinates);
-        }
-
-        [Test]
         public void CanRoundTripPointMRW()
         {
             var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}] }}";
@@ -355,18 +345,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void RoundTripSimplePointMRW()
-        {
-            var input = """{"type":"Point","coordinates":[-122.091954,47.607148]}""";
-
-            var point = AssertRoundtripMRW(input);
-
-            Assert.AreEqual(-122.091954, point.Coordinates.Longitude, 1e-10);
-            Assert.AreEqual(47.607148, point.Coordinates.Latitude, 1e-10);
-        }
-
-        [Test]
-        public void RoundTripComplexPointMRW()
+        public void CanRoundTripComplexPointMRW()
         {
             var input = """{"type":"Point","coordinates":[-122.091954,47.607148],"bbox":[-180,-90,180,90],"name":"Test Point","value":42}""";
 
@@ -389,47 +368,15 @@ namespace Azure.Core.Tests
             var point = new GeoPoint(-122.091954, 47.607148);
             var jsonModel = (IJsonModel<GeoPoint>)point;
             var persistableModel = (IPersistableModel<GeoPoint>)point;
-            var invalidOptions = new ModelReaderWriterOptions("X");
 
             using var stream = new MemoryStream();
             using var writer = new Utf8JsonWriter(stream);
             var reader = new Utf8JsonReader(stream.ToArray());
             var binaryData = BinaryData.FromString("""{"type":"Point","coordinates":[-122.091954,47.607148]}""");
 
-            Assert.Throws<FormatException>(() => jsonModel.Write(writer, invalidOptions));
-            //Assert.Throws<FormatException>(() => jsonModel.Create(ref reader, invalidOptions));
-            Assert.Throws<FormatException>(() => persistableModel.Write(invalidOptions));
-            Assert.Throws<FormatException>(() => persistableModel.Create(binaryData, invalidOptions));
-        }
-
-        [Test]
-        public void CanRoundTripPointWithBoundingBoxMRW()
-        {
-            var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}], \"bbox\": [ {PS(1)}, {PS(2)} ] }}";
-
-            var point = AssertRoundtripMRW(input);
-
-            Assert.AreEqual(P(0), point.Coordinates);
-            Assert.AreEqual(P(1).Longitude, point.BoundingBox.West);
-            Assert.AreEqual(P(1).Latitude, point.BoundingBox.South);
-            Assert.AreEqual(P(2).Longitude, point.BoundingBox.East);
-            Assert.AreEqual(P(2).Latitude, point.BoundingBox.North);
-        }
-
-        [Test]
-        public void CanRoundTripPointWithCustomPropertiesMRW()
-        {
-            var input = $"{{ \"type\": \"Point\", \"coordinates\": [{PS(0)}]," +
-                        $" \"name\": \"Test Point\"," +
-                        $" \"value\": 42," +
-                        $" \"active\": true }}";
-
-            var point = AssertRoundtripMRW(input);
-
-            Assert.AreEqual(P(0), point.Coordinates);
-            Assert.AreEqual("Test Point", point.CustomProperties["name"]);
-            Assert.AreEqual(42, point.CustomProperties["value"]);
-            Assert.AreEqual(true, point.CustomProperties["active"]);
+            Assert.Throws<FormatException>(() => jsonModel.Write(writer, _xmlOptions));
+            Assert.Throws<FormatException>(() => persistableModel.Write(_xmlOptions));
+            Assert.Throws<FormatException>(() => persistableModel.Create(binaryData, _xmlOptions));
         }
     }
 }
