@@ -64,7 +64,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// the new blocks with the existing blocks you want to keep using a
     /// single commit operation. To insert the same range of bytes in two
     /// different locations of the committed blob, you can commit the same
-    /// block in two places within the same commit operation.For any commit
+    /// block in two places within the same commit operation. For any commit
     /// operation, if any block is not found, the entire commitment operation
     /// fails with an error, and the blob is not modified. Any block commitment
     /// overwrites the blob’s existing properties and metadata, and discards
@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// When using base-64 encoding, the pre-encoded string must be 64 bytes
     /// or less.  Block ID values can be duplicated in different blobs.  A
     /// blob can have up to 100,000 uncommitted blocks, with a max total size
-    /// of appoximately 381.46 TiB (4,000 MB x 100,000 blocks)
+    /// of approximately 381.46 TiB (4,000 MB x 100,000 blocks)
     ///
     /// If you write a block for a blob that does not exist, a new block blob
     /// is created, with a length of zero bytes.  This blob will appear in
@@ -2339,7 +2339,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region GetBlockList
         /// <summary>
-        /// The <see cref="GetBlockList"/> operation operation retrieves
+        /// The <see cref="GetBlockList"/> operation retrieves
         /// the list of blocks that have been uploaded as part of a block blob.
         /// There are two block lists maintained for a blob.  The Committed
         /// Block list has blocks that have been successfully committed to a
