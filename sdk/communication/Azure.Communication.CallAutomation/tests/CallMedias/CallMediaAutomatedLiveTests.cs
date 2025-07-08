@@ -220,6 +220,160 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
+        [Ignore(reason: "Skipping this until the changes are deployed")]
+        [RecordedTest]
+        public async Task EnableLoopbackTrueInAnswerCallTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, enableLoopback: true);
+                    callConnectionId = result.CallerCallConnectionId;
+                    string? targetCallConnectionId = result.TargetCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+                    var answerCallConnection = client.GetCallConnection(result.TargetCallConnectionId);
+
+                    // multiple File Source
+                    var playFileSource = new List<PlaySource>() {
+                        new FileSource(new Uri(TestEnvironment.FileSourceUrl) )
+                    };
+
+                    PlayToAllOptions options = new PlayToAllOptions(playFileSource) { OperationContext = "context", Loop = true };
+
+                    // Assert the Play with multiple File Sources
+                    await answerCallConnection.GetCallMedia().PlayToAllAsync(options).ConfigureAwait(false);
+                    var playStartedEvent = await WaitForEvent<PlayStarted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(playStartedEvent);
+                    Assert.IsTrue(playStartedEvent is PlayStarted);
+                    Assert.AreEqual(targetCallConnectionId, ((PlayStarted)playStartedEvent!).CallConnectionId);
+
+                    var playCompletedEvent = await WaitForEvent<PlayCompleted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNull(playCompletedEvent);
+
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
+
+        [Ignore(reason: "Skipping this until the changes are deployed")]
+        [RecordedTest]
+        public async Task EnableLoopbackFalseInAnswerCallTest()
+        {
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, enableLoopback: false);
+                    callConnectionId = result.CallerCallConnectionId;
+                    string? targetCallConnectionId = result.TargetCallConnectionId;
+                    var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
+                    var callConnection = client.GetCallConnection(callConnectionId);
+                    var answerCallConnection = client.GetCallConnection(result.TargetCallConnectionId);
+
+                    // multiple File Source
+                    var playFileSource = new List<PlaySource>() {
+                        new FileSource(new Uri(TestEnvironment.FileSourceUrl) )
+                    };
+
+                    PlayToAllOptions options = new PlayToAllOptions(playFileSource) { OperationContext = "context", Loop = true };
+
+                    // Assert the Play with multiple File Sources
+                    await answerCallConnection.GetCallMedia().PlayToAllAsync(options).ConfigureAwait(false);
+                    var playStartedEvent = await WaitForEvent<PlayStarted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(playStartedEvent);
+                    Assert.IsTrue(playStartedEvent is PlayStarted);
+                    Assert.AreEqual(targetCallConnectionId, ((PlayStarted)playStartedEvent!).CallConnectionId);
+
+                    var playCompletedEvent = await WaitForEvent<PlayCompleted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(playCompletedEvent);
+                    Assert.IsTrue(playCompletedEvent is PlayCompleted);
+                    Assert.AreEqual(targetCallConnectionId, ((PlayCompleted)playCompletedEvent!).CallConnectionId);
+
+                    // try hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
+
         [RecordedTest]
         public async Task CreateCallWithMediaStreamingTest()
         {
@@ -555,7 +709,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CallAutomationClient targetClient,
             CommunicationUserIdentifier target,
             string uniqueId,
-            bool createCallWithCogService = false)
+            bool createCallWithCogService = false,
+            bool enableLoopback = false)
         {
             try
             {
@@ -574,7 +729,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 Assert.IsNotNull(incomingCallContext);
 
                 // answer the call
-                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}")) { EnableLoopbackAudio = enableLoopback };
                 AnswerCallResult answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
 
                 var targetCallConnectionId = answerResponse.CallConnectionProperties.CallConnectionId;
