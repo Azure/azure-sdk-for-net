@@ -40,6 +40,23 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   await $onMTGEmit(context);
 }
 
+/**
+ * Generates a metadata.json file containing API version information.
+ * 
+ * The emitter automatically generates a `metadata.json` file in the `Generated/` folder. 
+ * This file contains information such as the API version and can be used for automation 
+ * purposes like building a mapping of package version to supported API version.
+ * 
+ * The metadata file contains content such as:
+ * ```json
+ * {
+ *   "api-version": "2024-05-01"
+ * }
+ * ```
+ * 
+ * This file is not included as an asset of the nupkg. If no API version is specified, 
+ * the value will be "not-specified".
+ */
 async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): Promise<void> {
   const apiVersion = context.options["api-version"];
   
