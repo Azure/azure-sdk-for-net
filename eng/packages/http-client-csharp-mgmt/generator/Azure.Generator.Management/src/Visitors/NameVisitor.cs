@@ -21,14 +21,15 @@ internal class NameVisitor : ScmLibraryVisitor
 
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
+        var inputLibrary = ManagementClientGenerator.Instance.InputLibrary;
         if (type is not null && TryTransformUrlToUri(model.Name, out var newName))
         {
             type.Update(name: newName);
         }
 
-        if (type is not null && ManagementInputLibrary.IsResourceUpdateModel(model))
+        if (type is not null && inputLibrary.IsResourceUpdateModel(model))
         {
-            var enclosingResourceName = ManagementInputLibrary.FindEnclosingResourceNameForResourceUpdateModel(model);
+            var enclosingResourceName = inputLibrary.FindEnclosingResourceNameForResourceUpdateModel(model);
             var newModelName = $"{enclosingResourceName}Patch";
 
             _resourceUpdateModelTypes.Add(type.Type);
@@ -44,7 +45,7 @@ internal class NameVisitor : ScmLibraryVisitor
 
         // rename "Type" property to "ResourceType" in Azure.ResourceManager.CommonTypes.Resource
         bool typePropertyRenamed = false;
-        if (model.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ArmResource))
+        if (model.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ArmResourceId))
         {
             foreach (var property in model.Properties)
             {

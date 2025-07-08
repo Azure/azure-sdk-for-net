@@ -22,7 +22,7 @@ namespace Azure.Generator.Management.Primitives
 {
     internal class KnownManagementTypes
     {
-        public const string ArmResource = "Azure.ResourceManager.CommonTypes.Resource";
+        public const string ArmResourceId = "Azure.ResourceManager.CommonTypes.Resource";
         public const string ResourceUpdateModelId = "Azure.ResourceManager.Foundations.ResourceUpdateModel";
 
         public delegate MethodBodyStatement SerializationExpression(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);

@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,9 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
+        private HashSet<InputModelType>? _resourceUpdateModels;
+
+        private Dictionary<InputModelType, string>? _resourceUpdateModelToResourceNameMap;
 
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
@@ -38,12 +42,37 @@ namespace Azure.Generator.Management
 
         private InputNamespace BuildInputNamespaceInternal()
         {
-            // For MPG, we always generate convenience methods for all operations.
+            foreach (InputModelType model in base.InputNamespace.Models)
+            {
+                if (IsResourceUpdateModel(model))
+                {
+                    _resourceUpdateModels ??= new HashSet<InputModelType>();
+                    _resourceUpdateModels.Add(model);
+                }
+            }
+
             foreach (var client in base.InputNamespace.Clients)
             {
                 foreach (var method in client.Methods)
                 {
+                    // For MPG, we always generate convenience methods for all operations.
                     method.Operation.Update(generateConvenienceMethod: true);
+
+                    if (_resourceUpdateModels is not null)
+                    {
+                        foreach (var parameter in method.Operation.Parameters)
+                        {
+                            if (parameter.Type is InputModelType && method.Operation.HttpMethod == "PATCH")
+                            {
+                                var model = _resourceUpdateModels.FirstOrDefault(m => m.Name == parameter.Type.Name);
+                                if (model != null)
+                                {
+                                    _resourceUpdateModelToResourceNameMap ??= new Dictionary<InputModelType, string>();
+                                    _resourceUpdateModelToResourceNameMap[model] = method.Operation.ResourceName ?? throw new InvalidOperationException($"Resource name cannot be null for resource update model '{model.Name}'");
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -175,8 +204,13 @@ namespace Azure.Generator.Management
             }
         }
 
-        internal static bool IsResourceUpdateModel(InputModelType model)
+        internal bool IsResourceUpdateModel(InputModelType model)
         {
+            if (_resourceUpdateModels?.Contains(model) == true)
+            {
+                return true;
+            }
+
             const string ResourceUpdateModelId = KnownManagementTypes.ResourceUpdateModelId;
 
             var currentModel = model;
@@ -192,26 +226,12 @@ namespace Azure.Generator.Management
             return false;
         }
 
-        internal static string FindEnclosingResourceNameForResourceUpdateModel(InputModelType model)
+        internal string FindEnclosingResourceNameForResourceUpdateModel(InputModelType model)
         {
-            var inputLibrary = ManagementClientGenerator.Instance.InputLibrary;
-            foreach (var client in inputLibrary.InputNamespace.Clients)
+            if (_resourceUpdateModelToResourceNameMap?.TryGetValue(model, out var resourceName) == true)
             {
-                foreach (var method in client.Methods)
-                {
-                    foreach (var parameter in method.Operation.Parameters)
-                    {
-                        if (parameter.Type is InputModelType && parameter.Type.Name == model.Name && method.Operation.HttpMethod == "PATCH")
-                        {
-                            if (method.Operation.ResourceName != null)
-                            {
-                                return method.Operation.ResourceName;
-                            }
-                        }
-                    }
-                }
+                return resourceName;
             }
-
             throw new InvalidOperationException($"Could not find enclosing resource name for resource update model '{model.Name}'");
         }
     }
