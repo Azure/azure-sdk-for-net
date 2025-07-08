@@ -34,7 +34,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
         /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
         /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration)
+        /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, bool? enableLoopbackAudio)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
@@ -44,6 +45,7 @@ namespace Azure.Communication.CallAutomation
             AnsweredBy = answeredBy;
             TranscriptionConfiguration = transcriptionConfiguration;
             MediaStreamingConfiguration = mediaStreamingConfiguration;
+            EnableLoopbackAudio = enableLoopbackAudio;
         }
 
         /// <summary> The context associated with the call. </summary>
@@ -62,5 +64,7 @@ namespace Azure.Communication.CallAutomation
         public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
         /// <summary> Media Streaming Configuration. </summary>
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
+        /// <summary> Enables loopback audio functionality for the call. </summary>
+        public bool? EnableLoopbackAudio { get; set; }
     }
 }

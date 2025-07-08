@@ -258,6 +258,7 @@ namespace Azure.Communication.CallAutomation
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
+            request.EnableLoopbackAudio = options.EnableLoopbackAudio;
             request.CustomCallingContext = new CustomCallingContextInternal(
                 options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>());
@@ -735,6 +736,7 @@ namespace Azure.Communication.CallAutomation
             }
 
             request.OperationContext = options.OperationContext;
+            request.EnableLoopbackAudio = options.EnableLoopbackAudio;
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
@@ -768,6 +770,7 @@ namespace Azure.Communication.CallAutomation
             }
 
             request.OperationContext = options.OperationContext;
+            request.EnableLoopbackAudio = options.EnableLoopbackAudio;
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
@@ -781,6 +784,7 @@ namespace Azure.Communication.CallAutomation
             connectRequest.OperationContext = options.OperationContext;
             connectRequest.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             connectRequest.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+            connectRequest.EnableLoopbackAudio = options.EnableLoopbackAudio;
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;

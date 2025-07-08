@@ -49,6 +49,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
                 writer.WriteObjectValue(MediaStreamingConfiguration);
             }
+            if (Optional.IsDefined(EnableLoopbackAudio))
+            {
+                writer.WritePropertyName("enableLoopbackAudio"u8);
+                writer.WriteBooleanValue(EnableLoopbackAudio.Value);
+            }
             writer.WriteEndObject();
         }
 

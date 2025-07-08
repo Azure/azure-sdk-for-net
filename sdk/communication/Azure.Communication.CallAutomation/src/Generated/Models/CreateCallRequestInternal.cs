@@ -41,7 +41,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
         /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
         /// <param name="teamsAppSource"> The identifier of the source for creating call with Teams resource account ID. </param>
-        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, MicrosoftTeamsAppIdentifierModel teamsAppSource)
+        /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, MicrosoftTeamsAppIdentifierModel teamsAppSource, bool? enableLoopbackAudio)
         {
             Targets = targets;
             SourceCallerIdNumber = sourceCallerIdNumber;
@@ -53,6 +54,7 @@ namespace Azure.Communication.CallAutomation
             TranscriptionConfiguration = transcriptionConfiguration;
             MediaStreamingConfiguration = mediaStreamingConfiguration;
             TeamsAppSource = teamsAppSource;
+            EnableLoopbackAudio = enableLoopbackAudio;
         }
 
         /// <summary> The targets of the call. </summary>
@@ -78,5 +80,7 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
         /// <summary> The identifier of the source for creating call with Teams resource account ID. </summary>
         public MicrosoftTeamsAppIdentifierModel TeamsAppSource { get; set; }
+        /// <summary> Enables loopback audio functionality for the call. </summary>
+        public bool? EnableLoopbackAudio { get; set; }
     }
 }

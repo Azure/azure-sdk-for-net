@@ -50,5 +50,8 @@ namespace Azure.Communication.CallAutomation
         /// AI options for the call.
         /// </summary>
         public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
+
+        /// <summary> Enables loopback audio functionality for the call. </summary>
+        public bool? EnableLoopbackAudio { get; set; }
     }
 }
