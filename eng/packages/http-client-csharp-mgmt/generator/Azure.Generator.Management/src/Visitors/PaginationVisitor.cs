@@ -37,7 +37,7 @@ internal class PaginationVisitor : ScmLibraryVisitor
     {
         var assignmentExpression = responseToModelStatement.Expression as AssignmentExpression;
         var castExpression = assignmentExpression?.Value as CastExpression;
-        var value = Static(castExpression?.Type!).Invoke("FromResponse", [castExpression?.Inner!]);
+        var value = Static(castExpression?.Type!).Invoke(SerializationVisitor.FromResponseMethodName, [castExpression?.Inner!]);
         var variable = assignmentExpression!.Variable;
         return variable.Assign(value);
     }
