@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator;
-using Visitors;
+using Azure.Generator.Visitors;
 
 namespace Client.Plugin
 {

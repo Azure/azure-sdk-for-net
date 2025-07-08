@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using NUnit.Framework;
-using Visitors;
 
 namespace Azure.Generator.Tests.Visitors
 {

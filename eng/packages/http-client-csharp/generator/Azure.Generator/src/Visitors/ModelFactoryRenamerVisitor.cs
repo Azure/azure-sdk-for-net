@@ -1,11 +1,11 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Providers;
-using Visitors.Utilities;
+using Azure.Generator.Visitors.Utilities;
 
-namespace Visitors
+namespace Azure.Generator.Visitors
 {
     internal class ModelFactoryRenamerVisitor : ScmLibraryVisitor
     {
