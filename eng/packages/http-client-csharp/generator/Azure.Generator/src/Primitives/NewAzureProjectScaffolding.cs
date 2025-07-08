@@ -124,6 +124,12 @@ namespace Azure.Generator.Primitives
         /// <returns>A relative path string for the compile include file.</returns>
         protected string GetCompileInclude(string fileName, string relativeSegment = RelativeCoreSegment)
         {
+            // Use the AzureCoreSharedSources property for Core shared files
+            if (relativeSegment == RelativeCoreSegment)
+            {
+                return $"$(AzureCoreSharedSources){fileName}";
+            }
+            
             return $"{MSBuildThisFileDirectory}{string.Concat(Enumerable.Repeat(ParentDirectory, GetPathSegmentCount()))}{relativeSegment}{fileName}";
         }
 
