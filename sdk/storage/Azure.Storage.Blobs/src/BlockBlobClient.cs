@@ -2068,7 +2068,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="CommitBlockListAsync(IEnumerable{string}, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, CancellationToken)"/>
-        /// operation writes a blob bys pecifying the list of block IDs that make up the blob.
+        /// operation writes a blob by specifying the list of block IDs that make up the blob.
         /// In order to be written as part of a blob, a block must have been
         /// successfully written to the server in a prior <see cref="StageBlockAsync(string, Stream,  byte[], BlobRequestConditions, IProgress{long}, CancellationToken)"/>
         /// operation.  You can call <see cref="CommitBlockListAsync(IEnumerable{string}, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, CancellationToken)"/>
