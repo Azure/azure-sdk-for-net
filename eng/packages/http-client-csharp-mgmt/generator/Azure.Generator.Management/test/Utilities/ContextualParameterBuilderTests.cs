@@ -273,5 +273,22 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             Assert.AreEqual("name", contextualParameters[3].VariableName);
             Assert.AreEqual("id.Name", contextualParameters[3].BuildValueExpression(_idVariable).ToDisplayString());
         }
+
+        [TestCase]
+        public void ValidateContextualParameters_ProviderNamespaceAsAVariable()
+        {
+            var requestPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/examples/{name}");
+            var contextualParameters = ContextualParameterBuilder.BuildContextualParameters(requestPathPattern);
+            Assert.AreEqual(3, contextualParameters.Count);
+            Assert.AreEqual("subscriptions", contextualParameters[0].Key);
+            Assert.AreEqual("subscriptionId", contextualParameters[0].VariableName);
+            Assert.AreEqual("id.SubscriptionId", contextualParameters[0].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.AreEqual("providers", contextualParameters[1].Key);
+            Assert.AreEqual("resourceProviderNamespace", contextualParameters[1].VariableName);
+            Assert.AreEqual("id.ResourceType.Namespace", contextualParameters[1].BuildValueExpression(_idVariable).ToDisplayString());
+            Assert.AreEqual("examples", contextualParameters[2].Key);
+            Assert.AreEqual("name", contextualParameters[2].VariableName);
+            Assert.AreEqual("id.Name", contextualParameters[2].BuildValueExpression(_idVariable).ToDisplayString());
+        }
     }
 }

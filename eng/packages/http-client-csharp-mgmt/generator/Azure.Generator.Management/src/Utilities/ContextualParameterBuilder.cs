@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -24,6 +25,7 @@ namespace Azure.Generator.Management.Utilities
 
         private static void BuildContextualParameterHierarchy(RequestPathPattern current, Stack<ContextualParameter> parameterStack, int parentLayerCount)
         {
+            // TODO -- handle scope/extension resources
             // we resolved it until to tenant, exit because it no longer contains parameters
             if (current == RequestPathPattern.Tenant)
             {
@@ -55,7 +57,7 @@ namespace Azure.Generator.Management.Utilities
                 // TODO -- this only handles the simplest cases right now, we need to add more cases as the generator evolves.
                 var pairs = SplitIntoPairs(diffPath);
                 var appendParent = false;
-                foreach (var (key, value) in pairs)
+                foreach (var (key, value) in pairs.Reverse())
                 {
                     // we have a pair of segment, key and value
                     // In majority of cases, the key is a constant segment. In some rare scenarios, the key could be a variable.
