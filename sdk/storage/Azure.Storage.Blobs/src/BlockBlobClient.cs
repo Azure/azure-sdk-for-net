@@ -51,7 +51,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// networks.  With a block blob, you can upload multiple blocks in
     /// parallel to decrease upload time.  Each block can include an MD5 hash
     /// to verify the transfer, so you can track upload progress and re-send
-    /// blocks as needed.You can upload blocks in any order, and determine
+    /// blocks as needed. You can upload blocks in any order, and determine
     /// their sequence in the final block list commitment step. You can also
     /// upload a new block to replace an existing uncommitted block of the
     /// same block ID.  You have one week to commit blocks to a blob before
@@ -353,7 +353,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// The transport pipeline used to send every request.
         /// </param>
         /// <returns>
-        /// New instanc of the <see cref="BlockBlobClient"/> class.
+        /// New instance of the <see cref="BlockBlobClient"/> class.
         /// </returns>
         protected static BlockBlobClient CreateClient(Uri blobUri, BlobClientOptions options, HttpPipeline pipeline)
         {
