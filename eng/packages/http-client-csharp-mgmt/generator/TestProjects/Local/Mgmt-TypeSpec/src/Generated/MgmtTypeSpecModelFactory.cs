@@ -19,47 +19,6 @@ namespace MgmtTypeSpec.Models
     public static partial class MgmtTypeSpecModelFactory
     {
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="name"> The name of the private link associated with the Azure resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="MgmtTypeSpec.PrivateLinkData"/> instance for mocking. </returns>
-        public static PrivateLinkData PrivateLinkData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, PrivateLinkResourceProperties properties = default, string name = default, ManagedServiceIdentity identity = default)
-        {
-            return new PrivateLinkData(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                name,
-                identity);
-        }
-
-        /// <summary> Properties of a private link resource. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static PrivateLinkResourceProperties PrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new PrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Start SAP instance(s) request body. </summary>
-        /// <param name="startVm"> The boolean value indicates whether to start the virtual machines before starting the SAP instances. </param>
-        /// <returns> A new <see cref="Models.StartRequest"/> instance for mocking. </returns>
-        public static StartRequest StartRequest(bool? startVm = default)
-        {
-            return new StartRequest(startVm, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
