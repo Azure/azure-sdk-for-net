@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Generic;
@@ -172,6 +173,46 @@ namespace Azure.Generator.Management
                     singletonResourceName,
                     parentResource);
             }
+        }
+
+        internal static bool IsResourceUpdateModel(InputModelType model)
+        {
+            const string ResourceUpdateModelId = KnownManagementTypes.ResourceUpdateModelId;
+
+            var currentModel = model;
+            while (currentModel != null)
+            {
+                if (currentModel.CrossLanguageDefinitionId.Equals(ResourceUpdateModelId, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+                currentModel = currentModel.BaseModel;
+            }
+
+            return false;
+        }
+
+        internal static string FindEnclosingResourceNameForResourceUpdateModel(InputModelType model)
+        {
+            var inputLibrary = ManagementClientGenerator.Instance.InputLibrary;
+            foreach (var client in inputLibrary.InputNamespace.Clients)
+            {
+                foreach (var method in client.Methods)
+                {
+                    foreach (var parameter in method.Operation.Parameters)
+                    {
+                        if (parameter.Type is InputModelType && parameter.Type.Name == model.Name && method.Operation.HttpMethod == "PATCH")
+                        {
+                            if (method.Operation.ResourceName != null)
+                            {
+                                return method.Operation.ResourceName;
+                            }
+                        }
+                    }
+                }
+            }
+
+            throw new InvalidOperationException($"Could not find enclosing resource name for resource update model '{model.Name}'");
         }
     }
 }
