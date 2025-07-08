@@ -11,12 +11,11 @@ namespace Encode.Duration._Property
 {
     public partial class ISO8601DurationProperty
     {
-        public ISO8601DurationProperty(TimeSpan value) => throw null;
-
-        public TimeSpan Value
+        public ISO8601DurationProperty(TimeSpan value)
         {
-            get => throw null;
-            set => throw null;
+            Value = value;
         }
+
+        public TimeSpan Value { get; set; }
     }
 }

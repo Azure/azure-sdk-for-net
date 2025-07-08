@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using System.Xml;
 using Azure;
 using Azure.Core;
 
@@ -15,29 +16,116 @@ namespace Encode.Duration._Property
 {
     public partial class ISO8601DurationProperty : IJsonModel<ISO8601DurationProperty>
     {
-        internal ISO8601DurationProperty() => throw null;
+        internal ISO8601DurationProperty() 
+        {
+        }
 
-        void IJsonModel<ISO8601DurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<ISO8601DurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) 
+        {
+            JsonModelWriteCore(writer, options);
+        }
 
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) 
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStringValue(XmlConvert.ToString(Value));
+            writer.WriteEndObject();
+        }
 
-        ISO8601DurationProperty IJsonModel<ISO8601DurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        ISO8601DurationProperty IJsonModel<ISO8601DurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) 
+        {
+            return JsonModelCreateCore(ref reader, options);
+        }
 
-        protected virtual ISO8601DurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        protected virtual ISO8601DurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) 
+        {
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject token");
+            }
 
-        BinaryData IPersistableModel<ISO8601DurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
+            TimeSpan value = default;
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndObject)
+                {
+                    break;
+                }
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+                if (reader.TokenType == JsonTokenType.PropertyName)
+                {
+                    string propertyName = reader.GetString();
+                    reader.Read();
 
-        ISO8601DurationProperty IPersistableModel<ISO8601DurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+                    if (propertyName == "value")
+                    {
+                        string durationString = reader.GetString();
+                        value = XmlConvert.ToTimeSpan(durationString);
+                    }
+                }
+            }
 
-        protected virtual ISO8601DurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+            return new ISO8601DurationProperty(value);
+        }
 
-        string IPersistableModel<ISO8601DurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<ISO8601DurationProperty>.Write(ModelReaderWriterOptions options) 
+        {
+            return PersistableModelWriteCore(options);
+        }
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) 
+        {
+            using var document = JsonDocument.Parse(ModelReaderWriter.Write(this, options));
+            return BinaryData.FromObjectAsJson(document.RootElement);
+        }
+
+        ISO8601DurationProperty IPersistableModel<ISO8601DurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) 
+        {
+            return PersistableModelCreateCore(data, options);
+        }
+
+        protected virtual ISO8601DurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) 
+        {
+            using var document = JsonDocument.Parse(data);
+            return DeserializeISO8601DurationProperty(document.RootElement, options);
+        }
+
+        internal static ISO8601DurationProperty DeserializeISO8601DurationProperty(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+
+            TimeSpan value = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("value"u8))
+                {
+                    value = XmlConvert.ToTimeSpan(property.Value.GetString());
+                }
+            }
+
+            return new ISO8601DurationProperty(value);
+        }
+
+        string IPersistableModel<ISO8601DurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) 
+        {
+            return "J";
+        }
 
         /// <param name="isO8601DurationProperty"> The <see cref="ISO8601DurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ISO8601DurationProperty isO8601DurationProperty) => throw null;
+        public static implicit operator RequestContent(ISO8601DurationProperty isO8601DurationProperty) 
+        {
+            if (isO8601DurationProperty == null) return null;
+            return RequestContent.Create(ModelReaderWriter.Write(isO8601DurationProperty, new ModelReaderWriterOptions("W")));
+        }
 
-        public static explicit operator ISO8601DurationProperty(Response result) => throw null;
+        public static explicit operator ISO8601DurationProperty(Response result) 
+        {
+            using var document = JsonDocument.Parse(result.Content);
+            return DeserializeISO8601DurationProperty(document.RootElement);
+        }
     }
 }

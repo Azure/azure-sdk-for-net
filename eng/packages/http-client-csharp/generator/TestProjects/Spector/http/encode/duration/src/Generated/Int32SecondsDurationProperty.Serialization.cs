@@ -15,29 +15,117 @@ namespace Encode.Duration._Property
 {
     public partial class Int32SecondsDurationProperty : IJsonModel<Int32SecondsDurationProperty>
     {
-        internal Int32SecondsDurationProperty() => throw null;
+        internal Int32SecondsDurationProperty() 
+        {
+        }
 
-        void IJsonModel<Int32SecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<Int32SecondsDurationProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) 
+        {
+            JsonModelWriteCore(writer, options);
+        }
 
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) 
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteNumberValue((int)Value.TotalSeconds);
+            writer.WriteEndObject();
+        }
 
-        Int32SecondsDurationProperty IJsonModel<Int32SecondsDurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Int32SecondsDurationProperty IJsonModel<Int32SecondsDurationProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) 
+        {
+            return JsonModelCreateCore(ref reader, options);
+        }
 
-        protected virtual Int32SecondsDurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        protected virtual Int32SecondsDurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) 
+        {
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject token");
+            }
 
-        BinaryData IPersistableModel<Int32SecondsDurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
+            TimeSpan value = default;
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndObject)
+                {
+                    break;
+                }
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+                if (reader.TokenType == JsonTokenType.PropertyName)
+                {
+                    string propertyName = reader.GetString();
+                    reader.Read();
 
-        Int32SecondsDurationProperty IPersistableModel<Int32SecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+                    if (propertyName == "value")
+                    {
+                        int seconds = reader.GetInt32();
+                        value = TimeSpan.FromSeconds(seconds);
+                    }
+                }
+            }
 
-        protected virtual Int32SecondsDurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+            return new Int32SecondsDurationProperty(value);
+        }
 
-        string IPersistableModel<Int32SecondsDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<Int32SecondsDurationProperty>.Write(ModelReaderWriterOptions options) 
+        {
+            return PersistableModelWriteCore(options);
+        }
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) 
+        {
+            using var document = JsonDocument.Parse(ModelReaderWriter.Write(this, options));
+            return BinaryData.FromObjectAsJson(document.RootElement);
+        }
+
+        Int32SecondsDurationProperty IPersistableModel<Int32SecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) 
+        {
+            return PersistableModelCreateCore(data, options);
+        }
+
+        protected virtual Int32SecondsDurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) 
+        {
+            using var document = JsonDocument.Parse(data);
+            return DeserializeInt32SecondsDurationProperty(document.RootElement, options);
+        }
+
+        internal static Int32SecondsDurationProperty DeserializeInt32SecondsDurationProperty(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+
+            TimeSpan value = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("value"u8))
+                {
+                    int seconds = property.Value.GetInt32();
+                    value = TimeSpan.FromSeconds(seconds);
+                }
+            }
+
+            return new Int32SecondsDurationProperty(value);
+        }
+
+        string IPersistableModel<Int32SecondsDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) 
+        {
+            return "J";
+        }
 
         /// <param name="int32SecondsDurationProperty"> The <see cref="Int32SecondsDurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Int32SecondsDurationProperty int32SecondsDurationProperty) => throw null;
+        public static implicit operator RequestContent(Int32SecondsDurationProperty int32SecondsDurationProperty) 
+        {
+            if (int32SecondsDurationProperty == null) return null;
+            return RequestContent.Create(ModelReaderWriter.Write(int32SecondsDurationProperty, new ModelReaderWriterOptions("W")));
+        }
 
-        public static explicit operator Int32SecondsDurationProperty(Response result) => throw null;
+        public static explicit operator Int32SecondsDurationProperty(Response result) 
+        {
+            using var document = JsonDocument.Parse(result.Content);
+            return DeserializeInt32SecondsDurationProperty(document.RootElement);
+        }
     }
 }

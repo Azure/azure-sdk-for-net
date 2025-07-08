@@ -11,12 +11,11 @@ namespace Encode.Duration._Property
 {
     public partial class FloatSecondsDurationProperty
     {
-        public FloatSecondsDurationProperty(TimeSpan value) => throw null;
-
-        public TimeSpan Value
+        public FloatSecondsDurationProperty(TimeSpan value)
         {
-            get => throw null;
-            set => throw null;
+            Value = value;
         }
+
+        public TimeSpan Value { get; set; }
     }
 }
