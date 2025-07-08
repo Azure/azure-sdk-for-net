@@ -225,6 +225,31 @@ namespace Azure.ResourceManager.Compute.Models
                 serializedAdditionalRawData: null);
         }
 
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string instanceId = null, ComputeSku sku = null, VirtualMachineScaleSetVmProperties properties = null, ComputePlan plan = null, IEnumerable<VirtualMachineExtensionData> resources = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, string etag = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            resources ??= new List<VirtualMachineExtensionData>();
+            zones ??= new List<string>();
+
+            return new VirtualMachineScaleSetVmData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                instanceId,
+                sku,
+                properties,
+                plan,
+                resources?.ToList(),
+                zones?.ToList(),
+                identity,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.VirtualMachineScaleSetVmData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
