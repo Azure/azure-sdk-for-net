@@ -385,8 +385,6 @@
       <PackageIsAotCompatible>false</PackageIsAotCompatible>
       <PackageIsAotCompatible Condition="'$(IsAotCompatible)' == 'true'">true</PackageIsAotCompatible>
 
-    <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' '$(PackageIsAotCompatible)'" Importance="High" />
-
       <!-- Format package info line for output -->
       <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'</PackageInfoText>
     </PropertyGroup>
