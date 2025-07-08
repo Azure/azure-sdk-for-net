@@ -14,8 +14,17 @@ namespace Azure.Generator.Management.Utilities
 {
     internal static class ContextualParameterBuilder
     {
+        /// <summary>
+        /// This method accepts a <see cref="RequestPathPattern"/> as a contextual request path pattern
+        /// of a certain resource or resource collection class,
+        /// and builds a list of <see cref="ContextualParameter"/>s that represent the parameters
+        /// provided by this contextual request path pattern.
+        /// </summary>
+        /// <param name="requestPathPattern">The contextual request path pattern.</param>
+        /// <returns></returns>
         public static IReadOnlyList<ContextualParameter> BuildContextualParameters(RequestPathPattern requestPathPattern)
         {
+            // we use a stack here because we are building the contextual parameters in reverse order.
             var result = new Stack<ContextualParameter>();
 
             BuildContextualParameterHierarchy(requestPathPattern, result, 0);

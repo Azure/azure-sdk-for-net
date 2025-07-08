@@ -70,5 +70,38 @@ namespace MgmtTypeSpec.Mocking
         {
             return new FooSettingsResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "FooSettings", "default"));
         }
+
+        /// <summary> Gets a collection of Bars in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Bars and their operations over a BarResource. </returns>
+        public virtual BarCollection GetBars()
+        {
+            return GetCachedClient(client => new BarCollection(client, Id));
+        }
+
+        /// <summary> Get a Bar. </summary>
+        /// <param name="barName"> The name of the Bar. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BarResource> GetBar(string barName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
+
+            return GetBars().Get(barName, cancellationToken);
+        }
+
+        /// <summary> Get a Bar. </summary>
+        /// <param name="barName"> The name of the Bar. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BarResource>> GetBarAsync(string barName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
+
+            return await GetBars().GetAsync(barName, cancellationToken).ConfigureAwait(false);
+        }
     }
 }

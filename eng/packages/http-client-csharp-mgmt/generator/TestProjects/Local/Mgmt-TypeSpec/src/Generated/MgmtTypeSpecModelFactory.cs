@@ -105,5 +105,47 @@ namespace MgmtTypeSpec.Models
         {
             return new FooSettingsUpdateProperties(accessControlEnabled, additionalBinaryDataProperties: null);
         }
+
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="name"> The name of the Bar. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.BarData"/> instance for mocking. </returns>
+        public static BarData BarData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, BarProperties properties = default, string name = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BarData(
+                id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                name);
+        }
+
+        /// <summary> The BarProperties. </summary>
+        /// <param name="serviceUri"> the service url. </param>
+        /// <param name="something"> something. </param>
+        /// <param name="boolValue"> boolean value. </param>
+        /// <param name="floatValue"> float value. </param>
+        /// <param name="doubleValue"> double value. </param>
+        /// <returns> A new <see cref="Models.BarProperties"/> instance for mocking. </returns>
+        public static BarProperties BarProperties(Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default)
+        {
+            return new BarProperties(
+                serviceUri,
+                something,
+                boolValue,
+                floatValue,
+                doubleValue,
+                additionalBinaryDataProperties: null);
+        }
     }
 }

@@ -2,7 +2,7 @@
 import "@azure-tools/typespec-azure-resource-manager";
 import "./PrivateEndpointConnection.tsp";
 import "./foo.tsp";
-// import "./bar.tsp";
+import "./bar.tsp";
 
 using TypeSpec.Versioning;
 using Azure.ResourceManager;

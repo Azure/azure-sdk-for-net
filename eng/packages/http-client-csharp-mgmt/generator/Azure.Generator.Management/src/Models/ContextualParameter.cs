@@ -8,6 +8,9 @@ using System;
 
 namespace Azure.Generator.Management.Models
 {
+    /// <summary>
+    /// A <see cref="ContextualParameter"/> represents a parameter which could be determined contextually from the Id property of its enclosing resource or resource collection class.
+    /// </summary>
     internal class ContextualParameter
     {
         private readonly Func<ScopedApi<ResourceIdentifier>, ValueExpression> _valueExpressionBuilder;
@@ -23,8 +26,6 @@ namespace Azure.Generator.Management.Models
         public string VariableName { get; }
 
         public ValueExpression BuildValueExpression(ScopedApi<ResourceIdentifier> id)
-        {
-            return _valueExpressionBuilder(id);
-        }
+            => _valueExpressionBuilder(id);
     }
 }

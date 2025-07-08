@@ -373,6 +373,8 @@ namespace Azure.Generator.Management.Providers
                 ]);
             }
 
+            // TODO -- add method to get the child resource collection from the current resource.
+
             return [.. methods];
         }
 
