@@ -13,7 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy;
+namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
 /// Encapsulates a process running an instance of the Test Proxy as well as providing access to the Test Proxy administration actions
@@ -25,7 +25,7 @@ public class TestProxyProcess
     private static readonly string s_dotNetExe;
     private readonly int? _proxyPortHttp;
     private readonly int? _proxyPortHttps;
-    private readonly Process _testProxyProcess;
+    private readonly Process? _testProxyProcess;
     private readonly StringBuilder _errorBuffer = new();
     private static readonly object _lock = new();
     private static TestProxyProcess? _shared;
@@ -156,15 +156,15 @@ public class TestProxyProcess
     /// <summary>
     /// TODO.
     /// </summary>
-    public const string TestProxyProcessLocation { get; }
+    public const string TestProxyProcessLocation = "";
 
     /// <summary>
-    /// TODO.
+    /// Gets the HTTP port used by the proxy.
     /// </summary>
     public int? ProxyPortHttp => _proxyPortHttp;
 
     /// <summary>
-    /// TODO.
+    /// Gets the HTTPS port used by the proxy.
     /// </summary>
     public int? ProxyPortHttps => _proxyPortHttps;
 }
