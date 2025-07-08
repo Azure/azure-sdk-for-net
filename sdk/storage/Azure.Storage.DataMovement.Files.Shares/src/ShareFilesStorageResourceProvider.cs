@@ -404,7 +404,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
             // Now using a policy, update the user agent string with the version and add the policy
             // to the client options.
-            DataMovementUserAgentPolicy policy = new(versionAttribute.InformationalVersion);
+            string dataMovementVersion = string.Concat(DataMovementConstants.UserAgentIdentifier, versionAttribute.InformationalVersion);
+            StorageUserAgentPolicy policy = new(dataMovementVersion);
             options.AddPolicy(policy, HttpPipelinePosition.PerCall);
             return options;
         }

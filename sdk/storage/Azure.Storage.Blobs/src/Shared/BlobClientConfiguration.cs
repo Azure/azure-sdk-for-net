@@ -35,6 +35,8 @@ namespace Azure.Storage.Blobs
 
         public bool TrimBlobNameSlashes { get; internal set; }
 
+        public BlobClientOptions ClientOptions { get; internal set; }
+
         /// <summary>
         /// Create a <see cref="BlobClientConfiguration"/> with token authentication.
         /// </summary>
@@ -47,7 +49,8 @@ namespace Azure.Storage.Blobs
             CustomerProvidedKey? customerProvidedKey,
             TransferValidationOptions transferValidation,
             string encryptionScope,
-            bool trimBlobNameSlashes)
+            bool trimBlobNameSlashes,
+            BlobClientOptions clientOptions)
             : base(pipeline, tokenCredential, clientDiagnostics)
         {
             Version = version;
@@ -55,6 +58,7 @@ namespace Azure.Storage.Blobs
             TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
             TrimBlobNameSlashes = trimBlobNameSlashes;
+            ClientOptions = clientOptions;
         }
 
         /// <summary>
@@ -68,7 +72,8 @@ namespace Azure.Storage.Blobs
             CustomerProvidedKey? customerProvidedKey,
             TransferValidationOptions transferValidation,
             string encryptionScope,
-            bool trimBlobNameSlashes)
+            bool trimBlobNameSlashes,
+            BlobClientOptions clientOptions)
             : base(pipeline, sharedKeyCredential, clientDiagnostics)
         {
             Version = version;
@@ -76,6 +81,7 @@ namespace Azure.Storage.Blobs
             TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
             TrimBlobNameSlashes = trimBlobNameSlashes;
+            ClientOptions = clientOptions;
         }
 
         /// <summary>
@@ -89,7 +95,8 @@ namespace Azure.Storage.Blobs
             CustomerProvidedKey? customerProvidedKey,
             TransferValidationOptions transferValidation,
             string encryptionScope,
-            bool trimBlobNameSlashes)
+            bool trimBlobNameSlashes,
+            BlobClientOptions clientOptions)
             : base(pipeline, sasCredential, clientDiagnostics)
         {
             Version = version;
@@ -97,6 +104,7 @@ namespace Azure.Storage.Blobs
             TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
             TrimBlobNameSlashes = trimBlobNameSlashes;
+            ClientOptions = clientOptions;
         }
 
         /// <summary>
@@ -111,7 +119,8 @@ namespace Azure.Storage.Blobs
             CustomerProvidedKey? customerProvidedKey,
             TransferValidationOptions transferValidation,
             string encryptionScope,
-            bool trimBlobNameSlashes)
+            bool trimBlobNameSlashes,
+            BlobClientOptions clientOptions)
             : base(pipeline, clientDiagnostics)
         {
             Version = version;
@@ -119,6 +128,7 @@ namespace Azure.Storage.Blobs
             TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
             TrimBlobNameSlashes = trimBlobNameSlashes;
+            ClientOptions = clientOptions;
         }
 
         /// <summary>
@@ -134,7 +144,8 @@ namespace Azure.Storage.Blobs
             CustomerProvidedKey? customerProvidedKey,
             TransferValidationOptions transferValidation,
             string encryptionScope,
-            bool trimBlobNameSlashes)
+            bool trimBlobNameSlashes,
+            BlobClientOptions clientOptions)
             : base(pipeline, sharedKeyCredential, sasCredential, tokenCredential, clientDiagnostics)
         {
             Version = version;
@@ -142,6 +153,7 @@ namespace Azure.Storage.Blobs
             TransferValidation = transferValidation;
             EncryptionScope = encryptionScope;
             TrimBlobNameSlashes = trimBlobNameSlashes;
+            ClientOptions = clientOptions;
         }
 
         internal static BlobClientConfiguration DeepCopy(BlobClientConfiguration originalClientConfiguration)
@@ -155,6 +167,7 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: originalClientConfiguration.CustomerProvidedKey,
                 transferValidation: originalClientConfiguration.TransferValidation,
                 encryptionScope: originalClientConfiguration.EncryptionScope,
-                trimBlobNameSlashes: originalClientConfiguration.TrimBlobNameSlashes);
+                trimBlobNameSlashes: originalClientConfiguration.TrimBlobNameSlashes,
+                clientOptions: originalClientConfiguration.ClientOptions);
     }
 }

@@ -410,7 +410,8 @@ namespace Azure.Storage.Blobs.Specialized
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                trimBlobNameSlashes: options.TrimBlobNameSlashes);
+                trimBlobNameSlashes: options.TrimBlobNameSlashes,
+                clientOptions: options);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _blobRestClient = BuildBlobRestClient(blobUri);
@@ -589,6 +590,26 @@ namespace Azure.Storage.Blobs.Specialized
                 blobUri: Uri,
                 clientConfiguration: newClientConfiguration,
                 clientSideEncryption: ClientSideEncryption?.Clone());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
+        /// class with identical configurations but with an updated User Agent string.
+        /// </summary>
+        /// <param name="preappendedUserAgent">
+        /// The string to preappend the user agent with.
+        /// </param>
+        /// <returns></returns>
+        protected virtual BlobBaseClient WithPreappendUserAgent(string preappendedUserAgent)
+        {
+            // Create the pipeline policy with the user agent string updated.
+            StorageUserAgentPolicy userAgentPolicy = new(preappendedUserAgent);
+
+            // Update the client options with the injected user agent policy.
+            BlobClientOptions options = _client
+            // Create a deep copy of the BlobBaseClient but with an updated client options
+            // with an additional injected pipeline policy with the user agent string
+
         }
 
         /// <summary>

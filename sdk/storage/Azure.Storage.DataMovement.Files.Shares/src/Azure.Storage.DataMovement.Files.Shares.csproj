@@ -39,6 +39,7 @@
     <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Argument.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageUserAgentPolicy.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageDataMovementSharedSources)DataMovementConstants.cs" LinkBase="Shared\DataMovement" />
@@ -47,7 +48,6 @@
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceCheckpointDetailsInternal.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceItemInternal.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)StorageResourceContainerInternal.cs" LinkBase="Shared\DataMovement" />
-    <Compile Include="$(AzureStorageDataMovementSharedSources)DataMovementUserAgentPolicy.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Shared\ShareModelExtensions.cs" />
