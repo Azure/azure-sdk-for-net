@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Agents.Persistent
 {
@@ -15,29 +14,21 @@ namespace Azure.AI.Agents.Persistent
     public partial class SubmitToolApprovalAction : RequiredAction
     {
         /// <summary> Initializes a new instance of <see cref="SubmitToolApprovalAction"/>. </summary>
-        /// <param name="submitToolApproval">
-        /// The details describing tools that should be approved to continue run.
-        /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RequiredFunctionToolCall"/> and <see cref="RequiredMcpToolCall"/>.
-        /// </param>
+        /// <param name="submitToolApproval"> The details describing tools that should be approved to continue run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="submitToolApproval"/> is null. </exception>
-        internal SubmitToolApprovalAction(IEnumerable<RequiredToolCall> submitToolApproval)
+        internal SubmitToolApprovalAction(SubmitToolApprovalDetails submitToolApproval)
         {
             Argument.AssertNotNull(submitToolApproval, nameof(submitToolApproval));
 
             Type = "submit_tool_approval";
-            SubmitToolApproval = submitToolApproval.ToList();
+            SubmitToolApproval = submitToolApproval;
         }
 
         /// <summary> Initializes a new instance of <see cref="SubmitToolApprovalAction"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="submitToolApproval">
-        /// The details describing tools that should be approved to continue run.
-        /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RequiredFunctionToolCall"/> and <see cref="RequiredMcpToolCall"/>.
-        /// </param>
-        internal SubmitToolApprovalAction(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<RequiredToolCall> submitToolApproval) : base(type, serializedAdditionalRawData)
+        /// <param name="submitToolApproval"> The details describing tools that should be approved to continue run. </param>
+        internal SubmitToolApprovalAction(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, SubmitToolApprovalDetails submitToolApproval) : base(type, serializedAdditionalRawData)
         {
             SubmitToolApproval = submitToolApproval;
         }
@@ -47,11 +38,7 @@ namespace Azure.AI.Agents.Persistent
         {
         }
 
-        /// <summary>
-        /// The details describing tools that should be approved to continue run.
-        /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RequiredFunctionToolCall"/> and <see cref="RequiredMcpToolCall"/>.
-        /// </summary>
-        public IReadOnlyList<RequiredToolCall> SubmitToolApproval { get; }
+        /// <summary> The details describing tools that should be approved to continue run. </summary>
+        public SubmitToolApprovalDetails SubmitToolApproval { get; }
     }
 }

@@ -36,12 +36,7 @@ namespace Azure.AI.Agents.Persistent
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("submit_tool_approval"u8);
-            writer.WriteStartArray();
-            foreach (var item in SubmitToolApproval)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
+            writer.WriteObjectValue(SubmitToolApproval, options);
         }
 
         SubmitToolApprovalAction IJsonModel<SubmitToolApprovalAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -64,7 +59,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
-            IReadOnlyList<RequiredToolCall> submitToolApproval = default;
+            SubmitToolApprovalDetails submitToolApproval = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -72,12 +67,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("submit_tool_approval"u8))
                 {
-                    List<RequiredToolCall> array = new List<RequiredToolCall>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(RequiredToolCall.DeserializeRequiredToolCall(item, options));
-                    }
-                    submitToolApproval = array;
+                    submitToolApproval = SubmitToolApprovalDetails.DeserializeSubmitToolApprovalDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

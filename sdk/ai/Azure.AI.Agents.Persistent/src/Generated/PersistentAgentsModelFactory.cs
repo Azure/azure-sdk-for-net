@@ -145,17 +145,25 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.SubmitToolApprovalAction"/>. </summary>
-        /// <param name="submitToolApproval">
-        /// The details describing tools that should be approved to continue run.
+        /// <param name="submitToolApproval"> The details describing tools that should be approved to continue run. </param>
+        /// <returns> A new <see cref="Persistent.SubmitToolApprovalAction"/> instance for mocking. </returns>
+        public static SubmitToolApprovalAction SubmitToolApprovalAction(SubmitToolApprovalDetails submitToolApproval = null)
+        {
+            return new SubmitToolApprovalAction("submit_tool_approval", serializedAdditionalRawData: null, submitToolApproval);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.SubmitToolApprovalDetails"/>. </summary>
+        /// <param name="toolCalls">
+        /// The list of tool calls that must be approved for the agent thread run to continue.
         /// Please note <see cref="Persistent.RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Persistent.RequiredFunctionToolCall"/> and <see cref="Persistent.RequiredMcpToolCall"/>.
         /// </param>
-        /// <returns> A new <see cref="Persistent.SubmitToolApprovalAction"/> instance for mocking. </returns>
-        public static SubmitToolApprovalAction SubmitToolApprovalAction(IEnumerable<RequiredToolCall> submitToolApproval = null)
+        /// <returns> A new <see cref="Persistent.SubmitToolApprovalDetails"/> instance for mocking. </returns>
+        public static SubmitToolApprovalDetails SubmitToolApprovalDetails(IEnumerable<RequiredToolCall> toolCalls = null)
         {
-            submitToolApproval ??= new List<RequiredToolCall>();
+            toolCalls ??= new List<RequiredToolCall>();
 
-            return new SubmitToolApprovalAction("submit_tool_approval", serializedAdditionalRawData: null, submitToolApproval?.ToList());
+            return new SubmitToolApprovalDetails(toolCalls?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunError"/>. </summary>
