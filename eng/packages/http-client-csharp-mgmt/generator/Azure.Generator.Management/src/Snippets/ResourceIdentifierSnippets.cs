@@ -28,6 +28,9 @@ namespace Azure.Generator.Management.Snippets
         public static ScopedApi<ResourceIdentifier> Parent(this ScopedApi<ResourceIdentifier> resourceIdentifier)
             => resourceIdentifier.Property(nameof(ResourceIdentifier.Parent)).As<ResourceIdentifier>();
 
+        public static ScopedApi<string> Provider(this ScopedApi<ResourceIdentifier> resourceIdentifier)
+            => resourceIdentifier.Property(nameof(ResourceIdentifier.Provider)).As<string>();
+
         public static ScopedApi<ResourceIdentifier> AppendProviderResource(
             this ScopedApi<ResourceIdentifier> resourceIdentifier,
             ValueExpression providerNamespace,

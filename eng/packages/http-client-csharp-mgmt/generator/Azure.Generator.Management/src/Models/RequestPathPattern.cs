@@ -14,13 +14,6 @@ namespace Azure.Generator.Management.Models
         private const string ProviderPath = "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";
         private const string FeaturePath = "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features";
 
-        public const string ManagementGroupScopePrefix = "/providers/Microsoft.Management/managementGroups";
-        public const string ResourceGroupScopePrefix = "/subscriptions/{subscriptionId}/resourceGroups";
-        public const string SubscriptionScopePrefix = "/subscriptions";
-        public const string TenantScopePrefix = "/tenants";
-        public const string Providers = "/providers";
-        private const string ProvidersKey = "providers";
-
         public static readonly RequestPathPattern ManagementGroup = new("/providers/Microsoft.Management/managementGroups/{managementGroupId}");
         public static readonly RequestPathPattern ResourceGroup = new("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
         public static readonly RequestPathPattern Subscription = new("/subscriptions/{subscriptionId}");
@@ -33,7 +26,6 @@ namespace Azure.Generator.Management.Models
         {
             _path = path;
             _segments = ParseSegments(path);
-            IndexOfLastProviders = _path.LastIndexOf(Providers);
         }
 
         public RequestPathPattern(IEnumerable<RequestPathSegment> segments)
@@ -50,8 +42,6 @@ namespace Azure.Generator.Management.Models
         public int Count => _segments.Count;
 
         public string SerializedPath => _path;
-
-        public int IndexOfLastProviders { get; }
 
         public RequestPathSegment this[int index] => _segments[index];
 
@@ -104,13 +94,13 @@ namespace Azure.Generator.Management.Models
             }
             if (IsAncestorOf(other))
             {
-                diff = new RequestPathPattern(string.Join("", other._segments.Skip(Count)));
+                diff = new RequestPathPattern(other._segments.Skip(Count));
                 return true;
             }
             // Handle the special case of trim provider from feature
             else if (_path == ProviderPath && other._path.StartsWith(FeaturePath))
             {
-                diff = new RequestPathPattern(string.Join("", other._segments.Skip(Count + 2)));
+                diff = new RequestPathPattern(other._segments.Skip(Count + 2));
                 return true;
             }
             return false;
@@ -132,7 +122,7 @@ namespace Azure.Generator.Management.Models
             }
             // if there are 4 or more segments, we need to check if we trim off the last two segments, we get a `providers` segment pair
             // if so, we trim 4 segments instead of 2.
-            if (_segments[^4].IsConstant && _segments[^4].Value == ProvidersKey)
+            if (_segments[^4].IsProvidersSegment)
             {
                 return new RequestPathPattern(_segments.Take(Count - 4));
             }

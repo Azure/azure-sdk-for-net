@@ -5,6 +5,7 @@ using Azure.Core;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Snippets;
 using System;
+using System.Diagnostics;
 
 namespace Azure.Generator.Management.Models
 {

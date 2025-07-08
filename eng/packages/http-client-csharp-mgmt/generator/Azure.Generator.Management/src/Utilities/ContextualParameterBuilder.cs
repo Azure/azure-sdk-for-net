@@ -17,12 +17,12 @@ namespace Azure.Generator.Management.Utilities
         {
             var result = new Stack<ContextualParameter>();
 
-            BuildContextualParameterHierarchy(requestPathPattern, result, id => id);
+            BuildContextualParameterHierarchy(requestPathPattern, result, 0);
 
             return [.. result];
         }
 
-        private static void BuildContextualParameterHierarchy(RequestPathPattern current, Stack<ContextualParameter> parameterStack, Func<ScopedApi<ResourceIdentifier>, ScopedApi<ResourceIdentifier>> idMutator)
+        private static void BuildContextualParameterHierarchy(RequestPathPattern current, Stack<ContextualParameter> parameterStack, int parentLayerCount)
         {
             // we resolved it until to tenant, exit because it no longer contains parameters
             if (current == RequestPathPattern.Tenant)
@@ -36,17 +36,17 @@ namespace Azure.Generator.Management.Utilities
             if (current == RequestPathPattern.Subscription)
             {
                 // using the reference name of the last segment as the parameter name, aka subscriptionId
-                parameterStack.Push(new ContextualParameter(current[0].Value, current[1].VariableName, id => idMutator(id).SubscriptionId()));
+                parameterStack.Push(new ContextualParameter(current[0].Value, current[1].VariableName, id => id.SubscriptionId()));
             }
             else if (current == RequestPathPattern.ManagementGroup)
             {
                 // using the reference name of the last segment as the parameter name, aka managementGroupId
-                parameterStack.Push(new ContextualParameter(current[^2].Value, current[^1].VariableName, id => idMutator(id).Name()));
+                parameterStack.Push(new ContextualParameter(current[^2].Value, current[^1].VariableName, id => BuildParentInvocation(parentLayerCount, id).Name()));
             }
             else if (current == RequestPathPattern.ResourceGroup)
             {
                 // using the reference name of the last segment as the parameter name, aka resourceGroupName
-                parameterStack.Push(new ContextualParameter(current[^2].Value, current[^1].VariableName, id => idMutator(id).ResourceGroupName()));
+                parameterStack.Push(new ContextualParameter(current[^2].Value, current[^1].VariableName, id => id.ResourceGroupName()));
             }
             else
             {
@@ -54,11 +54,65 @@ namespace Azure.Generator.Management.Utilities
                 var diffPath = parent.TrimAncestorFrom(current);
                 // TODO -- this only handles the simplest cases right now, we need to add more cases as the generator evolves.
                 var pairs = SplitIntoPairs(diffPath);
-
-                // TODO -- come back here
+                var appendParent = false;
+                foreach (var (key, value) in pairs)
+                {
+                    // we have a pair of segment, key and value
+                    // In majority of cases, the key is a constant segment. In some rare scenarios, the key could be a variable.
+                    // The value could be a constant or a variable segment.
+                    if (!value.IsConstant)
+                    {
+                        if (key.IsProvidersSegment) // if the key is `providers` and the value is a parameter
+                        {
+                            if (current.Count <= 4) // path is /providers/{resourceProviderNamespace} or /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
+                            {
+                                // we have to reassign the value of parentLayerCount to a local variable to avoid the closure to wrap the parentLayerCount variable which changes during recursion.
+                                int currentParentCount = parentLayerCount;
+                                parameterStack.Push(new ContextualParameter(key.Value, value.VariableName, id => BuildParentInvocation(currentParentCount, id).Provider()));
+                            }
+                            else
+                            {
+                                // we have to reassign the value of parentLayerCount to a local variable to avoid the closure to wrap the parentLayerCount variable which changes during recursion.
+                                int currentParentCount = parentLayerCount;
+                                parameterStack.Push(new ContextualParameter(key.Value, value.VariableName, id => BuildParentInvocation(currentParentCount, id).ResourceType().Namespace()));
+                            }
+                            // do not append a new .Parent to the id
+                        }
+                        else // for all other normal keys
+                        {
+                            // we have to reassign the value of parentLayerCount to a local variable to avoid the closure to wrap the parentLayerCount variable which changes during recursion.
+                            int currentParentCount = parentLayerCount;
+                            parameterStack.Push(new ContextualParameter(key.Value, value.VariableName, id => BuildParentInvocation(currentParentCount, id).Name()));
+                            appendParent = true;
+                        }
+                    }
+                    else // in this branch value is a constant
+                    {
+                        if (key.IsProvidersSegment)
+                        {
+                            // if the key is not providers, we need to skip this level and increment the parent hierarchy
+                            appendParent = true;
+                        }
+                    }
+                }
+                // check if we need to call .Parent on id
+                if (appendParent)
+                {
+                    parentLayerCount++;
+                }
             }
-            // recurisvely get the parameters of its parent
-            BuildContextualParameterHierarchy(parent, parameterStack, idMutator);
+            // recursively get the parameters of its parent
+            BuildContextualParameterHierarchy(parent, parameterStack, parentLayerCount);
+
+            static ScopedApi<ResourceIdentifier> BuildParentInvocation(int parentLayerCount, ScopedApi<ResourceIdentifier> id)
+            {
+                var result = id;
+                for (int i = 0; i < parentLayerCount; i++)
+                {
+                    result = result.Parent();
+                }
+                return result;
+            }
         }
 
         private static IReadOnlyList<KeyValuePair<RequestPathSegment, RequestPathSegment>> SplitIntoPairs(IReadOnlyList<RequestPathSegment> requestPath)

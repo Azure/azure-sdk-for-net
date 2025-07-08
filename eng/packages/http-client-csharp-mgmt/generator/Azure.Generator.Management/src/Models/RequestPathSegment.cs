@@ -42,6 +42,11 @@ namespace Azure.Generator.Management.Models
         /// </summary>
         public string VariableName => _variableName ?? throw new InvalidOperationException("This segment is not a variable segment.");
 
+        /// <summary>
+        /// Returns true if this segment is the "providers" segment.
+        /// </summary>
+        public bool IsProvidersSegment => _value.Equals("providers");
+
         private static (bool IsConstant, string? VariableName) ParseValue(string value)
         {
             var span = value.AsSpan();
