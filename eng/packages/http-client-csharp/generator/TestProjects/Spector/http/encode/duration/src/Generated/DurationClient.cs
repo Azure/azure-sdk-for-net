@@ -26,7 +26,7 @@ namespace Encode.Duration
         public DurationClient(Uri endpoint, DurationClientOptions options) 
         {
             if (endpoint == null) throw new ArgumentNullException(nameof(endpoint));
-            if (options == null) throw new ArgumentNullException(nameof(options));
+            options = options ?? new DurationClientOptions();
             
             _endpoint = endpoint;
             _pipeline = HttpPipelineBuilder.Build(options);

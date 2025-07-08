@@ -37,21 +37,95 @@ namespace Encode.Duration._Property
             return JsonModelCreateCore(ref reader, options);
         }
 
-        protected virtual FloatSecondsDurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        protected virtual FloatSecondsDurationProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) 
+        {
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new JsonException("Expected StartObject token");
+            }
 
-        BinaryData IPersistableModel<FloatSecondsDurationProperty>.Write(ModelReaderWriterOptions options) => throw null;
+            TimeSpan value = default;
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndObject)
+                {
+                    break;
+                }
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+                if (reader.TokenType == JsonTokenType.PropertyName)
+                {
+                    string propertyName = reader.GetString();
+                    reader.Read();
 
-        FloatSecondsDurationProperty IPersistableModel<FloatSecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+                    if (propertyName == "value")
+                    {
+                        float seconds = reader.GetSingle();
+                        value = TimeSpan.FromSeconds(seconds);
+                    }
+                }
+            }
 
-        protected virtual FloatSecondsDurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+            return new FloatSecondsDurationProperty(value);
+        }
 
-        string IPersistableModel<FloatSecondsDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<FloatSecondsDurationProperty>.Write(ModelReaderWriterOptions options) 
+        {
+            return PersistableModelWriteCore(options);
+        }
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) 
+        {
+            using var document = JsonDocument.Parse(ModelReaderWriter.Write(this, options));
+            return BinaryData.FromObjectAsJson(document.RootElement);
+        }
+
+        FloatSecondsDurationProperty IPersistableModel<FloatSecondsDurationProperty>.Create(BinaryData data, ModelReaderWriterOptions options) 
+        {
+            return PersistableModelCreateCore(data, options);
+        }
+
+        protected virtual FloatSecondsDurationProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) 
+        {
+            using var document = JsonDocument.Parse(data);
+            return DeserializeFloatSecondsDurationProperty(document.RootElement, options);
+        }
+
+        internal static FloatSecondsDurationProperty DeserializeFloatSecondsDurationProperty(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+
+            TimeSpan value = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("value"u8))
+                {
+                    float seconds = property.Value.GetSingle();
+                    value = TimeSpan.FromSeconds(seconds);
+                }
+            }
+
+            return new FloatSecondsDurationProperty(value);
+        }
+
+        string IPersistableModel<FloatSecondsDurationProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) 
+        {
+            return "J";
+        }
 
         /// <param name="floatSecondsDurationProperty"> The <see cref="FloatSecondsDurationProperty"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(FloatSecondsDurationProperty floatSecondsDurationProperty) => throw null;
+        public static implicit operator RequestContent(FloatSecondsDurationProperty floatSecondsDurationProperty) 
+        {
+            if (floatSecondsDurationProperty == null) return null;
+            return RequestContent.Create(ModelReaderWriter.Write(floatSecondsDurationProperty, new ModelReaderWriterOptions("W")));
+        }
 
-        public static explicit operator FloatSecondsDurationProperty(Response result) => throw null;
+        public static explicit operator FloatSecondsDurationProperty(Response result) 
+        {
+            using var document = JsonDocument.Parse(result.Content);
+            return DeserializeFloatSecondsDurationProperty(document.RootElement);
+        }
     }
 }

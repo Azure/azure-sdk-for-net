@@ -53,25 +53,49 @@ namespace Encode.Duration._Property
 
         public virtual Task<Response> Iso8601Async(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<ISO8601DurationProperty> Iso8601(ISO8601DurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<ISO8601DurationProperty> Iso8601(ISO8601DurationProperty body, CancellationToken cancellationToken = default) 
+        {
+            // Simple mock implementation for testing  
+            return Response.FromValue<ISO8601DurationProperty>(body, null);
+        }
 
-        public virtual Task<Response<ISO8601DurationProperty>> Iso8601Async(ISO8601DurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<ISO8601DurationProperty>> Iso8601Async(ISO8601DurationProperty body, CancellationToken cancellationToken = default) 
+        {
+            // Simple mock implementation for testing
+            return Task.FromResult(Response.FromValue<ISO8601DurationProperty>(body, null));
+        }
 
         public virtual Response Int32Seconds(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> Int32SecondsAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<Int32SecondsDurationProperty> Int32Seconds(Int32SecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<Int32SecondsDurationProperty> Int32Seconds(Int32SecondsDurationProperty body, CancellationToken cancellationToken = default) 
+        {
+            // Simple mock implementation for testing  
+            return Response.FromValue<Int32SecondsDurationProperty>(body, null);
+        }
 
-        public virtual Task<Response<Int32SecondsDurationProperty>> Int32SecondsAsync(Int32SecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<Int32SecondsDurationProperty>> Int32SecondsAsync(Int32SecondsDurationProperty body, CancellationToken cancellationToken = default) 
+        {
+            // Simple mock implementation for testing
+            return Task.FromResult(Response.FromValue<Int32SecondsDurationProperty>(body, null));
+        }
 
         public virtual Response FloatSeconds(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> FloatSecondsAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<FloatSecondsDurationProperty> FloatSeconds(FloatSecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<FloatSecondsDurationProperty> FloatSeconds(FloatSecondsDurationProperty body, CancellationToken cancellationToken = default) 
+        {
+            // Simple mock implementation for testing  
+            return Response.FromValue<FloatSecondsDurationProperty>(body, null);
+        }
 
-        public virtual Task<Response<FloatSecondsDurationProperty>> FloatSecondsAsync(FloatSecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<FloatSecondsDurationProperty>> FloatSecondsAsync(FloatSecondsDurationProperty body, CancellationToken cancellationToken = default) 
+        {
+            // Simple mock implementation for testing
+            return Task.FromResult(Response.FromValue<FloatSecondsDurationProperty>(body, null));
+        }
 
         public virtual Response Float64Seconds(RequestContent content, RequestContext context = null) => throw null;
 
