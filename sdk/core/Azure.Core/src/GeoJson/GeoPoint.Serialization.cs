@@ -32,7 +32,7 @@ namespace Azure.Core.GeoJson
             var format = options.Format == "W" ? ((IPersistableModel<GeoPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GeoPoint)} does not support '{format}' format.");
             }
 
             GeoJsonConverter.Write(writer, this);
@@ -43,7 +43,7 @@ namespace Azure.Core.GeoJson
             var format = options.Format == "W" ? ((IPersistableModel<GeoPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GeoPoint)} does not support '{format}' format.");
             }
 
             var document = JsonDocument.ParseValue(ref reader);
@@ -55,7 +55,7 @@ namespace Azure.Core.GeoJson
             var format = options.Format == "W" ? ((IPersistableModel<GeoPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GeoPoint)} does not support '{format}' format.");
             }
 
             return ModelReaderWriter.Write(this, options, AzureCoreContext.Default);
@@ -66,7 +66,7 @@ namespace Azure.Core.GeoJson
             var format = options.Format == "W" ? ((IPersistableModel<GeoPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GeoPoint)} does not support '{format}' format.");
             }
 
             using var document = JsonDocument.Parse(data);

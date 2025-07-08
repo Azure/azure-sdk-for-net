@@ -371,7 +371,6 @@ namespace Azure.Core.Tests
 
             using var stream = new MemoryStream();
             using var writer = new Utf8JsonWriter(stream);
-            var reader = new Utf8JsonReader(stream.ToArray());
             var binaryData = BinaryData.FromString("""{"type":"Point","coordinates":[-122.091954,47.607148]}""");
 
             Assert.Throws<FormatException>(() => jsonModel.Write(writer, _xmlOptions));
