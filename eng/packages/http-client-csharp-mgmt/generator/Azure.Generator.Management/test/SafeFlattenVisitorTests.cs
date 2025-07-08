@@ -13,14 +13,14 @@ namespace Azure.Generator.Mgmt.Tests
     {
         private const string TestClientName = "TestClient";
         private const string TestModelName = "TestModel";
-        private const string TestProtyName = "TestProperty";
+        private const string TestPropertyName = "TestProperty";
         private const string InnerModelPropertyName = "InnerModelProperty";
         private const string InnerModelName = "InnerModel";
 
         [Test]
         public void TestSinglePropertyModelSafeFlatten()
         {
-            var modelProperty = InputFactory.Property(TestProtyName, InputPrimitiveType.String, serializedName: "testName", isRequired: true);
+            var modelProperty = InputFactory.Property(TestPropertyName, InputPrimitiveType.String, serializedName: "testName", isRequired: true);
             var innnerModel = InputFactory.Model(InnerModelName, properties: [InputFactory.Property("InnerProperty", InputPrimitiveType.String)]);
             var innerModelProperty = InputFactory.Property(InnerModelPropertyName, innnerModel, isRequired: true);
             var model = InputFactory.Model(TestModelName, properties: [modelProperty, innerModelProperty]);
