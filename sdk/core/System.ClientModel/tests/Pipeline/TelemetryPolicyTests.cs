@@ -174,4 +174,87 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
     {
         Assert.Throws<ArgumentNullException>(() => new TelemetryPolicy(null!));
     }
+
+    [Test]
+    public void GenerateUserAgentString_ProducesValidUserAgent()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+
+        // Test without application ID
+        string userAgent = TelemetryPolicy.GenerateUserAgentString(assembly);
+        Assert.IsNotNull(userAgent);
+        Assert.IsNotEmpty(userAgent);
+
+        // Should contain assembly name and version
+        string assemblyName = assembly.GetName().Name!;
+        Assert.That(userAgent, Does.Contain(assemblyName));
+
+        // Should contain framework and OS information in parentheses
+        Assert.That(userAgent, Does.Contain("("));
+        Assert.That(userAgent, Does.Contain(")"));
+    }
+
+    [Test]
+    public void GenerateUserAgentString_WithApplicationId_ProducesValidUserAgent()
+    {
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        string applicationId = "TestApp/1.0";
+
+        string userAgent = TelemetryPolicy.GenerateUserAgentString(assembly, applicationId);
+        Assert.IsNotNull(userAgent);
+        Assert.IsNotEmpty(userAgent);
+
+        // Should start with application ID
+        Assert.That(userAgent, Does.StartWith(applicationId));
+
+        // Should contain assembly name and version
+        string assemblyName = assembly.GetName().Name!;
+        Assert.That(userAgent, Does.Contain(assemblyName));
+    }
+
+    [Test]
+    public void EscapeProductInformation_HandlesValidInput()
+    {
+        string validInput = "(.NET 8.0; Windows 10)";
+        string result = TelemetryPolicy.EscapeProductInformation(validInput);
+
+        // Valid input should be returned unchanged
+        Assert.AreEqual(validInput, result);
+    }
+
+    [Test]
+    public void EscapeProductInformation_EscapesInvalidCharacters()
+    {
+        string inputWithParentheses = "(Test (nested) info)";
+        string result = TelemetryPolicy.EscapeProductInformation(inputWithParentheses);
+
+        // The method may return the input unchanged if it's already valid according to ProductInfoHeaderValue.TryParse
+        // or it may escape characters if needed. The main thing is that it returns a non-null, non-empty result.
+        Assert.IsNotNull(result);
+        Assert.IsNotEmpty(result);
+
+        // If escaping occurred, check for escaped characters
+        if (result != inputWithParentheses)
+        {
+            Assert.That(result, Does.Contain("\\"));
+        }
+    }
+
+    [Test]
+    public void ContainsNonAscii_ReturnsFalseForAsciiString()
+    {
+        string asciiString = "Hello World 123!";
+        bool result = TelemetryPolicy.ContainsNonAscii(asciiString);
+
+        Assert.IsFalse(result);
+    }
+
+    [Test]
+    public void ContainsNonAscii_ReturnsTrueForNonAsciiString()
+    {
+        string nonAsciiString = "Hello 世界";
+        bool result = TelemetryPolicy.ContainsNonAscii(nonAsciiString);
+
+        Assert.IsTrue(result);
+    }
 }

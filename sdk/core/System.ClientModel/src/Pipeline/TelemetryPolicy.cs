@@ -78,7 +78,13 @@ public class TelemetryPolicy : PipelinePolicy
         message.Request.Headers.Add("User-Agent", _defaultHeader);
     }
 
-    internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null)
+    /// <summary>
+    /// Generates a user agent string from the provided assembly and optional application ID.
+    /// </summary>
+    /// <param name="clientAssembly">The client assembly to extract name and version information from.</param>
+    /// <param name="applicationId">An optional application ID to prepend to the user agent string.</param>
+    /// <returns>A formatted user agent string.</returns>
+    public static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null)
     {
         AssemblyInformationalVersionAttribute? versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
         if (versionAttribute == null)
@@ -119,8 +125,8 @@ public class TelemetryPolicy : PipelinePolicy
     /// If the ProductInformation is not in the proper format, this escapes any ')' , '(' or '\' characters per https://www.rfc-editor.org/rfc/rfc7230#section-3.2.6
     /// </summary>
     /// <param name="productInfo">The ProductInfo portion of the user agent</param>
-    /// <returns></returns>
-    private static string EscapeProductInformation(string productInfo)
+    /// <returns>The escaped product information string.</returns>
+    public static string EscapeProductInformation(string productInfo)
     {
         // If the string is already valid, we don't need to escape anything
         bool success = false;
@@ -177,7 +183,12 @@ public class TelemetryPolicy : PipelinePolicy
         return sb.ToString();
     }
 
-    private static bool ContainsNonAscii(string value)
+    /// <summary>
+    /// Checks if a string contains any non-ASCII characters.
+    /// </summary>
+    /// <param name="value">The string to check.</param>
+    /// <returns>True if the string contains non-ASCII characters, false otherwise.</returns>
+    public static bool ContainsNonAscii(string value)
     {
         foreach (char c in value)
         {
