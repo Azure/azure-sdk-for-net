@@ -31,6 +31,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
         #endregion
         #region Snippet:AgentsCreateAgentWithInterpreterTool
         List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "my-agent",
@@ -87,6 +88,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
         WriteMessages(messages);
         #endregion
         #region Snippet:AgentsCodeInterpreterFileAttachment_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         await client.Threads.DeleteThreadAsync(thread.Id);
         await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
@@ -107,6 +109,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #region Snippet:AgentsCreateAgentWithInterpreterToolSync
         List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "my-agent",
@@ -163,6 +166,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
         WriteMessages(messages);
         #endregion
         #region Snippet:AgentsCodeInterpreterFileAttachmentSync_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         client.Threads.DeleteThread(thread.Id);
         client.Administration.DeleteAgent(agent.Id);
         #endregion

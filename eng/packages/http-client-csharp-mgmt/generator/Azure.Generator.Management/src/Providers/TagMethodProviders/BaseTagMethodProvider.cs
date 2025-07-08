@@ -91,7 +91,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             foreach (var (kind, method) in resourceClientProvider.ResourceServiceMethods)
             {
                 var operation = method.Operation;
-                if (kind == Models.OperationKind.Get)
+                if (kind == Models.ResourceOperationKind.Get)
                 {
                     getServiceMethod = method;
                     break;

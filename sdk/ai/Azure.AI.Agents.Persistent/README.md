@@ -95,6 +95,7 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 
 With an authenticated client, an agent can be created:
 ```C# Snippet:AgentsOverviewCreateAgent
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "Math Tutor",
@@ -211,6 +212,7 @@ FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
 // Create an agent with toolResources and process agent run
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
         model: modelDeploymentName,
         name: "SDK Test Agent - Retrieval",
@@ -241,6 +243,7 @@ PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVector
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "my-agent",
@@ -278,6 +281,7 @@ Here is an example to pass `CodeInterpreterTool` as tool:
 
 ```C# Snippet:AgentsCreateAgentWithInterpreterTool
 List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "my-agent",
@@ -335,6 +339,7 @@ BingGroundingToolDefinition bingGroundingTool = new(
 );
 ```
 ```C# Snippet:AgentsBingGroundingAsync_CreateAgent
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
 PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
@@ -366,6 +371,7 @@ ToolResources toolResource = new()
 
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
@@ -496,7 +502,8 @@ FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
 With the functions defined in their appropriate tools, an agent can be now created that has those tools enabled:
 
 ```C# Snippet:AgentsFunctionsCreateAgentWithFunctionTools
-// note: parallel function calling is only supported with newer models like gpt-4-1106-preview
+// NOTE: parallel function calling is only supported with newer models like gpt-4-1106-preview
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "SDK Test Agent - Functions",
@@ -652,6 +659,7 @@ In addition to the manual function calls, SDK supports automatic function callin
 
 When you create an agent, you can specify the function call by tools argument similar to the example of manual function calls:
 ```C# Snippet:StreamingWithAutoFunctionCall_CreateAgent
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "SDK Test Agent - Functions",
@@ -753,6 +761,7 @@ AzureFunctionToolDefinition azureFnTool = new(
 
 Note that in this scenario we are asking agent to supply storage queue URI to the azure function whenever it is called.
 ```C# Snippet:AgentsAzureFunctionsCreateAgentWithFunctionTools
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
@@ -897,6 +906,7 @@ OpenApiToolDefinition openapiTool = new(
     defaultParams: [ "format" ]
 );
 
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
