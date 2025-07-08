@@ -56,8 +56,8 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
         var telemetryPolicy = new TelemetryPolicy(Assembly.GetExecutingAssembly());
         ClientPipeline pipeline = ClientPipeline.Create(
             options,
-            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
-            perTryPolicies: new[] { telemetryPolicy },
+            perCallPolicies: new[] { telemetryPolicy },
+            perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         PipelineMessage message = pipeline.CreateMessage();
         message.Request.Uri = new Uri("https://example.com");
@@ -96,8 +96,8 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
 
         ClientPipeline pipeline = ClientPipeline.Create(
             options,
-            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
-            perTryPolicies: new[] { telemetryPolicy },
+            perCallPolicies: new[] { telemetryPolicy },
+            perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         PipelineMessage message = pipeline.CreateMessage();
         message.Request.Uri = new Uri("https://example.com");
@@ -146,8 +146,8 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
 
         ClientPipeline pipeline = ClientPipeline.Create(
             options,
-            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
-            perTryPolicies: new[] { telemetryPolicy },
+            perCallPolicies: new[] { telemetryPolicy },
+            perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         PipelineMessage message = pipeline.CreateMessage();
         message.Request.Uri = new Uri("https://example.com");
