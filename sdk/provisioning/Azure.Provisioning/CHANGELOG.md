@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2025-07-02)
+
+### Features Added
+
+- Updated models to match the latest API version for ArmDeployment and ArmDeploymentScript.
+- Added derived types (`AzureCliScript` and `AzurePowerShellScript`) for `ArmDeploymentScript` to support different kind of deployment scripts.
+    - Please note that usually `ArmDeploymentScript` should not be constructed directly, but rather through the `AzureCliScript` or `AzurePowerShellScript` constructors.
 
 ## 1.1.0 (2025-06-16)
 

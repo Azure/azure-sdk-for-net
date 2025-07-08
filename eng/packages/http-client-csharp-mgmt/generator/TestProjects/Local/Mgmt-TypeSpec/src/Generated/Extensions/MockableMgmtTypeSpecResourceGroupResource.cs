@@ -31,13 +31,6 @@ namespace MgmtTypeSpec.Mocking
         {
         }
 
-        /// <summary> Gets a collection of PrivateLinks in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateLinks and their operations over a PrivateLinkResource. </returns>
-        public virtual PrivateLinkCollection GetPrivateLinks()
-        {
-            return GetCachedClient(client => new PrivateLinkCollection(client, Id));
-        }
-
         /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of Foos and their operations over a FooResource. </returns>
         public virtual FooCollection GetFoos()
