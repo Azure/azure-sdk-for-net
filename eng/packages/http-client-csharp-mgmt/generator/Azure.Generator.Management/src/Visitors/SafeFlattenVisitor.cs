@@ -47,7 +47,6 @@ namespace Azure.Generator.Management.Visitors
                                 This.Property(internalSingleProperty.Name).Property(singleProperty.Name).Assign(Value).Terminate()
                             });
                         var flattenedProperty = new PropertyProvider(singleProperty.Description, singleProperty.Modifiers, singleProperty.Type, flattenPropertyName, flattenPropertyBody, type, singleProperty.ExplicitInterface, singleProperty.WireInfo, singleProperty.Attributes);
-                        //singleProperty.Update(name: flattenPropertyName, body: flattenPropertyBody);
                         flattenedProperties.Add(flattenedProperty);
                     }
                 }
