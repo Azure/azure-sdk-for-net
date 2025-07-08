@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.CognitiveServices
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics;
-        private readonly ProjectConnectionRestOperations _cognitiveServicesProjectConnectionProjectConnectionRestClient;
+        private readonly ClientDiagnostics _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics;
+        private readonly ProjectConnectionsRestOperations _cognitiveServicesProjectConnectionProjectConnectionsRestClient;
         private readonly CognitiveServicesConnectionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CognitiveServicesProjectConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string cognitiveServicesProjectConnectionProjectConnectionApiVersion);
-            _cognitiveServicesProjectConnectionProjectConnectionRestClient = new ProjectConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesProjectConnectionProjectConnectionApiVersion);
+            _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cognitiveServicesProjectConnectionProjectConnectionsApiVersion);
+            _cognitiveServicesProjectConnectionProjectConnectionsRestClient = new ProjectConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesProjectConnectionProjectConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Get</description>
+        /// <description>ProjectConnections_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CognitiveServicesProjectConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Get");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesProjectConnectionProjectConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cognitiveServicesProjectConnectionProjectConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CognitiveServicesProjectConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Get</description>
+        /// <description>ProjectConnections_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CognitiveServicesProjectConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Get");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesProjectConnectionProjectConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cognitiveServicesProjectConnectionProjectConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CognitiveServicesProjectConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Delete</description>
+        /// <description>ProjectConnections_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Delete");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesProjectConnectionProjectConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _cognitiveServicesProjectConnectionProjectConnectionRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var response = await _cognitiveServicesProjectConnectionProjectConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _cognitiveServicesProjectConnectionProjectConnectionsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new CognitiveServicesArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Delete</description>
+        /// <description>ProjectConnections_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -239,12 +239,12 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Delete");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesProjectConnectionProjectConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _cognitiveServicesProjectConnectionProjectConnectionRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var response = _cognitiveServicesProjectConnectionProjectConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _cognitiveServicesProjectConnectionProjectConnectionsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new CognitiveServicesArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -267,11 +267,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Update</description>
+        /// <description>ProjectConnections_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -286,11 +286,11 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Update");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesProjectConnectionProjectConnectionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _cognitiveServicesProjectConnectionProjectConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CognitiveServicesProjectConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Update</description>
+        /// <description>ProjectConnections_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Update");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesProjectConnectionProjectConnectionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var response = _cognitiveServicesProjectConnectionProjectConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new CognitiveServicesProjectConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

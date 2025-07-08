@@ -25,7 +25,7 @@ public class ContainerRegistrySpecification() :
         CustomizeSimpleModel<ContainerRegistryEncodedTaskRunContent>(m => { m.DiscriminatorName = "type"; m.DiscriminatorValue = "EncodedTaskRunRequest"; });
         CustomizeSimpleModel<ContainerRegistryFileTaskRunContent>(m => { m.DiscriminatorName = "type"; m.DiscriminatorValue = "FileTaskRunRequest"; });
         CustomizeSimpleModel<ContainerRegistryTaskRunContent>(m => { m.DiscriminatorName = "type"; m.DiscriminatorValue = "TaskRunRequest"; });
-
+        CustomizeProperty<ConnectedRegistryResource>("Parent", p => p.Name = "ConnectedRegistryParent");
 
         // Naming requirements
         AddNameRequirements<ContainerRegistryResource>(min: 5, max: 50, lower: true, upper: true, digits: true);

@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation
@@ -37,7 +36,5 @@ namespace _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation
 
         /// <param name="inputModel"> The <see cref="InputModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(InputModel inputModel) => throw null;
-
-        public static explicit operator InputModel(Response result) => throw null;
     }
 }

@@ -121,7 +121,7 @@ public partial class MongoDBRoleDefinition : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the MongoDBRoleDefinition.</param>
     public MongoDBRoleDefinition(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/mongodbRoleDefinitions", resourceVersion ?? "2024-08-15")
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/mongodbRoleDefinitions", resourceVersion ?? "2025-04-15")
     {
     }
 
@@ -146,6 +146,16 @@ public partial class MongoDBRoleDefinition : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-04-15.
+        /// </summary>
+        public static readonly string V2025_04_15 = "2025-04-15";
+
+        /// <summary>
+        /// 2024-11-15.
+        /// </summary>
+        public static readonly string V2024_11_15 = "2024-11-15";
+
         /// <summary>
         /// 2024-08-15.
         /// </summary>

@@ -81,6 +81,10 @@ namespace Azure.AI.Projects.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
+                data = new
+                {
+                    type = "InputData",
+                },
                 displayName = "ymjxkodggqrhjnmusta",
                 description = "cuviaxytqckkybxwc",
                 tags = new
@@ -122,6 +126,10 @@ namespace Azure.AI.Projects.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
+                data = new
+                {
+                    type = "InputData",
+                },
                 displayName = "ymjxkodggqrhjnmusta",
                 description = "cuviaxytqckkybxwc",
                 tags = new
@@ -161,7 +169,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
-            Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorConfiguration>
+            Evaluation evaluation = new Evaluation(default, new Dictionary<string, EvaluatorConfiguration>
             {
                 ["key2735"] = new EvaluatorConfiguration("gujwtvhptykq")
                 {
@@ -195,7 +203,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
-            Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorConfiguration>
+            Evaluation evaluation = new Evaluation(default, new Dictionary<string, EvaluatorConfiguration>
             {
                 ["key2735"] = new EvaluatorConfiguration("gujwtvhptykq")
                 {
@@ -231,6 +239,10 @@ namespace Azure.AI.Projects.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
+                data = new
+                {
+                    type = "InputData",
+                },
                 evaluators = new object(),
             });
             Response response = client.Create(content);
@@ -251,6 +263,10 @@ namespace Azure.AI.Projects.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
+                data = new
+                {
+                    type = "InputData",
+                },
                 evaluators = new object(),
             });
             Response response = await client.CreateAsync(content);
@@ -269,7 +285,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
-            Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorConfiguration>());
+            Evaluation evaluation = new Evaluation(default, new Dictionary<string, EvaluatorConfiguration>());
             Response<Evaluation> response = client.Create(evaluation);
         }
 
@@ -281,7 +297,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Evaluations client = new AIProjectClient(endpoint, credential).GetEvaluationsClient(apiVersion: "2025-05-15-preview");
 
-            Evaluation evaluation = new Evaluation(null, new Dictionary<string, EvaluatorConfiguration>());
+            Evaluation evaluation = new Evaluation(default, new Dictionary<string, EvaluatorConfiguration>());
             Response<Evaluation> response = await client.CreateAsync(evaluation);
         }
 

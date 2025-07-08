@@ -50,7 +50,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// The maximum allowed percentage of nodes health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the nodes at the beginning of upgrade and the state of the nodes at the time of the health evaluation.
         /// The check is performed after every upgrade domain upgrade completion to make sure the global state of the cluster is within tolerated limits.
-        ///
         /// </param>
         public ManagedClusterUpgradeDeltaHealthPolicy(int maxPercentDeltaUnhealthyNodes)
         {
@@ -62,20 +61,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// The maximum allowed percentage of nodes health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the nodes at the beginning of upgrade and the state of the nodes at the time of the health evaluation.
         /// The check is performed after every upgrade domain upgrade completion to make sure the global state of the cluster is within tolerated limits.
-        ///
         /// </param>
         /// <param name="maxPercentUpgradeDomainDeltaUnhealthyNodes">
         /// The maximum allowed percentage of upgrade domain nodes health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the upgrade domain nodes at the beginning of upgrade and the state of the upgrade domain nodes at the time of the health evaluation.
         /// The check is performed after every upgrade domain upgrade completion for all completed upgrade domains to make sure the state of the upgrade domains is within tolerated limits.
-        ///
         /// </param>
         /// <param name="maxPercentDeltaUnhealthyApplications">
         /// The maximum allowed percentage of applications health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the applications at the beginning of upgrade and the state of the applications at the time of the health evaluation.
         /// The check is performed after every upgrade domain upgrade completion to make sure the global state of the cluster is within tolerated limits. System services are not included in this.
         /// NOTE: This value will overwrite the value specified in properties.UpgradeDescription.HealthPolicy.MaxPercentUnhealthyApplications
-        ///
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterUpgradeDeltaHealthPolicy(int maxPercentDeltaUnhealthyNodes, int? maxPercentUpgradeDomainDeltaUnhealthyNodes, int? maxPercentDeltaUnhealthyApplications, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -95,14 +91,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// The maximum allowed percentage of nodes health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the nodes at the beginning of upgrade and the state of the nodes at the time of the health evaluation.
         /// The check is performed after every upgrade domain upgrade completion to make sure the global state of the cluster is within tolerated limits.
-        ///
         /// </summary>
         public int MaxPercentDeltaUnhealthyNodes { get; set; }
         /// <summary>
         /// The maximum allowed percentage of upgrade domain nodes health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the upgrade domain nodes at the beginning of upgrade and the state of the upgrade domain nodes at the time of the health evaluation.
         /// The check is performed after every upgrade domain upgrade completion for all completed upgrade domains to make sure the state of the upgrade domains is within tolerated limits.
-        ///
         /// </summary>
         public int? MaxPercentUpgradeDomainDeltaUnhealthyNodes { get; set; }
         /// <summary>
@@ -110,7 +104,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// The delta is measured between the state of the applications at the beginning of upgrade and the state of the applications at the time of the health evaluation.
         /// The check is performed after every upgrade domain upgrade completion to make sure the global state of the cluster is within tolerated limits. System services are not included in this.
         /// NOTE: This value will overwrite the value specified in properties.UpgradeDescription.HealthPolicy.MaxPercentUnhealthyApplications
-        ///
         /// </summary>
         public int? MaxPercentDeltaUnhealthyApplications { get; set; }
     }

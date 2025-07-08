@@ -10,11 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Unknown version of ScalingMechanism. </summary>
+    /// <summary> Unknown version of ManagedServiceScalingMechanism. </summary>
     internal partial class UnknownScalingMechanism : ManagedServiceScalingMechanism
     {
         /// <summary> Initializes a new instance of <see cref="UnknownScalingMechanism"/>. </summary>
-        /// <param name="kind"> Specifies the mechanism associated with this scaling policy. </param>
+        /// <param name="kind"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownScalingMechanism(ServiceScalingMechanismKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {

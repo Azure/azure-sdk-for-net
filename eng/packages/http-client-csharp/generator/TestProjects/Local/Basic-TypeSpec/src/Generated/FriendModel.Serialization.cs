@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace BasicTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> this is not a friendly model but with a friendly name. </summary>
     public partial class FriendModel : IJsonModel<FriendModel>
     {
         /// <summary> Initializes a new instance of <see cref="FriendModel"/> for deserialization. </summary>
@@ -148,7 +148,7 @@ namespace BasicTypeSpec
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(friendModel, ModelSerializationExtensions.WireOptions);
             return content;
         }

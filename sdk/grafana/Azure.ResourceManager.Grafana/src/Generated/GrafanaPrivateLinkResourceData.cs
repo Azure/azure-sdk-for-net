@@ -52,13 +52,6 @@ namespace Azure.ResourceManager.Grafana
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GrafanaPrivateLinkResourceData"/>. </summary>
-        public GrafanaPrivateLinkResourceData()
-        {
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GrafanaPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -81,9 +74,5 @@ namespace Azure.ResourceManager.Grafana
         public GrafanaProvisioningState? ProvisioningState { get; }
         /// <summary> The private link resource group id. </summary>
         public string GroupId { get; }
-        /// <summary> The private link resource required member names. </summary>
-        public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary> The private link resource Private link DNS zone name. </summary>
-        public IList<string> RequiredZoneNames { get; }
     }
 }

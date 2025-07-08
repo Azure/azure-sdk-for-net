@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Parameters.BodyOptionality
@@ -37,7 +36,5 @@ namespace Parameters.BodyOptionality
 
         /// <param name="bodyModel"> The <see cref="BodyModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(BodyModel bodyModel) => throw null;
-
-        public static explicit operator BodyModel(Response result) => throw null;
     }
 }

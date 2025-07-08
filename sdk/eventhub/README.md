@@ -17,17 +17,6 @@ Use the following packages to publish and consume events from Event Hubs:
 | [Azure.Messaging.EventHubs](https://www.nuget.org/packages/Azure.Messaging.EventHubs)  |  [API Reference for Azure.Messaging.EventHubs](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs?view=azure-dotnet)  |  [Samples for Azure.Messaging.EventHubs](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples)  |
 | [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor)  |  [API Reference for Azure.Messaging.EventHubs.Processor](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs?view=azure-dotnet)  |  [Samples for Azure.Messaging.EventHubs.Processor](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples)  |
 
-### `Microsoft.Azure.EventHubs`
-
-These packages are the legacy generation of client libraries for Event Hubs.  The source code is available on [GitHub](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub).
-
-Use the following legacy packages to publish and consume events from Event Hubs:
-
-| Nuget Package | Reference | Samples |
-|--------------------------------------|---------------------------------------------------------------|-------------------------------------------------------------------------------|
-| [Microsoft.Azure.EventHubs](https://www.nuget.org/packages/Microsoft.Azure.EventHubs)  |  [API Reference for Microsoft.Azure.EventHubs](https://learn.microsoft.com/dotnet/api/microsoft.azure.eventhubs?view=azure-dotnet-legacy)  |  [Samples for Azure.Messaging.EventHubs](https://github.com/Azure/azure-event-hubs/tree/master/samples/DotNet/)  |
-| [Microsoft.Azure.EventHubs.Processor](https://www.nuget.org/packages/Microsoft.Azure.EventHubs.Processor)  |  [API Reference for Microsoft.Azure.EventHubs.Processor](https://learn.microsoft.com/dotnet/api/microsoft.azure.eventhubs.processor?view=azure-dotnet) |  [Samples for Azure.Messaging.EventHubs.Processor](https://github.com/Azure/azure-event-hubs/tree/master/samples/DotNet/)  |
-
 ## Libraries for resource management
 
 Use the following library to work with the Azure Event Hubs resource provider:

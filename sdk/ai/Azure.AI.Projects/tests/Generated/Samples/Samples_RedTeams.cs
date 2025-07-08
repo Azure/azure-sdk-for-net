@@ -97,6 +97,10 @@ namespace Azure.AI.Projects.Samples
                 {
                     key9280 = "fwzjtipl",
                 },
+                target = new
+                {
+                    type = "TargetConfig",
+                },
             });
             Response response = client.Create(content);
 
@@ -134,6 +138,10 @@ namespace Azure.AI.Projects.Samples
                 {
                     key9280 = "fwzjtipl",
                 },
+                target = new
+                {
+                    type = "TargetConfig",
+                },
             });
             Response response = await client.CreateAsync(content);
 
@@ -150,7 +158,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-            RedTeam redTeam = new RedTeam(null)
+            RedTeam redTeam = new RedTeam(default)
             {
                 NumTurns = 10,
                 AttackStrategies = { AttackStrategy.Easy },
@@ -177,7 +185,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-            RedTeam redTeam = new RedTeam(null)
+            RedTeam redTeam = new RedTeam(default)
             {
                 NumTurns = 10,
                 AttackStrategies = { AttackStrategy.Easy },
@@ -216,6 +224,10 @@ namespace Azure.AI.Projects.Samples
             {
 "HateUnfairness"
             },
+                target = new
+                {
+                    type = "TargetConfig",
+                },
             });
             Response response = client.Create(content);
 
@@ -244,6 +256,10 @@ namespace Azure.AI.Projects.Samples
             {
 "HateUnfairness"
             },
+                target = new
+                {
+                    type = "TargetConfig",
+                },
             });
             Response response = await client.CreateAsync(content);
 
@@ -260,7 +276,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-            RedTeam redTeam = new RedTeam(null)
+            RedTeam redTeam = new RedTeam(default)
             {
                 NumTurns = 10,
                 AttackStrategies = { AttackStrategy.Easy },
@@ -278,7 +294,7 @@ namespace Azure.AI.Projects.Samples
             TokenCredential credential = new DefaultAzureCredential();
             RedTeams client = new AIProjectClient(endpoint, credential).GetRedTeamsClient(apiVersion: "2025-05-15-preview");
 
-            RedTeam redTeam = new RedTeam(null)
+            RedTeam redTeam = new RedTeam(default)
             {
                 NumTurns = 10,
                 AttackStrategies = { AttackStrategy.Easy },

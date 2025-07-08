@@ -133,7 +133,20 @@
             Targets="GetPackageInfo"
             BuildInParallel="$(BuildInParallel)"
             SkipNonexistentProjects="false"
-            SkipNonexistentTargets="true" />
+            SkipNonexistentTargets="true">
+      <Output ItemName="PackageInfoLines" TaskParameter="TargetOutputs" />
+    </MSBuild>
+    
+    <!-- Deduplicate package info lines -->
+    <RemoveDuplicates Inputs="@(PackageInfoLines)">
+      <Output TaskParameter="Filtered" ItemName="PackageInfoLinesFiltered"/>
+    </RemoveDuplicates>
+    
+    <!-- Write aggregated package info to file if OutputProjectInfoListFilePath is specified -->
+    <WriteLinesToFile Condition="'$(OutputProjectInfoListFilePath)' != ''" 
+                      File="$(OutputProjectInfoListFilePath)" 
+                      Lines="@(PackageInfoLinesFiltered)" 
+                      Overwrite="true" />
   </Target>
 
   <Target Name="GetCodeGenProjects">

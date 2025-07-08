@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace _Specs_.Azure.Core.Lro.Standard
 {
@@ -34,9 +33,6 @@ namespace _Specs_.Azure.Core.Lro.Standard
         protected virtual ExportedUser PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<ExportedUser>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="exportedUser"> The <see cref="ExportedUser"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ExportedUser exportedUser) => throw null;
 
         public static explicit operator ExportedUser(Response result) => throw null;
     }

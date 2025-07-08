@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Core
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
         /// <summary>The maximum number of seconds allowed for a <see cref="TimeSpan" />.</summary>
-        private static double MaximumTimeSpanSeconds = TimeSpan.MaxValue.TotalSeconds;
+        private static readonly double MaximumTimeSpanSeconds = TimeSpan.MaxValue.TotalSeconds;
 
         /// <summary>
         ///   The set of options responsible for configuring the retry

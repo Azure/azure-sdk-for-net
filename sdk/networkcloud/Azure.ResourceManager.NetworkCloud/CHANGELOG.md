@@ -1,13 +1,25 @@
 # Release History
 
-## 1.2.0 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0 (2025-06-25)
+
+### Features Added
+
 - Upgraded api-version tag from 'package-2024-07-01' to 'package-2025-02-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/08973141b0d31a7e75d4dc43a5224a1814a0994f/specification/networkcloud/resource-manager/readme.md.
 
 ## 1.2.0-beta.1 (2025-04-25)
 
 ### Features Added
+
 - This SDK version supports 2024-10-01-preview API version.
 - ClusterManager commands are updated with custom parameters AssociatedIdentity to support managing identity.
 - Cluster commands are updated with custom parameters AssociatedIdentity to support managing identity.
@@ -21,11 +33,13 @@
 ## 1.1.0 (2025-01-31)
 
 ### Features Added
+
 - Upgraded api-version tag from 'package-2023-07-01' to 'package-2024-07-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f999652ecea2a4bddc2b08a113617e23e98f10d4/specification/networkcloud/resource-manager/readme.md.
 
 ### Other Changes
-- Upgraded Azure.Core from 1.36.0 to 1.44.1
-- Upgraded Azure.ResourceManager from 1.9.0 to 1.13.0
+
+- Upgraded Azure.Core from 1.36.0 to 1.44.1.
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.13.0.
 
 ## 1.1.0-beta.1 (2024-11-06)
 

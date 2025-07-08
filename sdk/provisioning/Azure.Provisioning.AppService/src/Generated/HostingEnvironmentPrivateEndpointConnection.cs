@@ -117,7 +117,7 @@ public partial class HostingEnvironmentPrivateEndpointConnection : Provisionable
     /// </param>
     /// <param name="resourceVersion">Version of the HostingEnvironmentPrivateEndpointConnection.</param>
     public HostingEnvironmentPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments/privateEndpointConnections", resourceVersion ?? "2024-04-01")
+        : base(bicepIdentifier, "Microsoft.Web/hostingEnvironments/privateEndpointConnections", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -143,6 +143,11 @@ public partial class HostingEnvironmentPrivateEndpointConnection : Provisionable
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
         /// <summary>
         /// 2024-04-01.
         /// </summary>

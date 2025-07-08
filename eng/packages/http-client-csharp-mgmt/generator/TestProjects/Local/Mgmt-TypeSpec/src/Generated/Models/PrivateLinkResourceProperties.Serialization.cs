@@ -9,13 +9,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
-    /// <summary></summary>
+    /// <summary> Properties of a private link resource. </summary>
     internal partial class PrivateLinkResourceProperties : IJsonModel<PrivateLinkResourceProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -213,25 +211,5 @@ namespace MgmtTypeSpec.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PrivateLinkResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="privateLinkResourceProperties"> The <see cref="PrivateLinkResourceProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(PrivateLinkResourceProperties privateLinkResourceProperties)
-        {
-            if (privateLinkResourceProperties == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(privateLinkResourceProperties, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PrivateLinkResourceProperties"/> from. </param>
-        public static explicit operator PrivateLinkResourceProperties(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializePrivateLinkResourceProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

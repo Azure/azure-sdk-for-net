@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace _Type.Model.Usage
 {
@@ -34,9 +33,6 @@ namespace _Type.Model.Usage
         protected virtual OutputRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<OutputRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="outputRecord"> The <see cref="OutputRecord"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(OutputRecord outputRecord) => throw null;
 
         public static explicit operator OutputRecord(Response result) => throw null;
     }

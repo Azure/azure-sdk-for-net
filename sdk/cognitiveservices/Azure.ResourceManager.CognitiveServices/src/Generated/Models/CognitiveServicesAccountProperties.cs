@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="raiMonitorConfig"> Cognitive Services Rai Monitor Config. </param>
         /// <param name="networkInjections"> Specifies in AI Foundry where virtual network injection occurs to secure scenarios like Agents entirely within the user's private network, eliminating public internet exposure while maintaining control over network configurations and resources. </param>
         /// <param name="allowProjectManagement"> Specifies whether this resource support project management as child resources, used as containers for access management, data isolation and cost in AI Foundry. </param>
-        /// <param name="defaultProject"> Specifies the project that is targeted when data plane endpoints are called without a project parameter. </param>
-        /// <param name="associatedProjects"> Specifies the projects that are associated with this resource. </param>
+        /// <param name="defaultProject"> Specifies the project, by project name, that is targeted when data plane endpoints are called without a project parameter. </param>
+        /// <param name="associatedProjects"> Specifies the projects, by project name, that are associated with this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IReadOnlyList<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IList<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, AIFoundryNetworkInjection networkInjections, bool? allowProjectManagement, string defaultProject, IList<string> associatedProjects, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -223,10 +223,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Specifies whether this resource support project management as child resources, used as containers for access management, data isolation and cost in AI Foundry. </summary>
         [WirePath("allowProjectManagement")]
         public bool? AllowProjectManagement { get; set; }
-        /// <summary> Specifies the project that is targeted when data plane endpoints are called without a project parameter. </summary>
+        /// <summary> Specifies the project, by project name, that is targeted when data plane endpoints are called without a project parameter. </summary>
         [WirePath("defaultProject")]
         public string DefaultProject { get; set; }
-        /// <summary> Specifies the projects that are associated with this resource. </summary>
+        /// <summary> Specifies the projects, by project name, that are associated with this resource. </summary>
         [WirePath("associatedProjects")]
         public IList<string> AssociatedProjects { get; }
     }

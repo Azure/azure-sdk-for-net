@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace BasicTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> this is a roundtrip model. </summary>
     public partial class RoundTripModel : IJsonModel<RoundTripModel>
     {
         /// <summary> Initializes a new instance of <see cref="RoundTripModel"/> for deserialization. </summary>
@@ -653,7 +653,7 @@ namespace BasicTypeSpec
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(roundTripModel, ModelSerializationExtensions.WireOptions);
             return content;
         }
