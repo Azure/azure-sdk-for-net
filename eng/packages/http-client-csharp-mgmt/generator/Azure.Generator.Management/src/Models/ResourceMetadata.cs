@@ -11,5 +11,5 @@ namespace Azure.Generator.Management.Models
         ResourceScope ResourceScope,
         IReadOnlyList<ResourceMethod> Methods,
         string? SingletonResourceName,
-        string? ParentResource);
+        string? ParentResourceId);
 }

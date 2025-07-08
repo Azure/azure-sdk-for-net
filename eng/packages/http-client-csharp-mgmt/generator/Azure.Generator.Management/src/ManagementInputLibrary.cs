@@ -19,7 +19,7 @@ namespace Azure.Generator.Management
         private const string SingletonResourceName = "singletonResourceName";
         private const string ResourceScope = "resourceScope";
         private const string Methods = "methods";
-        private const string ParentResource = "parentResource";
+        private const string ParentResourceId = "parentResourceId";
 
         private IReadOnlyDictionary<InputModelType, ResourceMetadata>? _resourceMetadata;
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
@@ -158,7 +158,7 @@ namespace Azure.Generator.Management
                     }
                 }
 
-                if (args.TryGetValue(ParentResource, out var parentResourceData))
+                if (args.TryGetValue(ParentResourceId, out var parentResourceData))
                 {
                     parentResource = parentResourceData.ToObjectFromJson<string>();
                 }

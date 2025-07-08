@@ -23,12 +23,12 @@ namespace Azure.Generator.Management.Providers
 {
     internal class ResourceCollectionClientProvider : ResourceClientProvider
     {
-        private ResourceClientProvider _resource;
-        private InputServiceMethod? _getAll;
-        private InputServiceMethod? _create;
-        private InputServiceMethod? _get;
+        private readonly ResourceClientProvider _resource;
+        private readonly InputServiceMethod? _getAll;
+        private readonly InputServiceMethod? _create;
+        private readonly InputServiceMethod? _get;
 
-        internal ResourceCollectionClientProvider(InputModelType model, ResourceMetadata resourceMetadata, ResourceClientProvider resource) : base(model, resourceMetadata)
+        internal ResourceCollectionClientProvider(InputModelType model, ResourceMetadata resourceMetadata, ResourceClientProvider resource) : base(model, resourceMetadata, GetContextualRequestPattern(resourceMetadata))
         {
             _resource = resource;
 
@@ -52,6 +52,29 @@ namespace Azure.Generator.Management.Providers
                     _create = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
                 }
             }
+        }
+
+        /// <summary>
+        /// Get the contextual request path pattern for this collection client.
+        /// The contextual request path pattern for a collection should always be the request path pattern of the parent resource.
+        /// </summary>
+        /// <param name="resourceMetadata"></param>
+        /// <returns></returns>
+        /// <exception cref="NotSupportedException"></exception>
+        private static RequestPathPattern GetContextualRequestPattern(ResourceMetadata resourceMetadata)
+        {
+            if (resourceMetadata.ParentResourceId is not null)
+            {
+                return new RequestPathPattern(resourceMetadata.ParentResourceId);
+            }
+            return resourceMetadata.ResourceScope switch
+            {
+                ResourceScope.ManagementGroup => RequestPathPattern.ManagementGroup,
+                ResourceScope.ResourceGroup => RequestPathPattern.ResourceGroup,
+                ResourceScope.Subscription => RequestPathPattern.Subscription,
+                ResourceScope.Tenant => RequestPathPattern.Tenant,
+                _ => throw new NotSupportedException($"Unsupported resource scope: {resourceMetadata.ResourceScope}"),
+            };
         }
 
         protected override TypeProvider[] BuildSerializationProviders() => [];
@@ -214,27 +237,6 @@ namespace Azure.Generator.Management.Providers
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Gets the collection of parameter names that should be excluded from method parameters.
-        /// For collection clients, this excludes all contextual parameters except the last one (typically the resource name).
-        /// </summary>
-        internal override IReadOnlyList<string> ImplicitParameterNames
-        {
-            get
-            {
-                if (ContextualParameters is null)
-                    return [];
-
-                // resourceGroupName and subscriptionId are always included in the parameters for collection clients.
-                if (ContextualParameters.Count > 2)
-                {
-                    return ContextualParameters.Take(ContextualParameters.Count - 1).ToList();
-                }
-
-                return ContextualParameters;
-            }
         }
     }
 }
