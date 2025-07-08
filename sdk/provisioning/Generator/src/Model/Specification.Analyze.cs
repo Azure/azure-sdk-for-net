@@ -143,11 +143,10 @@ public abstract partial class Specification
                         parent = parent.ParentResource;
                     }
                 }
-                /**/
             });
     }
 
-    protected virtual Dictionary<Type, MethodInfo> FindConstructibleResources()
+    private protected virtual Dictionary<Type, MethodInfo> FindConstructibleResources()
     {
         // Find constructible resources
         Dictionary<Type, MethodInfo> resources = [];
