@@ -194,7 +194,7 @@ function getResourceModelId(
       format: {
         message: `Resource model not found for decorator ${decorator.decorator.name}`
       },
-      target: NoTarget,
+      target: NoTarget
     });
     return undefined;
   }
@@ -283,7 +283,7 @@ function addResourceMetadata(
       format: {
         message: `Cannot figure out resourceIdPatternResource from model ${model.name}.`
       },
-      target: NoTarget, // TODO -- we need a method to find the raw target from the crossLanguageDefinitionId of this model
+      target: NoTarget // TODO -- we need a method to find the raw target from the crossLanguageDefinitionId of this model
     });
     return;
   }

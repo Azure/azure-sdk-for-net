@@ -55,7 +55,7 @@ export function convertResourceMetadataToArguments(
     methods: metadata.methods,
     resourceScope: metadata.resourceScope,
     parentResource: metadata.parentResource,
-    singletonResourceName: metadata.singletonResourceName,
+    singletonResourceName: metadata.singletonResourceName
   };
 }
 

@@ -133,7 +133,10 @@ interface Employees2 {
       resourceMetadataDecorator.arguments.resourceType,
       "Microsoft.ContosoProviderHub/employeeParents/employees"
     );
-    strictEqual(resourceMetadataDecorator.arguments.singletonResourceName, undefined);
+    strictEqual(
+      resourceMetadataDecorator.arguments.singletonResourceName,
+      undefined
+    );
     strictEqual(
       resourceMetadataDecorator.arguments.resourceScope,
       "ResourceGroup"
@@ -236,7 +239,9 @@ interface CurrentEmployees {
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     updateClients(root, sdkContext);
-    const employeeClient = getAllClients(root).find((c) => c.name === "Employees");
+    const employeeClient = getAllClients(root).find(
+      (c) => c.name === "Employees"
+    );
     ok(employeeClient);
     const currentEmployeeClient = getAllClients(root).find(
       (c) => c.name === "CurrentEmployees"
@@ -244,7 +249,9 @@ interface CurrentEmployees {
     ok(currentEmployeeClient);
     const employeeModel = root.models.find((m) => m.name === "Employee");
     ok(employeeModel);
-    const employeeGetMethod = employeeClient.methods.find((m) => m.name === "get");
+    const employeeGetMethod = employeeClient.methods.find(
+      (m) => m.name === "get"
+    );
     ok(employeeGetMethod);
 
     const employeeMetadataDecorator = employeeModel.decorators?.find(
@@ -260,7 +267,10 @@ interface CurrentEmployees {
       employeeMetadataDecorator.arguments.resourceType,
       "Microsoft.ContosoProviderHub/employees"
     );
-    strictEqual(employeeMetadataDecorator.arguments.singletonResourceName, "default");
+    strictEqual(
+      employeeMetadataDecorator.arguments.singletonResourceName,
+      "default"
+    );
     strictEqual(
       employeeMetadataDecorator.arguments.resourceScope,
       "ResourceGroup"
