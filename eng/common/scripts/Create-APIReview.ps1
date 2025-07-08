@@ -14,7 +14,8 @@ Param (
   [string] $ConfigFileDir = "",
   [string] $APIViewUri = "https://apiview.dev/AutoReview",
   [string] $ArtifactName = "packages",
-  [bool] $MarkPackageAsShipped = $false
+  [bool] $MarkPackageAsShipped = $false,
+  [bool] $UseDevVersion = $false
 )
 
 Set-StrictMode -Version 3
@@ -200,10 +201,12 @@ function ProcessPackage($packageName)
             }
             # Get package info from json file created before updating version to daily dev
             $pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
-            $version = [AzureEngSemanticVersion]::ParseVersionString($pkgInfo.Version)
+
+            $pkgVersion = if ($UseDevVersion) { $pkgInfo.DevVersion } else { $pkgInfo.Version }
+            $version =  [AzureEngSemanticVersion]::ParseVersionString($pkgVersion)
             if ($version -eq $null)
             {
-                Write-Host "Version info is not available for package $packageName, because version '$(pkgInfo.Version)' is invalid. Please check if the version follows Azure SDK package versioning guidelines."
+                Write-Host "Version info is not available for package $packageName, because version ' $pkgVersion ' is invalid. Please check if the version follows Azure SDK package versioning guidelines."
                 return 1
             }
             
