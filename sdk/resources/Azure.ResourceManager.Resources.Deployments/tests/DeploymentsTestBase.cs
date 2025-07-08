@@ -16,16 +16,16 @@ using JsonObject = System.Collections.Generic.Dictionary<string, object>;
 
 namespace Azure.ResourceManager.Resources.Deployments.Tests
 {
-    public class ResourcesTestBase : ManagementRecordedTestBase<ResourcesTestEnvironment>
+    public class DeploymentsTestBase : ManagementRecordedTestBase<DeploymentsTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
 
-        protected ResourcesTestBase(bool isAsync, RecordedTestMode mode)
+        protected DeploymentsTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected ResourcesTestBase(bool isAsync)
+        protected DeploymentsTestBase(bool isAsync)
             : base(isAsync)
         {
         }

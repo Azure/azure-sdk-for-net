@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Deployments.Tests
 {
-    public class DeploymentOperationCollectionTests : ResourcesTestBase
+    public class DeploymentOperationCollectionTests : DeploymentsTestBase
     {
         public DeploymentOperationCollectionTests(bool isAsync)
             : base(isAsync)
