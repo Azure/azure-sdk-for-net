@@ -16,8 +16,8 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateTranscriptionRequestInternal"/>. </summary>
-        /// <param name="locale"> Defines new locale for transcription. </param>
-        /// <param name="speechModelEndpointId"> Sets Endpoint id where the custom model was deployed. </param>
+        /// <param name="locale"> Specifies the Locale used for transcription, e.g., en-CA or en-AU. </param>
+        /// <param name="speechModelEndpointId"> The ID of the deployed custom model, in GUID format, e.g., a259c255-1cdw-4ed7-a693-dd58563b6f6a. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="operationCallbackUri">
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
@@ -31,9 +31,9 @@ namespace Azure.Communication.CallAutomation
             OperationCallbackUri = operationCallbackUri;
         }
 
-        /// <summary> Defines new locale for transcription. </summary>
+        /// <summary> Specifies the Locale used for transcription, e.g., en-CA or en-AU. </summary>
         public string Locale { get; set; }
-        /// <summary> Sets Endpoint id where the custom model was deployed. </summary>
+        /// <summary> The ID of the deployed custom model, in GUID format, e.g., a259c255-1cdw-4ed7-a693-dd58563b6f6a. </summary>
         public string SpeechModelEndpointId { get; set; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }

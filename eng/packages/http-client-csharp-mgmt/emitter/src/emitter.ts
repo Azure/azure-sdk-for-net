@@ -3,7 +3,7 @@
 
 import { EmitContext } from "@typespec/compiler";
 
-import { CodeModel } from "@typespec/http-client-csharp";
+import { CodeModel, CSharpEmitterContext } from "@typespec/http-client-csharp";
 
 import {
   $onEmit as $onAzureEmit,
@@ -19,10 +19,12 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
   context.options["sdk-context-options"] ??= azureSDKContextOptions;
   context.options["model-namespace"] ??= true;
   await $onAzureEmit(context);
-}
 
-function updateCodeModel(codeModel: CodeModel): CodeModel {
-  updateClients(codeModel);
-
-  return codeModel;
+  function updateCodeModel(
+    codeModel: CodeModel,
+    sdkContext: CSharpEmitterContext
+  ): CodeModel {
+    updateClients(codeModel, sdkContext);
+    return codeModel;
+  }
 }
