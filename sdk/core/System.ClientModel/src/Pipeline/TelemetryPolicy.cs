@@ -13,7 +13,7 @@ internal class TelemetryPolicy : PipelinePolicy
 {
     private readonly string _defaultHeader;
 
-    public TelemetryPolicy(TelemetryDetails telemetryDetails)
+    public TelemetryPolicy(ClientTelemetryDetails telemetryDetails)
     {
         _defaultHeader = telemetryDetails.ToString();
     }

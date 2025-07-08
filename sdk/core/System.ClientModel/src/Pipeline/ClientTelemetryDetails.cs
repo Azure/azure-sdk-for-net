@@ -11,29 +11,29 @@ using System.Text;
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// Details about the package to be included in user agent telemetry.
+/// Details about the client package to be included in user agent telemetry.
 /// </summary>
-public class TelemetryDetails
+public class ClientTelemetryDetails
 {
     private const int MaxApplicationIdLength = 24;
     private readonly string _userAgent;
 
     /// <summary>
-    /// The package type represented by this <see cref="TelemetryDetails"/> instance.
+    /// The package type represented by this <see cref="ClientTelemetryDetails"/> instance.
     /// </summary>
     public Assembly Assembly { get; }
 
     /// <summary>
-    /// The value of the applicationId used to initialize this <see cref="TelemetryDetails"/> instance.
+    /// The value of the applicationId used to initialize this <see cref="ClientTelemetryDetails"/> instance.
     /// </summary>
     public string? ApplicationId { get; }
 
     /// <summary>
-    /// Initialize an instance of <see cref="TelemetryDetails"/> by extracting the name and version information from the <see cref="System.Reflection.Assembly"/> associated with the <paramref name="assembly"/>.
+    /// Initialize an instance of <see cref="ClientTelemetryDetails"/> by extracting the name and version information from the <see cref="System.Reflection.Assembly"/> associated with the <paramref name="assembly"/>.
     /// </summary>
-    /// <param name="assembly">The <see cref="System.Reflection.Assembly"/> used to generate the package name and version information for the <see cref="TelemetryDetails"/> value.</param>
-    /// <param name="applicationId">An optional value to be prepended to the <see cref="TelemetryDetails"/>.</param>
-    public TelemetryDetails(Assembly assembly, string? applicationId = null)
+    /// <param name="assembly">The <see cref="System.Reflection.Assembly"/> used to generate the package name and version information for the <see cref="ClientTelemetryDetails"/> value.</param>
+    /// <param name="applicationId">An optional value to be prepended to the <see cref="ClientTelemetryDetails"/>.</param>
+    public ClientTelemetryDetails(Assembly assembly, string? applicationId = null)
     {
         Argument.AssertNotNull(assembly, nameof(assembly));
         if (applicationId?.Length > MaxApplicationIdLength)
@@ -49,7 +49,7 @@ public class TelemetryDetails
     /// <summary>
     /// Sets the package name and version portion of the user agent telemetry value for the context of the <paramref name="message"/>.
     /// </summary>
-    /// <param name="message">The <see cref="PipelineMessage"/> that will use this <see cref="TelemetryDetails"/>.</param>
+    /// <param name="message">The <see cref="PipelineMessage"/> that will use this <see cref="ClientTelemetryDetails"/>.</param>
     public void Apply(PipelineMessage message)
     {
         message.SetProperty(typeof(UserAgentValueKey), ToString());
@@ -93,7 +93,7 @@ public class TelemetryDetails
     }
 
     /// <summary>
-    /// The properly formatted user agent string based on this <see cref="TelemetryDetails"/> instance.
+    /// The properly formatted user agent string based on this <see cref="ClientTelemetryDetails"/> instance.
     /// </summary>
     public override string ToString() => _userAgent;
 

@@ -92,7 +92,7 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
         message.Request.Method = "GET";
 
         // Set custom user agent
-        TelemetryDetails customTelemetry = new(Assembly.GetExecutingAssembly(), "MyApp/1.0");
+        ClientTelemetryDetails customTelemetry = new(Assembly.GetExecutingAssembly(), "MyApp/1.0");
         customTelemetry.Apply(message);
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
@@ -104,10 +104,10 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void TelemetryDetailsGeneratesValidUserAgent()
+    public void ClientTelemetryDetailsGeneratesValidUserAgent()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
-        TelemetryDetails telemetryDetails = new(assembly);
+        ClientTelemetryDetails telemetryDetails = new(assembly);
 
         string userAgent = telemetryDetails.ToString();
 
@@ -124,11 +124,11 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void TelemetryDetailsWithApplicationId()
+    public void ClientTelemetryDetailsWithApplicationId()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
         string applicationId = "TestApp/2.0";
-        TelemetryDetails telemetryDetails = new(assembly, applicationId);
+        ClientTelemetryDetails telemetryDetails = new(assembly, applicationId);
 
         string userAgent = telemetryDetails.ToString();
 
@@ -136,17 +136,17 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void TelemetryDetailsThrowsForLongApplicationId()
+    public void ClientTelemetryDetailsThrowsForLongApplicationId()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
         string longApplicationId = new string('a', 30); // More than 24 characters
 
-        Assert.Throws<ArgumentOutOfRangeException>(() => new TelemetryDetails(assembly, longApplicationId));
+        Assert.Throws<ArgumentOutOfRangeException>(() => new ClientTelemetryDetails(assembly, longApplicationId));
     }
 
     [Test]
-    public void TelemetryDetailsThrowsForNullAssembly()
+    public void ClientTelemetryDetailsThrowsForNullAssembly()
     {
-        Assert.Throws<ArgumentNullException>(() => new TelemetryDetails(null!));
+        Assert.Throws<ArgumentNullException>(() => new ClientTelemetryDetails(null!));
     }
 }

@@ -286,7 +286,7 @@ public sealed partial class ClientPipeline
     internal static TelemetryPolicy CreateTelemetryPolicy(ClientPipelineOptions options)
     {
         var type = options.GetType();
-        var telemetryDetails = new TelemetryDetails(type.Assembly);
+        var telemetryDetails = new ClientTelemetryDetails(type.Assembly);
         return new TelemetryPolicy(telemetryDetails);
     }
 
