@@ -68,7 +68,6 @@ namespace Azure.Generator.Management
             [ResourceScope.ManagementGroup] = typeof(ManagementGroupResource),
         };
 
-        // TODO -- build extensions and their corresponding mockable resources
         private IReadOnlyList<TypeProvider> BuildExtensions(IReadOnlyList<ResourceClientProvider> resources)
         {
             // walk through all resources to figure out their scopes
@@ -81,7 +80,10 @@ namespace Azure.Generator.Management
             };
             foreach (var resource in resources)
             {
-                scopeCandidates[resource.ResourceScope].Add(resource);
+                if (resource.ParentResourceIdPattern is null)
+                {
+                    scopeCandidates[resource.ResourceScope].Add(resource);
+                }
             }
 
             var mockableArmClientResource = new MockableArmClientProvider(typeof(ArmClient), resources);
