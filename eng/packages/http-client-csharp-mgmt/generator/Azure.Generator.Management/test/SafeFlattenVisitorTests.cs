@@ -21,8 +21,8 @@ namespace Azure.Generator.Mgmt.Tests
         public void TestSinglePropertyModelSafeFlatten()
         {
             var modelProperty = InputFactory.Property(TestPropertyName, InputPrimitiveType.String, serializedName: "testName", isRequired: true);
-            var innnerModel = InputFactory.Model(InnerModelName, properties: [InputFactory.Property("InnerProperty", InputPrimitiveType.String)]);
-            var innerModelProperty = InputFactory.Property(InnerModelPropertyName, innnerModel, isRequired: true);
+            var innerModel = InputFactory.Model(InnerModelName, properties: [InputFactory.Property("InnerProperty", InputPrimitiveType.String)]);
+            var innerModelProperty = InputFactory.Property(InnerModelPropertyName, innerModel, isRequired: true);
             var model = InputFactory.Model(TestModelName, properties: [modelProperty, innerModelProperty]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
             var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
