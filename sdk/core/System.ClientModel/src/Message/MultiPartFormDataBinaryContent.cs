@@ -1,47 +1,55 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Net.Http.Headers;
-using System.Net.Http;
 using System.Net;
-using System.Threading.Tasks;
-using System.Threading;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 
 namespace System.ClientModel;
 
-internal partial class MultiPartFormDataBinaryContent : BinaryContent
+/// <summary>
+/// Represents a multipart form data content that can be used to send binary data as part of a HTTP request.
+/// </summary>
+public class MultiPartFormDataBinaryContent : BinaryContent
 {
+    private const string ApplicationJsonContentType = "application/json";
     private readonly MultipartFormDataContent _multipartContent;
+    private static readonly Random _random = new Random();
+    private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
-    private const int BoundaryLength = 70;
-    private const string BoundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
-
+    /// <summary>
+    /// Creates an instance of <see cref="MultiPartFormDataBinaryContent"/> with a randomly generated boundary.
+    /// </summary>
     public MultiPartFormDataBinaryContent() : this(CreateBoundary()) { }
 
-    // CUSTOM: Internal ctor to use in serialization
-    internal MultiPartFormDataBinaryContent(string boundary)
+    /// <summary>
+    /// Creates an instance of <see cref="MultiPartFormDataBinaryContent"/> with a specified boundary.
+    /// </summary>
+    /// <param name="boundary"></param>
+    public MultiPartFormDataBinaryContent(string boundary)
     {
         _multipartContent = new MultipartFormDataContent(boundary);
     }
 
-    internal new string ContentType
+    /// <summary>
+    /// Gets the content type of the multipart form data content, which includes the boundary.
+    /// </summary>
+    public override string ContentType
     {
         get
         {
-            Debug.Assert(_multipartContent.Headers.ContentType is not null);
-
             return _multipartContent.Headers.ContentType!.ToString();
         }
     }
 
-    internal HttpContent HttpContent => _multipartContent;
-
     // CUSTOM: Add filepart to the multipart content.
+    /// <summary>
+    /// Adds a file part to the multipart content with the specified name and file content.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="fileContent"></param>
     public void Add(string name, FileBinaryContent fileContent)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -57,155 +65,188 @@ internal partial class MultiPartFormDataBinaryContent : BinaryContent
     }
 
     //// CUSTOM: Add IPersistableModel part to the multipart content.
-    public void Add<T>(string name, IPersistableModel<T> content, string? contentType = default)
+    /// <summary>
+    /// Adds a part to the multipart content with the specified name and content.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="name"></param>
+    /// <param name="model"></param>
+    /// <param name="context"></param>
+    /// <param name="contentType"></param>
+    public void Add<T>(string name,
+        IPersistableModel<T> model,
+        ModelReaderWriterContext? context = default,
+        string? contentType = default)
     {
-        Argument.AssertNotNull(content, nameof(content));
+        Argument.AssertNotNull(model, nameof(model));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        //Add(name, ModelReaderWriter.Write(content, ModelSerializationExtensions.WireOptions), contentType: contentType);
+#pragma warning disable AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
+        BinaryData data = context != null
+            ? ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, context)
+            : ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json);
+#pragma warning restore AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
+
+        Add(name, data, contentType: contentType ?? ApplicationJsonContentType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
+    /// <summary>
+    /// Adds a part to the multipart content with the specified name and string content.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="content"></param>
+    /// <param name="contentType"></param>
     public void Add(string name, string content, string? contentType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        StringContent stringContent = new(content);
-        if (contentType is not null)
-        {
-            stringContent.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
-        }
-
-        Add(stringContent, name);
+        Add(new StringContent(content), name, contentType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
+    /// <summary>
+    /// Adds a part to the multipart content with the specified name and integer content.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="content"></param>
+    /// <param name="contentType"></param>
     public void Add(string name, int content, string? contentType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         string value = content.ToString("G", CultureInfo.InvariantCulture);
-        StringContent stringContent = new(value);
-        if (contentType is not null)
-        {
-            stringContent.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
-        }
-        Add(stringContent, name);
+        Add(new StringContent(value), name, contentType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
+    /// <summary>
+    /// Adds a part to the multipart content with the specified name and long content.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="content"></param>
+    /// <param name="contentType"></param>
     public void Add(string name, long content, string? contentType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         string value = content.ToString("G", CultureInfo.InvariantCulture);
-        StringContent stringContent = new(value);
-        if (contentType is not null)
-        {
-            stringContent.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
-        }
-        Add(stringContent, name);
+        Add(new StringContent(value), name, contentType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
+    /// <summary>
+    /// Adds a part to the multipart content with the specified name and float content.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="content"></param>
+    /// <param name="contentType"></param>
     public void Add(string name, float content, string? contentType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         string value = content.ToString("G", CultureInfo.InvariantCulture);
-        StringContent stringContent = new(value);
-        if (contentType is not null)
-        {
-            stringContent.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
-        }
-        Add(stringContent, name);
+        Add(new StringContent(value), name, contentType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
+    /// <summary>
+    /// Adds a part to the multipart content with the specified name and double content.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="content"></param>
+    /// <param name="contentType"></param>
     public void Add(string name, double content, string? contentType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         string value = content.ToString("G", CultureInfo.InvariantCulture);
-        StringContent stringContent = new(value);
-        if (contentType is not null)
-        {
-            stringContent.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
-        }
-        Add(stringContent, name);
+        Add(new StringContent(value), name, contentType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
+    /// <summary>
+    /// Adds a part to the multipart content with the specified name and decimal content.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="content"></param>
+    /// <param name="contentType"></param>
     public void Add(string name, decimal content, string? contentType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         string value = content.ToString("G", CultureInfo.InvariantCulture);
-        StringContent stringContent = new(value);
-        if (contentType is not null)
-        {
-            stringContent.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
-        }
-        Add(stringContent, name);
+        Add(new StringContent(value), name, contentType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
+    /// <summary>
+    /// Adds a part to the multipart content with the specified name and boolean content.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="content"></param>
+    /// <param name="contentType"></param>
     public void Add(string name, bool content, string? contentType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         string value = content ? "true" : "false";
-        StringContent stringContent = new(value);
-        if (contentType is not null)
-        {
-            stringContent.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
-        }
-        Add(stringContent, name);
+        Add(new StringContent(value), name, contentType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
+    /// <summary>
+    /// Adds a part to the multipart content with the specified name and byte array content.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="content"></param>
+    /// <param name="contentType"></param>
     public void Add(string name, byte[] content, string? contentType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
-        var byteArrayContent = new ByteArrayContent(content);
-        if (contentType is not null)
-        {
-            byteArrayContent.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
-        }
 
-        Add(byteArrayContent, name);
+        Add(new ByteArrayContent(content), name, contentType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
+    /// <summary>
+    /// Adds a part to the multipart content with the specified name and BinaryData content.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="content"></param>
+    /// <param name="fileName"></param>
+    /// <param name="contentType"></param>
     public void Add(string name, BinaryData content, string? fileName = default, string? contentType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        ByteArrayContent byteArrayContent = new(content.ToArray());
-        if (contentType is not null)
-        {
-            byteArrayContent.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
-        }
-        Add(byteArrayContent, name, fileName);
+        Add(new ByteArrayContent(content.ToArray()), name, contentType);
     }
 
-    private void Add(HttpContent content, string name, string? fileName = default)
+    /// <param name="content"></param>
+    /// <param name="name"></param>
+    /// <param name="filename"></param>
+    /// <param name="contentType"></param>
+    private void Add(HttpContent content, string name, string? contentType, string? filename = default)
     {
-        Argument.AssertNotNull(content, nameof(content));
-        Argument.AssertNotNull(name, nameof(name));
-
-        if (fileName is not null)
+        if (contentType != null)
         {
-            _multipartContent.Add(content, name, fileName);
+            Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+            AddContentTypeHeader(content, contentType);
+        }
+        if (filename != null)
+        {
+            Argument.AssertNotNullOrEmpty(filename, nameof(filename));
+            _multipartContent.Add(content, name, filename);
         }
         else
         {
@@ -213,50 +254,35 @@ internal partial class MultiPartFormDataBinaryContent : BinaryContent
         }
     }
 
-    // CUSTOM: Make static & internalize to use in serialization
-#if NET6_0_OR_GREATER
-    internal static string CreateBoundary() =>
-        string.Create(BoundaryLength, 0, (chars, _) =>
-        {
-            Span<byte> random = stackalloc byte[BoundaryLength];
-            Random.Shared.NextBytes(random);
-
-            for (int i = 0; i < chars.Length; i++)
-            {
-                chars[i] = BoundaryValues[random[i] % BoundaryValues.Length];
-            }
-        });
-#else
-    private static readonly Random _random = new();
-
-    internal static string CreateBoundary()
+    /// <param name="content"></param>
+    /// <param name="contentType"></param>
+    private static void AddContentTypeHeader(HttpContent content, string contentType)
     {
-        Span<char> chars = stackalloc char[BoundaryLength];
+        MediaTypeHeaderValue header = new MediaTypeHeaderValue(contentType);
+        content.Headers.ContentType = header;
+    }
 
-        byte[] random = new byte[BoundaryLength];
-        lock (_random)
+    private static string CreateBoundary()
+    {
+        Span<char> chars = new char[70];
+        byte[] random = new byte[70];
+        _random.NextBytes(random);
+        int mask = 255 >> 2;
+        int i = 0;
+        for (; i < 70; i++)
         {
-            _random.NextBytes(random);
+            chars[i] = _boundaryValues[random[i] & mask];
         }
-
-        // Instead of `% BoundaryValues.Length` as is used above, use a mask to achieve the same result.
-        // `% BoundaryValues.Length` is optimized to the equivalent on .NET Core but not on .NET Framework.
-        const int Mask = 255 >> 2;
-        Debug.Assert(BoundaryValues.Length - 1 == Mask);
-
-        for (int i = 0; i < chars.Length; i++)
-        {
-            chars[i] = BoundaryValues[random[i] & Mask];
-        }
-
         return chars.ToString();
     }
-#endif
 
+    /// <summary>
+    /// Tries to compute the length of the content.
+    /// </summary>
+    /// <param name="length"></param>
+    /// <returns></returns>
     public override bool TryComputeLength(out long length)
     {
-        // We can't call the protected method on HttpContent
-
         if (_multipartContent.Headers.ContentLength is long contentLength)
         {
             length = contentLength;
@@ -267,6 +293,11 @@ internal partial class MultiPartFormDataBinaryContent : BinaryContent
         return false;
     }
 
+    /// <summary>
+    /// Writes the content to the specified stream.
+    /// </summary>
+    /// <param name="stream"></param>
+    /// <param name="cancellationToken"></param>
     public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
     {
 #if NET5_0_OR_GREATER
@@ -276,6 +307,12 @@ internal partial class MultiPartFormDataBinaryContent : BinaryContent
 #endif
     }
 
+    /// <summary>
+    /// Asynchronously writes the content to the specified stream.
+    /// </summary>
+    /// <param name="stream"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
     {
 #if NET5_0_OR_GREATER
@@ -285,6 +322,9 @@ internal partial class MultiPartFormDataBinaryContent : BinaryContent
 #endif
     }
 
+    /// <summary>
+    /// Disposes the multipart content and releases any resources it holds.
+    /// </summary>
     public override void Dispose()
     {
         _multipartContent.Dispose();
@@ -307,12 +347,12 @@ internal partial class MultiPartFormDataBinaryContent : BinaryContent
         protected override bool TryComputeLength(out long length)
             => _content.TryComputeLength(out length);
 
-#if NET6_0_OR_GREATER
-            protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-                => await _content!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+#if NET5_0_OR_GREATER
+        protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
+            => await _content!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
 
-            protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-                => _content.WriteTo(stream, cancellationToken);
+        protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
+            => _content.WriteTo(stream, cancellationToken);
 #endif
     }
 }
