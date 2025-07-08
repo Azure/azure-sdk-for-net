@@ -114,7 +114,7 @@ namespace Azure.Generator.Management.Providers
         internal string SpecName { get; }
         internal IEnumerable<(ResourceOperationKind Kind, InputServiceMethod Method)> ResourceServiceMethods => _resourceServiceMethods;
 
-        internal string? SingletonResourceName => _resourceMetadata.singletonResourceName;
+        internal string? SingletonResourceName => _resourceMetadata.SingletonResourceName;
 
         public bool IsSingleton => SingletonResourceName is not null;
 
