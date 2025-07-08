@@ -34,10 +34,8 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
     });
   }
 
-  // Generate metadata.json if emit-metadata option is enabled
-  if (context.options["emit-metadata"]) {
-    await generateMetadataFile(context);
-  }
+  // Generate metadata.json file
+  await generateMetadataFile(context);
 
   await $onMTGEmit(context);
 }

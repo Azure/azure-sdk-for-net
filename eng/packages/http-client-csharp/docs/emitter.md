@@ -138,11 +138,11 @@ The C# namespace to use for the generated code. This will override the TypeSpec 
 
 Whether to put models under a separate 'Models' sub-namespace. This only applies if the 'namespace' option is set. The default value is 'false'.
 
-### `emit-metadata`
+## Metadata Generation
 
-**Type:** `boolean`
+The emitter automatically generates a `metadata.json` file in the `Generated/` folder. This file contains information such as the API version and can be used for automation purposes like building a mapping of package version to supported API version.
 
-Whether to emit a metadata.json file containing information like the api-version. When enabled, a metadata.json file will be generated in the Generated folder with content such as:
+The metadata file contains content such as:
 
 ```json
 {
@@ -150,4 +150,4 @@ Whether to emit a metadata.json file containing information like the api-version
 }
 ```
 
-This file is not included as an asset of the nupkg and can be used for automation purposes like building a mapping of package version to supported api-version. The default value is 'false'.
+This file is not included as an asset of the nupkg. If no API version is specified, the value will be "not-specified".

@@ -48,26 +48,8 @@ describe("Metadata generation tests", async () => {
     });
   });
 
-  it("Does not generate metadata.json when emit-metadata is false", async () => {
+  it("Always generates metadata.json file", async () => {
     const options: AzureEmitterOptions = {
-      "emit-metadata": false,
-      "api-version": "2023-01-01"
-    };
-    const context = createEmitterContext(program, options);
-    
-    await $onEmit(context);
-    
-    // Check that no metadata file was written
-    const metadataCalls = writeFileMock.mock.calls.filter((call: any) => 
-      call[0].includes("metadata.json")
-    );
-    strictEqual(metadataCalls.length, 0);
-    strictEqual(program.diagnostics.length, 0);
-  });
-
-  it("Generates metadata.json when emit-metadata is true", async () => {
-    const options: AzureEmitterOptions = {
-      "emit-metadata": true,
       "api-version": "2023-01-01"
     };
     const context = createEmitterContext(program, options);
@@ -95,7 +77,6 @@ describe("Metadata generation tests", async () => {
   it("Includes correct api-version in metadata when specified", async () => {
     const testApiVersion = "2024-05-01";
     const options: AzureEmitterOptions = {
-      "emit-metadata": true,
       "api-version": testApiVersion
     };
     const context = createEmitterContext(program, options);
@@ -117,7 +98,6 @@ describe("Metadata generation tests", async () => {
 
   it("Handles missing api-version gracefully", async () => {
     const options: AzureEmitterOptions = {
-      "emit-metadata": true
       // No api-version specified
     };
     const context = createEmitterContext(program, options);
