@@ -88,8 +88,8 @@ namespace Azure.AI.Projects.Tests
             }
 
             Console.WriteLine($"Deleting Dataset versions {datasetVersion1} and {datasetVersion2}:");
-            //projectClient.Datasets.Delete(datasetName, datasetVersion1);
-            //projectClient.Datasets.Delete(datasetName, datasetVersion2);
+            projectClient.Datasets.Delete(datasetName, datasetVersion1);
+            projectClient.Datasets.Delete(datasetName, datasetVersion2);
             #endregion
         }
 
@@ -167,8 +167,8 @@ namespace Azure.AI.Projects.Tests
             }
 
             Console.WriteLine($"Deleting Dataset versions {datasetVersion1} and {datasetVersion2}...");
-            //await projectClient.Datasets.DeleteAsync(datasetName, datasetVersion1);
-            //await projectClient.Datasets.DeleteAsync(datasetName, datasetVersion2);
+            await projectClient.Datasets.DeleteAsync(datasetName, datasetVersion1);
+            await projectClient.Datasets.DeleteAsync(datasetName, datasetVersion2);
             #endregion
         }
     }

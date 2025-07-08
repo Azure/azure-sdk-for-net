@@ -37,6 +37,18 @@ namespace Azure.AI.Projects
 
             string outputVersion = inputVersion;
 
+            return (GetContainerClientOrRaise(pendingUploadResponse), outputVersion);
+        }
+
+        /// <summary>
+        /// The convenience method to get the container client.
+        /// </summary>
+        /// <param name="pendingUploadResponse">The pending upload request.</param>
+        /// <returns></returns>
+        private BlobContainerClient GetContainerClientOrRaise(PendingUploadResponse pendingUploadResponse)
+        {
+            bool isSasEmpty = false;
+
             if (pendingUploadResponse.BlobReference == null)
             {
                 throw new InvalidOperationException("Blob reference is not present.");
@@ -47,17 +59,22 @@ namespace Azure.AI.Projects
             }
             if (pendingUploadResponse.BlobReference.Credential.SasUri == null)
             {
-                throw new InvalidOperationException("SAS URI is missing or empty.");
+                isSasEmpty = true;
             }
 
-            var containerClient = new BlobContainerClient(pendingUploadResponse.BlobReference.Credential.SasUri);
-
-            //var containerClient = new BlobContainerClient(
-            //    blobContainerUri: new Uri(pendingUploadResponse.Value.BlobReference.BlobUri),
-            //    credential: _tokenCredential,
-            //    options: null);
-
-            return (containerClient, outputVersion);
+            BlobContainerClient containerClient;
+            if (isSasEmpty)
+            {
+                containerClient = new BlobContainerClient(
+                    blobContainerUri: pendingUploadResponse.BlobReference.BlobUri,
+                    credential: _tokenCredential,
+                    options: null);
+            }
+            else
+            {
+                containerClient = new BlobContainerClient(pendingUploadResponse.BlobReference.Credential.SasUri);
+            }
+            return containerClient;
         }
 
         /// <summary>
@@ -153,21 +170,7 @@ namespace Azure.AI.Projects
 
             string outputVersion = inputVersion;
 
-            if (pendingUploadResponse.BlobReference == null)
-            {
-                throw new InvalidOperationException("Blob reference is not present.");
-            }
-            if (pendingUploadResponse.BlobReference.Credential == null)
-            {
-                throw new InvalidOperationException("SAS credential is not present.");
-            }
-            if (pendingUploadResponse.BlobReference.Credential.SasUri == null)
-            {
-                throw new InvalidOperationException("SAS URI is missing or empty.");
-            }
-
-            var containerClient = new BlobContainerClient(pendingUploadResponse.BlobReference.Credential.SasUri);
-            return (containerClient, outputVersion);
+            return (GetContainerClientOrRaise(pendingUploadResponse), outputVersion);
         }
 
         /// <summary>
