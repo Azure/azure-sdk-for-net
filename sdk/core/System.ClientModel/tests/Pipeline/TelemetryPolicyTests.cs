@@ -52,11 +52,13 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
             Transport = transport
         };
 
-        // Library author explicitly adds telemetry policy
+        // Library author explicitly adds telemetry policy when creating pipeline
         var telemetryPolicy = new TelemetryPolicy(Assembly.GetExecutingAssembly());
-        options.AddPolicy(telemetryPolicy, PipelinePosition.PerTry);
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
+        ClientPipeline pipeline = ClientPipeline.Create(
+            options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new[] { telemetryPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         PipelineMessage message = pipeline.CreateMessage();
         message.Request.Uri = new Uri("https://example.com");
         message.Request.Method = "GET";
@@ -91,9 +93,12 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
         {
             Transport = transport
         };
-        options.AddPolicy(telemetryPolicy, PipelinePosition.PerTry);
 
-        ClientPipeline pipeline = ClientPipeline.Create(options);
+        ClientPipeline pipeline = ClientPipeline.Create(
+            options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new[] { telemetryPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         PipelineMessage message = pipeline.CreateMessage();
         message.Request.Uri = new Uri("https://example.com");
         message.Request.Method = "GET";
@@ -138,9 +143,12 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
         {
             Transport = transport
         };
-        options.AddPolicy(telemetryPolicy, PipelinePosition.PerTry);
 
-        ClientPipeline pipeline = ClientPipeline.Create(options);
+        ClientPipeline pipeline = ClientPipeline.Create(
+            options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: new[] { telemetryPolicy },
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         PipelineMessage message = pipeline.CreateMessage();
         message.Request.Uri = new Uri("https://example.com");
         message.Request.Method = "GET";
