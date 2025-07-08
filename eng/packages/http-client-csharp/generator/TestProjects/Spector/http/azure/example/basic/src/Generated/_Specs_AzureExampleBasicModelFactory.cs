@@ -6,15 +6,49 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace _Specs_.Azure.Example.Basic
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class _Specs_AzureExampleBasicModelFactory
     {
-        public static ActionRequest ActionRequest(string stringProperty = default, Model modelProperty = default, IEnumerable<string> arrayProperty = default, IDictionary<string, string> recordProperty = default) => throw null;
+        /// <summary> The ActionRequest. </summary>
+        /// <param name="stringProperty"></param>
+        /// <param name="modelProperty"></param>
+        /// <param name="arrayProperty"></param>
+        /// <param name="recordProperty"></param>
+        /// <returns> A new <see cref="Basic.ActionRequest"/> instance for mocking. </returns>
+        public static ActionRequest ActionRequest(string stringProperty = default, Model modelProperty = default, IEnumerable<string> arrayProperty = default, IDictionary<string, string> recordProperty = default)
+        {
+            arrayProperty ??= new ChangeTrackingList<string>();
+            recordProperty ??= new ChangeTrackingDictionary<string, string>();
 
-        public static Model Model(int? int32Property = default, float? float32Property = default, Enum? enumProperty = default) => throw null;
+            return new ActionRequest(stringProperty, modelProperty, arrayProperty?.ToList(), recordProperty, additionalBinaryDataProperties: null);
+        }
 
-        public static ActionResponse ActionResponse(string stringProperty = default, Model modelProperty = default, IEnumerable<string> arrayProperty = default, IDictionary<string, string> recordProperty = default) => throw null;
+        /// <summary> The Model. </summary>
+        /// <param name="int32Property"></param>
+        /// <param name="float32Property"></param>
+        /// <param name="enumProperty"></param>
+        /// <returns> A new <see cref="Basic.Model"/> instance for mocking. </returns>
+        public static Model Model(int? int32Property = default, float? float32Property = default, Enum? enumProperty = default)
+        {
+            return new Model(int32Property, float32Property, enumProperty, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ActionResponse. </summary>
+        /// <param name="stringProperty"></param>
+        /// <param name="modelProperty"></param>
+        /// <param name="arrayProperty"></param>
+        /// <param name="recordProperty"></param>
+        /// <returns> A new <see cref="Basic.ActionResponse"/> instance for mocking. </returns>
+        public static ActionResponse ActionResponse(string stringProperty = default, Model modelProperty = default, IEnumerable<string> arrayProperty = default, IDictionary<string, string> recordProperty = default)
+        {
+            arrayProperty ??= new ChangeTrackingList<string>();
+            recordProperty ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ActionResponse(stringProperty, modelProperty, arrayProperty?.ToList(), recordProperty, additionalBinaryDataProperties: null);
+        }
     }
 }

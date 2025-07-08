@@ -10,28 +10,51 @@ using System.ComponentModel;
 
 namespace _Specs_.Azure.Example.Basic
 {
+    /// <summary></summary>
     public readonly partial struct Enum : IEquatable<Enum>
     {
-        public Enum(string value) => throw null;
+        private readonly string _value;
+        private const string EnumValue1Value = "EnumValue1";
 
-        public static Enum EnumValue1 => throw null;
+        /// <summary> Initializes a new instance of <see cref="Enum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public Enum(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        public static bool operator ==(Enum left, Enum right) => throw null;
+            _value = value;
+        }
 
-        public static bool operator !=(Enum left, Enum right) => throw null;
+        /// <summary> Gets the EnumValue1. </summary>
+        public static Enum EnumValue1 { get; } = new Enum(EnumValue1Value);
+
+        /// <summary> Determines if two <see cref="Enum"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(Enum left, Enum right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="Enum"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(Enum left, Enum right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="Enum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Enum(string value) => throw null;
+        public static implicit operator Enum(string value) => new Enum(value);
 
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => throw null;
+        public override bool Equals(object obj) => obj is Enum other && Equals(other);
 
-        public bool Equals(Enum other) => throw null;
+        /// <inheritdoc/>
+        public bool Equals(Enum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => throw null;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
-        public override string ToString() => throw null;
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

@@ -5,28 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Specs_.Azure.Example.Basic
 {
+    /// <summary> The Model. </summary>
     public partial class Model
     {
-        public Model() => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public int? Int32Property
+        /// <summary> Initializes a new instance of <see cref="Model"/>. </summary>
+        public Model()
         {
-            get => throw null;
-            set => throw null;
         }
 
-        public float? Float32Property
+        /// <summary> Initializes a new instance of <see cref="Model"/>. </summary>
+        /// <param name="int32Property"></param>
+        /// <param name="float32Property"></param>
+        /// <param name="enumProperty"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal Model(int? int32Property, float? float32Property, Enum? enumProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            get => throw null;
-            set => throw null;
+            Int32Property = int32Property;
+            Float32Property = float32Property;
+            EnumProperty = enumProperty;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        public Enum? EnumProperty
-        {
-            get => throw null;
-            set => throw null;
-        }
+        /// <summary> Gets or sets the Int32Property. </summary>
+        public int? Int32Property { get; set; }
+
+        /// <summary> Gets or sets the Float32Property. </summary>
+        public float? Float32Property { get; set; }
+
+        /// <summary> Gets or sets the EnumProperty. </summary>
+        public Enum? EnumProperty { get; set; }
     }
 }

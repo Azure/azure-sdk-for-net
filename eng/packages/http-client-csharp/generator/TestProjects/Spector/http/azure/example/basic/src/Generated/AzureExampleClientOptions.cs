@@ -5,20 +5,29 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
+using _Specs_.Azure.Example.Basic;
 
 namespace AzureExampleBasicClient
 {
+    /// <summary> Client options for <see cref="AzureExampleClient"/>. </summary>
     public partial class AzureExampleClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
+        private const _Specs_.Azure.Example.Basic.AzureExampleClientOptions.ServiceVersion LatestVersion = _Specs_.Azure.Example.Basic.AzureExampleClientOptions.ServiceVersion.V2022_12_01_Preview;
 
-        public AzureExampleClientOptions(ServiceVersion version = LatestVersion) => throw null;
-
-        public enum ServiceVersion
+        /// <summary> Initializes a new instance of AzureExampleClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
+        public AzureExampleClientOptions(_Specs_.Azure.Example.Basic.AzureExampleClientOptions.ServiceVersion version = LatestVersion)
         {
-            /// <summary> The version 2022-12-01-preview. </summary>
-            V2022_12_01_Preview = 1
+            Version = version switch
+            {
+                _Specs_.Azure.Example.Basic.AzureExampleClientOptions.ServiceVersion.V2022_12_01_Preview => "2022-12-01-preview",
+                _ => throw new NotSupportedException()
+            };
         }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
     }
 }
