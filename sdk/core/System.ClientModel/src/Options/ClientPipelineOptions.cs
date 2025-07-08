@@ -25,6 +25,7 @@ public class ClientPipelineOptions
     private TimeSpan? _timeout;
     private ClientLoggingOptions? _loggingOptions;
     private bool? _enabledDistributedTracing;
+    private bool _enableUserAgentTelemetry;
 
     #region Pipeline creation: Overrides of default pipeline policies
 
@@ -130,6 +131,22 @@ public class ClientPipelineOptions
             AssertNotFrozen();
 
             _enabledDistributedTracing = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets whether user agent telemetry should be enabled.
+    /// When enabled, a User-Agent header containing client library and platform
+    /// information will be added to requests. The default is <c>false</c>.
+    /// </summary>
+    public bool EnableUserAgentTelemetry
+    {
+        get => _enableUserAgentTelemetry;
+        set
+        {
+            AssertNotFrozen();
+
+            _enableUserAgentTelemetry = value;
         }
     }
 
