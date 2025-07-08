@@ -74,44 +74,6 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task UserAgentTelemetryUsesCustomValueWhenSet()
-    {
-        MockPipelineTransport transport = new("Transport", 200);
-        PipelineRequest? capturedRequest = null;
-
-        transport.OnSendingRequest = (message) =>
-        {
-            capturedRequest = message.Request;
-        };
-
-        ClientPipelineOptions options = new()
-        {
-            Transport = transport
-        };
-
-        // Library author explicitly adds telemetry policy
-        var telemetryDetails = new ClientTelemetryDetails(Assembly.GetExecutingAssembly());
-        var telemetryPolicy = new TelemetryPolicy(telemetryDetails);
-        options.AddPolicy(telemetryPolicy, PipelinePosition.PerTry);
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-        PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Uri = new Uri("https://example.com");
-        message.Request.Method = "GET";
-
-        // Set custom user agent
-        ClientTelemetryDetails customTelemetry = new(Assembly.GetExecutingAssembly(), "MyApp/1.0");
-        customTelemetry.Apply(message);
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        // Should use the custom user agent value
-        Assert.IsNotNull(capturedRequest);
-        Assert.IsTrue(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent));
-        Assert.That(userAgent, Does.Contain("MyApp/1.0"));
-    }
-
-    [Test]
     public void ClientTelemetryDetailsGeneratesValidUserAgent()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();

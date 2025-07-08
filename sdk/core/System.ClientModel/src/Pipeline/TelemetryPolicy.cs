@@ -49,13 +49,6 @@ public class TelemetryPolicy : PipelinePolicy
 
     private void AddUserAgentHeader(PipelineMessage message)
     {
-        if (message.TryGetProperty(typeof(UserAgentValueKey), out var userAgent))
-        {
-            message.Request.Headers.Add("User-Agent", (string)userAgent!);
-        }
-        else
-        {
-            message.Request.Headers.Add("User-Agent", _defaultHeader);
-        }
+        message.Request.Headers.Add("User-Agent", _defaultHeader);
     }
 }

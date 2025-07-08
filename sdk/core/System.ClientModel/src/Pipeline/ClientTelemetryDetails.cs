@@ -46,15 +46,6 @@ public class ClientTelemetryDetails
         _userAgent = GenerateUserAgentString(assembly, applicationId);
     }
 
-    /// <summary>
-    /// Sets the package name and version portion of the user agent telemetry value for the context of the <paramref name="message"/>.
-    /// </summary>
-    /// <param name="message">The <see cref="PipelineMessage"/> that will use this <see cref="ClientTelemetryDetails"/>.</param>
-    public void Apply(PipelineMessage message)
-    {
-        message.SetProperty(typeof(UserAgentValueKey), ToString());
-    }
-
     internal static string GenerateUserAgentString(Assembly clientAssembly, string? applicationId = null)
     {
         AssemblyInformationalVersionAttribute? versionAttribute = clientAssembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
