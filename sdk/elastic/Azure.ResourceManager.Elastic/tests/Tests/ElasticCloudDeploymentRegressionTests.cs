@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Elastic.Tests
         [Test]
         public void SerializeAndDeserialize_AllUriProperties_WithRelativeUris()
         {
-            // Arrange
-            var elasticsearchServiceUri = new Uri("/elasticsearch", UriKind.Relative);
-            var kibanaServiceUri = new Uri("/kibana", UriKind.Relative);
-            var kibanaSsoUri = new Uri("/kibana/sso", UriKind.Relative);
+            // Arrange - Use relative paths that don't start with "/" to avoid platform-specific interpretation
+            var elasticsearchServiceUri = new Uri("elasticsearch", UriKind.Relative);
+            var kibanaServiceUri = new Uri("kibana", UriKind.Relative);
+            var kibanaSsoUri = new Uri("kibana/sso", UriKind.Relative);
 
             var deployment = new ElasticCloudDeployment(
                 name: "test-deployment",
@@ -102,15 +102,15 @@ namespace Azure.ResourceManager.Elastic.Tests
 
             if (root.TryGetProperty("elasticsearchServiceUrl", out var esElement))
             {
-                Assert.AreEqual("/elasticsearch", esElement.GetString());
+                Assert.AreEqual("elasticsearch", esElement.GetString());
             }
             if (root.TryGetProperty("kibanaServiceUrl", out var kibanaElement))
             {
-                Assert.AreEqual("/kibana", kibanaElement.GetString());
+                Assert.AreEqual("kibana", kibanaElement.GetString());
             }
             if (root.TryGetProperty("kibanaSsoUrl", out var kibanaSsoElement))
             {
-                Assert.AreEqual("/kibana/sso", kibanaSsoElement.GetString());
+                Assert.AreEqual("kibana/sso", kibanaSsoElement.GetString());
             }
 
             // Act - Deserialize
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.Elastic.Tests
             Assert.IsFalse(deserialized.KibanaSsoUri.IsAbsoluteUri);
 
             // Verify original strings are preserved
-            Assert.AreEqual("/elasticsearch", deserialized.ElasticsearchServiceUri.OriginalString);
-            Assert.AreEqual("/kibana", deserialized.KibanaServiceUri.OriginalString);
-            Assert.AreEqual("/kibana/sso", deserialized.KibanaSsoUri.OriginalString);
+            Assert.AreEqual("elasticsearch", deserialized.ElasticsearchServiceUri.OriginalString);
+            Assert.AreEqual("kibana", deserialized.KibanaServiceUri.OriginalString);
+            Assert.AreEqual("kibana/sso", deserialized.KibanaSsoUri.OriginalString);
         }
     }
 }
