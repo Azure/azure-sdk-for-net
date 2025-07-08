@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Azure.Generator.Management.Models
 {
-    internal class RequestPathPattern : IEquatable<RequestPathPattern>, IReadOnlyList<string>
+    internal class RequestPathPattern : IEquatable<RequestPathPattern>, IReadOnlyList<RequestPathSegment>
     {
         private const string ProviderPath = "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";
         private const string FeaturePath = "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features";
@@ -26,20 +26,25 @@ namespace Azure.Generator.Management.Models
         public static readonly RequestPathPattern Tenant = new(string.Empty);
 
         private string _path;
-        private IReadOnlyList<string> _segments;
+        private IReadOnlyList<RequestPathSegment> _segments;
 
         public RequestPathPattern(string path)
         {
             _path = path;
-            _segments = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
+            _segments = ParseSegments(path);
             IndexOfLastProviders = _path.LastIndexOf(Providers);
         }
 
-        public RequestPathPattern(IEnumerable<string> segments)
+        public RequestPathPattern(IEnumerable<RequestPathSegment> segments)
         {
-            _segments = segments.ToArray();
-            _path = string.Join("/", _segments);
+            _segments = [.. segments];
+            _path = string.Join("/", _segments); // TODO -- leading slash???
         }
+
+        private static IReadOnlyList<RequestPathSegment> ParseSegments(string path)
+            => path.Split('/', StringSplitOptions.RemoveEmptyEntries)
+                .Select(segment => new RequestPathSegment(segment))
+                .ToArray();
 
         public int Count => _segments.Count;
 
@@ -47,7 +52,7 @@ namespace Azure.Generator.Management.Models
 
         public int IndexOfLastProviders { get; }
 
-        public string this[int index] => _segments[index];
+        public RequestPathSegment this[int index] => _segments[index];
 
         /// <summary>
         /// Check if this <see cref="RequestPathPattern"/> is a prefix path of the other request path.
@@ -128,7 +133,7 @@ namespace Azure.Generator.Management.Models
 
         public override string ToString() => _path;
 
-        public IEnumerator<string> GetEnumerator() => _segments.GetEnumerator();
+        public IEnumerator<RequestPathSegment> GetEnumerator() => _segments.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => _segments.GetEnumerator();
 
@@ -145,18 +150,6 @@ namespace Azure.Generator.Management.Models
         public static implicit operator string(RequestPathPattern requestPath)
         {
             return requestPath._path;
-        }
-
-        public static bool IsSegmentConstant(string segment)
-        {
-            var trimmed = TrimSegment(segment);
-            var isScope = trimmed == "scope";
-            return !isScope && !segment.StartsWith('{');
-        }
-
-        public static string TrimSegment(string segment)
-        {
-            return segment.TrimStart('{').TrimEnd('}');
         }
     }
 }

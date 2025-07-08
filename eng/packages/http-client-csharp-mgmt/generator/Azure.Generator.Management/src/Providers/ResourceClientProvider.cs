@@ -97,9 +97,9 @@ namespace Azure.Generator.Management.Providers
             var contextualSegments = new RequestPathPattern(contextualRequestPath);
             foreach (var segment in contextualSegments)
             {
-                if (segment.StartsWith("{"))
+                if (!segment.IsConstant)
                 {
-                    contextualParametersList.Add(segment.TrimStart('{').TrimEnd('}'));
+                    contextualParametersList.Add(segment.VariableName);
                 }
             }
             return contextualParametersList;
@@ -275,9 +275,7 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var segment in _resourceIdPattern)
             {
-                bool isConstant = RequestPathPattern.IsSegmentConstant(segment);
-
-                if (isConstant)
+                if (segment.IsConstant)
                 {
                     formatBuilder.Append($"/{segment}");
                 }
@@ -287,8 +285,8 @@ namespace Azure.Generator.Management.Providers
                     {
                         formatBuilder.Append('/');
                     }
-                    var trimmed = RequestPathPattern.TrimSegment(segment);
-                    var parameter = new ParameterProvider(trimmed, $"The {trimmed}", GetPathParameterType(trimmed));
+                    var variableName = segment.VariableName;
+                    var parameter = new ParameterProvider(variableName, $"The {variableName}", GetPathParameterType(variableName));
                     parameters.Add(parameter);
                     formatBuilder.Append($"{{{refCount++}}}");
                 }
