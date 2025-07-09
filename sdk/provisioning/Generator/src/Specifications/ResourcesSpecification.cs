@@ -37,6 +37,7 @@ public class ResourcesSpecification : Specification
         CustomizePropertyIsoDuration<JitSchedulingPolicy>("Duration");
         CustomizePropertyIsoDuration<ArmApplicationJitAccessPolicy>("MaximumJitAccessDuration");
         CustomizePropertyIsoDuration<ArmDeploymentPropertiesExtended>("Duration");
+        CustomizePropertyIsoDuration<DeploymentStackResource>("Duration");
         // Not generated today:
         // CustomizePropertyIsoDuration<AzureCliScript>("RetentionInterval");
         // CustomizePropertyIsoDuration<AzureCliScript>("Timeout");
@@ -47,15 +48,19 @@ public class ResourcesSpecification : Specification
         CustomizeResource<AzureCliScript>(r =>
         {
             r.BaseType = GetModel<ArmDeploymentScriptResource>() as TypeModel;
-            r.DiscriminatorName = "Kind";
+            r.DiscriminatorName = "kind";
             r.DiscriminatorValue = "AzureCLI";
         });
         CustomizeResource<AzurePowerShellScript>(r =>
         {
             r.BaseType = GetModel<ArmDeploymentScriptResource>() as TypeModel;
-            r.DiscriminatorName = "Kind";
+            r.DiscriminatorName = "kind";
             r.DiscriminatorValue = "AzurePowerShell";
         });
+        CustomizePropertyIsoDuration<AzureCliScript>("RetentionInterval");
+        CustomizePropertyIsoDuration<AzureCliScript>("Timeout");
+        CustomizePropertyIsoDuration<AzurePowerShellScript>("RetentionInterval");
+        CustomizePropertyIsoDuration<AzurePowerShellScript>("Timeout");
         // remove the properties that inherited from the base type ArmDeploymentScript
         RemoveProperties<AzureCliScript>("Id", "Name", "Location", "Identity", "SystemData", "Tags");
         RemoveProperties<AzurePowerShellScript>("Id", "Name", "Location", "Identity", "SystemData", "Tags");
