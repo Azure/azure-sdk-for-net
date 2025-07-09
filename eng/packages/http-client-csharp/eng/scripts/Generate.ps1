@@ -73,7 +73,6 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'header'
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'path'
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'query'
-    Join-Path 'http' 'azure' 'core' 'page'
     Join-Path 'http' 'azure' 'core' 'scalar'
     Join-Path 'http' 'azure' 'core' 'traits'
     Join-Path 'http' 'azure' 'encode' 'duration'

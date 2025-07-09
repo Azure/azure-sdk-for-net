@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Expose the `GetVectorStoreFileBatchFiles` and `GetVectorStoreFileBatchFilesAsync` methods.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -61,3 +63,4 @@
 
 ### Features Added
 - Initial release
+- Please see the [agents migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/AGENTS_MIGRATION_GUIDE.md) on how to use `Azure.AI.Projects` with `Azure.AI.Agents.Persistent` package.

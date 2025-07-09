@@ -39,15 +39,15 @@ namespace Azure.Generator.Management.Providers
                     break; // we already have all methods we need
                 }
 
-                if (method.Kind == OperationKind.Get)
+                if (method.Kind == ResourceOperationKind.Get)
                 {
                     _get = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
                 }
-                if (method.Kind == OperationKind.List)
+                if (method.Kind == ResourceOperationKind.List)
                 {
                     _getAll = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
                 }
-                if (method.Kind == OperationKind.Create)
+                if (method.Kind == ResourceOperationKind.Create)
                 {
                     _create = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
                 }
@@ -70,7 +70,7 @@ namespace Azure.Generator.Management.Providers
         protected override FieldProvider[] BuildFields() => [_clientDiagnosticsField, _clientField];
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
+            => [ConstructorProviderHelpers.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
 
         // TODO -- we need to change this type to its parent resource type.
         private ScopedApi<ResourceType>? _resourceTypeExpression;
