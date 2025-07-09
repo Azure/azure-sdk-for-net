@@ -1,14 +1,11 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.1 (2025-07-09)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed the incorrect property name for discriminators in `AzureCliScript` and `AzurePowershellScript` ([#51135](https://github.com/Azure/azure-sdk-for-net/issues/51135))
+- Fixed the incorrect format for `TimeSpan` properties in `AzureCliScript` and `AzurePowershellScript` ([#51135](https://github.com/Azure/azure-sdk-for-net/issues/51135))
 
 ## 1.2.0 (2025-07-02)
 
