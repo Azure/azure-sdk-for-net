@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Tests.Pipeline;
 
-public class TelemetryPolicyTests : SyncAsyncTestBase
+public class UserAgentPolicyTests : SyncAsyncTestBase
 {
-    public TelemetryPolicyTests(bool isAsync) : base(isAsync)
+    public UserAgentPolicyTests(bool isAsync) : base(isAsync)
     {
     }
 
@@ -32,7 +32,7 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        // User-Agent header should not be present when telemetry policy is not added
+        // User-Agent header should not be present when user agent policy is not added
         Assert.IsFalse(message.Request.Headers.TryGetValue("User-Agent", out _));
     }
 
@@ -52,11 +52,11 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
             Transport = transport
         };
 
-        // Library author explicitly adds telemetry policy when creating pipeline
-        var telemetryPolicy = new TelemetryPolicy(Assembly.GetExecutingAssembly());
+        // Library author explicitly adds user agent policy when creating pipeline
+        var userAgentPolicy = new UserAgentPolicy(Assembly.GetExecutingAssembly());
         ClientPipeline pipeline = ClientPipeline.Create(
             options,
-            perCallPolicies: new[] { telemetryPolicy },
+            perCallPolicies: new[] { userAgentPolicy },
             perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         PipelineMessage message = pipeline.CreateMessage();
@@ -65,7 +65,7 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        // User-Agent header should be present when telemetry policy is included
+        // User-Agent header should be present when user agent policy is included
         Assert.IsNotNull(capturedRequest);
         Assert.IsTrue(capturedRequest!.Headers.TryGetValue("User-Agent", out string? userAgent));
         Assert.IsNotNull(userAgent);
@@ -75,12 +75,12 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void TelemetryPolicyGeneratesValidUserAgent()
+    public void UserAgentPolicyGeneratesValidUserAgent()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
-        TelemetryPolicy telemetryPolicy = new(assembly);
+        UserAgentPolicy userAgentPolicy = new(assembly);
 
-        // Create a mock transport and add telemetry policy to verify behavior
+        // Create a mock transport and add user agent policy to verify behavior
         MockPipelineTransport transport = new("Transport", 200);
         PipelineRequest? capturedRequest = null;
 
@@ -96,14 +96,14 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
 
         ClientPipeline pipeline = ClientPipeline.Create(
             options,
-            perCallPolicies: new[] { telemetryPolicy },
+            perCallPolicies: new[] { userAgentPolicy },
             perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         PipelineMessage message = pipeline.CreateMessage();
         message.Request.Uri = new Uri("https://example.com");
         message.Request.Method = "GET";
 
-        // Send through pipeline to test telemetry functionality
+        // Send through pipeline to test user agent functionality
         pipeline.Send(message);
 
         Assert.IsNotNull(capturedRequest);
@@ -121,14 +121,14 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void TelemetryPolicyWithApplicationId()
+    public void UserAgentPolicyWithApplicationId()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
         string applicationId = "TestApp/2.0";
-        TelemetryPolicy telemetryPolicy = new(assembly, applicationId);
+        UserAgentPolicy userAgentPolicy = new(assembly, applicationId);
 
         // Verify the application ID is used by checking the properties
-        Assert.AreEqual(applicationId, telemetryPolicy.ApplicationId);
+        Assert.AreEqual(applicationId, userAgentPolicy.ApplicationId);
 
         // Also verify by processing a message and checking the header through the pipeline
         MockPipelineTransport transport = new("Transport", 200);
@@ -146,7 +146,7 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
 
         ClientPipeline pipeline = ClientPipeline.Create(
             options,
-            perCallPolicies: new[] { telemetryPolicy },
+            perCallPolicies: new[] { userAgentPolicy },
             perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         PipelineMessage message = pipeline.CreateMessage();
@@ -161,18 +161,18 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void TelemetryPolicyThrowsForLongApplicationId()
+    public void UserAgentPolicyThrowsForLongApplicationId()
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
         string longApplicationId = new string('a', 30); // More than 24 characters
 
-        Assert.Throws<ArgumentOutOfRangeException>(() => new TelemetryPolicy(assembly, longApplicationId));
+        Assert.Throws<ArgumentOutOfRangeException>(() => new UserAgentPolicy(assembly, longApplicationId));
     }
 
     [Test]
-    public void TelemetryPolicyThrowsForNullAssembly()
+    public void UserAgentPolicyThrowsForNullAssembly()
     {
-        Assert.Throws<ArgumentNullException>(() => new TelemetryPolicy(null!));
+        Assert.Throws<ArgumentNullException>(() => new UserAgentPolicy(null!));
     }
 
     [Test]
@@ -181,7 +181,7 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
         Assembly assembly = Assembly.GetExecutingAssembly();
 
         // Test without application ID
-        string userAgent = TelemetryPolicy.GenerateUserAgentString(assembly);
+        string userAgent = UserAgentPolicy.GenerateUserAgentString(assembly);
         Assert.IsNotNull(userAgent);
         Assert.IsNotEmpty(userAgent);
 
@@ -200,7 +200,7 @@ public class TelemetryPolicyTests : SyncAsyncTestBase
         Assembly assembly = Assembly.GetExecutingAssembly();
         string applicationId = "TestApp/1.0";
 
-        string userAgent = TelemetryPolicy.GenerateUserAgentString(assembly, applicationId);
+        string userAgent = UserAgentPolicy.GenerateUserAgentString(assembly, applicationId);
         Assert.IsNotNull(userAgent);
         Assert.IsNotEmpty(userAgent);
 

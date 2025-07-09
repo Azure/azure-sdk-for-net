@@ -96,3 +96,27 @@ MapsClientOptions options = new()
     Transport = new HttpClientPipelineTransport(httpClient)
 };
 ```
+
+## Configure User-Agent headers
+
+Library authors can add User-Agent headers to their client requests by including a `UserAgentPolicy` in the client pipeline. This policy automatically generates headers containing the client library name, version, and platform information.
+
+```C# Snippet:ConfigurationUserAgent
+// In a library's client class constructor:
+var userAgentPolicy = new UserAgentPolicy(Assembly.GetExecutingAssembly());
+ClientPipeline pipeline = ClientPipeline.Create(
+    options, 
+    perCallPolicies: new[] { userAgentPolicy },
+    perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+    beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+
+// With custom application ID:
+var customUserAgent = new UserAgentPolicy(Assembly.GetExecutingAssembly(), "MyApp/1.0");
+ClientPipeline pipeline = ClientPipeline.Create(
+    options,
+    perCallPolicies: new[] { customUserAgent }, 
+    perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+    beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+```
+
+The generated User-Agent header follows the format: `"LibraryName/Version (.NET Framework; OS Information)"` or `"ApplicationId LibraryName/Version (.NET Framework; OS Information)"` when an application ID is provided.

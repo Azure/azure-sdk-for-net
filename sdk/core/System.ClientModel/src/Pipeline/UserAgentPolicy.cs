@@ -13,29 +13,29 @@ using System.Threading.Tasks;
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// A pipeline policy that adds user agent telemetry headers to HTTP requests.
+/// A pipeline policy that adds user agent headers to HTTP requests.
 /// </summary>
-public class TelemetryPolicy : PipelinePolicy
+public class UserAgentPolicy : PipelinePolicy
 {
     private const int MaxApplicationIdLength = 24;
     private readonly string _defaultHeader;
 
     /// <summary>
-    /// The package type represented by this <see cref="TelemetryPolicy"/> instance.
+    /// The package type represented by this <see cref="UserAgentPolicy"/> instance.
     /// </summary>
     public Assembly Assembly { get; }
 
     /// <summary>
-    /// The value of the applicationId used to initialize this <see cref="TelemetryPolicy"/> instance.
+    /// The value of the applicationId used to initialize this <see cref="UserAgentPolicy"/> instance.
     /// </summary>
     public string? ApplicationId { get; }
 
     /// <summary>
-    /// Initialize an instance of <see cref="TelemetryPolicy"/> by extracting the name and version information from the <see cref="System.Reflection.Assembly"/> associated with the <paramref name="assembly"/>.
+    /// Initialize an instance of <see cref="UserAgentPolicy"/> by extracting the name and version information from the <see cref="System.Reflection.Assembly"/> associated with the <paramref name="assembly"/>.
     /// </summary>
-    /// <param name="assembly">The <see cref="System.Reflection.Assembly"/> used to generate the package name and version information for the telemetry.</param>
+    /// <param name="assembly">The <see cref="System.Reflection.Assembly"/> used to generate the package name and version information for the user agent.</param>
     /// <param name="applicationId">An optional value to be prepended to the user agent string.</param>
-    public TelemetryPolicy(Assembly assembly, string? applicationId = null)
+    public UserAgentPolicy(Assembly assembly, string? applicationId = null)
     {
         Argument.AssertNotNull(assembly, nameof(assembly));
         if (applicationId?.Length > MaxApplicationIdLength)
