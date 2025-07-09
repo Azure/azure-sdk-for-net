@@ -4,8 +4,8 @@
 
 ### Bugs Fixed
 
-- Fixed the incorrect property name for discriminators in `AzureCliScript` and `AzurePowershellScript` ([#51135](https://github.com/Azure/azure-sdk-for-net/issues/51135))
-- Fixed the incorrect format for `TimeSpan` properties in `AzureCliScript` and `AzurePowershellScript` ([#51135](https://github.com/Azure/azure-sdk-for-net/issues/51135))
+- Fixed the incorrect property name for discriminators in `AzureCliScript` and `AzurePowerShellScript` ([#51135](https://github.com/Azure/azure-sdk-for-net/issues/51135))
+- Fixed the incorrect format for `TimeSpan` properties in `AzureCliScript` and `AzurePowerShellScript` ([#51135](https://github.com/Azure/azure-sdk-for-net/issues/51135))
 
 ## 1.2.0 (2025-07-02)
 
