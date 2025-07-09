@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy;
+namespace Microsoft.ClientModel.TestFramework;
 
 // Uses Windows Job Objects to ensure external processes are killed if the current process is terminated non-gracefully.
 internal static class ProcessTracker

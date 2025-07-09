@@ -10,11 +10,4 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.ClientModel.TestFramework.csproj" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Moq" />
-  </ItemGroup>
 </Project>

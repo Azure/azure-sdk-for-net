@@ -1,17 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.ClientModel.TestFramework.TestProxy;
+using NUnit.Framework;
 using System;
+using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework;
 
@@ -83,13 +83,13 @@ public class TestProxyProcess
 
         _testProxyProcess = Process.Start(testProxyProcessInfo);
 
-        ProcessTracker.Add(_testProxyProcess);
+        ProcessTracker.Add(_testProxyProcess!); // TODO
         _ = Task.Run(
             () =>
             {
-                while (!_testProxyProcess.HasExited && !_testProxyProcess.StandardError.EndOfStream)
+                while (!_testProxyProcess?.HasExited ?? false && (!_testProxyProcess?.StandardError.EndOfStream ?? false))
                 {
-                    var error = _testProxyProcess.StandardError.ReadLine();
+                    var error = _testProxyProcess!.StandardError.ReadLine();
                     // output to console in case another error in the test causes the exception to not be propagated
                     TestContext.Progress.WriteLine(error);
                     _errorBuffer.AppendLine(error);
@@ -105,7 +105,7 @@ public class TestProxyProcess
             int lines = 0;
             while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 50)
             {
-                string outputLine = _testProxyProcess.StandardOutput.ReadLine();
+                string outputLine = _testProxyProcess!.StandardOutput.ReadLine()!; // TODO
                 // useful for debugging
                 TestContext.Progress.WriteLine(outputLine);
 
@@ -131,12 +131,12 @@ public class TestProxyProcess
         }
 
         var options = new TestProxyClientOptions();
-        Client = new TestProxyRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), new Uri($"http://{IpAddress}:{_proxyPortHttp}"));
+        Client = new TestProxyClient(ClientPipeline.Create(), new Uri($"http://{IpAddress}:{_proxyPortHttp}"));
 
         _ = Task.Run(
             () =>
             {
-                while (!_testProxyProcess.HasExited && !_testProxyProcess.StandardOutput.EndOfStream)
+                while (!_testProxyProcess!.HasExited && !_testProxyProcess.StandardOutput.EndOfStream) // TODO
                 {
                     lock (_output)
                     {
@@ -167,4 +167,95 @@ public class TestProxyProcess
     /// Gets the HTTPS port used by the proxy.
     /// </summary>
     public int? ProxyPortHttps => _proxyPortHttps;
+
+    /// <summary>
+    /// Starts the test proxy
+    /// </summary>
+    /// <param name="debugMode">If true, the proxy will be configured to look for port 5000 and 5001, which is the default used when running the proxy locally in debug mode.</param>
+    /// <returns>The started TestProxy instance.</returns>
+    public static TestProxyProcess Start(bool debugMode = false)
+    {
+        if (_shared != null)
+        {
+            return _shared;
+        }
+
+        lock (_lock)
+        {
+            var shared = _shared;
+            if (shared == null)
+            {
+                shared = new TestProxyProcess(typeof(TestProxyProcess)
+                    .Assembly
+                    .GetCustomAttributes<AssemblyMetadataAttribute>()
+                    .Single(a => a.Key == "TestProxyPath")
+                    .Value!, // TODO- nullable
+                    debugMode);
+
+                AppDomain.CurrentDomain.DomainUnload += (_, _) =>
+                {
+                    shared._testProxyProcess?.Kill();
+                };
+
+                _shared = shared;
+            }
+
+            return shared;
+        }
+    }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <returns></returns>
+    public async Task CheckProxyOutputAsync()
+    {
+        if (s_enableDebugProxyLogging)
+        {
+            // add a small delay to allow the log output for the just finished test to be collected into the _output StringBuilder
+            await Task.Delay(20).ConfigureAwait(false);
+
+            // lock to avoid any race conditions caused by appending to the StringBuilder while calling ToString
+            lock (_output)
+            {
+                TestContext.Out.WriteLine(_output.ToString());
+                _output.Clear();
+            }
+        }
+
+        CheckForErrors();
+    }
+
+    private static bool TryParsePort(string output, string scheme, out int? port)
+    {
+        if (output == null)
+        {
+            TestContext.Progress.WriteLine("output was null");
+            port = null;
+            return false;
+        }
+        string nowListeningOn = "Now listening on: ";
+        int nowListeningOnLength = nowListeningOn.Length;
+        var index = output.IndexOf($"{nowListeningOn}{scheme}:", StringComparison.CurrentCultureIgnoreCase);
+        if (index > -1)
+        {
+            var start = index + nowListeningOnLength;
+            var uri = output.Substring(start, output.Length - start).Trim();
+            port = new Uri(uri).Port;
+            return true;
+        }
+
+        port = null;
+        return false;
+    }
+
+    private void CheckForErrors()
+    {
+        if (_errorBuffer.Length > 0)
+        {
+            var error = _errorBuffer.ToString();
+            _errorBuffer.Clear();
+            throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
+        }
+    }
 }

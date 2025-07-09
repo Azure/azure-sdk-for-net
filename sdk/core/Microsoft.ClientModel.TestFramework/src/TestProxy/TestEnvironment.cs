@@ -107,12 +107,12 @@ public abstract class TestEnvironment
     /// <summary>
     /// TODO.
     /// </summary>
-    public string? DevCertPath { get; set; }
+    public static string? DevCertPath { get; set; }
 
     /// <summary>
     /// TODO.
     /// </summary>
-    public string? DevCertPassword { get; set; }
+    public static string? DevCertPassword { get; set; }
 
     /// <summary>
     /// TODO.
