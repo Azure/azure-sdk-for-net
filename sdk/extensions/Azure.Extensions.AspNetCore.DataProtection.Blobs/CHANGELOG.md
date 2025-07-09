@@ -10,6 +10,18 @@
 
 ### Other Changes
 
+## 1.5.1 (2025-06-23)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Mike Alhayek _([GitHub](https://github.com/MikeAlhayek))_
+
+### Bugs Fixed
+
+- Updated `ConfigureKeyManagementBlobClientOptions` to ensure that its dependencies were resolved in the correct scope to prevent issues due to lifetime drift.  Previously, a new scope was created to resolve `AzureBlobXmlRepository`.  However, `AzureBlobXmlRepository` is registered as a singleton and should be resolved from the same scope in which the options are being configured. Creating a new scope introduced unnecessary overhead and potential for unexpected behavior due to differences in service lifetime management.  _(A community contribution, courtesy of [danielmarbach](https://github.com/MikeAlhayek))_
+
 ## 1.5.0 (2025-02-11)
 
 ### Other Changes

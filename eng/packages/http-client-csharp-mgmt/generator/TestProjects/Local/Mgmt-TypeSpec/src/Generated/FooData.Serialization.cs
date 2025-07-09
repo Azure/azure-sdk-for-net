@@ -13,11 +13,11 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using MgmtTypeSpec;
+using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec.Models
+namespace MgmtTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class FooData : IJsonModel<FooData>
     {
         /// <summary> Initializes a new instance of <see cref="FooData"/> for deserialization. </summary>
@@ -82,7 +82,7 @@ namespace MgmtTypeSpec.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            string @type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
@@ -103,7 +103,7 @@ namespace MgmtTypeSpec.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -166,7 +166,7 @@ namespace MgmtTypeSpec.Models
             }
             return new FooData(
                 id,
-                @type,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -216,20 +216,20 @@ namespace MgmtTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FooData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="data"> The <see cref="FooData"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(FooData data)
+        /// <param name="fooData"> The <see cref="FooData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(FooData fooData)
         {
-            if (data == null)
+            if (fooData == null)
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(fooData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FooData"/> from. </param>
-        public static explicit operator FooData(Response result)
+        internal static FooData FromResponse(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -26,14 +25,6 @@ namespace Azure.AI.Projects
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
-
-        private ServicePatterns _cachedServicePatterns;
-
-        /// <summary> Initializes a new instance of ServicePatterns. </summary>
-        public virtual ServicePatterns GetServicePatternsClient()
-        {
-            return Volatile.Read(ref _cachedServicePatterns) ?? Interlocked.CompareExchange(ref _cachedServicePatterns, new ServicePatterns(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedServicePatterns;
-        }
 
         /// <summary> Initializes a new instance of Connections. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>

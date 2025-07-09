@@ -60,8 +60,8 @@ namespace Azure.Developer.Playwright.Utility
             if (string.IsNullOrEmpty(authToken))
                 throw new Exception(Constants.s_no_auth_error);
             JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(authToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
-            var tokenWorkspaceId = jsonWebToken.Claims.FirstOrDefault(c => c.Type == "aid")?.Value;
-            Match match = Regex.Match(serviceEndpoint, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
+            var tokenWorkspaceId = jsonWebToken.Claims.FirstOrDefault(c => c.Type == "pwid")?.Value;
+            Match match = Regex.Match(serviceEndpoint, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/playwrightworkspaces/(?<workspaceId>[\w-]+)/");
             if (!match.Success)
                 throw new Exception(Constants.s_invalid_service_endpoint_error_message);
             var serviceEndpointWorkspaceId = match.Groups["workspaceId"].Value;

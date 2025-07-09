@@ -1,0 +1,11 @@
+{
+  "name": "client-plugin",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "description": "A client plugin for mutating a library generated with @typespec/http-client-csharp and related TypeSpec C# emitters.",
+  "files": [
+    "dist/**"
+  ]
+}

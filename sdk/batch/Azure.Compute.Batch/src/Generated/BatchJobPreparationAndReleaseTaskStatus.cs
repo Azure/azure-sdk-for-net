@@ -53,15 +53,15 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="BatchJobPreparationAndReleaseTaskStatus"/>. </summary>
         /// <param name="poolId"> The ID of the Pool containing the Compute Node to which this entry refers. </param>
         /// <param name="nodeId"> The ID of the Compute Node to which this entry refers. </param>
-        /// <param name="nodeUrl"> The URL of the Compute Node to which this entry refers. </param>
+        /// <param name="nodeUri"> The URL of the Compute Node to which this entry refers. </param>
         /// <param name="jobPreparationTaskExecutionInfo"> Information about the execution status of the Job Preparation Task on this Compute Node. </param>
         /// <param name="jobReleaseTaskExecutionInfo"> Information about the execution status of the Job Release Task on this Compute Node. This property is set only if the Job Release Task has run on the Compute Node. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobPreparationAndReleaseTaskStatus(string poolId, string nodeId, string nodeUrl, BatchJobPreparationTaskExecutionInfo jobPreparationTaskExecutionInfo, BatchJobReleaseTaskExecutionInfo jobReleaseTaskExecutionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchJobPreparationAndReleaseTaskStatus(string poolId, string nodeId, Uri nodeUri, BatchJobPreparationTaskExecutionInfo jobPreparationTaskExecutionInfo, BatchJobReleaseTaskExecutionInfo jobReleaseTaskExecutionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PoolId = poolId;
             NodeId = nodeId;
-            NodeUrl = nodeUrl;
+            NodeUri = nodeUri;
             JobPreparationTaskExecutionInfo = jobPreparationTaskExecutionInfo;
             JobReleaseTaskExecutionInfo = jobReleaseTaskExecutionInfo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -72,7 +72,7 @@ namespace Azure.Compute.Batch
         /// <summary> The ID of the Compute Node to which this entry refers. </summary>
         public string NodeId { get; }
         /// <summary> The URL of the Compute Node to which this entry refers. </summary>
-        public string NodeUrl { get; }
+        public Uri NodeUri { get; }
         /// <summary> Information about the execution status of the Job Preparation Task on this Compute Node. </summary>
         public BatchJobPreparationTaskExecutionInfo JobPreparationTaskExecutionInfo { get; }
         /// <summary> Information about the execution status of the Job Release Task on this Compute Node. This property is set only if the Job Release Task has run on the Compute Node. </summary>

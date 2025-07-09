@@ -7,8 +7,6 @@ Project("{C1BF05E9-044F-4231-BA82-7C4D81215A1F}") = "Azure.ResourceManager.Onlin
 EndProject
 Project("{C1BF05E9-044F-4231-BA82-7C4D81215A1F}") = "Azure.ResourceManager.OnlineExperimentation.Tests", "tests\Azure.ResourceManager.OnlineExperimentation.Tests.csproj", "{BBC520CD-705A-4461-A31B-29CC644216D6}"
 EndProject
-Project("{C1BF05E9-044F-4231-BA82-7C4D81215A1F}") = "Azure.ResourceManager.OnlineExperimentation.Samples", "samples\Azure.ResourceManager.OnlineExperimentation.Samples.csproj", "{1C428A65-8686-4817-A41D-7E100B9E863C}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

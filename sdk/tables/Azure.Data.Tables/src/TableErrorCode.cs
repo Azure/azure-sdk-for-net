@@ -215,6 +215,19 @@ namespace Azure.Data.Tables.Models
         public static bool operator ==(TableErrorCode left, TableErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TableErrorCode"/> values are not the same. </summary>
         public static bool operator !=(TableErrorCode left, TableErrorCode right) => !left.Equals(right);
+
+        /// <summary> Determines if a <see cref="TableErrorCode"/> and a string are equal. </summary>
+        public static bool operator ==(TableErrorCode code, string value) => value != null && code.Equals(value);
+
+        /// <summary> Determines if a <see cref="TableErrorCode"/> and a string are not equal. </summary>
+        public static bool operator !=(TableErrorCode code, string value) => !(code == value);
+
+        /// <summary> Determines if a string and a <see cref="TableErrorCode"/> are equal. </summary>
+        public static bool operator ==(string value, TableErrorCode code) => code == value;
+
+        /// <summary> Determines if a string and a <see cref="TableErrorCode"/> are not equal. </summary>
+        public static bool operator !=(string value, TableErrorCode code) => !(value == code);
+
         /// <summary> Converts a string to a <see cref="TableErrorCode"/>. </summary>
         public static implicit operator TableErrorCode(string value) => new TableErrorCode(value);
 

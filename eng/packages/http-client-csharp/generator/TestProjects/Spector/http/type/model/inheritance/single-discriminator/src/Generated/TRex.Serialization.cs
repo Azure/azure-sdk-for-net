@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
@@ -34,10 +32,5 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
         protected override Dinosaur PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<TRex>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="tRex"> The <see cref="TRex"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(TRex tRex) => throw null;
-
-        public static explicit operator TRex(Response result) => throw null;
     }
 }

@@ -51,17 +51,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// for authentication. This case-sensitive string can be up to 128 characters
         /// long, and supports UTF-8 characters.
         /// </param>
-        /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
         /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientAuthenticationName"/>, <paramref name="clientName"/> or <paramref name="namespaceName"/> is null. </exception>
-        internal EventGridMqttClientEventData(string clientAuthenticationName, string clientName, string namespaceName)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientAuthenticationName"/> or <paramref name="namespaceName"/> is null. </exception>
+        internal EventGridMqttClientEventData(string clientAuthenticationName, string namespaceName)
         {
             Argument.AssertNotNull(clientAuthenticationName, nameof(clientAuthenticationName));
-            Argument.AssertNotNull(clientName, nameof(clientName));
             Argument.AssertNotNull(namespaceName, nameof(namespaceName));
 
             ClientAuthenticationName = clientAuthenticationName;
-            ClientName = clientName;
             NamespaceName = namespaceName;
         }
 

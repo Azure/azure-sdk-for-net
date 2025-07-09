@@ -115,16 +115,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
 
-            CallAutomationClient callAutomationClient;
-
-            if (TestEnvironment.PMAEndpoint == null || TestEnvironment.PMAEndpoint.Length == 0)
-            {
-                callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
-            }
-            else
-            {
-                callAutomationClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
-            }
+            CallAutomationClient callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
 
             return InstrumentClient(callAutomationClient);
         }

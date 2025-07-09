@@ -54,14 +54,14 @@ namespace Azure.Compute.Batch
 
             CommonEnvironmentSettings = new ChangeTrackingList<EnvironmentSetting>();
             PoolInfo = poolInfo;
-            Metadata = new ChangeTrackingList<MetadataItem>();
+            Metadata = new ChangeTrackingList<BatchMetadataItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchJob"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Job within the Account. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </param>
         /// <param name="displayName"> The display name for the Job. </param>
         /// <param name="usesTaskDependencies"> Whether Tasks in the Job can define dependencies on each other. The default is false. </param>
-        /// <param name="url"> The URL of the Job. </param>
+        /// <param name="uri"> The URL of the Job. </param>
         /// <param name="eTag"> The ETag of the Job. This is an opaque string. You can use it to detect whether the Job has changed between requests. In particular, you can be pass the ETag when updating a Job to specify that your changes should take effect only if nobody else has modified the Job in the meantime. </param>
         /// <param name="lastModified"> The last modified time of the Job. This is the last time at which the Job level data, such as the Job state or priority, changed. It does not factor in task-level changes such as adding new Tasks or Tasks changing state. </param>
         /// <param name="creationTime"> The creation time of the Job. </param>
@@ -78,19 +78,19 @@ namespace Azure.Compute.Batch
         /// <param name="jobReleaseTask"> The Job Release Task. The Job Release Task is a special Task run at the end of the Job on each Compute Node that has run any other Task of the Job. </param>
         /// <param name="commonEnvironmentSettings"> The list of common environment variable settings. These environment variables are set for all Tasks in the Job (including the Job Manager, Job Preparation and Job Release Tasks). Individual Tasks can override an environment setting specified here by specifying the same setting name with a different value. </param>
         /// <param name="poolInfo"> The Pool settings associated with the Job. </param>
-        /// <param name="onAllTasksComplete"> The action the Batch service should take when all Tasks in the Job are in the completed state. The default is noaction. </param>
-        /// <param name="onTaskFailure"> The action the Batch service should take when any Task in the Job fails. A Task is considered to have failed if has a failureInfo. A failureInfo is set if the Task completes with a non-zero exit code after exhausting its retry count, or if there was an error starting the Task, for example due to a resource file download error. The default is noaction. </param>
+        /// <param name="allTasksCompleteMode"> The action the Batch service should take when all Tasks in the Job are in the completed state. The default is noaction. </param>
+        /// <param name="taskFailureMode"> The action the Batch service should take when any Task in the Job fails. A Task is considered to have failed if has a failureInfo. A failureInfo is set if the Task completes with a non-zero exit code after exhausting its retry count, or if there was an error starting the Task, for example due to a resource file download error. The default is noaction. </param>
         /// <param name="networkConfiguration"> The network configuration for the Job. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the Job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
         /// <param name="executionInfo"> The execution information for the Job. </param>
-        /// <param name="stats"> Resource usage statistics for the entire lifetime of the Job. This property is populated only if the BatchJob was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
+        /// <param name="jobStatistics"> Resource usage statistics for the entire lifetime of the Job. This property is populated only if the BatchJob was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJob(string id, string displayName, bool? usesTaskDependencies, string url, string eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, BatchJobState? state, DateTimeOffset? stateTransitionTime, BatchJobState? previousState, DateTimeOffset? previousStateTransitionTime, int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IReadOnlyList<EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, OnAllBatchTasksComplete? onAllTasksComplete, OnBatchTaskFailure? onTaskFailure, BatchJobNetworkConfiguration networkConfiguration, IList<MetadataItem> metadata, BatchJobExecutionInfo executionInfo, BatchJobStatistics stats, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchJob(string id, string displayName, bool? usesTaskDependencies, Uri uri, ETag? eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, BatchJobState? state, DateTimeOffset? stateTransitionTime, BatchJobState? previousState, DateTimeOffset? previousStateTransitionTime, int? priority, bool? allowTaskPreemption, int? maxParallelTasks, BatchJobConstraints constraints, BatchJobManagerTask jobManagerTask, BatchJobPreparationTask jobPreparationTask, BatchJobReleaseTask jobReleaseTask, IReadOnlyList<EnvironmentSetting> commonEnvironmentSettings, BatchPoolInfo poolInfo, BatchAllTasksCompleteMode? allTasksCompleteMode, BatchTaskFailureMode? taskFailureMode, BatchJobNetworkConfiguration networkConfiguration, IList<BatchMetadataItem> metadata, BatchJobExecutionInfo executionInfo, BatchJobStatistics jobStatistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
             UsesTaskDependencies = usesTaskDependencies;
-            Url = url;
+            Uri = uri;
             ETag = eTag;
             LastModified = lastModified;
             CreationTime = creationTime;
@@ -107,12 +107,12 @@ namespace Azure.Compute.Batch
             JobReleaseTask = jobReleaseTask;
             CommonEnvironmentSettings = commonEnvironmentSettings;
             PoolInfo = poolInfo;
-            OnAllTasksComplete = onAllTasksComplete;
-            OnTaskFailure = onTaskFailure;
+            AllTasksCompleteMode = allTasksCompleteMode;
+            TaskFailureMode = taskFailureMode;
             NetworkConfiguration = networkConfiguration;
             Metadata = metadata;
             ExecutionInfo = executionInfo;
-            Stats = stats;
+            JobStatistics = jobStatistics;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -128,9 +128,9 @@ namespace Azure.Compute.Batch
         /// <summary> Whether Tasks in the Job can define dependencies on each other. The default is false. </summary>
         public bool? UsesTaskDependencies { get; }
         /// <summary> The URL of the Job. </summary>
-        public string Url { get; }
+        public Uri Uri { get; }
         /// <summary> The ETag of the Job. This is an opaque string. You can use it to detect whether the Job has changed between requests. In particular, you can be pass the ETag when updating a Job to specify that your changes should take effect only if nobody else has modified the Job in the meantime. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
         /// <summary> The last modified time of the Job. This is the last time at which the Job level data, such as the Job state or priority, changed. It does not factor in task-level changes such as adding new Tasks or Tasks changing state. </summary>
         public DateTimeOffset? LastModified { get; }
         /// <summary> The creation time of the Job. </summary>
@@ -162,16 +162,16 @@ namespace Azure.Compute.Batch
         /// <summary> The Pool settings associated with the Job. </summary>
         public BatchPoolInfo PoolInfo { get; set; }
         /// <summary> The action the Batch service should take when all Tasks in the Job are in the completed state. The default is noaction. </summary>
-        public OnAllBatchTasksComplete? OnAllTasksComplete { get; set; }
+        public BatchAllTasksCompleteMode? AllTasksCompleteMode { get; set; }
         /// <summary> The action the Batch service should take when any Task in the Job fails. A Task is considered to have failed if has a failureInfo. A failureInfo is set if the Task completes with a non-zero exit code after exhausting its retry count, or if there was an error starting the Task, for example due to a resource file download error. The default is noaction. </summary>
-        public OnBatchTaskFailure? OnTaskFailure { get; }
+        public BatchTaskFailureMode? TaskFailureMode { get; }
         /// <summary> The network configuration for the Job. </summary>
         public BatchJobNetworkConfiguration NetworkConfiguration { get; }
         /// <summary> A list of name-value pairs associated with the Job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </summary>
-        public IList<MetadataItem> Metadata { get; }
+        public IList<BatchMetadataItem> Metadata { get; }
         /// <summary> The execution information for the Job. </summary>
         public BatchJobExecutionInfo ExecutionInfo { get; }
         /// <summary> Resource usage statistics for the entire lifetime of the Job. This property is populated only if the BatchJob was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </summary>
-        public BatchJobStatistics Stats { get; }
+        public BatchJobStatistics JobStatistics { get; }
     }
 }

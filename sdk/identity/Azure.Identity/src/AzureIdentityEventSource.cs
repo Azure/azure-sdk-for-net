@@ -407,6 +407,7 @@ namespace Azure.Identity
             }
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(ManagedIdentitySourceAttemptedEvent, Level = EventLevel.Informational, Message = ManagedIdentitySourceAttemptedMessage)]
         public void ManagedIdentitySourceAttempted(string source, bool isSelected)
         {

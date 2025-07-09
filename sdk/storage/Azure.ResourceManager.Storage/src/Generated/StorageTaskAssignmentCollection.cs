@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _storageTaskAssignmentRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTaskAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<StorageTaskAssignmentResource>(new StorageTaskAssignmentOperationSource(Client), _storageTaskAssignmentClientDiagnostics, Pipeline, _storageTaskAssignmentRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTaskAssignmentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageArmOperation<StorageTaskAssignmentResource>(new StorageTaskAssignmentOperationSource(Client), _storageTaskAssignmentClientDiagnostics, Pipeline, _storageTaskAssignmentRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTaskAssignmentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _storageTaskAssignmentRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTaskAssignmentName, data, cancellationToken);
-                var operation = new StorageArmOperation<StorageTaskAssignmentResource>(new StorageTaskAssignmentOperationSource(Client), _storageTaskAssignmentClientDiagnostics, Pipeline, _storageTaskAssignmentRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTaskAssignmentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageArmOperation<StorageTaskAssignmentResource>(new StorageTaskAssignmentOperationSource(Client), _storageTaskAssignmentClientDiagnostics, Pipeline, _storageTaskAssignmentRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTaskAssignmentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

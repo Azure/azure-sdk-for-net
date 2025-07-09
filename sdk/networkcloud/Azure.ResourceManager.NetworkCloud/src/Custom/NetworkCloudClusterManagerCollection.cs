@@ -35,10 +35,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>ClusterManagers_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
         /// </item>
@@ -51,9 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudClusterManagerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, CancellationToken cancellationToken)
-        {
-            return await CreateOrUpdateAsync(waitUntil, clusterManagerName, data, null, null, cancellationToken).ConfigureAwait(false);
-        }
+            => await CreateOrUpdateAsync(waitUntil, clusterManagerName, data, null, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Create a new cluster manager or update properties of the cluster manager if it exists.
@@ -65,10 +59,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterManagers_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,8 +73,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudClusterManagerResource> CreateOrUpdate(WaitUntil waitUntil, string clusterManagerName, NetworkCloudClusterManagerData data, CancellationToken cancellationToken)
-        {
-            return CreateOrUpdate(waitUntil, clusterManagerName, data, null, null, cancellationToken);
-        }
+            => CreateOrUpdate(waitUntil, clusterManagerName, data, null, null, cancellationToken);
     }
 }

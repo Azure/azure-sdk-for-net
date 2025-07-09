@@ -36,6 +36,16 @@ public partial class ElasticPoolPerDatabaseSettings : ProvisionableConstruct
     private BicepValue<double>? _maxCapacity;
 
     /// <summary>
+    /// Auto Pause Delay for per database within pool.
+    /// </summary>
+    public BicepValue<int> AutoPauseDelay 
+    {
+        get { Initialize(); return _autoPauseDelay!; }
+        set { Initialize(); _autoPauseDelay!.Assign(value); }
+    }
+    private BicepValue<int>? _autoPauseDelay;
+
+    /// <summary>
     /// Creates a new ElasticPoolPerDatabaseSettings.
     /// </summary>
     public ElasticPoolPerDatabaseSettings()
@@ -51,5 +61,6 @@ public partial class ElasticPoolPerDatabaseSettings : ProvisionableConstruct
         base.DefineProvisionableProperties();
         _minCapacity = DefineProperty<double>("MinCapacity", ["minCapacity"]);
         _maxCapacity = DefineProperty<double>("MaxCapacity", ["maxCapacity"]);
+        _autoPauseDelay = DefineProperty<int>("AutoPauseDelay", ["autoPauseDelay"]);
     }
 }

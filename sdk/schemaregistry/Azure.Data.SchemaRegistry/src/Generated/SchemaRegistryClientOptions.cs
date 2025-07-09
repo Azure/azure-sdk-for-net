@@ -5,12 +5,11 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry
 {
-    /// <summary> Client options for SchemaRegistryClient. </summary>
+    /// <summary> Client options for <see cref="SchemaRegistryClient"/>. </summary>
     public partial class SchemaRegistryClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_07_01;
@@ -18,12 +17,12 @@ namespace Azure.Data.SchemaRegistry
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2021-10". </summary>
+            /// <summary> Azure Schema Registry 2021-10 Version. </summary>
             V2021_10 = 1,
-            /// <summary> Service version "2022-10". </summary>
+            /// <summary> Azure Schema Registry 2022-10 Version. </summary>
             V2022_10 = 2,
-            /// <summary> Service version "2023-07-01". </summary>
-            V2023_07_01 = 3,
+            /// <summary> Azure Schema Registry 2023-07-01 Version. This is the default version. </summary>
+            V2023_07_01 = 3
         }
     }
 }

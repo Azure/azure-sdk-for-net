@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("replicationId"u8);
                 writer.WriteStringValue(ReplicationId);
             }
-            if (Optional.IsDefined(EndpointType))
+            if (options.Format != "W" && Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("endpointType"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());

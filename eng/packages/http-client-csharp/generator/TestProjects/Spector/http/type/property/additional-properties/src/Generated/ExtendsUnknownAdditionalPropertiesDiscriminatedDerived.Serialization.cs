@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
@@ -34,10 +32,5 @@ namespace _Type.Property.AdditionalProperties
         protected override ExtendsUnknownAdditionalPropertiesDiscriminated PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<ExtendsUnknownAdditionalPropertiesDiscriminatedDerived>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="extendsUnknownAdditionalPropertiesDiscriminatedDerived"> The <see cref="ExtendsUnknownAdditionalPropertiesDiscriminatedDerived"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ExtendsUnknownAdditionalPropertiesDiscriminatedDerived extendsUnknownAdditionalPropertiesDiscriminatedDerived) => throw null;
-
-        public static explicit operator ExtendsUnknownAdditionalPropertiesDiscriminatedDerived(Response result) => throw null;
     }
 }

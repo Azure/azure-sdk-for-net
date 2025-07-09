@@ -39,17 +39,10 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Value))
+            if (Optional.IsDefined(Innererror))
             {
-                writer.WritePropertyName("value"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WritePropertyName("innererror"u8);
+                writer.WriteObjectValue(Innererror, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,7 +82,7 @@ namespace Azure.Analytics.Defender.Easm
                 return null;
             }
             string code = default;
-            BinaryData value = default;
+            InnerError innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,13 +92,13 @@ namespace Azure.Analytics.Defender.Easm
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"u8))
+                if (property.NameEquals("innererror"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    value = BinaryData.FromString(property.Value.GetRawText());
+                    innererror = DeserializeInnerError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +107,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InnerError(code, value, serializedAdditionalRawData);
+            return new InnerError(code, innererror, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InnerError>.Write(ModelReaderWriterOptions options)

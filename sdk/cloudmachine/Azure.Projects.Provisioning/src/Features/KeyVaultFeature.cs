@@ -19,7 +19,7 @@ public class KeyVaultFeature : AzureProjectFeature
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         // Add a KeyVault to the infrastructure.
-        KeyVaultService kv = new("keyVault")
+        KeyVaultService kv = new("keyVault", KeyVaultService.ResourceVersions.V2023_07_01)
         {
             Name = infrastructure.ProjectId,
             Properties =

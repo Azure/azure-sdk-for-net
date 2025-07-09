@@ -88,9 +88,7 @@ public partial class RampUpRule : ProvisionableConstruct
 
     /// <summary>
     /// Custom decision algorithm can be provided in TiPCallback site extension
-    /// which URL can be specified. See TiPCallback site extension for the
-    /// scaffold and contracts.
-    /// https://www.siteextensions.net/packages/TiPCallback/
+    /// which URL can be specified.
     /// </summary>
     public BicepValue<Uri> ChangeDecisionCallbackUri 
     {

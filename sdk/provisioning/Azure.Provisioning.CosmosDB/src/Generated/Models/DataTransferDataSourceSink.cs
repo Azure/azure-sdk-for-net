@@ -19,7 +19,8 @@ namespace Azure.Provisioning.CosmosDB;
 /// Azure.ResourceManager.CosmosDB.Models.AzureBlobDataTransferDataSourceSink,
 /// Azure.ResourceManager.CosmosDB.Models.BaseCosmosDataTransferDataSourceSink,
 /// Azure.ResourceManager.CosmosDB.Models.CosmosCassandraDataTransferDataSourceSink,
-/// Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink
+/// Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink,
+/// Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink
 /// and
 /// Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink.
 /// </summary>

@@ -52,18 +52,18 @@ namespace Azure.Compute.Batch
 
         /// <summary> Initializes a new instance of <see cref="RecentBatchJob"/>. </summary>
         /// <param name="id"> The ID of the Job. </param>
-        /// <param name="url"> The URL of the Job. </param>
+        /// <param name="uri"> The URL of the Job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecentBatchJob(string id, string url, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecentBatchJob(string id, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
-            Url = url;
+            Uri = uri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of the Job. </summary>
         public string Id { get; }
         /// <summary> The URL of the Job. </summary>
-        public string Url { get; }
+        public Uri Uri { get; }
     }
 }

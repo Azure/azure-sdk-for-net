@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateCloudsGet()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_Get.json
-            // this example is just showing the usage of "PrivateClouds_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/PrivateClouds_Get.json
+            // this example is just showing the usage of "PrivateCloud_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateCloudsGetStretched()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_Get_Stretched.json
-            // this example is just showing the usage of "PrivateClouds_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/PrivateClouds_Get_Stretched.json
+            // this example is just showing the usage of "PrivateCloud_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_PrivateCloudsDelete()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_Delete.json
-            // this example is just showing the usage of "PrivateClouds_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/PrivateClouds_Delete.json
+            // this example is just showing the usage of "PrivateCloud_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PrivateCloudsUpdate()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_Update.json
-            // this example is just showing the usage of "PrivateClouds_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/PrivateClouds_Update.json
+            // this example is just showing the usage of "PrivateCloud_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -127,20 +127,6 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudPatch patch = new AvsPrivateCloudPatch
             {
                 Identity = new ManagedServiceIdentity("None"),
-                ManagementCluster = new AvsManagementCluster
-                {
-                    ClusterSize = 4,
-                },
-                Encryption = new CustomerManagedEncryption
-                {
-                    Status = AvsEncryptionState.Enabled,
-                    KeyVaultProperties = new AvsEncryptionKeyVaultProperties
-                    {
-                        KeyName = "keyname1",
-                        KeyVersion = "ver1.0",
-                        KeyVaultUri = new Uri("https://keyvault1-kmip-kvault.vault.azure.net/"),
-                    },
-                },
             };
             ArmOperation<AvsPrivateCloudResource> lro = await avsPrivateCloud.UpdateAsync(WaitUntil.Completed, patch);
             AvsPrivateCloudResource result = lro.Value;
@@ -156,8 +142,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PrivateCloudsUpdateStretched()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_Update_Stretched.json
-            // this example is just showing the usage of "PrivateClouds_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/PrivateClouds_Update_Stretched.json
+            // this example is just showing the usage of "PrivateCloud_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -173,13 +159,7 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
             // invoke the operation
-            AvsPrivateCloudPatch patch = new AvsPrivateCloudPatch
-            {
-                ManagementCluster = new AvsManagementCluster
-                {
-                    ClusterSize = 4,
-                },
-            };
+            AvsPrivateCloudPatch patch = new AvsPrivateCloudPatch();
             ArmOperation<AvsPrivateCloudResource> lro = await avsPrivateCloud.UpdateAsync(WaitUntil.Completed, patch);
             AvsPrivateCloudResource result = lro.Value;
 
@@ -192,10 +172,10 @@ namespace Azure.ResourceManager.Avs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAdminCredentials_PrivateCloudsListAdminCredentials()
+        public async Task RotateVCenterPassword_PrivateCloudsRotateVcenterPassword()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_ListAdminCredentials.json
-            // this example is just showing the usage of "PrivateClouds_ListAdminCredentials" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/PrivateClouds_RotateVcenterPassword.json
+            // this example is just showing the usage of "PrivateClouds_RotateVCenterPassword" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -211,16 +191,16 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
             // invoke the operation
-            AdminCredentials result = await avsPrivateCloud.GetAdminCredentialsAsync();
+            await avsPrivateCloud.RotateVCenterPasswordAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task RotateNsxtPassword_PrivateCloudsRotateNsxtPassword()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_RotateNsxtPassword.json
+            // Generated from example definition: 2024-09-01/PrivateClouds_RotateNsxtPassword.json
             // this example is just showing the usage of "PrivateClouds_RotateNsxtPassword" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -244,10 +224,10 @@ namespace Azure.ResourceManager.Avs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task RotateVCenterPassword_PrivateCloudsRotateVcenterPassword()
+        public async Task GetAdminCredentials_PrivateCloudsListAdminCredentials()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_RotateVcenterPassword.json
-            // this example is just showing the usage of "PrivateClouds_RotateVcenterPassword" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/PrivateClouds_ListAdminCredentials.json
+            // this example is just showing the usage of "PrivateClouds_ListAdminCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -263,9 +243,9 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
             // invoke the operation
-            await avsPrivateCloud.RotateVCenterPasswordAsync(WaitUntil.Completed);
+            AdminCredentials result = await avsPrivateCloud.GetAdminCredentialsAsync();
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

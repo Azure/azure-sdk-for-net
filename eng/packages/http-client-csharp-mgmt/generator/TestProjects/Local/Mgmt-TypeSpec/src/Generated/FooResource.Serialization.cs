@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
 {

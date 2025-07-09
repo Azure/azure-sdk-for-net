@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Grafana.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelListResponse"/>. </summary>
-        internal ManagedPrivateEndpointModelListResponse()
+        /// <param name="value"> The ManagedPrivateEndpointModel items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ManagedPrivateEndpointModelListResponse(IEnumerable<ManagedPrivateEndpointModelData> value)
         {
-            Value = new ChangeTrackingList<ManagedPrivateEndpointModelData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelListResponse"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"></param>
+        /// <param name="value"> The ManagedPrivateEndpointModel items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedPrivateEndpointModelListResponse(IReadOnlyList<ManagedPrivateEndpointModelData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedPrivateEndpointModelListResponse(IReadOnlyList<ManagedPrivateEndpointModelData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelListResponse"/> for deserialization. </summary>
+        internal ManagedPrivateEndpointModelListResponse()
+        {
+        }
+
+        /// <summary> The ManagedPrivateEndpointModel items on this page. </summary>
         public IReadOnlyList<ManagedPrivateEndpointModelData> Value { get; }
-        /// <summary> Gets the next link. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
-            StorageTaskProperties properties = default;
+            StorageTaskUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                     {
                         continue;
                     }
-                    properties = StorageTaskProperties.DeserializeStorageTaskProperties(property.Value, options);
+                    properties = StorageTaskUpdateProperties.DeserializeStorageTaskUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

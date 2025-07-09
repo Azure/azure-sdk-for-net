@@ -1,7 +1,7 @@
 {
   "matrix": {
     "Agent": {
-      "ubuntu-20.04": {
+      "ubuntu-24.04": {
           "OSVmImage": "env:LINUXVMIMAGE",
           "Pool": "env:LINUXPOOL"
       },

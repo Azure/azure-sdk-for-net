@@ -59,7 +59,9 @@ public partial class AppServiceCertificate : ProvisionableResource
     private BicepValue<string>? _keyVaultSecretName;
 
     /// <summary>
-    /// Kind of resource.
+    /// Kind of resource. If the resource is an app, you can refer to
+    /// https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference
+    /// for details supported values for kind.
     /// </summary>
     public BicepValue<string> Kind 
     {
@@ -126,7 +128,7 @@ public partial class AppServiceCertificate : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the AppServiceCertificate.</param>
     public AppServiceCertificate(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.CertificateRegistration/certificateOrders/certificates", resourceVersion ?? "2024-04-01")
+        : base(bicepIdentifier, "Microsoft.CertificateRegistration/certificateOrders/certificates", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -152,6 +154,11 @@ public partial class AppServiceCertificate : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
         /// <summary>
         /// 2024-04-01.
         /// </summary>

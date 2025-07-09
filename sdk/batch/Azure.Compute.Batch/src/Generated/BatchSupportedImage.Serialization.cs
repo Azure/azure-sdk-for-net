@@ -95,7 +95,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string nodeAgentSKUId = default;
-            ImageReference imageReference = default;
+            BatchVmImageReference imageReference = default;
             OSType osType = default;
             IReadOnlyList<string> capabilities = default;
             DateTimeOffset? batchSupportEndOfLife = default;
@@ -111,7 +111,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = ImageReference.DeserializeImageReference(property.Value, options);
+                    imageReference = BatchVmImageReference.DeserializeBatchVmImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osType"u8))

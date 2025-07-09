@@ -63,16 +63,6 @@ public partial class TopicSpacesConfiguration : ProvisionableConstruct
     private RoutingEnrichments? _routingEnrichments;
 
     /// <summary>
-    /// Client authentication settings for topic spaces configuration.
-    /// </summary>
-    public ClientAuthenticationSettings ClientAuthentication 
-    {
-        get { Initialize(); return _clientAuthentication!; }
-        set { Initialize(); AssignOrReplace(ref _clientAuthentication, value); }
-    }
-    private ClientAuthenticationSettings? _clientAuthentication;
-
-    /// <summary>
     /// The maximum session expiry in hours. The property default value is 1
     /// hour.             Min allowed value is 1 hour and max allowed value is
     /// 8 hours.
@@ -133,7 +123,6 @@ public partial class TopicSpacesConfiguration : ProvisionableConstruct
         _routeTopicResourceId = DefineProperty<string>("RouteTopicResourceId", ["routeTopicResourceId"]);
         _hostname = DefineProperty<string>("Hostname", ["hostname"], isOutput: true);
         _routingEnrichments = DefineModelProperty<RoutingEnrichments>("RoutingEnrichments", ["routingEnrichments"]);
-        _clientAuthentication = DefineModelProperty<ClientAuthenticationSettings>("ClientAuthentication", ["clientAuthentication"]);
         _maximumSessionExpiryInHours = DefineProperty<int>("MaximumSessionExpiryInHours", ["maximumSessionExpiryInHours"]);
         _maximumClientSessionsPerAuthenticationName = DefineProperty<int>("MaximumClientSessionsPerAuthenticationName", ["maximumClientSessionsPerAuthenticationName"]);
         _routingIdentityInfo = DefineModelProperty<RoutingIdentityInfo>("RoutingIdentityInfo", ["routingIdentityInfo"]);

@@ -22,7 +22,7 @@ public partial class StorageAccountManagementPolicy : ProvisionableResource
 
     /// <summary>
     /// The Storage Account ManagementPolicies Rules. See more details in:
-    /// https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.
+    /// https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview.
     /// </summary>
     public BicepList<ManagementPolicyRule> Rules 
     {

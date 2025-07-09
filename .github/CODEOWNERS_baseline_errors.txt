@@ -1,6 +1,7 @@
 khmic5 is not a public member of Azure.
 schaabs is not a public member of Azure.
 lirenhe is not a public member of Azure.
+mconnew is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 adamedx is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 Azure/aks-pm is an invalid team. Ensure the team exists and has write permissions.
 liadtal is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -32,7 +33,6 @@ orhasban is not a public member of Azure.
 zoharHenMicrosoft is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 sagivf is not a public member of Azure.
 Aviv-Yaniv is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-sijuman is not a public member of Azure.
 sarathys is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 rakku-ms is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 rpsqrd is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -55,7 +55,6 @@ SteveMSFT is an invalid user. Ensure the user exists, is public member of Azure 
 msyache is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 longli0 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 ShaoAnLin is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-lulululululu is not a public member of Azure.
 ctstone is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 vkurpad is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 conhua is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -136,7 +135,6 @@ a-t-mason is an invalid user. Ensure the user exists, is public member of Azure 
 ganzee is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 shawnxzq is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 lmy269 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-sumantmehtams is not a public member of Azure.
 idear1203 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 rgreenMSFT is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 raedJarrar is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -191,7 +189,6 @@ ajlam is an invalid user. Ensure the user exists, is public member of Azure and 
 ambhatna is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 kummanish is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 prbansa is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-akucer is not a public member of Azure.
 naiteeks is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 bennage is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 giakas is not a public member of Azure.
@@ -210,7 +207,6 @@ ischrei is an invalid user. Ensure the user exists, is public member of Azure an
 danhadari is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 cijothomas is not a public member of Azure.
 rajkumar-rangaraj is not a public member of Azure.
-TimothyMothra is not a public member of Azure.
 crtreasu is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 rgarcia is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 aznetsuppgithub is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.

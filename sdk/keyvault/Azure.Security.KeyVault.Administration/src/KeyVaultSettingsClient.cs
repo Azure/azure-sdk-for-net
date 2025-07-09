@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
@@ -173,7 +174,7 @@ namespace Azure.Security.KeyVault.Administration
 
                 KeyVaultSetting updatedSetting = default;
                 using var document = JsonDocument.Parse(response.ContentStream, default);
-                updatedSetting = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
+                updatedSetting = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement, ModelSerializationExtensions.WireOptions);
 
                 return Response.FromValue(updatedSetting, response);
             }
@@ -203,7 +204,7 @@ namespace Azure.Security.KeyVault.Administration
 
                 KeyVaultSetting updatedSetting = default;
                 using var document = await JsonDocument.ParseAsync(response.ContentStream, default).ConfigureAwait(false);
-                updatedSetting = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
+                updatedSetting = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement, ModelSerializationExtensions.WireOptions);
 
                 return Response.FromValue(updatedSetting, response);
             }

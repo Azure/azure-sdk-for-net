@@ -14,5 +14,10 @@ namespace Azure.Generator.Management.Extensions
             var methods = clientProvider.GetMethodCollectionByOperation(operation);
             return isAsync ? methods[^1] : methods[^2];
         }
+
+        public static MethodProvider GetRequestMethodByOperation(this ClientProvider clientProvider, InputOperation operation)
+        {
+            return clientProvider.RestClient.GetCreateRequestMethod(operation);
+        }
     }
 }

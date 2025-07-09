@@ -16,34 +16,37 @@ public sealed partial class FileBinaryContent : BinaryContent
     /// Creates an instance of <see cref="FileBinaryContent"/>.
     /// </summary>
     /// <param name="data"></param>
-    public FileBinaryContent(BinaryData data)
+    /// <param name="contentType"></param>
+    public FileBinaryContent(BinaryData data, string? contentType = default)
     {
         Argument.AssertNotNull(data, nameof(data));
+
         _content = Create(data);
+        MediaType = contentType ?? "application/octet-stream";
     }
 
     /// <summary>
     /// Creates an instance of <see cref="FileBinaryContent"/>.
     /// </summary>
-    public FileBinaryContent(Stream stream)
+    public FileBinaryContent(Stream stream, string? contentType = default)
     {
         Argument.AssertNotNull(stream, nameof(stream));
+
         _content = Create(stream);
+        MediaType = contentType ?? "application/octet-stream";
     }
 
     /// <summary>
     /// Creates an instance of <see cref="FileBinaryContent"/>.
     /// </summary>
-    public FileBinaryContent(string path)
+    public FileBinaryContent(string path, string? contentType = default)
     {
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
         FileStream fileStream = File.OpenRead(path);
         _content = Create(fileStream);
+        MediaType = contentType ?? "application/octet-stream";
     }
-
-    /// <inheritdoc/>
-    public override string? ContentType { get; set; } = "application/octet-stream";
 
     /// <summary>
     /// The name of the file to be used when uploading this content.

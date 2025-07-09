@@ -53,14 +53,14 @@ namespace Azure.Compute.Batch
             CertificateReferences = new ChangeTrackingList<BatchCertificateReference>();
             ApplicationPackageReferences = new ChangeTrackingList<BatchApplicationPackageReference>();
             UserAccounts = new ChangeTrackingList<UserAccount>();
-            Metadata = new ChangeTrackingList<MetadataItem>();
+            Metadata = new ChangeTrackingList<BatchMetadataItem>();
             MountConfiguration = new ChangeTrackingList<MountConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchPool"/>. </summary>
         /// <param name="id"> A string that uniquely identifies the Pool within the Account. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case). </param>
         /// <param name="displayName"> The display name for the Pool. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
-        /// <param name="url"> The URL of the Pool. </param>
+        /// <param name="uri"> The URL of the Pool. </param>
         /// <param name="eTag"> The ETag of the Pool. This is an opaque string. You can use it to detect whether the Pool has changed between requests. In particular, you can be pass the ETag when updating a Pool to specify that your changes should take effect only if nobody else has modified the Pool in the meantime. </param>
         /// <param name="lastModified"> The last modified time of the Pool. This is the last time at which the Pool level data, such as the targetDedicatedNodes or enableAutoscale settings, changed. It does not factor in node-level changes such as a Compute Node changing state. </param>
         /// <param name="creationTime"> The creation time of the Pool. </param>
@@ -95,18 +95,18 @@ namespace Azure.Compute.Batch
         /// <param name="taskSchedulingPolicy"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
         /// <param name="userAccounts"> The list of user Accounts to be created on each Compute Node in the Pool. </param>
         /// <param name="metadata"> A list of name-value pairs associated with the Pool as metadata. </param>
-        /// <param name="stats"> Utilization and resource usage statistics for the entire lifetime of the Pool. This property is populated only if the BatchPool was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
+        /// <param name="poolStatistics"> Utilization and resource usage statistics for the entire lifetime of the Pool. This property is populated only if the BatchPool was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </param>
         /// <param name="mountConfiguration"> A list of file systems to mount on each node in the pool. This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
         /// <param name="identity"> The identity of the Batch pool, if configured. The list of user identities associated with the Batch pool. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <param name="targetNodeCommunicationMode"> The desired node communication mode for the pool. If omitted, the default value is Default. </param>
         /// <param name="currentNodeCommunicationMode"> The current state of the pool communication mode. </param>
         /// <param name="upgradePolicy"> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPool(string id, string displayName, string url, string eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, BatchPoolState? state, DateTimeOffset? stateTransitionTime, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionTime, string vmSize, VirtualMachineConfiguration virtualMachineConfiguration, TimeSpan? resizeTimeout, IReadOnlyList<ResizeError> resizeErrors, IReadOnlyDictionary<string, string> resourceTags, int? currentDedicatedNodes, int? currentLowPriorityNodes, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, AutoScaleRun autoScaleRun, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, BatchStartTask startTask, IReadOnlyList<BatchCertificateReference> certificateReferences, IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, IReadOnlyList<UserAccount> userAccounts, IReadOnlyList<MetadataItem> metadata, BatchPoolStatistics stats, IReadOnlyList<MountConfiguration> mountConfiguration, BatchPoolIdentity identity, BatchNodeCommunicationMode? targetNodeCommunicationMode, BatchNodeCommunicationMode? currentNodeCommunicationMode, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchPool(string id, string displayName, Uri uri, ETag? eTag, DateTimeOffset? lastModified, DateTimeOffset? creationTime, BatchPoolState? state, DateTimeOffset? stateTransitionTime, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionTime, string vmSize, VirtualMachineConfiguration virtualMachineConfiguration, TimeSpan? resizeTimeout, IReadOnlyList<ResizeError> resizeErrors, IReadOnlyDictionary<string, string> resourceTags, int? currentDedicatedNodes, int? currentLowPriorityNodes, int? targetDedicatedNodes, int? targetLowPriorityNodes, bool? enableAutoScale, string autoScaleFormula, TimeSpan? autoScaleEvaluationInterval, AutoScaleRun autoScaleRun, bool? enableInterNodeCommunication, NetworkConfiguration networkConfiguration, BatchStartTask startTask, IReadOnlyList<BatchCertificateReference> certificateReferences, IReadOnlyList<BatchApplicationPackageReference> applicationPackageReferences, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, IReadOnlyList<UserAccount> userAccounts, IReadOnlyList<BatchMetadataItem> metadata, BatchPoolStatistics poolStatistics, IReadOnlyList<MountConfiguration> mountConfiguration, BatchPoolIdentity identity, BatchNodeCommunicationMode? targetNodeCommunicationMode, BatchNodeCommunicationMode? currentNodeCommunicationMode, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
-            Url = url;
+            Uri = uri;
             ETag = eTag;
             LastModified = lastModified;
             CreationTime = creationTime;
@@ -136,7 +136,7 @@ namespace Azure.Compute.Batch
             TaskSchedulingPolicy = taskSchedulingPolicy;
             UserAccounts = userAccounts;
             Metadata = metadata;
-            Stats = stats;
+            PoolStatistics = poolStatistics;
             MountConfiguration = mountConfiguration;
             Identity = identity;
             TargetNodeCommunicationMode = targetNodeCommunicationMode;
@@ -150,9 +150,9 @@ namespace Azure.Compute.Batch
         /// <summary> The display name for the Pool. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </summary>
         public string DisplayName { get; }
         /// <summary> The URL of the Pool. </summary>
-        public string Url { get; }
+        public Uri Uri { get; }
         /// <summary> The ETag of the Pool. This is an opaque string. You can use it to detect whether the Pool has changed between requests. In particular, you can be pass the ETag when updating a Pool to specify that your changes should take effect only if nobody else has modified the Pool in the meantime. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
         /// <summary> The last modified time of the Pool. This is the last time at which the Pool level data, such as the targetDedicatedNodes or enableAutoscale settings, changed. It does not factor in node-level changes such as a Compute Node changing state. </summary>
         public DateTimeOffset? LastModified { get; }
         /// <summary> The creation time of the Pool. </summary>
@@ -213,9 +213,9 @@ namespace Azure.Compute.Batch
         /// <summary> The list of user Accounts to be created on each Compute Node in the Pool. </summary>
         public IReadOnlyList<UserAccount> UserAccounts { get; }
         /// <summary> A list of name-value pairs associated with the Pool as metadata. </summary>
-        public IReadOnlyList<MetadataItem> Metadata { get; }
+        public IReadOnlyList<BatchMetadataItem> Metadata { get; }
         /// <summary> Utilization and resource usage statistics for the entire lifetime of the Pool. This property is populated only if the BatchPool was retrieved with an expand clause including the 'stats' attribute; otherwise it is null. The statistics may not be immediately available. The Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes. </summary>
-        public BatchPoolStatistics Stats { get; }
+        public BatchPoolStatistics PoolStatistics { get; }
         /// <summary> A list of file systems to mount on each node in the pool. This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </summary>
         public IReadOnlyList<MountConfiguration> MountConfiguration { get; }
         /// <summary> The identity of the Batch pool, if configured. The list of user identities associated with the Batch pool. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>

@@ -4,12 +4,9 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 
@@ -35,10 +32,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>BareMetalMachines_Update</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
         /// </item>
@@ -49,9 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, CancellationToken cancellationToken)
-        {
-            return await UpdateAsync(waitUntil, patch, null, null, cancellationToken).ConfigureAwait(false);
-        }
+            => await UpdateAsync(waitUntil, patch, null, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Patch properties of the provided bare metal machine, or update tags associated with the bare metal machine. Properties and tag updates can be done independently.
@@ -65,10 +56,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>BareMetalMachines_Update</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
         /// </item>
@@ -79,8 +66,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudBareMetalMachineResource> Update(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, CancellationToken cancellationToken)
-        {
-            return Update(waitUntil, patch, null, null, cancellationToken);
-        }
+            => Update(waitUntil, patch, null, null, cancellationToken);
     }
 }

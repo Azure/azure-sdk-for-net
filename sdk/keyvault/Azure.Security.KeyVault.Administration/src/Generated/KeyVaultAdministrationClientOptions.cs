@@ -5,14 +5,13 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> Client options for Azure.Security.KeyVault.Administration library clients. </summary>
+    /// <summary> Client options for <see cref="KeyVaultAccessControlClient"/>. </summary>
     public partial class KeyVaultAdministrationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V7_6_Preview_2;
+        private const ServiceVersion LatestVersion = ServiceVersion.V7_6;
     }
 }

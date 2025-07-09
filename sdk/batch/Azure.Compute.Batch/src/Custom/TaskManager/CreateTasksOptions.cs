@@ -13,13 +13,13 @@ namespace Azure.Compute.Batch
     {
         private int _maxDegreeOfParallelism;
         private int _maxTimeBetweenCallsInSeconds;
-        private ICreateTaskResultHandler _createTaskResultHandler;
+        private TaskResultHandler _createTaskResultHandler;
         private bool _returnBatchTaskAddResults;
 
         /// <summary>
         /// The handler which processes the results of the AddTaskCollection request.  If this is null, the default is used.
         /// </summary>
-        public ICreateTaskResultHandler CreateTaskResultHandler
+        public TaskResultHandler CreateTaskResultHandler
         {
             get { return this._createTaskResultHandler; }
             set { this._createTaskResultHandler = value; }
@@ -70,7 +70,7 @@ namespace Azure.Compute.Batch
         /// BatchTaskAddResult from the CreateTasks and CreateTasksAsync methods.
         /// Default is false.
         /// </summary>
-        public bool ReturnBatchTaskAddResults
+        public bool ReturnBatchTaskCreateResults
         {
             get { return this._returnBatchTaskAddResults; }
             set { this._returnBatchTaskAddResults = value; }
@@ -81,7 +81,7 @@ namespace Azure.Compute.Batch
         /// </summary>
         public CreateTasksOptions(int maxDegreeOfParallelism = 1,
             int maxTimeBetweenCallsInSeconds = 30,
-            ICreateTaskResultHandler createTaskResultHandler = null,
+            TaskResultHandler createTaskResultHandler = null,
             bool returnBatchTaskAddResults = false)
         {
             this.MaxDegreeOfParallelism = maxDegreeOfParallelism;
@@ -94,7 +94,7 @@ namespace Azure.Compute.Batch
             {
                 this.CreateTaskResultHandler = new DefaultCreateTaskResultHandler();
             }
-            this.ReturnBatchTaskAddResults = returnBatchTaskAddResults;
+            this.ReturnBatchTaskCreateResults = returnBatchTaskAddResults;
         }
     }
 }

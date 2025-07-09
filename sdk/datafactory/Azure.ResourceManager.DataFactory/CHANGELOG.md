@@ -1,6 +1,6 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.9.0 (2025-06-13)
+
+### Features Added
+
+- Added property to Spark V2 linked service definition.
+- Added property to Hive V2 linked service definition.
+- Added Databricks Activity to dataFactory pipeline.
+
+### Bugs Fixed
+- Fixed ExpressionV2 for value type from string to object.
 
 ## 1.8.0 (2025-05-09)
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 
 namespace System.ClientModel.Internal;
@@ -29,7 +30,7 @@ internal partial class ModelWriter<T>
     public UnsafeBufferSequence.Reader ExtractReader()
     {
         using UnsafeBufferSequence sequenceWriter = new UnsafeBufferSequence();
-        using var jsonWriter = new Utf8JsonWriter(sequenceWriter);
+        using var jsonWriter = new Utf8JsonWriter(sequenceWriter, new JsonWriterOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
         _model.Write(jsonWriter, _options);
         jsonWriter.Flush();
         return sequenceWriter.ExtractReader();

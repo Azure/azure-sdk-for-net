@@ -25,22 +25,22 @@ namespace Azure.ResourceManager.Avs.Models
 
             VmMembers = vmMembers.ToList();
             AffinityType = affinityType;
-            PolicyType = PlacementPolicyType.VmVm;
+            Type = PlacementPolicyType.VmVm;
         }
 
         /// <summary> Initializes a new instance of <see cref="VmPlacementPolicyProperties"/>. </summary>
-        /// <param name="policyType"> Placement Policy type. </param>
+        /// <param name="type"> Placement Policy type. </param>
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmMembers"> Virtual machine members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
-        internal VmPlacementPolicyProperties(PlacementPolicyType policyType, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ResourceIdentifier> vmMembers, AvsPlacementPolicyAffinityType affinityType) : base(policyType, state, displayName, provisioningState, serializedAdditionalRawData)
+        internal VmPlacementPolicyProperties(PlacementPolicyType type, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ResourceIdentifier> vmMembers, AvsPlacementPolicyAffinityType affinityType) : base(type, state, displayName, provisioningState, serializedAdditionalRawData)
         {
             VmMembers = vmMembers;
             AffinityType = affinityType;
-            PolicyType = policyType;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="VmPlacementPolicyProperties"/> for deserialization. </summary>

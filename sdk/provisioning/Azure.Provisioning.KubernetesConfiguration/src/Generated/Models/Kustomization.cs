@@ -117,12 +117,12 @@ public partial class Kustomization : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _path = DefineProperty<string>("Path", ["path"]);
-        _dependsOn = DefineListProperty<string>("DependsOn", ["dependsOn"]);
-        _timeoutInSeconds = DefineProperty<long>("TimeoutInSeconds", ["timeoutInSeconds"]);
-        _syncIntervalInSeconds = DefineProperty<long>("SyncIntervalInSeconds", ["syncIntervalInSeconds"]);
-        _retryIntervalInSeconds = DefineProperty<long>("RetryIntervalInSeconds", ["retryIntervalInSeconds"]);
-        _prune = DefineProperty<bool>("Prune", ["prune"]);
-        _force = DefineProperty<bool>("Force", ["force"]);
+        _path = DefineProperty<string>("Path", ["Path"]);
+        _dependsOn = DefineListProperty<string>("DependsOn", ["DependsOn"]);
+        _timeoutInSeconds = DefineProperty<long>("TimeoutInSeconds", ["TimeoutInSeconds"]);
+        _syncIntervalInSeconds = DefineProperty<long>("SyncIntervalInSeconds", ["SyncIntervalInSeconds"]);
+        _retryIntervalInSeconds = DefineProperty<long>("RetryIntervalInSeconds", ["RetryIntervalInSeconds"]);
+        _prune = DefineProperty<bool>("Prune", ["Prune"]);
+        _force = DefineProperty<bool>("Force", ["Force"]);
     }
 }

@@ -6,8 +6,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.IotOp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.IotOperations.Tests", "tests\Azure.ResourceManager.IotOperations.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.IotOperations.Samples", "samples\Azure.ResourceManager.IotOperations.Samples.csproj", "{2F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

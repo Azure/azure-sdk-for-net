@@ -17,6 +17,17 @@ namespace Azure.Provisioning.AppContainers;
 public partial class ContainerAppQueueScaleRule : ProvisionableConstruct
 {
     /// <summary>
+    /// Storage account name. required if using managed identity to
+    /// authenticate.
+    /// </summary>
+    public BicepValue<string> AccountName 
+    {
+        get { Initialize(); return _accountName!; }
+        set { Initialize(); _accountName!.Assign(value); }
+    }
+    private BicepValue<string>? _accountName;
+
+    /// <summary>
     /// Queue name.
     /// </summary>
     public BicepValue<string> QueueName 
@@ -47,6 +58,17 @@ public partial class ContainerAppQueueScaleRule : ProvisionableConstruct
     private BicepList<ContainerAppScaleRuleAuth>? _auth;
 
     /// <summary>
+    /// The resource ID of a user-assigned managed identity that is assigned to
+    /// the Container App, or &apos;system&apos; for system-assigned identity.
+    /// </summary>
+    public BicepValue<string> Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); _identity!.Assign(value); }
+    }
+    private BicepValue<string>? _identity;
+
+    /// <summary>
     /// Creates a new ContainerAppQueueScaleRule.
     /// </summary>
     public ContainerAppQueueScaleRule()
@@ -59,8 +81,10 @@ public partial class ContainerAppQueueScaleRule : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _accountName = DefineProperty<string>("AccountName", ["accountName"]);
         _queueName = DefineProperty<string>("QueueName", ["queueName"]);
         _queueLength = DefineProperty<int>("QueueLength", ["queueLength"]);
         _auth = DefineListProperty<ContainerAppScaleRuleAuth>("Auth", ["auth"]);
+        _identity = DefineProperty<string>("Identity", ["identity"]);
     }
 }

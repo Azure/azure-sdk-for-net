@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.Sql;
 
 /// <summary>
-/// The storage redundancy type of the backup.
+/// The storage account type used to store backups for this database.
 /// </summary>
 public enum SqlBackupStorageRedundancy
 {

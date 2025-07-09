@@ -38,10 +38,10 @@ namespace Azure.Compute.Batch
             writer.WriteStringValue(Thumbprint);
             writer.WritePropertyName("thumbprintAlgorithm"u8);
             writer.WriteStringValue(ThumbprintAlgorithm);
-            if (options.Format != "W" && Optional.IsDefined(Url))
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -74,7 +74,7 @@ namespace Azure.Compute.Batch
                 writer.WriteObjectValue(DeleteCertificateError, options);
             }
             writer.WritePropertyName("data"u8);
-            writer.WriteStringValue(Data);
+            writer.WriteBase64StringValue(Data.ToArray(), "D");
             if (Optional.IsDefined(CertificateFormat))
             {
                 writer.WritePropertyName("certificateFormat"u8);
@@ -124,14 +124,14 @@ namespace Azure.Compute.Batch
             }
             string thumbprint = default;
             string thumbprintAlgorithm = default;
-            string url = default;
+            Uri url = default;
             BatchCertificateState? state = default;
             DateTimeOffset? stateTransitionTime = default;
             BatchCertificateState? previousState = default;
             DateTimeOffset? previousStateTransitionTime = default;
             string publicData = default;
-            DeleteBatchCertificateError deleteCertificateError = default;
-            string data = default;
+            BatchCertificateDeleteError deleteCertificateError = default;
+            BinaryData data = default;
             BatchCertificateFormat? certificateFormat = default;
             string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -150,7 +150,11 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -200,12 +204,12 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    deleteCertificateError = DeleteBatchCertificateError.DeserializeDeleteBatchCertificateError(property.Value, options);
+                    deleteCertificateError = BatchCertificateDeleteError.DeserializeBatchCertificateDeleteError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    data = property.Value.GetString();
+                    data = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (property.NameEquals("certificateFormat"u8))

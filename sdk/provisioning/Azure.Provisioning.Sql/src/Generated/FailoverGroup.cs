@@ -70,6 +70,16 @@ public partial class FailoverGroup : ProvisionableResource
     private FailoverGroupReadWriteEndpoint? _readWriteEndpoint;
 
     /// <summary>
+    /// Databases secondary type on partner server.
+    /// </summary>
+    public BicepValue<FailoverGroupDatabasesSecondaryType> SecondaryType 
+    {
+        get { Initialize(); return _secondaryType!; }
+        set { Initialize(); _secondaryType!.Assign(value); }
+    }
+    private BicepValue<FailoverGroupDatabasesSecondaryType>? _secondaryType;
+
+    /// <summary>
     /// Resource tags.
     /// </summary>
     public BicepDictionary<string> Tags 
@@ -145,7 +155,7 @@ public partial class FailoverGroup : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the FailoverGroup.</param>
     public FailoverGroup(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/failoverGroups", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/servers/failoverGroups", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -159,6 +169,7 @@ public partial class FailoverGroup : ProvisionableResource
         _partnerServers = DefineListProperty<PartnerServerInfo>("PartnerServers", ["properties", "partnerServers"]);
         _readOnlyEndpoint = DefineModelProperty<FailoverGroupReadOnlyEndpoint>("ReadOnlyEndpoint", ["properties", "readOnlyEndpoint"]);
         _readWriteEndpoint = DefineModelProperty<FailoverGroupReadWriteEndpoint>("ReadWriteEndpoint", ["properties", "readWriteEndpoint"]);
+        _secondaryType = DefineProperty<FailoverGroupDatabasesSecondaryType>("SecondaryType", ["properties", "secondaryType"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
@@ -173,6 +184,11 @@ public partial class FailoverGroup : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>

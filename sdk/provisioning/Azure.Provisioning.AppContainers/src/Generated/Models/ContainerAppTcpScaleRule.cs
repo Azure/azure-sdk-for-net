@@ -37,6 +37,17 @@ public partial class ContainerAppTcpScaleRule : ProvisionableConstruct
     private BicepList<ContainerAppScaleRuleAuth>? _auth;
 
     /// <summary>
+    /// The resource ID of a user-assigned managed identity that is assigned to
+    /// the Container App, or &apos;system&apos; for system-assigned identity.
+    /// </summary>
+    public BicepValue<string> Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); _identity!.Assign(value); }
+    }
+    private BicepValue<string>? _identity;
+
+    /// <summary>
     /// Creates a new ContainerAppTcpScaleRule.
     /// </summary>
     public ContainerAppTcpScaleRule()
@@ -51,5 +62,6 @@ public partial class ContainerAppTcpScaleRule : ProvisionableConstruct
         base.DefineProvisionableProperties();
         _metadata = DefineDictionaryProperty<string>("Metadata", ["metadata"]);
         _auth = DefineListProperty<ContainerAppScaleRuleAuth>("Auth", ["auth"]);
+        _identity = DefineProperty<string>("Identity", ["identity"]);
     }
 }

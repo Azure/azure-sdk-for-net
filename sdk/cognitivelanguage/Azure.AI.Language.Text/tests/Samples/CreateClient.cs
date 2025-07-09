@@ -20,8 +20,8 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         public void CreateTextAnalysisClientForSpecificApiVersion()
         {
             #region Snippet:CreateTextAnalysisClientForSpecificApiVersion
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-            AzureKeyCredential credential = new("your apikey");
+            Uri endpoint = new Uri("{endpoint}");
+            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 #if !SNIPPET
             endpoint = TestEnvironment.Endpoint;
             credential = new(TestEnvironment.ApiKey);
@@ -35,8 +35,8 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         public void CreateTextClient()
         {
             #region Snippet:CreateTextClient
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-            AzureKeyCredential credential = new("your apikey");
+            Uri endpoint = new Uri("{endpoint}");
+            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 #if !SNIPPET
             endpoint = TestEnvironment.Endpoint;
             credential = new(TestEnvironment.ApiKey);
@@ -49,7 +49,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         public void TextAnalysisClient_CreateWithDefaultAzureCredential()
         {
             #region Snippet:TextAnalysisClient_CreateWithDefaultAzureCredential
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+            Uri endpoint = new Uri("{endpoint}");
 #if !SNIPPET
             endpoint = TestEnvironment.Endpoint;
 #endif

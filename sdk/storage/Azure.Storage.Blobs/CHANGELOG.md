@@ -1,6 +1,16 @@
 # Release History
 
-## 12.26.0-beta.1 (Unreleased)
+## 12.26.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.26.0-beta.1 (2025-06-09)
 
 ### Features Added
 - Added support for service version 2025-11-05.
@@ -9,6 +19,11 @@
 
 ### Other Changes
 - Changed BlobServiceClient.AccountName to be virtual so that it can be overridden and mocked.
+
+## 12.24.1 (2025-06-10)
+
+### Features Added
+- Added `PageBlobCreateOptions.PremiumPageBlobAccessTier` for `PageBlobClient.Create(..)`
 
 ## 12.25.0-beta.1 (2025-05-06)
 

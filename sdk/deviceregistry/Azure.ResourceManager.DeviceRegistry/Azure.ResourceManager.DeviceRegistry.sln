@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Devic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DeviceRegistry.Tests", "tests\Azure.ResourceManager.DeviceRegistry.Tests.csproj", "{EE2B83DC-93C8-408A-9754-1D72670DFB97}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DeviceRegistry.Samples", "samples\Azure.ResourceManager.DeviceRegistry.Samples.csproj", "{B912E881-D3EC-46DB-B29F-509F579C182A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

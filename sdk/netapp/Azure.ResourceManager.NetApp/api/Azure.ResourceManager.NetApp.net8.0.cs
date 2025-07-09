@@ -1912,7 +1912,7 @@ namespace Azure.ResourceManager.NetApp.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public NetAppReplicationObject(Azure.Core.ResourceIdentifier remoteVolumeResourceId) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetApp.Models.NetAppDestinationReplication> DestinationReplications { get { throw null; } }
-        public Azure.ResourceManager.NetApp.Models.NetAppEndpointType? EndpointType { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppEndpointType? EndpointType { get { throw null; } [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)] set { } }
         public Azure.ResourceManager.NetApp.Models.RemotePath RemotePath { get { throw null; } set { } }
         public string RemoteVolumeRegion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RemoteVolumeResourceId { get { throw null; } set { } }

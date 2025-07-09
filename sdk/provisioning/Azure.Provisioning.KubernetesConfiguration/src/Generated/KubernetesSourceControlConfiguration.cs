@@ -199,20 +199,20 @@ public partial class KubernetesSourceControlConfiguration : ProvisionableResourc
     protected override void DefineProvisionableProperties()
     {
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _configurationProtectedSettings = DefineDictionaryProperty<string>("ConfigurationProtectedSettings", ["properties", "configurationProtectedSettings"]);
-        _helmOperatorProperties = DefineModelProperty<HelmOperatorProperties>("HelmOperatorProperties", ["properties", "helmOperatorProperties"]);
-        _isHelmOperatorEnabled = DefineProperty<bool>("IsHelmOperatorEnabled", ["properties", "enableHelmOperator"]);
-        _operatorInstanceName = DefineProperty<string>("OperatorInstanceName", ["properties", "operatorInstanceName"]);
-        _operatorNamespace = DefineProperty<string>("OperatorNamespace", ["properties", "operatorNamespace"]);
-        _operatorParams = DefineProperty<string>("OperatorParams", ["properties", "operatorParams"]);
-        _operatorScope = DefineProperty<KubernetesOperatorScope>("OperatorScope", ["properties", "operatorScope"]);
-        _operatorType = DefineProperty<KubernetesOperator>("OperatorType", ["properties", "operatorType"]);
-        _repositoryUri = DefineProperty<Uri>("RepositoryUri", ["properties", "repositoryUrl"]);
-        _sshKnownHostsContents = DefineProperty<string>("SshKnownHostsContents", ["properties", "sshKnownHostsContents"]);
-        _complianceStatus = DefineModelProperty<KubernetesConfigurationComplianceStatus>("ComplianceStatus", ["properties", "complianceStatus"], isOutput: true);
+        _configurationProtectedSettings = DefineDictionaryProperty<string>("ConfigurationProtectedSettings", ["ConfigurationProtectedSettings"]);
+        _helmOperatorProperties = DefineModelProperty<HelmOperatorProperties>("HelmOperatorProperties", ["HelmOperatorProperties"]);
+        _isHelmOperatorEnabled = DefineProperty<bool>("IsHelmOperatorEnabled", ["IsHelmOperatorEnabled"]);
+        _operatorInstanceName = DefineProperty<string>("OperatorInstanceName", ["OperatorInstanceName"]);
+        _operatorNamespace = DefineProperty<string>("OperatorNamespace", ["OperatorNamespace"]);
+        _operatorParams = DefineProperty<string>("OperatorParams", ["OperatorParams"]);
+        _operatorScope = DefineProperty<KubernetesOperatorScope>("OperatorScope", ["OperatorScope"]);
+        _operatorType = DefineProperty<KubernetesOperator>("OperatorType", ["OperatorType"]);
+        _repositoryUri = DefineProperty<Uri>("RepositoryUri", ["RepositoryUri"]);
+        _sshKnownHostsContents = DefineProperty<string>("SshKnownHostsContents", ["SshKnownHostsContents"]);
+        _complianceStatus = DefineModelProperty<KubernetesConfigurationComplianceStatus>("ComplianceStatus", ["ComplianceStatus"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _provisioningState = DefineProperty<KubernetesConfigurationProvisioningStateType>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _repositoryPublicKey = DefineProperty<string>("RepositoryPublicKey", ["properties", "repositoryPublicKey"], isOutput: true);
+        _provisioningState = DefineProperty<KubernetesConfigurationProvisioningStateType>("ProvisioningState", ["ProvisioningState"], isOutput: true);
+        _repositoryPublicKey = DefineProperty<string>("RepositoryPublicKey", ["RepositoryPublicKey"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Uri databaseTransformsUrl = default;
             Uri graphStudioUrl = default;
             Uri machineLearningNotebookUrl = default;
-            Uri mongoDBUrl = default;
+            Uri mongoDbUrl = default;
             Uri ordsUrl = default;
             Uri sqlDevWebUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    mongoDBUrl = new Uri(property.Value.GetString());
+                    mongoDbUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ordsUrl"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 databaseTransformsUrl,
                 graphStudioUrl,
                 machineLearningNotebookUrl,
-                mongoDBUrl,
+                mongoDbUrl,
                 ordsUrl,
                 sqlDevWebUrl,
                 serializedAdditionalRawData);

@@ -107,7 +107,7 @@ public partial class EventGridTopicPrivateEndpointConnection : ProvisionableReso
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridTopicPrivateEndpointConnection.</param>
     public EventGridTopicPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/topics/privateEndpointConnections", resourceVersion ?? "2022-06-15")
+        : base(bicepIdentifier, "Microsoft.EventGrid/topics/privateEndpointConnections", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -132,6 +132,11 @@ public partial class EventGridTopicPrivateEndpointConnection : ProvisionableReso
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
+
         /// <summary>
         /// 2022-06-15.
         /// </summary>

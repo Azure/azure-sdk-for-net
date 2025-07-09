@@ -98,6 +98,17 @@ public partial class BlobInventoryPolicyFilter : ProvisionableConstruct
     private BicepValue<bool>? _includeDeleted;
 
     /// <summary>
+    /// When set the policy filters the objects that are created in the last N
+    /// days. Where N is an integer value between 1 to 36500.
+    /// </summary>
+    public BicepValue<int> CreationTimeLastNDays 
+    {
+        get { Initialize(); return _creationTimeLastNDays!; }
+        set { Initialize(); _creationTimeLastNDays!.Assign(value); }
+    }
+    private BicepValue<int>? _creationTimeLastNDays;
+
+    /// <summary>
     /// Creates a new BlobInventoryPolicyFilter.
     /// </summary>
     public BlobInventoryPolicyFilter()
@@ -116,5 +127,6 @@ public partial class BlobInventoryPolicyFilter : ProvisionableConstruct
         _includeBlobVersions = DefineProperty<bool>("IncludeBlobVersions", ["includeBlobVersions"]);
         _includeSnapshots = DefineProperty<bool>("IncludeSnapshots", ["includeSnapshots"]);
         _includeDeleted = DefineProperty<bool>("IncludeDeleted", ["includeDeleted"]);
+        _creationTimeLastNDays = DefineProperty<int>("CreationTimeLastNDays", ["creationTime", "lastNDays"]);
     }
 }

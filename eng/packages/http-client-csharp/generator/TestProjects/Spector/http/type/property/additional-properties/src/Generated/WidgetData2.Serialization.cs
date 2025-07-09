@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
@@ -34,10 +32,5 @@ namespace _Type.Property.AdditionalProperties
         protected virtual WidgetData2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<WidgetData2>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="widgetData2"> The <see cref="WidgetData2"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(WidgetData2 widgetData2) => throw null;
-
-        public static explicit operator WidgetData2(Response result) => throw null;
     }
 }

@@ -44,15 +44,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Url))
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
@@ -106,10 +106,10 @@ namespace Azure.Compute.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Stats))
+            if (options.Format != "W" && Optional.IsDefined(JobScheduleStatistics))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(Stats, options);
+                writer.WriteObjectValue(JobScheduleStatistics, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -150,8 +150,8 @@ namespace Azure.Compute.Batch
             }
             string id = default;
             string displayName = default;
-            string url = default;
-            string eTag = default;
+            Uri url = default;
+            ETag? eTag = default;
             DateTimeOffset? lastModified = default;
             DateTimeOffset? creationTime = default;
             BatchJobScheduleState? state = default;
@@ -161,7 +161,7 @@ namespace Azure.Compute.Batch
             BatchJobScheduleConfiguration schedule = default;
             BatchJobSpecification jobSpecification = default;
             BatchJobScheduleExecutionInfo executionInfo = default;
-            IList<MetadataItem> metadata = default;
+            IList<BatchMetadataItem> metadata = default;
             BatchJobScheduleStatistics stats = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -179,12 +179,20 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    eTag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastModified"u8))
@@ -270,10 +278,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<MetadataItem> array = new List<MetadataItem>();
+                    List<BatchMetadataItem> array = new List<BatchMetadataItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataItem.DeserializeMetadataItem(item, options));
+                        array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
@@ -307,7 +315,7 @@ namespace Azure.Compute.Batch
                 schedule,
                 jobSpecification,
                 executionInfo,
-                metadata ?? new ChangeTrackingList<MetadataItem>(),
+                metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
                 stats,
                 serializedAdditionalRawData);
         }

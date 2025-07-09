@@ -247,9 +247,9 @@ namespace Azure.Monitor.Query.Tests
                 TestEnvironment.MetricsResource).ToEnumerableAsync();
 
             Assert.True(results.Any(ns =>
-                ns.Name == "microsoft.operationalinsights-workspaces" &&
-                ns.Type == "Microsoft.Insights/metricNamespaces" &&
-                ns.FullyQualifiedName == "microsoft.operationalinsights/workspaces"));
+                ns.Name.Equals("microsoft.operationalinsights-workspaces", StringComparison.OrdinalIgnoreCase) &&
+                ns.Type.Equals("Microsoft.Insights/metricNamespaces", StringComparison.OrdinalIgnoreCase) &&
+                ns.FullyQualifiedName.Equals("microsoft.operationalinsights/workspaces", StringComparison.OrdinalIgnoreCase)));
         }
 
         [RecordedTest]

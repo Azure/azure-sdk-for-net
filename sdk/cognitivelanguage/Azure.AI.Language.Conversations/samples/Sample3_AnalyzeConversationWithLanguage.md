@@ -10,12 +10,13 @@ Start by importing the namespace for the `ConversationAnalysisClient` and relate
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 ```
 
 To analyze an utterance, you need to first create a `ConversationAnalysisClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:ConversationAnalysisClient_Create
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
@@ -26,7 +27,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-string projectName = "Menu";
+string projectName = "EmailApp";
 string deploymentName = "production";
 
 AnalyzeConversationInput data =

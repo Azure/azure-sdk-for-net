@@ -115,7 +115,9 @@ public partial class KubeEnvironment : ProvisionableResource
     private BicepValue<bool>? _isInternalLoadBalancerEnabled;
 
     /// <summary>
-    /// Kind of resource.
+    /// Kind of resource. If the resource is an app, you can refer to
+    /// https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference
+    /// for details supported values for kind.
     /// </summary>
     public BicepValue<string> Kind 
     {
@@ -200,7 +202,7 @@ public partial class KubeEnvironment : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the KubeEnvironment.</param>
     public KubeEnvironment(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/kubeEnvironments", resourceVersion ?? "2021-03-01")
+        : base(bicepIdentifier, "Microsoft.Web/kubeEnvironments", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -233,6 +235,16 @@ public partial class KubeEnvironment : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
+        /// <summary>
+        /// 2024-04-01.
+        /// </summary>
+        public static readonly string V2024_04_01 = "2024-04-01";
+
         /// <summary>
         /// 2021-03-01.
         /// </summary>

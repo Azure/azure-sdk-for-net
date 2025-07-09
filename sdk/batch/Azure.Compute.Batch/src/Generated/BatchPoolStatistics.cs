@@ -46,33 +46,33 @@ namespace Azure.Compute.Batch
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BatchPoolStatistics"/>. </summary>
-        /// <param name="url"> The URL for the statistics. </param>
+        /// <param name="uri"> The URL for the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        internal BatchPoolStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime)
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        internal BatchPoolStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime)
         {
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            Url = url;
+            Uri = uri;
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchPoolStatistics"/>. </summary>
-        /// <param name="url"> The URL for the statistics. </param>
+        /// <param name="uri"> The URL for the statistics. </param>
         /// <param name="startTime"> The start time of the time range covered by the statistics. </param>
         /// <param name="lastUpdateTime"> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </param>
-        /// <param name="usageStats"> Statistics related to Pool usage, such as the amount of core-time used. </param>
-        /// <param name="resourceStats"> Statistics related to resource consumption by Compute Nodes in the Pool. </param>
+        /// <param name="usageStatistics"> Statistics related to Pool usage, such as the amount of core-time used. </param>
+        /// <param name="resourceStatistics"> Statistics related to resource consumption by Compute Nodes in the Pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolStatistics(string url, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, BatchPoolUsageStatistics usageStats, BatchPoolResourceStatistics resourceStats, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchPoolStatistics(Uri uri, DateTimeOffset startTime, DateTimeOffset lastUpdateTime, BatchPoolUsageStatistics usageStatistics, BatchPoolResourceStatistics resourceStatistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Url = url;
+            Uri = uri;
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
-            UsageStats = usageStats;
-            ResourceStats = resourceStats;
+            UsageStatistics = usageStatistics;
+            ResourceStatistics = resourceStatistics;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,14 +82,14 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The URL for the statistics. </summary>
-        public string Url { get; }
+        public Uri Uri { get; }
         /// <summary> The start time of the time range covered by the statistics. </summary>
         public DateTimeOffset StartTime { get; }
         /// <summary> The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime. </summary>
         public DateTimeOffset LastUpdateTime { get; }
         /// <summary> Statistics related to Pool usage, such as the amount of core-time used. </summary>
-        public BatchPoolUsageStatistics UsageStats { get; }
+        public BatchPoolUsageStatistics UsageStatistics { get; }
         /// <summary> Statistics related to resource consumption by Compute Nodes in the Pool. </summary>
-        public BatchPoolResourceStatistics ResourceStats { get; }
+        public BatchPoolResourceStatistics ResourceStatistics { get; }
     }
 }

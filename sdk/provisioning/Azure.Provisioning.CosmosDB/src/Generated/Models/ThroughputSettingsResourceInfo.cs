@@ -5,6 +5,7 @@
 
 #nullable enable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
 
@@ -77,6 +78,17 @@ public partial class ThroughputSettingsResourceInfo : ProvisionableConstruct
     private BicepValue<string>? _softAllowedMaximumThroughput;
 
     /// <summary>
+    /// Array of Throughput Bucket limits to be applied to the Cosmos DB
+    /// container.
+    /// </summary>
+    public BicepList<CosmosDBThroughputBucket> ThroughputBuckets 
+    {
+        get { Initialize(); return _throughputBuckets!; }
+        set { Initialize(); _throughputBuckets!.Assign(value); }
+    }
+    private BicepList<CosmosDBThroughputBucket>? _throughputBuckets;
+
+    /// <summary>
     /// Creates a new ThroughputSettingsResourceInfo.
     /// </summary>
     public ThroughputSettingsResourceInfo()
@@ -96,5 +108,6 @@ public partial class ThroughputSettingsResourceInfo : ProvisionableConstruct
         _offerReplacePending = DefineProperty<string>("OfferReplacePending", ["offerReplacePending"], isOutput: true);
         _instantMaximumThroughput = DefineProperty<string>("InstantMaximumThroughput", ["instantMaximumThroughput"], isOutput: true);
         _softAllowedMaximumThroughput = DefineProperty<string>("SoftAllowedMaximumThroughput", ["softAllowedMaximumThroughput"], isOutput: true);
+        _throughputBuckets = DefineListProperty<CosmosDBThroughputBucket>("ThroughputBuckets", ["throughputBuckets"]);
     }
 }

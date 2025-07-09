@@ -47,12 +47,12 @@ namespace Azure.Compute.Batch.Tests.Integration
                 // create a pool to verify we have something to query for
                 BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(1);
 
-                await client.CreateJobAsync(new BatchJobCreateContent(jobId, new BatchPoolInfo() { PoolId = poolId }));
+                await client.CreateJobAsync(new BatchJobCreateOptions(jobId, new BatchPoolInfo() { PoolId = poolId }));
 
                 for (int i = 0; i < 5; i++)
                 {
                     string taskId = $"task-{i}";
-                    await client.CreateTaskAsync(jobId, new BatchTaskCreateContent(taskId, $"cmd /c echo Hello World {taskId}"));
+                    await client.CreateTaskAsync(jobId, new BatchTaskCreateOptions(taskId, $"cmd /c echo Hello World {taskId}"));
                 }
 
                 await WaitForTasksToComplete(client, jobId, IsPlayBack());
@@ -77,7 +77,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                     await foreach (BatchNodeFile item in client.GetTaskFilesAsync(jobId, t.Id))
                     {
-                        string url = item.Url;
+                        Uri url = item.Uri;
                         long contentLenght = item.Properties != null ? item.Properties.ContentLength : 0;
                     }
                 }
@@ -104,9 +104,9 @@ namespace Azure.Compute.Batch.Tests.Integration
                 // create a pool to verify we have something to query for
                 BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(1);
 
-                await client.CreateJobAsync(new BatchJobCreateContent(jobId, new BatchPoolInfo() { PoolId = poolId }));
+                await client.CreateJobAsync(new BatchJobCreateOptions(jobId, new BatchPoolInfo() { PoolId = poolId }));
 
-                await client.CreateTaskAsync(jobId, new BatchTaskCreateContent(taskId, $"cmd /c echo Hello World"));
+                await client.CreateTaskAsync(jobId, new BatchTaskCreateOptions(taskId, $"cmd /c echo Hello World"));
 
                 await WaitForTasksToComplete(client, jobId, IsPlayBack());
 
@@ -145,12 +145,12 @@ namespace Azure.Compute.Batch.Tests.Integration
                 // create a pool to verify we have something to query for
                 BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(1);
 
-                await client.CreateJobAsync(new BatchJobCreateContent(jobId, new BatchPoolInfo() { PoolId = poolId }));
+                await client.CreateJobAsync(new BatchJobCreateOptions(jobId, new BatchPoolInfo() { PoolId = poolId }));
 
                 for (int i = 0; i < 5; i++)
                 {
                     string taskId = $"task-{i}";
-                    await client.CreateTaskAsync(jobId, new BatchTaskCreateContent(taskId, $"cmd /c echo Hello World {taskId}"));
+                    await client.CreateTaskAsync(jobId, new BatchTaskCreateOptions(taskId, $"cmd /c echo Hello World {taskId}"));
                 }
 
                 await WaitForTasksToComplete(client, jobId, IsPlayBack());

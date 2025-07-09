@@ -36,10 +36,10 @@ namespace Azure.Compute.Batch
 
             writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
-            writer.WritePropertyName("azureFileUrl"u8);
-            writer.WriteStringValue(AzureFileUrl);
             writer.WritePropertyName("accountKey"u8);
             writer.WriteStringValue(AccountKey);
+            writer.WritePropertyName("azureFileUrl"u8);
+            writer.WriteStringValue(AzureFileUri.AbsoluteUri);
             writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
             if (Optional.IsDefined(MountOptions))
@@ -85,8 +85,8 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string accountName = default;
-            string azureFileUrl = default;
             string accountKey = default;
+            Uri azureFileUrl = default;
             string relativeMountPath = default;
             string mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -98,14 +98,14 @@ namespace Azure.Compute.Batch
                     accountName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureFileUrl"u8))
-                {
-                    azureFileUrl = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("accountKey"u8))
                 {
                     accountKey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("azureFileUrl"u8))
+                {
+                    azureFileUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("relativeMountPath"u8))
@@ -126,8 +126,8 @@ namespace Azure.Compute.Batch
             serializedAdditionalRawData = rawDataDictionary;
             return new AzureFileShareConfiguration(
                 accountName,
-                azureFileUrl,
                 accountKey,
+                azureFileUrl,
                 relativeMountPath,
                 mountOptions,
                 serializedAdditionalRawData);

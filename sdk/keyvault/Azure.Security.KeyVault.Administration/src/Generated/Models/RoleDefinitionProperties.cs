@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> Role definition properties. </summary>
     internal partial class RoleDefinitionProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="RoleDefinitionProperties"/>. </summary>
         public RoleDefinitionProperties()
         {
@@ -25,23 +29,29 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="roleType"> The role type. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
-        internal RoleDefinitionProperties(string roleName, string description, KeyVaultRoleType? roleType, IList<KeyVaultPermission> permissions, IList<KeyVaultRoleScope> assignableScopes)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RoleDefinitionProperties(string roleName, string description, KeyVaultRoleType? roleType, IList<KeyVaultPermission> permissions, IList<KeyVaultRoleScope> assignableScopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoleName = roleName;
             Description = description;
             RoleType = roleType;
             Permissions = permissions;
             AssignableScopes = assignableScopes;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The role name. </summary>
         public string RoleName { get; set; }
+
         /// <summary> The role definition description. </summary>
         public string Description { get; set; }
+
         /// <summary> The role type. </summary>
         public KeyVaultRoleType? RoleType { get; set; }
+
         /// <summary> Role definition permissions. </summary>
         public IList<KeyVaultPermission> Permissions { get; }
+
         /// <summary> Role definition assignable scopes. </summary>
         public IList<KeyVaultRoleScope> AssignableScopes { get; }
     }

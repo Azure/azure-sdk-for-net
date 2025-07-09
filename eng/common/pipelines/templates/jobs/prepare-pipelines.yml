@@ -88,6 +88,7 @@ jobs:
         switch ($lang)
         {
           "java" {
+            $generatePublicCIPipeline = 'false'
             $internalVariableGroups = '$(AzureSDK_Maven_Release_Pipeline_Secrets) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
             $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
           }

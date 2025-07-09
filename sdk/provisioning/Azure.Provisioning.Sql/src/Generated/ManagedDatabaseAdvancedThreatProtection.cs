@@ -86,7 +86,7 @@ public partial class ManagedDatabaseAdvancedThreatProtection : ProvisionableReso
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedDatabaseAdvancedThreatProtection.</param>
     public ManagedDatabaseAdvancedThreatProtection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -113,6 +113,11 @@ public partial class ManagedDatabaseAdvancedThreatProtection : ProvisionableReso
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
     }
 
     /// <summary>

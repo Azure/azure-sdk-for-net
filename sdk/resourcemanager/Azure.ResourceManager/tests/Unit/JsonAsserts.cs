@@ -1,8 +1,11 @@
+using System.ClientModel.Primitives;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using NUnit.Framework;
+
+#nullable enable
 
 namespace Azure.ResourceManager.Tests
 {
@@ -22,13 +25,14 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(expected, text);
         }
 
-        public static void AssertConverterSerialization(string expected, object model, JsonSerializerOptions options = default)
+        public static void AssertConverterSerialization<T>(string expected, T model, ModelReaderWriterOptions? options = null)
         {
             using var memoryStream = new MemoryStream();
 
             using (var writer = new Utf8JsonWriter(memoryStream))
             {
-                JsonSerializer.Serialize(writer, model, options);
+                var jsonModel = model as IJsonModel<T>;
+                jsonModel?.Write(writer, options ?? new ModelReaderWriterOptions("W"));
             }
 
             var text = Encoding.UTF8.GetString(memoryStream.ToArray());

@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
 
             writer.WritePropertyName("subnetId"u8);
-            writer.WriteStringValue(SubnetId);
+            writer.WriteStringValue(SubnetOcid);
             writer.WritePropertyName("vnicId"u8);
-            writer.WriteStringValue(VnicId);
+            writer.WriteStringValue(VnicOcid);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            ResourceIdentifier subnetId = default;
-            ResourceIdentifier vnicId = default;
+            string subnetId = default;
+            string vnicId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
                 {
-                    subnetId = new ResourceIdentifier(property.Value.GetString());
+                    subnetId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("vnicId"u8))
                 {
-                    vnicId = new ResourceIdentifier(property.Value.GetString());
+                    vnicId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

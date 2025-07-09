@@ -744,6 +744,7 @@ prepend-rp-prefix:
 models-to-treat-empty-string-as-null:
   - WebAppBackupData
   - WebSiteInstanceStatusData
+  - AppServiceApiDefinitionInfo
 
 directive:
 # operation removal - should be temporary

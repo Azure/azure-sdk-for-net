@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,25 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.2 (2025-06-19)
+
+### Features Added
+
+- **Support for Exclusion Filters in Export Operations**:
+
+  - Added `AzureResourcesToExclude` and `TerraformResourcesToExclude` properties to export parameter models,
+    these allow users to exclude resources from being exported based on Azure resource ID patterns or Terraform resource types.
+
+- **Authorization Scope Filter Support**:
+
+  - Introduced the `TerraformAuthorizationScopeFilter` struct, enabling fine-grained control over the scope of Azure Resource Graph queries during export.
+
+- **Export Result Enhancements**:
+  - The `TerraformExportResult` model now includes an `Import` property, providing Terraform import blocks for exported resources.
+
+- **API Version Updates**:
+  - Updated the default API version for Terraform export operations to `2025-06-01-preview` across all relevant classes and REST operations.
 
 ## 1.0.0-beta.1 (2024-10-31)
 

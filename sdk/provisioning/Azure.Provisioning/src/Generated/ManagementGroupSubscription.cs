@@ -113,6 +113,7 @@ public partial class ManagementGroupSubscription : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

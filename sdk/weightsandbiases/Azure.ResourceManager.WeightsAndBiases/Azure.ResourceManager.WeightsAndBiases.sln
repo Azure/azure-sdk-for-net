@@ -7,8 +7,6 @@ Project("{7084F53A-7A93-47E3-A8AF-CA120F237830}") = "Azure.ResourceManager.Weigh
 EndProject
 Project("{7084F53A-7A93-47E3-A8AF-CA120F237830}") = "Azure.ResourceManager.WeightsAndBiases.Tests", "tests\Azure.ResourceManager.WeightsAndBiases.Tests.csproj", "{17FC3AF6-E574-45CB-8CFF-A3DFC8D9F774}"
 EndProject
-Project("{7084F53A-7A93-47E3-A8AF-CA120F237830}") = "Azure.ResourceManager.WeightsAndBiases.Samples", "samples\Azure.ResourceManager.WeightsAndBiases.Samples.csproj", "{37FCF7F7-BA85-4D9F-9E2B-7EEEDBB8C067}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

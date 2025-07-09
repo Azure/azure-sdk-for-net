@@ -54,7 +54,7 @@ namespace Azure.Compute.Batch
         /// <param name="storageAccountType"> The storage account type for managed disk. </param>
         /// <param name="securityProfile"> Specifies the security profile settings for the managed disk. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDisk(StorageAccountType? storageAccountType, VMDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedDisk(StorageAccountType? storageAccountType, BatchVmDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageAccountType = storageAccountType;
             SecurityProfile = securityProfile;
@@ -64,6 +64,6 @@ namespace Azure.Compute.Batch
         /// <summary> The storage account type for managed disk. </summary>
         public StorageAccountType? StorageAccountType { get; set; }
         /// <summary> Specifies the security profile settings for the managed disk. </summary>
-        public VMDiskSecurityProfile SecurityProfile { get; set; }
+        public BatchVmDiskSecurityProfile SecurityProfile { get; set; }
     }
 }

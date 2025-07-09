@@ -7,8 +7,6 @@ Project("{58ED53BB-B601-4D64-B4AE-3D8828AC2EF1}") = "Azure.ResourceManager.Workl
 EndProject
 Project("{58ED53BB-B601-4D64-B4AE-3D8828AC2EF1}") = "Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests", "tests\Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests.csproj", "{5ECFFF83-AFCA-4B70-A373-0EADBA557DC2}"
 EndProject
-Project("{58ED53BB-B601-4D64-B4AE-3D8828AC2EF1}") = "Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples", "samples\Azure.ResourceManager.WorkloadsSapVirtualInstance.Samples.csproj", "{FB45B373-C2B7-4EE8-80DB-DF95A2899696}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

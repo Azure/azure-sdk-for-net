@@ -8,6 +8,7 @@
     <PackageTags>Azure.Health.Deidentification</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAutorestDependency>false</IncludeAutorestDependency>
     <NoWarn>AZC0030</NoWarn>
   </PropertyGroup>
 

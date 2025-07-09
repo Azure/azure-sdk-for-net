@@ -90,211 +90,11 @@ namespace Azure.ResourceManager.Avs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AvsPrivateCloudAddonResources in the AvsPrivateCloud. </summary>
-        /// <returns> An object representing collection of AvsPrivateCloudAddonResources and their operations over a AvsPrivateCloudAddonResource. </returns>
-        public virtual AvsPrivateCloudAddonCollection GetAvsPrivateCloudAddons()
+        /// <summary> Gets an object representing a WorkloadNetworkResource along with the instance operations that can be performed on it in the AvsPrivateCloud. </summary>
+        /// <returns> Returns a <see cref="WorkloadNetworkResource"/> object. </returns>
+        public virtual WorkloadNetworkResource GetWorkloadNetwork()
         {
-            return GetCachedClient(client => new AvsPrivateCloudAddonCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Addon
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Addons_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPrivateCloudAddonResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="addonName"> Name of the addon. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AvsPrivateCloudAddonResource>> GetAvsPrivateCloudAddonAsync(string addonName, CancellationToken cancellationToken = default)
-        {
-            return await GetAvsPrivateCloudAddons().GetAsync(addonName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Addon
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Addons_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPrivateCloudAddonResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="addonName"> Name of the addon. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AvsPrivateCloudAddonResource> GetAvsPrivateCloudAddon(string addonName, CancellationToken cancellationToken = default)
-        {
-            return GetAvsPrivateCloudAddons().Get(addonName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ExpressRouteAuthorizationResources in the AvsPrivateCloud. </summary>
-        /// <returns> An object representing collection of ExpressRouteAuthorizationResources and their operations over a ExpressRouteAuthorizationResource. </returns>
-        public virtual ExpressRouteAuthorizationCollection GetExpressRouteAuthorizations()
-        {
-            return GetCachedClient(client => new ExpressRouteAuthorizationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a ExpressRouteAuthorization
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Authorizations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ExpressRouteAuthorizationResource>> GetExpressRouteAuthorizationAsync(string authorizationName, CancellationToken cancellationToken = default)
-        {
-            return await GetExpressRouteAuthorizations().GetAsync(authorizationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a ExpressRouteAuthorization
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Authorizations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ExpressRouteAuthorizationResource> GetExpressRouteAuthorization(string authorizationName, CancellationToken cancellationToken = default)
-        {
-            return GetExpressRouteAuthorizations().Get(authorizationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AvsCloudLinkResources in the AvsPrivateCloud. </summary>
-        /// <returns> An object representing collection of AvsCloudLinkResources and their operations over a AvsCloudLinkResource. </returns>
-        public virtual AvsCloudLinkCollection GetAvsCloudLinks()
-        {
-            return GetCachedClient(client => new AvsCloudLinkCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a CloudLink
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/cloudLinks/{cloudLinkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudLinks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsCloudLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cloudLinkName"> Name of the cloud link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AvsCloudLinkResource>> GetAvsCloudLinkAsync(string cloudLinkName, CancellationToken cancellationToken = default)
-        {
-            return await GetAvsCloudLinks().GetAsync(cloudLinkName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a CloudLink
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/cloudLinks/{cloudLinkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudLinks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsCloudLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cloudLinkName"> Name of the cloud link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AvsCloudLinkResource> GetAvsCloudLink(string cloudLinkName, CancellationToken cancellationToken = default)
-        {
-            return GetAvsCloudLinks().Get(cloudLinkName, cancellationToken);
+            return new WorkloadNetworkResource(Client, Id.AppendChildResource("workloadNetworks", "default"));
         }
 
         /// <summary> Gets a collection of AvsPrivateCloudClusterResources in the AvsPrivateCloud. </summary>
@@ -313,11 +113,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -344,11 +144,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,75 +164,6 @@ namespace Azure.ResourceManager.Avs
         public virtual Response<AvsPrivateCloudClusterResource> GetAvsPrivateCloudCluster(string clusterName, CancellationToken cancellationToken = default)
         {
             return GetAvsPrivateCloudClusters().Get(clusterName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of GlobalReachConnectionResources in the AvsPrivateCloud. </summary>
-        /// <returns> An object representing collection of GlobalReachConnectionResources and their operations over a GlobalReachConnectionResource. </returns>
-        public virtual GlobalReachConnectionCollection GetGlobalReachConnections()
-        {
-            return GetCachedClient(client => new GlobalReachConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a GlobalReachConnection
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/globalReachConnections/{globalReachConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalReachConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalReachConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GlobalReachConnectionResource>> GetGlobalReachConnectionAsync(string globalReachConnectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetGlobalReachConnections().GetAsync(globalReachConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a GlobalReachConnection
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/globalReachConnections/{globalReachConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalReachConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GlobalReachConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GlobalReachConnectionResource> GetGlobalReachConnection(string globalReachConnectionName, CancellationToken cancellationToken = default)
-        {
-            return GetGlobalReachConnections().Get(globalReachConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of HcxEnterpriseSiteResources in the AvsPrivateCloud. </summary>
@@ -451,11 +182,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HcxEnterpriseSites_Get</description>
+        /// <description>HcxEnterpriseSite_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -482,11 +213,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HcxEnterpriseSites_Get</description>
+        /// <description>HcxEnterpriseSite_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -504,80 +235,280 @@ namespace Azure.ResourceManager.Avs
             return GetHcxEnterpriseSites().Get(hcxEnterpriseSiteName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a IscsiPathResource along with the instance operations that can be performed on it in the AvsPrivateCloud. </summary>
-        /// <returns> Returns a <see cref="IscsiPathResource"/> object. </returns>
-        public virtual IscsiPathResource GetIscsiPath()
+        /// <summary> Gets a collection of ExpressRouteAuthorizationResources in the AvsPrivateCloud. </summary>
+        /// <returns> An object representing collection of ExpressRouteAuthorizationResources and their operations over a ExpressRouteAuthorizationResource. </returns>
+        public virtual ExpressRouteAuthorizationCollection GetExpressRouteAuthorizations()
         {
-            return new IscsiPathResource(Client, Id.AppendChildResource("iscsiPaths", "default"));
-        }
-
-        /// <summary> Gets a collection of ScriptExecutionResources in the AvsPrivateCloud. </summary>
-        /// <returns> An object representing collection of ScriptExecutionResources and their operations over a ScriptExecutionResource. </returns>
-        public virtual ScriptExecutionCollection GetScriptExecutions()
-        {
-            return GetCachedClient(client => new ScriptExecutionCollection(client, Id));
+            return GetCachedClient(client => new ExpressRouteAuthorizationCollection(client, Id));
         }
 
         /// <summary>
-        /// Get a ScriptExecution
+        /// Get a ExpressRouteAuthorization
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScriptExecutions_Get</description>
+        /// <description>ExpressRouteAuthorization_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ScriptExecutionResource"/></description>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scriptExecutionName"> Name of the script cmdlet. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ScriptExecutionResource>> GetScriptExecutionAsync(string scriptExecutionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteAuthorizationResource>> GetExpressRouteAuthorizationAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
-            return await GetScriptExecutions().GetAsync(scriptExecutionName, cancellationToken).ConfigureAwait(false);
+            return await GetExpressRouteAuthorizations().GetAsync(authorizationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get a ScriptExecution
+        /// Get a ExpressRouteAuthorization
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/authorizations/{authorizationName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScriptExecutions_Get</description>
+        /// <description>ExpressRouteAuthorization_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ScriptExecutionResource"/></description>
+        /// <description><see cref="ExpressRouteAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scriptExecutionName"> Name of the script cmdlet. </param>
+        /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ScriptExecutionResource> GetScriptExecution(string scriptExecutionName, CancellationToken cancellationToken = default)
+        public virtual Response<ExpressRouteAuthorizationResource> GetExpressRouteAuthorization(string authorizationName, CancellationToken cancellationToken = default)
         {
-            return GetScriptExecutions().Get(scriptExecutionName, cancellationToken);
+            return GetExpressRouteAuthorizations().Get(authorizationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GlobalReachConnectionResources in the AvsPrivateCloud. </summary>
+        /// <returns> An object representing collection of GlobalReachConnectionResources and their operations over a GlobalReachConnectionResource. </returns>
+        public virtual GlobalReachConnectionCollection GetGlobalReachConnections()
+        {
+            return GetCachedClient(client => new GlobalReachConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a GlobalReachConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/globalReachConnections/{globalReachConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalReachConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalReachConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GlobalReachConnectionResource>> GetGlobalReachConnectionAsync(string globalReachConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetGlobalReachConnections().GetAsync(globalReachConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a GlobalReachConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/globalReachConnections/{globalReachConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalReachConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalReachConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="globalReachConnectionName"> Name of the global reach connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GlobalReachConnectionResource> GetGlobalReachConnection(string globalReachConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetGlobalReachConnections().Get(globalReachConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AvsCloudLinkResources in the AvsPrivateCloud. </summary>
+        /// <returns> An object representing collection of AvsCloudLinkResources and their operations over a AvsCloudLinkResource. </returns>
+        public virtual AvsCloudLinkCollection GetAvsCloudLinks()
+        {
+            return GetCachedClient(client => new AvsCloudLinkCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a CloudLink
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/cloudLinks/{cloudLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudLink_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cloudLinkName"> Name of the cloud link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AvsCloudLinkResource>> GetAvsCloudLinkAsync(string cloudLinkName, CancellationToken cancellationToken = default)
+        {
+            return await GetAvsCloudLinks().GetAsync(cloudLinkName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a CloudLink
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/cloudLinks/{cloudLinkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudLink_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsCloudLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cloudLinkName"> Name of the cloud link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AvsCloudLinkResource> GetAvsCloudLink(string cloudLinkName, CancellationToken cancellationToken = default)
+        {
+            return GetAvsCloudLinks().Get(cloudLinkName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AvsPrivateCloudAddonResources in the AvsPrivateCloud. </summary>
+        /// <returns> An object representing collection of AvsPrivateCloudAddonResources and their operations over a AvsPrivateCloudAddonResource. </returns>
+        public virtual AvsPrivateCloudAddonCollection GetAvsPrivateCloudAddons()
+        {
+            return GetCachedClient(client => new AvsPrivateCloudAddonCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Addon
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Addon_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudAddonResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="addonName"> Name of the addon. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AvsPrivateCloudAddonResource>> GetAvsPrivateCloudAddonAsync(string addonName, CancellationToken cancellationToken = default)
+        {
+            return await GetAvsPrivateCloudAddons().GetAsync(addonName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Addon
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/addons/{addonName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Addon_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudAddonResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="addonName"> Name of the addon. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AvsPrivateCloudAddonResource> GetAvsPrivateCloudAddon(string addonName, CancellationToken cancellationToken = default)
+        {
+            return GetAvsPrivateCloudAddons().Get(addonName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ScriptPackageResources in the AvsPrivateCloud. </summary>
@@ -596,11 +527,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScriptPackages_Get</description>
+        /// <description>ScriptPackage_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -627,11 +558,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScriptPackages_Get</description>
+        /// <description>ScriptPackage_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -649,11 +580,218 @@ namespace Azure.ResourceManager.Avs
             return GetScriptPackages().Get(scriptPackageName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a WorkloadNetworkResource along with the instance operations that can be performed on it in the AvsPrivateCloud. </summary>
-        /// <returns> Returns a <see cref="WorkloadNetworkResource"/> object. </returns>
-        public virtual WorkloadNetworkResource GetWorkloadNetwork()
+        /// <summary> Gets a collection of ScriptExecutionResources in the AvsPrivateCloud. </summary>
+        /// <returns> An object representing collection of ScriptExecutionResources and their operations over a ScriptExecutionResource. </returns>
+        public virtual ScriptExecutionCollection GetScriptExecutions()
         {
-            return new WorkloadNetworkResource(Client, Id.AppendChildResource("workloadNetworks", "default"));
+            return GetCachedClient(client => new ScriptExecutionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a ScriptExecution
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScriptExecution_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptExecutionName"> Name of the script cmdlet. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScriptExecutionResource>> GetScriptExecutionAsync(string scriptExecutionName, CancellationToken cancellationToken = default)
+        {
+            return await GetScriptExecutions().GetAsync(scriptExecutionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a ScriptExecution
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScriptExecution_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptExecutionName"> Name of the script cmdlet. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScriptExecutionResource> GetScriptExecution(string scriptExecutionName, CancellationToken cancellationToken = default)
+        {
+            return GetScriptExecutions().Get(scriptExecutionName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a IscsiPathResource along with the instance operations that can be performed on it in the AvsPrivateCloud. </summary>
+        /// <returns> Returns a <see cref="IscsiPathResource"/> object. </returns>
+        public virtual IscsiPathResource GetIscsiPath()
+        {
+            return new IscsiPathResource(Client, Id.AppendChildResource("iscsiPaths", "default"));
+        }
+
+        /// <summary> Gets a collection of AvsProvisionedNetworkResources in the AvsPrivateCloud. </summary>
+        /// <returns> An object representing collection of AvsProvisionedNetworkResources and their operations over a AvsProvisionedNetworkResource. </returns>
+        public virtual AvsProvisionedNetworkCollection GetAvsProvisionedNetworks()
+        {
+            return GetCachedClient(client => new AvsProvisionedNetworkCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a ProvisionedNetwork
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/provisionedNetworks/{provisionedNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProvisionedNetwork_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsProvisionedNetworkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="provisionedNetworkName"> Name of the cloud link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisionedNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisionedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AvsProvisionedNetworkResource>> GetAvsProvisionedNetworkAsync(string provisionedNetworkName, CancellationToken cancellationToken = default)
+        {
+            return await GetAvsProvisionedNetworks().GetAsync(provisionedNetworkName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a ProvisionedNetwork
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/provisionedNetworks/{provisionedNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProvisionedNetwork_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsProvisionedNetworkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="provisionedNetworkName"> Name of the cloud link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisionedNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="provisionedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AvsProvisionedNetworkResource> GetAvsProvisionedNetwork(string provisionedNetworkName, CancellationToken cancellationToken = default)
+        {
+            return GetAvsProvisionedNetworks().Get(provisionedNetworkName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AvsPureStoragePolicyResources in the AvsPrivateCloud. </summary>
+        /// <returns> An object representing collection of AvsPureStoragePolicyResources and their operations over a AvsPureStoragePolicyResource. </returns>
+        public virtual AvsPureStoragePolicyCollection GetAvsPureStoragePolicies()
+        {
+            return GetCachedClient(client => new AvsPureStoragePolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a PureStoragePolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PureStoragePolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPureStoragePolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storagePolicyName"> Name of the storage policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AvsPureStoragePolicyResource>> GetAvsPureStoragePolicyAsync(string storagePolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetAvsPureStoragePolicies().GetAsync(storagePolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a PureStoragePolicy
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/pureStoragePolicies/{storagePolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PureStoragePolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPureStoragePolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storagePolicyName"> Name of the storage policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storagePolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storagePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AvsPureStoragePolicyResource> GetAvsPureStoragePolicy(string storagePolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetAvsPureStoragePolicies().Get(storagePolicyName, cancellationToken);
         }
 
         /// <summary>
@@ -665,11 +803,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Get</description>
+        /// <description>PrivateCloud_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -705,11 +843,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Get</description>
+        /// <description>PrivateCloud_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -745,11 +883,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Delete</description>
+        /// <description>PrivateCloud_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -787,11 +925,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Delete</description>
+        /// <description>PrivateCloud_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -829,11 +967,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Update</description>
+        /// <description>PrivateCloud_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -842,7 +980,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The private cloud properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<AvsPrivateCloudResource>> UpdateAsync(WaitUntil waitUntil, AvsPrivateCloudPatch patch, CancellationToken cancellationToken = default)
@@ -875,11 +1013,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Update</description>
+        /// <description>PrivateCloud_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -888,7 +1026,7 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The private cloud properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<AvsPrivateCloudResource> Update(WaitUntil waitUntil, AvsPrivateCloudPatch patch, CancellationToken cancellationToken = default)
@@ -913,19 +1051,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// List the admin credentials for the private cloud
+        /// Rotate the vCenter password
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/listAdminCredentials</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/rotateVcenterPassword</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_ListAdminCredentials</description>
+        /// <description>PrivateClouds_RotateVCenterPassword</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -933,15 +1071,19 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AdminCredentials>> GetAdminCredentialsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RotateVCenterPasswordAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetAdminCredentials");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateVCenterPassword");
             scope.Start();
             try
             {
-                var response = await _avsPrivateCloudPrivateCloudsRestClient.ListAdminCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                var response = await _avsPrivateCloudPrivateCloudsRestClient.RotateVCenterPasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateRotateVCenterPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -951,19 +1093,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// List the admin credentials for the private cloud
+        /// Rotate the vCenter password
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/listAdminCredentials</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/rotateVcenterPassword</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_ListAdminCredentials</description>
+        /// <description>PrivateClouds_RotateVCenterPassword</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -971,15 +1113,19 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AdminCredentials> GetAdminCredentials(CancellationToken cancellationToken = default)
+        public virtual ArmOperation RotateVCenterPassword(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetAdminCredentials");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateVCenterPassword");
             scope.Start();
             try
             {
-                var response = _avsPrivateCloudPrivateCloudsRestClient.ListAdminCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
+                var response = _avsPrivateCloudPrivateCloudsRestClient.RotateVCenterPassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateRotateVCenterPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -1001,7 +1147,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1043,7 +1189,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1073,19 +1219,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Rotate the vCenter password
+        /// List the admin credentials for the private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/rotateVcenterPassword</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/listAdminCredentials</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_RotateVcenterPassword</description>
+        /// <description>PrivateClouds_ListAdminCredentials</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1093,19 +1239,15 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> RotateVCenterPasswordAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdminCredentials>> GetAdminCredentialsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateVCenterPassword");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetAdminCredentials");
             scope.Start();
             try
             {
-                var response = await _avsPrivateCloudPrivateCloudsRestClient.RotateVcenterPasswordAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateRotateVcenterPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
+                var response = await _avsPrivateCloudPrivateCloudsRestClient.ListAdminCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -1115,19 +1257,19 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Rotate the vCenter password
+        /// List the admin credentials for the private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/rotateVcenterPassword</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/listAdminCredentials</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_RotateVcenterPassword</description>
+        /// <description>PrivateClouds_ListAdminCredentials</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1135,19 +1277,15 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation RotateVCenterPassword(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual Response<AdminCredentials> GetAdminCredentials(CancellationToken cancellationToken = default)
         {
-            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.RotateVCenterPassword");
+            using var scope = _avsPrivateCloudPrivateCloudsClientDiagnostics.CreateScope("AvsPrivateCloudResource.GetAdminCredentials");
             scope.Start();
             try
             {
-                var response = _avsPrivateCloudPrivateCloudsRestClient.RotateVcenterPassword(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AvsArmOperation(_avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, _avsPrivateCloudPrivateCloudsRestClient.CreateRotateVcenterPasswordRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
+                var response = _avsPrivateCloudPrivateCloudsRestClient.ListAdminCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -1165,11 +1303,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Get</description>
+        /// <description>PrivateCloud_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1227,11 +1365,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Get</description>
+        /// <description>PrivateCloud_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1289,11 +1427,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Get</description>
+        /// <description>PrivateCloud_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1346,11 +1484,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Get</description>
+        /// <description>PrivateCloud_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1403,11 +1541,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Get</description>
+        /// <description>PrivateCloud_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1463,11 +1601,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Get</description>
+        /// <description>PrivateCloud_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

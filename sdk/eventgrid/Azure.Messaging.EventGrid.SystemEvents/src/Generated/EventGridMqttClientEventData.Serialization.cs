@@ -38,8 +38,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
             writer.WritePropertyName("clientAuthenticationName"u8);
             writer.WriteStringValue(ClientAuthenticationName);
-            writer.WritePropertyName("clientName"u8);
-            writer.WriteStringValue(ClientName);
+            if (Optional.IsDefined(ClientName))
+            {
+                writer.WritePropertyName("clientName"u8);
+                writer.WriteStringValue(ClientName);
+            }
             writer.WritePropertyName("namespaceName"u8);
             writer.WriteStringValue(NamespaceName);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

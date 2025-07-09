@@ -343,7 +343,8 @@ namespace Azure.Identity.Tests
 
             if (source is ISupportsTokenCachePersistenceOptions tcpoSource && destination is ISupportsTokenCachePersistenceOptions tcpoDestination)
             {
-                Assert.AreEqual(tcpoSource.TokenCachePersistenceOptions, tcpoDestination.TokenCachePersistenceOptions);
+                Assert.AreEqual(tcpoSource.TokenCachePersistenceOptions.Name, tcpoDestination.TokenCachePersistenceOptions.Name);
+                Assert.AreEqual(tcpoSource.TokenCachePersistenceOptions.UnsafeAllowUnencryptedStorage, tcpoDestination.TokenCachePersistenceOptions.UnsafeAllowUnencryptedStorage);
             }
         }
     }

@@ -6,6 +6,7 @@ using System.Linq;
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager.Search;
 using Azure.ResourceManager.Search.Models;
+using Generator.Model;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
@@ -26,6 +27,8 @@ public class SearchSpecification() :
         RemoveModel<SearchSkuName>();
         RemoveProperty<SharedSearchServicePrivateLinkResourceProperties>("SharedPrivateLinkResourceStatus");
         RemoveProperty<SharedSearchServicePrivateLinkResourceProperties>("SharedPrivateLinkResourceProvisioningState");
+        CustomizeProperty<SharedSearchServicePrivateLinkResourceProperties>("Status", p => p.HideLevel = PropertyHideLevel.DoNotHide);
+        CustomizeProperty<SharedSearchServicePrivateLinkResourceProperties>("ProvisioningState", p => p.HideLevel = PropertyHideLevel.DoNotHide);
         
         // Patch models
         CustomizeEnum<SearchServicePrivateLinkServiceConnectionStatus>(e => { foreach (EnumValue member in e.Values) { member.Value = member.Name; } });
@@ -35,6 +38,9 @@ public class SearchSpecification() :
         CustomizeEnum<SearchEncryptionWithCmkEnforcement>(e => { foreach (EnumValue member in e.Values) { member.Value = member.Name; } });
         CustomizeEnum<SearchEncryptionComplianceStatus>(e => { foreach (EnumValue member in e.Values) { member.Value = member.Name; } });
         CustomizeEnum<SearchAadAuthFailureMode>(e => { foreach (EnumValue member in e.Values) { member.Value = member.Name.ToCamelCase(); } });
+        IncludeHiddenVersions<SearchPrivateEndpointConnectionResource>("2025-02-01-Preview", "2024-06-01-Preview", "2024-03-01-Preview", "2021-06-06-Preview", "2021-04-01-Preview", "2020-08-01-Preview", "2019-10-01-Preview", "2014-07-31-Preview");
+        IncludeHiddenVersions<SharedSearchServicePrivateLinkResource>("2025-02-01-Preview", "2024-06-01-Preview", "2024-03-01-Preview", "2021-06-06-Preview", "2021-04-01-Preview", "2020-08-01-Preview", "2019-10-01-Preview", "2014-07-31-Preview");
+        IncludeHiddenVersions<SearchServiceResource>("2025-02-01-Preview", "2024-06-01-Preview", "2024-03-01-Preview", "2021-06-06-Preview", "2021-04-01-Preview", "2020-08-01-Preview", "2019-10-01-Preview", "2014-07-31-Preview");
 
         // Naming requirements
         AddNameRequirements<SearchServiceResource>(min: 2, max: 60, lower: true, digits: true, hyphen: true);

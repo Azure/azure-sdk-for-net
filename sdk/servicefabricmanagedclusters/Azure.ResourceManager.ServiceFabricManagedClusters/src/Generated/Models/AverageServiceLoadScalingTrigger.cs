@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AverageServiceLoadScalingTrigger"/>. </summary>
-        /// <param name="kind"> Specifies the trigger associated with this scaling policy. </param>
+        /// <param name="kind"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="metricName"> The name of the metric for which usage should be tracked. </param>
         /// <param name="lowerLoadThreshold"> The lower limit of the load below which a scale in operation should be performed. </param>

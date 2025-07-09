@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="createdByWorkspaceArmId"></param>
-        /// <param name="error"></param>
+        /// <param name="error"> Provides the error message if the connection fails. </param>
         /// <param name="expiryOn"></param>
         /// <param name="group"> Group based on connection category. </param>
         /// <param name="isSharedToAll"></param>
         /// <param name="metadata"> Store user metadata for this connection. </param>
-        /// <param name="peRequirement"></param>
-        /// <param name="peStatus"></param>
+        /// <param name="peRequirement"> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </param>
+        /// <param name="peStatus"> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </param>
         /// <param name="sharedUserList"></param>
-        /// <param name="target"></param>
+        /// <param name="target"> The connection URL to be used. </param>
         /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CognitiveServicesConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Gets the created by workspace arm id. </summary>
         [WirePath("createdByWorkspaceArmId")]
         public ResourceIdentifier CreatedByWorkspaceArmId { get; }
-        /// <summary> Gets or sets the error. </summary>
+        /// <summary> Provides the error message if the connection fails. </summary>
         [WirePath("error")]
         public string Error { get; set; }
         /// <summary> Gets or sets the expiry on. </summary>
@@ -113,16 +113,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Store user metadata for this connection. </summary>
         [WirePath("metadata")]
         public IDictionary<string, string> Metadata { get; }
-        /// <summary> Gets or sets the pe requirement. </summary>
+        /// <summary> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </summary>
         [WirePath("peRequirement")]
         public ManagedPERequirement? PeRequirement { get; set; }
-        /// <summary> Gets or sets the pe status. </summary>
+        /// <summary> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </summary>
         [WirePath("peStatus")]
         public ManagedPEStatus? PeStatus { get; set; }
         /// <summary> Gets the shared user list. </summary>
         [WirePath("sharedUserList")]
         public IList<string> SharedUserList { get; }
-        /// <summary> Gets or sets the target. </summary>
+        /// <summary> The connection URL to be used. </summary>
         [WirePath("target")]
         public string Target { get; set; }
         /// <summary> Gets or sets the use workspace managed identity. </summary>

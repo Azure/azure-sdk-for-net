@@ -19,37 +19,55 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
+        /// <param name="azureResourcesToExclude"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
+        /// <param name="terraformResourcesToExclude"> Exclude resources from being exported based on the Terraform resource type. </param>
         /// <param name="query"> The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ "my-rg" and type =~ "microsoft.network/virtualnetworks"`. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
         /// <param name="isRecursive"> Whether to recursively list child resources of the query result. </param>
+        /// <param name="table"> The ARG table name. </param>
+        /// <param name="authorizationScopeFilter"> The ARG Scope Filter parameter. </param>
         /// <returns> A new <see cref="Models.ExportQueryTerraform"/> instance for mocking. </returns>
-        public static ExportQueryTerraform ExportQueryTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, string query = null, string namePattern = null, bool? isRecursive = null)
+        public static ExportQueryTerraform ExportQueryTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, IEnumerable<string> azureResourcesToExclude = null, IEnumerable<string> terraformResourcesToExclude = null, string query = null, string namePattern = null, bool? isRecursive = null, string table = null, TerraformAuthorizationScopeFilter? authorizationScopeFilter = null)
         {
+            azureResourcesToExclude ??= new List<string>();
+            terraformResourcesToExclude ??= new List<string>();
+
             return new ExportQueryTerraform(
                 CommonExportType.ExportQuery,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
+                azureResourcesToExclude?.ToList(),
+                terraformResourcesToExclude?.ToList(),
                 serializedAdditionalRawData: null,
                 query,
                 namePattern,
-                isRecursive);
+                isRecursive,
+                table,
+                authorizationScopeFilter);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportResourceGroupTerraform"/>. </summary>
         /// <param name="targetProvider"> The target Azure Terraform Provider. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. </param>
+        /// <param name="azureResourcesToExclude"> Exclude resources from being exported based on the Azure resource ID pattern (case-insensitive regexp). </param>
+        /// <param name="terraformResourcesToExclude"> Exclude resources from being exported based on the Terraform resource type. </param>
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
         /// <param name="namePattern"> The name pattern of the Terraform resources. </param>
         /// <returns> A new <see cref="Models.ExportResourceGroupTerraform"/> instance for mocking. </returns>
-        public static ExportResourceGroupTerraform ExportResourceGroupTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, string resourceGroupName = null, string namePattern = null)
+        public static ExportResourceGroupTerraform ExportResourceGroupTerraform(TargetTerraformProvider? targetProvider = null, bool? isOutputFullPropertiesEnabled = null, bool? isMaskSensitiveEnabled = null, IEnumerable<string> azureResourcesToExclude = null, IEnumerable<string> terraformResourcesToExclude = null, string resourceGroupName = null, string namePattern = null)
         {
+            azureResourcesToExclude ??= new List<string>();
+            terraformResourcesToExclude ??= new List<string>();
+
             return new ExportResourceGroupTerraform(
                 CommonExportType.ExportResourceGroup,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
+                azureResourcesToExclude?.ToList(),
+                terraformResourcesToExclude?.ToList(),
                 serializedAdditionalRawData: null,
                 resourceGroupName,
                 namePattern);
@@ -79,15 +97,16 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.TerraformExportResult"/>. </summary>
         /// <param name="configuration"> The Terraform configuration content. </param>
+        /// <param name="import"> The Terraform import blocks for the current export, which users can use to run "terraform plan" with to import the resources. </param>
         /// <param name="skippedResourceIds"> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </param>
         /// <param name="errors"> A list of errors derived during exporting each resource. </param>
         /// <returns> A new <see cref="Models.TerraformExportResult"/> instance for mocking. </returns>
-        public static TerraformExportResult TerraformExportResult(string configuration = null, IEnumerable<ResourceIdentifier> skippedResourceIds = null, IEnumerable<ResponseError> errors = null)
+        public static TerraformExportResult TerraformExportResult(string configuration = null, string import = null, IEnumerable<ResourceIdentifier> skippedResourceIds = null, IEnumerable<ResponseError> errors = null)
         {
             skippedResourceIds ??= new List<ResourceIdentifier>();
             errors ??= new List<ResponseError>();
 
-            return new TerraformExportResult(configuration, skippedResourceIds?.ToList(), errors?.ToList(), serializedAdditionalRawData: null);
+            return new TerraformExportResult(configuration, import, skippedResourceIds?.ToList(), errors?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

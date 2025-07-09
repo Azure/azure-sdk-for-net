@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -39,10 +40,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(State))
             {
@@ -72,7 +73,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IpAddress.ToString());
             }
             if (Optional.IsDefined(AffinityId))
             {
@@ -202,13 +203,13 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string id = default;
-            string url = default;
+            Uri url = default;
             BatchNodeState? state = default;
             SchedulingState? schedulingState = default;
             DateTimeOffset? stateTransitionTime = default;
             DateTimeOffset? lastBootTime = default;
             DateTimeOffset? allocationTime = default;
-            string ipAddress = default;
+            IPAddress ipAddress = default;
             string affinityId = default;
             string vmSize = default;
             int? totalTasksRun = default;
@@ -235,7 +236,11 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -285,7 +290,11 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("affinityId"u8))

@@ -7,8 +7,6 @@ Project("{0E226CD3-25FE-40E7-B1FA-AD1802210A3E}") = "Azure.ResourceManager.Compu
 EndProject
 Project("{0E226CD3-25FE-40E7-B1FA-AD1802210A3E}") = "Azure.ResourceManager.ComputeSchedule.Tests", "tests\Azure.ResourceManager.ComputeSchedule.Tests.csproj", "{A5B31417-952E-4847-BC59-09E9C8603B8C}"
 EndProject
-Project("{0E226CD3-25FE-40E7-B1FA-AD1802210A3E}") = "Azure.ResourceManager.ComputeSchedule.Samples", "samples\Azure.ResourceManager.ComputeSchedule.Samples.csproj", "{FE1DDA4E-EDE2-4DC6-A6BF-9E135C78A7A7}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

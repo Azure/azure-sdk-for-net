@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetPublicIP()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetPublicIP.json
-            // this example is just showing the usage of "WorkloadNetworks_GetPublicIP" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetPublicIP.json
+            // this example is just showing the usage of "WorkloadNetworkPublicIP_GetPublicIP" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_WorkloadNetworksDeletePublicIP()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_DeletePublicIP.json
-            // this example is just showing the usage of "WorkloadNetworks_DeletePublicIP" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_DeletePublicIP.json
+            // this example is just showing the usage of "WorkloadNetworkPublicIP_DeletePublicIP" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_WorkloadNetworksCreatePublicIP()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_CreatePublicIP.json
-            // this example is just showing the usage of "WorkloadNetworks_CreatePublicIP" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_CreatePublicIP.json
+            // this example is just showing the usage of "WorkloadNetworkPublicIP_CreatePublicIP" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -95,11 +95,7 @@ namespace Azure.ResourceManager.Avs.Samples
             WorkloadNetworkPublicIPResource workloadNetworkPublicIP = client.GetWorkloadNetworkPublicIPResource(workloadNetworkPublicIPResourceId);
 
             // invoke the operation
-            WorkloadNetworkPublicIPData data = new WorkloadNetworkPublicIPData
-            {
-                DisplayName = "publicIP1",
-                NumberOfPublicIPs = 32L,
-            };
+            WorkloadNetworkPublicIPData data = new WorkloadNetworkPublicIPData();
             ArmOperation<WorkloadNetworkPublicIPResource> lro = await workloadNetworkPublicIP.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkPublicIPResource result = lro.Value;
 

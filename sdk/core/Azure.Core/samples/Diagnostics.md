@@ -256,7 +256,7 @@ Another approach would be to filter out generic HTTP client activities:
 .WithTracing(tracerProviderBuilder => tracerProviderBuilder
     .AddSource("Azure.*")
     .AddHttpClientInstrumentation(o => {
-        o => o.FilterHttpRequestMessage = (_) => Activity.Current?.Parent?.Source?.Name != "Azure.Core.Http";
+        o.FilterHttpRequestMessage = (_) => Activity.Current?.Parent?.Source?.Name != "Azure.Core.Http";
     })
     ...)
 ```

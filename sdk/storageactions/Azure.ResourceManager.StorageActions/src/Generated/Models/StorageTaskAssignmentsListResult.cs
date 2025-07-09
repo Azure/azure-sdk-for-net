@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StorageActions.Models
@@ -47,25 +48,31 @@ namespace Azure.ResourceManager.StorageActions.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentsListResult"/>. </summary>
-        internal StorageTaskAssignmentsListResult()
+        /// <param name="value"> List of Storage Task Assignment Resource IDs associated with this Storage Task. </param>
+        internal StorageTaskAssignmentsListResult(IEnumerable<SubResource> value)
         {
-            Value = new ChangeTrackingList<SubResource>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentsListResult"/>. </summary>
         /// <param name="value"> List of Storage Task Assignment Resource IDs associated with this Storage Task. </param>
-        /// <param name="nextLink"> Request URL that can be used to query next page of Resource IDs. Returned when total number of requested Resource IDs exceed maximum page size. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskAssignmentsListResult(IReadOnlyList<SubResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskAssignmentsListResult(IReadOnlyList<SubResource> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentsListResult"/> for deserialization. </summary>
+        internal StorageTaskAssignmentsListResult()
+        {
+        }
+
         /// <summary> List of Storage Task Assignment Resource IDs associated with this Storage Task. </summary>
         public IReadOnlyList<SubResource> Value { get; }
-        /// <summary> Request URL that can be used to query next page of Resource IDs. Returned when total number of requested Resource IDs exceed maximum page size. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

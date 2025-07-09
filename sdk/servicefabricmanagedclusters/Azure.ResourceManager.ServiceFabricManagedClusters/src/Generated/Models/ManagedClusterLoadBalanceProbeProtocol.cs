@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> the reference to the load balancer probe used by the load balancing rule. </summary>
+    /// <summary> The reference to the load balancer probe used by the load balancing rule. </summary>
     public readonly partial struct ManagedClusterLoadBalanceProbeProtocol : IEquatable<ManagedClusterLoadBalanceProbeProtocol>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string HttpValue = "http";
         private const string HttpsValue = "https";
 
-        /// <summary> tcp. </summary>
+        /// <summary> Probe protocol is TCP. </summary>
         public static ManagedClusterLoadBalanceProbeProtocol Tcp { get; } = new ManagedClusterLoadBalanceProbeProtocol(TcpValue);
-        /// <summary> http. </summary>
+        /// <summary> Probe protocol is HTTP. </summary>
         public static ManagedClusterLoadBalanceProbeProtocol Http { get; } = new ManagedClusterLoadBalanceProbeProtocol(HttpValue);
-        /// <summary> https. </summary>
+        /// <summary> Probe protocol is HTTPS. </summary>
         public static ManagedClusterLoadBalanceProbeProtocol Https { get; } = new ManagedClusterLoadBalanceProbeProtocol(HttpsValue);
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalanceProbeProtocol"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterLoadBalanceProbeProtocol left, ManagedClusterLoadBalanceProbeProtocol right) => left.Equals(right);

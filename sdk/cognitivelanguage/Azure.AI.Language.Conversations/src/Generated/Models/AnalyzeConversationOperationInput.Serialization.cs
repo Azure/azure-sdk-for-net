@@ -48,6 +48,11 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(CancelAfter))
+            {
+                writer.WritePropertyName("cancelAfter"u8);
+                writer.WriteNumberValue(CancelAfter.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,6 +93,7 @@ namespace Azure.AI.Language.Conversations.Models
             string displayName = default;
             MultiLanguageConversationInput analysisInput = default;
             IList<AnalyzeConversationOperationAction> tasks = default;
+            float? cancelAfter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,13 +118,22 @@ namespace Azure.AI.Language.Conversations.Models
                     tasks = array;
                     continue;
                 }
+                if (property.NameEquals("cancelAfter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cancelAfter = property.Value.GetSingle();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AnalyzeConversationOperationInput(displayName, analysisInput, tasks, serializedAdditionalRawData);
+            return new AnalyzeConversationOperationInput(displayName, analysisInput, tasks, cancelAfter, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzeConversationOperationInput>.Write(ModelReaderWriterOptions options)

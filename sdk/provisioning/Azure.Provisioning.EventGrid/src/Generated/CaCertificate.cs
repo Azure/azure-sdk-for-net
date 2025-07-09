@@ -113,7 +113,7 @@ public partial class CaCertificate : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CaCertificate.</param>
     public CaCertificate(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/caCertificates", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/caCertificates", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -138,7 +138,12 @@ public partial class CaCertificate : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
     }
+
     /// <summary>
     /// Creates a reference to an existing CaCertificate.
     /// </summary>

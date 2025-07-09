@@ -63,7 +63,7 @@ public partial class ProjectInfrastructure
         });
 
         // setup project identity
-        Identity = new UserAssignedIdentity("projectIdentity")
+        Identity = new UserAssignedIdentity("projectIdentity", UserAssignedIdentity.ResourceVersions.V2023_01_31)
         {
             Name = ProjectId
         };

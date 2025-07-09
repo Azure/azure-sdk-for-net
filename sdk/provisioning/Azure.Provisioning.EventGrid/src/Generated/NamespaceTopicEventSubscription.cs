@@ -118,7 +118,7 @@ public partial class NamespaceTopicEventSubscription : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the NamespaceTopicEventSubscription.</param>
     public NamespaceTopicEventSubscription(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/topics/eventSubscriptions", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/topics/eventSubscriptions", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -137,6 +137,17 @@ public partial class NamespaceTopicEventSubscription : ProvisionableResource
         _provisioningState = DefineProperty<SubscriptionProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<NamespaceTopic>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported NamespaceTopicEventSubscription resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
     }
 
     /// <summary>

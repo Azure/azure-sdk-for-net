@@ -4,7 +4,7 @@
   },
   "matrix": {
     "Agent": {
-      "Ubuntu-20.04_NET6.0": {
+      "Ubuntu-24.04_NET6.0": {
         "OSVmImage": "env:LINUXVMIMAGE",
         "Pool": "env:LINUXPOOL",
         "TestTargetFramework": "net6.0"

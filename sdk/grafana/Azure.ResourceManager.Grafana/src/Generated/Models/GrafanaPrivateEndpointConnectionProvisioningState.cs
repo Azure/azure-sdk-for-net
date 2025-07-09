@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Grafana.Models
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Connection has been provisioned. </summary>
         public static GrafanaPrivateEndpointConnectionProvisioningState Succeeded { get; } = new GrafanaPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+        /// <summary> Connection is being created. </summary>
         public static GrafanaPrivateEndpointConnectionProvisioningState Creating { get; } = new GrafanaPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> Connection is being deleted. </summary>
         public static GrafanaPrivateEndpointConnectionProvisioningState Deleting { get; } = new GrafanaPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Connection provisioning has failed. </summary>
         public static GrafanaPrivateEndpointConnectionProvisioningState Failed { get; } = new GrafanaPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="GrafanaPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(GrafanaPrivateEndpointConnectionProvisioningState left, GrafanaPrivateEndpointConnectionProvisioningState right) => left.Equals(right);

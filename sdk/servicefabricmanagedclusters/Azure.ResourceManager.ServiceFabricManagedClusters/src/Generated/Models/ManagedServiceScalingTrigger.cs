@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingTrigger"/>. </summary>
-        /// <param name="kind"> Specifies the trigger associated with this scaling policy. </param>
+        /// <param name="kind"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedServiceScalingTrigger(ServiceScalingTriggerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies the trigger associated with this scaling policy. </summary>
+        /// <summary> Gets or sets the kind. </summary>
         internal ServiceScalingTriggerKind Kind { get; set; }
     }
 }

@@ -16,7 +16,7 @@ public class AppConfigurationFeature : AzureProjectFeature
 
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
-        AppConfigurationStore appConfigResource = new("appConfiguration")
+        AppConfigurationStore appConfigResource = new("appConfiguration", AppConfigurationStore.ResourceVersions.V2024_05_01)
         {
             Name = infrastructure.ProjectId,
             SkuName = Sku.ToString(),
@@ -80,7 +80,7 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
         if (_bicepIdentifier == null) _bicepIdentifier = store.BicepIdentifier + "_setting";
 
         string bicepIdentifier = infrastructure.Features.CreateUniqueBicepIdentifier(_bicepIdentifier);
-        AppConfigurationKeyValue kvp = new(bicepIdentifier)
+        AppConfigurationKeyValue kvp = new(bicepIdentifier, AppConfigurationKeyValue.ResourceVersions.V2024_05_01)
         {
             Name = Key,
             Value = Value,

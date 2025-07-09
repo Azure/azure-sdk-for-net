@@ -6,7 +6,7 @@
     {
       "Agent": {
         "msi_image": {
-          "OSVmImage": "env:LINUXNEXTVMIMAGE",
+          "OSVmImage": "env:LINUXVMIMAGE",
           "Pool": "azsdk-pool-mms-ubuntu-2204-identitymsi",
           "AdditionalTestFilters": "TestCategory=IdentityVM"
         },

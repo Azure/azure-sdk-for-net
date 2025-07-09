@@ -80,7 +80,7 @@ public partial class SqlFirewallRule : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlFirewallRule.</param>
     public SqlFirewallRule(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/firewallRules", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/servers/firewallRules", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -101,6 +101,11 @@ public partial class SqlFirewallRule : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>

@@ -165,6 +165,17 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private BicepValue<DateTimeOffset>? _pointInTimeUtc;
 
     /// <summary>
+    /// Replica properties of a server. These Replica properties are required
+    /// to be passed only in case you want to Promote a server.
+    /// </summary>
+    public PostgreSqlFlexibleServersReplica Replica 
+    {
+        get { Initialize(); return _replica!; }
+        set { Initialize(); AssignOrReplace(ref _replica, value); }
+    }
+    private PostgreSqlFlexibleServersReplica? _replica;
+
+    /// <summary>
     /// Replicas allowed for a server.
     /// </summary>
     public BicepValue<int> ReplicaCapacity 
@@ -219,16 +230,6 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private PostgreSqlFlexibleServerStorage? _storage;
 
     /// <summary>
-    /// Max storage allowed for a server.
-    /// </summary>
-    public BicepValue<int> StorageSizeInGB 
-    {
-        get { Initialize(); return _storageSizeInGB!; }
-        set { Initialize(); _storageSizeInGB!.Assign(value); }
-    }
-    private BicepValue<int>? _storageSizeInGB;
-
-    /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
     public BicepDictionary<string> Tags 
@@ -274,6 +275,16 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
         get { Initialize(); return _minorVersion!; }
     }
     private BicepValue<string>? _minorVersion;
+
+    /// <summary>
+    /// List of private endpoint connections associated with the specified
+    /// resource.
+    /// </summary>
+    public BicepList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> PrivateEndpointConnections 
+    {
+        get { Initialize(); return _privateEndpointConnections!; }
+    }
+    private BicepList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>? _privateEndpointConnections;
 
     /// <summary>
     /// A state of a server that is visible to user.
@@ -327,17 +338,18 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
         _maintenanceWindow = DefineModelProperty<PostgreSqlFlexibleServerMaintenanceWindow>("MaintenanceWindow", ["properties", "maintenanceWindow"]);
         _network = DefineModelProperty<PostgreSqlFlexibleServerNetwork>("Network", ["properties", "network"]);
         _pointInTimeUtc = DefineProperty<DateTimeOffset>("PointInTimeUtc", ["properties", "pointInTimeUTC"]);
+        _replica = DefineModelProperty<PostgreSqlFlexibleServersReplica>("Replica", ["properties", "replica"]);
         _replicaCapacity = DefineProperty<int>("ReplicaCapacity", ["properties", "replicaCapacity"]);
         _replicationRole = DefineProperty<PostgreSqlFlexibleServerReplicationRole>("ReplicationRole", ["properties", "replicationRole"]);
         _sku = DefineModelProperty<PostgreSqlFlexibleServerSku>("Sku", ["sku"]);
         _sourceServerResourceId = DefineProperty<ResourceIdentifier>("SourceServerResourceId", ["properties", "sourceServerResourceId"]);
         _storage = DefineModelProperty<PostgreSqlFlexibleServerStorage>("Storage", ["properties", "storage"]);
-        _storageSizeInGB = DefineProperty<int>("StorageSizeInGB", ["properties", "storage", "storageSizeGB"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _version = DefineProperty<PostgreSqlFlexibleServerVersion>("Version", ["properties", "version"]);
         _fullyQualifiedDomainName = DefineProperty<string>("FullyQualifiedDomainName", ["properties", "fullyQualifiedDomainName"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _minorVersion = DefineProperty<string>("MinorVersion", ["properties", "minorVersion"], isOutput: true);
+        _privateEndpointConnections = DefineListProperty<PostgreSqlFlexibleServersPrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
         _state = DefineProperty<PostgreSqlFlexibleServerState>("State", ["properties", "state"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }

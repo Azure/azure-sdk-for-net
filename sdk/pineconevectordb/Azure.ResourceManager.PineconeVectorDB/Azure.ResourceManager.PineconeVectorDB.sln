@@ -7,8 +7,6 @@ Project("{3B7CC8EB-09B2-45C1-BB53-4AD0DBE5A3AB}") = "Azure.ResourceManager.Pinec
 EndProject
 Project("{3B7CC8EB-09B2-45C1-BB53-4AD0DBE5A3AB}") = "Azure.ResourceManager.PineconeVectorDB.Tests", "tests\Azure.ResourceManager.PineconeVectorDB.Tests.csproj", "{7CA6E80F-D36B-41B2-8F7F-72CD33715F84}"
 EndProject
-Project("{3B7CC8EB-09B2-45C1-BB53-4AD0DBE5A3AB}") = "Azure.ResourceManager.PineconeVectorDB.Samples", "samples\Azure.ResourceManager.PineconeVectorDB.Samples.csproj", "{B6567C1C-FDD3-4877-B04C-661E5CEA8C31}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

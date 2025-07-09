@@ -18,12 +18,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="lowKey">
         /// The lower bound of the partition key range that
         /// should be split between the partition ‘Count’
-        ///
         /// </param>
         /// <param name="highKey">
         /// The upper bound of the partition key range that
         /// should be split between the partition ‘Count’
-        ///
         /// </param>
         public UniformInt64RangePartitionScheme(int count, long lowKey, long highKey)
         {
@@ -34,18 +32,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UniformInt64RangePartitionScheme"/>. </summary>
-        /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
+        /// <param name="partitionScheme"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="lowKey">
         /// The lower bound of the partition key range that
         /// should be split between the partition ‘Count’
-        ///
         /// </param>
         /// <param name="highKey">
         /// The upper bound of the partition key range that
         /// should be split between the partition ‘Count’
-        ///
         /// </param>
         internal UniformInt64RangePartitionScheme(PartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData, int count, long lowKey, long highKey) : base(partitionScheme, serializedAdditionalRawData)
         {
@@ -65,13 +61,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary>
         /// The lower bound of the partition key range that
         /// should be split between the partition ‘Count’
-        ///
         /// </summary>
         public long LowKey { get; set; }
         /// <summary>
         /// The upper bound of the partition key range that
         /// should be split between the partition ‘Count’
-        ///
         /// </summary>
         public long HighKey { get; set; }
     }

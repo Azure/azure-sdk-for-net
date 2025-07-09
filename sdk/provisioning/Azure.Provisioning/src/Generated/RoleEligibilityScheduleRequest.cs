@@ -264,6 +264,7 @@ public partial class RoleEligibilityScheduleRequest : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _condition = DefineProperty<string>("Condition", ["properties", "condition"]);
         _conditionVersion = DefineProperty<string>("ConditionVersion", ["properties", "conditionVersion"]);

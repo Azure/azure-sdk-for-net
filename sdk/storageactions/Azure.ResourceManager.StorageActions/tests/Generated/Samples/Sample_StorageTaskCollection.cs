@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.StorageActions.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutStorageTask()
         {
-            // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/PutStorageTask.json
-            // this example is just showing the usage of "StorageTasks_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-01-01/storageTasksCrud/PutStorageTask.json
+            // this example is just showing the usage of "StorageTask_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -75,8 +75,8 @@ OnFailure = OnFailureAction.Break,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetStorageTask()
         {
-            // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/GetStorageTask.json
-            // this example is just showing the usage of "StorageTasks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-01-01/storageTasksCrud/GetStorageTask.json
+            // this example is just showing the usage of "StorageTask_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -108,8 +108,8 @@ OnFailure = OnFailureAction.Break,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListStorageTasksByResourceGroup()
         {
-            // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksList/ListStorageTasksByResourceGroup.json
-            // this example is just showing the usage of "StorageTasks_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-01-01/storageTasksList/ListStorageTasksByResourceGroup.json
+            // this example is just showing the usage of "StorageTask_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -143,8 +143,8 @@ OnFailure = OnFailureAction.Break,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetStorageTask()
         {
-            // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/GetStorageTask.json
-            // this example is just showing the usage of "StorageTasks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-01-01/storageTasksCrud/GetStorageTask.json
+            // this example is just showing the usage of "StorageTask_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -172,8 +172,8 @@ OnFailure = OnFailureAction.Break,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetStorageTask()
         {
-            // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/GetStorageTask.json
-            // this example is just showing the usage of "StorageTasks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-01-01/storageTasksCrud/GetStorageTask.json
+            // this example is just showing the usage of "StorageTask_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

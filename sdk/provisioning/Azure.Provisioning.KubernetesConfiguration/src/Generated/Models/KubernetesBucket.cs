@@ -104,12 +104,12 @@ public partial class KubernetesBucket : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _uri = DefineProperty<Uri>("Uri", ["url"]);
-        _bucketName = DefineProperty<string>("BucketName", ["bucketName"]);
-        _useInsecureCommunication = DefineProperty<bool>("UseInsecureCommunication", ["insecure"]);
-        _timeoutInSeconds = DefineProperty<long>("TimeoutInSeconds", ["timeoutInSeconds"]);
-        _syncIntervalInSeconds = DefineProperty<long>("SyncIntervalInSeconds", ["syncIntervalInSeconds"]);
-        _accessKey = DefineProperty<string>("AccessKey", ["accessKey"]);
-        _localAuthRef = DefineProperty<string>("LocalAuthRef", ["localAuthRef"]);
+        _uri = DefineProperty<Uri>("Uri", ["Uri"]);
+        _bucketName = DefineProperty<string>("BucketName", ["BucketName"]);
+        _useInsecureCommunication = DefineProperty<bool>("UseInsecureCommunication", ["UseInsecureCommunication"]);
+        _timeoutInSeconds = DefineProperty<long>("TimeoutInSeconds", ["TimeoutInSeconds"]);
+        _syncIntervalInSeconds = DefineProperty<long>("SyncIntervalInSeconds", ["SyncIntervalInSeconds"]);
+        _accessKey = DefineProperty<string>("AccessKey", ["AccessKey"]);
+        _localAuthRef = DefineProperty<string>("LocalAuthRef", ["LocalAuthRef"]);
     }
 }

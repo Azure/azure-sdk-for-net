@@ -43,9 +43,8 @@ public partial class ContainerAppManagedEnvironment : ProvisionableResource
     private BicepValue<AzureLocation>? _location;
 
     /// <summary>
-    /// Cluster configuration which enables the log daemon to export
-    /// app logs to a destination. Currently only
-    /// &quot;log-analytics&quot; is             supported
+    /// Cluster configuration which enables the log daemon to export app logs
+    /// to configured destination.
     /// </summary>
     public ContainerAppLogsConfiguration AppLogsConfiguration 
     {
@@ -85,6 +84,17 @@ public partial class ContainerAppManagedEnvironment : ProvisionableResource
         set { Initialize(); _daprAIInstrumentationKey!.Assign(value); }
     }
     private BicepValue<string>? _daprAIInstrumentationKey;
+
+    /// <summary>
+    /// Managed identities for the Managed Environment to interact with other
+    /// Azure services without maintaining any secrets or credentials in code.
+    /// </summary>
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// Name of the platform-managed resource group created for the Managed
@@ -261,7 +271,7 @@ public partial class ContainerAppManagedEnvironment : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironment.</param>
     public ContainerAppManagedEnvironment(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/managedEnvironments", resourceVersion ?? "2024-03-01")
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments", resourceVersion ?? "2025-01-01")
     {
     }
 
@@ -277,6 +287,7 @@ public partial class ContainerAppManagedEnvironment : ProvisionableResource
         _customDomainConfiguration = DefineModelProperty<ContainerAppCustomDomainConfiguration>("CustomDomainConfiguration", ["properties", "customDomainConfiguration"]);
         _daprAIConnectionString = DefineProperty<string>("DaprAIConnectionString", ["properties", "daprAIConnectionString"]);
         _daprAIInstrumentationKey = DefineProperty<string>("DaprAIInstrumentationKey", ["properties", "daprAIInstrumentationKey"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _infrastructureResourceGroup = DefineProperty<string>("InfrastructureResourceGroup", ["properties", "infrastructureResourceGroup"]);
         _isEnabled = DefineProperty<bool>("IsEnabled", ["properties", "peerTrafficConfiguration", "encryption", "enabled"]);
         _isMtlsEnabled = DefineProperty<bool>("IsMtlsEnabled", ["properties", "peerAuthentication", "mtls", "enabled"]);
@@ -301,6 +312,11 @@ public partial class ContainerAppManagedEnvironment : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-01-01.
+        /// </summary>
+        public static readonly string V2025_01_01 = "2025-01-01";
+
         /// <summary>
         /// 2024-03-01.
         /// </summary>

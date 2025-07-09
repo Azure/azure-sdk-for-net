@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Marke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Marketplace.Tests", "tests\Azure.ResourceManager.Marketplace.Tests.csproj", "{979A70DE-D021-4C54-B5E8-9804FB83F67C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Marketplace.Samples", "samples\Azure.ResourceManager.Marketplace.Samples.csproj", "{C36309D7-0416-4BAC-8F44-BBFC7458076E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

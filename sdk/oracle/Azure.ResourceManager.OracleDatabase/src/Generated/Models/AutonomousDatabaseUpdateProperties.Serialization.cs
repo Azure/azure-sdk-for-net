@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string displayName = default;
             bool? isAutoScalingEnabled = default;
             bool? isAutoScalingForStorageEnabled = default;
-            string peerDBId = default;
+            string peerDbId = default;
             bool? isLocalDataGuardEnabled = default;
             bool? isMtlsConnectionRequired = default;
             OracleLicenseModel? licenseModel = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("peerDbId"u8))
                 {
-                    peerDBId = property.Value.GetString();
+                    peerDbId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isLocalDataGuardEnabled"u8))
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 isAutoScalingEnabled,
                 isAutoScalingForStorageEnabled,
-                peerDBId,
+                peerDbId,
                 isLocalDataGuardEnabled,
                 isMtlsConnectionRequired,
                 licenseModel,

@@ -47,7 +47,7 @@ namespace Azure.Compute.Batch
 
         /// <summary> Initializes a new instance of <see cref="BatchJobSchedulingError"/>. </summary>
         /// <param name="category"> The category of the Job scheduling error. </param>
-        internal BatchJobSchedulingError(ErrorCategory category)
+        internal BatchJobSchedulingError(BatchErrorSourceCategory category)
         {
             Category = category;
             Details = new ChangeTrackingList<NameValuePair>();
@@ -59,7 +59,7 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the Job scheduling error, intended to be suitable for display in a user interface. </param>
         /// <param name="details"> A list of additional error details related to the scheduling error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobSchedulingError(ErrorCategory category, string code, string message, IReadOnlyList<NameValuePair> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchJobSchedulingError(BatchErrorSourceCategory category, string code, string message, IReadOnlyList<NameValuePair> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Code = code;
@@ -74,7 +74,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> The category of the Job scheduling error. </summary>
-        public ErrorCategory Category { get; }
+        public BatchErrorSourceCategory Category { get; }
         /// <summary> An identifier for the Job scheduling error. Codes are invariant and are intended to be consumed programmatically. </summary>
         public string Code { get; }
         /// <summary> A message describing the Job scheduling error, intended to be suitable for display in a user interface. </summary>

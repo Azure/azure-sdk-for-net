@@ -30,6 +30,7 @@ OpenApiToolDefinition openapiTool = new(
     defaultParams: ["format"]
 );
 
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
@@ -49,6 +50,7 @@ OpenApiToolDefinition openapiTool = new(
     defaultParams: [ "format" ]
 );
 
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
@@ -163,12 +165,14 @@ await foreach (PersistentThreadMessage threadMessage in messages)
 
 Synchronous sample:
 ```C# Snippet:AgentsOpenAPISync_Cleanup
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 client.Threads.DeleteThread(thread.Id);
 client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsOpenAPI_Cleanup
+// NOTE: Comment out these two lines if you plan to reuse the agent later.
 await client.Threads.DeleteThreadAsync(thread.Id);
 await client.Administration.DeleteAgentAsync(agent.Id);
 ```

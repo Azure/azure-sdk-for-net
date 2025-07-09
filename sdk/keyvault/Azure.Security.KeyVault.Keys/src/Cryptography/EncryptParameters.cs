@@ -113,16 +113,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             new EncryptParameters(EncryptionAlgorithm.A256Cbc, plaintext, iv, null);
 
         /// <summary>
-        /// Creates an instance of the <see cref="EncryptParameters"/> class using the <see cref="EncryptionAlgorithm.CkmAesKeyWrap"/> encryption algorithm.
-        /// </summary>
-        /// <param name="plaintext">The text to encrypt.</param>
-        /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
-        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.CkmAesKeyWrap"/> encryption algorithm.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptParameters CkmAesKeyWrapParameters(byte[] plaintext, byte[] iv = null) =>
-            new EncryptParameters(EncryptionAlgorithm.CkmAesKeyWrap, plaintext, iv, null);
-
-        /// <summary>
         /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A128CbcPad"/> encryption algorithm with PKCS#7 padding.
         /// </summary>
         /// <param name="plaintext">The plaintext to encrypt.</param>
@@ -160,16 +150,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
         public static EncryptParameters A256CbcPadParameters(byte[] plaintext, byte[] iv = null) =>
             new EncryptParameters(EncryptionAlgorithm.A256CbcPad, plaintext, iv, null);
-
-        /// <summary>
-        /// Creates an instance of the <see cref="EncryptParameters"/> class using the <see cref="EncryptionAlgorithm.CkmAesKeyWrapPad"/> encryption algorithm with PKCS#7 padding.
-        /// </summary>
-        /// <param name="plaintext">The plain text to encrypt.</param>
-        /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
-        /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.CkmAesKeyWrapPad"/> encryption algorithm.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
-        public static EncryptParameters CkmAesKeyWrapPadParameters(byte[] plaintext, byte[] iv = null) =>
-            new EncryptParameters(EncryptionAlgorithm.CkmAesKeyWrapPad, plaintext, iv, null);
 
         internal EncryptParameters(EncryptionAlgorithm algorithm, byte[] plaintext) :
             this(algorithm, plaintext, null, null)

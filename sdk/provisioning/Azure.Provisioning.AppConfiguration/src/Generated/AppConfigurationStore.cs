@@ -53,6 +53,17 @@ public partial class AppConfigurationStore : ProvisionableResource
     private BicepValue<AppConfigurationCreateMode>? _createMode;
 
     /// <summary>
+    /// Property specifying the configuration of data plane proxy for Azure
+    /// Resource Manager (ARM).
+    /// </summary>
+    public AppConfigurationDataPlaneProxyProperties DataPlaneProxy 
+    {
+        get { Initialize(); return _dataPlaneProxy!; }
+        set { Initialize(); AssignOrReplace(ref _dataPlaneProxy, value); }
+    }
+    private AppConfigurationDataPlaneProxyProperties? _dataPlaneProxy;
+
+    /// <summary>
     /// Disables all authentication methods other than AAD authentication.
     /// </summary>
     public BicepValue<bool> DisableLocalAuth 
@@ -201,7 +212,7 @@ public partial class AppConfigurationStore : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the AppConfigurationStore.</param>
     public AppConfigurationStore(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores", resourceVersion ?? "2024-05-01")
+        : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores", resourceVersion ?? "2024-06-01")
     {
     }
 
@@ -213,6 +224,7 @@ public partial class AppConfigurationStore : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _createMode = DefineProperty<AppConfigurationCreateMode>("CreateMode", ["properties", "createMode"]);
+        _dataPlaneProxy = DefineModelProperty<AppConfigurationDataPlaneProxyProperties>("DataPlaneProxy", ["properties", "dataPlaneProxy"]);
         _disableLocalAuth = DefineProperty<bool>("DisableLocalAuth", ["properties", "disableLocalAuth"]);
         _enablePurgeProtection = DefineProperty<bool>("EnablePurgeProtection", ["properties", "enablePurgeProtection"]);
         _encryptionKeyVaultProperties = DefineModelProperty<AppConfigurationKeyVaultProperties>("EncryptionKeyVaultProperties", ["properties", "encryption", "keyVaultProperties"]);
@@ -234,6 +246,11 @@ public partial class AppConfigurationStore : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-06-01.
+        /// </summary>
+        public static readonly string V2024_06_01 = "2024-06-01";
+
         /// <summary>
         /// 2024-05-01.
         /// </summary>

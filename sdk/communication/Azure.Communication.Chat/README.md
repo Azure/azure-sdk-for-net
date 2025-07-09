@@ -65,7 +65,14 @@ Once you initialized a `ChatClient` class, you can do the following chat operati
 
 ### Create a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
-CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
+CreateChatThreadOptions createChatThreadOptions = new CreateChatThreadOptions("Hello world!");
+
+createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
+createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
+
+createChatThreadOptions.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(40);
+
+CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
 ChatThreadProperties chatThread = createChatThreadResult.ChatThread;
 ```
 ### Get a thread
@@ -85,9 +92,14 @@ Once you initialized a `ChatThreadClient` class, you can do the following chat o
 
 ### Update a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread_KeyConcepts
-chatThreadClient.UpdateTopic(topic: "Launch meeting");
-```
+UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new UpdateChatThreadPropertiesOptions();
+updateChatThreadPropertiesOptions.Topic = "Launch meeting";
+updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
 
+updateChatThreadPropertiesOptions.RetentionPolicy = ChatRetentionPolicy.None();
+
+await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
+```
 ### Send a message
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage_KeyConcepts
 SendChatMessageResult sendChatMessageResult = chatThreadClient.SendMessage("Let's meet at 11am");
@@ -179,7 +191,20 @@ var chatParticipant = new ChatParticipant(identifier: kimberly)
 {
     DisplayName = "Kim"
 };
-CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
+
+chatParticipant.Metadata.Add("MetadataKey1", "MetadataValue1");
+chatParticipant.Metadata.Add("MetadataKey2", "MetadataValue2");
+
+CreateChatThreadOptions createChatThreadOptions = new CreateChatThreadOptions("Hello world!");
+
+createChatThreadOptions.Participants.Add(chatParticipant);
+
+createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
+createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
+
+createChatThreadOptions.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(60);
+
+CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
 string threadId = createChatThreadResult.ChatThread.Id;
 ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
 ```
@@ -215,11 +240,15 @@ await chatClient.DeleteChatThreadAsync(threadId);
 
 ### Update a thread
 
-Use `UpdateTopic` to update the chat thread topic.
-- `topic` is used to describe the updated topic for the thread.
-
+Use `UpdatePropertiesAsync` to update the chat thread topic or metadata.
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
-await chatThreadClient.UpdateTopicAsync(topic: "new topic !");
+UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new UpdateChatThreadPropertiesOptions();
+updateChatThreadPropertiesOptions.Topic = "new topic !";
+updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
+
+updateChatThreadPropertiesOptions.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(60);
+
+await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
 ```
 
 ## Message Operations
@@ -376,12 +405,12 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [coc_contact]: mailto:opencode@microsoft.com
 [nuget]: https://www.nuget.org/
 [netstandars2mappings]:https://github.com/dotnet/standard/blob/master/docs/versions.md
-[useraccesstokens]:https://learn.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
-[communication_resource_docs]: https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
-[communication_resource_create_portal]:  https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
-[communication_resource_create_power_shell]: https://learn.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
-[communication_resource_create_net]: https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
-[nextsteps]:https://learn.microsoft.com/azure/communication-services/quickstarts/chat/get-started?pivots=programming-language-csharp
+[useraccesstokens]:https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
+[communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
+[communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
+[nextsteps]:https://docs.microsoft.com/azure/communication-services/quickstarts/chat/get-started?pivots=programming-language-csharp
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Chat/src
-[product_docs]: https://learn.microsoft.com/azure/communication-services/overview
+[product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [package]: https://www.nuget.org/packages/Azure.Communication.Chat

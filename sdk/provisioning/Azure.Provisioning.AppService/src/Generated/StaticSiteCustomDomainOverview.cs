@@ -132,7 +132,7 @@ public partial class StaticSiteCustomDomainOverview : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteCustomDomainOverview.</param>
     public StaticSiteCustomDomainOverview(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/staticSites/customDomains", resourceVersion ?? "2024-04-01")
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/customDomains", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -160,6 +160,11 @@ public partial class StaticSiteCustomDomainOverview : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
         /// <summary>
         /// 2024-04-01.
         /// </summary>

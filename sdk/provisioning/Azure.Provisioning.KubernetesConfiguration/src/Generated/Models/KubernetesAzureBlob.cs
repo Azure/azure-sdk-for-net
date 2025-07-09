@@ -123,14 +123,14 @@ public partial class KubernetesAzureBlob : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _uri = DefineProperty<Uri>("Uri", ["url"]);
-        _containerName = DefineProperty<string>("ContainerName", ["containerName"]);
-        _timeoutInSeconds = DefineProperty<long>("TimeoutInSeconds", ["timeoutInSeconds"]);
-        _syncIntervalInSeconds = DefineProperty<long>("SyncIntervalInSeconds", ["syncIntervalInSeconds"]);
-        _servicePrincipal = DefineModelProperty<KubernetesServicePrincipal>("ServicePrincipal", ["servicePrincipal"]);
-        _accountKey = DefineProperty<string>("AccountKey", ["accountKey"]);
-        _sasToken = DefineProperty<string>("SasToken", ["sasToken"]);
-        _managedIdentityClientId = DefineProperty<Guid>("ManagedIdentityClientId", ["managedIdentity", "clientId"]);
-        _localAuthRef = DefineProperty<string>("LocalAuthRef", ["localAuthRef"]);
+        _uri = DefineProperty<Uri>("Uri", ["Uri"]);
+        _containerName = DefineProperty<string>("ContainerName", ["ContainerName"]);
+        _timeoutInSeconds = DefineProperty<long>("TimeoutInSeconds", ["TimeoutInSeconds"]);
+        _syncIntervalInSeconds = DefineProperty<long>("SyncIntervalInSeconds", ["SyncIntervalInSeconds"]);
+        _servicePrincipal = DefineModelProperty<KubernetesServicePrincipal>("ServicePrincipal", ["ServicePrincipal"]);
+        _accountKey = DefineProperty<string>("AccountKey", ["AccountKey"]);
+        _sasToken = DefineProperty<string>("SasToken", ["SasToken"]);
+        _managedIdentityClientId = DefineProperty<Guid>("ManagedIdentityClientId", ["ManagedIdentityClientId"]);
+        _localAuthRef = DefineProperty<string>("LocalAuthRef", ["LocalAuthRef"]);
     }
 }

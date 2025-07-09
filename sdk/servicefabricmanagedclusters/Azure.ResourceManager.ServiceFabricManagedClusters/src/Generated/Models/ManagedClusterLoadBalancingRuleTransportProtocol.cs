@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string TcpValue = "tcp";
         private const string UdpValue = "udp";
 
-        /// <summary> tcp. </summary>
+        /// <summary> Transport protocol is TCP. </summary>
         public static ManagedClusterLoadBalancingRuleTransportProtocol Tcp { get; } = new ManagedClusterLoadBalancingRuleTransportProtocol(TcpValue);
-        /// <summary> udp. </summary>
+        /// <summary> Transport protocol is UDP. </summary>
         public static ManagedClusterLoadBalancingRuleTransportProtocol Udp { get; } = new ManagedClusterLoadBalancingRuleTransportProtocol(UdpValue);
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalancingRuleTransportProtocol"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterLoadBalancingRuleTransportProtocol left, ManagedClusterLoadBalancingRuleTransportProtocol right) => left.Equals(right);

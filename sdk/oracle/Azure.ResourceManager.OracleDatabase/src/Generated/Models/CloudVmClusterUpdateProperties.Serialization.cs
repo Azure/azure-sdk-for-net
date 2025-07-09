@@ -39,6 +39,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("storageSizeInGbs"u8);
                 writer.WriteNumberValue(StorageSizeInGbs.Value);
             }
+            if (Optional.IsCollectionDefined(FileSystemConfigurationDetails))
+            {
+                writer.WritePropertyName("fileSystemConfigurationDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in FileSystemConfigurationDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(DataStorageSizeInTbs))
             {
                 writer.WritePropertyName("dataStorageSizeInTbs"u8);
@@ -89,17 +99,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(ComputeNodes))
+            if (Optional.IsCollectionDefined(ComputeNodeOcids))
             {
                 writer.WritePropertyName("computeNodes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ComputeNodes)
+                foreach (var item in ComputeNodeOcids)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -142,6 +147,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             int? storageSizeInGbs = default;
+            IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails = default;
             double? dataStorageSizeInTbs = default;
             int? dbNodeStorageSizeInGbs = default;
             int? memorySizeInGbs = default;
@@ -151,7 +157,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             OracleLicenseModel? licenseModel = default;
             DiagnosticCollectionConfig dataCollectionOptions = default;
             string displayName = default;
-            IList<ResourceIdentifier> computeNodes = default;
+            IList<string> computeNodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,6 +169,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                         continue;
                     }
                     storageSizeInGbs = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("fileSystemConfigurationDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FileSystemConfigurationDetails> array = new List<FileSystemConfigurationDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.FileSystemConfigurationDetails.DeserializeFileSystemConfigurationDetails(item, options));
+                    }
+                    fileSystemConfigurationDetails = array;
                     continue;
                 }
                 if (property.NameEquals("dataStorageSizeInTbs"u8))
@@ -253,17 +273,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
+                        array.Add(item.GetString());
                     }
                     computeNodes = array;
                     continue;
@@ -276,6 +289,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new CloudVmClusterUpdateProperties(
                 storageSizeInGbs,
+                fileSystemConfigurationDetails ?? new ChangeTrackingList<FileSystemConfigurationDetails>(),
                 dataStorageSizeInTbs,
                 dbNodeStorageSizeInGbs,
                 memorySizeInGbs,
@@ -285,7 +299,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 licenseModel,
                 dataCollectionOptions,
                 displayName,
-                computeNodes ?? new ChangeTrackingList<ResourceIdentifier>(),
+                computeNodes ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 

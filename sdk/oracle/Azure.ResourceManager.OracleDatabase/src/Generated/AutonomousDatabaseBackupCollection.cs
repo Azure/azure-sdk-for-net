@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseBackups_CreateOrUpdate</description>
+        /// <description>AutonomousDatabaseBackup_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseBackups_CreateOrUpdate</description>
+        /// <description>AutonomousDatabaseBackup_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseBackups_Get</description>
+        /// <description>AutonomousDatabaseBackup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseBackups_Get</description>
+        /// <description>AutonomousDatabaseBackup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseBackups_ListByAutonomousDatabase</description>
+        /// <description>AutonomousDatabaseBackup_ListByParent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -264,8 +264,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> An async collection of <see cref="AutonomousDatabaseBackupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutonomousDatabaseBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _autonomousDatabaseBackupRestClient.CreateListByAutonomousDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autonomousDatabaseBackupRestClient.CreateListByAutonomousDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _autonomousDatabaseBackupRestClient.CreateListByParentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autonomousDatabaseBackupRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutonomousDatabaseBackupResource(Client, AutonomousDatabaseBackupData.DeserializeAutonomousDatabaseBackupData(e)), _autonomousDatabaseBackupClientDiagnostics, Pipeline, "AutonomousDatabaseBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -278,11 +278,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseBackups_ListByAutonomousDatabase</description>
+        /// <description>AutonomousDatabaseBackup_ListByParent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> A collection of <see cref="AutonomousDatabaseBackupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutonomousDatabaseBackupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _autonomousDatabaseBackupRestClient.CreateListByAutonomousDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autonomousDatabaseBackupRestClient.CreateListByAutonomousDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _autonomousDatabaseBackupRestClient.CreateListByParentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autonomousDatabaseBackupRestClient.CreateListByParentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutonomousDatabaseBackupResource(Client, AutonomousDatabaseBackupData.DeserializeAutonomousDatabaseBackupData(e)), _autonomousDatabaseBackupClientDiagnostics, Pipeline, "AutonomousDatabaseBackupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseBackups_Get</description>
+        /// <description>AutonomousDatabaseBackup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,11 +351,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseBackups_Get</description>
+        /// <description>AutonomousDatabaseBackup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -394,11 +394,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseBackups_Get</description>
+        /// <description>AutonomousDatabaseBackup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -439,11 +439,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AutonomousDatabaseBackups_Get</description>
+        /// <description>AutonomousDatabaseBackup_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

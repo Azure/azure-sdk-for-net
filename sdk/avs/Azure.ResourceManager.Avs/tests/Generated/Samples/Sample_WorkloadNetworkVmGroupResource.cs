@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetVMGroup()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetVMGroup.json
-            // this example is just showing the usage of "WorkloadNetworks_GetVmGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetVMGroup.json
+            // this example is just showing the usage of "WorkloadNetworkVMGroup_GetVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_WorkloadNetworksDeleteVMGroup()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_DeleteVMGroup.json
-            // this example is just showing the usage of "WorkloadNetworks_DeleteVmGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_DeleteVMGroup.json
+            // this example is just showing the usage of "WorkloadNetworkVMGroup_DeleteVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_WorkloadNetworksUpdateVMGroup()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_UpdateVMGroup.json
-            // this example is just showing the usage of "WorkloadNetworks_UpdateVmGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/WorkloadNetworks_UpdateVMGroup.json
+            // this example is just showing the usage of "WorkloadNetworkVMGroup_UpdateVmGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -95,11 +95,7 @@ namespace Azure.ResourceManager.Avs.Samples
             WorkloadNetworkVmGroupResource workloadNetworkVmGroup = client.GetWorkloadNetworkVmGroupResource(workloadNetworkVmGroupResourceId);
 
             // invoke the operation
-            WorkloadNetworkVmGroupData data = new WorkloadNetworkVmGroupData
-            {
-                Members = { "564d43da-fefc-2a3b-1d92-42855622fa50" },
-                Revision = 1L,
-            };
+            WorkloadNetworkVmGroupData data = new WorkloadNetworkVmGroupData();
             ArmOperation<WorkloadNetworkVmGroupResource> lro = await workloadNetworkVmGroup.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkVmGroupResource result = lro.Value;
 

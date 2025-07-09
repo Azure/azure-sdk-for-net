@@ -55,12 +55,14 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> Initializes a new instance of <see cref="TerraformExportResult"/>. </summary>
         /// <param name="configuration"> The Terraform configuration content. </param>
+        /// <param name="import"> The Terraform import blocks for the current export, which users can use to run "terraform plan" with to import the resources. </param>
         /// <param name="skippedResourceIds"> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </param>
         /// <param name="errors"> A list of errors derived during exporting each resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TerraformExportResult(string configuration, IReadOnlyList<ResourceIdentifier> skippedResourceIds, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TerraformExportResult(string configuration, string import, IReadOnlyList<ResourceIdentifier> skippedResourceIds, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Configuration = configuration;
+            Import = import;
             SkippedResourceIds = skippedResourceIds;
             Errors = errors;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -68,6 +70,8 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> The Terraform configuration content. </summary>
         public string Configuration { get; }
+        /// <summary> The Terraform import blocks for the current export, which users can use to run "terraform plan" with to import the resources. </summary>
+        public string Import { get; }
         /// <summary> A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform. </summary>
         public IReadOnlyList<ResourceIdentifier> SkippedResourceIds { get; }
         /// <summary> A list of errors derived during exporting each resource. </summary>

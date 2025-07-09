@@ -40,7 +40,7 @@ internal class ServiceBusSubscriptionFeature : AzureProjectFeature
         string topidId = ServiceBusTopicFeature.CreateId(_namespaceName, _topicName);
         ServiceBusTopic serviceBusTopic = infrastructure.GetConstruct<ServiceBusTopic>(topidId);
 
-        var subscription = new ServiceBusSubscription(Name, "2021-11-01")
+        var subscription = new ServiceBusSubscription(Name, ServiceBusSubscription.ResourceVersions.V2021_11_01)
         {
             Name = Name,
             Parent = serviceBusTopic,

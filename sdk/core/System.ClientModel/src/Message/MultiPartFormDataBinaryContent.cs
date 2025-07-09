@@ -15,9 +15,9 @@ namespace System.ClientModel;
 public class MultiPartFormDataBinaryContent : BinaryContent
 {
     private const string ApplicationJsonContentType = "application/json";
-    private readonly MultipartFormDataContent _multipartContent;
     private static readonly Random _random = new Random();
     private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
+    private readonly MultipartFormDataContent _multipartContent;
 
     /// <summary>
     /// Creates an instance of <see cref="MultiPartFormDataBinaryContent"/> with a randomly generated boundary.
@@ -31,17 +31,7 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     public MultiPartFormDataBinaryContent(string boundary)
     {
         _multipartContent = new MultipartFormDataContent(boundary);
-    }
-
-    /// <summary>
-    /// Gets the content type of the multipart form data content, which includes the boundary.
-    /// </summary>
-    public override string ContentType
-    {
-        get
-        {
-            return _multipartContent.Headers.ContentType!.ToString();
-        }
+        MediaType = _multipartContent.Headers.ContentType!.ToString();
     }
 
     // CUSTOM: Add filepart to the multipart content.
@@ -56,9 +46,9 @@ public class MultiPartFormDataBinaryContent : BinaryContent
         Argument.AssertNotNull(fileContent, nameof(fileContent));
 
         HttpContent content = new HttpContentAdapter(fileContent);
-        if (fileContent.ContentType != null)
+        if (fileContent.MediaType != null)
         {
-            content.Headers.ContentType = MediaTypeHeaderValue.Parse(fileContent.ContentType);
+            content.Headers.ContentType = MediaTypeHeaderValue.Parse(fileContent.MediaType);
         }
 
         Add(content, name, fileContent.Filename);

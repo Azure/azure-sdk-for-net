@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CognitiveServicesProjectConnectionCollection : ArmCollection, IEnumerable<CognitiveServicesProjectConnectionResource>, IAsyncEnumerable<CognitiveServicesProjectConnectionResource>
     {
-        private readonly ClientDiagnostics _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics;
-        private readonly ProjectConnectionRestOperations _cognitiveServicesProjectConnectionProjectConnectionRestClient;
+        private readonly ClientDiagnostics _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics;
+        private readonly ProjectConnectionsRestOperations _cognitiveServicesProjectConnectionProjectConnectionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="CognitiveServicesProjectConnectionCollection"/> class for mocking. </summary>
         protected CognitiveServicesProjectConnectionCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CognitiveServicesProjectConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesProjectConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CognitiveServicesProjectConnectionResource.ResourceType, out string cognitiveServicesProjectConnectionProjectConnectionApiVersion);
-            _cognitiveServicesProjectConnectionProjectConnectionRestClient = new ProjectConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesProjectConnectionProjectConnectionApiVersion);
+            _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesProjectConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CognitiveServicesProjectConnectionResource.ResourceType, out string cognitiveServicesProjectConnectionProjectConnectionsApiVersion);
+            _cognitiveServicesProjectConnectionProjectConnectionsRestClient = new ProjectConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesProjectConnectionProjectConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Create</description>
+        /// <description>ProjectConnections_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.CreateOrUpdate");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesProjectConnectionProjectConnectionRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _cognitiveServicesProjectConnectionProjectConnectionRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, data);
+                var response = await _cognitiveServicesProjectConnectionProjectConnectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _cognitiveServicesProjectConnectionProjectConnectionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new CognitiveServicesArmOperation<CognitiveServicesProjectConnectionResource>(Response.FromValue(new CognitiveServicesProjectConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Create</description>
+        /// <description>ProjectConnections_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.CreateOrUpdate");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesProjectConnectionProjectConnectionRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, data, cancellationToken);
-                var uri = _cognitiveServicesProjectConnectionProjectConnectionRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, data);
+                var response = _cognitiveServicesProjectConnectionProjectConnectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, data, cancellationToken);
+                var uri = _cognitiveServicesProjectConnectionProjectConnectionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new CognitiveServicesArmOperation<CognitiveServicesProjectConnectionResource>(Response.FromValue(new CognitiveServicesProjectConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -162,11 +162,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Get</description>
+        /// <description>ProjectConnections_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.Get");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesProjectConnectionProjectConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _cognitiveServicesProjectConnectionProjectConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CognitiveServicesProjectConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -207,11 +207,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Get</description>
+        /// <description>ProjectConnections_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,11 +227,11 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.Get");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesProjectConnectionProjectConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken);
+                var response = _cognitiveServicesProjectConnectionProjectConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CognitiveServicesProjectConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -252,11 +252,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_List</description>
+        /// <description>ProjectConnections_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -271,9 +271,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesProjectConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CognitiveServicesProjectConnectionResource> GetAllAsync(string target = null, string category = null, bool? includeAll = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesProjectConnectionProjectConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, target, category, includeAll);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesProjectConnectionProjectConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, target, category, includeAll);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesProjectConnectionResource(Client, CognitiveServicesConnectionData.DeserializeCognitiveServicesConnectionData(e)), _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics, Pipeline, "CognitiveServicesProjectConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesProjectConnectionProjectConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, target, category, includeAll);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesProjectConnectionProjectConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, target, category, includeAll);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesProjectConnectionResource(Client, CognitiveServicesConnectionData.DeserializeCognitiveServicesConnectionData(e)), _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics, Pipeline, "CognitiveServicesProjectConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -285,11 +285,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_List</description>
+        /// <description>ProjectConnections_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -304,9 +304,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesProjectConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CognitiveServicesProjectConnectionResource> GetAll(string target = null, string category = null, bool? includeAll = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesProjectConnectionProjectConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, target, category, includeAll);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesProjectConnectionProjectConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, target, category, includeAll);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesProjectConnectionResource(Client, CognitiveServicesConnectionData.DeserializeCognitiveServicesConnectionData(e)), _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics, Pipeline, "CognitiveServicesProjectConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesProjectConnectionProjectConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, target, category, includeAll);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesProjectConnectionProjectConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, target, category, includeAll);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesProjectConnectionResource(Client, CognitiveServicesConnectionData.DeserializeCognitiveServicesConnectionData(e)), _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics, Pipeline, "CognitiveServicesProjectConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -318,11 +318,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Get</description>
+        /// <description>ProjectConnections_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -338,11 +338,11 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.Exists");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesProjectConnectionProjectConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cognitiveServicesProjectConnectionProjectConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -361,11 +361,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Get</description>
+        /// <description>ProjectConnections_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -381,11 +381,11 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.Exists");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesProjectConnectionProjectConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken);
+                var response = _cognitiveServicesProjectConnectionProjectConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -404,11 +404,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Get</description>
+        /// <description>ProjectConnections_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -424,11 +424,11 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.GetIfExists");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cognitiveServicesProjectConnectionProjectConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cognitiveServicesProjectConnectionProjectConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<CognitiveServicesProjectConnectionResource>(response.GetRawResponse());
                 return Response.FromValue(new CognitiveServicesProjectConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -449,11 +449,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProjectConnection_Get</description>
+        /// <description>ProjectConnections_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -469,11 +469,11 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _cognitiveServicesProjectConnectionProjectConnectionClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.GetIfExists");
+            using var scope = _cognitiveServicesProjectConnectionProjectConnectionsClientDiagnostics.CreateScope("CognitiveServicesProjectConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cognitiveServicesProjectConnectionProjectConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken);
+                var response = _cognitiveServicesProjectConnectionProjectConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<CognitiveServicesProjectConnectionResource>(response.GetRawResponse());
                 return Response.FromValue(new CognitiveServicesProjectConnectionResource(Client, response.Value), response.GetRawResponse());

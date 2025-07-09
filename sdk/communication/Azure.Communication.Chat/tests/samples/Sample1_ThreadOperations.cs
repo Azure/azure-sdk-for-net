@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Communication.Chat.Tests.samples
@@ -34,7 +35,20 @@ namespace Azure.Communication.Chat.Tests.samples
             {
                 DisplayName = "Kim"
             };
-            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
+
+            chatParticipant.Metadata.Add("MetadataKey1", "MetadataValue1");
+            chatParticipant.Metadata.Add("MetadataKey2", "MetadataValue2");
+
+            CreateChatThreadOptions createChatThreadOptions = new CreateChatThreadOptions("Hello world!");
+
+            createChatThreadOptions.Participants.Add(chatParticipant);
+
+            createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
+            createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
+
+            createChatThreadOptions.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(60);
+
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
             string threadId = createChatThreadResult.ChatThread.Id;
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
@@ -52,7 +66,13 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetThreads
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
-            await chatThreadClient.UpdateTopicAsync(topic: "new topic !");
+            UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new UpdateChatThreadPropertiesOptions();
+            updateChatThreadPropertiesOptions.Topic = "new topic !";
+            updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
+
+            updateChatThreadPropertiesOptions.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(60);
+
+            await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread

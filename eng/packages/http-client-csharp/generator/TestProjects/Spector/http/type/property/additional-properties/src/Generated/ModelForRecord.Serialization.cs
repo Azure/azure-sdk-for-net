@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 
 namespace _Type.Property.AdditionalProperties
 {
@@ -34,10 +32,5 @@ namespace _Type.Property.AdditionalProperties
         protected virtual ModelForRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<ModelForRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="modelForRecord"> The <see cref="ModelForRecord"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ModelForRecord modelForRecord) => throw null;
-
-        public static explicit operator ModelForRecord(Response result) => throw null;
     }
 }

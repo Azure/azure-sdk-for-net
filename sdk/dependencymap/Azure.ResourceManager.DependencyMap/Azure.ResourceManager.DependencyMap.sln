@@ -7,8 +7,6 @@ Project("{B42C2B35-50A7-4E88-8CEA-3131B26AA1F8}") = "Azure.ResourceManager.Depen
 EndProject
 Project("{B42C2B35-50A7-4E88-8CEA-3131B26AA1F8}") = "Azure.ResourceManager.DependencyMap.Tests", "tests\Azure.ResourceManager.DependencyMap.Tests.csproj", "{F136E09B-4688-46C2-8929-EAEE2DAED0D1}"
 EndProject
-Project("{B42C2B35-50A7-4E88-8CEA-3131B26AA1F8}") = "Azure.ResourceManager.DependencyMap.Samples", "samples\Azure.ResourceManager.DependencyMap.Samples.csproj", "{E603ACD3-CCE6-4680-B41C-B51DC858E9D3}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

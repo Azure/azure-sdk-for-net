@@ -16,11 +16,11 @@ namespace Azure.Communication.Chat
 {
     // for backward compatibility, keep the previous method signature which will accept `repeatability-request-id` as a parameter
     [CodeGenSuppress("CreateCreateChatThreadRequest", typeof(string), typeof(IEnumerable<ChatParticipantInternal>))]
-    [CodeGenSuppress("CreateChatThreadAsync", typeof(string), typeof(IEnumerable<ChatParticipantInternal>), typeof(CancellationToken))]
-    [CodeGenSuppress("CreateChatThread", typeof(string), typeof(IEnumerable<ChatParticipantInternal>), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateChatThreadAsync", typeof(string), typeof(IEnumerable<ChatParticipantInternal>), typeof(IDictionary<string, string>), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateChatThread", typeof(string), typeof(IEnumerable<ChatParticipantInternal>), typeof(IDictionary<string, string>), typeof(CancellationToken))]
     internal partial class ChatRestClient
     {
-        internal HttpMessage CreateCreateChatThreadRequest(string topic, string repeatabilityRequestId, IEnumerable<ChatParticipantInternal> participants)
+        internal HttpMessage CreateCreateChatThreadRequest(CreateChatThreadOptions options)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -30,17 +30,31 @@ namespace Azure.Communication.Chat
             uri.AppendPath("/chat/threads", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("repeatability-request-id", repeatabilityRequestId ?? Guid.NewGuid().ToString());
+            request.Headers.Add("repeatability-request-id", options.IdempotencyToken ?? Guid.NewGuid().ToString());
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            CreateChatThreadRequest createChatThreadRequest = new CreateChatThreadRequest(topic);
-            if (participants != null)
+            CreateChatThreadRequest createChatThreadRequest = new CreateChatThreadRequest(options.Topic);
+            if (options.Participants != null)
             {
-                foreach (var value in participants)
+                foreach (var value in options.Participants)
                 {
-                    createChatThreadRequest.Participants.Add(value);
+                    createChatThreadRequest.Participants.Add(value.ToChatParticipantInternal());
                 }
             }
+
+            if (options.Metadata != null)
+            {
+                foreach (var value in options.Metadata)
+                {
+                    createChatThreadRequest.Metadata.Add(value);
+                }
+            }
+
+            if (options.RetentionPolicy != null)
+            {
+                createChatThreadRequest.RetentionPolicy = ChatRetentionPolicyConverter.ConvertBack(options.RetentionPolicy);
+            }
+
             var model = createChatThreadRequest;
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -49,19 +63,17 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Creates a chat thread. </summary>
-        /// <param name="topic"> The chat thread topic. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
-        /// <param name="participants"> Participants to be added to the chat thread. </param>
+        /// <param name="options">The options to use for creating the chat thread.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
-        public async Task<Response<CreateChatThreadResultInternal>> CreateChatThreadAsync(string topic, string repeatabilityRequestId = null, IEnumerable<ChatParticipantInternal> participants = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options.Topic"/> is null. </exception>
+        public async Task<Response<CreateChatThreadResultInternal>> CreateChatThreadAsync(CreateChatThreadOptions options, CancellationToken cancellationToken = default)
         {
-            if (topic == null)
+            if (options?.Topic == null)
             {
-                throw new ArgumentNullException(nameof(topic));
+                throw new ArgumentNullException(nameof(options.Topic));
             }
 
-            using var message = CreateCreateChatThreadRequest(topic, repeatabilityRequestId, participants);
+            using var message = CreateCreateChatThreadRequest(options);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -78,19 +90,17 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Creates a chat thread. </summary>
-        /// <param name="topic"> The chat thread topic. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
-        /// <param name="participants"> Participants to be added to the chat thread. </param>
+        /// <param name="options">The options to use for creating the chat thread.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
-        public Response<CreateChatThreadResultInternal> CreateChatThread(string topic, string repeatabilityRequestId = null, IEnumerable<ChatParticipantInternal> participants = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options.Topic"/> is null. </exception>
+        public Response<CreateChatThreadResultInternal> CreateChatThread(CreateChatThreadOptions options, CancellationToken cancellationToken = default)
         {
-            if (topic == null)
+            if (options.Topic == null)
             {
-                throw new ArgumentNullException(nameof(topic));
+                throw new ArgumentNullException(nameof(options.Topic));
             }
 
-            using var message = CreateCreateChatThreadRequest(topic, repeatabilityRequestId, participants);
+            using var message = CreateCreateChatThreadRequest(options);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -132,7 +132,7 @@ function Set-ApiViewCommentForRelatedIssues {
   . ${PSScriptRoot}\..\common.ps1
   $issuesForCommit = $null
   try {
-    $issuesForCommit = Search-GitHubIssues -CommitHash $HeadCommitish
+    $issuesForCommit = Search-GitHubIssues -CommitHash $HeadCommitish -AuthToken $AuthToken
     if ($issuesForCommit.items.Count -eq 0) {
       LogInfo "No issues found for commit: $HeadCommitish"
       Write-Host "##vso[task.complete result=SucceededWithIssues;]DONE"

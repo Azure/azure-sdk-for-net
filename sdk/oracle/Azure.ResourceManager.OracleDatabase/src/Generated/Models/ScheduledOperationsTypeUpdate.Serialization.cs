@@ -34,11 +34,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(ScheduledOperationsTypeUpdate)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(DayOfWeek))
-            {
-                writer.WritePropertyName("dayOfWeek"u8);
-                writer.WriteObjectValue(DayOfWeek, options);
-            }
+            writer.WritePropertyName("dayOfWeek"u8);
+            writer.WriteObjectValue(DayOfWeek, options);
             if (Optional.IsDefined(AutoStartOn))
             {
                 writer.WritePropertyName("scheduledStartTime"u8);
@@ -86,7 +83,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            DayOfWeekUpdate dayOfWeek = default;
+            OracleDatabaseDayOfWeekUpdate dayOfWeek = default;
             DateTimeOffset? scheduledStartTime = default;
             DateTimeOffset? scheduledStopTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -95,11 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("dayOfWeek"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dayOfWeek = DayOfWeekUpdate.DeserializeDayOfWeekUpdate(property.Value, options);
+                    dayOfWeek = OracleDatabaseDayOfWeekUpdate.DeserializeOracleDatabaseDayOfWeekUpdate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scheduledStartTime"u8))

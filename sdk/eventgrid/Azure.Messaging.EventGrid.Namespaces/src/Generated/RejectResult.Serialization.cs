@@ -10,11 +10,10 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> The result of the Reject operation. </summary>
     public partial class RejectResult : IJsonModel<RejectResult>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -181,18 +180,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RejectResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="rejectResult"> The <see cref="RejectResult"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(RejectResult rejectResult)
-        {
-            if (rejectResult == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(rejectResult, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="RejectResult"/> from. </param>
         public static explicit operator RejectResult(Response result)

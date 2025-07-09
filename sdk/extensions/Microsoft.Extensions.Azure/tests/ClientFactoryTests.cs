@@ -251,7 +251,7 @@ namespace Azure.Core.Extensions.Tests
         [TestCase("tenantId1;tenantId2;;tenantId3")]
         [TestCase("tenantId1;tenantId2; ;tenantId3")]
         [TestCase("tenantId1; tenantId2; tenantId3")]
-        public void CreatesClientSecretCredentials_AdditionalTenants(string additionalTenants)
+        public void CreatesClientSecretCredentialsAdditionalTenants(string additionalTenants)
         {
             IConfiguration configuration = GetConfiguration(
                 new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
@@ -313,7 +313,7 @@ namespace Azure.Core.Extensions.Tests
         [TestCase("tenantId1;tenantId2;;tenantId3")]
         [TestCase("tenantId1;tenantId2; ;tenantId3")]
         [TestCase("tenantId1; tenantId2; tenantId3")]
-        public void CreatesAzurePipelinesCredential_AdditionalTenants(string additionalTenants)
+        public void CreatesAzurePipelinesCredentialAdditionalTenants(string additionalTenants)
         {
             IConfiguration configuration = GetConfiguration(
                 new KeyValuePair<string, string>("credential", "azurepipelines"),
@@ -349,7 +349,7 @@ namespace Azure.Core.Extensions.Tests
         [TestCase("", "ConfigurationTenantId", null, null)]
         [TestCase(null, "", "SomeServiceConnectionId", null)]
         [TestCase("", null, "", "SomeSystemAccessToken")]
-        public void CreatesAzurePipelinesCredential_InvalidConfig(string clientId, string tenantId, string serviceConnectionId, string systemAccessToken)
+        public void CreatesAzurePipelinesCredentialInvalidConfig(string clientId, string tenantId, string serviceConnectionId, string systemAccessToken)
         {
             IConfiguration configuration = GetConfiguration(
                 new KeyValuePair<string, string>("credential", "azurepipelines"),
@@ -367,6 +367,7 @@ namespace Azure.Core.Extensions.Tests
         public void CreatesDefaultAzureCredential(
             [Values(true, false)] bool additionalTenants,
             [Values(true, false)] bool clientId,
+            [Values(true, false)] bool managedIdentityClientId,
             [Values(true, false)] bool tenantId,
             [Values(true, false)] bool objectId,
             [Values(true, false)] bool resourceId)
@@ -381,6 +382,10 @@ namespace Azure.Core.Extensions.Tests
             if (clientId)
             {
                 configEntries.Add(new KeyValuePair<string, string>("clientId", "clientId"));
+            }
+            if (managedIdentityClientId)
+            {
+                configEntries.Add(new KeyValuePair<string, string>("managedIdentityClientId", "managedIdentityClientId"));
             }
             if (tenantId)
             {
@@ -397,17 +402,18 @@ namespace Azure.Core.Extensions.Tests
 
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(configEntries).Build();
 
-            // if both clientId and resourceId set, we expect an ArgumentException
+            // if multiple parameters for the managed identity are set, we expect an ArgumentException
             // We also expect an exception if objectId is set for DefaultAzureCredential, as it is only supported for ManagedIdentityCredential
-            if ((clientId && resourceId) || objectId)
+            if ((clientId && resourceId) || (managedIdentityClientId && resourceId) || objectId)
             {
                 Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
                 return;
             }
+
             var credential = ClientFactory.CreateCredential(configuration);
 
             // if all parameters were false we expect null
-            if (!additionalTenants && !clientId && !tenantId && !resourceId)
+            if (!additionalTenants && !clientId && !managedIdentityClientId && !tenantId && !resourceId)
             {
                 Assert.IsNull(credential);
                 return;
@@ -436,16 +442,25 @@ namespace Azure.Core.Extensions.Tests
             string managedIdentityId;
             int idType;
             ReflectIdAndType(miCredential, out managedIdentityId, out idType);
-            if (clientId)
+
+            // managedIdentityClientId takes precedence over clientId when both are present
+            if (managedIdentityClientId)
+            {
+                Assert.AreEqual("managedIdentityClientId", managedIdentityId);
+                Assert.AreEqual(1, idType); // 1 is the value for ClientId
+            }
+            else if (clientId)
             {
                 Assert.AreEqual("clientId", managedIdentityId);
                 Assert.AreEqual(1, idType); // 1 is the value for ClientId
             }
+
             if (resourceId)
             {
                 Assert.AreEqual(resourceIdValue.ToString(), managedIdentityId);
                 Assert.AreEqual(2, idType); // 2 is the value for ResourceId
             }
+
             if (objectId)
             {
                 Assert.AreEqual("objectId", managedIdentityId);
@@ -659,7 +674,7 @@ namespace Azure.Core.Extensions.Tests
         [TestCase("tenantId1;tenantId2;;tenantId3")]
         [TestCase("tenantId1;tenantId2; ;tenantId3")]
         [TestCase("tenantId1; tenantId2; tenantId3")]
-        public void CreatesWorkloadIdentityCredential_AdditionalTenants(string additionalTenants)
+        public void CreatesWorkloadIdentityCredentialAdditionalTenants(string additionalTenants)
         {
             IConfiguration configuration = GetConfiguration(
                 new KeyValuePair<string, string>("credential", "workloadidentity"),
@@ -689,6 +704,233 @@ namespace Azure.Core.Extensions.Tests
                 .ToList();
 
             Assert.AreEqual(expectedTenants, workloadIdentityCredential.AdditionallyAllowedTenantIds);
+        }
+
+        [Test]
+        public void CreatesManagedFederatedIdentityCredentialWithManagedIdentityClientId()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "managedidentityasfederatedidentity"),
+                new KeyValuePair<string, string>("tenantId", "TestTenantId"),
+                new KeyValuePair<string, string>("clientId", "TestClientId"),
+                new KeyValuePair<string, string>("managedIdentityClientId", "TestManagedIdentityClientId"),
+                new KeyValuePair<string, string>("azureCloud", "public")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>(credential);
+            var mfCredential = (Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)credential;
+
+            // Validate via reflection that the fields are set as expected
+            var mic = typeof(Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)
+                .GetField("_managedIdentityCredential", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(mfCredential);
+            Assert.IsInstanceOf<ManagedIdentityCredential>(mic);
+
+            var managedIdentityCredential = (ManagedIdentityCredential)mic;
+            string clientId;
+            int idType;
+            ReflectIdAndType(managedIdentityCredential, out clientId, out idType);
+
+            Assert.AreEqual("TestManagedIdentityClientId", clientId);
+            Assert.AreEqual(1, idType); // 1 is the value for ClientId
+        }
+
+        [Test]
+        public void CreatesManagedFederatedIdentityCredentialWithResourceId()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "managedidentityasfederatedidentity"),
+                new KeyValuePair<string, string>("tenantId", "TestTenantId"),
+                new KeyValuePair<string, string>("clientId", "TestClientId"),
+                new KeyValuePair<string, string>("managedIdentityResourceId", "/subscriptions/test-sub/resourceGroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity"),
+                new KeyValuePair<string, string>("azureCloud", "public")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>(credential);
+            var mfCredential = (Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)credential;
+
+            // Validate via reflection that the fields are set as expected
+            var mic = typeof(Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)
+                .GetField("_managedIdentityCredential", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(mfCredential);
+            Assert.IsInstanceOf<ManagedIdentityCredential>(mic);
+
+            var managedIdentityCredential = (ManagedIdentityCredential)mic;
+            string resourceId;
+            int idType;
+            ReflectIdAndType(managedIdentityCredential, out resourceId, out idType);
+
+            Assert.AreEqual("/subscriptions/test-sub/resourceGroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity", resourceId);
+            Assert.AreEqual(2, idType); // 2 is the value for ResourceId
+        }
+
+        [Test]
+        public void CreatesManagedFederatedIdentityCredentialWithObjectId()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "managedidentityasfederatedidentity"),
+                new KeyValuePair<string, string>("tenantId", "TestTenantId"),
+                new KeyValuePair<string, string>("clientId", "TestClientId"),
+                new KeyValuePair<string, string>("managedIdentityObjectId", "test-object-id-guid"),
+                new KeyValuePair<string, string>("azureCloud", "public")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>(credential);
+            var mfCredential = (Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)credential;
+
+            // Validate via reflection that the fields are set as expected
+            var mic = typeof(Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)
+                .GetField("_managedIdentityCredential", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(mfCredential);
+            Assert.IsInstanceOf<ManagedIdentityCredential>(mic);
+
+            var managedIdentityCredential = (ManagedIdentityCredential)mic;
+            string objectId;
+            int idType;
+            ReflectIdAndType(managedIdentityCredential, out objectId, out idType);
+
+            Assert.AreEqual("test-object-id-guid", objectId);
+            Assert.AreEqual(3, idType); // 3 is the value for ObjectId
+        }
+
+        [Test]
+        [TestCase("public")]
+        [TestCase("usgov")]
+        [TestCase("china")]
+        public void CreatesManagedFederatedIdentityCredentialWithDifferentClouds(string azureCloud)
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "managedidentityasfederatedidentity"),
+                new KeyValuePair<string, string>("tenantId", "TestTenantId"),
+                new KeyValuePair<string, string>("clientId", "TestClientId"),
+                new KeyValuePair<string, string>("managedIdentityClientId", "TestManagedIdentityClientId"),
+                new KeyValuePair<string, string>("azureCloud", azureCloud)
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>(credential);
+            var mfCredential = (Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)credential;
+
+            // Validate via reflection that the fields are set as expected
+            var mic = typeof(Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)
+                .GetField("_managedIdentityCredential", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(mfCredential);
+            Assert.IsInstanceOf<ManagedIdentityCredential>(mic);
+        }
+
+        [Test]
+        public void CreatesManagedFederatedIdentityCredentialThrowsWhenMissingRequiredOptions()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "managedidentityasfederatedidentity"),
+                new KeyValuePair<string, string>("tenantId", "TestTenantId"),
+                new KeyValuePair<string, string>("clientId", "TestClientId")
+                // missing azureCloud and one of the managed identity identifiers
+            );
+
+            Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
+        }
+
+        [Test]
+        [TestCase(null, "TestClientId", "TestManagedIdentityClientId", "public")]  // missing tenantId
+        [TestCase("TestTenantId", null, "TestManagedIdentityClientId", "public")]  // missing clientId
+        [TestCase("TestTenantId", "TestClientId", "TestManagedIdentityClientId", null)]  // missing azureCloud
+        [TestCase("TestTenantId", "TestClientId", null, "public")]  // missing managed identity identifier
+        public void CreatesManagedFederatedIdentityCredentialThrowsWhenAnyRequiredOptionMissing(string tenantId, string clientId, string managedIdentityClientId, string azureCloud)
+        {
+            var items = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("credential", "managedidentityasfederatedidentity")
+            };
+
+            if (tenantId != null)
+            {
+                items.Add(new KeyValuePair<string, string>("tenantId", tenantId));
+            }
+            if (clientId != null)
+            {
+                items.Add(new KeyValuePair<string, string>("clientId", clientId));
+            }
+            if (managedIdentityClientId != null)
+            {
+                items.Add(new KeyValuePair<string, string>("managedIdentityClientId", managedIdentityClientId));
+            }
+            if (azureCloud != null)
+            {
+                items.Add(new KeyValuePair<string, string>("azureCloud", azureCloud));
+            }
+
+            IConfiguration configuration = GetConfiguration(items.ToArray());
+
+            Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
+        }
+
+        [Test]
+        public void CreatesManagedFederatedIdentityCredentialThrowsWhenMultipleManagedIdentityIdentifiersSpecified()
+        {
+            // Test multiple managed identity identifiers (should throw)
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "managedidentityasfederatedidentity"),
+                new KeyValuePair<string, string>("tenantId", "TestTenantId"),
+                new KeyValuePair<string, string>("clientId", "TestClientId"),
+                new KeyValuePair<string, string>("managedIdentityClientId", "TestManagedIdentityClientId"),
+                new KeyValuePair<string, string>("managedIdentityResourceId", "/subscriptions/test-sub/resourceGroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity"),
+                new KeyValuePair<string, string>("azureCloud", "public")
+            );
+
+            Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
+        }
+
+        [Test]
+        public void CreatesManagedFederatedIdentityCredentialThrowsWhenInvalidAzureCloud()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "managedidentityasfederatedidentity"),
+                new KeyValuePair<string, string>("tenantId", "TestTenantId"),
+                new KeyValuePair<string, string>("clientId", "TestClientId"),
+                new KeyValuePair<string, string>("managedIdentityClientId", "TestManagedIdentityClientId"),
+                new KeyValuePair<string, string>("azureCloud", "invalid-cloud")
+            );
+
+            // This should throw an ArgumentException due to invalid cloud
+            Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
+        }
+
+        [Test]
+        [TestCase("*")]
+        [TestCase("tenantId1;tenantId2;tenantId3")]
+        [TestCase("tenantId1;tenantId2;;tenantId3")]
+        [TestCase("tenantId1;tenantId2; ;tenantId3")]
+        [TestCase("tenantId1; tenantId2; tenantId3")]
+        public void CreatesManagedFederatedIdentityCredentialAdditionalTenants(string additionalTenants)
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "managedidentityasfederatedidentity"),
+                new KeyValuePair<string, string>("tenantId", "TestTenantId"),
+                new KeyValuePair<string, string>("clientId", "TestClientId"),
+                new KeyValuePair<string, string>("managedIdentityClientId", "TestManagedIdentityClientId"),
+                new KeyValuePair<string, string>("azureCloud", "public"),
+                new KeyValuePair<string, string>("additionallyAllowedTenants", additionalTenants)
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>(credential);
+            var mfCredential = (Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)credential;
+
+            var expectedTenants = additionalTenants.Split(';')
+                .Select(t => t.Trim())
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .ToList();
+
+            Assert.AreEqual(expectedTenants, mfCredential.AdditionallyAllowedTenants);
         }
 
         [Test]

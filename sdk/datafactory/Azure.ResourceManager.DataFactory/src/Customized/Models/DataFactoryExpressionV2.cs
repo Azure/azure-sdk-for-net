@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Expression operator value Type: string. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future release", false)]
         public string Operator { get; set; }
+
+        /// <summary> Value for Constant/Field Type: string. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string Value { get => V2Value.ToString(); set => V2Value = value; }
     }
 }

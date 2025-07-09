@@ -66,7 +66,7 @@ namespace Azure.Data.SchemaRegistry
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -137,13 +137,15 @@ namespace Azure.Data.SchemaRegistry
             try
             {
                 Response response;
+                using RequestContent content = new BinaryData(schemaDefinition);
+                RequestContext context = FromCancellationToken(cancellationToken);
                 if (async)
                 {
-                    response = await RegisterSchemaAsync(groupName, schemaName, new BinaryData(schemaDefinition), format.ContentType, cancellationToken).ConfigureAwait(false);
+                    response = await RegisterSchemaAsync(groupName, schemaName, format.ContentType, content, context).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RegisterSchema(groupName, schemaName, new BinaryData(schemaDefinition), format.ContentType, cancellationToken);
+                    response = RegisterSchema(groupName, schemaName, format.ContentType, content, context);
                 }
 
                 var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -226,13 +228,15 @@ namespace Azure.Data.SchemaRegistry
             try
             {
                 Response response;
+                using RequestContent content = new BinaryData(schemaDefinition);
+                RequestContext context = FromCancellationToken(cancellationToken);
                 if (async)
                 {
-                    response = await GetSchemaPropertiesByContentAsync(groupName, schemaName, new BinaryData(schemaDefinition), format.ContentType, cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaPropertiesByContentAsync(groupName, schemaName, format.ContentType, content, context).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = GetSchemaPropertiesByContent(groupName, schemaName, new BinaryData(schemaDefinition), format.ContentType, cancellationToken);
+                    response = GetSchemaPropertiesByContent(groupName, schemaName, format.ContentType, content, context);
                 }
 
                 var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -332,13 +336,11 @@ namespace Azure.Data.SchemaRegistry
                 Response<BinaryData> response;
                 if (async)
                 {
-                    // The generated client expects an "accept" header, which should be the Avro content type
-                    response = await GetSchemaByVersionAsync(groupName, schemaName, version, SchemaFormat.Avro.ContentType, cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaByVersionAsync(groupName, schemaName, version, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    // The generated client expects an "accept" header, which should be the Avro content type
-                    response = GetSchemaByVersion(groupName, schemaName, version, SchemaFormat.Avro.ContentType, cancellationToken);
+                    response = GetSchemaByVersion(groupName, schemaName, version, cancellationToken);
                 }
 
                 var schemaIdHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -368,11 +370,11 @@ namespace Azure.Data.SchemaRegistry
                 Response<BinaryData> response;
                 if (async)
                 {
-                    response = await GetSchemaByIdAsync(schemaId, SchemaFormat.Avro.ContentType, cancellationToken).ConfigureAwait(false);
+                    response = await GetSchemaByIdAsync(schemaId, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = GetSchemaById(schemaId, SchemaFormat.Avro.ContentType, cancellationToken);
+                    response = GetSchemaById(schemaId, cancellationToken);
                 }
 
                 var schemaIdHeader = response.GetRawResponse().Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -391,6 +393,17 @@ namespace Azure.Data.SchemaRegistry
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        private static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
     }
 }

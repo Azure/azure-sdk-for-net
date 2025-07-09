@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2025-07-02)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-09-01' to 'package-2024-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/802ded7f507321d74f4594edf2a78732b83edda6/specification/vmware/resource-manager/readme.md.
+- Added Host, Provisioned Network, Pure Storage Policy Resource and Collection classes
+
+### Other Changes
+
+- Generated using typespec
 
 ## 1.4.0 (2024-10-28)
 

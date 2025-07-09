@@ -304,7 +304,8 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Version
             int version = reader.ReadInt32();
-            if (version != DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion)
+            if (version < DataMovementBlobConstants.DestinationCheckpointDetails.MinValidSchemaVersion
+                || version > DataMovementBlobConstants.DestinationCheckpointDetails.MaxValidSchemaVersion)
             {
                 throw Errors.UnsupportedJobSchemaVersionHeader(version);
             }
@@ -340,9 +341,17 @@ namespace Azure.Storage.DataMovement.Blobs
             int cacheControlLength = reader.ReadInt32();
 
             // AccessTier
-            bool isAccessTierSet = reader.ReadBoolean();
+            bool isAccessTierSet = default;
+            if (version >= DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion_4)
+            {
+                isAccessTierSet = reader.ReadBoolean();
+            }
             AccessTier? accessTier = default;
             JobPlanAccessTier jobPlanAccessTier = (JobPlanAccessTier)reader.ReadByte();
+            if (version < DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion_4)
+            {
+                isAccessTierSet = !jobPlanAccessTier.Equals(JobPlanAccessTier.None);
+            }
             if (isAccessTierSet)
             {
                 accessTier = new AccessTier(jobPlanAccessTier.ToString());

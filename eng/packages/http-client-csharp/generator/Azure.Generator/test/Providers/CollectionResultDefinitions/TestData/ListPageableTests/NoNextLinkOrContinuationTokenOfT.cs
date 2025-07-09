@@ -25,9 +25,10 @@ namespace Samples
         /// <param name="animalKind"> animalKind description. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="global::System.ArgumentNullException"> <paramref name="animalKind"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="animalKind"/> is an empty string, and was expected to be non-empty. </exception>
         public CatClientGetCatsCollectionResultOfT(global::Samples.CatClient client, string animalKind, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
-            global::Samples.Argument.AssertNotNull(animalKind, nameof(animalKind));
+            global::Samples.Argument.AssertNotNullOrEmpty(animalKind, nameof(animalKind));
 
             _client = client;
             _animalKind = animalKind;
@@ -55,12 +56,7 @@ namespace Samples
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, this.CancellationToken);
-                if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
-                {
-                    throw new global::Azure.RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (global::System.Exception e)
             {

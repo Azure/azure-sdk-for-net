@@ -43,6 +43,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             CreateOrUpdateRoleDefinitionOptions options = new(KeyVaultRoleScope.Global, name)
             {
+                RoleName = name.ToString(),
                 Description = description,
                 Permissions =
                 {
@@ -77,6 +78,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             CreateOrUpdateRoleDefinitionOptions options = new(KeyVaultRoleScope.Global, name)
             {
+                RoleName = name.ToString(),
                 Description = description,
                 Permissions =
                 {
@@ -121,6 +123,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             CreateOrUpdateRoleDefinitionOptions options = new(KeyVaultRoleScope.Global, name)
             {
+                RoleName = name.ToString(),
                 Description = description,
                 Permissions =
                 {
@@ -253,7 +256,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.AreEqual(404, response.Status);
 
             JsonDocument json = JsonDocument.Parse(response.Content);
-            KeyVaultServiceError error = KeyVaultServiceError.DeserializeKeyVaultServiceError(json.RootElement.GetProperty("error"));
+            KeyVaultServiceError error = KeyVaultServiceError.DeserializeKeyVaultServiceError(json.RootElement.GetProperty("error"), ModelSerializationExtensions.WireOptions);
             Assert.AreEqual("RoleAssignmentNotFound", error.Code);
         }
 
@@ -266,7 +269,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.AreEqual(404, response.Status);
 
             JsonDocument json = JsonDocument.Parse(response.Content);
-            KeyVaultServiceError error = KeyVaultServiceError.DeserializeKeyVaultServiceError(json.RootElement.GetProperty("error"));
+            KeyVaultServiceError error = KeyVaultServiceError.DeserializeKeyVaultServiceError(json.RootElement.GetProperty("error"), ModelSerializationExtensions.WireOptions);
             Assert.AreEqual("RoleDefinitionNotFound", error.Code);
         }
     }

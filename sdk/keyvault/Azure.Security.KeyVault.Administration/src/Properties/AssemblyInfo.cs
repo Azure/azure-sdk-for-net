@@ -12,6 +12,3 @@ using Azure.Core;
     "ad2d92d2d15605093924cceaf74c4861eff62abf69b9291ed0a340e113be11e6a7d3113e92484c" +
     "f7045cc7")]
 [assembly: Azure.Core.AzureResourceProviderNamespace("Microsoft.KeyVault")]
-
-[assembly: CodeGenSuppressType("SecurityKeyVaultAdministrationClientBuilderExtensions")]
-[assembly: CodeGenSuppressType("ServiceVersion")]

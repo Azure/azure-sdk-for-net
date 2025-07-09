@@ -159,7 +159,7 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagementGroupPolicyDefinition.</param>
     public ManagementGroupPolicyDefinition(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Authorization/policyDefinitions", resourceVersion ?? "2023-04-01")
+        : base(bicepIdentifier, "Microsoft.Authorization/policyDefinitions", resourceVersion ?? "2025-01-01")
     {
     }
 
@@ -169,6 +169,7 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _description = DefineProperty<string>("Description", ["properties", "description"]);
         _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"]);
@@ -186,6 +187,16 @@ public partial class ManagementGroupPolicyDefinition : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-01-01.
+        /// </summary>
+        public static readonly string V2025_01_01 = "2025-01-01";
+
+        /// <summary>
+        /// 2024-05-01.
+        /// </summary>
+        public static readonly string V2024_05_01 = "2024-05-01";
+
         /// <summary>
         /// 2023-04-01.
         /// </summary>

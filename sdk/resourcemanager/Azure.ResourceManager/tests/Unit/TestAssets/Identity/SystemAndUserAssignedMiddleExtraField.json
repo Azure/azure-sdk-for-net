@@ -1,14 +1,12 @@
 ﻿{
-  "identity": {
     "principalId": "22fddec1-8b9f-49dc-bd72-ddaf8f215577",
     "extraId": "test",
     "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
     "type": "SystemAssigned, UserAssigned",
     "userAssignedIdentities": {
-      "/subscriptions/db1ab6f0-4769-4b27-9dde-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity": {
-        "clientId": "9a9eaa6a-b49c-4c63-afb5-3b72e3e65422",
-        "principalId": "77563a98-c9d9-407b-a7af-592d21fa2153"
-      }
+        "/subscriptions/db1ab6f0-4769-4b27-9dde-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity": {
+            "clientId": "9a9eaa6a-b49c-4c63-afb5-3b72e3e65422",
+            "principalId": "77563a98-c9d9-407b-a7af-592d21fa2153"
+        }
     }
-  }
 }

@@ -5,7 +5,7 @@ Azure Event Grid allows you to build applications with event-based architectures
 Use the client library for Azure Event Grid System Events to:
 - Deserialize Event Grid system events into strongly typed models.
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://learn.microsoft.com/dotnet/api/overview/azure/messaging.eventgrid-readme?view=azure-dotnet) | [Product documentation](https://learn.microsoft.com/azure/event-grid/pull-delivery-overview)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventGrid.SystemEvents/) | [API reference documentation](https://learn.microsoft.com/dotnet/api/overview/azure/messaging.eventgrid-readme?view=azure-dotnet) | [Product documentation](https://learn.microsoft.com/azure/event-grid/pull-delivery-overview)
 
 ## Getting started
 
@@ -14,7 +14,7 @@ Use the client library for Azure Event Grid System Events to:
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Messaging.EventGrid.SystemEvents --prerelease
+dotnet add package Azure.Messaging.EventGrid.SystemEvents
 ```
 
 ### Prerequisites

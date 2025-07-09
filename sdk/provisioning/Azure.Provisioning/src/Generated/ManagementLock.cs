@@ -101,6 +101,7 @@ public partial class ManagementLock : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _level = DefineProperty<ManagementLockLevel>("Level", ["properties", "level"], isRequired: true);
         _notes = DefineProperty<string>("Notes", ["properties", "notes"]);

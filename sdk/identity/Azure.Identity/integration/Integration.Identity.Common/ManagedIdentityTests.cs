@@ -1,11 +1,20 @@
-﻿using Azure.Identity;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Identity;
 using Azure.Storage.Blobs;
 using Azure.Core;
 
 namespace Integration.Identity.Common;
 
+/// <summary>
+/// Tests for Managed Identity authentication.
+/// </summary>
 public static class ManagedIdentityTests
 {
+    /// <summary>
+    /// Authenticates to Azure Storage using Managed Identity.
+    /// </summary>
     public static void AuthToStorage()
     {
         string resourceId = Environment.GetEnvironmentVariable("IDENTITY_USER_DEFINED_IDENTITY")!;

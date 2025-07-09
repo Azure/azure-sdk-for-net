@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.Avs.Mocking
         private LocationsRestOperations _locationsRestClient;
         private ClientDiagnostics _avsPrivateCloudPrivateCloudsClientDiagnostics;
         private PrivateCloudsRestOperations _avsPrivateCloudPrivateCloudsRestClient;
+        private ClientDiagnostics _skusClientDiagnostics;
+        private SkusRestOperations _skusRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableAvsSubscriptionResource"/> class for mocking. </summary>
         protected MockableAvsSubscriptionResource()
@@ -39,6 +41,8 @@ namespace Azure.ResourceManager.Avs.Mocking
         private LocationsRestOperations LocationsRestClient => _locationsRestClient ??= new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics AvsPrivateCloudPrivateCloudsClientDiagnostics => _avsPrivateCloudPrivateCloudsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs", AvsPrivateCloudResource.ResourceType.Namespace, Diagnostics);
         private PrivateCloudsRestOperations AvsPrivateCloudPrivateCloudsRestClient => _avsPrivateCloudPrivateCloudsRestClient ??= new PrivateCloudsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AvsPrivateCloudResource.ResourceType));
+        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -47,76 +51,6 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Return quota for subscription by region
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkQuotaAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_CheckQuotaAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckAvsQuotaAvailability");
-            scope.Start();
-            try
-            {
-                var response = await LocationsRestClient.CheckQuotaAvailabilityAsync(Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Return quota for subscription by region
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkQuotaAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_CheckQuotaAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckAvsQuotaAvailability");
-            scope.Start();
-            try
-            {
-                var response = LocationsRestClient.CheckQuotaAvailability(Id.SubscriptionId, location, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Return trial status for subscription by region
         /// <list type="bullet">
         /// <item>
@@ -125,15 +59,15 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Locations_CheckTrialAvailability</description>
+        /// <description>Locations_CheckAvsTrialAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> A location in a subscription. </param>
         /// <param name="sku"> Optionally, check for a specific SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
@@ -142,7 +76,7 @@ namespace Azure.ResourceManager.Avs.Mocking
             scope.Start();
             try
             {
-                var response = await LocationsRestClient.CheckTrialAvailabilityAsync(Id.SubscriptionId, location, sku, cancellationToken).ConfigureAwait(false);
+                var response = await LocationsRestClient.CheckAvsTrialAvailabilityAsync(Id.SubscriptionId, location, sku, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -161,15 +95,15 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Locations_CheckTrialAvailability</description>
+        /// <description>Locations_CheckAvsTrialAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> A location in a subscription. </param>
         /// <param name="sku"> Optionally, check for a specific SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
@@ -178,7 +112,77 @@ namespace Azure.ResourceManager.Avs.Mocking
             scope.Start();
             try
             {
-                var response = LocationsRestClient.CheckTrialAvailability(Id.SubscriptionId, location, sku, cancellationToken);
+                var response = LocationsRestClient.CheckAvsTrialAvailability(Id.SubscriptionId, location, sku, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Return quota for subscription by region
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkQuotaAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckAvsQuotaAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> A location in a subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckAvsQuotaAvailability");
+            scope.Start();
+            try
+            {
+                var response = await LocationsRestClient.CheckAvsQuotaAvailabilityAsync(Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Return quota for subscription by region
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/locations/{location}/checkQuotaAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckAvsQuotaAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> A location in a subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableAvsSubscriptionResource.CheckAvsQuotaAvailability");
+            scope.Start();
+            try
+            {
+                var response = LocationsRestClient.CheckAvsQuotaAvailability(Id.SubscriptionId, location, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -197,11 +201,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_ListInSubscription</description>
+        /// <description>PrivateCloud_ListInSubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,11 +231,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_ListInSubscription</description>
+        /// <description>PrivateCloud_ListInSubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -246,6 +250,58 @@ namespace Azure.ResourceManager.Avs.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudResource(Client, AvsPrivateCloudData.DeserializeAvsPrivateCloudData(e)), AvsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, "MockableAvsSubscriptionResource.GetAvsPrivateClouds", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// A list of SKUs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_GetAvsSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AvsResourceSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvsResourceSku> GetAvsSkusAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateGetAvsSkusRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateGetAvsSkusNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvsResourceSku.DeserializeAvsResourceSku(e), SkusClientDiagnostics, Pipeline, "MockableAvsSubscriptionResource.GetAvsSkus", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// A list of SKUs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AVS/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_GetAvsSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AvsResourceSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvsResourceSku> GetAvsSkus(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateGetAvsSkusRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateGetAvsSkusNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvsResourceSku.DeserializeAvsResourceSku(e), SkusClientDiagnostics, Pipeline, "MockableAvsSubscriptionResource.GetAvsSkus", "value", "nextLink", cancellationToken);
         }
     }
 }

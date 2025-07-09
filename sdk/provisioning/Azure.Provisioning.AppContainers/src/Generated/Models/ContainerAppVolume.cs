@@ -58,8 +58,8 @@ public partial class ContainerAppVolume : ProvisionableConstruct
     private BicepList<SecretVolumeItem>? _secrets;
 
     /// <summary>
-    /// Mount options used while mounting the AzureFile. Must be a
-    /// comma-separated string.
+    /// Mount options used while mounting the Azure file share or NFS Azure
+    /// file share. Must be a comma-separated string.
     /// </summary>
     public BicepValue<string> MountOptions 
     {

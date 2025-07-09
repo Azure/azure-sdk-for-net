@@ -3,7 +3,7 @@
 ## Overview
 
 The [ModelReaderWriterContext](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/ModelReaderWriter/ModelReaderWriterContext.cs) class
- provides type information necessary for [ModelReaderWriter]((https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/ModelReaderWriter/ModelReaderWriter.cs)
+ provides type information necessary for [ModelReaderWriter](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/ModelReaderWriter/ModelReaderWriter.cs)
  to work with [AOT (Ahead of Time)](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) compilation.
 It also provides a performance boost vs using ModelReaderWriter without the context class.  It is considered
 an advanced scenario and is not necessary to work with ModelReaderWriter. However, if you are using AOT compilation or need to optimize

@@ -33,6 +33,10 @@ public class CosmosDBSpecification() :
         CustomizeProperty<CosmosDBAccountKeyList>("SecondaryMasterKey", p => p.IsSecure = true);
         CustomizeProperty<CosmosDBAccountKeyList>("PrimaryReadonlyMasterKey", p => p.IsSecure = true);
         CustomizeProperty<CosmosDBAccountKeyList>("SecondaryReadonlyMasterKey", p => p.IsSecure = true);
+        CustomizeProperty<CosmosDBServiceResource>("Properties", p => p.Name = "CreateOrUpdateProperties");
+        CustomizeProperty<DataTransferJobProperties>("Error", p => p.Name = "ErrorResult");
+        CustomizeProperty<DataTransferJobGetResultResource>("Error", p => p.Name = "ErrorResult");
+        CustomizeEnum<CosmosDBAccountCreateMode>(e => e.Values.Add(new EnumValue(e, "PointInTimeRestore", "PointInTimeRestore") { Hidden = true }));
 
         // Naming requirements
         AddNameRequirements<CosmosDBAccountResource>(min: 3, max: 44, lower: true, digits: true, hyphen: true);

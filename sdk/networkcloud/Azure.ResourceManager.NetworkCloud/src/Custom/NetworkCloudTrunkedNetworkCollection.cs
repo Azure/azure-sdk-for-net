@@ -35,10 +35,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>TrunkedNetworks_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudTrunkedNetworkResource"/></description>
         /// </item>
@@ -51,9 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudTrunkedNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string trunkedNetworkName, NetworkCloudTrunkedNetworkData data, CancellationToken cancellationToken)
-        {
-            return await CreateOrUpdateAsync(waitUntil, trunkedNetworkName, data, null, null, cancellationToken).ConfigureAwait(false);
-        }
+            => await CreateOrUpdateAsync(waitUntil, trunkedNetworkName, data, null, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Create a new trunked network or update the properties of the existing trunked network.
@@ -65,10 +59,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TrunkedNetworks_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,8 +73,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudTrunkedNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string trunkedNetworkName, NetworkCloudTrunkedNetworkData data, CancellationToken cancellationToken)
-        {
-            return CreateOrUpdate(waitUntil, trunkedNetworkName, data, null, null, cancellationToken);
-        }
+            => CreateOrUpdate(waitUntil, trunkedNetworkName, data, null, null, cancellationToken);
     }
 }

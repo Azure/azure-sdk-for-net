@@ -55,6 +55,8 @@
       <LinkBase>Shared/Core</LinkBase>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-	</ItemGroup>
+  </ItemGroup>
+
+
 
 </Project>

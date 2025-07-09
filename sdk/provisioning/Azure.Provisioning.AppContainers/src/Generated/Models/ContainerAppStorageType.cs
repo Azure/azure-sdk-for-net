@@ -24,4 +24,9 @@ public enum ContainerAppStorageType
     /// Secret.
     /// </summary>
     Secret,
+
+    /// <summary>
+    /// NfsAzureFile.
+    /// </summary>
+    NfsAzureFile,
 }

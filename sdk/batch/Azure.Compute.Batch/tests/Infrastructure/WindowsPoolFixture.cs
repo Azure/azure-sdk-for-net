@@ -21,17 +21,17 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 
             if (currentPool == null)
             {
-                BatchPoolCreateContent batchPoolCreateOptions = CreatePoolOptions(targetDedicatedNodes);
+                BatchPoolCreateOptions batchPoolCreateOptions = CreatePoolOptions(targetDedicatedNodes);
                 Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
             }
 
             return await WaitForPoolAllocation(client, PoolId);
         }
 
-        public BatchPoolCreateContent CreatePoolOptions(int? targetDedicatedNodes = null)
+        public BatchPoolCreateOptions CreatePoolOptions(int? targetDedicatedNodes = null)
         {
             // create a new pool
-            ImageReference imageReference = new ImageReference()
+            BatchVmImageReference imageReference = new BatchVmImageReference()
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             };
             VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64");
 
-            BatchPoolCreateContent batchPoolCreateOptions = new BatchPoolCreateContent(
+            BatchPoolCreateOptions batchPoolCreateOptions = new BatchPoolCreateOptions(
                 PoolId,
                 VMSize)
             {

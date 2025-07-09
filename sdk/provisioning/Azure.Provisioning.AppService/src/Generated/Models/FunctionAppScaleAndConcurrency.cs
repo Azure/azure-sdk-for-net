@@ -29,33 +29,33 @@ public partial class FunctionAppScaleAndConcurrency : ProvisionableConstruct
     /// <summary>
     /// The maximum number of instances for the function app.
     /// </summary>
-    public BicepValue<float> MaximumInstanceCount 
+    public BicepValue<int> FunctionAppMaximumInstanceCount 
     {
-        get { Initialize(); return _maximumInstanceCount!; }
-        set { Initialize(); _maximumInstanceCount!.Assign(value); }
+        get { Initialize(); return _functionAppMaximumInstanceCount!; }
+        set { Initialize(); _functionAppMaximumInstanceCount!.Assign(value); }
     }
-    private BicepValue<float>? _maximumInstanceCount;
+    private BicepValue<int>? _functionAppMaximumInstanceCount;
 
     /// <summary>
     /// Set the amount of memory allocated to each instance of the function app
     /// in MB. CPU and network bandwidth are allocated proportionally.
     /// </summary>
-    public BicepValue<float> InstanceMemoryMB 
+    public BicepValue<int> FunctionAppInstanceMemoryMB 
     {
-        get { Initialize(); return _instanceMemoryMB!; }
-        set { Initialize(); _instanceMemoryMB!.Assign(value); }
+        get { Initialize(); return _functionAppInstanceMemoryMB!; }
+        set { Initialize(); _functionAppInstanceMemoryMB!.Assign(value); }
     }
-    private BicepValue<float>? _instanceMemoryMB;
+    private BicepValue<int>? _functionAppInstanceMemoryMB;
 
     /// <summary>
     /// The maximum number of concurrent HTTP trigger invocations per instance.
     /// </summary>
-    public BicepValue<float> HttpPerInstanceConcurrency 
+    public BicepValue<int> ConcurrentHttpPerInstanceConcurrency 
     {
-        get { Initialize(); return _httpPerInstanceConcurrency!; }
-        set { Initialize(); _httpPerInstanceConcurrency!.Assign(value); }
+        get { Initialize(); return _concurrentHttpPerInstanceConcurrency!; }
+        set { Initialize(); _concurrentHttpPerInstanceConcurrency!.Assign(value); }
     }
-    private BicepValue<float>? _httpPerInstanceConcurrency;
+    private BicepValue<int>? _concurrentHttpPerInstanceConcurrency;
 
     /// <summary>
     /// Creates a new FunctionAppScaleAndConcurrency.
@@ -71,9 +71,12 @@ public partial class FunctionAppScaleAndConcurrency : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _alwaysReady = DefineListProperty<FunctionAppAlwaysReadyConfig>("AlwaysReady", ["alwaysReady"]);
         _maximumInstanceCount = DefineProperty<float>("MaximumInstanceCount", ["maximumInstanceCount"]);
         _instanceMemoryMB = DefineProperty<float>("InstanceMemoryMB", ["instanceMemoryMB"]);
         _httpPerInstanceConcurrency = DefineProperty<float>("HttpPerInstanceConcurrency", ["triggers", "http", "perInstanceConcurrency"]);
+        _alwaysReady = DefineListProperty<FunctionAppAlwaysReadyConfig>("AlwaysReady", ["alwaysReady"]);
+        _functionAppMaximumInstanceCount = DefineProperty<int>("FunctionAppMaximumInstanceCount", ["maximumInstanceCount"]);
+        _functionAppInstanceMemoryMB = DefineProperty<int>("FunctionAppInstanceMemoryMB", ["instanceMemoryMB"]);
+        _concurrentHttpPerInstanceConcurrency = DefineProperty<int>("ConcurrentHttpPerInstanceConcurrency", ["triggers", "http", "perInstanceConcurrency"]);
     }
 }

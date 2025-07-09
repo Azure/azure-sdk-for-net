@@ -4,10 +4,12 @@
 using System.Buffers;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
-using System.Diagnostics;
-using System.Globalization;
-using System.Net;
-using System.Net.Http.Headers;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace System.ClientModel;
 
@@ -18,14 +20,13 @@ namespace System.ClientModel;
 public abstract class BinaryContent : IDisposable
 {
     private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
+    private const string JsonSerializerRequiresDynamicCode = "JSON serialization and deserialization might require types that cannot be statically analyzed and might need runtime code generation.";
+    private const string JsonSerializerRequiresUnreferencedCode = "JSON serialization and deserialization might require types that cannot be statically analyzed.";
 
     /// <summary>
-    /// The content type of the binary content.
+    /// Gets the media type of the content.
     /// </summary>
-    public virtual string? ContentType { get; set; }
-
-    //internal string? Name { get; set; }
-    //internal virtual string? Filename { get; set; }
+    public string? MediaType { get; protected set; }
 
     /// <summary>
     /// Creates an instance of <see cref="BinaryContent"/> that contains the
@@ -75,199 +76,88 @@ public abstract class BinaryContent : IDisposable
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/>.
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// JSON representation of the provided object.
     /// </summary>
-    /// <param name="name">The name of the part.</param>
-    /// <param name="content"></param>
-    /// <returns></returns>
-    public static BinaryContent CreateMultipartFormDataPart(string name, BinaryData content)
+    /// <typeparam name="T">The type of the object to serialize.</typeparam>
+    /// <param name="jsonSerializable">The object to serialize to JSON.</param>
+    /// <param name="options">The <see cref="JsonSerializerOptions"/> to use for serialization.
+    /// If not provided, the default options will be used.</param>
+    /// <returns>An instance of <see cref="BinaryContent"/> that contains the
+    /// JSON representation of the provided object.</returns>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+    [RequiresDynamicCode(JsonSerializerRequiresDynamicCode)]
+    [RequiresUnreferencedCode(JsonSerializerRequiresUnreferencedCode)]
+    public static BinaryContent CreateJson<T>(T jsonSerializable, JsonSerializerOptions? options = default)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(content, nameof(content));
+        Argument.AssertNotNull(jsonSerializable, nameof(jsonSerializable));
 
-        return new MultipartFormDataPartBinaryContent(name, new BinaryDataBinaryContent(content.ToMemory()));
-    }
-
-    /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/>.
-    /// </summary>
-    /// <param name="name">The name of the part.</param>
-    /// <param name="content"></param>
-    /// <returns></returns>
-    public static BinaryContent CreateMultipartFormDataPart(string name, string content)
-    {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(content, nameof(content));
-
-        return CreateMultipartFormDataPart(name, BinaryData.FromString(content));
-    }
-
-    /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/>.
-    /// </summary>
-    /// <param name="name">The name of the part.</param>
-    /// <param name="content"></param>
-    /// <returns></returns>
-    public static BinaryContent CreateMultipartFormDataPart(string name, int content)
-    {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(content, nameof(content));
-
-        string value = content.ToString("G", CultureInfo.InvariantCulture);
-        return CreateMultipartFormDataPart(name, BinaryData.FromString(value));
-    }
-
-    /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/>.
-    /// </summary>
-    /// <param name="name">The name of the part.</param>
-    /// <param name="content"></param>
-    /// <returns></returns>
-    public static BinaryContent CreateMultipartFormDataPart(string name, long content)
-    {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(content, nameof(content));
-
-        string value = content.ToString("G", CultureInfo.InvariantCulture);
-        return CreateMultipartFormDataPart(name, BinaryData.FromString(value));
-    }
-
-    /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/>.
-    /// </summary>
-    /// <param name="name">The name of the part.</param>
-    /// <param name="content"></param>
-    /// <returns></returns>
-    public static BinaryContent CreateMultipartFormDataPart(string name, float content)
-    {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(content, nameof(content));
-
-        string value = content.ToString("G", CultureInfo.InvariantCulture);
-        return CreateMultipartFormDataPart(name, BinaryData.FromString(value));
-    }
-
-    /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/>.
-    /// </summary>
-    /// <param name="name">The name of the part.</param>
-    /// <param name="content"></param>
-    /// <returns></returns>
-    public static BinaryContent CreateMultipartFormDataPart(string name, double content)
-    {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(content, nameof(content));
-
-        string value = content.ToString("G", CultureInfo.InvariantCulture);
-        return CreateMultipartFormDataPart(name, BinaryData.FromString(value));
-    }
-
-    /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/>.
-    /// </summary>
-    /// <param name="name">The name of the part.</param>
-    /// <param name="content"></param>
-    /// <returns></returns>
-    public static BinaryContent CreateMultipartFormDataPart(string name, decimal content)
-    {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(content, nameof(content));
-
-        string value = content.ToString("G", CultureInfo.InvariantCulture);
-        return CreateMultipartFormDataPart(name, BinaryData.FromString(value));
-    }
-
-    /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/>.
-    /// </summary>
-    /// <param name="name">The name of the part.</param>
-    /// <param name="content"></param>
-    /// <returns></returns>
-    public static BinaryContent CreateMultipartFormDataPart(string name, bool content)
-    {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(content, nameof(content));
-
-        string value = content ? "true" : "false";
-        return CreateMultipartFormDataPart(name, BinaryData.FromString(value));
-    }
-
-    /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/>.
-    /// </summary>
-    /// <param name="name">The name of the part.</param>
-    /// <param name="content"></param>
-    /// <returns></returns>
-    public static BinaryContent CreateMultipartFormDataPart(string name, byte[] content)
-    {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(content, nameof(content));
-
-        return CreateMultipartFormDataPart(name, BinaryData.FromBytes(content));
-    }
-
-    /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/>.
-    /// </summary>
-    /// <param name="name">The name of the part.</param>
-    /// <param name="content"></param>
-    /// <returns></returns>
-    public static BinaryContent CreateMultipartFormDataPart(string name, FileBinaryContent content)
-    {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(content, nameof(content));
-
-        return new MultipartFormDataPartBinaryContent(name, content);
+        BinaryData data = BinaryData.FromObjectAsJson(jsonSerializable, options);
+        return new BinaryDataBinaryContent(data.ToMemory(), "application/json");
     }
 
     /// <summary>
     /// Creates an instance of <see cref="BinaryContent"/> that contains the
-    /// bytes resulting from writing the value of the provided
-    /// <see cref="IPersistableModel{T}"/>.
+    /// JSON representation of the provided object using the specified JSON type information.
     /// </summary>
-    /// <param name="name">The name of the part.</param>
-    /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
-    /// <param name="options">The <see cref="ModelReaderWriterOptions"/>, if any,
-    /// that indicates what format the <paramref name="model"/> will be written in.
-    /// </param>
-    /// <returns>An instance of <see cref="BinaryContent"/> that wraps a <see cref="IPersistableModel{T}"/>.</returns>
-    public static BinaryContent CreateMultipartFormDataPart<T>(
-        string name,
-        T model,
-        ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
+    /// <typeparam name="T">The type of the object to serialize.</typeparam>
+    /// <param name="jsonSerializable">The object to serialize to JSON.</param>
+    /// <param name="jsonTypeInfo">The <see cref="JsonTypeInfo{T}"/> to use for serialization.</param>
+    /// <returns>An instance of <see cref="BinaryContent"/> that contains the
+    /// JSON representation of the provided object.</returns>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+    public static BinaryContent CreateJson<T>(T jsonSerializable, JsonTypeInfo<T> jsonTypeInfo)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(model, nameof(model));
+        Argument.AssertNotNull(jsonSerializable, nameof(jsonSerializable));
+        Argument.AssertNotNull(jsonTypeInfo, nameof(jsonTypeInfo));
 
-        return new MultipartFormDataPartBinaryContent(name, new ModelBinaryContent<T>(model, options ?? ModelWriteWireOptions));
+        BinaryData data = BinaryData.FromObjectAsJson(jsonSerializable, jsonTypeInfo);
+        return new BinaryDataBinaryContent(data.ToMemory(), "application/json");
     }
 
     /// <summary>
     /// Creates an instance of <see cref="BinaryContent"/> that contains the
-    /// the provided <see cref="BinaryContent"/> as multi-part form data.
+    /// provided JSON string.
     /// </summary>
-    /// <param name="parts"></param>
-    /// <returns></returns>
-    public static BinaryContent CreateMultipartFormDataContent(IEnumerable<BinaryContent> parts)
+    /// <param name="jsonString">The JSON string to be used as the content.</param>
+    /// <param name="validate">Whether to validate that the string contains valid JSON.
+    /// If true, the method will validate the JSON format and throw an exception if invalid.
+    /// Defaults to false for backwards compatibility.</param>
+    /// <returns>An instance of <see cref="BinaryContent"/> that contains the
+    /// provided JSON string.</returns>
+    /// <exception cref="ArgumentException">Thrown when <paramref name="validate"/> is true and
+    /// <paramref name="jsonString"/> is not valid JSON.</exception>
+    public static BinaryContent CreateJson(string jsonString, bool validate = false)
     {
-        Argument.AssertNotNull(parts, nameof(parts));
+        Argument.AssertNotNull(jsonString, nameof(jsonString));
 
-        return new MultiPartFormDataBinaryContent(parts);
+        if (validate)
+        {
+            ValidateJsonString(jsonString);
+        }
+
+        BinaryData data = BinaryData.FromString(jsonString);
+        return new BinaryDataBinaryContent(data.ToMemory(), "application/json");
     }
 
-    /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/> that contains the
-    /// the provided <see cref="BinaryContent"/> as multi-part form data.
-    /// </summary>
-    /// <param name="boundary"></param>
-    /// <param name="parts"></param>
-    /// <returns></returns>
-    public static BinaryContent CreateMultipartFormDataContent(string boundary, IEnumerable<BinaryContent> parts)
+    private static void ValidateJsonString(string jsonString)
     {
-        Argument.AssertNotNullOrEmpty(boundary, nameof(boundary));
-        Argument.AssertNotNull(parts, nameof(parts));
+        try
+        {
+            var reader = new Utf8JsonReader(System.Text.Encoding.UTF8.GetBytes(jsonString));
 
-        return new MultiPartFormDataBinaryContent(boundary, parts);
+            // Skip through the entire JSON document to validate it's well-formed
+            while (reader.Read())
+            {
+                // The Read() method will throw JsonException if the JSON is malformed
+            }
+        }
+        catch (JsonException ex)
+        {
+            throw new ArgumentException($"The provided string is not valid JSON: {ex.Message}", nameof(jsonString), ex);
+        }
     }
 
     /// <summary>
@@ -301,9 +191,10 @@ public abstract class BinaryContent : IDisposable
     {
         private readonly ReadOnlyMemory<byte> _bytes;
 
-        public BinaryDataBinaryContent(ReadOnlyMemory<byte> bytes)
+        public BinaryDataBinaryContent(ReadOnlyMemory<byte> bytes, string? mediaType = null)
         {
             _bytes = bytes;
+            MediaType = mediaType;
         }
 
         public override bool TryComputeLength(out long length)
@@ -345,6 +236,14 @@ public abstract class BinaryContent : IDisposable
         {
             _model = model;
             _options = options;
+
+            // Set MediaType to JSON if the model will be serialized as JSON
+            // This checks if JSON format is requested, either explicitly ("J") or
+            // via wire format ("W") where the model returns "J" as its preferred format
+            if (options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J"))
+            {
+                MediaType = "application/json";
+            }
         }
 
         private UnsafeBufferSequence.Reader SequenceReader
@@ -473,217 +372,5 @@ public abstract class BinaryContent : IDisposable
         {
             _stream.Dispose();
         }
-    }
-
-    private sealed class MultiPartFormDataBinaryContent : BinaryContent
-    {
-        private readonly MultipartFormDataContent _multipartContent;
-
-        private const int BoundaryLength = 70;
-        private const string BoundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
-
-        public MultiPartFormDataBinaryContent(IEnumerable<BinaryContent> parts)
-            : this(CreateBoundary(), parts) { }
-
-        public MultiPartFormDataBinaryContent(string boundary, IEnumerable<BinaryContent> parts)
-        {
-            Argument.AssertNotNullOrEmpty(boundary, nameof(boundary));
-            Argument.AssertNotNull(parts, nameof(parts));
-
-            _multipartContent = new MultipartFormDataContent(boundary);
-
-            foreach (BinaryContent part in parts)
-            {
-                if (part is not MultipartFormDataPartBinaryContent partBinaryContent)
-                {
-                    throw new InvalidOperationException($"The type is not a valid part: '{part.GetType()}'.");
-                }
-                Add(partBinaryContent);
-            }
-        }
-
-        public override string? ContentType
-        {
-            get
-            {
-                Debug.Assert(_multipartContent.Headers.ContentType is not null);
-
-                return _multipartContent.Headers.ContentType!.ToString();
-            }
-        }
-
-        public void Add(MultipartFormDataPartBinaryContent content)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(content.Name, nameof(content.Name));
-
-            HttpContent httpContent = new HttpContentAdapter(content);
-            if (content.ContentType is not null)
-            {
-                httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse(content.ContentType);
-            }
-
-            string? filename = content.Content is FileBinaryContent fileContent ? fileContent.Filename : null;
-            Add(httpContent, content.Name!, filename);
-        }
-
-        private void Add(HttpContent content, string name, string? fileName = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(name, nameof(name));
-
-            if (fileName is not null)
-            {
-                _multipartContent.Add(content, name, fileName);
-            }
-            else
-            {
-                _multipartContent.Add(content, name);
-            }
-        }
-
-#if NET6_0_OR_GREATER
-    private static string CreateBoundary() =>
-        string.Create(BoundaryLength, 0, (chars, _) =>
-        {
-            Span<byte> random = stackalloc byte[BoundaryLength];
-            Random.Shared.NextBytes(random);
-
-            for (int i = 0; i < chars.Length; i++)
-            {
-                chars[i] = BoundaryValues[random[i] % BoundaryValues.Length];
-            }
-        });
-#else
-        private static readonly Random _random = new();
-
-        private static string CreateBoundary()
-        {
-            Span<char> chars = stackalloc char[BoundaryLength];
-
-            byte[] random = new byte[BoundaryLength];
-            lock (_random)
-            {
-                _random.NextBytes(random);
-            }
-            const int Mask = 255 >> 2;
-            Debug.Assert(BoundaryValues.Length - 1 == Mask);
-
-            for (int i = 0; i < chars.Length; i++)
-            {
-                chars[i] = BoundaryValues[random[i] & Mask];
-            }
-
-            return chars.ToString();
-        }
-#endif
-
-        public override bool TryComputeLength(out long length)
-        {
-            if (_multipartContent.Headers.ContentLength is long contentLength)
-            {
-                length = contentLength;
-                return true;
-            }
-
-            length = 0;
-            return false;
-        }
-
-        public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
-        {
-#if NET5_0_OR_GREATER
-        _multipartContent.CopyTo(stream, default, cancellationToken);
-#else
-        Internal.TaskExtensions.EnsureCompleted(_multipartContent.CopyToAsync(stream));
-#endif
-        }
-
-        public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
-        {
-#if NET5_0_OR_GREATER
-        await _multipartContent.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
-#else
-        await _multipartContent.CopyToAsync(stream).ConfigureAwait(false);
-#endif
-        }
-
-        public override void Dispose()
-        {
-            _multipartContent.Dispose();
-        }
-
-        private sealed class HttpContentAdapter : HttpContent
-        {
-            private readonly BinaryContent _content;
-
-            public HttpContentAdapter(BinaryContent content)
-            {
-                Argument.AssertNotNull(content, nameof(content));
-
-                _content = content;
-            }
-
-            protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
-                => await _content.WriteToAsync(stream).ConfigureAwait(false);
-
-            protected override bool TryComputeLength(out long length)
-                => _content.TryComputeLength(out length);
-
-#if NET6_0_OR_GREATER
-            protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-                => await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
-
-            protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-                => _content.WriteTo(stream, cancellationToken);
-#endif
-            protected override void Dispose(bool disposing)
-            {
-                base.Dispose(disposing);
-                if (disposing)
-                {
-                    _content.Dispose();
-                }
-            }
-        }
-    }
-
-    private sealed class MultipartFormDataPartBinaryContent : BinaryContent
-    {
-        private readonly BinaryContent _content;
-
-        public MultipartFormDataPartBinaryContent(string name, BinaryContent content)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
-
-            _content = content;
-            Name = name;
-        }
-
-        public override string? ContentType
-        {
-            get
-            {
-                return _content.ContentType;
-            }
-        }
-
-        internal string Name { get;  }
-        internal BinaryContent Content => _content;
-
-        public override void Dispose()
-        {
-            _content.Dispose();
-            GC.SuppressFinalize(this);
-        }
-
-        public override bool TryComputeLength(out long length)
-            => _content.TryComputeLength(out length);
-
-        public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
-            => _content.WriteTo(stream, cancellationToken);
-        public override Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
-            => _content.WriteToAsync(stream, cancellationToken);
     }
 }

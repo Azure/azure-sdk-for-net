@@ -28,6 +28,8 @@ namespace Azure.Storage.DataMovement.Blobs
             internal const int SchemaVersion_3 = 3;
             internal const int SchemaVersion_4 = 4;
             internal const int SchemaVersion = SchemaVersion_4;
+            internal const int MinValidSchemaVersion = SchemaVersion_3;
+            internal const int MaxValidSchemaVersion = SchemaVersion;
 
             internal const int VersionIndex = 0;
             internal const int PreserveBlobTypeIndex = VersionIndex + IntSizeInBytes;

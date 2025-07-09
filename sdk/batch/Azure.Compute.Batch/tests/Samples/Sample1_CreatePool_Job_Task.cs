@@ -32,11 +32,11 @@ namespace Azure.Compute.Batch.Tests.Samples
             #endregion
 
             #region Snippet:Batch_Sample01_CreateBatchJob
-            await batchClient.CreateJobAsync(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
+            await batchClient.CreateJobAsync(new BatchJobCreateOptions("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
             #endregion
 
             #region Snippet:Batch_Sample01_CreateBatchTask
-            await batchClient.CreateTaskAsync("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
+            await batchClient.CreateTaskAsync("jobId", new BatchTaskCreateOptions("taskId", $"echo Hello world"));
             #endregion
 
             #region Snippet:Batch_Sample01_GetTasks
@@ -76,7 +76,7 @@ namespace Azure.Compute.Batch.Tests.Samples
 
             #region Snippet:Batch_Sample01_PoolCreation
             var poolName = "HelloWorldPool";
-            var imageReference = new BatchImageReference()
+            var imageReference = new Azure.ResourceManager.Batch.Models.BatchImageReference()
             {
                 Publisher = "canonical",
                 Offer = "0001-com-ubuntu-server-jammy",

@@ -7,8 +7,6 @@ Project("{F903E55E-0FDE-4855-AC34-AFAC1F7FC419}") = "Azure.ResourceManager.SiteM
 EndProject
 Project("{F903E55E-0FDE-4855-AC34-AFAC1F7FC419}") = "Azure.ResourceManager.SiteManager.Tests", "tests\Azure.ResourceManager.SiteManager.Tests.csproj", "{39B18B76-C158-40EB-B1F7-95ED36BAC834}"
 EndProject
-Project("{F903E55E-0FDE-4855-AC34-AFAC1F7FC419}") = "Azure.ResourceManager.SiteManager.Samples", "samples\Azure.ResourceManager.SiteManager.Samples.csproj", "{87DBDED0-0F32-40C0-B899-3CC2451AB541}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

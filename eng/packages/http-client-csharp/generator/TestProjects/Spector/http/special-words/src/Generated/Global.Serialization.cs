@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace SpecialWords._Models
@@ -37,7 +36,5 @@ namespace SpecialWords._Models
 
         /// <param name="global"> The <see cref="Global"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Global @global) => throw null;
-
-        public static explicit operator Global(Response result) => throw null;
     }
 }

@@ -105,12 +105,8 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         public async Task RecognizeEntitiesPreview()
         {
             #region Snippet:Sample4_AnalyzeTextAsync_RecognizeEntities_Preview
-            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-            AzureKeyCredential credential = new("your apikey");
-#if !SNIPPET
-            endpoint = TestEnvironment.Endpoint;
-            credential = new(TestEnvironment.ApiKey);
-#endif
+            Uri endpoint = TestEnvironment.Endpoint;
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2024_11_15_Preview);
             var client = new TextAnalysisClient(endpoint, credential, options);
 

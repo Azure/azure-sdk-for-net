@@ -527,7 +527,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceManagedCluster.</param>
     public ContainerServiceManagedCluster(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2024-08-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2025-04-01")
     {
     }
 
@@ -591,6 +591,36 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-04-01.
+        /// </summary>
+        public static readonly string V2025_04_01 = "2025-04-01";
+
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
+        /// <summary>
+        /// 2025-02-01.
+        /// </summary>
+        public static readonly string V2025_02_01 = "2025-02-01";
+
+        /// <summary>
+        /// 2025-01-01.
+        /// </summary>
+        public static readonly string V2025_01_01 = "2025-01-01";
+
+        /// <summary>
+        /// 2024-10-01.
+        /// </summary>
+        public static readonly string V2024_10_01 = "2024-10-01";
+
+        /// <summary>
+        /// 2024-09-01.
+        /// </summary>
+        public static readonly string V2024_09_01 = "2024-09-01";
+
         /// <summary>
         /// 2024-08-01.
         /// </summary>

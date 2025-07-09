@@ -77,7 +77,7 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificateClientOptions : Azure.Core.ClientOptions
     {
-        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_6_Preview_2) { }
+        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_6) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Certificates
             V7_3 = 3,
             V7_4 = 4,
             V7_5 = 5,
-            V7_6_Preview_2 = 6,
+            V7_6 = 6,
         }
     }
     public partial class CertificateContact
@@ -370,6 +370,7 @@ namespace Azure.Security.KeyVault.Certificates
         public System.Uri Id { get { throw null; } }
         public System.Uri KeyId { get { throw null; } }
         public string Name { get { throw null; } }
+        public bool? PreserveCertificateOrder { get { throw null; } }
         public Azure.Security.KeyVault.Certificates.CertificateProperties Properties { get { throw null; } }
         public System.Uri SecretId { get { throw null; } }
     }
@@ -396,7 +397,6 @@ namespace Azure.Security.KeyVault.Certificates
     {
         internal KeyVaultCertificateWithPolicy() { }
         public Azure.Security.KeyVault.Certificates.CertificatePolicy Policy { get { throw null; } }
-        public bool? PreserveCertificateOrder { get { throw null; } }
     }
     public partial class LifetimeAction
     {
@@ -444,6 +444,7 @@ namespace Microsoft.Extensions.Azure
     public static partial class CertificateClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Security.KeyVault.Certificates.CertificateClient, Azure.Security.KeyVault.Certificates.CertificateClientOptions> AddCertificateClient<TBuilder>(this TBuilder builder, System.Uri vaultUri) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Security.KeyVault.Certificates.CertificateClient, Azure.Security.KeyVault.Certificates.CertificateClientOptions> AddCertificateClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

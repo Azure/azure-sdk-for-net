@@ -108,7 +108,7 @@ public partial class EventGridPartnerNamespacePrivateEndpointConnection : Provis
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridPartnerNamespacePrivateEndpointConnection.</param>
     public EventGridPartnerNamespacePrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections", resourceVersion ?? "2022-06-15")
+        : base(bicepIdentifier, "Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -134,6 +134,11 @@ public partial class EventGridPartnerNamespacePrivateEndpointConnection : Provis
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
+
         /// <summary>
         /// 2022-06-15.
         /// </summary>

@@ -8,857 +8,502 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Data.SchemaRegistry.Models;
 
 namespace Azure.Data.SchemaRegistry
 {
-    // Data plane generated client.
     /// <summary> SchemaRegistryClient is a client for registering and retrieving schemas from the Azure Schema Registry service. </summary>
     public partial class SchemaRegistryClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://eventhubs.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://eventhubs.azure.net/.default" };
         private readonly string _apiVersion;
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
-
-        /// <summary> Get a registered schema by its unique ID reference. </summary>
-        /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </remarks>
-        internal virtual async Task<Response<BinaryData>> GetSchemaByIdAsync(string id, string accept, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSchemaByIdAsync(id, accept, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary> Get a registered schema by its unique ID reference. </summary>
-        /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </remarks>
-        internal virtual Response<BinaryData> GetSchemaById(string id, string accept, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSchemaById(id, accept, context);
-            return Response.FromValue(response.Content, response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Get a registered schema by its unique ID reference.
+        /// [Protocol Method] Gets the list of schema groups user is authorized to access.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSchemaByIdAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSchemaByIdAsync(string id, string accept, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            using var scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaById");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSchemaByIdRequest(id, accept, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get a registered schema by its unique ID reference.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSchemaById(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetSchemaById(string id, string accept, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            using var scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaById");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSchemaByIdRequest(id, accept, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get specific schema versions. </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="schemaVersion"> Version number of specific schema. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets one specific version of one schema. </remarks>
-        internal virtual async Task<Response<BinaryData>> GetSchemaByVersionAsync(string groupName, string schemaName, int schemaVersion, string accept, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSchemaByVersionAsync(groupName, schemaName, schemaVersion, accept, context).ConfigureAwait(false);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary> Get specific schema versions. </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="schemaVersion"> Version number of specific schema. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets one specific version of one schema. </remarks>
-        internal virtual Response<BinaryData> GetSchemaByVersion(string groupName, string schemaName, int schemaVersion, string accept, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSchemaByVersion(groupName, schemaName, schemaVersion, accept, context);
-            return Response.FromValue(response.Content, response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get specific schema versions.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSchemaByVersionAsync(string,string,int,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="schemaVersion"> Version number of specific schema. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSchemaByVersionAsync(string groupName, string schemaName, int schemaVersion, string accept, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            using var scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaByVersion");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSchemaByVersionRequest(groupName, schemaName, schemaVersion, accept, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get specific schema versions.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSchemaByVersion(string,string,int,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="schemaVersion"> Version number of specific schema. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="accept"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetSchemaByVersion(string groupName, string schemaName, int schemaVersion, string accept, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNull(accept, nameof(accept));
-
-            using var scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaByVersion");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSchemaByVersionRequest(groupName, schemaName, schemaVersion, accept, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get properties for existing schema. </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="schemaContent"> String representation (UTF-8) of the schema. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=Json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="schemaContent"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets the properties referencing an existing schema within the specified schema group, as matched by schema content comparison. </remarks>
-        internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, BinaryData schemaContent, ContentType contentType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNull(schemaContent, nameof(schemaContent));
-
-            using RequestContent content = schemaContent;
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSchemaPropertiesByContentAsync(groupName, schemaName, content, contentType, context).ConfigureAwait(false);
-            return response;
-        }
-
-        /// <summary> Get properties for existing schema. </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="schemaContent"> String representation (UTF-8) of the schema. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=Json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="schemaContent"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets the properties referencing an existing schema within the specified schema group, as matched by schema content comparison. </remarks>
-        internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, BinaryData schemaContent, ContentType contentType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNull(schemaContent, nameof(schemaContent));
-
-            using RequestContent content = schemaContent;
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSchemaPropertiesByContent(groupName, schemaName, content, contentType, context);
-            return response;
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get properties for existing schema.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSchemaPropertiesByContentAsync(string,string,BinaryData,ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=Json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, RequestContent content, ContentType contentType, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaPropertiesByContent");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSchemaPropertiesByContentRequest(groupName, schemaName, content, contentType, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get properties for existing schema.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSchemaPropertiesByContent(string,string,BinaryData,ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=Json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, RequestContent content, ContentType contentType, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaPropertiesByContent");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSchemaPropertiesByContentRequest(groupName, schemaName, content, contentType, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Register new schema. </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="schemaContent"> String representation (UTF-8) of the schema. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=Json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="schemaContent"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1. </remarks>
-        internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, BinaryData schemaContent, ContentType contentType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNull(schemaContent, nameof(schemaContent));
-
-            using RequestContent content = schemaContent;
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await RegisterSchemaAsync(groupName, schemaName, content, contentType, context).ConfigureAwait(false);
-            return response;
-        }
-
-        /// <summary> Register new schema. </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="schemaContent"> String representation (UTF-8) of the schema. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=Json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="schemaContent"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1. </remarks>
-        internal virtual Response RegisterSchema(string groupName, string schemaName, BinaryData schemaContent, ContentType contentType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNull(schemaContent, nameof(schemaContent));
-
-            using RequestContent content = schemaContent;
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = RegisterSchema(groupName, schemaName, content, contentType, context);
-            return response;
-        }
-
-        /// <summary>
-        /// [Protocol Method] Register new schema
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="RegisterSchemaAsync(string,string,BinaryData,ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=Json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, RequestContent content, ContentType contentType, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.RegisterSchema");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateRegisterSchemaRequest(groupName, schemaName, content, contentType, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Register new schema
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="RegisterSchema(string,string,BinaryData,ContentType,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The content type for given schema. Allowed values: "application/json; serialization=Avro" | "application/json; serialization=Json" | "text/plain; charset=utf-8" | "text/vnd.ms.protobuf". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual Response RegisterSchema(string groupName, string schemaName, RequestContent content, ContentType contentType, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.RegisterSchema");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateRegisterSchemaRequest(groupName, schemaName, content, contentType, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get list of schema groups. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the list of schema groups user is authorized to access. </remarks>
-        internal virtual AsyncPageable<string> GetSchemaGroupsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchemaGroupsRequest(context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchemaGroupsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => e.GetString(), ClientDiagnostics, _pipeline, "SchemaRegistryClient.GetSchemaGroups", "Value", "NextLink", context);
-        }
-
-        /// <summary> Get list of schema groups. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the list of schema groups user is authorized to access. </remarks>
-        internal virtual Pageable<string> GetSchemaGroups(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchemaGroupsRequest(context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchemaGroupsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => e.GetString(), ClientDiagnostics, _pipeline, "SchemaRegistryClient.GetSchemaGroups", "Value", "NextLink", context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get list of schema groups.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSchemaGroupsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual AsyncPageable<BinaryData> GetSchemaGroupsAsync(RequestContext context)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchemaGroupsRequest(context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchemaGroupsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SchemaRegistryClient.GetSchemaGroups", "Value", "NextLink", context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get list of schema groups.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSchemaGroups(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         internal virtual Pageable<BinaryData> GetSchemaGroups(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchemaGroupsRequest(context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchemaGroupsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SchemaRegistryClient.GetSchemaGroups", "Value", "NextLink", context);
-        }
-
-        /// <summary> List schema versions. </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets the list of all versions of one schema. </remarks>
-        internal virtual AsyncPageable<int> GetSchemaVersionsAsync(string groupName, string schemaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchemaVersionsRequest(groupName, schemaName, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchemaVersionsNextPageRequest(nextLink, groupName, schemaName, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => e.GetInt32(), ClientDiagnostics, _pipeline, "SchemaRegistryClient.GetSchemaVersions", "Value", "NextLink", context);
-        }
-
-        /// <summary> List schema versions. </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Gets the list of all versions of one schema. </remarks>
-        internal virtual Pageable<int> GetSchemaVersions(string groupName, string schemaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchemaVersionsRequest(groupName, schemaName, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchemaVersionsNextPageRequest(nextLink, groupName, schemaName, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => e.GetInt32(), ClientDiagnostics, _pipeline, "SchemaRegistryClient.GetSchemaVersions", "Value", "NextLink", context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaGroups");
+            scope.Start();
+            try
+            {
+                return new SchemaRegistryClientGetSchemaGroupsCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] List schema versions.
+        /// [Protocol Method] Gets the list of schema groups user is authorized to access.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual AsyncPageable<BinaryData> GetSchemaGroupsAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaGroups");
+            scope.Start();
+            try
+            {
+                return new SchemaRegistryClientGetSchemaGroupsAsyncCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the list of schema groups user is authorized to access. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Pageable<string> GetSchemaGroups(CancellationToken cancellationToken = default)
+        {
+            return new SchemaRegistryClientGetSchemaGroupsCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> Gets the list of schema groups user is authorized to access. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual AsyncPageable<string> GetSchemaGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            return new SchemaRegistryClientGetSchemaGroupsAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the list of all versions of one schema.
+        /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSchemaVersionsAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> Name of schema group. </param>
         /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        internal virtual AsyncPageable<BinaryData> GetSchemaVersionsAsync(string groupName, string schemaName, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchemaVersionsRequest(groupName, schemaName, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchemaVersionsNextPageRequest(nextLink, groupName, schemaName, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SchemaRegistryClient.GetSchemaVersions", "Value", "NextLink", context);
-        }
-
-        /// <summary>
-        /// [Protocol Method] List schema versions.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSchemaVersions(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="groupName"> Name of schema group. </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetSchemaVersions(string groupName, string schemaName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchemaVersionsRequest(groupName, schemaName, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchemaVersionsNextPageRequest(nextLink, groupName, schemaName, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SchemaRegistryClient.GetSchemaVersions", "Value", "NextLink", context);
-        }
-
-        internal HttpMessage CreateGetSchemaGroupsRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/$schemaGroups", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetSchemaVersionsRequest(string groupName, string schemaName, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/$schemaGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetSchemaByIdRequest(string id, string accept, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/$schemaGroups/$schemas/", false);
-            uri.AppendPath(id, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", accept);
-            return message;
-        }
-
-        internal HttpMessage CreateGetSchemaByVersionRequest(string groupName, string schemaName, int schemaVersion, string accept, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/$schemaGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendPath("/versions/", false);
-            uri.AppendPath(schemaVersion, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", accept);
-            return message;
-        }
-
-        internal HttpMessage CreateGetSchemaPropertiesByContentRequest(string groupName, string schemaName, RequestContent content, ContentType contentType, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/$schemaGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendPath(":get-id", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", contentType.ToString());
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateRegisterSchemaRequest(string groupName, string schemaName, RequestContent content, ContentType contentType, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendPath("/$schemaGroups/", false);
-            uri.AppendPath(groupName, true);
-            uri.AppendPath("/schemas/", false);
-            uri.AppendPath(schemaName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", contentType.ToString());
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetSchemaGroupsNextPageRequest(string nextLink, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetSchemaVersionsNextPageRequest(string nextLink, string groupName, string schemaName, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaVersions");
+            scope.Start();
+            try
             {
-                return DefaultRequestContext;
+                return new SchemaRegistryClientGetSchemaVersionsCollectionResult(this, groupName, schemaName, context);
             }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier204;
-        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        /// <summary>
+        /// [Protocol Method] Gets the list of all versions of one schema.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual AsyncPageable<BinaryData> GetSchemaVersionsAsync(string groupName, string schemaName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaVersions");
+            scope.Start();
+            try
+            {
+                return new SchemaRegistryClientGetSchemaVersionsAsyncCollectionResult(this, groupName, schemaName, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the list of all versions of one schema. </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Pageable<int> GetSchemaVersions(string groupName, string schemaName, CancellationToken cancellationToken = default)
+        {
+            return new SchemaRegistryClientGetSchemaVersionsCollectionResultOfT(this, groupName, schemaName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> Gets the list of all versions of one schema. </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual AsyncPageable<int> GetSchemaVersionsAsync(string groupName, string schemaName, CancellationToken cancellationToken = default)
+        {
+            return new SchemaRegistryClientGetSchemaVersionsAsyncCollectionResultOfT(this, groupName, schemaName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetSchemaById(string id, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaById");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSchemaByIdRequest(id, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetSchemaByIdAsync(string id, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaById");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSchemaByIdRequest(id, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </summary>
+        /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<BinaryData> GetSchemaById(string id, CancellationToken cancellationToken = default)
+        {
+            Response result = GetSchemaById(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue(result.Content, result);
+        }
+
+        /// <summary> Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested. </summary>
+        /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<BinaryData>> GetSchemaByIdAsync(string id, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetSchemaByIdAsync(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue(result.Content, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets one specific version of one schema.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="schemaVersion"> Version number of specific schema. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetSchemaByVersion(string groupName, string schemaName, int schemaVersion, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaByVersion");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSchemaByVersionRequest(groupName, schemaName, schemaVersion, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets one specific version of one schema.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="schemaVersion"> Version number of specific schema. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetSchemaByVersionAsync(string groupName, string schemaName, int schemaVersion, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaByVersion");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSchemaByVersionRequest(groupName, schemaName, schemaVersion, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets one specific version of one schema. </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="schemaVersion"> Version number of specific schema. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<BinaryData> GetSchemaByVersion(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
+        {
+            Response result = GetSchemaByVersion(groupName, schemaName, schemaVersion, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue(result.Content, result);
+        }
+
+        /// <summary> Gets one specific version of one schema. </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="schemaVersion"> Version number of specific schema. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<BinaryData>> GetSchemaByVersionAsync(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetSchemaByVersionAsync(groupName, schemaName, schemaVersion, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue(result.Content, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the properties referencing an existing schema within the specified schema group, as matched by schema content comparison.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="contentType"> The content type for given schema. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, string contentType, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaPropertiesByContent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSchemaPropertiesByContentRequest(groupName, schemaName, contentType, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the properties referencing an existing schema within the specified schema group, as matched by schema content comparison.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="contentType"> The content type for given schema. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, string contentType, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaPropertiesByContent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSchemaPropertiesByContentRequest(groupName, schemaName, contentType, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the properties referencing an existing schema within the specified schema group, as matched by schema content comparison. </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="contentType"> The content type for given schema. </param>
+        /// <param name="schemaContent"> String representation (UTF-8) of the schema. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response GetSchemaPropertiesByContent(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
+        {
+            return GetSchemaPropertiesByContent(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> Gets the properties referencing an existing schema within the specified schema group, as matched by schema content comparison. </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="contentType"> The content type for given schema. </param>
+        /// <param name="schemaContent"> String representation (UTF-8) of the schema. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response> GetSchemaPropertiesByContentAsync(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
+        {
+            return await GetSchemaPropertiesByContentAsync(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="contentType"> The content type for given schema. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response RegisterSchema(string groupName, string schemaName, string contentType, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.RegisterSchema");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRegisterSchemaRequest(groupName, schemaName, contentType, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="contentType"> The content type for given schema. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, string contentType, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.RegisterSchema");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRegisterSchemaRequest(groupName, schemaName, contentType, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1. </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="contentType"> The content type for given schema. </param>
+        /// <param name="schemaContent"> String representation (UTF-8) of the schema. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response RegisterSchema(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
+        {
+            return RegisterSchema(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1. </summary>
+        /// <param name="groupName"> Name of schema group. </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="contentType"> The content type for given schema. </param>
+        /// <param name="schemaContent"> String representation (UTF-8) of the schema. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response> RegisterSchemaAsync(string groupName, string schemaName, SchemaContentTypeValues contentType, BinaryData schemaContent, CancellationToken cancellationToken = default)
+        {
+            return await RegisterSchemaAsync(groupName, schemaName, contentType.ToSerialString(), RequestContent.Create(schemaContent), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
     }
 }

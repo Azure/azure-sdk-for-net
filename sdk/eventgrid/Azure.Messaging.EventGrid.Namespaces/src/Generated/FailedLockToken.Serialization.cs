@@ -10,11 +10,10 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> Failed LockToken information. </summary>
     public partial class FailedLockToken : IJsonModel<FailedLockToken>
     {
         /// <summary> Initializes a new instance of <see cref="FailedLockToken"/> for deserialization. </summary>
@@ -148,25 +147,5 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FailedLockToken>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="failedLockToken"> The <see cref="FailedLockToken"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(FailedLockToken failedLockToken)
-        {
-            if (failedLockToken == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(failedLockToken, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FailedLockToken"/> from. </param>
-        public static explicit operator FailedLockToken(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeFailedLockToken(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -5,12 +5,12 @@
   },
   "matrix": {
     "Agent": {
-      "Ubuntu-20.04_NET8.0": {
+      "Ubuntu-24.04_NET8.0": {
         "OSVmImage": "env:LINUXVMIMAGE",
         "Pool": "env:LINUXPOOL",
         "TestTargetFramework": "net8.0"
       },
-      "Ubuntu-20.04_NET9.0": {
+      "Ubuntu-24.04_NET9.0": {
         "OSVmImage": "env:LINUXVMIMAGE",
         "Pool": "env:LINUXPOOL",
         "TestTargetFramework": "net9.0"

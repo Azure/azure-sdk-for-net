@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fix `SystemData` deserialize method in custom code.
+
 ### Other Changes
 
 ## 1.2.0-beta.2 (2024-10-31)

@@ -8,92 +8,64 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    // Data plane generated client.
-    /// <summary> The KeyVaultRest service client. </summary>
     internal partial class KeyVaultRestClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of KeyVaultRestClient for mocking. </summary>
         protected KeyVaultRestClient()
         {
         }
 
-        /// <summary> Returns the status of full backup operation. </summary>
-        /// <param name="jobId"> The id returned as part of the backup request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<FullBackupDetailsInternal>> FullBackupStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        /// <summary> Initializes a new instance of KeyVaultRestClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public KeyVaultRestClient(Uri endpoint, TokenCredential credential, KeyVaultRestClientOptions options)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await FullBackupStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(FullBackupDetailsInternal.FromResponse(response), response);
+            options ??= new KeyVaultRestClientOptions();
+
+            _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Returns the status of full backup operation. </summary>
-        /// <param name="jobId"> The id returned as part of the backup request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<FullBackupDetailsInternal> FullBackupStatus(string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = FullBackupStatus(jobId, context);
-            return Response.FromValue(FullBackupDetailsInternal.FromResponse(response), response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary>
-        /// [Protocol Method] Returns the status of full backup operation
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="FullBackupStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The id returned as part of the backup request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <summary> Creates a full backup using a user-provided SAS token to an Azure blob storage container. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> FullBackupStatusAsync(string jobId, RequestContext context)
+        internal virtual Operation<BinaryData> FullBackup(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullBackupStatus");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullBackup");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateFullBackupStatusRequest(jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateFullBackupRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -102,37 +74,253 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
+        /// <summary> Creates a full backup using a user-provided SAS token to an Azure blob storage container. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Operation<BinaryData>> FullBackupAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullBackup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateFullBackupRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullBackupAsync", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a full backup using a user-provided SAS token to an Azure blob storage container. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual Operation<FullBackupDetailsInternal> FullBackup(WaitUntil waitUntil, SASTokenParameter azureStorageBlobContainerUri, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = FullBackup(waitUntil, azureStorageBlobContainerUri, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullBackup");
+        }
+
+        /// <summary> Creates a full backup using a user-provided SAS token to an Azure blob storage container. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual async Task<Operation<FullBackupDetailsInternal>> FullBackupAsync(WaitUntil waitUntil, SASTokenParameter azureStorageBlobContainerUri, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = await FullBackupAsync(waitUntil, azureStorageBlobContainerUri, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullBackupAsync");
+        }
+
+        /// <summary> Pre-backup operation for checking whether the customer can perform a full backup operation. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Operation<BinaryData> PreFullBackup(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.PreFullBackup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePreFullBackupRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Pre-backup operation for checking whether the customer can perform a full backup operation. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Operation<BinaryData>> PreFullBackupAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.PreFullBackup");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePreFullBackupRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullBackupAsync", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Pre-backup operation for checking whether the customer can perform a full backup operation. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="preBackupOperationParameters"> Optional parameters to validate prior to performing a full backup operation. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual Operation<FullBackupDetailsInternal> PreFullBackup(WaitUntil waitUntil, PreBackupOperationParameters preBackupOperationParameters, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = PreFullBackup(waitUntil, preBackupOperationParameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup");
+        }
+
+        /// <summary> Pre-backup operation for checking whether the customer can perform a full backup operation. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="preBackupOperationParameters"> Optional parameters to validate prior to performing a full backup operation. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual async Task<Operation<FullBackupDetailsInternal>> PreFullBackupAsync(WaitUntil waitUntil, PreBackupOperationParameters preBackupOperationParameters, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = await PreFullBackupAsync(waitUntil, preBackupOperationParameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => (FullBackupDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullBackupAsync");
+        }
+
+        /// <summary> Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Operation<BinaryData> FullRestoreOperation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullRestoreOperation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateFullRestoreOperationRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Operation<BinaryData>> FullRestoreOperationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullRestoreOperation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateFullRestoreOperationRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperationAsync", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual Operation<RestoreDetailsInternal> FullRestoreOperation(WaitUntil waitUntil, RestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = FullRestoreOperation(waitUntil, restoreBlobDetails, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation");
+        }
+
+        /// <summary> Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual async Task<Operation<RestoreDetailsInternal>> FullRestoreOperationAsync(WaitUntil waitUntil, RestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = await FullRestoreOperationAsync(waitUntil, restoreBlobDetails, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperationAsync");
+        }
+
+        /// <summary> Pre-restore operation for checking whether the customer can perform a full restore operation. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Operation<BinaryData> PreFullRestoreOperation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.PreFullRestoreOperation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePreFullRestoreOperationRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Pre-restore operation for checking whether the customer can perform a full restore operation. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Operation<BinaryData>> PreFullRestoreOperationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.PreFullRestoreOperation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePreFullRestoreOperationRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperationAsync", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Pre-restore operation for checking whether the customer can perform a full restore operation. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="preRestoreOperationParameters"> Optional pre restore parameters to validate prior to performing a full restore operation. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual Operation<RestoreDetailsInternal> PreFullRestoreOperation(WaitUntil waitUntil, PreRestoreOperationParameters preRestoreOperationParameters, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = PreFullRestoreOperation(waitUntil, preRestoreOperationParameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation");
+        }
+
+        /// <summary> Pre-restore operation for checking whether the customer can perform a full restore operation. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="preRestoreOperationParameters"> Optional pre restore parameters to validate prior to performing a full restore operation. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual async Task<Operation<RestoreDetailsInternal>> PreFullRestoreOperationAsync(WaitUntil waitUntil, PreRestoreOperationParameters preRestoreOperationParameters, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = await PreFullRestoreOperationAsync(waitUntil, preRestoreOperationParameters, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => (RestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperationAsync");
+        }
+
         /// <summary>
         /// [Protocol Method] Returns the status of full backup operation
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="FullBackupStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The id returned as part of the backup request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response FullBackupStatus(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullBackupStatus");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullBackupStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateFullBackupStatusRequest(jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -141,65 +329,26 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
-        /// <summary> Returns the status of restore operation. </summary>
-        /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<RestoreDetailsInternal>> RestoreStatusAsync(string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await RestoreStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(RestoreDetailsInternal.FromResponse(response), response);
-        }
-
-        /// <summary> Returns the status of restore operation. </summary>
-        /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<RestoreDetailsInternal> RestoreStatus(string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = RestoreStatus(jobId, context);
-            return Response.FromValue(RestoreDetailsInternal.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Returns the status of restore operation
+        /// [Protocol Method] Returns the status of full backup operation
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="RestoreStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="jobId"> The id returned as part of the backup request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RestoreStatusAsync(string jobId, RequestContext context)
+        internal virtual async Task<Response> FullBackupStatusAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.RestoreStatus");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullBackupStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRestoreStatusRequest(jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateFullBackupStatusRequest(jobId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -208,37 +357,46 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
+        /// <summary> Returns the status of full backup operation. </summary>
+        /// <param name="jobId"> The id returned as part of the backup request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<FullBackupDetailsInternal> FullBackupStatus(string jobId, CancellationToken cancellationToken = default)
+        {
+            Response result = FullBackupStatus(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((FullBackupDetailsInternal)result, result);
+        }
+
+        /// <summary> Returns the status of full backup operation. </summary>
+        /// <param name="jobId"> The id returned as part of the backup request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<FullBackupDetailsInternal>> FullBackupStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Response result = await FullBackupStatusAsync(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((FullBackupDetailsInternal)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Returns the status of restore operation
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="RestoreStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response RestoreStatus(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.RestoreStatus");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.RestoreStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateRestoreStatusRequest(jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -247,65 +405,26 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
-        /// <summary> Returns the status of the selective key restore operation. </summary>
-        /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<SelectiveKeyRestoreDetailsInternal>> SelectiveKeyRestoreStatusAsync(string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await SelectiveKeyRestoreStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(SelectiveKeyRestoreDetailsInternal.FromResponse(response), response);
-        }
-
-        /// <summary> Returns the status of the selective key restore operation. </summary>
-        /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<SelectiveKeyRestoreDetailsInternal> SelectiveKeyRestoreStatus(string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = SelectiveKeyRestoreStatus(jobId, context);
-            return Response.FromValue(SelectiveKeyRestoreDetailsInternal.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Returns the status of the selective key restore operation
+        /// [Protocol Method] Returns the status of restore operation
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SelectiveKeyRestoreStatusAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SelectiveKeyRestoreStatusAsync(string jobId, RequestContext context)
+        internal virtual async Task<Response> RestoreStatusAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.SelectiveKeyRestoreStatus");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.RestoreStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSelectiveKeyRestoreStatusRequest(jobId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateRestoreStatusRequest(jobId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -314,37 +433,46 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
+        /// <summary> Returns the status of restore operation. </summary>
+        /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<RestoreDetailsInternal> RestoreStatus(string jobId, CancellationToken cancellationToken = default)
+        {
+            Response result = RestoreStatus(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((RestoreDetailsInternal)result, result);
+        }
+
+        /// <summary> Returns the status of restore operation. </summary>
+        /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<RestoreDetailsInternal>> RestoreStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Response result = await RestoreStatusAsync(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((RestoreDetailsInternal)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Returns the status of the selective key restore operation
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SelectiveKeyRestoreStatus(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response SelectiveKeyRestoreStatus(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.SelectiveKeyRestoreStatus");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.SelectiveKeyRestoreStatus");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSelectiveKeyRestoreStatusRequest(jobId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -354,33 +482,25 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// [Protocol Method] Updates key vault account setting, stores it, then returns the setting name and value to the client.
+        /// [Protocol Method] Returns the status of the selective key restore operation
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> UpdateSettingAsync(string settingName, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> SelectiveKeyRestoreStatusAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.UpdateSetting");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.SelectiveKeyRestoreStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateSettingRequest(settingName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateSelectiveKeyRestoreStatusRequest(jobId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -389,34 +509,113 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
+        /// <summary> Returns the status of the selective key restore operation. </summary>
+        /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<SelectiveKeyRestoreDetailsInternal> SelectiveKeyRestoreStatus(string jobId, CancellationToken cancellationToken = default)
+        {
+            Response result = SelectiveKeyRestoreStatus(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((SelectiveKeyRestoreDetailsInternal)result, result);
+        }
+
+        /// <summary> Returns the status of the selective key restore operation. </summary>
+        /// <param name="jobId"> The Job Id returned part of the restore operation. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<SelectiveKeyRestoreDetailsInternal>> SelectiveKeyRestoreStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Response result = await SelectiveKeyRestoreStatusAsync(jobId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((SelectiveKeyRestoreDetailsInternal)result, result);
+        }
+
+        /// <summary> Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Operation<BinaryData> SelectiveKeyRestoreOperation(WaitUntil waitUntil, string keyName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.SelectiveKeyRestoreOperation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSelectiveKeyRestoreOperationRequest(keyName, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Operation<BinaryData>> SelectiveKeyRestoreOperationAsync(WaitUntil waitUntil, string keyName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.SelectiveKeyRestoreOperation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSelectiveKeyRestoreOperationRequest(keyName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperationAsync", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
+        /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual Operation<SelectiveKeyRestoreDetailsInternal> SelectiveKeyRestoreOperation(WaitUntil waitUntil, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = SelectiveKeyRestoreOperation(waitUntil, keyName, restoreBlobDetails, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return ProtocolOperationHelpers.Convert(result, response => (SelectiveKeyRestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation");
+        }
+
+        /// <summary> Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
+        /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual async Task<Operation<SelectiveKeyRestoreDetailsInternal>> SelectiveKeyRestoreOperationAsync(WaitUntil waitUntil, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = await SelectiveKeyRestoreOperationAsync(waitUntil, keyName, restoreBlobDetails, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => (SelectiveKeyRestoreDetailsInternal)response, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperationAsync");
+        }
+
         /// <summary>
-        /// [Protocol Method] Updates key vault account setting, stores it, then returns the setting name and value to the client.
+        /// [Protocol Method] Description of the pool setting to be updated
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpdateSetting(string settingName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.UpdateSetting");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.UpdateSetting");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateSettingRequest(settingName, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -425,67 +624,27 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
-        /// <summary> Get specified account setting object. </summary>
-        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Retrieves the setting object of a specified setting name. </remarks>
-        internal virtual async Task<Response<KeyVaultSetting>> GetSettingAsync(string settingName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSettingAsync(settingName, context).ConfigureAwait(false);
-            return Response.FromValue(KeyVaultSetting.FromResponse(response), response);
-        }
-
-        /// <summary> Get specified account setting object. </summary>
-        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Retrieves the setting object of a specified setting name. </remarks>
-        internal virtual Response<KeyVaultSetting> GetSetting(string settingName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSetting(settingName, context);
-            return Response.FromValue(KeyVaultSetting.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Get specified account setting object.
+        /// [Protocol Method] Description of the pool setting to be updated
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSettingAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSettingAsync(string settingName, RequestContext context)
+        internal virtual async Task<Response> UpdateSettingAsync(string settingName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.GetSetting");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.UpdateSetting");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSettingRequest(settingName, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateUpdateSettingRequest(settingName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -495,36 +654,25 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// [Protocol Method] Get specified account setting object.
+        /// [Protocol Method] Retrieves the setting object of a specified setting name.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSetting(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetSetting(string settingName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.GetSetting");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.GetSetting");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetSettingRequest(settingName, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -533,52 +681,26 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
-        /// <summary> List account settings. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Retrieves a list of all the available account settings that can be configured. </remarks>
-        internal virtual async Task<Response<GetSettingsResult>> GetSettingsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSettingsAsync(context).ConfigureAwait(false);
-            return Response.FromValue(GetSettingsResult.FromResponse(response), response);
-        }
-
-        /// <summary> List account settings. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Retrieves a list of all the available account settings that can be configured. </remarks>
-        internal virtual Response<GetSettingsResult> GetSettings(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSettings(context);
-            return Response.FromValue(GetSettingsResult.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] List account settings.
+        /// [Protocol Method] Retrieves the setting object of a specified setting name.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSettingsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSettingsAsync(RequestContext context)
+        internal virtual async Task<Response> GetSettingAsync(string settingName, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.GetSettings");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.GetSetting");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSettingsRequest(context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetSettingRequest(settingName, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -587,101 +709,45 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
+        /// <summary> Retrieves the setting object of a specified setting name. </summary>
+        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<KeyVaultSetting> GetSetting(string settingName, CancellationToken cancellationToken = default)
+        {
+            Response result = GetSetting(settingName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((KeyVaultSetting)result, result);
+        }
+
+        /// <summary> Retrieves the setting object of a specified setting name. </summary>
+        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<KeyVaultSetting>> GetSettingAsync(string settingName, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetSettingAsync(settingName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((KeyVaultSetting)result, result);
+        }
+
         /// <summary>
-        /// [Protocol Method] List account settings.
+        /// [Protocol Method] Retrieves a list of all the available account settings that can be configured.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetSettings(CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetSettings(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.GetSettings");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.GetSettings");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetSettingsRequest(context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a full backup using a user-provided SAS token to an Azure blob storage container. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureStorageBlobContainerUri"/> is null. </exception>
-        internal virtual async Task<Operation<FullBackupDetailsInternal>> FullBackupAsync(WaitUntil waitUntil, SASTokenParameter azureStorageBlobContainerUri, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(azureStorageBlobContainerUri, nameof(azureStorageBlobContainerUri));
-
-            using RequestContent content = azureStorageBlobContainerUri.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await FullBackupAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FullBackupDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.FullBackup");
-        }
-
-        /// <summary> Creates a full backup using a user-provided SAS token to an Azure blob storage container. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="azureStorageBlobContainerUri"> Azure blob shared access signature token pointing to a valid Azure blob container where full backup needs to be stored. This token needs to be valid for at least next 24 hours from the time of making this call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureStorageBlobContainerUri"/> is null. </exception>
-        internal virtual Operation<FullBackupDetailsInternal> FullBackup(WaitUntil waitUntil, SASTokenParameter azureStorageBlobContainerUri, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(azureStorageBlobContainerUri, nameof(azureStorageBlobContainerUri));
-
-            using RequestContent content = azureStorageBlobContainerUri.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = FullBackup(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, FullBackupDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.FullBackup");
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a full backup using a user-provided SAS token to an Azure blob storage container.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="FullBackupAsync(WaitUntil,SASTokenParameter,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        internal virtual async Task<Operation<BinaryData>> FullBackupAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullBackup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateFullBackupRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -691,36 +757,24 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a full backup using a user-provided SAS token to an Azure blob storage container.
+        /// [Protocol Method] Retrieves a list of all the available account settings that can be configured.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="FullBackup(WaitUntil,SASTokenParameter,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        internal virtual Operation<BinaryData> FullBackup(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetSettingsAsync(RequestContext context)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullBackup");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.GetSettings");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateFullBackupRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+                using HttpMessage message = CreateGetSettingsRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -729,640 +783,22 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
-        /// <summary> Pre-backup operation for checking whether the customer can perform a full backup operation. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="preBackupOperationParameters"> Optional parameters to validate prior to performing a full backup operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="preBackupOperationParameters"/> is null. </exception>
-        internal virtual async Task<Operation<FullBackupDetailsInternal>> PreFullBackupAsync(WaitUntil waitUntil, PreBackupOperationParameters preBackupOperationParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(preBackupOperationParameters, nameof(preBackupOperationParameters));
-
-            using RequestContent content = preBackupOperationParameters.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await PreFullBackupAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FullBackupDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup");
-        }
-
-        /// <summary> Pre-backup operation for checking whether the customer can perform a full backup operation. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="preBackupOperationParameters"> Optional parameters to validate prior to performing a full backup operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="preBackupOperationParameters"/> is null. </exception>
-        internal virtual Operation<FullBackupDetailsInternal> PreFullBackup(WaitUntil waitUntil, PreBackupOperationParameters preBackupOperationParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(preBackupOperationParameters, nameof(preBackupOperationParameters));
-
-            using RequestContent content = preBackupOperationParameters.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = PreFullBackup(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, FullBackupDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup");
-        }
-
-        /// <summary>
-        /// [Protocol Method] Pre-backup operation for checking whether the customer can perform a full backup operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="PreFullBackupAsync(WaitUntil,PreBackupOperationParameters,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <summary> Retrieves a list of all the available account settings that can be configured. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        internal virtual async Task<Operation<BinaryData>> PreFullBackupAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        internal virtual Response<GetSettingsResult> GetSettings(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.PreFullBackup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreatePreFullBackupRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = GetSettings(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((GetSettingsResult)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Pre-backup operation for checking whether the customer can perform a full backup operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="PreFullBackup(WaitUntil,PreBackupOperationParameters,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <summary> Retrieves a list of all the available account settings that can be configured. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        internal virtual Operation<BinaryData> PreFullBackup(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response<GetSettingsResult>> GetSettingsAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.PreFullBackup");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreatePreFullBackupRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await GetSettingsAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((GetSettingsResult)result, result);
         }
-
-        /// <summary> Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restoreBlobDetails"/> is null. </exception>
-        internal virtual async Task<Operation<RestoreDetailsInternal>> FullRestoreOperationAsync(WaitUntil waitUntil, RestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(restoreBlobDetails, nameof(restoreBlobDetails));
-
-            using RequestContent content = restoreBlobDetails.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await FullRestoreOperationAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, RestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation");
-        }
-
-        /// <summary> Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restoreBlobDetails"/> is null. </exception>
-        internal virtual Operation<RestoreDetailsInternal> FullRestoreOperation(WaitUntil waitUntil, RestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(restoreBlobDetails, nameof(restoreBlobDetails));
-
-            using RequestContent content = restoreBlobDetails.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = FullRestoreOperation(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, RestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation");
-        }
-
-        /// <summary>
-        /// [Protocol Method] Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="FullRestoreOperationAsync(WaitUntil,RestoreOperationParameters,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        internal virtual async Task<Operation<BinaryData>> FullRestoreOperationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullRestoreOperation");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateFullRestoreOperationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="FullRestoreOperation(WaitUntil,RestoreOperationParameters,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        internal virtual Operation<BinaryData> FullRestoreOperation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullRestoreOperation");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateFullRestoreOperationRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Pre-restore operation for checking whether the customer can perform a full restore operation. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="preRestoreOperationParameters"> Optional pre restore parameters to validate prior to performing a full restore operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="preRestoreOperationParameters"/> is null. </exception>
-        internal virtual async Task<Operation<RestoreDetailsInternal>> PreFullRestoreOperationAsync(WaitUntil waitUntil, PreRestoreOperationParameters preRestoreOperationParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(preRestoreOperationParameters, nameof(preRestoreOperationParameters));
-
-            using RequestContent content = preRestoreOperationParameters.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await PreFullRestoreOperationAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, RestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation");
-        }
-
-        /// <summary> Pre-restore operation for checking whether the customer can perform a full restore operation. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="preRestoreOperationParameters"> Optional pre restore parameters to validate prior to performing a full restore operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="preRestoreOperationParameters"/> is null. </exception>
-        internal virtual Operation<RestoreDetailsInternal> PreFullRestoreOperation(WaitUntil waitUntil, PreRestoreOperationParameters preRestoreOperationParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(preRestoreOperationParameters, nameof(preRestoreOperationParameters));
-
-            using RequestContent content = preRestoreOperationParameters.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = PreFullRestoreOperation(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, RestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation");
-        }
-
-        /// <summary>
-        /// [Protocol Method] Pre-restore operation for checking whether the customer can perform a full restore operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="PreFullRestoreOperationAsync(WaitUntil,PreRestoreOperationParameters,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        internal virtual async Task<Operation<BinaryData>> PreFullRestoreOperationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.PreFullRestoreOperation");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreatePreFullRestoreOperationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Pre-restore operation for checking whether the customer can perform a full restore operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="PreFullRestoreOperation(WaitUntil,PreRestoreOperationParameters,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        internal virtual Operation<BinaryData> PreFullRestoreOperation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.PreFullRestoreOperation");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreatePreFullRestoreOperationRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
-        /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="restoreBlobDetails"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Operation<SelectiveKeyRestoreDetailsInternal>> SelectiveKeyRestoreOperationAsync(WaitUntil waitUntil, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(restoreBlobDetails, nameof(restoreBlobDetails));
-
-            using RequestContent content = restoreBlobDetails.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await SelectiveKeyRestoreOperationAsync(waitUntil, keyName, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, SelectiveKeyRestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation");
-        }
-
-        /// <summary> Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
-        /// <param name="restoreBlobDetails"> The Azure blob SAS token pointing to a folder where the previous successful full backup was stored. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="restoreBlobDetails"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Operation<SelectiveKeyRestoreDetailsInternal> SelectiveKeyRestoreOperation(WaitUntil waitUntil, string keyName, SelectiveKeyRestoreOperationParameters restoreBlobDetails, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(restoreBlobDetails, nameof(restoreBlobDetails));
-
-            using RequestContent content = restoreBlobDetails.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = SelectiveKeyRestoreOperation(waitUntil, keyName, content, context);
-            return ProtocolOperationHelpers.Convert(response, SelectiveKeyRestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation");
-        }
-
-        /// <summary>
-        /// [Protocol Method] Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob storage backup folder
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SelectiveKeyRestoreOperationAsync(WaitUntil,string,SelectiveKeyRestoreOperationParameters,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        internal virtual async Task<Operation<BinaryData>> SelectiveKeyRestoreOperationAsync(WaitUntil waitUntil, string keyName, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.SelectiveKeyRestoreOperation");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSelectiveKeyRestoreOperationRequest(keyName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob storage backup folder
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="SelectiveKeyRestoreOperation(WaitUntil,string,SelectiveKeyRestoreOperationParameters,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="keyName"> The name of the key to be restored from the user supplied backup. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        internal virtual Operation<BinaryData> SelectiveKeyRestoreOperation(WaitUntil waitUntil, string keyName, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.SelectiveKeyRestoreOperation");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSelectiveKeyRestoreOperationRequest(keyName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal HttpMessage CreateFullBackupRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/backup", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreatePreFullBackupRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/prebackup", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateFullRestoreOperationRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/restore", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreatePreFullRestoreOperationRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/prerestore", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateFullBackupStatusRequest(string jobId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/backup/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/pending", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateRestoreStatusRequest(string jobId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/restore/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/pending", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateSelectiveKeyRestoreStatusRequest(string jobId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/restore/", false);
-            uri.AppendPath(jobId, true);
-            uri.AppendPath("/pending", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateSelectiveKeyRestoreOperationRequest(string keyName, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/keys/", false);
-            uri.AppendPath(keyName, true);
-            uri.AppendPath("/restore", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateUpdateSettingRequest(string settingName, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/settings/", false);
-            uri.AppendPath(settingName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetSettingRequest(string settingName, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/settings/", false);
-            uri.AppendPath(settingName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetSettingsRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/settings", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

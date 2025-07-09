@@ -38,6 +38,28 @@ public partial class ContainerAppScale : ProvisionableConstruct
     private BicepValue<int>? _maxReplicas;
 
     /// <summary>
+    /// Optional. KEDA Cooldown Period in seconds. Defaults to 300 seconds if
+    /// not set.
+    /// </summary>
+    public BicepValue<int> CooldownPeriod 
+    {
+        get { Initialize(); return _cooldownPeriod!; }
+        set { Initialize(); _cooldownPeriod!.Assign(value); }
+    }
+    private BicepValue<int>? _cooldownPeriod;
+
+    /// <summary>
+    /// Optional. KEDA Polling Interval in seconds. Defaults to 30 seconds if
+    /// not set.
+    /// </summary>
+    public BicepValue<int> PollingInterval 
+    {
+        get { Initialize(); return _pollingInterval!; }
+        set { Initialize(); _pollingInterval!.Assign(value); }
+    }
+    private BicepValue<int>? _pollingInterval;
+
+    /// <summary>
     /// Scaling rules.
     /// </summary>
     public BicepList<ContainerAppScaleRule> Rules 
@@ -62,6 +84,8 @@ public partial class ContainerAppScale : ProvisionableConstruct
         base.DefineProvisionableProperties();
         _minReplicas = DefineProperty<int>("MinReplicas", ["minReplicas"]);
         _maxReplicas = DefineProperty<int>("MaxReplicas", ["maxReplicas"]);
+        _cooldownPeriod = DefineProperty<int>("CooldownPeriod", ["cooldownPeriod"]);
+        _pollingInterval = DefineProperty<int>("PollingInterval", ["pollingInterval"]);
         _rules = DefineListProperty<ContainerAppScaleRule>("Rules", ["rules"]);
     }
 }

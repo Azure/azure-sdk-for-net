@@ -1,12 +1,6 @@
 # Release History
 
-## 4.8.0-beta.2 (Unreleased)
-
-### Acknowledgments
-
-Thank you to our developer community members who helped to make the Key Vault client libraries better with their contributions to this release:
-
-- James Gould _([GitHub](https://github.com/james-gould))_
+## 4.9.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -14,9 +8,23 @@ Thank you to our developer community members who helped to make the Key Vault cl
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 4.8.0 (2025-06-16)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Key Vault client libraries better with their contributions to this release:
+
+- James Gould _([GitHub](https://github.com/james-gould))_
+
+### Bugs Fixed
+
 - Removed additional forward slash in `RestoreCertificateBackup` and `RestoreCertificateBackupAsync`.
 
 ### Other Changes
+
+- The default service version is now "7.6". 
 
 ## 4.8.0-beta.1 (2025-04-08)
 

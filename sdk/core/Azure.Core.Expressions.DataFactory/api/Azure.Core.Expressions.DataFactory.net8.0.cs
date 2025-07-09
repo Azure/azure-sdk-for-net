@@ -1,5 +1,11 @@
 namespace Azure.Core.Expressions.DataFactory
 {
+    public partial class DataFactoryContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal DataFactoryContext() { }
+        public static Azure.Core.Expressions.DataFactory.DataFactoryContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataFactoryElementKind : System.IEquatable<Azure.Core.Expressions.DataFactory.DataFactoryElementKind>
     {
@@ -17,7 +23,7 @@ namespace Azure.Core.Expressions.DataFactory
         public static bool operator !=(Azure.Core.Expressions.DataFactory.DataFactoryElementKind left, Azure.Core.Expressions.DataFactory.DataFactoryElementKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public sealed partial class DataFactoryElement<T>
+    public sealed partial class DataFactoryElement<T> : System.ClientModel.Primitives.IJsonModel<Azure.Core.Expressions.DataFactory.DataFactoryElement<T>>, System.ClientModel.Primitives.IPersistableModel<Azure.Core.Expressions.DataFactory.DataFactoryElement<T>>
     {
         internal DataFactoryElement() { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElementKind Kind { get { throw null; } }
@@ -31,6 +37,11 @@ namespace Azure.Core.Expressions.DataFactory
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator Azure.Core.Expressions.DataFactory.DataFactoryElement<T> (T literal) { throw null; }
+        Azure.Core.Expressions.DataFactory.DataFactoryElement<T> System.ClientModel.Primitives.IJsonModel<Azure.Core.Expressions.DataFactory.DataFactoryElement<T>>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Core.Expressions.DataFactory.DataFactoryElement<T>>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Core.Expressions.DataFactory.DataFactoryElement<T> System.ClientModel.Primitives.IPersistableModel<Azure.Core.Expressions.DataFactory.DataFactoryElement<T>>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Core.Expressions.DataFactory.DataFactoryElement<T>>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Core.Expressions.DataFactory.DataFactoryElement<T>>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public override string? ToString() { throw null; }
     }
     public partial class DataFactoryKeyVaultSecret : Azure.Core.Expressions.DataFactory.DataFactorySecret

@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Secrets;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Samples
@@ -88,6 +90,13 @@ namespace Azure.Core.Samples
         }
 
         private class SampleClientOptions : ClientOptions { }
+        private class SampleClient
+        {
+            public SampleClient(Uri endpoint, TokenCredential credential, SampleClientOptions options = default)
+            {
+            }
+        }
+
         private class FooClientRequestFailedDetailsParser : RequestFailedDetailsParser
         {
             public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)
