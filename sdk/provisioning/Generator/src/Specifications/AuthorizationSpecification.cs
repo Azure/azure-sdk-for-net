@@ -30,7 +30,6 @@ public class AuthorizationSpecification : Specification
         CustomizePropertyIsoDuration<RoleManagementPolicyExpirationRule>("MaximumDuration");
         CustomizePropertyIsoDuration<RoleAssignmentScheduleRequestResource>("Duration");
         CustomizePropertyIsoDuration<RoleEligibilityScheduleRequestResource>("Duration");
-        CustomizePropertyIsoDuration<RoleAssignmentScheduleRequestResource>("Duration");
 
         // Naming requirements
         // RoleAssignmentResource and AuthorizationRoleDefinitionResource must be GUIDs - handled in code
