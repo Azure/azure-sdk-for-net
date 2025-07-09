@@ -39,5 +39,16 @@ namespace Azure.ResourceManager.PortalServicesCopilot
 
             return GetMockablePortalServicesCopilotArmClient(client).GetPortalServicesCopilotSettingResource(id);
         }
+
+        /// <summary> Gets an object representing a <see cref="PortalServicesCopilotSettingResource"/> along with the instance operations that can be performed on it in the <see cref="TenantResource"/>. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="PortalServicesCopilotSettingResource"/> object. </returns>
+        public static PortalServicesCopilotSettingResource GetPortalServicesCopilotSetting(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockablePortalServicesCopilotTenantResource(tenantResource).GetPortalServicesCopilotSetting();
+        }
     }
 }

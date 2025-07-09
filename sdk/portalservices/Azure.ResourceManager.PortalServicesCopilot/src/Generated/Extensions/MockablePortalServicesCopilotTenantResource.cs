@@ -7,6 +7,8 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PortalServicesCopilot;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PortalServicesCopilot.Mocking
 {
@@ -23,6 +25,13 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Mocking
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePortalServicesCopilotTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+        }
+
+        /// <summary> Gets an object representing a <see cref="PortalServicesCopilotSettingResource"/> along with the instance operations that can be performed on it in the <see cref="TenantResource"/>. </summary>
+        /// <returns> Returns a <see cref="PortalServicesCopilotSettingResource"/> object. </returns>
+        public virtual PortalServicesCopilotSettingResource GetPortalServicesCopilotSetting()
+        {
+            return new PortalServicesCopilotSettingResource(Client, Id.AppendProviderResource("Microsoft.PortalServices", "copilotSettings", "default"));
         }
     }
 }

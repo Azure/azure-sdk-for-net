@@ -966,9 +966,8 @@
         {
           "name": "Azure.ClientGenerator.Core.@resourceSchema",
           "arguments": {
-            "isSingleton": true,
+            "resourceIdPattern": "/providers/Microsoft.PortalServices/copilotSettings/default",
             "resourceType": "Microsoft.PortalServices/copilotSettings",
-            "resourceScope": "Tenant",
             "methods": [
               {
                 "$id": "79",
@@ -990,7 +989,9 @@
                 "id": "Microsoft.PortalServices.CopilotSettings.delete",
                 "kind": "Delete"
               }
-            ]
+            ],
+            "resourceScope": "Tenant",
+            "singletonResourceName": "default"
           }
         }
       ],

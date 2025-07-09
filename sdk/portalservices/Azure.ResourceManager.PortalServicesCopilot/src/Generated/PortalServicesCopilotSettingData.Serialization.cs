@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                 return null;
             }
             ResourceIdentifier id = default;
-            string @type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PortalServicesCopilotSettingsProperties properties = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
             }
             return new PortalServicesCopilotSettingData(
                 id,
-                @type,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 properties,
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         string IPersistableModel<PortalServicesCopilotSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="portalServicesCopilotSettingData"> The <see cref="PortalServicesCopilotSettingData"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(PortalServicesCopilotSettingData portalServicesCopilotSettingData)
+        internal static RequestContent ToRequestContent(PortalServicesCopilotSettingData portalServicesCopilotSettingData)
         {
             if (portalServicesCopilotSettingData == null)
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PortalServicesCopilotSettingData"/> from. </param>
-        public static explicit operator PortalServicesCopilotSettingData(Response result)
+        internal static PortalServicesCopilotSettingData FromResponse(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);

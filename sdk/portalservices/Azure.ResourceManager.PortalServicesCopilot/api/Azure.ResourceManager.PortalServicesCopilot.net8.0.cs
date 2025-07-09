@@ -8,6 +8,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
     }
     public static partial class PortalServicesCopilotExtensions
     {
+        public static Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingResource GetPortalServicesCopilotSetting(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
         public static Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingResource GetPortalServicesCopilotSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class PortalServicesCopilotSettingData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData>
@@ -16,8 +17,6 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         public Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData (Azure.Response result) { throw null; }
-        public static implicit operator Azure.Core.RequestContent (Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData portalServicesCopilotSettingData) { throw null; }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -34,6 +33,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Mocking
     public partial class MockablePortalServicesCopilotTenantResource : Azure.ResourceManager.ArmResource
     {
         protected MockablePortalServicesCopilotTenantResource() { }
+        public virtual Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingResource GetPortalServicesCopilotSetting() { throw null; }
     }
 }
 namespace Azure.ResourceManager.PortalServicesCopilot.Models
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
     {
         public static Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdate CopilotSettingsResourceUpdate(Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdateProperties CopilotSettingsResourceUpdateProperties(bool? accessControlEnabled = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData PortalServicesCopilotSettingData(Azure.Core.ResourceIdentifier id = null, string type = null, Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties properties = null, string name = null) { throw null; }
+        public static Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData PortalServicesCopilotSettingData(Azure.Core.ResourceIdentifier id = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties properties = null, string name = null) { throw null; }
         public static Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool accessControlEnabled = false, Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState? provisioningState = default(Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState?)) { throw null; }
     }
     public partial class CopilotSettingsResourceUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdate>
@@ -74,7 +75,6 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         public Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdateProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator Azure.Core.RequestContent (Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdate copilotSettingsResourceUpdate) { throw null; }
         protected virtual Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
