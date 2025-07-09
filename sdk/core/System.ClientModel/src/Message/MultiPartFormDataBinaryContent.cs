@@ -14,9 +14,12 @@ namespace System.ClientModel;
 /// </summary>
 public class MultiPartFormDataBinaryContent : BinaryContent
 {
-    private const string ApplicationJsonContentType = "application/json";
+    private const string MediaTypeApplicationJson = "application/json";
+
+    private static readonly ModelReaderWriterOptions ModelWriteWireOptions = new ModelReaderWriterOptions("W");
     private static readonly Random _random = new Random();
     private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
+
     private readonly MultipartFormDataContent _multipartContent;
 
     /// <summary>
@@ -51,7 +54,7 @@ public class MultiPartFormDataBinaryContent : BinaryContent
             content.Headers.ContentType = MediaTypeHeaderValue.Parse(fileContent.MediaType);
         }
 
-        Add(content, name, fileContent.Filename);
+        Add(content, name, fileContent.MediaType, fileContent.Filename);
     }
 
     //// CUSTOM: Add IPersistableModel part to the multipart content.
@@ -61,23 +64,32 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     /// <typeparam name="T"></typeparam>
     /// <param name="name"></param>
     /// <param name="model"></param>
+    /// <param name="options"></param>
     /// <param name="context"></param>
-    /// <param name="contentType"></param>
-    public void Add<T>(string name,
+    /// <param name="mediaType"></param>
+    public void Add<T>(
+        string name,
         IPersistableModel<T> model,
+        ModelReaderWriterOptions? options = default,
         ModelReaderWriterContext? context = default,
-        string? contentType = default)
+        string? mediaType = default)
     {
         Argument.AssertNotNull(model, nameof(model));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
+        options ??= ModelWriteWireOptions;
+        if (options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J"))
+        {
+            mediaType = MediaTypeApplicationJson;
+        }
+
 #pragma warning disable AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
         BinaryData data = context != null
-            ? ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, context)
-            : ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json);
+            ? ModelReaderWriter.Write(model, options, context)
+            : ModelReaderWriter.Write(model, options);
 #pragma warning restore AZC0150 // Use ModelReaderWriter overloads with ModelReaderWriterContext
 
-        Add(name, data, contentType: contentType ?? ApplicationJsonContentType);
+        Add(name, data, mediaType: mediaType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -86,13 +98,13 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     /// </summary>
     /// <param name="name"></param>
     /// <param name="content"></param>
-    /// <param name="contentType"></param>
-    public void Add(string name, string content, string? contentType = default)
+    /// <param name="mediaType"></param>
+    public void Add(string name, string content, string? mediaType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        Add(new StringContent(content), name, contentType);
+        Add(new StringContent(content), name, mediaType: mediaType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -101,14 +113,14 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     /// </summary>
     /// <param name="name"></param>
     /// <param name="content"></param>
-    /// <param name="contentType"></param>
-    public void Add(string name, int content, string? contentType = default)
+    /// <param name="mediaType"></param>
+    public void Add(string name, int content, string? mediaType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         string value = content.ToString("G", CultureInfo.InvariantCulture);
-        Add(new StringContent(value), name, contentType);
+        Add(new StringContent(value), name, mediaType: mediaType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -117,14 +129,14 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     /// </summary>
     /// <param name="name"></param>
     /// <param name="content"></param>
-    /// <param name="contentType"></param>
-    public void Add(string name, long content, string? contentType = default)
+    /// <param name="mediaType"></param>
+    public void Add(string name, long content, string? mediaType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         string value = content.ToString("G", CultureInfo.InvariantCulture);
-        Add(new StringContent(value), name, contentType);
+        Add(new StringContent(value), name, mediaType: mediaType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -133,14 +145,14 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     /// </summary>
     /// <param name="name"></param>
     /// <param name="content"></param>
-    /// <param name="contentType"></param>
-    public void Add(string name, float content, string? contentType = default)
+    /// <param name="mediaType"></param>
+    public void Add(string name, float content, string? mediaType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         string value = content.ToString("G", CultureInfo.InvariantCulture);
-        Add(new StringContent(value), name, contentType);
+        Add(new StringContent(value), name, mediaType: mediaType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -149,14 +161,14 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     /// </summary>
     /// <param name="name"></param>
     /// <param name="content"></param>
-    /// <param name="contentType"></param>
-    public void Add(string name, double content, string? contentType = default)
+    /// <param name="mediaType"></param>
+    public void Add(string name, double content, string? mediaType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         string value = content.ToString("G", CultureInfo.InvariantCulture);
-        Add(new StringContent(value), name, contentType);
+        Add(new StringContent(value), name, mediaType: mediaType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -165,14 +177,14 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     /// </summary>
     /// <param name="name"></param>
     /// <param name="content"></param>
-    /// <param name="contentType"></param>
-    public void Add(string name, decimal content, string? contentType = default)
+    /// <param name="mediaType"></param>
+    public void Add(string name, decimal content, string? mediaType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         string value = content.ToString("G", CultureInfo.InvariantCulture);
-        Add(new StringContent(value), name, contentType);
+        Add(new StringContent(value), name, mediaType: mediaType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -181,14 +193,14 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     /// </summary>
     /// <param name="name"></param>
     /// <param name="content"></param>
-    /// <param name="contentType"></param>
-    public void Add(string name, bool content, string? contentType = default)
+    /// <param name="mediaType"></param>
+    public void Add(string name, bool content, string? mediaType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         string value = content ? "true" : "false";
-        Add(new StringContent(value), name, contentType);
+        Add(new StringContent(value), name, mediaType: mediaType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -197,13 +209,13 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     /// </summary>
     /// <param name="name"></param>
     /// <param name="content"></param>
-    /// <param name="contentType"></param>
-    public void Add(string name, byte[] content, string? contentType = default)
+    /// <param name="mediaType"></param>
+    public void Add(string name, byte[] content, string? mediaType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        Add(new ByteArrayContent(content), name, contentType);
+        Add(new ByteArrayContent(content), name, mediaType: mediaType);
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -212,26 +224,25 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     /// </summary>
     /// <param name="name"></param>
     /// <param name="content"></param>
-    /// <param name="fileName"></param>
-    /// <param name="contentType"></param>
-    public void Add(string name, BinaryData content, string? fileName = default, string? contentType = default)
+    /// <param name="mediaType"></param>
+    public void Add(string name, BinaryData content, string? mediaType = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        Add(new ByteArrayContent(content.ToArray()), name, contentType);
+        Add(new ByteArrayContent(content.ToArray()), name, mediaType: mediaType);
     }
 
     /// <param name="content"></param>
     /// <param name="name"></param>
     /// <param name="filename"></param>
-    /// <param name="contentType"></param>
-    private void Add(HttpContent content, string name, string? contentType, string? filename = default)
+    /// <param name="mediaType"></param>
+    private void Add(HttpContent content, string name, string? mediaType, string? filename = default)
     {
-        if (contentType != null)
+        if (mediaType != null)
         {
-            Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
-            AddContentTypeHeader(content, contentType);
+            Argument.AssertNotNullOrEmpty(mediaType, nameof(mediaType));
+            AddContentTypeHeader(content, mediaType);
         }
         if (filename != null)
         {
@@ -245,10 +256,10 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     }
 
     /// <param name="content"></param>
-    /// <param name="contentType"></param>
-    private static void AddContentTypeHeader(HttpContent content, string contentType)
+    /// <param name="mediaType"></param>
+    private static void AddContentTypeHeader(HttpContent content, string mediaType)
     {
-        MediaTypeHeaderValue header = new MediaTypeHeaderValue(contentType);
+        MediaTypeHeaderValue header = new MediaTypeHeaderValue(mediaType);
         content.Headers.ContentType = header;
     }
 
@@ -318,6 +329,7 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     public override void Dispose()
     {
         _multipartContent.Dispose();
+        GC.SuppressFinalize(this);
     }
 
     private sealed class HttpContentAdapter : HttpContent
