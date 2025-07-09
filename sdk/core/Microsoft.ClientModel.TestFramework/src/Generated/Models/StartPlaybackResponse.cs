@@ -10,7 +10,8 @@ using System.Collections.Generic;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    internal partial class StartPlaybackResponse
+    /// <summary> The StartPlaybackResponse. </summary>
+    public partial class StartPlaybackResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

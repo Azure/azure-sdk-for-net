@@ -11,7 +11,8 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    internal partial class TestProxyClient
+    /// <summary></summary>
+    public partial class TestProxyClient
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
 

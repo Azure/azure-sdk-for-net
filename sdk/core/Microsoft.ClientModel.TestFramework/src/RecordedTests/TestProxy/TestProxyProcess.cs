@@ -20,7 +20,7 @@ namespace Microsoft.ClientModel.TestFramework;
 /// via the TestProxyRestClient.
 /// <seealso href="https://github.com/Azure/azure-sdk-tools/tree/main/tools/test-proxy"/>
 /// </summary>
-public class TestProxyProcess
+internal class TestProxyProcess
 {
     private static readonly string s_dotNetExe;
     private readonly int? _proxyPortHttp;

@@ -10,7 +10,8 @@ using System.Collections.Generic;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    internal partial class BodyRegexSanitizer
+    /// <summary> The BodyRegexSanitizer. </summary>
+    public partial class BodyRegexSanitizer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

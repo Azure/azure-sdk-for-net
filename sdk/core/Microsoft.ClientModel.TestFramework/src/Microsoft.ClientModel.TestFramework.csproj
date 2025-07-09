@@ -14,7 +14,6 @@
   <ItemGroup>
      <PackageReference Include="System.ClientModel" /> 
     <PackageReference Include="NUnit" />
-    <PackageReference Include="Moq" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
   </ItemGroup>
 

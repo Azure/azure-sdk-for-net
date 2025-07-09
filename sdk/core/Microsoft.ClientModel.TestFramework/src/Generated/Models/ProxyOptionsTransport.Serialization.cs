@@ -12,7 +12,8 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    internal partial class ProxyOptionsTransport : IJsonModel<ProxyOptionsTransport>
+    /// <summary> The ProxyOptionsTransport. </summary>
+    public partial class ProxyOptionsTransport : IJsonModel<ProxyOptionsTransport>
     {
         /// <summary> Initializes a new instance of <see cref="ProxyOptionsTransport"/> for deserialization. </summary>
         internal ProxyOptionsTransport()
@@ -42,14 +43,12 @@ namespace Microsoft.ClientModel.TestFramework
             writer.WritePropertyName("tlsValidationCert"u8);
             writer.WriteStringValue(TlsValidationCert);
             writer.WritePropertyName("certificates"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(Certificates);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Certificates))
+            writer.WriteStartArray();
+            foreach (ProxyOptionsTransportCertificationsItem item in Certificates)
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
+                writer.WriteObjectValue(item, options);
             }
-#endif
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -94,7 +93,7 @@ namespace Microsoft.ClientModel.TestFramework
             }
             bool allowAutoRedirect = default;
             string tlsValidationCert = default;
-            BinaryData certificates = default;
+            IList<ProxyOptionsTransportCertificationsItem> certificates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -110,7 +109,12 @@ namespace Microsoft.ClientModel.TestFramework
                 }
                 if (prop.NameEquals("certificates"u8))
                 {
-                    certificates = BinaryData.FromString(prop.Value.GetRawText());
+                    List<ProxyOptionsTransportCertificationsItem> array = new List<ProxyOptionsTransportCertificationsItem>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ProxyOptionsTransportCertificationsItem.DeserializeProxyOptionsTransportCertificationsItem(item, options));
+                    }
+                    certificates = array;
                     continue;
                 }
                 if (options.Format != "W")

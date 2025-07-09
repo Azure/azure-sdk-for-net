@@ -12,7 +12,8 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    internal partial class BodyKeySanitizer : IJsonModel<BodyKeySanitizer>
+    /// <summary> The BodyKeySanitizer. </summary>
+    public partial class BodyKeySanitizer : IJsonModel<BodyKeySanitizer>
     {
         /// <summary> Initializes a new instance of <see cref="BodyKeySanitizer"/> for deserialization. </summary>
         internal BodyKeySanitizer()

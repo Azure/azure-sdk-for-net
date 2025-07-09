@@ -1,5 +1,5 @@
 {
-  "name": "System.ClientModel",
+  "name": "Microsoft.ClientModel.TestFramework",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -9,7 +9,15 @@
     "@typespec/rest": "latest",
     "@typespec/openapi": "latest",
     "@typespec/openapi3": "latest",
-    "@typespec/http-client-csharp": "latest"
+    "@typespec/http-client-csharp": "latest",
+    "@azure-tools/typespec-azure-core": "latest",
+    "@azure-tools/typespec-autorest": "latest",
+    "@azure-tools/typespec-python": "latest",
+    "@azure-tools/typespec-java": "latest",
+    "@azure-tools/typespec-csharp": "latest",
+    "@azure-tools/typespec-ts": "latest",
+    "@azure-tools/typespec-client-generator-core": "latest"
   },
+  
   "packageManager": "npm@11.4.2+sha512.f90c1ec8b207b625d6edb6693aef23dacb39c38e4217fe8c46a973f119cab392ac0de23fe3f07e583188dae9fd9108b3845ad6f525b598742bd060ebad60bff3"
 }

@@ -14,6 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
+    /// <summary> The AddCustomMatcherRequest. </summary>
     internal partial class AddCustomMatcherRequest : IJsonModel<AddCustomMatcherRequest>
     {
         /// <summary> Initializes a new instance of <see cref="AddCustomMatcherRequest"/> for deserialization. </summary>

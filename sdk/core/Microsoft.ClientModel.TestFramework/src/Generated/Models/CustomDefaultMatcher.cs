@@ -10,7 +10,8 @@ using System.Collections.Generic;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    internal partial class CustomDefaultMatcher
+    /// <summary> The CustomDefaultMatcher. </summary>
+    public partial class CustomDefaultMatcher
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

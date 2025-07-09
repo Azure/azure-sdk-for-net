@@ -12,7 +12,8 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    internal partial class HeaderCondition : IJsonModel<HeaderCondition>
+    /// <summary> The HeaderCondition. </summary>
+    public partial class HeaderCondition : IJsonModel<HeaderCondition>
     {
         /// <summary> Initializes a new instance of <see cref="HeaderCondition"/> for deserialization. </summary>
         internal HeaderCondition()

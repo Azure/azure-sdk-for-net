@@ -11,6 +11,7 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
+    /// <summary> The AddCustomMatcherRequest. </summary>
     internal partial class AddCustomMatcherRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

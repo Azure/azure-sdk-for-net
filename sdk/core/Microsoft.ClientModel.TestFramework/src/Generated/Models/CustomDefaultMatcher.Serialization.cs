@@ -12,7 +12,8 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    internal partial class CustomDefaultMatcher : IJsonModel<CustomDefaultMatcher>
+    /// <summary> The CustomDefaultMatcher. </summary>
+    public partial class CustomDefaultMatcher : IJsonModel<CustomDefaultMatcher>
     {
         /// <summary> Initializes a new instance of <see cref="CustomDefaultMatcher"/> for deserialization. </summary>
         internal CustomDefaultMatcher()

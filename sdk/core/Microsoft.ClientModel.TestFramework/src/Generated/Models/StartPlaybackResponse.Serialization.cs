@@ -14,7 +14,8 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    internal partial class StartPlaybackResponse : IJsonModel<StartPlaybackResponse>
+    /// <summary> The StartPlaybackResponse. </summary>
+    public partial class StartPlaybackResponse : IJsonModel<StartPlaybackResponse>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

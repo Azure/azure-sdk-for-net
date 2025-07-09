@@ -6,24 +6,23 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    /// <summary> The ProxyOptions. </summary>
-    public partial class ProxyOptions : IJsonModel<ProxyOptions>
+    /// <summary> The ProxyOptionsTransportCertificationsItem. </summary>
+    public partial class ProxyOptionsTransportCertificationsItem : IJsonModel<ProxyOptionsTransportCertificationsItem>
     {
-        /// <summary> Initializes a new instance of <see cref="ProxyOptions"/> for deserialization. </summary>
-        internal ProxyOptions()
+        /// <summary> Initializes a new instance of <see cref="ProxyOptionsTransportCertificationsItem"/> for deserialization. </summary>
+        internal ProxyOptionsTransportCertificationsItem()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProxyOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProxyOptionsTransportCertificationsItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,13 +33,15 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxyOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProxyOptionsTransportCertificationsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProxyOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProxyOptionsTransportCertificationsItem)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("transport"u8);
-            writer.WriteObjectValue(Transport, options);
+            writer.WritePropertyName("pemValue"u8);
+            writer.WriteStringValue(PemValue);
+            writer.WritePropertyName("pemKey"u8);
+            writer.WriteStringValue(PemKey);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -60,36 +61,42 @@ namespace Microsoft.ClientModel.TestFramework
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProxyOptions IJsonModel<ProxyOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProxyOptionsTransportCertificationsItem IJsonModel<ProxyOptionsTransportCertificationsItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProxyOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProxyOptionsTransportCertificationsItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxyOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProxyOptionsTransportCertificationsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProxyOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProxyOptionsTransportCertificationsItem)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProxyOptions(document.RootElement, options);
+            return DeserializeProxyOptionsTransportCertificationsItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProxyOptions DeserializeProxyOptions(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProxyOptionsTransportCertificationsItem DeserializeProxyOptionsTransportCertificationsItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ProxyOptionsTransport transport = default;
+            string pemValue = default;
+            string pemKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("transport"u8))
+                if (prop.NameEquals("pemValue"u8))
                 {
-                    transport = ProxyOptionsTransport.DeserializeProxyOptionsTransport(prop.Value, options);
+                    pemValue = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("pemKey"u8))
+                {
+                    pemKey = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,57 +104,47 @@ namespace Microsoft.ClientModel.TestFramework
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProxyOptions(transport, additionalBinaryDataProperties);
+            return new ProxyOptionsTransportCertificationsItem(pemValue, pemKey, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProxyOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProxyOptionsTransportCertificationsItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxyOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProxyOptionsTransportCertificationsItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, MicrosoftClientModelTestFrameworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProxyOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProxyOptionsTransportCertificationsItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProxyOptions IPersistableModel<ProxyOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProxyOptionsTransportCertificationsItem IPersistableModel<ProxyOptionsTransportCertificationsItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProxyOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProxyOptionsTransportCertificationsItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxyOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProxyOptionsTransportCertificationsItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeProxyOptions(document.RootElement, options);
+                        return DeserializeProxyOptionsTransportCertificationsItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProxyOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProxyOptionsTransportCertificationsItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProxyOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="proxyOptions"> The <see cref="ProxyOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(ProxyOptions proxyOptions)
-        {
-            if (proxyOptions == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(proxyOptions, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<ProxyOptionsTransportCertificationsItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Linq;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    internal partial class SanitizersToRemove
+    /// <summary> The SanitizersToRemove. </summary>
+    public partial class SanitizersToRemove
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -19,48 +20,23 @@ namespace Microsoft.ClientModel.TestFramework
         /// <summary> Initializes a new instance of <see cref="SanitizersToRemove"/>. </summary>
         /// <param name="sanitizers"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizers"/> is null. </exception>
-        public SanitizersToRemove(BinaryData sanitizers)
+        public SanitizersToRemove(IEnumerable<string> sanitizers)
         {
             Argument.AssertNotNull(sanitizers, nameof(sanitizers));
 
-            Sanitizers = sanitizers;
+            Sanitizers = sanitizers.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SanitizersToRemove"/>. </summary>
         /// <param name="sanitizers"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SanitizersToRemove(BinaryData sanitizers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SanitizersToRemove(IList<string> sanitizers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sanitizers = sanitizers;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Gets the Sanitizers.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Sanitizers { get; }
+        /// <summary> Gets the Sanitizers. </summary>
+        public IList<string> Sanitizers { get; }
     }
 }

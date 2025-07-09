@@ -13,7 +13,8 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    internal partial class SanitizersToRemove : IJsonModel<SanitizersToRemove>
+    /// <summary> The SanitizersToRemove. </summary>
+    public partial class SanitizersToRemove : IJsonModel<SanitizersToRemove>
     {
         /// <summary> Initializes a new instance of <see cref="SanitizersToRemove"/> for deserialization. </summary>
         internal SanitizersToRemove()
@@ -39,14 +40,17 @@ namespace Microsoft.ClientModel.TestFramework
                 throw new FormatException($"The model {nameof(SanitizersToRemove)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("sanitizers"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(Sanitizers);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Sanitizers))
+            writer.WriteStartArray();
+            foreach (string item in Sanitizers)
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item);
             }
-#endif
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -89,13 +93,25 @@ namespace Microsoft.ClientModel.TestFramework
             {
                 return null;
             }
-            BinaryData sanitizers = default;
+            IList<string> sanitizers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sanitizers"u8))
                 {
-                    sanitizers = BinaryData.FromString(prop.Value.GetRawText());
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    sanitizers = array;
                     continue;
                 }
                 if (options.Format != "W")

@@ -14,6 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
+    /// <summary> The AddHeaderSanitizerRequest. </summary>
     internal partial class AddHeaderSanitizerRequest : IJsonModel<AddHeaderSanitizerRequest>
     {
         /// <summary> Initializes a new instance of <see cref="AddHeaderSanitizerRequest"/> for deserialization. </summary>

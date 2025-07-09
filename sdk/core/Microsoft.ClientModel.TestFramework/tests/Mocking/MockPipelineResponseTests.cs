@@ -28,9 +28,9 @@ public class MockPipelineResponseTests
         mockResponse.WithHeader("Content-Type", "application/json");
         mockResponse.WithHeader("X-Custom-Header", "CustomValue");
         Assert.IsTrue(mockResponse.Headers.TryGetValue("Content-Type", out string value));
-        Assert.Equals("application/json", value);
+        Assert.AreEqual("application/json", value);
         Assert.IsTrue(mockResponse.Headers.TryGetValue("X-Custom-Header", out value));
-        Assert.Equals("CustomValue", value);
+        Assert.AreEqual("CustomValue", value);
     }
 
     [Test]

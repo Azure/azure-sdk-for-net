@@ -12,7 +12,8 @@ using System.Text.Json;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    internal partial class BodyRegexSanitizer : IJsonModel<BodyRegexSanitizer>
+    /// <summary> The BodyRegexSanitizer. </summary>
+    public partial class BodyRegexSanitizer : IJsonModel<BodyRegexSanitizer>
     {
         /// <summary> Initializes a new instance of <see cref="BodyRegexSanitizer"/> for deserialization. </summary>
         internal BodyRegexSanitizer()

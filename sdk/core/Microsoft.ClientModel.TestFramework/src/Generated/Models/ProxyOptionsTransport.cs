@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Linq;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    internal partial class ProxyOptionsTransport
+    /// <summary> The ProxyOptionsTransport. </summary>
+    public partial class ProxyOptionsTransport
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,14 +22,14 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="tlsValidationCert"></param>
         /// <param name="certificates"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="tlsValidationCert"/> or <paramref name="certificates"/> is null. </exception>
-        public ProxyOptionsTransport(bool allowAutoRedirect, string tlsValidationCert, BinaryData certificates)
+        public ProxyOptionsTransport(bool allowAutoRedirect, string tlsValidationCert, IEnumerable<ProxyOptionsTransportCertificationsItem> certificates)
         {
             Argument.AssertNotNull(tlsValidationCert, nameof(tlsValidationCert));
             Argument.AssertNotNull(certificates, nameof(certificates));
 
             AllowAutoRedirect = allowAutoRedirect;
             TlsValidationCert = tlsValidationCert;
-            Certificates = certificates;
+            Certificates = certificates.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProxyOptionsTransport"/>. </summary>
@@ -36,7 +37,7 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="tlsValidationCert"></param>
         /// <param name="certificates"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyOptionsTransport(bool allowAutoRedirect, string tlsValidationCert, BinaryData certificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProxyOptionsTransport(bool allowAutoRedirect, string tlsValidationCert, IList<ProxyOptionsTransportCertificationsItem> certificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowAutoRedirect = allowAutoRedirect;
             TlsValidationCert = tlsValidationCert;
@@ -50,32 +51,7 @@ namespace Microsoft.ClientModel.TestFramework
         /// <summary> Gets the TlsValidationCert. </summary>
         public string TlsValidationCert { get; }
 
-        /// <summary>
-        /// Gets the Certificates.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Certificates { get; }
+        /// <summary> Gets the Certificates. </summary>
+        public IList<ProxyOptionsTransportCertificationsItem> Certificates { get; }
     }
 }

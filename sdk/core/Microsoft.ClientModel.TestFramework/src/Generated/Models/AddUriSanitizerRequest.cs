@@ -11,6 +11,7 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
+    /// <summary> The AddUriSanitizerRequest. </summary>
     internal partial class AddUriSanitizerRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

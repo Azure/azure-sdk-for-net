@@ -10,7 +10,8 @@ using System.Collections.Generic;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    internal partial class StartRecordResponse
+    /// <summary> The StartRecordResponse. </summary>
+    public partial class StartRecordResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

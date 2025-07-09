@@ -12,7 +12,8 @@ using Microsoft.ClientModel.TestFramework.TestProxy;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    internal partial class TestFrameworkClient
+    /// <summary></summary>
+    public partial class TestFrameworkClient
     {
         private readonly Uri _endpoint;
         private TestProxyClient _cachedTestProxyClient;

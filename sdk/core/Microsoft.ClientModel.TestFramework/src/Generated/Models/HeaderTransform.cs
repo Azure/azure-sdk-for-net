@@ -10,7 +10,8 @@ using System.Collections.Generic;
 
 namespace Microsoft.ClientModel.TestFramework
 {
-    internal partial class HeaderTransform
+    /// <summary> The HeaderTransform. </summary>
+    public partial class HeaderTransform
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

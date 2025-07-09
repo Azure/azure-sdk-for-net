@@ -10,4 +10,8 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.ClientModel.TestFramework.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="NUnit3TestAdapter" />
+  </ItemGroup>
 </Project>

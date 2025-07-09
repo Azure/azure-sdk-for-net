@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 namespace Microsoft.ClientModel.TestFramework
 {
     /// <summary> Client options for <see cref="TestFrameworkClient"/>. </summary>
-    internal partial class TestFrameworkClientOptions : ClientPipelineOptions
+    public partial class TestFrameworkClientOptions : ClientPipelineOptions
     {
     }
 }

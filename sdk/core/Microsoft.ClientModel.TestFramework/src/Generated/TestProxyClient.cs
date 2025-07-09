@@ -14,7 +14,8 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    internal partial class TestProxyClient
+    /// <summary></summary>
+    public partial class TestProxyClient
     {
         private readonly Uri _endpoint;
 
@@ -45,10 +46,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult StartPlayback(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult StartPlayback(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateStartPlaybackRequest(content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -63,10 +67,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> StartPlaybackAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> StartPlaybackAsync(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateStartPlaybackRequest(content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -74,9 +81,12 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <summary> Start playback for a test. </summary>
         /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<StartPlaybackResponse> StartPlayback(StartInformation body, CancellationToken cancellationToken = default)
+        public virtual ClientResult<StartPlaybackResponse> StartPlayback(StartInformation body, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(body, nameof(body));
+
             ClientResult result = StartPlayback(body, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
             return ClientResult.FromValue((StartPlaybackResponse)result, result.GetRawResponse());
         }
@@ -84,9 +94,12 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <summary> Start playback for a test. </summary>
         /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<StartPlaybackResponse>> StartPlaybackAsync(StartInformation body, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<StartPlaybackResponse>> StartPlaybackAsync(StartInformation body, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(body, nameof(body));
+
             ClientResult result = await StartPlaybackAsync(body, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return ClientResult.FromValue((StartPlaybackResponse)result, result.GetRawResponse());
         }
@@ -101,10 +114,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="recordingId"> The recording ID to stop playback for. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult StopPlayback(string recordingId, RequestOptions options)
+        public virtual ClientResult StopPlayback(string recordingId, RequestOptions options)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+
             using PipelineMessage message = CreateStopPlaybackRequest(recordingId, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -119,10 +136,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="recordingId"> The recording ID to stop playback for. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> StopPlaybackAsync(string recordingId, RequestOptions options)
+        public virtual async Task<ClientResult> StopPlaybackAsync(string recordingId, RequestOptions options)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+
             using PipelineMessage message = CreateStopPlaybackRequest(recordingId, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -130,9 +151,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <summary> Stop playback for a test. </summary>
         /// <param name="recordingId"> The recording ID to stop playback for. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<StopPlaybackResponse> StopPlayback(string recordingId, CancellationToken cancellationToken = default)
+        public virtual ClientResult<StopPlaybackResponse> StopPlayback(string recordingId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+
             ClientResult result = StopPlayback(recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
             return ClientResult.FromValue((StopPlaybackResponse)result, result.GetRawResponse());
         }
@@ -140,9 +165,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <summary> Stop playback for a test. </summary>
         /// <param name="recordingId"> The recording ID to stop playback for. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<StopPlaybackResponse>> StopPlaybackAsync(string recordingId, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<StopPlaybackResponse>> StopPlaybackAsync(string recordingId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+
             ClientResult result = await StopPlaybackAsync(recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return ClientResult.FromValue((StopPlaybackResponse)result, result.GetRawResponse());
         }
@@ -157,10 +186,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult StartRecord(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult StartRecord(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateStartRecordRequest(content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -175,10 +207,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> StartRecordAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> StartRecordAsync(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateStartRecordRequest(content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -186,9 +221,12 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <summary> Start recording for a test. </summary>
         /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<StartRecordResponse> StartRecord(StartInformation body, CancellationToken cancellationToken = default)
+        public virtual ClientResult<StartRecordResponse> StartRecord(StartInformation body, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(body, nameof(body));
+
             ClientResult result = StartRecord(body, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
             return ClientResult.FromValue((StartRecordResponse)result, result.GetRawResponse());
         }
@@ -196,9 +234,12 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <summary> Start recording for a test. </summary>
         /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<StartRecordResponse>> StartRecordAsync(StartInformation body, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<StartRecordResponse>> StartRecordAsync(StartInformation body, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(body, nameof(body));
+
             ClientResult result = await StartRecordAsync(body, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return ClientResult.FromValue((StartRecordResponse)result, result.GetRawResponse());
         }
@@ -215,10 +256,16 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="recordingSkip"> Set to request-response to skip recording this session. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/>, <paramref name="recordingSkip"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> or <paramref name="recordingSkip"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult StopRecord(string recordingId, string recordingSkip, BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult StopRecord(string recordingId, string recordingSkip, BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+            Argument.AssertNotNullOrEmpty(recordingSkip, nameof(recordingSkip));
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateStopRecordRequest(recordingId, recordingSkip, content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -235,10 +282,16 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="recordingSkip"> Set to request-response to skip recording this session. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/>, <paramref name="recordingSkip"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> or <paramref name="recordingSkip"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> StopRecordAsync(string recordingId, string recordingSkip, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> StopRecordAsync(string recordingId, string recordingSkip, BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+            Argument.AssertNotNullOrEmpty(recordingSkip, nameof(recordingSkip));
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateStopRecordRequest(recordingId, recordingSkip, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -248,9 +301,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="recordingSkip"> Set to request-response to skip recording this session. </param>
         /// <param name="variables"> Variables for the recording. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/>, <paramref name="recordingSkip"/> or <paramref name="variables"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> or <paramref name="recordingSkip"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult StopRecord(string recordingId, string recordingSkip, StopRecordRequest variables, CancellationToken cancellationToken = default)
+        public virtual ClientResult StopRecord(string recordingId, string recordingSkip, StopRecordRequest variables, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+            Argument.AssertNotNullOrEmpty(recordingSkip, nameof(recordingSkip));
+            Argument.AssertNotNull(variables, nameof(variables));
+
             return StopRecord(recordingId, recordingSkip, variables, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
@@ -259,9 +318,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="recordingSkip"> Set to request-response to skip recording this session. </param>
         /// <param name="variables"> Variables for the recording. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/>, <paramref name="recordingSkip"/> or <paramref name="variables"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> or <paramref name="recordingSkip"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> StopRecordAsync(string recordingId, string recordingSkip, StopRecordRequest variables, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> StopRecordAsync(string recordingId, string recordingSkip, StopRecordRequest variables, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+            Argument.AssertNotNullOrEmpty(recordingSkip, nameof(recordingSkip));
+            Argument.AssertNotNull(variables, nameof(variables));
+
             return await StopRecordAsync(recordingId, recordingSkip, variables, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
@@ -276,10 +341,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="recordingId"> The recording ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult SetRecordingTransportOptions(string recordingId, BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult SetRecordingTransportOptions(string recordingId, BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateSetRecordingTransportOptionsRequest(recordingId, content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -295,10 +365,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="recordingId"> The recording ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> SetRecordingTransportOptionsAsync(string recordingId, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> SetRecordingTransportOptionsAsync(string recordingId, BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateSetRecordingTransportOptionsRequest(recordingId, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -307,9 +382,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="recordingId"> The recording ID. </param>
         /// <param name="proxyOptions"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="proxyOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult SetRecordingTransportOptions(string recordingId, ProxyOptions proxyOptions, CancellationToken cancellationToken = default)
+        public virtual ClientResult SetRecordingTransportOptions(string recordingId, ProxyOptions proxyOptions, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+            Argument.AssertNotNull(proxyOptions, nameof(proxyOptions));
+
             return SetRecordingTransportOptions(recordingId, proxyOptions, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
@@ -317,9 +397,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="recordingId"> The recording ID. </param>
         /// <param name="proxyOptions"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="proxyOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> SetRecordingTransportOptionsAsync(string recordingId, ProxyOptions proxyOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> SetRecordingTransportOptionsAsync(string recordingId, ProxyOptions proxyOptions, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+            Argument.AssertNotNull(proxyOptions, nameof(proxyOptions));
+
             return await SetRecordingTransportOptionsAsync(recordingId, proxyOptions, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
@@ -334,10 +419,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="recordingId"> The recording ID to apply the transform to. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult RemoveSanitizers(string recordingId, BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult RemoveSanitizers(string recordingId, BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateRemoveSanitizersRequest(recordingId, content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -353,10 +443,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="recordingId"> The recording ID to apply the transform to. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> RemoveSanitizersAsync(string recordingId, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> RemoveSanitizersAsync(string recordingId, BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateRemoveSanitizersRequest(recordingId, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -365,9 +460,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="recordingId"> The recording ID to apply the transform to. </param>
         /// <param name="sanitizers"> Sanitizers to remove. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="sanitizers"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult RemoveSanitizers(string recordingId, SanitizersToRemove sanitizers, CancellationToken cancellationToken = default)
+        public virtual ClientResult RemoveSanitizers(string recordingId, SanitizersToRemove sanitizers, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+            Argument.AssertNotNull(sanitizers, nameof(sanitizers));
+
             return RemoveSanitizers(recordingId, sanitizers, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
@@ -375,9 +475,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="recordingId"> The recording ID to apply the transform to. </param>
         /// <param name="sanitizers"> Sanitizers to remove. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="sanitizers"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> RemoveSanitizersAsync(string recordingId, SanitizersToRemove sanitizers, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> RemoveSanitizersAsync(string recordingId, SanitizersToRemove sanitizers, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
+            Argument.AssertNotNull(sanitizers, nameof(sanitizers));
+
             return await RemoveSanitizersAsync(recordingId, sanitizers, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
@@ -393,10 +498,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizerType"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sanitizerType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddSanitizer(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
+        public virtual ClientResult AddSanitizer(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
         {
+            Argument.AssertNotNullOrEmpty(sanitizerType, nameof(sanitizerType));
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddSanitizerRequest(sanitizerType, content, recordingId, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -413,10 +523,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizerType"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sanitizerType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddSanitizerAsync(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
+        public virtual async Task<ClientResult> AddSanitizerAsync(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
         {
+            Argument.AssertNotNullOrEmpty(sanitizerType, nameof(sanitizerType));
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddSanitizerRequest(sanitizerType, content, recordingId, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -426,9 +541,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="sanitizer"></param>
         /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizerType"/> or <paramref name="sanitizer"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sanitizerType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddSanitizer(string sanitizerType, BinaryData sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult AddSanitizer(string sanitizerType, BinaryData sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(sanitizerType, nameof(sanitizerType));
+            Argument.AssertNotNull(sanitizer, nameof(sanitizer));
+
             return AddSanitizer(sanitizerType, BinaryContent.Create(sanitizer), recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
@@ -437,9 +557,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="sanitizer"></param>
         /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizerType"/> or <paramref name="sanitizer"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sanitizerType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddSanitizerAsync(string sanitizerType, BinaryData sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> AddSanitizerAsync(string sanitizerType, BinaryData sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(sanitizerType, nameof(sanitizerType));
+            Argument.AssertNotNull(sanitizer, nameof(sanitizer));
+
             return await AddSanitizerAsync(sanitizerType, BinaryContent.Create(sanitizer), recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
@@ -453,10 +578,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddBodyKeySanitizer(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult AddBodyKeySanitizer(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddBodyKeySanitizerRequest(content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -471,10 +599,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddBodyKeySanitizerAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> AddBodyKeySanitizerAsync(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddBodyKeySanitizerRequest(content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -484,9 +615,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizerType"/> or <paramref name="sanitizer"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddBodyKeySanitizer(string sanitizerType, BodyKeySanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult AddBodyKeySanitizer(string sanitizerType, BodyKeySanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(sanitizerType, nameof(sanitizerType));
+            Argument.AssertNotNull(sanitizer, nameof(sanitizer));
+
             AddBodyKeySanitizerRequest spreadModel = new AddBodyKeySanitizerRequest(sanitizerType, recordingId, sanitizer, null);
             return AddBodyKeySanitizer(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
@@ -496,9 +631,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizerType"/> or <paramref name="sanitizer"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddBodyKeySanitizerAsync(string sanitizerType, BodyKeySanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> AddBodyKeySanitizerAsync(string sanitizerType, BodyKeySanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(sanitizerType, nameof(sanitizerType));
+            Argument.AssertNotNull(sanitizer, nameof(sanitizer));
+
             AddBodyKeySanitizerRequest spreadModel = new AddBodyKeySanitizerRequest(sanitizerType, recordingId, sanitizer, null);
             return await AddBodyKeySanitizerAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
@@ -513,10 +652,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddHeaderSanitizer(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult AddHeaderSanitizer(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddHeaderSanitizerRequest(content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -531,10 +673,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddHeaderSanitizerAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> AddHeaderSanitizerAsync(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddHeaderSanitizerRequest(content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -544,9 +689,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizerType"/> or <paramref name="sanitizer"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddHeaderSanitizer(string sanitizerType, HeaderRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult AddHeaderSanitizer(string sanitizerType, HeaderRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(sanitizerType, nameof(sanitizerType));
+            Argument.AssertNotNull(sanitizer, nameof(sanitizer));
+
             AddHeaderSanitizerRequest spreadModel = new AddHeaderSanitizerRequest(sanitizerType, recordingId, sanitizer, null);
             return AddHeaderSanitizer(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
@@ -556,9 +705,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizerType"/> or <paramref name="sanitizer"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddHeaderSanitizerAsync(string sanitizerType, HeaderRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> AddHeaderSanitizerAsync(string sanitizerType, HeaderRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(sanitizerType, nameof(sanitizerType));
+            Argument.AssertNotNull(sanitizer, nameof(sanitizer));
+
             AddHeaderSanitizerRequest spreadModel = new AddHeaderSanitizerRequest(sanitizerType, recordingId, sanitizer, null);
             return await AddHeaderSanitizerAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
@@ -573,10 +726,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddUriSanitizer(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult AddUriSanitizer(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddUriSanitizerRequest(content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -591,10 +747,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddUriSanitizerAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> AddUriSanitizerAsync(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddUriSanitizerRequest(content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -604,9 +763,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="sanitizer"> The body for a URI regex sanitizer. </param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizerType"/> or <paramref name="sanitizer"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddUriSanitizer(string sanitizerType, UriRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult AddUriSanitizer(string sanitizerType, UriRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(sanitizerType, nameof(sanitizerType));
+            Argument.AssertNotNull(sanitizer, nameof(sanitizer));
+
             AddUriSanitizerRequest spreadModel = new AddUriSanitizerRequest(sanitizerType, recordingId, sanitizer, null);
             return AddUriSanitizer(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
@@ -616,9 +779,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="sanitizer"> The body for a URI regex sanitizer. </param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizerType"/> or <paramref name="sanitizer"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddUriSanitizerAsync(string sanitizerType, UriRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> AddUriSanitizerAsync(string sanitizerType, UriRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(sanitizerType, nameof(sanitizerType));
+            Argument.AssertNotNull(sanitizer, nameof(sanitizer));
+
             AddUriSanitizerRequest spreadModel = new AddUriSanitizerRequest(sanitizerType, recordingId, sanitizer, null);
             return await AddUriSanitizerAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
@@ -633,10 +800,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddBodyRegexSanitizer(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult AddBodyRegexSanitizer(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddBodyRegexSanitizerRequest(content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -651,10 +821,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddBodyRegexSanitizerAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> AddBodyRegexSanitizerAsync(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddBodyRegexSanitizerRequest(content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -664,9 +837,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="sanitizer"> The body for a body regex sanitizer. </param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizerType"/> or <paramref name="sanitizer"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddBodyRegexSanitizer(string sanitizerType, BodyRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult AddBodyRegexSanitizer(string sanitizerType, BodyRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(sanitizerType, nameof(sanitizerType));
+            Argument.AssertNotNull(sanitizer, nameof(sanitizer));
+
             AddBodyRegexSanitizerRequest spreadModel = new AddBodyRegexSanitizerRequest(sanitizerType, recordingId, sanitizer, null);
             return AddBodyRegexSanitizer(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
@@ -676,9 +853,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="sanitizer"> The body for a body regex sanitizer. </param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sanitizerType"/> or <paramref name="sanitizer"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddBodyRegexSanitizerAsync(string sanitizerType, BodyRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> AddBodyRegexSanitizerAsync(string sanitizerType, BodyRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(sanitizerType, nameof(sanitizerType));
+            Argument.AssertNotNull(sanitizer, nameof(sanitizer));
+
             AddBodyRegexSanitizerRequest spreadModel = new AddBodyRegexSanitizerRequest(sanitizerType, recordingId, sanitizer, null);
             return await AddBodyRegexSanitizerAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
@@ -695,10 +876,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="recordingId"> The recording ID to apply the matcher to. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matcherType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="matcherType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult SetMatcher(string matcherType, BinaryContent content, string recordingId = default, RequestOptions options = null)
+        public virtual ClientResult SetMatcher(string matcherType, BinaryContent content, string recordingId = default, RequestOptions options = null)
         {
+            Argument.AssertNotNullOrEmpty(matcherType, nameof(matcherType));
+
             using PipelineMessage message = CreateSetMatcherRequest(matcherType, content, recordingId, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -715,10 +900,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="recordingId"> The recording ID to apply the matcher to. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matcherType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="matcherType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> SetMatcherAsync(string matcherType, BinaryContent content, string recordingId = default, RequestOptions options = null)
+        public virtual async Task<ClientResult> SetMatcherAsync(string matcherType, BinaryContent content, string recordingId = default, RequestOptions options = null)
         {
+            Argument.AssertNotNullOrEmpty(matcherType, nameof(matcherType));
+
             using PipelineMessage message = CreateSetMatcherRequest(matcherType, content, recordingId, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -728,9 +917,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="matcher"></param>
         /// <param name="recordingId"> The recording ID to apply the matcher to. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matcherType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="matcherType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult SetMatcher(string matcherType, BinaryData matcher = default, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult SetMatcher(string matcherType, BinaryData matcher = default, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(matcherType, nameof(matcherType));
+
             return SetMatcher(matcherType, BinaryContent.Create(matcher), recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
@@ -739,9 +932,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="matcher"></param>
         /// <param name="recordingId"> The recording ID to apply the matcher to. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matcherType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="matcherType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> SetMatcherAsync(string matcherType, BinaryData matcher = default, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> SetMatcherAsync(string matcherType, BinaryData matcher = default, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(matcherType, nameof(matcherType));
+
             return await SetMatcherAsync(matcherType, BinaryContent.Create(matcher), recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
@@ -755,10 +952,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddBodilessMatcher(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult AddBodilessMatcher(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddBodilessMatcherRequest(content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -773,10 +973,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddBodilessMatcherAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> AddBodilessMatcherAsync(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddBodilessMatcherRequest(content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -785,9 +988,12 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="matcherType"></param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matcherType"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddBodilessMatcher(string matcherType, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult AddBodilessMatcher(string matcherType, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(matcherType, nameof(matcherType));
+
             AddBodilessMatcherRequest spreadModel = new AddBodilessMatcherRequest(matcherType, recordingId, null);
             return AddBodilessMatcher(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
@@ -796,9 +1002,12 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="matcherType"></param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matcherType"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddBodilessMatcherAsync(string matcherType, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> AddBodilessMatcherAsync(string matcherType, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(matcherType, nameof(matcherType));
+
             AddBodilessMatcherRequest spreadModel = new AddBodilessMatcherRequest(matcherType, recordingId, null);
             return await AddBodilessMatcherAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
@@ -813,10 +1022,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddCustomMatcher(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult AddCustomMatcher(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddCustomMatcherRequest(content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -831,10 +1043,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddCustomMatcherAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> AddCustomMatcherAsync(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddCustomMatcherRequest(content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -844,9 +1059,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="matcher"> The body for a custom matcher. </param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matcherType"/> or <paramref name="matcher"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddCustomMatcher(string matcherType, CustomDefaultMatcher matcher, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult AddCustomMatcher(string matcherType, CustomDefaultMatcher matcher, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(matcherType, nameof(matcherType));
+            Argument.AssertNotNull(matcher, nameof(matcher));
+
             AddCustomMatcherRequest spreadModel = new AddCustomMatcherRequest(matcherType, recordingId, matcher, null);
             return AddCustomMatcher(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
@@ -856,9 +1075,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="matcher"> The body for a custom matcher. </param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="matcherType"/> or <paramref name="matcher"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddCustomMatcherAsync(string matcherType, CustomDefaultMatcher matcher, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> AddCustomMatcherAsync(string matcherType, CustomDefaultMatcher matcher, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(matcherType, nameof(matcherType));
+            Argument.AssertNotNull(matcher, nameof(matcher));
+
             AddCustomMatcherRequest spreadModel = new AddCustomMatcherRequest(matcherType, recordingId, matcher, null);
             return await AddCustomMatcherAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
@@ -875,10 +1098,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="recordingId"> The recording ID to apply the transform to. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transformType"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transformType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddTransform(string transformType, BinaryContent content, string recordingId = default, RequestOptions options = null)
+        public virtual ClientResult AddTransform(string transformType, BinaryContent content, string recordingId = default, RequestOptions options = null)
         {
+            Argument.AssertNotNullOrEmpty(transformType, nameof(transformType));
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddTransformRequest(transformType, content, recordingId, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -895,10 +1123,15 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="recordingId"> The recording ID to apply the transform to. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transformType"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transformType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddTransformAsync(string transformType, BinaryContent content, string recordingId = default, RequestOptions options = null)
+        public virtual async Task<ClientResult> AddTransformAsync(string transformType, BinaryContent content, string recordingId = default, RequestOptions options = null)
         {
+            Argument.AssertNotNullOrEmpty(transformType, nameof(transformType));
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddTransformRequest(transformType, content, recordingId, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -908,9 +1141,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="transform"></param>
         /// <param name="recordingId"> The recording ID to apply the transform to. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transformType"/> or <paramref name="transform"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transformType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddTransform(string transformType, BinaryData transform, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult AddTransform(string transformType, BinaryData transform, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(transformType, nameof(transformType));
+            Argument.AssertNotNull(transform, nameof(transform));
+
             return AddTransform(transformType, BinaryContent.Create(transform), recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
@@ -919,9 +1157,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="transform"></param>
         /// <param name="recordingId"> The recording ID to apply the transform to. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transformType"/> or <paramref name="transform"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transformType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddTransformAsync(string transformType, BinaryData transform, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> AddTransformAsync(string transformType, BinaryData transform, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(transformType, nameof(transformType));
+            Argument.AssertNotNull(transform, nameof(transform));
+
             return await AddTransformAsync(transformType, BinaryContent.Create(transform), recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
@@ -935,10 +1178,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddHeaderTransform(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult AddHeaderTransform(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddHeaderTransformRequest(content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
@@ -953,10 +1199,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddHeaderTransformAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> AddHeaderTransformAsync(BinaryContent content, RequestOptions options = null)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using PipelineMessage message = CreateAddHeaderTransformRequest(content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
@@ -966,9 +1215,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="transform"> The body for a header transform. </param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transformType"/> or <paramref name="transform"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddHeaderTransform(string transformType, HeaderTransform transform, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult AddHeaderTransform(string transformType, HeaderTransform transform, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(transformType, nameof(transformType));
+            Argument.AssertNotNull(transform, nameof(transform));
+
             AddHeaderTransformRequest spreadModel = new AddHeaderTransformRequest(transformType, recordingId, transform, null);
             return AddHeaderTransform(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
@@ -978,9 +1231,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// <param name="transform"> The body for a header transform. </param>
         /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transformType"/> or <paramref name="transform"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddHeaderTransformAsync(string transformType, HeaderTransform transform, string recordingId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> AddHeaderTransformAsync(string transformType, HeaderTransform transform, string recordingId = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(transformType, nameof(transformType));
+            Argument.AssertNotNull(transform, nameof(transform));
+
             AddHeaderTransformRequest spreadModel = new AddHeaderTransformRequest(transformType, recordingId, transform, null);
             return await AddHeaderTransformAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }

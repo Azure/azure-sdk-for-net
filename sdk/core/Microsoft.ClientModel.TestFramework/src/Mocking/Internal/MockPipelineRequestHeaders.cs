@@ -47,7 +47,7 @@ internal class MockPipelineRequestHeaders : PipelineRequestHeaders
         return false;
     }
 
-    public void SetHeader(string name, string value)
+    public override void Add(string name, string value)
     {
         if (!_headers.TryGetValue(name, out List<string>? values))
         {
@@ -56,14 +56,13 @@ internal class MockPipelineRequestHeaders : PipelineRequestHeaders
         values.Add(value);
     }
 
-    public override void Add(string name, string value)
-    {
-        SetHeader(name, value);
-    }
-
     public override void Set(string name, string value)
     {
-        SetHeader(name, value);
+        var values = new List<string>
+        {
+            value
+        };
+        _headers[name] = values;
     }
 
     public override bool Remove(string name)
