@@ -18,7 +18,7 @@ To install the mcp server for use within vscode copilot agent mode, run the foll
 
 *When updating the config the script will not overwrite any other server configs.*
 
-The script will install the latest version of the azsdk cli executable from [tools releases](https://github.com/Azure/azure-sdk-tools/releases) and install it to `$HOME/.azure-sdk-mcp/azsdk`.
+The script will install the version established [here](https://github.com/Azure/azure-sdk-tools/releases/tag/azsdk_Latest) of the azsdk cli executable from [tools releases](https://github.com/Azure/azure-sdk-tools/releases) and install it to `$HOME/.azure-sdk-mcp/azsdk`.
 
 ## Authoring an MCP server
 
