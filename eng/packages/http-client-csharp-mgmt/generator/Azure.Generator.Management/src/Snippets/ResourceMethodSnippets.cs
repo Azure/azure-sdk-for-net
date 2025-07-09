@@ -86,7 +86,7 @@ namespace Azure.Generator.Management.Snippets
         public static MethodBodyStatement CreateHttpMessage(
             ResourceClientProvider resourceClientProvider,
             string methodName,
-            ValueExpression[] arguments,
+            IReadOnlyList<ValueExpression> arguments,
             out VariableExpression messageVariable)
         {
             // HttpMessage message = _restClient.{methodName}(...arguments);

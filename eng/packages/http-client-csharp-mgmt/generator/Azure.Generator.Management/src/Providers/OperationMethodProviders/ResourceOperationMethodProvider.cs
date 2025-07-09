@@ -295,7 +295,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                     continue;
                 }
 
-                if (!_resourceClientProvider.ImplicitParameterNames.Contains(parameter.Name))
+                if (!_resourceClientProvider.ContextualParameters.ContainsKey(parameter.Name))
                 {
                     var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
                     if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))
