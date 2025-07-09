@@ -76,7 +76,7 @@ namespace Azure.Generator.Management.Providers
             if (resource.IsSingleton)
             {
                 var resourceMethodSignature = new MethodSignature(
-                    $"Get{resource.SpecName}",
+                    $"Get{resource.ResourceName}",
                     $"Gets an object representing a {resource.Type:C} along with the instance operations that can be performed on it in the {ArmCoreType:C}.",
                     MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                     resource.Type,
@@ -97,7 +97,7 @@ namespace Azure.Generator.Management.Providers
             {
                 var collection = resource.ResourceCollection!;
                 // the first method is returning the collection
-                var pluralOfResourceName = resource.SpecName.Pluralize();
+                var pluralOfResourceName = resource.ResourceName.Pluralize();
                 var collectionMethodSignature = new MethodSignature(
                     $"Get{pluralOfResourceName}",
                     $"Gets a collection of {pluralOfResourceName} in the {ArmCoreType:C}",

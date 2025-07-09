@@ -18,7 +18,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             return new MethodSignature(
                 _isAsync ? "UpdateAsync" : "Update",
-                $"Update a {_resourceClientProvider.SpecName}",
+                $"Update a {_resourceClientProvider.ResourceName}",
                 _convenienceMethod.Signature.Modifiers,
                 _serviceMethod.GetOperationMethodReturnType(_isAsync, _resourceClientProvider.ResourceClientCSharpType, _resourceClientProvider.ResourceData.Type),
                 _convenienceMethod.Signature.ReturnDescription,

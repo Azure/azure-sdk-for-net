@@ -16,19 +16,19 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
 {
-    internal class ResourceCollectionClientProvider : ResourceClientProvider
+    internal class ResourceCollectionClientProvider : ContextualClientProvider
     {
         private readonly ResourceClientProvider _resource;
         private readonly InputServiceMethod? _getAll;
         private readonly InputServiceMethod? _create;
         private readonly InputServiceMethod? _get;
 
-        internal ResourceCollectionClientProvider(InputModelType model, ResourceMetadata resourceMetadata, ResourceClientProvider resource) : base(model, resourceMetadata, GetContextualRequestPattern(resourceMetadata))
+        internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, ResourceMetadata resourceMetadata) : base(GetContextualRequestPattern(resourceMetadata))
         {
             _resource = resource;
 
@@ -77,9 +77,13 @@ namespace Azure.Generator.Management.Providers
             };
         }
 
+        internal string ResourceName => _resource.ResourceName;
+
         protected override TypeProvider[] BuildSerializationProviders() => [];
 
-        protected override string BuildName() => $"{SpecName}Collection";
+        protected override string BuildName() => $"{ResourceName}Collection";
+
+        protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
         protected override CSharpType? GetBaseType() => typeof(ArmCollection);
 
@@ -90,9 +94,6 @@ namespace Azure.Generator.Management.Providers
 
         protected override PropertyProvider[] BuildProperties() => [];
 
-        private protected override IReadOnlyList<ResourceClientProvider> BuildChildResources()
-            => []; // collections should not have child resources.
-
         protected override FieldProvider[] BuildFields() => [_clientDiagnosticsField, _clientField];
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -100,7 +101,7 @@ namespace Azure.Generator.Management.Providers
 
         // TODO -- we need to change this type to its parent resource type.
         private ScopedApi<ResourceType>? _resourceTypeExpression;
-        protected override ScopedApi<ResourceType> ResourceTypeExpression => _resourceTypeExpression ??= BuildCollectionResourceTypeExpression();
+        protected ScopedApi<ResourceType> ResourceTypeExpression => _resourceTypeExpression ??= BuildCollectionResourceTypeExpression();
 
         private ScopedApi<ResourceType> BuildCollectionResourceTypeExpression()
         {
@@ -123,8 +124,6 @@ namespace Azure.Generator.Management.Providers
                     throw new NotSupportedException($"Unsupported resource scope: {ResourceScope}");
             }
         }
-
-        protected internal override CSharpType ResourceClientCSharpType => _resource.Type;
 
         protected override MethodProvider[] BuildMethods() => [BuildValidateResourceIdMethod(), .. BuildCreateOrUpdateMethods(), .. BuildGetMethods(), .. BuildGetAllMethods(), .. BuildExistsMethods(), .. BuildGetIfExistsMethods(), .. BuildEnumeratorMethods()];
 
