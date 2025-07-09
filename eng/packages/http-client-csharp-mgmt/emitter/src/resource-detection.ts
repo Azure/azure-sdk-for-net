@@ -286,7 +286,7 @@ function addResourceMetadata(
       code: "general-warning", // TODO -- later maybe we could define a specific code for resource hierarchy issues
       messageId: "default",
       format: {
-        message: `Cannot figure out resourceIdPatternResource from model ${model.name}.`
+        message: `Cannot figure out resourceIdPattern from model ${model.name}.`
       },
       target: NoTarget // TODO -- we need a method to find the raw target from the crossLanguageDefinitionId of this model
     });

@@ -38,6 +38,23 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public BarSettingsProperties Properties { get; set; }
+        internal BarSettingsProperties Properties { get; set; }
+
+        /// <summary> enabled. </summary>
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BarSettingsProperties();
+                }
+                Properties.IsEnabled = value;
+            }
+        }
     }
 }
