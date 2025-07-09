@@ -16,6 +16,7 @@ namespace Azure.Generator.Management.Visitors
     internal class SafeFlattenVisitor : ScmLibraryVisitor
     {
         private Dictionary<ModelProvider, (HashSet<PropertyProvider> FlattenedProperties, HashSet<PropertyProvider> InternalizedProperties)> _flattenedModels = new();
+        private HashSet<CSharpType> _flattenedTypes = new();
 
         // TODO: we can't check property count of property types in VisitType since we don't have TypeProvider from CSharpType.
         // Once we have CSharpType to TypeProvider mapping, we can remove this and have this logic in VisitType instead
@@ -28,7 +29,6 @@ namespace Azure.Generator.Management.Visitors
 
             var flattenedProperties = new HashSet<PropertyProvider>();
             var internalizedProperties = new HashSet<PropertyProvider>();
-            var internalizedPropertyTypes = new HashSet<CSharpType>();
             foreach (var property in model.Properties)
             {
                 var propertyType = property.Type;
@@ -42,6 +42,8 @@ namespace Azure.Generator.Management.Visitors
 
                         // make the current property internal
                         var internalSingleProperty = type!.Properties.Single(p => p.Type.AreNamesEqual(propertyTypeProvider.Type)); // type equal not working here, so we use AreNamesEqual
+                        internalizedProperties.Add(internalSingleProperty);
+                        _flattenedTypes.Add(propertyTypeProvider.Type!);
 
                         // flatten the single property to public and associate it with the internal property
                         var flattenPropertyName = $"{singleProperty.Name}"; // TODO: handle name conflicts
@@ -81,14 +83,10 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
-            var internalizedModelTypes = _flattenedModels.Values.Select(v => v.InternalizedProperties).SelectMany(p => p).Select(x => x.Type).ToHashSet();
-            if (internalizedModelTypes.Contains(type.Type))
+            // Since we make the properties with flattend types internal, the flattened types will be internalized during post processing, We need to keep the flattened types public
+            if (_flattenedTypes.Any(x => x.AreNamesEqual(type.Type)))
             {
-                type.Update(modifiers: type.DeclarationModifiers & ~TypeSignatureModifiers.Internal | TypeSignatureModifiers.Public);
-                foreach (var serialization in type.SerializationProviders)
-                {
-                    serialization.Update(modifiers: serialization.DeclarationModifiers & ~TypeSignatureModifiers.Internal | TypeSignatureModifiers.Public);
-                }
+                ManagementClientGenerator.Instance.AddTypeToKeep(type);
             }
             return base.VisitType(type);
         }

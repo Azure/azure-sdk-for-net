@@ -31,7 +31,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public FooSettingsUpdateProperties Properties { get; set; }
+        internal FooSettingsUpdateProperties Properties { get; set; }
 
         /// <summary> Gets or sets the AccessControlEnabled. </summary>
         public bool? AccessControlEnabled
