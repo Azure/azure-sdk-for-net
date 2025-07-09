@@ -64,9 +64,9 @@ namespace Azure.Generator.Management.Utilities
                 // get the diff between the current path and the parent path, we only handle the diff and defer the handling of the parent itself in the next recursion.
                 var diffPath = parent.TrimAncestorFrom(current);
                 // TODO -- this only handles the simplest cases right now, we need to add more cases as the generator evolves.
-                var pairs = SplitIntoPairs(diffPath);
+                var pairs = ReverselySplitIntoPairs(diffPath);
                 var appendParent = false;
-                foreach (var (key, value) in pairs.Reverse())
+                foreach (var (key, value) in pairs)
                 {
                     // we have a pair of segment, key and value
                     // In majority of cases, the key is a constant segment. In some rare scenarios, the key could be a variable.
@@ -124,24 +124,24 @@ namespace Azure.Generator.Management.Utilities
                 }
                 return result;
             }
-        }
 
-        private static IReadOnlyList<KeyValuePair<RequestPathSegment, RequestPathSegment>> SplitIntoPairs(IReadOnlyList<RequestPathSegment> requestPath)
-        {
-            // in our current cases, we will always have even segments.
-            Debug.Assert(requestPath.Count % 2 == 0, "The request path should always have an even number of segments for pairing.");
-            int maxNumberOfPairs = requestPath.Count / 2;
-            var pairs = new KeyValuePair<RequestPathSegment, RequestPathSegment>[maxNumberOfPairs];
-
-            for (int i = 0; i < maxNumberOfPairs; i++)
+            static IReadOnlyList<KeyValuePair<RequestPathSegment, RequestPathSegment>> ReverselySplitIntoPairs(IReadOnlyList<RequestPathSegment> requestPath)
             {
-                // each pair is a key-value pair, where the key is the first segment and the value is the second segment.
-                pairs[i] = new KeyValuePair<RequestPathSegment, RequestPathSegment>(
-                    requestPath[i * 2],
-                    requestPath[i * 2 + 1]);
-            }
+                // in our current cases, we will always have even segments.
+                Debug.Assert(requestPath.Count % 2 == 0, "The request path should always have an even number of segments for pairing.");
+                int maxNumberOfPairs = requestPath.Count / 2;
+                var pairs = new KeyValuePair<RequestPathSegment, RequestPathSegment>[maxNumberOfPairs];
 
-            return pairs;
+                for (int i = maxNumberOfPairs - 1; i >= 0; i++)
+                {
+                    // each pair is a key-value pair, where the key is the first segment and the value is the second segment.
+                    pairs[i] = new KeyValuePair<RequestPathSegment, RequestPathSegment>(
+                        requestPath[i * 2],
+                        requestPath[i * 2 + 1]);
+                }
+
+                return pairs;
+            }
         }
     }
 }
