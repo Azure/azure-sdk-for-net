@@ -21,16 +21,16 @@ if (-not $InstallDirectory)
 }
 . (Join-Path $PSScriptRoot '..' 'scripts' 'Helpers' 'AzSdkTool-Helpers.ps1')
 
-# If version is not provided, look for the tag <package>_Latest and set the version to the tag's description
+# If version is not provided, look for the tag <package>_version and set the version to the tag's description
 if (-not $Version) {
     try {
-        $versionTag = "${Package}_Latest"
+        $versionTag = "${Package}_version"
         $specificReleaseUrl = "https://api.github.com/repos/$Repository/releases/tags/$versionTag"
         $latestRelease = Invoke-RestMethod -Uri $specificReleaseUrl
         $Version = $latestRelease.body
     }
     catch {
-        Write-Warning "Could not fetch version from ${Package}_Latest tag. Will run the latest version."
+        Write-Warning "Could not fetch version from ${Package}_version tag. Will run the latest version."
     }
 }
 
