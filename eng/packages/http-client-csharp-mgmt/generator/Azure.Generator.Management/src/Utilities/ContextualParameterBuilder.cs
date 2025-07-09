@@ -132,10 +132,11 @@ namespace Azure.Generator.Management.Utilities
                 int maxNumberOfPairs = requestPath.Count / 2;
                 var pairs = new KeyValuePair<RequestPathSegment, RequestPathSegment>[maxNumberOfPairs];
 
-                for (int i = maxNumberOfPairs - 1; i >= 0; i--)
+                for (int i = 0; i < maxNumberOfPairs; i++)
                 {
                     // each pair is a key-value pair, where the key is the first segment and the value is the second segment.
-                    pairs[i] = new KeyValuePair<RequestPathSegment, RequestPathSegment>(
+                    // please note that we are filling the pairs in reverse order
+                    pairs[^(i + 1)] = new KeyValuePair<RequestPathSegment, RequestPathSegment>(
                         requestPath[i * 2],
                         requestPath[i * 2 + 1]);
                 }
