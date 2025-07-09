@@ -43,9 +43,6 @@ internal static class StringExtensions
         return identifier;
     }
 
-    public static string RemovePeriods(this string input)
-        => input.RemoveCharacters('.');
-
     public static string RemoveAsterisks(this string input)
         => input.RemoveCharacters('*');
 

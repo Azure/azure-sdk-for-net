@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 {
-    [ModelReaderWriterBuildable(typeof(int))]
+    [ModelReaderWriterBuildable(typeof(PersistableModel))]
     internal partial class SystemClientModelTestsInternalContext : ModelReaderWriterContext
     {
         partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
@@ -19,6 +19,24 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             protected override Type BuilderType => typeof(JsonModelConverterTests.DoesNotImplementPersistableModel);
 
             protected override object CreateInstance() => new JsonModelConverterTests.DoesNotImplementPersistableModel();
+        }
+
+        private class PersistableModel : IPersistableModel<PersistableModel>
+        {
+            PersistableModel? IPersistableModel<PersistableModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                throw new NotImplementedException();
+            }
+
+            string IPersistableModel<PersistableModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+            {
+                throw new NotImplementedException();
+            }
+
+            BinaryData IPersistableModel<PersistableModel>.Write(ModelReaderWriterOptions options)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

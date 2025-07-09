@@ -51,33 +51,47 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             TypeSymbolKindCache SymbolToKindCache,
             TypeSymbolTypeRefCache SymbolToTypeRefCache) data)
     {
-        if (data.TypesWithAttribute.Length > 1)
-        {
-            context.ReportDiagnostic(Diagnostic.Create(
-                DiagnosticDescriptors.MultipleContextsNotSupported,
-                data.TypesWithAttribute[0].Context?.Locations.First(),
-                data.TypesWithAttribute.Skip(1).Where(s => s.Context is not null).Select(s => s.Context!.Locations.First())));
-            return;
-        }
+        var tuples = data.TypesWithAttribute
+            .Where(tuple =>
+            {
+                if (tuple.Context is null)
+                    return false;
 
-        if (data.TypesWithAttribute.Length == 0)
+                return GetBaseClass(tuple.Context) is
+                {
+                    Name: "ModelReaderWriterContext",
+                    ContainingType: null,
+                    ContainingNamespace:
+                    {
+                        Name: "Primitives",
+                        ContainingNamespace:
+                        {
+                            Name: "ClientModel",
+                            ContainingNamespace:
+                            {
+                                Name: "System",
+                                ContainingNamespace.IsGlobalNamespace: true
+                            }
+                        }
+                    }
+                };
+            });
+
+        if (tuples.Count() != 1)
         {
             // nothing to generate
             return;
         }
 
-        if (data.TypesWithAttribute[0].Context is null)
-        {
-            return;
-        }
+        var tuple = tuples.First();
 
-        var contextSymbol = data.TypesWithAttribute[0].Context!;
+        var contextSymbol = tuple.Context!;
 
-        var mrwContextSymbol = GetMrwContextSymbol(contextSymbol);
+        var mrwContextSymbol = GetBaseClass(contextSymbol);
 
         var contextType = data.SymbolToTypeRefCache.Get(contextSymbol, data.SymbolToKindCache);
 
-        var builders = GetTypesFromAttributes(data.TypesWithAttribute[0].Attributes)
+        var builders = GetTypesFromAttributes(tuple.Attributes)
             .SelectMany(typeSymbol => GetRecursiveGenericTypes(typeSymbol, data.SymbolToKindCache))
             .Distinct(SymbolEqualityComparer.Default);
 
@@ -88,7 +102,6 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         if (!IsPartialClass(contextSymbol))
         {
-            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.ContextMustBePartial, Location.None));
             return;
         }
 
@@ -132,7 +145,6 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         if (!HasAccessibleParameterlessConstructor(typeSymbol, symbolKindCache) && itemType.IsSameAssembly(contextType))
         {
-            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.TypeMustHaveParameterlessConstructor, typeSymbol.Locations.FirstOrDefault(), type.Name));
             return null;
         }
 
@@ -145,7 +157,6 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         if (typeSymbol.IsAbstract && proxy is null)
         {
-            context.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.AbstractTypeWithoutProxy, typeSymbol.Locations.FirstOrDefault(), type.Name));
             return null;
         }
 
@@ -174,7 +185,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         }
     }
 
-    private INamedTypeSymbol? GetMrwContextSymbol(INamedTypeSymbol typeSymbol)
+    private INamedTypeSymbol? GetBaseClass(INamedTypeSymbol typeSymbol)
     {
         var current = typeSymbol.BaseType;
         while (current != null && current.BaseType != null && current.BaseType.SpecialType != SpecialType.System_Object)

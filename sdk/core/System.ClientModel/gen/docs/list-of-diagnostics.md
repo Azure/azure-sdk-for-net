@@ -197,3 +197,46 @@ public class MyClass : IPersistableModel<MyClass>
 }
 + public class MyClassProxy : IPersistableModel<MyClass> { }
 ```
+
+## SCM0006
+
+### Cause
+
+The source generator found a type specified in `ModelReaderWriterBuildableAttribute` that does not implement `IPersistableModel<T>`.  Or is not one of the automatically
+supported collection types found here: https://aka.ms/ModelReaderWriterContext#supported-collection-types.
+
+### How to fix violation
+
+Ensure the type specified in `ModelReaderWriterBuildableAttribute` implements `IPersistableModel<T>` or one of the [supported collection types](https://aka.ms/ModelReaderWriterContext#supported-collection-types).
+Otherwise remove the `ModelReaderWriterBuildableAttribute` from the class and [manually add a type builder](https://aka.ms/ModelReaderWriterContext#custom-type-builders) for the type.
+
+### Example of a violation
+
+#### Description
+
+The following code defines a class that does not implement `IPersistableModel<T>`, which causes a violation of SCM0006.
+
+#### Code
+
+```c#
+[ModelReaderWriterBuildable(typeof(MyModel))] // This will cause SCM0006
+public partial class MyContext : ModelReaderWriterContext { }
+
+public class MyModel { }
+```
+
+### Example of how to fix
+
+#### Description
+
+Implement `IPersistableModel<T>` or an interface that inherits from it (such as `IJsonModel<T>`) on the type.
+
+#### Code
+
+```diff
+[ModelReaderWriterBuildable(typeof(MyModel))]
+public partial class MyContext : ModelReaderWriterContext { }
+
+- public class MyModel { }
++ public class MyModel : IPersistableModel<MyModel> { }
+```
