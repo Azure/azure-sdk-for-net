@@ -39,10 +39,6 @@ public class ResourcesSpecification : Specification
         CustomizePropertyIsoDuration<ArmDeploymentPropertiesExtended>("Duration");
         CustomizePropertyIsoDuration<DeploymentStackResource>("Duration");
         // Not generated today:
-        // CustomizePropertyIsoDuration<AzureCliScript>("RetentionInterval");
-        // CustomizePropertyIsoDuration<AzureCliScript>("Timeout");
-        // CustomizePropertyIsoDuration<AzurePowerShellScript>("RetentionInterval");
-        // CustomizePropertyIsoDuration<AzurePowerShellScript>("Timeout");
         // CustomizePropertyIsoDuration<ArmDeploymentOperationProperties>("Duration");
 
         CustomizeResource<AzureCliScript>(r =>
