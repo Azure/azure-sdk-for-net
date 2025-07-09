@@ -4,7 +4,6 @@
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +26,8 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
-        private HashSet<InputModelType>? _resourceUpdateModels;
 
-        private Dictionary<InputModelType, string>? _resourceUpdateModelToResourceNameMap;
+        private Dictionary<InputModelType, (bool IsUpdateModel, string? ResourceName)> _resourceUpdateModelToResourceNameMap = [];
 
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
@@ -44,12 +42,13 @@ namespace Azure.Generator.Management
         {
             foreach (InputModelType model in base.InputNamespace.Models)
             {
-                if (IsResourceUpdateModel(model))
+                if (!_resourceUpdateModelToResourceNameMap.ContainsKey(model))
                 {
-                    _resourceUpdateModels ??= new HashSet<InputModelType>();
-                    _resourceUpdateModels.Add(model);
+                    _resourceUpdateModelToResourceNameMap[model] = (IsResourceUpdateModel(model), null);
                 }
             }
+
+            var hasResourceUpdateModel = _resourceUpdateModelToResourceNameMap.Values.Any(entry => entry.IsUpdateModel);
 
             foreach (var client in base.InputNamespace.Clients)
             {
@@ -58,17 +57,17 @@ namespace Azure.Generator.Management
                     // For MPG, we always generate convenience methods for all operations.
                     method.Operation.Update(generateConvenienceMethod: true);
 
-                    if (_resourceUpdateModels is not null)
+                    if (hasResourceUpdateModel)
                     {
                         foreach (var parameter in method.Operation.Parameters)
                         {
-                            if (parameter.Type is InputModelType && method.Operation.HttpMethod == "PATCH")
+                            if (parameter.Type is InputModelType parameterModel && method.Operation.HttpMethod == "PATCH")
                             {
-                                var model = _resourceUpdateModels.FirstOrDefault(m => m.Name == parameter.Type.Name);
-                                if (model != null)
+                                if (_resourceUpdateModelToResourceNameMap.TryGetValue(parameterModel, out var existingEntry) &&
+                                    existingEntry.IsUpdateModel && existingEntry.ResourceName == null)
                                 {
-                                    _resourceUpdateModelToResourceNameMap ??= new Dictionary<InputModelType, string>();
-                                    _resourceUpdateModelToResourceNameMap[model] = method.Operation.ResourceName ?? throw new InvalidOperationException($"Resource name cannot be null for resource update model '{model.Name}'");
+                                    var resourceName = method.Operation.ResourceName ?? throw new InvalidOperationException($"Resource name cannot be null for resource update model '{parameterModel.Name}'");
+                                    _resourceUpdateModelToResourceNameMap[parameterModel] = (true, resourceName);
                                 }
                             }
                         }
@@ -206,9 +205,9 @@ namespace Azure.Generator.Management
 
         internal bool IsResourceUpdateModel(InputModelType model)
         {
-            if (_resourceUpdateModels?.Contains(model) == true)
+            if (_resourceUpdateModelToResourceNameMap.ContainsKey(model))
             {
-                return true;
+                return _resourceUpdateModelToResourceNameMap[model].IsUpdateModel;
             }
 
             const string ResourceUpdateModelId = KnownManagementTypes.ResourceUpdateModelId;
@@ -228,10 +227,11 @@ namespace Azure.Generator.Management
 
         internal string FindEnclosingResourceNameForResourceUpdateModel(InputModelType model)
         {
-            if (_resourceUpdateModelToResourceNameMap?.TryGetValue(model, out var resourceName) == true)
+            if (_resourceUpdateModelToResourceNameMap.TryGetValue(model, out var resourceInfo) &&  resourceInfo.IsUpdateModel && resourceInfo.ResourceName is not null)
             {
-                return resourceName;
+                return resourceInfo.ResourceName;
             }
+
             throw new InvalidOperationException($"Could not find enclosing resource name for resource update model '{model.Name}'");
         }
     }

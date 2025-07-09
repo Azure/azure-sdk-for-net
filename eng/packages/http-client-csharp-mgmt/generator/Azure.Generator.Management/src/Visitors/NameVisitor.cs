@@ -88,6 +88,7 @@ internal class NameVisitor : ScmLibraryVisitor
 
         if (parameterUpdated)
         {
+            // This is required as a workaround to update documentation for the method signature
             method.Update(signature: method.Signature);
         }
         return base.VisitMethod(method);
