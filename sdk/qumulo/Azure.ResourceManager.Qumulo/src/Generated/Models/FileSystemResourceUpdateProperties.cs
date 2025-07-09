@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
@@ -48,23 +49,28 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <summary> Initializes a new instance of <see cref="FileSystemResourceUpdateProperties"/>. </summary>
         public FileSystemResourceUpdateProperties()
         {
+            PrivateIPs = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FileSystemResourceUpdateProperties"/>. </summary>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
         /// <param name="userDetails"> User Details. </param>
         /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
+        /// <param name="clusterLoginUri"></param>
+        /// <param name="privateIPs"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileSystemResourceUpdateProperties(QumuloMarketplaceDetails marketplaceDetails, QumuloUserDetails userDetails, string delegatedSubnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileSystemResourceUpdateProperties(MarketplaceDetails marketplaceDetails, QumuloUserDetails userDetails, ResourceIdentifier delegatedSubnetId, Uri clusterLoginUri, IList<string> privateIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceDetails = marketplaceDetails;
             UserDetails = userDetails;
             DelegatedSubnetId = delegatedSubnetId;
+            ClusterLoginUri = clusterLoginUri;
+            PrivateIPs = privateIPs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Marketplace details. </summary>
-        public QumuloMarketplaceDetails MarketplaceDetails { get; set; }
+        public MarketplaceDetails MarketplaceDetails { get; set; }
         /// <summary> User Details. </summary>
         internal QumuloUserDetails UserDetails { get; set; }
         /// <summary> User Email. </summary>
@@ -75,6 +81,6 @@ namespace Azure.ResourceManager.Qumulo.Models
         }
 
         /// <summary> Delegated subnet id for Vnet injection. </summary>
-        public string DelegatedSubnetId { get; set; }
+        public ResourceIdentifier DelegatedSubnetId { get; set; }
     }
 }

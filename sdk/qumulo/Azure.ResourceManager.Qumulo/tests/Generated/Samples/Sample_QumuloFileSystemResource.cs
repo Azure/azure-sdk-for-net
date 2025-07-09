@@ -165,14 +165,14 @@ namespace Azure.ResourceManager.Qumulo.Samples
 },
                 Properties = new FileSystemResourceUpdateProperties
                 {
-                    MarketplaceDetails = new QumuloMarketplaceDetails("fwtpz", "s")
+                    MarketplaceDetails = new MarketplaceDetails("fwtpz", "s")
                     {
                         MarketplaceSubscriptionId = "xaqtkloiyovmexqhn",
                         PublisherId = "czxcfrwodazyaft",
                         TermUnit = "cfwwczmygsimcyvoclcw",
                     },
                     UserDetailsEmail = "aqsnzyroo",
-                    DelegatedSubnetId = "bqaryqsjlackxphpmzffgoqsvm",
+                    DelegatedSubnetId = new ResourceIdentifier("bqaryqsjlackxphpmzffgoqsvm"),
                 },
             };
             QumuloFileSystemResource result = await qumuloFileSystemResource.UpdateAsync(patch);

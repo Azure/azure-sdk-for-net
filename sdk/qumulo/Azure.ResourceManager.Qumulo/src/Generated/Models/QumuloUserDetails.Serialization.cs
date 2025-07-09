@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    internal partial class QumuloUserDetails : IUtf8JsonSerializable, IJsonModel<QumuloUserDetails>
+    public partial class QumuloUserDetails : IUtf8JsonSerializable, IJsonModel<QumuloUserDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QumuloUserDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

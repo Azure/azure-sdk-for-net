@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> User Details of Qumulo FileSystem resource. </summary>
-    internal partial class QumuloUserDetails
+    public partial class QumuloUserDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -62,11 +62,6 @@ namespace Azure.ResourceManager.Qumulo.Models
         {
             Email = email;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="QumuloUserDetails"/> for deserialization. </summary>
-        internal QumuloUserDetails()
-        {
         }
 
         /// <summary> User Email. </summary>
