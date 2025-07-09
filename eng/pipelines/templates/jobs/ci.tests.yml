@@ -75,7 +75,7 @@ jobs:
           sbomEnabled: false
         - output: pipelineArtifact
           targetPath: '$(Build.ArtifactStagingDirectory)/llm-artifacts'
-          artifactName: "LLM Artifacts - $(System.JobName) - $(System.JobAttempt)"
+          artifactName: "LLM Artifacts"
           condition: eq(variables['uploadTestResults'], 'true')
           sbomEnabled: false
 

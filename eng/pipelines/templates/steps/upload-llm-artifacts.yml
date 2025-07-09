@@ -9,7 +9,7 @@ steps:
       {
         $fileFullName = $testResultsFile.FullName
         $fileName = $testResultsFile.Name
-        Move-Item -Path $fileFullName -Destination $artifactsDirectory/$fileName -ErrorAction SilentlyContinue
+        Move-Item -Path $fileFullName -Destination "$artifactsDirectory/$(System.JobName)/$fileName" -ErrorAction SilentlyContinue
         Write-Host "##vso[task.setvariable variable=uploadTestResults]true"
       }
     condition: always()
