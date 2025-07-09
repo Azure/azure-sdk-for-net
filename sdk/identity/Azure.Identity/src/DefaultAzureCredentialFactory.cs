@@ -111,12 +111,10 @@ namespace Azure.Identity
                     chain.Add(CreateVisualStudioCredential());
                 }
 
-#pragma warning disable CS0618 // Type or member is obsolete
                 if (!Options.ExcludeVisualStudioCodeCredential)
                 {
                     chain.Add(CreateVisualStudioCodeCredential());
                 }
-#pragma warning restore CS0618 // Type or member is obsolete
 
                 if (!Options.ExcludeAzureCliCredential)
                 {
