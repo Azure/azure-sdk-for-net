@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
     public partial class CopilotSettingsResourceUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdate>
     {
         public CopilotSettingsResourceUpdate() { }
-        public Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdateProperties Properties { get { throw null; } set { } }
+        public bool? AccessControlEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.PortalServicesCopilot.Models.CopilotSettingsResourceUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

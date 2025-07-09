@@ -31,6 +31,23 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public CopilotSettingsResourceUpdateProperties Properties { get; set; }
+        internal CopilotSettingsResourceUpdateProperties Properties { get; set; }
+
+        /// <summary> Boolean indicating if role-based access control is enabled for copilot in this tenant. </summary>
+        public bool? AccessControlEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessControlEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CopilotSettingsResourceUpdateProperties();
+                }
+                Properties.AccessControlEnabled = value;
+            }
+        }
     }
 }
