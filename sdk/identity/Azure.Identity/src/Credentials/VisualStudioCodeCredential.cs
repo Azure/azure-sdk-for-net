@@ -20,17 +20,24 @@ namespace Azure.Identity
         private const string CredentialsSection = "VS Code Azure";
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/vscodecredential/troubleshoot";
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
-        /// </summary>
-        public VisualStudioCodeCredential() : base(GetBrokerOptoins(FileSystemService.Default)) { }
+        private readonly bool _isBrokerOptionsEnabled;
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
         /// </summary>
-#pragma warning disable CS0618 // Type or member is obsolete
-        public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options) { }
-#pragma warning restore CS0618 // Type or member is obsolete
+        public VisualStudioCodeCredential() : base(TryGetBrokerOptions(FileSystemService.Default, out bool isBrokerEnabled) ?? CreateFallbackOptions())
+        {
+            _isBrokerOptionsEnabled = isBrokerEnabled;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
+        /// </summary>
+        public VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options)
+            : base(TryGetBrokerOptionsWithCredentialOptions(FileSystemService.Default, options, out bool isBrokerEnabled) ?? CreateFallbackOptionsFromCredentialOptions(options))
+        {
+            _isBrokerOptionsEnabled = isBrokerEnabled;
+        }
 
         /// <InheritDoc />
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default) =>
@@ -42,6 +49,11 @@ namespace Azure.Identity
 
         private async Task<AccessToken> GetTokenImpl(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
+            if (!_isBrokerOptionsEnabled)
+            {
+                throw new CredentialUnavailableException($"The {nameof(VisualStudioCodeCredential)} requires the Azure.Identity.Broker package to be referenced. {CredentialsSection} {Troubleshooting}");
+            }
+
             using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(VisualStudioCodeCredential)}.{nameof(GetToken)}", requestContext);
 
             try
@@ -59,17 +71,84 @@ namespace Azure.Identity
             }
         }
 
-        internal static InteractiveBrowserCredentialOptions GetBrokerOptoins(IFileSystemService _fileSystem)
+        /// <summary>
+        /// Attempts to get broker options and returns them if available, along with a flag indicating success.
+        /// </summary>
+        /// <param name="fileSystem">The file system service to use for reading authentication records.</param>
+        /// <param name="isBrokerEnabled">Output parameter indicating whether broker options are available.</param>
+        /// <returns>The broker options if available, null otherwise.</returns>
+        private static InteractiveBrowserCredentialOptions TryGetBrokerOptions(IFileSystemService fileSystem, out bool isBrokerEnabled)
         {
-            DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options);
-            if (options == null)
+            isBrokerEnabled = DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options);
+
+            if (isBrokerEnabled && options != null)
             {
-                throw new CredentialUnavailableException($"The {nameof(VisualStudioCodeCredential)} requires the Azure.Identity.Broker package to be referenced. {CredentialsSection} {Troubleshooting}");
+                options.AuthenticationRecord = GetAuthenticationRecord(fileSystem);
+                return options;
             }
 
-            // ClientId = "f8b0c6d2-1a3e-4b5c-9f7d-8e1f2b3c4d5e", // VS Code Azure Client ID
-            options.AuthenticationRecord = GetAuthenticationRecord(_fileSystem);
-            return options;
+            return null;
+        }
+
+        /// <summary>
+        /// Creates fallback options when broker options are not available.
+        /// This prevents the constructor from failing and defers the error to GetToken.
+        /// </summary>
+        /// <returns>A minimal InteractiveBrowserCredentialOptions instance.</returns>
+        private static InteractiveBrowserCredentialOptions CreateFallbackOptions()
+        {
+            return new InteractiveBrowserCredentialOptions();
+        }
+
+        /// <summary>
+        /// Attempts to get broker options with legacy credential options and returns them if available, along with a flag indicating success.
+        /// </summary>
+        /// <param name="fileSystem">The file system service to use for reading authentication records.</param>
+        /// <param name="credentialOptions">The legacy credential options.</param>
+        /// <param name="isBrokerEnabled">Output parameter indicating whether broker options are available.</param>
+        /// <returns>The broker options if available, null otherwise.</returns>
+        private static InteractiveBrowserCredentialOptions TryGetBrokerOptionsWithCredentialOptions(IFileSystemService fileSystem, VisualStudioCodeCredentialOptions credentialOptions, out bool isBrokerEnabled)
+        {
+            isBrokerEnabled = DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options);
+
+            if (isBrokerEnabled && options != null)
+            {
+                if (credentialOptions != null)
+                {
+                    options.TenantId = credentialOptions.TenantId;
+                    options.AdditionallyAllowedTenants = credentialOptions.AdditionallyAllowedTenants;
+                    options.AuthorityHost = credentialOptions.AuthorityHost;
+                    options.IsUnsafeSupportLoggingEnabled = credentialOptions.IsUnsafeSupportLoggingEnabled;
+                    options.IsChainedCredential = credentialOptions.IsChainedCredential;
+                }
+
+                options.AuthenticationRecord = GetAuthenticationRecord(fileSystem);
+                return options;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Creates fallback options when broker options are not available, based on legacy credential options.
+        /// This prevents the constructor from failing and defers the error to GetToken.
+        /// </summary>
+        /// <param name="credentialOptions">The legacy credential options to base fallback options on.</param>
+        /// <returns>A minimal InteractiveBrowserCredentialOptions instance.</returns>
+        private static InteractiveBrowserCredentialOptions CreateFallbackOptionsFromCredentialOptions(VisualStudioCodeCredentialOptions credentialOptions)
+        {
+            var fallbackOptions = new InteractiveBrowserCredentialOptions();
+
+            if (credentialOptions != null)
+            {
+                fallbackOptions.TenantId = credentialOptions.TenantId;
+                fallbackOptions.AdditionallyAllowedTenants = credentialOptions.AdditionallyAllowedTenants;
+                fallbackOptions.AuthorityHost = credentialOptions.AuthorityHost;
+                fallbackOptions.IsUnsafeSupportLoggingEnabled = credentialOptions.IsUnsafeSupportLoggingEnabled;
+                fallbackOptions.IsChainedCredential = credentialOptions.IsChainedCredential;
+            }
+
+            return fallbackOptions;
         }
 
         internal static AuthenticationRecord GetAuthenticationRecord(IFileSystemService _fileSystem)
@@ -82,7 +161,7 @@ namespace Azure.Identity
             }
             try
             {
-                var content = _fileSystem.ReadAllText(authRecordPath);
+                var content = _fileSystem.ReadAllText(authRecordPath); // No need to read all text, look at the sample
                 var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(content));
                 var authRecord = AuthenticationRecord.Deserialize(stream);
                 if (authRecord != null && !string.IsNullOrEmpty(authRecord.TenantId) && !string.IsNullOrEmpty(authRecord.HomeAccountId))
