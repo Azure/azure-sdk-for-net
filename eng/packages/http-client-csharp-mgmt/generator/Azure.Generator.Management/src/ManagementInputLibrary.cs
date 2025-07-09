@@ -205,17 +205,15 @@ namespace Azure.Generator.Management
 
         internal bool IsResourceUpdateModel(InputModelType model)
         {
-            if (_resourceUpdateModelToResourceNameMap.ContainsKey(model))
+            if (_resourceUpdateModelToResourceNameMap.TryGetValue(model, out var resourceInfo))
             {
-                return _resourceUpdateModelToResourceNameMap[model].IsUpdateModel;
+                return resourceInfo.IsUpdateModel;
             }
-
-            const string ResourceUpdateModelId = KnownManagementTypes.ResourceUpdateModelId;
 
             var currentModel = model;
             while (currentModel != null)
             {
-                if (currentModel.CrossLanguageDefinitionId.Equals(ResourceUpdateModelId, StringComparison.OrdinalIgnoreCase))
+                if (currentModel.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ResourceUpdateModelId, StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }
