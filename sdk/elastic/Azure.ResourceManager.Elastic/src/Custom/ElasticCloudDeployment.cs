@@ -5,7 +5,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
@@ -21,75 +20,54 @@ namespace Azure.ResourceManager.Elastic.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void WriteElasticsearchServiceUri(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            if (ElasticsearchServiceUri.IsAbsoluteUri)
-                writer.WriteStringValue(ElasticsearchServiceUri.AbsoluteUri);
-            else
-                writer.WriteStringValue(ElasticsearchServiceUri.OriginalString);
+            WriteUri(writer, ElasticsearchServiceUri);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void DeserializeElasticsearchServiceUri(JsonProperty property, ref Uri elasticsearchServiceUrl)
         {
-            if (property.Value.ValueKind != JsonValueKind.Null)
-            {
-                if (Uri.TryCreate(property.Value.GetString(), UriKind.Absolute, out elasticsearchServiceUrl))
-                {
-                    elasticsearchServiceUrl = new Uri(property.Value.GetString(), UriKind.Absolute);
-                }
-                else
-                {
-                    elasticsearchServiceUrl = new Uri(property.Value.GetString(), UriKind.Relative);
-                }
-            }
+            DeserializeUri(property, ref elasticsearchServiceUrl);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void WriteKibanaServiceUri(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            if (KibanaServiceUri.IsAbsoluteUri)
-                writer.WriteStringValue(KibanaServiceUri.AbsoluteUri);
-            else
-                writer.WriteStringValue(KibanaServiceUri.OriginalString);
+            WriteUri(writer, KibanaServiceUri);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void DeserializeKibanaServiceUri(JsonProperty property, ref Uri kibanaServiceUrl)
         {
-            if (property.Value.ValueKind != JsonValueKind.Null)
-            {
-                if (Uri.TryCreate(property.Value.GetString(), UriKind.Absolute, out kibanaServiceUrl))
-                {
-                    kibanaServiceUrl = new Uri(property.Value.GetString(), UriKind.Absolute);
-                }
-                else
-                {
-                    kibanaServiceUrl = new Uri(property.Value.GetString(), UriKind.Relative);
-                }
-            }
+            DeserializeUri(property, ref kibanaServiceUrl);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void WriteKibanaSsoUri(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            if (KibanaSsoUri.IsAbsoluteUri)
-                writer.WriteStringValue(KibanaSsoUri.AbsoluteUri);
-            else
-                writer.WriteStringValue(KibanaSsoUri.OriginalString);
+            WriteUri(writer, KibanaSsoUri);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void DeserializeKibanaSsoUri(JsonProperty property, ref Uri kibanaSsoUrl)
         {
+            DeserializeUri(property, ref kibanaSsoUrl);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void WriteUri(Utf8JsonWriter writer, Uri uri)
+        {
+            writer.WriteStringValue(uri.IsAbsoluteUri ? uri.AbsoluteUri : uri.OriginalString);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DeserializeUri(JsonProperty property, ref Uri uri)
+        {
             if (property.Value.ValueKind != JsonValueKind.Null)
             {
-                if (Uri.TryCreate(property.Value.GetString(), UriKind.Absolute, out kibanaSsoUrl))
-                {
-                    kibanaSsoUrl = new Uri(property.Value.GetString(), UriKind.Absolute);
-                }
-                else
-                {
-                    kibanaSsoUrl = new Uri(property.Value.GetString(), UriKind.Relative);
-                }
+                var uriString = property.Value.GetString();
+                uri = Uri.TryCreate(uriString, UriKind.Absolute, out var absoluteUri)
+                    ? absoluteUri
+                    : new Uri(uriString, UriKind.Relative);
             }
         }
     }

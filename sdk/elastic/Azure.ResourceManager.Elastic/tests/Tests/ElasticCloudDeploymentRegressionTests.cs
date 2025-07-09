@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.ResourceManager.Elastic.Models;
 using NUnit.Framework;
-using System.ClientModel.Primitives;
-using Azure.Core;
-using System.Text.Json;
 
 namespace Azure.ResourceManager.Elastic.Tests
 {
