@@ -86,7 +86,7 @@
 
     <!-- BCL packages -->
     <PackageReference Update="System.Buffers" Version="4.5.1" />
-    <PackageReference Update="System.ClientModel" Version="1.4.2" />
+    <PackageReference Update="System.ClientModel" Version="1.5.0" />
     <PackageReference Update="System.IO.Hashing" Version="8.0.0" />
     <PackageReference Update="System.Memory" Version="4.5.5" />
     <PackageReference Update="System.Memory.Data" Version="8.0.1" />
@@ -165,13 +165,13 @@
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.4.2" />
 
     <!-- CDK -->
-    <PackageReference Update="Azure.Provisioning" Version="1.1.0" />
-    <PackageReference Update="Azure.Provisioning.CognitiveServices" Version="1.0.0" />
-    <PackageReference Update="Azure.Provisioning.EventGrid" Version="1.0.0" />
-    <PackageReference Update="Azure.Provisioning.KeyVault" Version="1.0.0" />
+    <PackageReference Update="Azure.Provisioning" Version="1.2.0" />
+    <PackageReference Update="Azure.Provisioning.AppService" Version="1.2.0" />
+    <PackageReference Update="Azure.Provisioning.CognitiveServices" Version="1.1.0" />
+    <PackageReference Update="Azure.Provisioning.EventGrid" Version="1.1.0" />
+    <PackageReference Update="Azure.Provisioning.KeyVault" Version="1.1.0" />
     <PackageReference Update="Azure.Provisioning.ServiceBus" Version="1.0.0" />
-    <PackageReference Update="Azure.Provisioning.Storage" Version="1.0.0" />
-    <PackageReference Update="Azure.Provisioning.AppService" Version="1.0.0" />
+    <PackageReference Update="Azure.Provisioning.Storage" Version="1.1.1" />
     <PackageReference Update="Microsoft.Bcl.Numerics" Version="8.0.0" />
 
     <!-- Other approved packages -->
@@ -204,6 +204,10 @@
     <PackageReference Update="Microsoft.TestPlatform.ObjectModel" Version="17.10.0" />
     <PackageReference Update="MSTest.TestFramework" Version="1.3.2" />
     <PackageReference Update="NUnit" Version="3.13.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.AI.Agents.Persistent'))">
+    <PackageReference Update="Microsoft.Extensions.AI.Abstractions" Version="9.6.0"/>
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.Projects'))">
@@ -422,7 +426,7 @@
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
     <PackageReference Update="PublicApiGenerator" Version="10.0.1" />
-    <PackageReference Update="System.ClientModel" Version="1.4.2" />
+    <PackageReference Update="System.ClientModel" Version="1.5.0" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.IO.Pipelines" Version="4.5.1" />

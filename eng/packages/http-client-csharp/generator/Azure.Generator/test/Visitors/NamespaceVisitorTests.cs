@@ -1,13 +1,14 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
-using Visitors.Tests.Common;
-using Visitors.Tests.TestHelpers;
+using Azure.Generator.Tests.Common;
+using Azure.Generator.Tests.TestHelpers;
+using Azure.Generator.Visitors;
 
-namespace Visitors.Tests
+namespace Azure.Generator.Tests.Visitors
 {
     public class NamespaceVisitorTests
     {

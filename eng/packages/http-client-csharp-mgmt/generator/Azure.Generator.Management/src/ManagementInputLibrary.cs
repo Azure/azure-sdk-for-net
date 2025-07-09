@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,8 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
 
+        private Dictionary<InputModelType, (bool IsUpdateModel, string? ResourceName)> _resourceUpdateModelToResourceNameMap = [];
+
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
         {
@@ -37,12 +40,38 @@ namespace Azure.Generator.Management
 
         private InputNamespace BuildInputNamespaceInternal()
         {
-            // For MPG, we always generate convenience methods for all operations.
+            foreach (InputModelType model in base.InputNamespace.Models)
+            {
+                if (!_resourceUpdateModelToResourceNameMap.ContainsKey(model))
+                {
+                    _resourceUpdateModelToResourceNameMap[model] = (IsResourceUpdateModel(model), null);
+                }
+            }
+
+            var hasResourceUpdateModel = _resourceUpdateModelToResourceNameMap.Values.Any(entry => entry.IsUpdateModel);
+
             foreach (var client in base.InputNamespace.Clients)
             {
                 foreach (var method in client.Methods)
                 {
+                    // For MPG, we always generate convenience methods for all operations.
                     method.Operation.Update(generateConvenienceMethod: true);
+
+                    if (hasResourceUpdateModel)
+                    {
+                        foreach (var parameter in method.Operation.Parameters)
+                        {
+                            if (parameter.Type is InputModelType parameterModel && method.Operation.HttpMethod == "PATCH")
+                            {
+                                if (_resourceUpdateModelToResourceNameMap.TryGetValue(parameterModel, out var existingEntry) &&
+                                    existingEntry.IsUpdateModel && existingEntry.ResourceName == null)
+                                {
+                                    var resourceName = method.Operation.ResourceName ?? throw new InvalidOperationException($"Resource name cannot be null for resource update model '{parameterModel.Name}'");
+                                    _resourceUpdateModelToResourceNameMap[parameterModel] = (true, resourceName);
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -172,6 +201,36 @@ namespace Azure.Generator.Management
                     singletonResourceName,
                     parentResource);
             }
+        }
+
+        internal bool IsResourceUpdateModel(InputModelType model)
+        {
+            if (_resourceUpdateModelToResourceNameMap.TryGetValue(model, out var resourceInfo))
+            {
+                return resourceInfo.IsUpdateModel;
+            }
+
+            var currentModel = model;
+            while (currentModel != null)
+            {
+                if (currentModel.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ResourceUpdateModelId, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+                currentModel = currentModel.BaseModel;
+            }
+
+            return false;
+        }
+
+        internal string FindEnclosingResourceNameForResourceUpdateModel(InputModelType model)
+        {
+            if (_resourceUpdateModelToResourceNameMap.TryGetValue(model, out var resourceInfo) &&  resourceInfo.IsUpdateModel && resourceInfo.ResourceName is not null)
+            {
+                return resourceInfo.ResourceName;
+            }
+
+            throw new InvalidOperationException($"Could not find enclosing resource name for resource update model '{model.Name}'");
         }
     }
 }

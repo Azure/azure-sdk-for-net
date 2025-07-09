@@ -5,10 +5,11 @@ using System.Linq;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
-using Visitors.Tests.Common;
-using Visitors.Tests.TestHelpers;
+using Azure.Generator.Tests.Common;
+using Azure.Generator.Tests.TestHelpers;
+using Azure.Generator.Visitors;
 
-namespace Visitors.Tests
+namespace Azure.Generator.Tests.Visitors
 {
     public class ModelFactoryRenamerVisitorTests
     {
