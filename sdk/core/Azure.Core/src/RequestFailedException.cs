@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -278,10 +280,102 @@ namespace Azure
         }
 
         // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
-        internal class ErrorResponse
+        internal class ErrorResponse : IJsonModel<ErrorResponse>
         {
             [System.Text.Json.Serialization.JsonPropertyName("error")]
             public ResponseError? Error { get; set; }
+
+            internal ErrorResponse()
+            {
+            }
+
+            private ErrorResponse(ResponseError? error)
+            {
+                Error = error;
+            }
+
+            ErrorResponse? IJsonModel<ErrorResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            {
+                var format = options.Format == "W" ? ((IPersistableModel<ErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
+                if (format != "J")
+                {
+                    throw new FormatException($"The model {nameof(ErrorResponse)} does not support reading '{format}' format.");
+                }
+
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeErrorResponse(document.RootElement, options);
+            }
+
+            private static ErrorResponse? DeserializeErrorResponse(JsonElement element, ModelReaderWriterOptions options)
+            {
+                if (element.ValueKind == JsonValueKind.Null)
+                {
+                    return null;
+                }
+
+                ResponseError? error = default;
+                foreach (var property in element.EnumerateObject())
+                {
+                    if (property.NameEquals("error"u8))
+                    {
+                        if (property.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            continue;
+                        }
+
+                        error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureCoreContext.Default);
+                        continue;
+                    }
+                }
+                return new ErrorResponse(error);
+            }
+
+            ErrorResponse? IPersistableModel<ErrorResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                var format = options.Format == "W" ? ((IPersistableModel<ErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+                switch (format)
+                {
+                    case "J":
+                        {
+                            using JsonDocument document = JsonDocument.Parse(data, new JsonDocumentOptions { MaxDepth = 256 });
+                            return DeserializeErrorResponse(document.RootElement, options);
+                        }
+                    default:
+                        throw new FormatException($"The model {nameof(ErrorResponse)} does not support reading '{options.Format}' format.");
+                }
+            }
+
+            string IPersistableModel<ErrorResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+            void IJsonModel<ErrorResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                writer.WriteStartObject();
+                JsonModelWriteCore(writer, options);
+                writer.WriteEndObject();
+            }
+
+            private void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                if (Error != null)
+                {
+                    writer.WritePropertyName("error");
+                    ((IJsonModel<ResponseError>)Error).Write(writer, options);
+                }
+            }
+
+            BinaryData IPersistableModel<ErrorResponse>.Write(ModelReaderWriterOptions options)
+            {
+                var format = options.Format == "W" ? ((IPersistableModel<ErrorResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+                switch (format)
+                {
+                    case "J":
+                        return ModelReaderWriter.Write(this, options, AzureCoreContext.Default);
+                    default:
+                        throw new FormatException($"The model {nameof(ErrorResponse)} does not support writing '{options.Format}' format.");
+                }
+            }
         }
 
         private readonly struct ErrorDetails
