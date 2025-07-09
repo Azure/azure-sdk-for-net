@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
         private ResourceGroupResource ResourceGroup { get; set; }
 
         // For the webhook endpoint, replace "SANITIZED_FUNCTION_KEY" with the function key
-        // from the Logic App "mylogicappkish2" in the East US region under the
+        // from the Logic App "sdk-test-logic-app" in the CentralUSEUAP region under the
         // "Azure Event Grid SDK" subscription.
-        private const string EventSubscriptionDestinationEndpoint = "https://prod-71.eastus.logic.azure.com:443/workflows/b60c5432896846608c05de3a96be6de2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
+        private const string LogicAppEndpointUrl = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
 
         private async Task SetCollection()
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
         public async Task NamespaceTopicsSubscriptionCreateUpdateDelete()
         {
             await SetCollection();
-            var namespaceName = Recording.GenerateAssetName("sdk-Namespace-");
-            var namespaceTopicName = Recording.GenerateAssetName("sdk-Namespace-Topic");
+            var namespaceName = Recording.GenerateAssetName("sdk-eventgrid-test-");
+            var namespaceTopicName = Recording.GenerateAssetName("sdk-eventgrid-test-topic");
             var namespaceTopicSubscriptionName1 = Recording.GenerateAssetName("sdk-Namespace-Topic-Subscription");
             var namespaceTopicSubscriptionName2 = Recording.GenerateAssetName("sdk-Namespace-Topic-Subscription");
             var namespaceTopicSubscriptionName3 = Recording.GenerateAssetName("sdk-Namespace-Topic-Subscription");
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 {
                     Destination = new WebHookEventSubscriptionDestination
                     {
-                        Endpoint = new Uri(EventSubscriptionDestinationEndpoint),
+                        Endpoint = new Uri(LogicAppEndpointUrl),
                     }
                 }
             };
