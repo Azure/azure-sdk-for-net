@@ -114,15 +114,11 @@ namespace Azure.Generator.Management.Models
                 return Tenant;
             }
 
-            // otherwise, we try to remove its last two segments
-            if (Count < 4)
-            {
-                // if there are no more 4 segments, we trim off the last two segments as its parent
-                return new RequestPathPattern(_segments.Take(Count - 2));
-            }
-            // if there are 4 or more segments, we need to check if we trim off the last two segments, we get a `providers` segment pair
-            // if so, we trim 4 segments instead of 2.
-            if (_segments[^4].IsProvidersSegment)
+            // if there are 4 or more segments,
+            // there is a possibility that if we trim off the last two segments, we get a `providers` segment pair.
+            // such as in `/providers/Microsoft.Management/managementGroups/{managementGroupId}`.
+            // in this case, we need to trim off 2 more segments to get its real parent.
+            if (Count >= 4 && _segments[^4].IsProvidersSegment)
             {
                 return new RequestPathPattern(_segments.Take(Count - 4));
             }
