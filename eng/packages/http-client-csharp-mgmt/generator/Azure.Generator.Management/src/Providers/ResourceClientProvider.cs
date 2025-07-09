@@ -123,6 +123,8 @@ namespace Azure.Generator.Management.Providers
                 .Where(r => r is not ResourceCollectionClientProvider);
 
             var childResources = new List<ResourceClientProvider>();
+            // TODO -- this is quite cumbersome that every time we have to iterate all the resources to find the child resources of this resource.
+            // maybe later we could maintain a map in the OutputLibrary so that we could get them directly.
             foreach (var candidate in allResources)
             {
                 // check if the request path of this resource, is the same as the parent resource request path of the candidate.
