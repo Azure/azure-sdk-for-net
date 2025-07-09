@@ -5,12 +5,17 @@ steps:
   - pwsh: |
       $artifactsDirectory = "$(Build.ArtifactStagingDirectory)/llm-artifacts"
       New-Item $artifactsDirectory -ItemType directory -Force
+
+      Write-Host "================="
+      Get-ChildItem -Path $(TestTargetFramework)*.trx -Recurse -File
+      Write-Host "================="
+
       foreach($testResultsFile in (Get-ChildItem -Path $(TestTargetFramework)*.trx -Recurse -File))
       {
         $fileFullName = $testResultsFile.FullName
         $fileName = $testResultsFile.Name
-        Move-Item -Path $fileFullName -Destination "$artifactsDirectory/$(System.JobName)/$fileName" -ErrorAction SilentlyContinue
+        Move-Item -Path $fileFullName -Destination "$artifactsDirectory/$(System.JobName)/$fileName" -ErrorAction Continue
         Write-Host "##vso[task.setvariable variable=uploadTestResults]true"
       }
-    condition: always()
+    condition: succeededOrFailed()
     displayName: Copy test results files to llm artifacts staging directory
