@@ -45,7 +45,7 @@ namespace Azure.Communication.CallAutomation
 
             var returnedEvent = _evHandler.WaitForEventProcessor(filter
                 => filter.CallConnectionId == _callConnectionId
-                && (filter.GetType() == typeof(ConnectFailed)),
+                && (filter.GetType() == typeof(CallConnected) || filter.GetType() == typeof(ConnectFailed)),
                 cancellationToken);
 
             return SetReturnedEvent(returnedEvent);
@@ -65,7 +65,7 @@ namespace Azure.Communication.CallAutomation
 
             var returnedEvent = await _evHandler.WaitForEventProcessorAsync(filter
                 => filter.CallConnectionId == _callConnectionId
-                && (filter.GetType() == typeof(ConnectFailed)),
+                && (filter.GetType() == typeof(CallConnected) || filter.GetType() == typeof(ConnectFailed)),
                 cancellationToken).ConfigureAwait(false);
 
             return SetReturnedEvent(returnedEvent);
