@@ -15,7 +15,7 @@ namespace Azure.Generator.Management.Models
         public RequestPathSegment(string value)
         {
             _value = value;
-            (_isConstant, _variableName) = ParseValue(value);
+            ParseValue(value, ref _isConstant, ref _variableName);
         }
 
         public bool Equals(RequestPathSegment? other)
@@ -47,19 +47,20 @@ namespace Azure.Generator.Management.Models
         /// </summary>
         public bool IsProvidersSegment => _value.Equals("providers");
 
-        private static (bool IsConstant, string? VariableName) ParseValue(string value)
+        private static void ParseValue(string value, ref bool isConstant, ref string? variableName)
         {
             var span = value.AsSpan();
             if (span[0] == '{' && span[^1] == '}')
             {
                 // This is a variable segment
-                var variableName = span[1..^1].ToString();
-                return (false, variableName);
+                variableName = span[1..^1].ToString();
+                isConstant = false;
             }
             else
             {
                 // This is a constant segment
-                return (true, null);
+                variableName = null;
+                isConstant = true;
             }
         }
 
