@@ -5,6 +5,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 using Maps;
 using NUnit.Framework;
@@ -114,6 +115,31 @@ public class ConfigurationSamples
         {
             Transport = new HttpClientPipelineTransport(httpClient)
         };
+        #endregion
+    }
+
+    [Test]
+    [Ignore("Used for documentation")]
+    public void ConfigurationUserAgent()
+    {
+        #region Snippet:ConfigurationUserAgent
+        MapsClientOptions options = new();
+        
+        // In a library's client class constructor:
+        var userAgentPolicy = new UserAgentPolicy(Assembly.GetExecutingAssembly());
+        ClientPipeline pipeline = ClientPipeline.Create(
+            options, 
+            perCallPolicies: new[] { userAgentPolicy },
+            perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+
+        // With custom application ID:
+        var customUserAgent = new UserAgentPolicy(Assembly.GetExecutingAssembly(), "MyApp/1.0");
+        ClientPipeline pipeline2 = ClientPipeline.Create(
+            options,
+            perCallPolicies: new[] { customUserAgent }, 
+            perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         #endregion
     }
 }
