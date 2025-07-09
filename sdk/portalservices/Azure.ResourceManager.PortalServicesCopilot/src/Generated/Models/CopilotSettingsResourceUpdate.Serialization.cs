@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         string IPersistableModel<CopilotSettingsResourceUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="copilotSettingsResourceUpdate"> The <see cref="CopilotSettingsResourceUpdate"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(CopilotSettingsResourceUpdate copilotSettingsResourceUpdate)
+        internal static RequestContent ToRequestContent(CopilotSettingsResourceUpdate copilotSettingsResourceUpdate)
         {
             if (copilotSettingsResourceUpdate == null)
             {

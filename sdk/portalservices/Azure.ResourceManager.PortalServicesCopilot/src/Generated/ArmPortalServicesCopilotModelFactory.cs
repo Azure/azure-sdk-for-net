@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
 
         /// <summary> The copilot settings tenant resource definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="name"> The default copilot settings, applying to entire tenant. </param>
         /// <returns> A new <see cref="PortalServicesCopilot.PortalServicesCopilotSettingData"/> instance for mocking. </returns>
-        public static PortalServicesCopilotSettingData PortalServicesCopilotSettingData(ResourceIdentifier id = default, string @type = default, SystemData systemData = default, PortalServicesCopilotSettingsProperties properties = default, string name = default)
+        public static PortalServicesCopilotSettingData PortalServicesCopilotSettingData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, PortalServicesCopilotSettingsProperties properties = default, string name = default)
         {
             return new PortalServicesCopilotSettingData(
                 id,
-                @type,
+                resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
                 properties,
