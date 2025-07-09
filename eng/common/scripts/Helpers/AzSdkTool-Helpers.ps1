@@ -138,17 +138,30 @@ function Install-Standalone-Tool (
 
     if (!$Version -or $Version -eq "*") {
         Write-Host "Attempting to find latest version for package '$Package'"
-        $releasesUrl = "https://api.github.com/repos/$Repository/releases"
-        $releases = Invoke-RestMethod -Uri $releasesUrl
         $found = $false
-        foreach ($release in $releases) {
-            if ($release.tag_name -like "$Package*") {
-                $tag = $release.tag_name
-                $Version = $release.tag_name -replace "${Package}_", ""
-                $found = $true
-                break
-            }
+        # Look for specific version tag first, formatted as <package>_version
+        try{
+            $versionTag = "${Package}_version"
+            $specificReleaseUrl = "https://api.github.com/repos/$Repository/releases/tags/$versionTag"
+            $specificRelease = Invoke-RestMethod -Uri $specificReleaseUrl
+            $Version = $specificRelease.body
+            $tag = "${Package}_$Version"
+            $found = $true
         }
+        # If not found, look for the latest release tag
+        catch {
+            $releasesUrl = "https://api.github.com/repos/$Repository/releases"
+            $releases = Invoke-RestMethod -Uri $releasesUrl
+            foreach ($release in $releases) {
+                if ($release.tag_name -like "$Package*") {
+                    $tag = $release.tag_name
+                    $Version = $release.tag_name -replace "${Package}_", ""
+                    $found = $true
+                    break
+                }
+            } 
+        }
+
         if ($found -eq $false) {
             throw "No release found for package '$Package'"
         }
