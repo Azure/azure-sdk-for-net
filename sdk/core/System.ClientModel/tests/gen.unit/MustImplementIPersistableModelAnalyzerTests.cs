@@ -641,5 +641,68 @@ namespace TestProject
 
             Assert.AreEqual(0, diagnostics.Length);
         }
+
+        [Test]
+        public async Task CollectionOfIJsonModelShouldReport()
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.ObjectModel;
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(Collection<JsonModel>))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new MustImplementIPersistableModelAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(1, diagnostics.Length);
+            Assert.IsTrue(diagnostics[0].GetMessage().Contains("Collection"));
+        }
+
+        [Test]
+        public async Task ListOfCollectionOfIJsonModelShouldReport()
+        {
+            string source =
+$$"""
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(List<Collection<JsonModel>>))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref System.Text.Json.Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        public void Write(System.Text.Json.Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var analyzer = new MustImplementIPersistableModelAnalyzer();
+            var diagnostics = await CompilationHelper.GetAnalyzerDiagnosticsAsync(compilation, analyzer);
+
+            Assert.AreEqual(1, diagnostics.Length);
+            Assert.IsTrue(diagnostics[0].GetMessage().Contains("List"));
+        }
     }
 }

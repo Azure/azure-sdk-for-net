@@ -58,7 +58,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
         public static readonly DiagnosticDescriptor MustImplementIPersistableModel = new(
             id: "SCM0006",
             title: "Type must implement IPersistableModel<T>",
-            messageFormat: "Type '{0}' must implement IPersistableModel<T>",
+            messageFormat: "Type '{0}' must implement IPersistableModel<T> or be one of the automatic collection types https://aka.ms/ModelReaderWriterContext#supported-collection-types",
             category: "ModelReaderWriterContextGenerator",
             helpLinkUri: "https://aka.ms/system-clientmodel/diagnostics#scm0006",
             defaultSeverity: DiagnosticSeverity.Warning,

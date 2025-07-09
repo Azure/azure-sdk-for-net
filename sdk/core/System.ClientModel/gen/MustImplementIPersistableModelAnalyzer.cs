@@ -62,9 +62,16 @@ public sealed class MustImplementIPersistableModelAnalyzer : DiagnosticAnalyzer
                 if (attr.ConstructorArguments.Length == 1 &&
                     attr.ConstructorArguments[0].Kind == TypedConstantKind.Type)
                 {
-                    var modelType = GetModelType(attr.ConstructorArguments[0].Value);
-                    if (modelType is null)
+                    var outterModel = attr.ConstructorArguments[0].Value as ITypeSymbol;
+                    if (outterModel is null)
                         continue;
+
+                    var modelType = GetModelType(outterModel);
+                    if (modelType is null)
+                    {
+                        ReportDiagnostic(symbolContext, namedType, attr, outterModel);
+                        continue;
+                    }
 
                     // Check if modelType implements IPersistableModel<T>
                     bool implements = modelType.AllInterfaces.Any(i =>
@@ -72,19 +79,25 @@ public sealed class MustImplementIPersistableModelAnalyzer : DiagnosticAnalyzer
 
                     if (!implements)
                     {
-                        var attributeLocation = attr.ApplicationSyntaxReference?.GetSyntax()?.GetLocation()
-                            ?? namedType.Locations.FirstOrDefault()
-                            ?? Location.None;
-
-                        var diagnostic = Diagnostic.Create(
-                            ModelReaderWriterContextGenerator.DiagnosticDescriptors.MustImplementIPersistableModel,
-                            attributeLocation,
-                            modelType.Name);
-                        symbolContext.ReportDiagnostic(diagnostic);
+                        symbolContext = ReportDiagnostic(symbolContext, namedType, attr, modelType);
                     }
                 }
             }
         }, SymbolKind.NamedType);
+    }
+
+    private static SymbolAnalysisContext ReportDiagnostic(SymbolAnalysisContext symbolContext, INamedTypeSymbol namedType, AttributeData attr, ITypeSymbol modelType)
+    {
+        var attributeLocation = attr.ApplicationSyntaxReference?.GetSyntax()?.GetLocation()
+            ?? namedType.Locations.FirstOrDefault()
+            ?? Location.None;
+
+        var diagnostic = Diagnostic.Create(
+            ModelReaderWriterContextGenerator.DiagnosticDescriptors.MustImplementIPersistableModel,
+            attributeLocation,
+            modelType.Name);
+        symbolContext.ReportDiagnostic(diagnostic);
+        return symbolContext;
     }
 
     private static INamedTypeSymbol? GetModelType(object? value)
