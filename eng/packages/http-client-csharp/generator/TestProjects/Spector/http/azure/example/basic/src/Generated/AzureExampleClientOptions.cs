@@ -6,14 +6,19 @@
 #nullable disable
 
 using Azure.Core;
-using _Specs_.Azure.Example.Basic;
 
 namespace AzureExampleBasicClient
 {
     public partial class AzureExampleClientOptions : ClientOptions
     {
-        private const _Specs_.Azure.Example.Basic.AzureExampleClientOptions.ServiceVersion LatestVersion = _Specs_.Azure.Example.Basic.AzureExampleClientOptions.ServiceVersion.V2022_12_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
 
-        public AzureExampleClientOptions(_Specs_.Azure.Example.Basic.AzureExampleClientOptions.ServiceVersion version = LatestVersion) => throw null;
+        public AzureExampleClientOptions(ServiceVersion version = LatestVersion) => throw null;
+
+        public enum ServiceVersion
+        {
+            /// <summary> V2022_12_01_Preview. </summary>
+            V2022_12_01_Preview = 1
+        }
     }
 }
