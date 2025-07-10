@@ -4,8 +4,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -26,7 +24,7 @@ namespace Azure
             {
                 using var document = JsonDocument.ParseValue(ref reader);
                 var element = document.RootElement;
-                return ReadFromJson(element);
+                return ReadFromJson(element, ModelReaderWriterOptions.Json);
             }
 
             public override void Write(Utf8JsonWriter writer, ResponseError? value, JsonSerializerOptions options)
@@ -38,9 +36,13 @@ namespace Azure
         /// <summary>
         /// Writes the <see cref="ResponseError"/> to the provided <see cref="Utf8JsonWriter"/>.
         /// </summary>
-        private void Write(Utf8JsonWriter writer)
+        private void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
+            var format = options.Format == "W" ? ((IPersistableModel<ResponseError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResponseError)} does not support writing '{format}' format.");
+            }
 
             if (Code != null)
             {
@@ -63,7 +65,7 @@ namespace Azure
             if (InnerError != null)
             {
                 writer.WritePropertyName("innererror");
-                InnerError.Write(writer, ModelReaderWriterOptions.Json);
+                InnerError.Write(writer, options);
             }
 
             if (Details.Count > 0)
@@ -79,17 +81,15 @@ namespace Azure
                     }
                     else
                     {
-                        detail.Write(writer);
+                        ((IJsonModel<ResponseError>)detail).Write(writer, options);
                     }
                 }
 
                 writer.WriteEndArray();
             }
-
-            writer.WriteEndObject();
         }
 
-        private static ResponseError? ReadFromJson(JsonElement element)
+        private static ResponseError? ReadFromJson(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,7 +117,7 @@ namespace Azure
             ResponseInnerError? innererror = null;
             if (element.TryGetProperty("innererror", out property))
             {
-                innererror = ResponseInnerError.ReadFromJson(property);
+                innererror = ResponseInnerError.ReadFromJson(property, options);
             }
 
             List<ResponseError>? details = null;
@@ -126,7 +126,7 @@ namespace Azure
             {
                 foreach (var item in property.EnumerateArray())
                 {
-                    var detail = ReadFromJson(item);
+                    var detail = ReadFromJson(item, options);
                     if (detail != null)
                     {
                         details ??= new();
@@ -140,58 +140,8 @@ namespace Azure
 
         void IJsonModel<ResponseError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResponseError>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ResponseError)} does not support '{format}' format.");
-            }
-
             writer.WriteStartObject();
-
-            if (Code != null)
-            {
-                writer.WritePropertyName("code");
-                writer.WriteStringValue(Code);
-            }
-
-            if (Message != null)
-            {
-                writer.WritePropertyName("message");
-                writer.WriteStringValue(Message);
-            }
-
-            if (Target != null)
-            {
-                writer.WritePropertyName("target");
-                writer.WriteStringValue(Target);
-            }
-
-            if (InnerError != null)
-            {
-                writer.WritePropertyName("innererror");
-                InnerError.Write(writer, ModelReaderWriterOptions.Json);
-            }
-
-            if (Details.Count > 0)
-            {
-                writer.WritePropertyName("details");
-                writer.WriteStartArray();
-
-                foreach (var detail in Details)
-                {
-                    if (detail == null)
-                    {
-                        writer.WriteNullValue();
-                    }
-                    else
-                    {
-                        detail.Write(writer);
-                    }
-                }
-
-                writer.WriteEndArray();
-            }
-
+            JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -204,32 +154,36 @@ namespace Azure
             }
 
             using var document = JsonDocument.ParseValue(ref reader);
-            var element = document.RootElement;
-            return ReadFromJson(element) ?? new ResponseError();
+            return ReadFromJson(document.RootElement, options) ?? new ResponseError();
         }
 
         BinaryData IPersistableModel<ResponseError>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResponseError>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ResponseError)} does not support '{format}' format.");
-            }
 
-            return ModelReaderWriter.Write(this, options, AzureCoreContext.Default);
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureCoreContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResponseError)} does not support writing '{options.Format}' format.");
+            }
         }
 
         ResponseError IPersistableModel<ResponseError>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResponseError>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ResponseError)} does not support '{format}' format.");
-            }
 
-            using var document = JsonDocument.Parse(data);
-            var element = document.RootElement;
-            return ReadFromJson(element) ?? new ResponseError();
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, new JsonDocumentOptions { MaxDepth = 256 });
+                        return ReadFromJson(document.RootElement, options) ?? new();
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResponseError)} does not support reading '{options.Format}' format.");
+            }
         }
 
         string IPersistableModel<ResponseError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
