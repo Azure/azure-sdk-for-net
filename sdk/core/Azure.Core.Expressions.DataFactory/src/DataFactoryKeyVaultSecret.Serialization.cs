@@ -123,10 +123,10 @@ namespace Azure.Core.Expressions.DataFactory
             {
                 (model as IUtf8JsonSerializable)?.Write(writer);
             }
-            public override DataFactoryKeyVaultSecret Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override DataFactoryKeyVaultSecret? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAzureKeyVaultSecretReference(document.RootElement)!;
+                return DeserializeAzureKeyVaultSecretReference(document.RootElement);
             }
         }
     }

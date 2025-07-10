@@ -142,10 +142,10 @@ namespace Azure.Core.Expressions.DataFactory
             {
                 (model as IUtf8JsonSerializable)?.Write(writer);
             }
-            public override DataFactoryLinkedServiceReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override DataFactoryLinkedServiceReference? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDataFactoryLinkedServiceReference(document.RootElement)!;
+                return DeserializeDataFactoryLinkedServiceReference(document.RootElement);
             }
         }
     }

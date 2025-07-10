@@ -92,10 +92,10 @@ namespace Azure.Core.Expressions.DataFactory
             {
                 (model as IUtf8JsonSerializable)?.Write(writer);
             }
-            public override DataFactorySecret Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override DataFactorySecret? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDataFactorySecretBaseDefinition(document.RootElement)!;
+                return DeserializeDataFactorySecretBaseDefinition(document.RootElement);
             }
         }
     }
