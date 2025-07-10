@@ -390,6 +390,11 @@ directive:
       $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
       $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
       $.LoadBalancerFrontendIpConfiguration.properties.properties["x-ms-client-flatten"] = true;
+  # rename the expand parameter in this operation to expandOption to avoid the breaking change of its type
+  - from: ComputeRP.json
+    where: $["x-ms-paths"]["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions?$expand=Properties"].get
+    transform: >
+      $.parameters[6]["x-ms-client-name"] = "expandOption";
   # this makes the name in VirtualMachineScaleSetExtension to be readonly so that our inheritance chooser could properly make it inherit from Azure.ResourceManager.ResourceData. We have some customized code to add the setter for name back (as in constructor)
   - from: ComputeRP.json
     where: $.definitions.VirtualMachineScaleSetExtension.properties.name

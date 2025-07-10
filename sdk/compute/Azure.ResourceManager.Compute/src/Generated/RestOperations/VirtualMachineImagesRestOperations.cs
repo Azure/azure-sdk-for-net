@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal RequestUriBuilder CreateListWithPropertiesRequestUri(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expand, int? top, string orderby)
+        internal RequestUriBuilder CreateListWithPropertiesRequestUri(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expandOption, int? top, string orderby)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(skus, true);
             uri.AppendPath("/versions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("$expand", expand, true);
+            uri.AppendQuery("$expand", expandOption, true);
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.Compute
             return uri;
         }
 
-        internal HttpMessage CreateListWithPropertiesRequest(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expand, int? top, string orderby)
+        internal HttpMessage CreateListWithPropertiesRequest(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expandOption, int? top, string orderby)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(skus, true);
             uri.AppendPath("/versions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("$expand", expand, true);
+            uri.AppendQuery("$expand", expandOption, true);
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
@@ -764,21 +764,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="expandOption"> The expand expression to apply on the operation. </param>
         /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="orderby"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="expand"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="expandOption"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<VirtualMachineImage>>> ListWithPropertiesAsync(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expand, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<VirtualMachineImage>>> ListWithPropertiesAsync(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expandOption, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
-            Argument.AssertNotNull(expand, nameof(expand));
+            Argument.AssertNotNull(expandOption, nameof(expandOption));
 
-            using var message = CreateListWithPropertiesRequest(subscriptionId, location, publisherName, offer, skus, expand, top, orderby);
+            using var message = CreateListWithPropertiesRequest(subscriptionId, location, publisherName, offer, skus, expandOption, top, orderby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -804,21 +804,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="expandOption"> The expand expression to apply on the operation. </param>
         /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="orderby"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="expand"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="expandOption"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<VirtualMachineImage>> ListWithProperties(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expand, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<VirtualMachineImage>> ListWithProperties(string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expandOption, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
-            Argument.AssertNotNull(expand, nameof(expand));
+            Argument.AssertNotNull(expandOption, nameof(expandOption));
 
-            using var message = CreateListWithPropertiesRequest(subscriptionId, location, publisherName, offer, skus, expand, top, orderby);
+            using var message = CreateListWithPropertiesRequest(subscriptionId, location, publisherName, offer, skus, expandOption, top, orderby);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

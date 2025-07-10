@@ -1394,7 +1394,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListWithPropertiesRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListWithPropertiesRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.ExpandOption, options.Top, options.Orderby);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => VirtualMachineImage.DeserializeVirtualMachineImage(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesWithProperties", "", null, cancellationToken);
         }
 
@@ -1422,7 +1422,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListWithPropertiesRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineImagesRestClient.CreateListWithPropertiesRequest(Id.SubscriptionId, options.Location, options.PublisherName, options.Offer, options.Skus, options.ExpandOption, options.Top, options.Orderby);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => VirtualMachineImage.DeserializeVirtualMachineImage(e), VirtualMachineImagesClientDiagnostics, Pipeline, "MockableComputeSubscriptionResource.GetVirtualMachineImagesWithProperties", "", null, cancellationToken);
         }
 
