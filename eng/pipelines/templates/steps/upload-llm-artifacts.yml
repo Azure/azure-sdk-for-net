@@ -14,13 +14,15 @@ steps:
       {
         $fileFullName = $testResultsFile.FullName
 
-        # Convert /mnt/vss/_work/1/s/sdk/template/Azure.Template/tests/TestResults/net8.0.trx to template-Azure.Template-net8.0.trx
-        $between  = ($fileFullName -split 'sdk/|/tests')[1] -replace '/','-'
-        $originalFile     = Split-Path $fileFullName -Leaf
-        $fileName  = "$between-$originalFile"
+        # Convert a path like
+        #   /mnt/vss/_work/1/s/sdk/template/Azure.Template/tests/TestResults/net8.0.trx
+        # to
+        #   template-Azure.Template-net8.0.trx
+        $serviceAndPackage  = ($fileFullName -split 'sdk/|/tests')[1] -replace '/','-'
+        $trxFile     = Split-Path $fileFullName -Leaf
+        $fileName  = "$serviceAndPackage-$trxFile"
 
-        New-Item "$artifactsDirectory/$(System.JobName)" -ItemType directory -Force
-        Move-Item -Path $fileFullName -Destination "$artifactsDirectory/$(System.JobName)/$fileName" -ErrorAction Continue
+        Move-Item -Path $fileFullName -Destination "$artifactsDirectory/$fileName" -ErrorAction Continue
         Write-Host "##vso[task.setvariable variable=uploadTestResults]true"
       }
     condition: succeededOrFailed()
