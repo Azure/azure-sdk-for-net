@@ -3,7 +3,7 @@
 
 using Azure.Generator.Tests.TestHelpers;
 using NUnit.Framework;
-using Visitors;
+using Azure.Generator.Visitors;
 
 namespace Azure.Generator.Tests
 {

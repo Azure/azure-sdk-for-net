@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
@@ -20,7 +19,7 @@ namespace MgmtTypeSpec.Models
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkListResult"/>. </summary>
         /// <param name="value"> The PrivateLink items on this page. </param>
-        internal PrivateLinkListResult(IEnumerable<PrivateLinkData> value)
+        internal PrivateLinkListResult(IEnumerable<PrivateLink> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +28,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="value"> The PrivateLink items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkListResult(IList<PrivateLinkData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateLinkListResult(IList<PrivateLink> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +36,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The PrivateLink items on this page. </summary>
-        public IList<PrivateLinkData> Value { get; }
+        public IList<PrivateLink> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
