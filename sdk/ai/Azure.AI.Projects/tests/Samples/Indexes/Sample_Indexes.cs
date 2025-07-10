@@ -4,10 +4,14 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Diagnostics;
 
 namespace Azure.AI.Projects.Tests
 {
@@ -33,14 +37,14 @@ namespace Azure.AI.Projects.Tests
 #endif
             AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
-            RequestContent content = RequestContent.Create(new
+            BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
             {
                 connectionName = aiSearchConnectionName,
                 indexName = aiSearchIndexName,
                 type = "AzureSearch",
                 description = "Sample Index for testing",
                 displayName = "Sample Index"
-            });
+            }));
 
             Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
             var index = projectClient.Indexes.CreateOrUpdate(
@@ -51,7 +55,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(index);
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-            DatasetIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
+            DatasetIndex retrievedIndex = projectClient.Indexes.Get(name: indexName, version: indexVersion);
             Console.WriteLine(retrievedIndex);
 
             Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
@@ -61,7 +65,7 @@ namespace Azure.AI.Projects.Tests
             }
 
             Console.WriteLine($"Listing all Indices:");
-            foreach (DatasetIndex version in projectClient.Indexes.GetIndices())
+            foreach (DatasetIndex version in projectClient.Indexes.Get())
             {
                 Console.WriteLine(version);
             }

@@ -4,14 +4,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.ClientModel.Primitives;
+using System.Diagnostics;
 
 namespace Azure.AI.Projects.Tests;
 
 public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
 {
+    private void EnableSystemClientModelDebugging()
+    {
+        // Enable System.ClientModel diagnostics
+        ActivitySource.AddActivityListener(new ActivityListener
+        {
+            ShouldListenTo = _ => true,
+            Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
+            ActivityStarted = activity => Console.WriteLine($"Started: {activity.DisplayName}"),
+            ActivityStopped = activity => Console.WriteLine($"Stopped: {activity.DisplayName} - Duration: {activity.Duration}")
+        });
+    }
+
+    private AIProjectClient CreateDebugClient(string endpoint)
+    {
+        var options = new AIProjectClientOptions();
+
+        // Add custom pipeline policy for debugging
+        options.AddPolicy(new DebugPipelinePolicy(), PipelinePosition.PerCall);
+
+        return new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential(), options);
+    }
+
+    // Custom pipeline policy for debugging System.ClientModel requests
+    private class DebugPipelinePolicy : PipelinePolicy
+    {
+        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int index)
+        {
+            Console.WriteLine($"Request: {message.Request.Method} {message.Request.Uri}");
+
+            ProcessNext(message, pipeline, index);
+
+            Console.WriteLine($"Response: {message.Response?.Status} {message.Response?.ReasonPhrase}");
+        }
+
+        public override ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int index)
+        {
+            Console.WriteLine($"Async Request: {message.Request.Method} {message.Request.Uri}");
+
+            var result = ProcessNextAsync(message, pipeline, index);
+
+            Console.WriteLine($"Async Response: {message.Response?.Status} {message.Response?.ReasonPhrase}");
+
+            return result;
+        }
+    }
+
     [Test]
     [SyncOnly]
     public void DeploymentExample()
@@ -26,16 +75,21 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 #endif
-        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+
+        // Enable debugging for System.ClientModel
+        EnableSystemClientModelDebugging();
+
+        // Create client with debugging enabled
+        AIProjectClient projectClient = CreateDebugClient(endpoint);
 
         Console.WriteLine("List all deployments:");
-        foreach (AIDeployment deployment in projectClient.Deployments.GetDeployments())
+        foreach (AIDeployment deployment in projectClient.Deployments.Get())
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-        foreach (AIDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
+        foreach (AIDeployment deployment in projectClient.Deployments.Get(modelPublisher: modelPublisher))
         {
             Console.WriteLine(deployment);
         }
@@ -60,16 +114,21 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 #endif
-        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+
+        // Enable debugging for System.ClientModel
+        EnableSystemClientModelDebugging();
+
+        // Create client with debugging enabled
+        AIProjectClient projectClient = CreateDebugClient(endpoint);
 
         Console.WriteLine("List all deployments:");
-        await foreach (AIDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
+        await foreach (AIDeployment deployment in projectClient.Deployments.GetAsync())
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-        await foreach (AIDeployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
+        await foreach (AIDeployment deployment in projectClient.Deployments.GetAsync(modelPublisher: modelPublisher))
         {
             Console.WriteLine(deployment);
         }

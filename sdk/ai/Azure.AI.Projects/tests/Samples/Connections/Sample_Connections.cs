@@ -7,6 +7,9 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.ClientModel.Primitives;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Tests
 {
@@ -24,7 +27,7 @@ namespace Azure.AI.Projects.Tests
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var connectionName = TestEnvironment.CONNECTIONNAME;
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
             Console.WriteLine("List the properties of all connections:");
             foreach (ConnectionProperties connection in projectClient.Connections.GetConnections())
@@ -40,11 +43,11 @@ namespace Azure.AI.Projects.Tests
             }
 
             Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-            ConnectionProperties specificConnection = projectClient.Connections.Get(connectionName, includeCredentials: false);
+            ConnectionProperties specificConnection = projectClient.Connections.GetConnection(connectionName, includeCredentials: false);
             Console.WriteLine(specificConnection);
 
             Console.WriteLine("Get the properties of a connection with credentials:");
-            ConnectionProperties specificConnectionCredentials = projectClient.Connections.Get(connectionName, includeCredentials: true);
+            ConnectionProperties specificConnectionCredentials = projectClient.Connections.GetConnection(connectionName, includeCredentials: true);
             Console.WriteLine(specificConnectionCredentials);
 
             Console.WriteLine($"Get the properties of the default connection:");
@@ -85,11 +88,11 @@ namespace Azure.AI.Projects.Tests
             }
 
             Console.WriteLine($"Get the properties of a connection named `{connectionName}`:");
-            ConnectionProperties specificConnection = await projectClient.Connections.GetAsync(connectionName, includeCredentials: false);
+            ConnectionProperties specificConnection = await projectClient.Connections.GetConnectionAsync(connectionName, includeCredentials: false);
             Console.WriteLine(specificConnection);
 
             Console.WriteLine("Get the properties of a connection with credentials:");
-            ConnectionProperties specificConnectionCredentials = await projectClient.Connections.GetAsync(connectionName, includeCredentials: true);
+            ConnectionProperties specificConnectionCredentials = await projectClient.Connections.GetConnectionAsync(connectionName, includeCredentials: true);
             Console.WriteLine(specificConnectionCredentials);
 
             Console.WriteLine($"Get the properties of the default connection:");

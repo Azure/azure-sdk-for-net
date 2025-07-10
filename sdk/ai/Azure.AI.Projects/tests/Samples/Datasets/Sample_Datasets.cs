@@ -8,15 +8,70 @@ using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using System.Text.RegularExpressions;
+using System.ClientModel.Primitives;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.Threading;
+
+// TODO: having issues with Get(datasetName, datasetVersion) and GetCredentials(datasetName, datasetVersion) methods -- not finding full ID
+// TODO: having issues with GetVersions(datasetName) and GetDatasetVersions() methods -- looping/excessive time in net462, works in net8.0 and 9.0
+// TODO: remove debugging code before releasing
 
 namespace Azure.AI.Projects.Tests
 {
     public class Sample_Datasets : SamplesBase<AIProjectsTestEnvironment>
     {
+        private void EnableSystemClientModelDebugging()
+        {
+            // Enable System.ClientModel diagnostics
+            ActivitySource.AddActivityListener(new ActivityListener
+            {
+                ShouldListenTo = _ => true,
+                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
+                ActivityStarted = activity => Console.WriteLine($"Started: {activity.DisplayName}"),
+                ActivityStopped = activity => Console.WriteLine($"Stopped: {activity.DisplayName} - Duration: {activity.Duration}")
+            });
+        }
+
+        private AIProjectClient CreateDebugClient(string endpoint)
+        {
+            var options = new AIProjectClientOptions();
+
+            // Add custom pipeline policy for debugging
+            options.AddPolicy(new DebugPipelinePolicy(), PipelinePosition.PerCall);
+
+            return new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential(), options);
+        }
+
+        // Custom pipeline policy for debugging System.ClientModel requests
+        private class DebugPipelinePolicy : PipelinePolicy
+        {
+            public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int index)
+            {
+                Console.WriteLine($"Request: {message.Request.Method} {message.Request.Uri}");
+
+                ProcessNext(message, pipeline, index);
+
+                Console.WriteLine($"Response: {message.Response?.Status} {message.Response?.ReasonPhrase}");
+            }
+
+            public override ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int index)
+            {
+                Console.WriteLine($"Async Request: {message.Request.Method} {message.Request.Uri}");
+
+                var result = ProcessNextAsync(message, pipeline, index);
+
+                Console.WriteLine($"Async Response: {message.Response?.Status} {message.Response?.ReasonPhrase}");
+                return result;
+            }
+        }
+
         [Test]
         [SyncOnly]
         public void DatasetsExample()
         {
+            EnableSystemClientModelDebugging();
+
             #region Snippet:AI_Projects_DatasetsExampleSync
 #if SNIPPET
             var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -45,7 +100,7 @@ namespace Azure.AI.Projects.Tests
                 datasetVersion2 = "2.0";
             }
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = CreateDebugClient(endpoint); // new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
             Console.WriteLine($"Uploading a single file to create Dataset version {datasetVersion1}:");
             DatasetVersion dataset = projectClient.Datasets.UploadFile(
@@ -67,7 +122,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(dataset);
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
-            dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion1);
+            dataset = projectClient.Datasets.Get(datasetName, datasetVersion1);
             Console.WriteLine(dataset);
 
             Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
@@ -81,10 +136,14 @@ namespace Azure.AI.Projects.Tests
                 Console.WriteLine(ds.Version);
             }
 
+            TimeSpan timeout = TimeSpan.FromSeconds(60);
+            using var cancellationTokenSource = new CancellationTokenSource(timeout);
+
             Console.WriteLine($"Listing latest versions for all datasets:");
-            foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions())
+            var datasetVersions = projectClient.Datasets.Get(cancellationToken: cancellationTokenSource.Token);
+            foreach (DatasetVersion ds in datasetVersions)
             {
-                Console.WriteLine(ds);
+                Console.WriteLine($"{ds.Name}, {ds.Version}");
             }
 
             Console.WriteLine($"Deleting Dataset versions {datasetVersion1} and {datasetVersion2}:");
@@ -97,6 +156,8 @@ namespace Azure.AI.Projects.Tests
         [AsyncOnly]
         public async Task DatasetsExampleAsync()
         {
+            EnableSystemClientModelDebugging();
+
             #region Snippet:AI_Projects_DatasetsExampleAsync
 #if SNIPPET
             var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
@@ -125,7 +186,7 @@ namespace Azure.AI.Projects.Tests
                 datasetVersion2 = "2.0";
             }
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = CreateDebugClient(endpoint); // new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
             Console.WriteLine($"Uploading a single file to create Dataset version {datasetVersion1}...");
             DatasetVersion dataset = await projectClient.Datasets.UploadFileAsync(
@@ -147,7 +208,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(dataset);
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion1}...");
-            dataset = await projectClient.Datasets.GetDatasetAsync(datasetName, datasetVersion1);
+            dataset = await projectClient.Datasets.GetAsync(datasetName, datasetVersion1);
             Console.WriteLine(dataset);
 
             Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
@@ -160,11 +221,11 @@ namespace Azure.AI.Projects.Tests
                 Console.WriteLine(ds.Version);
             }
 
-            Console.WriteLine($"Listing latest versions for all datasets:");
-            await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersionsAsync())
-            {
-                Console.WriteLine(ds);
-            }
+            // Console.WriteLine($"Listing latest versions for all datasets:");
+            // await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersionsAsync())
+            // {
+            //     Console.WriteLine(ds);
+            // }
 
             Console.WriteLine($"Deleting Dataset versions {datasetVersion1} and {datasetVersion2}...");
             await projectClient.Datasets.DeleteAsync(datasetName, datasetVersion1);

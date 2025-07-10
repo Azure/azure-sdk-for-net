@@ -81,7 +81,7 @@ namespace Azure.AI.Projects
 
             _endpoint = endpoint;
             Pipeline = CreatePipeline(credential, options);
-            _apiVersion = options.Version; // TODO: remember to change this back
+            _apiVersion = options.Version;
             _tokenCredential = credential;
 
             _cacheManager = new ConnectionCacheManager(_endpoint, credential);
