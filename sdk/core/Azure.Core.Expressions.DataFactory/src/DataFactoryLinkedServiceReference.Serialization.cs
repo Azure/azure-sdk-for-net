@@ -90,11 +90,11 @@ namespace Azure.Core.Expressions.DataFactory
 
         string IPersistableModel<DataFactoryLinkedServiceReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal static DataFactoryLinkedServiceReference DeserializeDataFactoryLinkedServiceReference(JsonElement element)
+        internal static DataFactoryLinkedServiceReference? DeserializeDataFactoryLinkedServiceReference(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
-                return null!;
+                return null;
             }
             DataFactoryLinkedServiceReferenceKind kind = default;
             string? referenceName = default;
@@ -145,7 +145,7 @@ namespace Azure.Core.Expressions.DataFactory
             public override DataFactoryLinkedServiceReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDataFactoryLinkedServiceReference(document.RootElement);
+                return DeserializeDataFactoryLinkedServiceReference(document.RootElement)!;
             }
         }
     }

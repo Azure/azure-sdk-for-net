@@ -77,11 +77,11 @@ namespace Azure.Core.Expressions.DataFactory
 
         string IPersistableModel<DataFactoryKeyVaultSecret>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal static DataFactoryKeyVaultSecret DeserializeAzureKeyVaultSecretReference(JsonElement element)
+        internal static DataFactoryKeyVaultSecret? DeserializeAzureKeyVaultSecretReference(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
-                return null!;
+                return null;
             }
             DataFactoryLinkedServiceReference? store = default;
             DataFactoryElement<string>? secretName = default;
@@ -126,7 +126,7 @@ namespace Azure.Core.Expressions.DataFactory
             public override DataFactoryKeyVaultSecret Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAzureKeyVaultSecretReference(document.RootElement);
+                return DeserializeAzureKeyVaultSecretReference(document.RootElement)!;
             }
         }
     }

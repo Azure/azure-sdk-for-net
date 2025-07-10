@@ -69,11 +69,11 @@ namespace Azure.Core.Expressions.DataFactory
 
         string IPersistableModel<DataFactorySecret>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        internal static DataFactorySecret DeserializeDataFactorySecretBaseDefinition(JsonElement element)
+        internal static DataFactorySecret? DeserializeDataFactorySecretBaseDefinition(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
-                return null!;
+                return null;
             }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
@@ -95,7 +95,7 @@ namespace Azure.Core.Expressions.DataFactory
             public override DataFactorySecret Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDataFactorySecretBaseDefinition(document.RootElement);
+                return DeserializeDataFactorySecretBaseDefinition(document.RootElement)!;
             }
         }
     }
