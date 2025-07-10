@@ -33,6 +33,10 @@ public sealed class AbstractTypeWithoutProxyAnalyzer : DiagnosticAnalyzer
         if (buildableAttrType == null)
             return;
 
+        var contextBaseType = context.Compilation.GetTypeByMetadataName("System.ClientModel.Primitives.ModelReaderWriterContext");
+        if (contextBaseType == null)
+            return;
+
         context.RegisterSymbolAction(symbolContext =>
         {
             var namedType = (INamedTypeSymbol)symbolContext.Symbol;
@@ -40,10 +44,6 @@ public sealed class AbstractTypeWithoutProxyAnalyzer : DiagnosticAnalyzer
                 return;
 
             // Only look at context classes (those inheriting from ModelReaderWriterContext)
-            var contextBaseType = symbolContext.Compilation.GetTypeByMetadataName("System.ClientModel.Primitives.ModelReaderWriterContext");
-            if (contextBaseType == null)
-                return;
-
             bool isContext = false;
             for (var baseType = namedType.BaseType; baseType != null; baseType = baseType.BaseType)
             {

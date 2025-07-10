@@ -36,15 +36,14 @@ public sealed class ParameterlessConstructorAnalyzer : DiagnosticAnalyzer
         if (proxyAttrType == null)
             return;
 
+        var contextBaseType = context.Compilation.GetTypeByMetadataName("System.ClientModel.Primitives.ModelReaderWriterContext");
+        if (contextBaseType == null)
+            return;
+
         context.RegisterSymbolAction(symbolContext =>
         {
             var namedType = (INamedTypeSymbol)symbolContext.Symbol;
             if (namedType.TypeKind != TypeKind.Class)
-                return;
-
-            // Only look at context classes (those inheriting from ModelReaderWriterContext)
-            var contextBaseType = symbolContext.Compilation.GetTypeByMetadataName("System.ClientModel.Primitives.ModelReaderWriterContext");
-            if (contextBaseType == null)
                 return;
 
             bool isContext = false;

@@ -23,43 +23,48 @@ public sealed class BuildableAttributeUsageAnalyzer : DiagnosticAnalyzer
     {
         context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
         context.EnableConcurrentExecution();
-        context.RegisterSymbolAction(AnalyzeSymbol, SymbolKind.NamedType);
+        context.RegisterCompilationStartAction(StartAction);
     }
 
-    private static void AnalyzeSymbol(SymbolAnalysisContext context)
+    private static void StartAction(CompilationStartAnalysisContext context)
     {
-        var namedType = (INamedTypeSymbol)context.Symbol;
-        if (namedType.TypeKind != TypeKind.Class)
-            return;
-
-        // Look for ModelReaderWriterBuildableAttribute
-        var hasBuildableAttribute = namedType.GetAttributes().Any(attr =>
-            attr.AttributeClass?.ToDisplayString() == "System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute");
-
-        if (!hasBuildableAttribute)
-            return;
-
-        // Check if the class inherits from ModelReaderWriterContext
         var contextType = context.Compilation.GetTypeByMetadataName("System.ClientModel.Primitives.ModelReaderWriterContext");
         if (contextType == null)
             return;
 
-        bool inheritsFromContext = false;
-        for (var baseType = namedType.BaseType; baseType != null; baseType = baseType.BaseType)
-        {
-            if (SymbolEqualityComparer.Default.Equals(baseType, contextType))
-            {
-                inheritsFromContext = true;
-                break;
-            }
-        }
+        var buildableAttrType = context.Compilation.GetTypeByMetadataName("System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute");
+        if (buildableAttrType == null)
+                return;
 
-        if (!inheritsFromContext)
+        context.RegisterSymbolAction(symbolContext =>
         {
-            var diagnostic = Diagnostic.Create(
-                ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext,
-                namedType.Locations.FirstOrDefault() ?? Location.None);
-            context.ReportDiagnostic(diagnostic);
-        }
+            var namedType = (INamedTypeSymbol)symbolContext.Symbol;
+            if (namedType.TypeKind != TypeKind.Class)
+                return;
+
+            // Look for ModelReaderWriterBuildableAttribute
+            var hasBuildableAttribute = namedType.GetAttributes().Any(attr => SymbolEqualityComparer.Default.Equals(attr.AttributeClass, buildableAttrType));
+
+            if (!hasBuildableAttribute)
+                return;
+
+            bool inheritsFromContext = false;
+            for (var baseType = namedType.BaseType; baseType != null; baseType = baseType.BaseType)
+            {
+                if (SymbolEqualityComparer.Default.Equals(baseType, contextType))
+                {
+                    inheritsFromContext = true;
+                    break;
+                }
+            }
+
+            if (!inheritsFromContext)
+            {
+                var diagnostic = Diagnostic.Create(
+                    ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext,
+                    namedType.Locations.FirstOrDefault() ?? Location.None);
+                symbolContext.ReportDiagnostic(diagnostic);
+            }
+        }, SymbolKind.NamedType);
     }
 }
