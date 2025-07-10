@@ -23,7 +23,7 @@ namespace Azure.Generator.Visitors
     internal class SystemTextJsonConverterVisitor : ScmLibraryVisitor
     {
         private const string SystemTextJsonConverterDecoratorName = "Azure.ClientGenerator.Core.@useSystemTextJsonConverter";
-        private static ValueExpression WireOptions = Static(new ModelSerializationExtensionsDefinition().Type).Property("WireOptions");
+        private static readonly ValueExpression WireOptions = Static(new ModelSerializationExtensionsDefinition().Type).Property("WireOptions");
 
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
