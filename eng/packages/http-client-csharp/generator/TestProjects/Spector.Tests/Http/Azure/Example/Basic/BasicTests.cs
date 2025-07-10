@@ -4,6 +4,7 @@
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Azure.Core;
+using AzureExampleBasicClient;
 using NUnit.Framework;
 
 namespace TestProjects.Spector.Tests.Http.Azure.Example.Basic
