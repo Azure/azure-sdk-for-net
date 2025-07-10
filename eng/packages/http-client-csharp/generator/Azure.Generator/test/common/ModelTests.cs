@@ -168,12 +168,12 @@ namespace Azure.Generator.Tests.Common
                     if (strategy.GetType().Name.StartsWith("ModelJsonConverterStrategy"))
                     {
                         //we never get to the interface implementation because JsonSerializer errors before that
-                        Assert.Throws<JsonException>(() => { T model = (T)strategy.Read(serviceResponse, ModelInstance, options)!; });
+                        Assert.Throws<JsonException>(() => { var model = (T?)strategy.Read(serviceResponse, ModelInstance, options); });
                         result = true;
                     }
                     else
                     {
-                        Assert.Throws<InvalidOperationException>(() => { T model = (T)strategy.Read(serviceResponse, ModelInstance, options)!; });
+                        Assert.Throws<InvalidOperationException>(() => { var model = (T?)strategy.Read(serviceResponse, ModelInstance, options); });
                         result = true;
                     }
                 }
