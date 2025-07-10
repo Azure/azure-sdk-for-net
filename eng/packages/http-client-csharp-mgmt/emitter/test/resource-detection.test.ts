@@ -355,33 +355,6 @@ model EmployeeProperties {
   profile?: bytes;
 }
 
-/** The provisioning state of a resource. */
-@lroStatus
-union ProvisioningState {
-  string,
-
-  /** The resource create request has been accepted */
-  Accepted: "Accepted",
-
-  /** The resource is being provisioned */
-  Provisioning: "Provisioning",
-
-  /** The resource is updating */
-  Updating: "Updating",
-
-  /** Resource has been created. */
-  Succeeded: "Succeeded",
-
-  /** Resource creation failed. */
-  Failed: "Failed",
-
-  /** Resource creation was canceled. */
-  Canceled: "Canceled",
-
-  /** The resource is being deleted */
-  Deleting: "Deleting",
-}
-
 interface Operations extends Azure.ResourceManager.Operations {}
 
 @armResourceOperations
