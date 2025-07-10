@@ -32,7 +32,7 @@ namespace Azure.Core.Expressions.DataFactory
             ((IUtf8JsonSerializable)this).Write(writer);
         }
 
-        DataFactorySecret IJsonModel<DataFactorySecret>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataFactorySecret? IJsonModel<DataFactorySecret>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactorySecret>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -55,7 +55,7 @@ namespace Azure.Core.Expressions.DataFactory
             return ModelReaderWriter.Write(this, options, DataFactoryContext.Default);
         }
 
-        DataFactorySecret IPersistableModel<DataFactorySecret>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DataFactorySecret? IPersistableModel<DataFactorySecret>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactorySecret>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
