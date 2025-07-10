@@ -142,7 +142,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation, pagingMetadata: paging);
             var client = InputFactory.Client("catClient", methods: [inputServiceMethod]);
 
-            MockHelpers.LoadMockPlugin(inputModels: () => [inputModel], clients: () => [client]);
+            MockHelpers.LoadMockGenerator(inputModels: () => [inputModel], clients: () => [client]);
         }
     }
 }

@@ -1,14 +1,15 @@
 # Release History
 
-## 1.47.0-beta.1 (Unreleased)
+## 1.47.0 (2025-07-09)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added `RequestContent.Create<T>(T model, ModelReaderWriterOptions? options = null)` overload that accepts `IPersistableModel<T>` types for improved performance and API consistency with `BinaryContent`.
+- Adopt System.ClientModel 1.5.0
 
 ### Other Changes
+
+- Adjusted the options used for JSON serialization to relax encoding rules and reduce the cost and impact. ([#50885](https://github.com/Azure/azure-sdk-for-net/pull/50885))
 
 ## 1.46.2 (2025-06-05)
 

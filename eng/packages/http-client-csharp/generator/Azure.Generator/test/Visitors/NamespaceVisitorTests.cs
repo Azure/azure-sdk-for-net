@@ -1,12 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Tests.Common;
-using Azure.Generator.Tests.TestHelpers;
-using Azure.Generator.Visitors;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using Azure.Generator.Tests.Common;
+using Azure.Generator.Tests.TestHelpers;
+using Azure.Generator.Visitors;
 
 namespace Azure.Generator.Tests.Visitors
 {
@@ -15,7 +15,7 @@ namespace Azure.Generator.Tests.Visitors
         [Test]
         public void UpdatesNamespaceForModel()
         {
-            MockHelpers.LoadMockPlugin(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": true }");
+            MockHelpers.LoadMockGenerator(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": true }");
             var visitor = new TestNamespaceVisitor();
             var inputType = InputFactory.Model("TestModel", "Samples");
             var model = new ModelProvider(inputType);
@@ -28,7 +28,7 @@ namespace Azure.Generator.Tests.Visitors
         [Test]
         public void DoesNotUseModelsNamespaceIfConfigSetToFalse()
         {
-            MockHelpers.LoadMockPlugin(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": false }");
+            MockHelpers.LoadMockGenerator(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": false }");
             var visitor = new TestNamespaceVisitor();
             var inputType = InputFactory.Model("TestModel", "Samples");
             var model = new ModelProvider(inputType);
@@ -41,7 +41,7 @@ namespace Azure.Generator.Tests.Visitors
         [Test]
         public void DoesNotChangeNamespaceOfCustomizedModel()
         {
-            MockHelpers.LoadMockPlugin(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": true }");
+            MockHelpers.LoadMockGenerator(configurationJson: "{ \"package-name\": \"TestLibrary\", \"model-namespace\": true }");
             var visitor = new TestNamespaceVisitor();
             var inputType = InputFactory.Model("TestModel", "Samples");
             var model = new ModelProvider(inputType);
@@ -57,7 +57,7 @@ namespace Azure.Generator.Tests.Visitors
         [Test]
         public void DoesNotUseModelsNamespaceIfConfigNotSet()
         {
-            MockHelpers.LoadMockPlugin();
+            MockHelpers.LoadMockGenerator();
             var visitor = new TestNamespaceVisitor();
             var inputType = InputFactory.Model("TestModel", "Samples");
             var model = new ModelProvider(inputType);
