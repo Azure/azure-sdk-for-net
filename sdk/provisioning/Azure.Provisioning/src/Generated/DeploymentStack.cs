@@ -338,6 +338,7 @@ public partial class DeploymentStack : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _actionOnUnmanage = DefineModelProperty<ActionOnUnmanage>("ActionOnUnmanage", ["properties", "actionOnUnmanage"]);
         _bypassStackOutOfSyncError = DefineProperty<bool>("BypassStackOutOfSyncError", ["properties", "bypassStackOutOfSyncError"]);

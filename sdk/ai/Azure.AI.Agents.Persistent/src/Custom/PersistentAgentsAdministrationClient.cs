@@ -20,8 +20,8 @@ namespace Azure.AI.Agents.Persistent
     public partial class PersistentAgentsAdministrationClient
     {
         private static readonly bool s_is_test_run = AppContextSwitchHelper.GetConfigValue(
-            PersistantAgensConstants.UseOldConnectionString,
-            PersistantAgensConstants.UseOldConnectionStringEnvVar);
+            PersistentAgentsConstants.UseOldConnectionString,
+            PersistentAgentsConstants.UseOldConnectionStringEnvVar);
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal virtual ClientDiagnostics ClientDiagnostics { get; }
         // TODO: Replace project connections string by PROJECT_ENDPOINT when 1DP will be available.

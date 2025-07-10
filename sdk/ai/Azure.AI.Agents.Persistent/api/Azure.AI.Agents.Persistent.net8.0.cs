@@ -1164,6 +1164,10 @@ namespace Azure.AI.Agents.Persistent
         public virtual Azure.Response<Azure.AI.Agents.Persistent.ThreadRun> CreateThreadAndRun(string assistantId, Azure.AI.Agents.Persistent.ThreadAndRunOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Agents.Persistent.ThreadRun>> CreateThreadAndRunAsync(string assistantId, Azure.AI.Agents.Persistent.ThreadAndRunOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class PersistentAgentsClientExtensions
+    {
+        public static Microsoft.Extensions.AI.IChatClient AsIChatClient(this Azure.AI.Agents.Persistent.PersistentAgentsClient client, string agentId, string? defaultThreadId = null) { throw null; }
+    }
     public static partial class PersistentAgentsExtensions
     {
         public static Azure.AI.Agents.Persistent.PersistentAgentsClient GetPersistentAgentsClient(this System.ClientModel.Primitives.ClientConnectionProvider provider) { throw null; }
