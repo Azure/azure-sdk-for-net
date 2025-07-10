@@ -10,8 +10,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework
+namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
     /// <summary> The ProxyOptions. </summary>
     public partial class ProxyOptions : IJsonModel<ProxyOptions>

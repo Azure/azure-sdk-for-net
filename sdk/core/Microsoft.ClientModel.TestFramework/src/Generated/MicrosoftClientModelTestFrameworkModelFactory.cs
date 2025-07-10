@@ -17,7 +17,7 @@ namespace Microsoft.ClientModel.TestFramework
         /// <summary> The StartInformation. </summary>
         /// <param name="xRecordingFile"></param>
         /// <param name="xRecodingAssetsFiles"></param>
-        /// <returns> A new <see cref="TestFramework.StartInformation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TestProxy.StartInformation"/> instance for mocking. </returns>
         public static StartInformation StartInformation(string xRecordingFile = default, string xRecodingAssetsFiles = default)
         {
             return new StartInformation(xRecordingFile, xRecodingAssetsFiles, additionalBinaryDataProperties: null);
@@ -53,7 +53,7 @@ namespace Microsoft.ClientModel.TestFramework
 
         /// <summary> The ProxyOptions. </summary>
         /// <param name="transport"></param>
-        /// <returns> A new <see cref="TestFramework.ProxyOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TestProxy.ProxyOptions"/> instance for mocking. </returns>
         public static ProxyOptions ProxyOptions(ProxyOptionsTransport transport = default)
         {
             return new ProxyOptions(transport, additionalBinaryDataProperties: null);
@@ -63,7 +63,7 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="allowAutoRedirect"></param>
         /// <param name="tlsValidationCert"></param>
         /// <param name="certificates"></param>
-        /// <returns> A new <see cref="TestFramework.ProxyOptionsTransport"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TestProxy.ProxyOptionsTransport"/> instance for mocking. </returns>
         public static ProxyOptionsTransport ProxyOptionsTransport(bool allowAutoRedirect = default, string tlsValidationCert = default, IEnumerable<ProxyOptionsTransportCertificationsItem> certificates = default)
         {
             certificates ??= new ChangeTrackingList<ProxyOptionsTransportCertificationsItem>();
@@ -74,7 +74,7 @@ namespace Microsoft.ClientModel.TestFramework
         /// <summary> The ProxyOptionsTransportCertificationsItem. </summary>
         /// <param name="pemValue"></param>
         /// <param name="pemKey"></param>
-        /// <returns> A new <see cref="TestFramework.ProxyOptionsTransportCertificationsItem"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TestProxy.ProxyOptionsTransportCertificationsItem"/> instance for mocking. </returns>
         public static ProxyOptionsTransportCertificationsItem ProxyOptionsTransportCertificationsItem(string pemValue = default, string pemKey = default)
         {
             return new ProxyOptionsTransportCertificationsItem(pemValue, pemKey, additionalBinaryDataProperties: null);
@@ -82,7 +82,7 @@ namespace Microsoft.ClientModel.TestFramework
 
         /// <summary> The SanitizersToRemove. </summary>
         /// <param name="sanitizers"></param>
-        /// <returns> A new <see cref="TestFramework.SanitizersToRemove"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TestProxy.SanitizersToRemove"/> instance for mocking. </returns>
         public static SanitizersToRemove SanitizersToRemove(IEnumerable<string> sanitizers = default)
         {
             sanitizers ??= new ChangeTrackingList<string>();
@@ -95,10 +95,31 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="value"></param>
         /// <param name="regex"></param>
         /// <param name="groupForReplace"></param>
-        /// <returns> A new <see cref="TestFramework.BodyKeySanitizer"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TestProxy.BodyKeySanitizer"/> instance for mocking. </returns>
         public static BodyKeySanitizer BodyKeySanitizer(string jsonPath = default, string value = default, string regex = default, string groupForReplace = default)
         {
             return new BodyKeySanitizer(jsonPath, value, regex, groupForReplace, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The HeaderRegexSanitizer. </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="regex"></param>
+        /// <param name="groupForReplace"></param>
+        /// <returns> A new <see cref="TestProxy.HeaderRegexSanitizer"/> instance for mocking. </returns>
+        public static TestProxy.HeaderRegexSanitizer HeaderRegexSanitizer(string key = default, string value = default, string regex = default, string groupForReplace = default)
+        {
+            return new TestProxy.HeaderRegexSanitizer(key, value, regex, groupForReplace, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The UriRegexSanitizer. </summary>
+        /// <param name="regex"></param>
+        /// <param name="value"></param>
+        /// <param name="groupForReplace"></param>
+        /// <returns> A new <see cref="TestProxy.UriRegexSanitizer"/> instance for mocking. </returns>
+        public static TestProxy.UriRegexSanitizer UriRegexSanitizer(string regex = default, string value = default, string groupForReplace = default)
+        {
+            return new TestProxy.UriRegexSanitizer(regex, value, groupForReplace, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The BodyRegexSanitizer. </summary>
@@ -106,25 +127,25 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="value"></param>
         /// <param name="groupForReplace"></param>
         /// <param name="condition"></param>
-        /// <returns> A new <see cref="TestFramework.BodyRegexSanitizer"/> instance for mocking. </returns>
-        public static BodyRegexSanitizer BodyRegexSanitizer(string regex = default, string value = default, string groupForReplace = default, Condition condition = default)
+        /// <returns> A new <see cref="TestProxy.BodyRegexSanitizer"/> instance for mocking. </returns>
+        public static BodyRegexSanitizer BodyRegexSanitizer(string regex = default, string value = default, string groupForReplace = default, SanitizerCondition condition = default)
         {
             return new BodyRegexSanitizer(regex, value, groupForReplace, condition, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The Condition. </summary>
+        /// <summary> The SanitizerCondition. </summary>
         /// <param name="uriRegex"></param>
         /// <param name="responseHeader"></param>
-        /// <returns> A new <see cref="TestFramework.Condition"/> instance for mocking. </returns>
-        public static Condition Condition(string uriRegex = default, HeaderCondition responseHeader = default)
+        /// <returns> A new <see cref="TestProxy.SanitizerCondition"/> instance for mocking. </returns>
+        public static SanitizerCondition SanitizerCondition(string uriRegex = default, HeaderCondition responseHeader = default)
         {
-            return new Condition(uriRegex, responseHeader, additionalBinaryDataProperties: null);
+            return new SanitizerCondition(uriRegex, responseHeader, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The HeaderCondition. </summary>
         /// <param name="key"></param>
         /// <param name="valueRegex"></param>
-        /// <returns> A new <see cref="TestFramework.HeaderCondition"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="TestProxy.HeaderCondition"/> instance for mocking. </returns>
         public static HeaderCondition HeaderCondition(string key = default, string valueRegex = default)
         {
             return new HeaderCondition(key, valueRegex, additionalBinaryDataProperties: null);
@@ -135,8 +156,8 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="compareBodies"></param>
         /// <param name="ignoredHeaders"></param>
         /// <param name="ignoredQueryParameters"></param>
-        /// <returns> A new <see cref="TestFramework.CustomDefaultMatcher"/> instance for mocking. </returns>
-        public static CustomDefaultMatcher CustomDefaultMatcher(string excludedHeaders = default, bool compareBodies = default, string ignoredHeaders = default, string ignoredQueryParameters = default)
+        /// <returns> A new <see cref="TestProxy.CustomDefaultMatcher"/> instance for mocking. </returns>
+        public static CustomDefaultMatcher CustomDefaultMatcher(string excludedHeaders = default, bool? compareBodies = default, string ignoredHeaders = default, string ignoredQueryParameters = default)
         {
             return new CustomDefaultMatcher(excludedHeaders, compareBodies, ignoredHeaders, ignoredQueryParameters, additionalBinaryDataProperties: null);
         }
@@ -145,8 +166,8 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="condition"></param>
-        /// <returns> A new <see cref="TestFramework.HeaderTransform"/> instance for mocking. </returns>
-        public static HeaderTransform HeaderTransform(string key = default, string value = default, Condition condition = default)
+        /// <returns> A new <see cref="TestProxy.HeaderTransform"/> instance for mocking. </returns>
+        public static HeaderTransform HeaderTransform(string key = default, string value = default, SanitizerCondition condition = default)
         {
             return new HeaderTransform(key, value, condition, additionalBinaryDataProperties: null);
         }

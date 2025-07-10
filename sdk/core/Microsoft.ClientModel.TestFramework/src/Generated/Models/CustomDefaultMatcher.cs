@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.ClientModel.TestFramework
+namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
     /// <summary> The CustomDefaultMatcher. </summary>
     public partial class CustomDefaultMatcher
@@ -17,21 +17,8 @@ namespace Microsoft.ClientModel.TestFramework
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomDefaultMatcher"/>. </summary>
-        /// <param name="excludedHeaders"></param>
-        /// <param name="compareBodies"></param>
-        /// <param name="ignoredHeaders"></param>
-        /// <param name="ignoredQueryParameters"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="excludedHeaders"/>, <paramref name="ignoredHeaders"/> or <paramref name="ignoredQueryParameters"/> is null. </exception>
-        public CustomDefaultMatcher(string excludedHeaders, bool compareBodies, string ignoredHeaders, string ignoredQueryParameters)
+        public CustomDefaultMatcher()
         {
-            Argument.AssertNotNull(excludedHeaders, nameof(excludedHeaders));
-            Argument.AssertNotNull(ignoredHeaders, nameof(ignoredHeaders));
-            Argument.AssertNotNull(ignoredQueryParameters, nameof(ignoredQueryParameters));
-
-            ExcludedHeaders = excludedHeaders;
-            CompareBodies = compareBodies;
-            IgnoredHeaders = ignoredHeaders;
-            IgnoredQueryParameters = ignoredQueryParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomDefaultMatcher"/>. </summary>
@@ -40,7 +27,7 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="ignoredHeaders"></param>
         /// <param name="ignoredQueryParameters"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomDefaultMatcher(string excludedHeaders, bool compareBodies, string ignoredHeaders, string ignoredQueryParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomDefaultMatcher(string excludedHeaders, bool? compareBodies, string ignoredHeaders, string ignoredQueryParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExcludedHeaders = excludedHeaders;
             CompareBodies = compareBodies;
@@ -49,16 +36,16 @@ namespace Microsoft.ClientModel.TestFramework
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the ExcludedHeaders. </summary>
-        public string ExcludedHeaders { get; }
+        /// <summary> Gets or sets the ExcludedHeaders. </summary>
+        public string ExcludedHeaders { get; set; }
 
-        /// <summary> Gets the CompareBodies. </summary>
-        public bool CompareBodies { get; }
+        /// <summary> Gets or sets the CompareBodies. </summary>
+        public bool? CompareBodies { get; set; }
 
-        /// <summary> Gets the IgnoredHeaders. </summary>
-        public string IgnoredHeaders { get; }
+        /// <summary> Gets or sets the IgnoredHeaders. </summary>
+        public string IgnoredHeaders { get; set; }
 
-        /// <summary> Gets the IgnoredQueryParameters. </summary>
-        public string IgnoredQueryParameters { get; }
+        /// <summary> Gets or sets the IgnoredQueryParameters. </summary>
+        public string IgnoredQueryParameters { get; set; }
     }
 }

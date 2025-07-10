@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework
+namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    internal partial class HeaderRegexSanitizer : IJsonModel<HeaderRegexSanitizer>
+    /// <summary> The HeaderRegexSanitizer. </summary>
+    public partial class HeaderRegexSanitizer : IJsonModel<HeaderRegexSanitizer>
     {
         /// <summary> Initializes a new instance of <see cref="HeaderRegexSanitizer"/> for deserialization. </summary>
         internal HeaderRegexSanitizer()

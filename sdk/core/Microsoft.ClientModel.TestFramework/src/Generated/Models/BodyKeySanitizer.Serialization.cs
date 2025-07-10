@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework
+namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
     /// <summary> The BodyKeySanitizer. </summary>
     public partial class BodyKeySanitizer : IJsonModel<BodyKeySanitizer>
@@ -40,12 +41,21 @@ namespace Microsoft.ClientModel.TestFramework
             }
             writer.WritePropertyName("jsonPath"u8);
             writer.WriteStringValue(JsonPath);
-            writer.WritePropertyName("value"u8);
-            writer.WriteStringValue(Value);
-            writer.WritePropertyName("regex"u8);
-            writer.WriteStringValue(Regex);
-            writer.WritePropertyName("groupForReplace"u8);
-            writer.WriteStringValue(GroupForReplace);
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
+            if (Optional.IsDefined(Regex))
+            {
+                writer.WritePropertyName("regex"u8);
+                writer.WriteStringValue(Regex);
+            }
+            if (Optional.IsDefined(GroupForReplace))
+            {
+                writer.WritePropertyName("groupForReplace"u8);
+                writer.WriteStringValue(GroupForReplace);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

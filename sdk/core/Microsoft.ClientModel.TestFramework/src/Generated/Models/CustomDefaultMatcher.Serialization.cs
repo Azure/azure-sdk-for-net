@@ -9,17 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework
+namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
     /// <summary> The CustomDefaultMatcher. </summary>
     public partial class CustomDefaultMatcher : IJsonModel<CustomDefaultMatcher>
     {
-        /// <summary> Initializes a new instance of <see cref="CustomDefaultMatcher"/> for deserialization. </summary>
-        internal CustomDefaultMatcher()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomDefaultMatcher>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -38,14 +34,26 @@ namespace Microsoft.ClientModel.TestFramework
             {
                 throw new FormatException($"The model {nameof(CustomDefaultMatcher)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("excludedHeaders"u8);
-            writer.WriteStringValue(ExcludedHeaders);
-            writer.WritePropertyName("compareBodies"u8);
-            writer.WriteBooleanValue(CompareBodies);
-            writer.WritePropertyName("ignoredHeaders"u8);
-            writer.WriteStringValue(IgnoredHeaders);
-            writer.WritePropertyName("ignoredQueryParameters"u8);
-            writer.WriteStringValue(IgnoredQueryParameters);
+            if (Optional.IsDefined(ExcludedHeaders))
+            {
+                writer.WritePropertyName("excludedHeaders"u8);
+                writer.WriteStringValue(ExcludedHeaders);
+            }
+            if (Optional.IsDefined(CompareBodies))
+            {
+                writer.WritePropertyName("compareBodies"u8);
+                writer.WriteBooleanValue(CompareBodies.Value);
+            }
+            if (Optional.IsDefined(IgnoredHeaders))
+            {
+                writer.WritePropertyName("ignoredHeaders"u8);
+                writer.WriteStringValue(IgnoredHeaders);
+            }
+            if (Optional.IsDefined(IgnoredQueryParameters))
+            {
+                writer.WritePropertyName("ignoredQueryParameters"u8);
+                writer.WriteStringValue(IgnoredQueryParameters);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -89,7 +97,7 @@ namespace Microsoft.ClientModel.TestFramework
                 return null;
             }
             string excludedHeaders = default;
-            bool compareBodies = default;
+            bool? compareBodies = default;
             string ignoredHeaders = default;
             string ignoredQueryParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -102,6 +110,10 @@ namespace Microsoft.ClientModel.TestFramework
                 }
                 if (prop.NameEquals("compareBodies"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     compareBodies = prop.Value.GetBoolean();
                     continue;
                 }

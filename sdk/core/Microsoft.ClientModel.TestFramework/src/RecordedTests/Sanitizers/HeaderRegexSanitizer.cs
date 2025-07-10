@@ -5,9 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microsoft.ClientModel.TestFramework;
+namespace Microsoft.ClientModel.TestFramework.TestProxy;
 
-internal partial class HeaderRegexSanitizer
+/// <summary>
+/// TODO.
+/// </summary>
+public partial class HeaderRegexSanitizer
 {
     /// <summary>
     /// TODO.

@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework
+namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    internal partial class UriRegexSanitizer : IJsonModel<UriRegexSanitizer>
+    /// <summary> The UriRegexSanitizer. </summary>
+    public partial class UriRegexSanitizer : IJsonModel<UriRegexSanitizer>
     {
         /// <summary> Initializes a new instance of <see cref="UriRegexSanitizer"/> for deserialization. </summary>
         internal UriRegexSanitizer()

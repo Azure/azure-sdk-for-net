@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework
+namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
     /// <summary> The HeaderTransform. </summary>
     public partial class HeaderTransform
@@ -19,17 +20,14 @@ namespace Microsoft.ClientModel.TestFramework
         /// <summary> Initializes a new instance of <see cref="HeaderTransform"/>. </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        /// <param name="condition"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/>, <paramref name="value"/> or <paramref name="condition"/> is null. </exception>
-        public HeaderTransform(string key, string value, Condition condition)
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public HeaderTransform(string key, string value)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(condition, nameof(condition));
 
             Key = key;
             Value = value;
-            Condition = condition;
         }
 
         /// <summary> Initializes a new instance of <see cref="HeaderTransform"/>. </summary>
@@ -37,7 +35,7 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="value"></param>
         /// <param name="condition"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HeaderTransform(string key, string value, Condition condition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HeaderTransform(string key, string value, SanitizerCondition condition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Value = value;
@@ -51,7 +49,7 @@ namespace Microsoft.ClientModel.TestFramework
         /// <summary> Gets the Value. </summary>
         public string Value { get; }
 
-        /// <summary> Gets the Condition. </summary>
-        public Condition Condition { get; }
+        /// <summary> Gets or sets the Condition. </summary>
+        public SanitizerCondition Condition { get; set; }
     }
 }

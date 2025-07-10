@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework
+namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    internal partial class HeaderRegexSanitizer
+    /// <summary> The HeaderRegexSanitizer. </summary>
+    public partial class HeaderRegexSanitizer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

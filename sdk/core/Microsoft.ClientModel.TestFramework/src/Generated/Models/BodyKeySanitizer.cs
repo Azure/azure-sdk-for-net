@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework
+namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
     /// <summary> The BodyKeySanitizer. </summary>
     public partial class BodyKeySanitizer
@@ -18,21 +19,12 @@ namespace Microsoft.ClientModel.TestFramework
 
         /// <summary> Initializes a new instance of <see cref="BodyKeySanitizer"/>. </summary>
         /// <param name="jsonPath"></param>
-        /// <param name="value"></param>
-        /// <param name="regex"></param>
-        /// <param name="groupForReplace"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jsonPath"/>, <paramref name="value"/>, <paramref name="regex"/> or <paramref name="groupForReplace"/> is null. </exception>
-        public BodyKeySanitizer(string jsonPath, string value, string regex, string groupForReplace)
+        /// <exception cref="ArgumentNullException"> <paramref name="jsonPath"/> is null. </exception>
+        public BodyKeySanitizer(string jsonPath)
         {
             Argument.AssertNotNull(jsonPath, nameof(jsonPath));
-            Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(regex, nameof(regex));
-            Argument.AssertNotNull(groupForReplace, nameof(groupForReplace));
 
             JsonPath = jsonPath;
-            Value = value;
-            Regex = regex;
-            GroupForReplace = groupForReplace;
         }
 
         /// <summary> Initializes a new instance of <see cref="BodyKeySanitizer"/>. </summary>
@@ -53,13 +45,13 @@ namespace Microsoft.ClientModel.TestFramework
         /// <summary> Gets the JsonPath. </summary>
         public string JsonPath { get; }
 
-        /// <summary> Gets the Value. </summary>
-        public string Value { get; }
+        /// <summary> Gets or sets the Value. </summary>
+        public string Value { get; set; }
 
-        /// <summary> Gets the Regex. </summary>
-        public string Regex { get; }
+        /// <summary> Gets or sets the Regex. </summary>
+        public string Regex { get; set; }
 
-        /// <summary> Gets the GroupForReplace. </summary>
-        public string GroupForReplace { get; }
+        /// <summary> Gets or sets the GroupForReplace. </summary>
+        public string GroupForReplace { get; set; }
     }
 }

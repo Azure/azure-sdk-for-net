@@ -9,20 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework
+namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
-    /// <summary> The Condition. </summary>
-    public partial class Condition : IJsonModel<Condition>
+    /// <summary> The SanitizerCondition. </summary>
+    public partial class SanitizerCondition : IJsonModel<SanitizerCondition>
     {
-        /// <summary> Initializes a new instance of <see cref="Condition"/> for deserialization. </summary>
-        internal Condition()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Condition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SanitizerCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,15 +29,21 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Condition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SanitizerCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Condition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SanitizerCondition)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("uriRegex"u8);
-            writer.WriteStringValue(UriRegex);
-            writer.WritePropertyName("responseHeader"u8);
-            writer.WriteObjectValue(ResponseHeader, options);
+            if (Optional.IsDefined(UriRegex))
+            {
+                writer.WritePropertyName("uriRegex"u8);
+                writer.WriteStringValue(UriRegex);
+            }
+            if (Optional.IsDefined(ResponseHeader))
+            {
+                writer.WritePropertyName("responseHeader"u8);
+                writer.WriteObjectValue(ResponseHeader, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -61,24 +63,24 @@ namespace Microsoft.ClientModel.TestFramework
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Condition IJsonModel<Condition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SanitizerCondition IJsonModel<SanitizerCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Condition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SanitizerCondition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Condition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SanitizerCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Condition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SanitizerCondition)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCondition(document.RootElement, options);
+            return DeserializeSanitizerCondition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Condition DeserializeCondition(JsonElement element, ModelReaderWriterOptions options)
+        internal static SanitizerCondition DeserializeSanitizerCondition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,6 +98,10 @@ namespace Microsoft.ClientModel.TestFramework
                 }
                 if (prop.NameEquals("responseHeader"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     responseHeader = HeaderCondition.DeserializeHeaderCondition(prop.Value, options);
                     continue;
                 }
@@ -104,47 +110,47 @@ namespace Microsoft.ClientModel.TestFramework
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Condition(uriRegex, responseHeader, additionalBinaryDataProperties);
+            return new SanitizerCondition(uriRegex, responseHeader, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Condition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SanitizerCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Condition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SanitizerCondition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, MicrosoftClientModelTestFrameworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Condition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SanitizerCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Condition IPersistableModel<Condition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SanitizerCondition IPersistableModel<SanitizerCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Condition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SanitizerCondition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Condition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SanitizerCondition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeCondition(document.RootElement, options);
+                        return DeserializeSanitizerCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Condition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SanitizerCondition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Condition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SanitizerCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

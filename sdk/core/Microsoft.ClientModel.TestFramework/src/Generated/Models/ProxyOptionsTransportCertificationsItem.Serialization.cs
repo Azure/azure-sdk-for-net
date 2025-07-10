@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework
+namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
     /// <summary> The ProxyOptionsTransportCertificationsItem. </summary>
     public partial class ProxyOptionsTransportCertificationsItem : IJsonModel<ProxyOptionsTransportCertificationsItem>

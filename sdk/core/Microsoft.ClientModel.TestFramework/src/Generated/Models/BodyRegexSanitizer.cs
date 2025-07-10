@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework
+namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
     /// <summary> The BodyRegexSanitizer. </summary>
     public partial class BodyRegexSanitizer
@@ -18,21 +19,12 @@ namespace Microsoft.ClientModel.TestFramework
 
         /// <summary> Initializes a new instance of <see cref="BodyRegexSanitizer"/>. </summary>
         /// <param name="regex"></param>
-        /// <param name="value"></param>
-        /// <param name="groupForReplace"></param>
-        /// <param name="condition"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regex"/>, <paramref name="value"/>, <paramref name="groupForReplace"/> or <paramref name="condition"/> is null. </exception>
-        public BodyRegexSanitizer(string regex, string value, string groupForReplace, Condition condition)
+        /// <exception cref="ArgumentNullException"> <paramref name="regex"/> is null. </exception>
+        public BodyRegexSanitizer(string regex)
         {
             Argument.AssertNotNull(regex, nameof(regex));
-            Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(groupForReplace, nameof(groupForReplace));
-            Argument.AssertNotNull(condition, nameof(condition));
 
             Regex = regex;
-            Value = value;
-            GroupForReplace = groupForReplace;
-            Condition = condition;
         }
 
         /// <summary> Initializes a new instance of <see cref="BodyRegexSanitizer"/>. </summary>
@@ -41,7 +33,7 @@ namespace Microsoft.ClientModel.TestFramework
         /// <param name="groupForReplace"></param>
         /// <param name="condition"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BodyRegexSanitizer(string regex, string value, string groupForReplace, Condition condition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BodyRegexSanitizer(string regex, string value, string groupForReplace, SanitizerCondition condition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Regex = regex;
             Value = value;
@@ -53,13 +45,13 @@ namespace Microsoft.ClientModel.TestFramework
         /// <summary> Gets the Regex. </summary>
         public string Regex { get; }
 
-        /// <summary> Gets the Value. </summary>
-        public string Value { get; }
+        /// <summary> Gets or sets the Value. </summary>
+        public string Value { get; set; }
 
-        /// <summary> Gets the GroupForReplace. </summary>
-        public string GroupForReplace { get; }
+        /// <summary> Gets or sets the GroupForReplace. </summary>
+        public string GroupForReplace { get; set; }
 
-        /// <summary> Gets the Condition. </summary>
-        public Condition Condition { get; }
+        /// <summary> Gets or sets the Condition. </summary>
+        public SanitizerCondition Condition { get; set; }
     }
 }

@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework
+namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
     /// <summary> The HeaderTransform. </summary>
     public partial class HeaderTransform : IJsonModel<HeaderTransform>
@@ -42,8 +43,11 @@ namespace Microsoft.ClientModel.TestFramework
             writer.WriteStringValue(Key);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition, options);
+            if (Optional.IsDefined(Condition))
+            {
+                writer.WritePropertyName("condition"u8);
+                writer.WriteObjectValue(Condition, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -88,7 +92,7 @@ namespace Microsoft.ClientModel.TestFramework
             }
             string key = default;
             string value = default;
-            Condition condition = default;
+            SanitizerCondition condition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -104,7 +108,11 @@ namespace Microsoft.ClientModel.TestFramework
                 }
                 if (prop.NameEquals("condition"u8))
                 {
-                    condition = Condition.DeserializeCondition(prop.Value, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    condition = SanitizerCondition.DeserializeSanitizerCondition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
