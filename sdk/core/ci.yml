@@ -71,7 +71,7 @@ extends:
     - ArtifactName: Azure.Core
       ExpectedWarningsFilepath: /Azure.Core/tests/compatibility/ExpectedAotWarnings.txt
     - ArtifactName: Azure.Core.Expressions.DataFactory
-      ExpectedWarningsFilepath: /Azure.Core.Expressions.DataFactory/tests/compatibility/ExpectedAotWarnings.txt
+      ExpectedWarningsFilepath: None
     - ArtifactName: System.ClientModel
       ExpectedWarningsFilepath: None
 
