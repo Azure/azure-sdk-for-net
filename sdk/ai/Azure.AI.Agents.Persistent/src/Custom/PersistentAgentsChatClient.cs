@@ -337,6 +337,16 @@ namespace Azure.AI.Agents.Persistent
 
             runOptions.ThreadOptions ??= new();
 
+            if (runOptions.OverrideInstructions is not null)
+            {
+                (instructions ??= new()).Append(runOptions.OverrideInstructions);
+            }
+
+            if (options?.Instructions is not null)
+            {
+                (instructions ??= new()).Append(options.Instructions);
+            }
+
             foreach (ChatMessage chatMessage in messages)
             {
                 List<MessageInputContentBlock> messageContents = [];
