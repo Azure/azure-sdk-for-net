@@ -17,6 +17,11 @@
 - `VisualStudioCredential` throws `CredentialUnavailableException` for all failures except for OperationCancelledException due to cancellation being requested for a `CancellationToken`. This ensures that it falls through for most failures when part of a chained credential.
 - Removed `AzureApplicationCredential`. For context, see issue [49781](https://github.com/Azure/azure-sdk-for-net/issues/49781).
 
+## 1.14.2 (2025-07-10)
+
+### Other changes
+- Updated `Microsoft.Identity.Client` dependency to version 4.73.1
+
 ## 1.14.1 (2025-06-24)
 
 ### Bugs Fixed
