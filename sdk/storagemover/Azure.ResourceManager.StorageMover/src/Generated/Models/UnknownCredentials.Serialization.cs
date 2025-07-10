@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    internal partial class UnknownStorageMoverCredentials : IUtf8JsonSerializable, IJsonModel<StorageMoverCredentials>
+    internal partial class UnknownCredentials : IUtf8JsonSerializable, IJsonModel<StorageMoverCredentials>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageMoverCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             return DeserializeStorageMoverCredentials(document.RootElement, options);
         }
 
-        internal static UnknownStorageMoverCredentials DeserializeUnknownStorageMoverCredentials(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownCredentials DeserializeUnknownCredentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownStorageMoverCredentials(type, serializedAdditionalRawData);
+            return new UnknownCredentials(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMoverCredentials>.Write(ModelReaderWriterOptions options)

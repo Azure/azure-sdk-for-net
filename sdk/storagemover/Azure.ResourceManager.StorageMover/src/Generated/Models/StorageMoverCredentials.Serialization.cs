@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    [PersistableModelProxy(typeof(UnknownStorageMoverCredentials))]
+    [PersistableModelProxy(typeof(UnknownCredentials))]
     public partial class StorageMoverCredentials : IUtf8JsonSerializable, IJsonModel<StorageMoverCredentials>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageMoverCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     case "AzureKeyVaultSmb": return AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(element, options);
                 }
             }
-            return UnknownStorageMoverCredentials.DeserializeUnknownStorageMoverCredentials(element, options);
+            return UnknownCredentials.DeserializeUnknownCredentials(element, options);
         }
 
         BinaryData IPersistableModel<StorageMoverCredentials>.Write(ModelReaderWriterOptions options)

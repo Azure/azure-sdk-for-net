@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> Unknown version of StorageMoverCredentials. </summary>
-    internal partial class UnknownStorageMoverCredentials : StorageMoverCredentials
+    internal partial class UnknownCredentials : StorageMoverCredentials
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownStorageMoverCredentials"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCredentials"/>. </summary>
         /// <param name="type"> The Credentials type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownStorageMoverCredentials(CredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
+        internal UnknownCredentials(CredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
             Type = type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnknownStorageMoverCredentials"/> for deserialization. </summary>
-        internal UnknownStorageMoverCredentials()
+        /// <summary> Initializes a new instance of <see cref="UnknownCredentials"/> for deserialization. </summary>
+        internal UnknownCredentials()
         {
         }
     }
