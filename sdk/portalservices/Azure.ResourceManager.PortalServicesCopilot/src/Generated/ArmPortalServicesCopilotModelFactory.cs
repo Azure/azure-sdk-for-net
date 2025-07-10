@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
 
         /// <summary> The type used for update operations of the CopilotSettingsResource. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.CopilotSettingsResourceUpdate"/> instance for mocking. </returns>
-        public static CopilotSettingsResourceUpdate CopilotSettingsResourceUpdate(CopilotSettingsResourceUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.CopilotSettingsResourcePatch"/> instance for mocking. </returns>
+        public static CopilotSettingsResourcePatch CopilotSettingsResourcePatch(CopilotSettingsResourceUpdateProperties properties = default)
         {
-            return new CopilotSettingsResourceUpdate(properties, additionalBinaryDataProperties: null);
+            return new CopilotSettingsResourcePatch(properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The updatable properties of the CopilotSettingsResource. </summary>

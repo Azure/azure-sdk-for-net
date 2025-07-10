@@ -217,12 +217,12 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         }
 
         /// <summary> Update a CopilotSettingsResource. </summary>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual Response<PortalServicesCopilotSettingResource> Update(CopilotSettingsResourceUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<PortalServicesCopilotSettingResource> Update(CopilotSettingsResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.Update");
             scope.Start();
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(CopilotSettingsResourceUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(CopilotSettingsResourcePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalServicesCopilotSettingData> response = Response.FromValue(PortalServicesCopilotSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,12 +250,12 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         }
 
         /// <summary> Update a CopilotSettingsResource. </summary>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<PortalServicesCopilotSettingResource>> UpdateAsync(CopilotSettingsResourceUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<PortalServicesCopilotSettingResource>> UpdateAsync(CopilotSettingsResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _portalservicescopilotsettingClientDiagnostics.CreateScope("PortalServicesCopilotSettingResource.UpdateAsync");
             scope.Start();
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(CopilotSettingsResourceUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(CopilotSettingsResourcePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalServicesCopilotSettingData> response = Response.FromValue(PortalServicesCopilotSettingData.FromResponse(result), result);
                 if (response.Value == null)
