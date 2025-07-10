@@ -291,6 +291,7 @@ namespace System.ClientModel.Primitives
         protected virtual bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Assembly)]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ModelReaderWriterContextTypeAttribute : System.Attribute
     {
         public ModelReaderWriterContextTypeAttribute(System.Type contextType) { }
