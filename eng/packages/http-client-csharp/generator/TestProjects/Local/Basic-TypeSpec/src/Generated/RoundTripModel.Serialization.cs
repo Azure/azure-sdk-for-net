@@ -679,7 +679,7 @@ namespace BasicTypeSpec
                 writer.WriteObjectValue<IJsonModel<RoundTripModel>>(model, ModelSerializationExtensions.WireOptions);
             }
 
-            /// <summary> Reads the JSON representation into the model. </summary>
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
             /// <param name="reader"> The reader. </param>
             /// <param name="typeToConvert"> The type to convert. </param>
             /// <param name="options"> The serialization options. </param>
