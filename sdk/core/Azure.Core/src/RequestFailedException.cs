@@ -279,7 +279,6 @@ namespace Azure
             response.ContentStream = bufferedStream;
         }
 
-        // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
         internal class ErrorResponse : IJsonModel<ErrorResponse>
         {
             [System.Text.Json.Serialization.JsonPropertyName("error")]
