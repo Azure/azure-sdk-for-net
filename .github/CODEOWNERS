@@ -322,6 +322,9 @@
 # PRLabel: %Communication - Calling Server
 /sdk/communication/Azure.Communication.CallingServer/              @minwoolee-msft
 
+# PRLabel: %Communication - CallAutomation
+/sdk/communication/Azure.Communication.CallAutomation/              @juntuchen-msft @minwoolee-msft @fhaghbin-msft @v-dharmarajv
+
 # PRLabel: %Communication - Chat
 /sdk/communication/Azure.Communication.Chat/                       @LuChen-Microsoft
 
