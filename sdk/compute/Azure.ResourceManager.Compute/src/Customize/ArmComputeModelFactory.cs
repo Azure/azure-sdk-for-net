@@ -188,15 +188,13 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, ComputePlan plan = null, IEnumerable<VirtualMachineExtensionData> resources = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, string etag = null, bool? latestModelApplied = null, string vmId = null, VirtualMachineScaleSetVmInstanceView instanceView = null, VirtualMachineHardwareProfile hardwareProfile = null, ResilientVmDeletionStatus? resilientVmDeletionStatus = null, VirtualMachineStorageProfile storageProfile = null, AdditionalCapabilities additionalCapabilities = null, VirtualMachineOSProfile osProfile = null, SecurityProfile securityProfile = null, VirtualMachineNetworkProfile networkProfile = null, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, string provisioningState = null, string licenseType = null, string modelDefinitionApplied = null, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = null, string userData = null, DateTimeOffset? timeCreated = null)
         {
-            return new VirtualMachineScaleSetVmData(
+            return VirtualMachineScaleSetVmData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 tags,
                 location,
-                instanceId,
-                sku,
                 VirtualMachineScaleSetVmProperties(
                     latestModelApplied,
                     vmId,
@@ -217,37 +215,33 @@ namespace Azure.ResourceManager.Compute.Models
                     protectionPolicy,
                     userData,
                     timeCreated),
+                instanceId,
+                sku,
                 plan,
                 resources?.ToList(),
                 zones?.ToList(),
                 identity,
-                etag,
-                serializedAdditionalRawData: null);
+                etag);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string instanceId = null, ComputeSku sku = null, VirtualMachineScaleSetVmProperties properties = null, ComputePlan plan = null, IEnumerable<VirtualMachineExtensionData> resources = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, string etag = null)
+        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, VirtualMachineScaleSetVmProperties properties, ComputePlan plan = null, IEnumerable<VirtualMachineExtensionData> resources = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, string etag = null)
         {
-            tags ??= new Dictionary<string, string>();
-            resources ??= new List<VirtualMachineExtensionData>();
-            zones ??= new List<string>();
-
-            return new VirtualMachineScaleSetVmData(
+            return VirtualMachineScaleSetVmData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 tags,
                 location,
+                properties,
                 instanceId,
                 sku,
-                properties,
                 plan,
-                resources?.ToList(),
-                zones?.ToList(),
+                resources,
+                zones,
                 identity,
-                etag,
-                serializedAdditionalRawData: null);
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.VirtualMachineScaleSetVmData" />. </summary>
