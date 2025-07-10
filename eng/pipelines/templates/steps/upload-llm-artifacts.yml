@@ -18,7 +18,7 @@ steps:
         #   /mnt/vss/_work/1/s/sdk/template/Azure.Template/tests/TestResults/net8.0.trx
         # to
         #   template-Azure.Template-net8.0.trx
-        $serviceAndPackage  = ($fileFullName -split 'sdk/|/tests')[1] -replace '/','-'
+        $serviceAndPackage = ($fileFullName -split 'sdk[\\/]|[\\/]tests')[1] -replace '[\\/]', '-'
         $trxFile     = Split-Path $fileFullName -Leaf
         $fileName  = "$serviceAndPackage-$trxFile"
 
