@@ -13,37 +13,8 @@ namespace Azure.AI.Vision.Face
     /// <summary> Properties describing facial hair attributes. </summary>
     public partial class FacialHair
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FacialHair"/>. </summary>
         /// <param name="moustache"> A number ranging from 0 to 1 indicating a level of confidence associated with a property. </param>
@@ -60,24 +31,21 @@ namespace Azure.AI.Vision.Face
         /// <param name="moustache"> A number ranging from 0 to 1 indicating a level of confidence associated with a property. </param>
         /// <param name="beard"> A number ranging from 0 to 1 indicating a level of confidence associated with a property. </param>
         /// <param name="sideburns"> A number ranging from 0 to 1 indicating a level of confidence associated with a property. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FacialHair(float moustache, float beard, float sideburns, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FacialHair(float moustache, float beard, float sideburns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Moustache = moustache;
             Beard = beard;
             Sideburns = sideburns;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FacialHair"/> for deserialization. </summary>
-        internal FacialHair()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A number ranging from 0 to 1 indicating a level of confidence associated with a property. </summary>
         public float Moustache { get; }
+
         /// <summary> A number ranging from 0 to 1 indicating a level of confidence associated with a property. </summary>
         public float Beard { get; }
+
         /// <summary> A number ranging from 0 to 1 indicating a level of confidence associated with a property. </summary>
         public float Sideburns { get; }
     }

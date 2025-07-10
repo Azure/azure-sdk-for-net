@@ -14,63 +14,26 @@ namespace Azure.AI.Vision.Face
     /// <summary> The GroupRequest. </summary>
     internal partial class GroupRequest
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GroupRequest"/>. </summary>
         /// <param name="faceIds"> Array of candidate faceIds created by "Detect". The maximum is 1000 faces. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="faceIds"/> is null. </exception>
         internal GroupRequest(IEnumerable<Guid> faceIds)
         {
-            Argument.AssertNotNull(faceIds, nameof(faceIds));
-
             FaceIds = faceIds.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="GroupRequest"/>. </summary>
         /// <param name="faceIds"> Array of candidate faceIds created by "Detect". The maximum is 1000 faces. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupRequest(IReadOnlyList<Guid> faceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GroupRequest(IList<Guid> faceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FaceIds = faceIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GroupRequest"/> for deserialization. </summary>
-        internal GroupRequest()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of candidate faceIds created by "Detect". The maximum is 1000 faces. </summary>
-        public IReadOnlyList<Guid> FaceIds { get; }
+        public IList<Guid> FaceIds { get; }
     }
 }

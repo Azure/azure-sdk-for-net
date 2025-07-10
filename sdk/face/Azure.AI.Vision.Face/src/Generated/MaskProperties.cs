@@ -13,65 +13,32 @@ namespace Azure.AI.Vision.Face
     /// <summary> Properties describing the presence of a mask on a given face. </summary>
     public partial class MaskProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MaskProperties"/>. </summary>
         /// <param name="noseAndMouthCovered"> A boolean value indicating whether nose and mouth are covered. </param>
         /// <param name="type"> Type of the mask. </param>
-        internal MaskProperties(bool noseAndMouthCovered, MaskType type)
+        internal MaskProperties(bool noseAndMouthCovered, MaskType @type)
         {
             NoseAndMouthCovered = noseAndMouthCovered;
-            Type = type;
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="MaskProperties"/>. </summary>
         /// <param name="noseAndMouthCovered"> A boolean value indicating whether nose and mouth are covered. </param>
         /// <param name="type"> Type of the mask. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaskProperties(bool noseAndMouthCovered, MaskType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MaskProperties(bool noseAndMouthCovered, MaskType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NoseAndMouthCovered = noseAndMouthCovered;
-            Type = type;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MaskProperties"/> for deserialization. </summary>
-        internal MaskProperties()
-        {
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A boolean value indicating whether nose and mouth are covered. </summary>
         public bool NoseAndMouthCovered { get; }
+
         /// <summary> Type of the mask. </summary>
         public MaskType Type { get; }
     }

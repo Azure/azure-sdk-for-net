@@ -14,56 +14,83 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct HairColorType : IEquatable<HairColorType>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownHairColorValue = "unknown";
+        /// <summary> White. </summary>
+        private const string WhiteValue = "white";
+        /// <summary> Gray. </summary>
+        private const string GrayValue = "gray";
+        /// <summary> Blond. </summary>
+        private const string BlondValue = "blond";
+        /// <summary> Brown. </summary>
+        private const string BrownValue = "brown";
+        /// <summary> Red. </summary>
+        private const string RedValue = "red";
+        /// <summary> Black. </summary>
+        private const string BlackValue = "black";
+        /// <summary> Other. </summary>
+        private const string OtherValue = "other";
 
         /// <summary> Initializes a new instance of <see cref="HairColorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HairColorType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownHairColorValue = "unknown";
-        private const string WhiteValue = "white";
-        private const string GrayValue = "gray";
-        private const string BlondValue = "blond";
-        private const string BrownValue = "brown";
-        private const string RedValue = "red";
-        private const string BlackValue = "black";
-        private const string OtherValue = "other";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static HairColorType UnknownHairColor { get; } = new HairColorType(UnknownHairColorValue);
+
         /// <summary> White. </summary>
         public static HairColorType White { get; } = new HairColorType(WhiteValue);
+
         /// <summary> Gray. </summary>
         public static HairColorType Gray { get; } = new HairColorType(GrayValue);
+
         /// <summary> Blond. </summary>
         public static HairColorType Blond { get; } = new HairColorType(BlondValue);
+
         /// <summary> Brown. </summary>
         public static HairColorType Brown { get; } = new HairColorType(BrownValue);
+
         /// <summary> Red. </summary>
         public static HairColorType Red { get; } = new HairColorType(RedValue);
+
         /// <summary> Black. </summary>
         public static HairColorType Black { get; } = new HairColorType(BlackValue);
+
         /// <summary> Other. </summary>
         public static HairColorType Other { get; } = new HairColorType(OtherValue);
+
         /// <summary> Determines if two <see cref="HairColorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HairColorType left, HairColorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HairColorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HairColorType left, HairColorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HairColorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HairColorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HairColorType(string value) => new HairColorType(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HairColorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HairColorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

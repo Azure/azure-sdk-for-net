@@ -12,7 +12,7 @@ namespace Azure.AI.Vision.Face
 {
     // Data plane generated sub-client.
     /// <summary> The LargePersonGroup sub-client. </summary>
-    [CodeGenClient("LargePersonGroupClientImpl")]
+    [CodeGenType("LargePersonGroupClientImpl")]
     public partial class LargePersonGroupClient
     {
         /// <summary> Initializes a new instance of FaceClient. </summary>
@@ -23,7 +23,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LargePersonGroupClient(Uri endpoint, AzureKeyCredential credential, string largePersonGroupId) : this(endpoint, credential, largePersonGroupId, new AzureAIVisionFaceClientOptions())
+        public LargePersonGroupClient(Uri endpoint, AzureKeyCredential credential, string largePersonGroupId) : this(endpoint, credential, largePersonGroupId, new FaceAdministrationClientOptions())
         {
         }
 
@@ -35,7 +35,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LargePersonGroupClient(Uri endpoint, TokenCredential credential, string largePersonGroupId) : this(endpoint, credential, largePersonGroupId, new AzureAIVisionFaceClientOptions())
+        public LargePersonGroupClient(Uri endpoint, TokenCredential credential, string largePersonGroupId) : this(endpoint, credential, largePersonGroupId, new FaceAdministrationClientOptions())
         {
         }
 
@@ -48,7 +48,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LargePersonGroupClient(Uri endpoint, AzureKeyCredential credential, string largePersonGroupId, AzureAIVisionFaceClientOptions options)
+        public LargePersonGroupClient(Uri endpoint, AzureKeyCredential credential, string largePersonGroupId, FaceAdministrationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -71,7 +71,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LargePersonGroupClient(Uri endpoint, TokenCredential credential, string largePersonGroupId, AzureAIVisionFaceClientOptions options)
+        public LargePersonGroupClient(Uri endpoint, TokenCredential credential, string largePersonGroupId, FaceAdministrationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));

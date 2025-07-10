@@ -14,41 +14,58 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct FaceLivenessDecision : IEquatable<FaceLivenessDecision>
     {
         private readonly string _value;
+        /// <summary> The algorithm could not classify the target face as either real or spoof. </summary>
+        private const string UncertainValue = "uncertain";
+        /// <summary> The algorithm has classified the target face as real. </summary>
+        private const string RealFaceValue = "realface";
+        /// <summary> The algorithm has classified the target face as a spoof. </summary>
+        private const string SpoofFaceValue = "spoofface";
 
         /// <summary> Initializes a new instance of <see cref="FaceLivenessDecision"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FaceLivenessDecision(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UncertainValue = "uncertain";
-        private const string RealFaceValue = "realface";
-        private const string SpoofFaceValue = "spoofface";
+            _value = value;
+        }
 
         /// <summary> The algorithm could not classify the target face as either real or spoof. </summary>
         public static FaceLivenessDecision Uncertain { get; } = new FaceLivenessDecision(UncertainValue);
+
         /// <summary> The algorithm has classified the target face as real. </summary>
         public static FaceLivenessDecision RealFace { get; } = new FaceLivenessDecision(RealFaceValue);
+
         /// <summary> The algorithm has classified the target face as a spoof. </summary>
         public static FaceLivenessDecision SpoofFace { get; } = new FaceLivenessDecision(SpoofFaceValue);
+
         /// <summary> Determines if two <see cref="FaceLivenessDecision"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FaceLivenessDecision left, FaceLivenessDecision right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FaceLivenessDecision"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FaceLivenessDecision left, FaceLivenessDecision right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FaceLivenessDecision"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FaceLivenessDecision"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FaceLivenessDecision(string value) => new FaceLivenessDecision(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FaceLivenessDecision other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FaceLivenessDecision other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

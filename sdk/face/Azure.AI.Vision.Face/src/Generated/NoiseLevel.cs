@@ -14,41 +14,58 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct NoiseLevel : IEquatable<NoiseLevel>
     {
         private readonly string _value;
+        /// <summary> Low noise level. </summary>
+        private const string LowValue = "low";
+        /// <summary> Medium noise level. </summary>
+        private const string MediumValue = "medium";
+        /// <summary> High noise level. </summary>
+        private const string HighValue = "high";
 
         /// <summary> Initializes a new instance of <see cref="NoiseLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NoiseLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LowValue = "low";
-        private const string MediumValue = "medium";
-        private const string HighValue = "high";
+            _value = value;
+        }
 
         /// <summary> Low noise level. </summary>
         public static NoiseLevel Low { get; } = new NoiseLevel(LowValue);
+
         /// <summary> Medium noise level. </summary>
         public static NoiseLevel Medium { get; } = new NoiseLevel(MediumValue);
+
         /// <summary> High noise level. </summary>
         public static NoiseLevel High { get; } = new NoiseLevel(HighValue);
+
         /// <summary> Determines if two <see cref="NoiseLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NoiseLevel left, NoiseLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NoiseLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NoiseLevel left, NoiseLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NoiseLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NoiseLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NoiseLevel(string value) => new NoiseLevel(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NoiseLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NoiseLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

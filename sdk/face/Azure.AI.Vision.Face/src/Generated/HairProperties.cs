@@ -14,47 +14,15 @@ namespace Azure.AI.Vision.Face
     /// <summary> Properties describing hair attributes. </summary>
     public partial class HairProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HairProperties"/>. </summary>
         /// <param name="bald"> A number describing confidence level of whether the person is bald. </param>
         /// <param name="invisible"> A boolean value describing whether the hair is visible in the image. </param>
         /// <param name="hairColor"> An array of candidate colors and confidence level in the presence of each. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hairColor"/> is null. </exception>
         internal HairProperties(float bald, bool invisible, IEnumerable<HairColor> hairColor)
         {
-            Argument.AssertNotNull(hairColor, nameof(hairColor));
-
             Bald = bald;
             Invisible = invisible;
             HairColor = hairColor.ToList();
@@ -64,25 +32,22 @@ namespace Azure.AI.Vision.Face
         /// <param name="bald"> A number describing confidence level of whether the person is bald. </param>
         /// <param name="invisible"> A boolean value describing whether the hair is visible in the image. </param>
         /// <param name="hairColor"> An array of candidate colors and confidence level in the presence of each. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HairProperties(float bald, bool invisible, IReadOnlyList<HairColor> hairColor, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HairProperties(float bald, bool invisible, IList<HairColor> hairColor, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Bald = bald;
             Invisible = invisible;
             HairColor = hairColor;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HairProperties"/> for deserialization. </summary>
-        internal HairProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A number describing confidence level of whether the person is bald. </summary>
         public float Bald { get; }
+
         /// <summary> A boolean value describing whether the hair is visible in the image. </summary>
         public bool Invisible { get; }
+
         /// <summary> An array of candidate colors and confidence level in the presence of each. </summary>
-        public IReadOnlyList<HairColor> HairColor { get; }
+        public IList<HairColor> HairColor { get; }
     }
 }

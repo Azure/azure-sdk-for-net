@@ -13,46 +13,14 @@ namespace Azure.AI.Vision.Face
     /// <summary> The FindSimilarFromLargeFaceListRequest. </summary>
     internal partial class FindSimilarFromLargeFaceListRequest
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FindSimilarFromLargeFaceListRequest"/>. </summary>
         /// <param name="faceId"> faceId of the query face. User needs to call "Detect" first to get a valid faceId. Note that this faceId is not persisted and will expire 24 hours after the detection call. </param>
         /// <param name="largeFaceListId"> An existing user-specified unique candidate Large Face List, created in "Create Large Face List". Large Face List contains a set of persistedFaceIds which are persisted and will never expire. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largeFaceListId"/> is null. </exception>
         internal FindSimilarFromLargeFaceListRequest(Guid faceId, string largeFaceListId)
         {
-            Argument.AssertNotNull(largeFaceListId, nameof(largeFaceListId));
-
             FaceId = faceId;
             LargeFaceListId = largeFaceListId;
         }
@@ -62,27 +30,25 @@ namespace Azure.AI.Vision.Face
         /// <param name="maxNumOfCandidatesReturned"> The number of top similar faces returned. The valid range is [1, 1000]. Default value is 20. </param>
         /// <param name="mode"> Similar face searching mode. It can be 'matchPerson' or 'matchFace'. Default value is 'matchPerson'. </param>
         /// <param name="largeFaceListId"> An existing user-specified unique candidate Large Face List, created in "Create Large Face List". Large Face List contains a set of persistedFaceIds which are persisted and will never expire. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FindSimilarFromLargeFaceListRequest(Guid faceId, int? maxNumOfCandidatesReturned, FindSimilarMatchMode? mode, string largeFaceListId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FindSimilarFromLargeFaceListRequest(Guid faceId, int? maxNumOfCandidatesReturned, FindSimilarMatchMode? mode, string largeFaceListId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FaceId = faceId;
             MaxNumOfCandidatesReturned = maxNumOfCandidatesReturned;
             Mode = mode;
             LargeFaceListId = largeFaceListId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FindSimilarFromLargeFaceListRequest"/> for deserialization. </summary>
-        internal FindSimilarFromLargeFaceListRequest()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> faceId of the query face. User needs to call "Detect" first to get a valid faceId. Note that this faceId is not persisted and will expire 24 hours after the detection call. </summary>
         public Guid FaceId { get; }
+
         /// <summary> The number of top similar faces returned. The valid range is [1, 1000]. Default value is 20. </summary>
         public int? MaxNumOfCandidatesReturned { get; }
+
         /// <summary> Similar face searching mode. It can be 'matchPerson' or 'matchFace'. Default value is 'matchPerson'. </summary>
         public FindSimilarMatchMode? Mode { get; }
+
         /// <summary> An existing user-specified unique candidate Large Face List, created in "Create Large Face List". Large Face List contains a set of persistedFaceIds which are persisted and will never expire. </summary>
         public string LargeFaceListId { get; }
     }

@@ -13,74 +13,32 @@ namespace Azure.AI.Vision.Face
     /// <summary> The face verification output. </summary>
     public partial class LivenessWithVerifyOutputs
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyOutputs"/>. </summary>
-        /// <param name="verifyImage"> The detail of face for verification. </param>
         /// <param name="matchConfidence"> The target face liveness face and comparison image face verification confidence. </param>
         /// <param name="isIdentical"> Whether the target liveness face and comparison image face match. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="verifyImage"/> is null. </exception>
-        internal LivenessWithVerifyOutputs(LivenessWithVerifyImage verifyImage, float matchConfidence, bool isIdentical)
+        internal LivenessWithVerifyOutputs(float matchConfidence, bool isIdentical)
         {
-            Argument.AssertNotNull(verifyImage, nameof(verifyImage));
-
-            VerifyImage = verifyImage;
             MatchConfidence = matchConfidence;
             IsIdentical = isIdentical;
         }
 
         /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyOutputs"/>. </summary>
-        /// <param name="verifyImage"> The detail of face for verification. </param>
         /// <param name="matchConfidence"> The target face liveness face and comparison image face verification confidence. </param>
         /// <param name="isIdentical"> Whether the target liveness face and comparison image face match. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LivenessWithVerifyOutputs(LivenessWithVerifyImage verifyImage, float matchConfidence, bool isIdentical, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LivenessWithVerifyOutputs(float matchConfidence, bool isIdentical, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            VerifyImage = verifyImage;
             MatchConfidence = matchConfidence;
             IsIdentical = isIdentical;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyOutputs"/> for deserialization. </summary>
-        internal LivenessWithVerifyOutputs()
-        {
-        }
-
-        /// <summary> The detail of face for verification. </summary>
-        public LivenessWithVerifyImage VerifyImage { get; }
         /// <summary> The target face liveness face and comparison image face verification confidence. </summary>
         public float MatchConfidence { get; }
+
         /// <summary> Whether the target liveness face and comparison image face match. </summary>
         public bool IsIdentical { get; }
     }

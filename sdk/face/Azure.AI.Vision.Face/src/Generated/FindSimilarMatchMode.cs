@@ -14,38 +14,53 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct FindSimilarMatchMode : IEquatable<FindSimilarMatchMode>
     {
         private readonly string _value;
+        /// <summary> Match person. </summary>
+        private const string MatchPersonValue = "matchPerson";
+        /// <summary> Match face. </summary>
+        private const string MatchFaceValue = "matchFace";
 
         /// <summary> Initializes a new instance of <see cref="FindSimilarMatchMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FindSimilarMatchMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MatchPersonValue = "matchPerson";
-        private const string MatchFaceValue = "matchFace";
+            _value = value;
+        }
 
         /// <summary> Match person. </summary>
         public static FindSimilarMatchMode MatchPerson { get; } = new FindSimilarMatchMode(MatchPersonValue);
+
         /// <summary> Match face. </summary>
         public static FindSimilarMatchMode MatchFace { get; } = new FindSimilarMatchMode(MatchFaceValue);
+
         /// <summary> Determines if two <see cref="FindSimilarMatchMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FindSimilarMatchMode left, FindSimilarMatchMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FindSimilarMatchMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FindSimilarMatchMode left, FindSimilarMatchMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FindSimilarMatchMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FindSimilarMatchMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FindSimilarMatchMode(string value) => new FindSimilarMatchMode(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FindSimilarMatchMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FindSimilarMatchMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

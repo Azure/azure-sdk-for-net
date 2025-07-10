@@ -13,37 +13,8 @@ namespace Azure.AI.Vision.Face
     /// <summary> A collection of 27-point face landmarks pointing to the important positions of face components. </summary>
     public partial class FaceLandmarks
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FaceLandmarks"/>. </summary>
         /// <param name="pupilLeft"> The coordinates of the left eye pupil. </param>
@@ -73,37 +44,8 @@ namespace Azure.AI.Vision.Face
         /// <param name="upperLipBottom"> The coordinates of the upper lip bottom. </param>
         /// <param name="underLipTop"> The coordinates of the under lip top. </param>
         /// <param name="underLipBottom"> The coordinates of the under lip bottom. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pupilLeft"/>, <paramref name="pupilRight"/>, <paramref name="noseTip"/>, <paramref name="mouthLeft"/>, <paramref name="mouthRight"/>, <paramref name="eyebrowLeftOuter"/>, <paramref name="eyebrowLeftInner"/>, <paramref name="eyeLeftOuter"/>, <paramref name="eyeLeftTop"/>, <paramref name="eyeLeftBottom"/>, <paramref name="eyeLeftInner"/>, <paramref name="eyebrowRightInner"/>, <paramref name="eyebrowRightOuter"/>, <paramref name="eyeRightInner"/>, <paramref name="eyeRightTop"/>, <paramref name="eyeRightBottom"/>, <paramref name="eyeRightOuter"/>, <paramref name="noseRootLeft"/>, <paramref name="noseRootRight"/>, <paramref name="noseLeftAlarTop"/>, <paramref name="noseRightAlarTop"/>, <paramref name="noseLeftAlarOutTip"/>, <paramref name="noseRightAlarOutTip"/>, <paramref name="upperLipTop"/>, <paramref name="upperLipBottom"/>, <paramref name="underLipTop"/> or <paramref name="underLipBottom"/> is null. </exception>
         internal FaceLandmarks(LandmarkCoordinate pupilLeft, LandmarkCoordinate pupilRight, LandmarkCoordinate noseTip, LandmarkCoordinate mouthLeft, LandmarkCoordinate mouthRight, LandmarkCoordinate eyebrowLeftOuter, LandmarkCoordinate eyebrowLeftInner, LandmarkCoordinate eyeLeftOuter, LandmarkCoordinate eyeLeftTop, LandmarkCoordinate eyeLeftBottom, LandmarkCoordinate eyeLeftInner, LandmarkCoordinate eyebrowRightInner, LandmarkCoordinate eyebrowRightOuter, LandmarkCoordinate eyeRightInner, LandmarkCoordinate eyeRightTop, LandmarkCoordinate eyeRightBottom, LandmarkCoordinate eyeRightOuter, LandmarkCoordinate noseRootLeft, LandmarkCoordinate noseRootRight, LandmarkCoordinate noseLeftAlarTop, LandmarkCoordinate noseRightAlarTop, LandmarkCoordinate noseLeftAlarOutTip, LandmarkCoordinate noseRightAlarOutTip, LandmarkCoordinate upperLipTop, LandmarkCoordinate upperLipBottom, LandmarkCoordinate underLipTop, LandmarkCoordinate underLipBottom)
         {
-            Argument.AssertNotNull(pupilLeft, nameof(pupilLeft));
-            Argument.AssertNotNull(pupilRight, nameof(pupilRight));
-            Argument.AssertNotNull(noseTip, nameof(noseTip));
-            Argument.AssertNotNull(mouthLeft, nameof(mouthLeft));
-            Argument.AssertNotNull(mouthRight, nameof(mouthRight));
-            Argument.AssertNotNull(eyebrowLeftOuter, nameof(eyebrowLeftOuter));
-            Argument.AssertNotNull(eyebrowLeftInner, nameof(eyebrowLeftInner));
-            Argument.AssertNotNull(eyeLeftOuter, nameof(eyeLeftOuter));
-            Argument.AssertNotNull(eyeLeftTop, nameof(eyeLeftTop));
-            Argument.AssertNotNull(eyeLeftBottom, nameof(eyeLeftBottom));
-            Argument.AssertNotNull(eyeLeftInner, nameof(eyeLeftInner));
-            Argument.AssertNotNull(eyebrowRightInner, nameof(eyebrowRightInner));
-            Argument.AssertNotNull(eyebrowRightOuter, nameof(eyebrowRightOuter));
-            Argument.AssertNotNull(eyeRightInner, nameof(eyeRightInner));
-            Argument.AssertNotNull(eyeRightTop, nameof(eyeRightTop));
-            Argument.AssertNotNull(eyeRightBottom, nameof(eyeRightBottom));
-            Argument.AssertNotNull(eyeRightOuter, nameof(eyeRightOuter));
-            Argument.AssertNotNull(noseRootLeft, nameof(noseRootLeft));
-            Argument.AssertNotNull(noseRootRight, nameof(noseRootRight));
-            Argument.AssertNotNull(noseLeftAlarTop, nameof(noseLeftAlarTop));
-            Argument.AssertNotNull(noseRightAlarTop, nameof(noseRightAlarTop));
-            Argument.AssertNotNull(noseLeftAlarOutTip, nameof(noseLeftAlarOutTip));
-            Argument.AssertNotNull(noseRightAlarOutTip, nameof(noseRightAlarOutTip));
-            Argument.AssertNotNull(upperLipTop, nameof(upperLipTop));
-            Argument.AssertNotNull(upperLipBottom, nameof(upperLipBottom));
-            Argument.AssertNotNull(underLipTop, nameof(underLipTop));
-            Argument.AssertNotNull(underLipBottom, nameof(underLipBottom));
-
             PupilLeft = pupilLeft;
             PupilRight = pupilRight;
             NoseTip = noseTip;
@@ -161,8 +103,8 @@ namespace Azure.AI.Vision.Face
         /// <param name="upperLipBottom"> The coordinates of the upper lip bottom. </param>
         /// <param name="underLipTop"> The coordinates of the under lip top. </param>
         /// <param name="underLipBottom"> The coordinates of the under lip bottom. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FaceLandmarks(LandmarkCoordinate pupilLeft, LandmarkCoordinate pupilRight, LandmarkCoordinate noseTip, LandmarkCoordinate mouthLeft, LandmarkCoordinate mouthRight, LandmarkCoordinate eyebrowLeftOuter, LandmarkCoordinate eyebrowLeftInner, LandmarkCoordinate eyeLeftOuter, LandmarkCoordinate eyeLeftTop, LandmarkCoordinate eyeLeftBottom, LandmarkCoordinate eyeLeftInner, LandmarkCoordinate eyebrowRightInner, LandmarkCoordinate eyebrowRightOuter, LandmarkCoordinate eyeRightInner, LandmarkCoordinate eyeRightTop, LandmarkCoordinate eyeRightBottom, LandmarkCoordinate eyeRightOuter, LandmarkCoordinate noseRootLeft, LandmarkCoordinate noseRootRight, LandmarkCoordinate noseLeftAlarTop, LandmarkCoordinate noseRightAlarTop, LandmarkCoordinate noseLeftAlarOutTip, LandmarkCoordinate noseRightAlarOutTip, LandmarkCoordinate upperLipTop, LandmarkCoordinate upperLipBottom, LandmarkCoordinate underLipTop, LandmarkCoordinate underLipBottom, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FaceLandmarks(LandmarkCoordinate pupilLeft, LandmarkCoordinate pupilRight, LandmarkCoordinate noseTip, LandmarkCoordinate mouthLeft, LandmarkCoordinate mouthRight, LandmarkCoordinate eyebrowLeftOuter, LandmarkCoordinate eyebrowLeftInner, LandmarkCoordinate eyeLeftOuter, LandmarkCoordinate eyeLeftTop, LandmarkCoordinate eyeLeftBottom, LandmarkCoordinate eyeLeftInner, LandmarkCoordinate eyebrowRightInner, LandmarkCoordinate eyebrowRightOuter, LandmarkCoordinate eyeRightInner, LandmarkCoordinate eyeRightTop, LandmarkCoordinate eyeRightBottom, LandmarkCoordinate eyeRightOuter, LandmarkCoordinate noseRootLeft, LandmarkCoordinate noseRootRight, LandmarkCoordinate noseLeftAlarTop, LandmarkCoordinate noseRightAlarTop, LandmarkCoordinate noseLeftAlarOutTip, LandmarkCoordinate noseRightAlarOutTip, LandmarkCoordinate upperLipTop, LandmarkCoordinate upperLipBottom, LandmarkCoordinate underLipTop, LandmarkCoordinate underLipBottom, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PupilLeft = pupilLeft;
             PupilRight = pupilRight;
@@ -191,66 +133,87 @@ namespace Azure.AI.Vision.Face
             UpperLipBottom = upperLipBottom;
             UnderLipTop = underLipTop;
             UnderLipBottom = underLipBottom;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FaceLandmarks"/> for deserialization. </summary>
-        internal FaceLandmarks()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The coordinates of the left eye pupil. </summary>
         public LandmarkCoordinate PupilLeft { get; }
+
         /// <summary> The coordinates of the right eye pupil. </summary>
         public LandmarkCoordinate PupilRight { get; }
+
         /// <summary> The coordinates of the nose tip. </summary>
         public LandmarkCoordinate NoseTip { get; }
+
         /// <summary> The coordinates of the mouth left. </summary>
         public LandmarkCoordinate MouthLeft { get; }
+
         /// <summary> The coordinates of the mouth right. </summary>
         public LandmarkCoordinate MouthRight { get; }
+
         /// <summary> The coordinates of the left eyebrow outer. </summary>
         public LandmarkCoordinate EyebrowLeftOuter { get; }
+
         /// <summary> The coordinates of the left eyebrow inner. </summary>
         public LandmarkCoordinate EyebrowLeftInner { get; }
+
         /// <summary> The coordinates of the left eye outer. </summary>
         public LandmarkCoordinate EyeLeftOuter { get; }
+
         /// <summary> The coordinates of the left eye top. </summary>
         public LandmarkCoordinate EyeLeftTop { get; }
+
         /// <summary> The coordinates of the left eye bottom. </summary>
         public LandmarkCoordinate EyeLeftBottom { get; }
+
         /// <summary> The coordinates of the left eye inner. </summary>
         public LandmarkCoordinate EyeLeftInner { get; }
+
         /// <summary> The coordinates of the right eyebrow inner. </summary>
         public LandmarkCoordinate EyebrowRightInner { get; }
+
         /// <summary> The coordinates of the right eyebrow outer. </summary>
         public LandmarkCoordinate EyebrowRightOuter { get; }
+
         /// <summary> The coordinates of the right eye inner. </summary>
         public LandmarkCoordinate EyeRightInner { get; }
+
         /// <summary> The coordinates of the right eye top. </summary>
         public LandmarkCoordinate EyeRightTop { get; }
+
         /// <summary> The coordinates of the right eye bottom. </summary>
         public LandmarkCoordinate EyeRightBottom { get; }
+
         /// <summary> The coordinates of the right eye outer. </summary>
         public LandmarkCoordinate EyeRightOuter { get; }
+
         /// <summary> The coordinates of the nose root left. </summary>
         public LandmarkCoordinate NoseRootLeft { get; }
+
         /// <summary> The coordinates of the nose root right. </summary>
         public LandmarkCoordinate NoseRootRight { get; }
+
         /// <summary> The coordinates of the nose left alar top. </summary>
         public LandmarkCoordinate NoseLeftAlarTop { get; }
+
         /// <summary> The coordinates of the nose right alar top. </summary>
         public LandmarkCoordinate NoseRightAlarTop { get; }
+
         /// <summary> The coordinates of the nose left alar out tip. </summary>
         public LandmarkCoordinate NoseLeftAlarOutTip { get; }
+
         /// <summary> The coordinates of the nose right alar out tip. </summary>
         public LandmarkCoordinate NoseRightAlarOutTip { get; }
+
         /// <summary> The coordinates of the upper lip top. </summary>
         public LandmarkCoordinate UpperLipTop { get; }
+
         /// <summary> The coordinates of the upper lip bottom. </summary>
         public LandmarkCoordinate UpperLipBottom { get; }
+
         /// <summary> The coordinates of the under lip top. </summary>
         public LandmarkCoordinate UnderLipTop { get; }
+
         /// <summary> The coordinates of the under lip bottom. </summary>
         public LandmarkCoordinate UnderLipBottom { get; }
     }

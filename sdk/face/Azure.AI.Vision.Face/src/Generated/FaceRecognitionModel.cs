@@ -14,44 +14,63 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct FaceRecognitionModel : IEquatable<FaceRecognitionModel>
     {
         private readonly string _value;
+        /// <summary> The default recognition model for "Detect". All those faceIds created before 2019 March are bonded with this recognition model. </summary>
+        private const string Recognition01Value = "recognition_01";
+        /// <summary> Recognition model released in 2019 March. </summary>
+        private const string Recognition02Value = "recognition_02";
+        /// <summary> Recognition model released in 2020 May. </summary>
+        private const string Recognition03Value = "recognition_03";
+        /// <summary> Recognition model released in 2021 February. It's recommended to use this recognition model for better recognition accuracy. </summary>
+        private const string Recognition04Value = "recognition_04";
 
         /// <summary> Initializes a new instance of <see cref="FaceRecognitionModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FaceRecognitionModel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Recognition01Value = "recognition_01";
-        private const string Recognition02Value = "recognition_02";
-        private const string Recognition03Value = "recognition_03";
-        private const string Recognition04Value = "recognition_04";
+            _value = value;
+        }
 
         /// <summary> The default recognition model for "Detect". All those faceIds created before 2019 March are bonded with this recognition model. </summary>
         public static FaceRecognitionModel Recognition01 { get; } = new FaceRecognitionModel(Recognition01Value);
+
         /// <summary> Recognition model released in 2019 March. </summary>
         public static FaceRecognitionModel Recognition02 { get; } = new FaceRecognitionModel(Recognition02Value);
+
         /// <summary> Recognition model released in 2020 May. </summary>
         public static FaceRecognitionModel Recognition03 { get; } = new FaceRecognitionModel(Recognition03Value);
+
         /// <summary> Recognition model released in 2021 February. It's recommended to use this recognition model for better recognition accuracy. </summary>
         public static FaceRecognitionModel Recognition04 { get; } = new FaceRecognitionModel(Recognition04Value);
+
         /// <summary> Determines if two <see cref="FaceRecognitionModel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FaceRecognitionModel left, FaceRecognitionModel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FaceRecognitionModel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FaceRecognitionModel left, FaceRecognitionModel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FaceRecognitionModel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FaceRecognitionModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FaceRecognitionModel(string value) => new FaceRecognitionModel(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FaceRecognitionModel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FaceRecognitionModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

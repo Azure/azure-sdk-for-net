@@ -13,37 +13,8 @@ namespace Azure.AI.Vision.Face
     /// <summary> An array of candidate colors and confidence level in the presence of each. </summary>
     public partial class HairColor
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HairColor"/>. </summary>
         /// <param name="color"> Name of the hair color. </param>
@@ -57,21 +28,17 @@ namespace Azure.AI.Vision.Face
         /// <summary> Initializes a new instance of <see cref="HairColor"/>. </summary>
         /// <param name="color"> Name of the hair color. </param>
         /// <param name="confidence"> Confidence level of the color. Range between [0,1]. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HairColor(HairColorType color, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HairColor(HairColorType color, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Color = color;
             Confidence = confidence;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HairColor"/> for deserialization. </summary>
-        internal HairColor()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the hair color. </summary>
         public HairColorType Color { get; }
+
         /// <summary> Confidence level of the color. Range between [0,1]. </summary>
         public float Confidence { get; }
     }

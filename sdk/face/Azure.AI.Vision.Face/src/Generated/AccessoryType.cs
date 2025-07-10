@@ -14,41 +14,58 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct AccessoryType : IEquatable<AccessoryType>
     {
         private readonly string _value;
+        /// <summary> Head wear. </summary>
+        private const string HeadwearValue = "headwear";
+        /// <summary> Glasses. </summary>
+        private const string GlassesValue = "glasses";
+        /// <summary> Mask. </summary>
+        private const string MaskValue = "mask";
 
         /// <summary> Initializes a new instance of <see cref="AccessoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AccessoryType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HeadwearValue = "headwear";
-        private const string GlassesValue = "glasses";
-        private const string MaskValue = "mask";
+            _value = value;
+        }
 
         /// <summary> Head wear. </summary>
         public static AccessoryType Headwear { get; } = new AccessoryType(HeadwearValue);
+
         /// <summary> Glasses. </summary>
         public static AccessoryType Glasses { get; } = new AccessoryType(GlassesValue);
+
         /// <summary> Mask. </summary>
         public static AccessoryType Mask { get; } = new AccessoryType(MaskValue);
+
         /// <summary> Determines if two <see cref="AccessoryType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AccessoryType left, AccessoryType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AccessoryType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AccessoryType left, AccessoryType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AccessoryType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AccessoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AccessoryType(string value) => new AccessoryType(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AccessoryType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AccessoryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

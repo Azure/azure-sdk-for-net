@@ -13,37 +13,8 @@ namespace Azure.AI.Vision.Face
     /// <summary> Properties describing occlusions on a given face. </summary>
     public partial class OcclusionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OcclusionProperties"/>. </summary>
         /// <param name="foreheadOccluded"> A boolean value indicating whether forehead is occluded. </param>
@@ -60,24 +31,21 @@ namespace Azure.AI.Vision.Face
         /// <param name="foreheadOccluded"> A boolean value indicating whether forehead is occluded. </param>
         /// <param name="eyeOccluded"> A boolean value indicating whether eyes are occluded. </param>
         /// <param name="mouthOccluded"> A boolean value indicating whether the mouth is occluded. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OcclusionProperties(bool foreheadOccluded, bool eyeOccluded, bool mouthOccluded, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OcclusionProperties(bool foreheadOccluded, bool eyeOccluded, bool mouthOccluded, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ForeheadOccluded = foreheadOccluded;
             EyeOccluded = eyeOccluded;
             MouthOccluded = mouthOccluded;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OcclusionProperties"/> for deserialization. </summary>
-        internal OcclusionProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A boolean value indicating whether forehead is occluded. </summary>
         public bool ForeheadOccluded { get; }
+
         /// <summary> A boolean value indicating whether eyes are occluded. </summary>
         public bool EyeOccluded { get; }
+
         /// <summary> A boolean value indicating whether the mouth is occluded. </summary>
         public bool MouthOccluded { get; }
     }
