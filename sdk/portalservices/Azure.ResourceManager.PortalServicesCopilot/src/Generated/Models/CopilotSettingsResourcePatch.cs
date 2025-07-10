@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PortalServicesCopilot.Models
 {
     /// <summary> The type used for update operations of the CopilotSettingsResource. </summary>
-    public partial class CopilotSettingsResourceUpdate
+    public partial class CopilotSettingsResourcePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CopilotSettingsResourceUpdate"/>. </summary>
-        public CopilotSettingsResourceUpdate()
+        /// <summary> Initializes a new instance of <see cref="CopilotSettingsResourcePatch"/>. </summary>
+        public CopilotSettingsResourcePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CopilotSettingsResourceUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopilotSettingsResourcePatch"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CopilotSettingsResourceUpdate(CopilotSettingsResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CopilotSettingsResourcePatch(CopilotSettingsResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
