@@ -9,7 +9,6 @@ using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Providers.TagMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
-using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Humanizer;
 using Microsoft.CodeAnalysis;
@@ -34,7 +33,7 @@ namespace Azure.Generator.Management.Providers
     /// <summary>
     /// Provides a resource client type.
     /// </summary>
-    internal class ResourceClientProvider : ContextualClientProvider
+    internal sealed class ResourceClientProvider : ContextualClientProvider
     {
         internal static ResourceClientProvider Create(InputModelType model, ResourceMetadata resourceMetadata)
         {
@@ -60,9 +59,9 @@ namespace Azure.Generator.Management.Providers
 
         private readonly ResourceMetadata _resourceMetadata;
 
-        private protected readonly ClientProvider _restClientProvider;
-        private protected readonly FieldProvider _clientDiagnosticsField;
-        private protected readonly FieldProvider _restClientField;
+        private readonly ClientProvider _restClientProvider;
+        private readonly FieldProvider _clientDiagnosticsField;
+        private readonly FieldProvider _restClientField;
 
         private ResourceClientProvider(string resourceName, InputModelType model, InputClient inputClient, ResourceMetadata resourceMetadata)
             : base(new RequestPathPattern(resourceMetadata.ResourceIdPattern))
@@ -108,7 +107,7 @@ namespace Azure.Generator.Management.Providers
         private IReadOnlyList<ResourceClientProvider>? _childResources;
         public IReadOnlyList<ResourceClientProvider> ChildResources => _childResources ??= BuildChildResources();
 
-        private protected virtual IReadOnlyList<ResourceClientProvider> BuildChildResources()
+        private IReadOnlyList<ResourceClientProvider> BuildChildResources()
         {
             // first we find all the resources from the output library
             var allResources = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders

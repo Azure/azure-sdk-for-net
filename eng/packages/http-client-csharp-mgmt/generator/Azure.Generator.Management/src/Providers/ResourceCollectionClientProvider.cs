@@ -24,7 +24,7 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
 {
-    internal class ResourceCollectionClientProvider : ContextualClientProvider
+    internal sealed class ResourceCollectionClientProvider : ContextualClientProvider
     {
         private readonly ResourceMetadata _resourceMetadata;
         private readonly ResourceClientProvider _resource;
