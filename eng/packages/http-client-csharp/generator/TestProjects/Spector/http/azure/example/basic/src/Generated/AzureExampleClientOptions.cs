@@ -9,25 +9,32 @@ using System;
 using Azure.Core;
 using _Specs_.Azure.Example.Basic;
 
-namespace AzureExampleBasicClient
+namespace _Specs_.Azure.Example.Basic
 {
-    /// <summary> Client options for <see cref="AzureExampleClient"/>. </summary>
+    /// <summary> Client options for AzureExampleClient. </summary>
     public partial class AzureExampleClientOptions : ClientOptions
     {
-        private const _Specs_.Azure.Example.Basic.AzureExampleClientOptions.ServiceVersion LatestVersion = _Specs_.Azure.Example.Basic.AzureExampleClientOptions.ServiceVersion.V2022_12_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
 
         /// <summary> Initializes a new instance of AzureExampleClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public AzureExampleClientOptions(_Specs_.Azure.Example.Basic.AzureExampleClientOptions.ServiceVersion version = LatestVersion)
+        public AzureExampleClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                _Specs_.Azure.Example.Basic.AzureExampleClientOptions.ServiceVersion.V2022_12_01_Preview => "2022-12-01-preview",
+                ServiceVersion.V2022_12_01_Preview => "2022-12-01-preview",
                 _ => throw new NotSupportedException()
             };
         }
 
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
+
+        /// <summary> The service version. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> Service version "2022-12-01-preview". </summary>
+            V2022_12_01_Preview = 1,
+        }
     }
 }
