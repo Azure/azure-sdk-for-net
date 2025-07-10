@@ -353,10 +353,6 @@ model EmployeeProperties {
   /** Profile of employee */
   @encode("base64url")
   profile?: bytes;
-
-  /** The status of the last operation. */
-  @visibility(Lifecycle.Read)
-  provisioningState?: ProvisioningState;
 }
 
 /** The provisioning state of a resource. */
@@ -456,6 +452,17 @@ interface Employees {
       employeeGetMethod.crossLanguageDefinitionId
     );
     strictEqual(employeeMetadataDecorator.arguments.methods[0].kind, "Get");
+    
+    const departmentMetadataDecorator = departmentModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    ok(departmentMetadataDecorator);
+    ok(departmentMetadataDecorator.arguments);
+    strictEqual(
+      departmentMetadataDecorator.arguments.parentResourceId,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
+    );
+    
     strictEqual(
       employeeMetadataDecorator.arguments.parentResourceId,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
