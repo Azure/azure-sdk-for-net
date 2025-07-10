@@ -71,11 +71,11 @@ namespace MgmtTypeSpec
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BarSettingsProperties properties = default;
-            string name = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -117,11 +117,11 @@ namespace MgmtTypeSpec
             }
             return new BarSettingsData(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
-                name);
+                properties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

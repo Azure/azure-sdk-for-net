@@ -3,8 +3,12 @@
 
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Azure.Core;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -32,6 +36,15 @@ internal class ResourceVisitor : ScmLibraryVisitor
                 serialization.Update(
                     relativeFilePath: TransformRelativeFilePathForSerialization(serialization),
                     name: TransformName(serialization));
+            }
+
+            foreach (var constructor in type.Constructors)
+            {
+                if (constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal))
+                {
+                    // reorder the parameters: put the parameter "string name" right after the resource identifier parameter
+                    ReorderConstructorParametersIfNecessary(constructor);
+                }
             }
         }
     }
@@ -66,4 +79,26 @@ internal class ResourceVisitor : ScmLibraryVisitor
 
     private static string TransformRelativeFilePathForSerialization(TypeProvider model)
         => Path.Combine("src", "Generated", $"{TransformName(model)}.Serialization.cs");
+
+    private static void ReorderConstructorParametersIfNecessary(ConstructorProvider constructor)
+    {
+        var parameters = constructor.Signature.Parameters;
+        if (parameters.Count <= 1 || parameters[0].Type.FrameworkType != typeof(ResourceIdentifier))
+            return;
+
+        var nameParameterIndex = parameters.ToList().FindIndex(p => p.Name == "name" && p.Type.FrameworkType == typeof(string));
+
+        // If no "name" parameter found or it's already in the second position, return
+        if (nameParameterIndex == -1 || nameParameterIndex == 1)
+            return;
+
+        var reorderedParameters = new List<ParameterProvider>
+        {
+            parameters[0], // ResourceIdentifier
+            parameters[nameParameterIndex] // "name" parameter
+        };
+        reorderedParameters.AddRange(parameters.Skip(1).Where((p, i) => i + 1 != nameParameterIndex));
+
+        constructor.Signature.Update(parameters: reorderedParameters);
+    }
 }
