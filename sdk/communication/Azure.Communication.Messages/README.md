@@ -53,7 +53,7 @@ To send a notification message, call the `Send` or `SendAsync` function from the
 ```C#
 // Create the recipient list, currently only one recipient is supported 
 var recipientList = new List<string> { "<RecipientPhoneNumber>" };
-var textContent = new = new TextNotificationContent(new Guid("<channel-registration-id>"), recipientList, "Come on everyone, let's go for lunch together.");
+var textContent = new TextNotificationContent(new Guid("<channel-registration-id>"), recipientList, "Come on everyone, let's go for lunch together.");
 SendMessageResult result = await notificationMessagesClient.SendAsync(textContent);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 ```
