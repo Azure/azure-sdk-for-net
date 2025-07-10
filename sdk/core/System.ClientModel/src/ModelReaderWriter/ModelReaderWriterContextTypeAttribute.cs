@@ -1,12 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
+
 namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// Attribute to specify the context type for this assemblies <see cref="ModelReaderWriterContext"/> for source generation.
 /// </summary>
 [AttributeUsage(AttributeTargets.Assembly)]
+[EditorBrowsable(EditorBrowsableState.Never)]
 public class ModelReaderWriterContextTypeAttribute : Attribute
 {
     /// <summary>
