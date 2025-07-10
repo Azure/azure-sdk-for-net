@@ -69,7 +69,7 @@ PersistentThreadMessage message = client.Messages.CreateMessage(
     MessageRole.User,
     "What's the weather in Seattle?");
 
-ThreadRun run = client.Runs.CreateRun(thread.Id, agent.Id);
+ThreadRun run = client.Runs.CreateRun(thread, agent);
 
 do
 {
@@ -93,7 +93,7 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     MessageRole.User,
     "What's the weather in Seattle?");
 
-ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
+ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
 do
 {
