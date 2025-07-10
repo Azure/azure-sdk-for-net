@@ -1,18 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using Azure.Core;
-
+using Azure.Core.Pipeline;
 using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
+using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,14 +26,29 @@ namespace Azure.Generator.Management.Providers
 {
     internal class ResourceCollectionClientProvider : ContextualClientProvider
     {
+        private readonly ResourceMetadata _resourceMetadata;
         private readonly ResourceClientProvider _resource;
         private readonly InputServiceMethod? _getAll;
         private readonly InputServiceMethod? _create;
         private readonly InputServiceMethod? _get;
 
-        internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, ResourceMetadata resourceMetadata) : base(GetContextualRequestPattern(resourceMetadata))
+        private readonly ClientProvider _restClientProvider;
+        private readonly FieldProvider _clientDiagnosticsField;
+        private readonly FieldProvider _restClientField;
+
+        // This is the resource type of the current resource. Not the resource type of my parent resource
+        private ScopedApi<ResourceType> _resourceTypeExpression;
+
+        internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, InputClient inputClient, ResourceMetadata resourceMetadata) : base(GetContextualRequestPattern(resourceMetadata))
         {
+            _resourceMetadata = resourceMetadata;
             _resource = resource;
+
+            _restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+            _clientDiagnosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), ResourceHelpers.GetClientDiagnosticFieldName(ResourceName), this);
+            _restClientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, _restClientProvider.Type, $"_{ResourceName.ToLower()}RestClient", this);
+
+            _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
             foreach (var method in resourceMetadata.Methods)
             {
@@ -77,7 +95,13 @@ namespace Azure.Generator.Management.Providers
             };
         }
 
+        public ResourceClientProvider Resource => _resource;
+
         internal string ResourceName => _resource.ResourceName;
+        internal ResourceScope ResourceScope => _resource.ResourceScope;
+
+        private protected override OperationSourceProvider BuildOperationSource()
+            => new OperationSourceProvider(_resource);
 
         protected override TypeProvider[] BuildSerializationProviders() => [];
 
@@ -94,25 +118,45 @@ namespace Azure.Generator.Management.Providers
 
         protected override PropertyProvider[] BuildProperties() => [];
 
-        protected override FieldProvider[] BuildFields() => [_clientDiagnosticsField, _clientField];
+        protected override FieldProvider[] BuildFields() => [_clientDiagnosticsField, _restClientField];
 
         protected override ConstructorProvider[] BuildConstructors()
             => [ConstructorProviderHelpers.BuildMockingConstructor(this), BuildResourceIdentifierConstructor()];
 
-        // TODO -- we need to change this type to its parent resource type.
-        private ScopedApi<ResourceType>? _resourceTypeExpression;
-        protected ScopedApi<ResourceType> ResourceTypeExpression => _resourceTypeExpression ??= BuildCollectionResourceTypeExpression();
-
-        private ScopedApi<ResourceType> BuildCollectionResourceTypeExpression()
+        private ConstructorProvider BuildResourceIdentifierConstructor()
         {
-            // we need to know the parent of the current resource, and use the `ResourceType` property of the parent resource.
-            return Static(GetParentResourceType()).Property("ResourceType").As<ResourceType>();
+            var idParameter = new ParameterProvider("id", $"The identifier of the resource that is the target of operations.", typeof(ResourceIdentifier));
+            var parameters = new List<ParameterProvider>
+            {
+                new("client", $"The client parameters to use in these operations.", typeof(ArmClient)),
+                idParameter
+            };
+
+            var initializer = new ConstructorInitializer(true, parameters);
+            var signature = new ConstructorSignature(
+                Type,
+                $"Initializes a new instance of {Type:C} class.",
+                MethodSignatureModifiers.Internal,
+                parameters,
+                null,
+                initializer);
+
+            var bodyStatements = new MethodBodyStatement[]
+            {
+                _clientDiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeExpression.Namespace(), This.As<ArmResource>().Diagnostics())).Terminate(),
+                ResourceHelpers.BuildTryGetApiVersionInvocation(ResourceName, _resourceTypeExpression, out var apiVersion).Terminate(),
+                _restClientField.Assign(New.Instance(_restClientProvider.Type, _clientDiagnosticsField, This.As<ArmResource>().Pipeline(), This.As<ArmResource>().Endpoint(), apiVersion)).Terminate(),
+                Static(Type).Invoke("ValidateResourceId", idParameter).Terminate()
+            };
+
+            return new ConstructorProvider(signature, bodyStatements, this);
         }
 
-        private CSharpType GetParentResourceType()
+        // TODO -- this expression currently is incorrect. Maybe we need to leave an API in OutputLibrary for us to query the parent resource, because when construct the collection, we do not know it yet.
+        private static CSharpType GetParentResourceType(ResourceMetadata resourceMetadata, ResourceClientProvider resource)
         {
             // TODO -- implement this to be more accurate when we implement the parent of resources.
-            switch (ResourceScope)
+            switch (resourceMetadata.ResourceScope)
             {
                 case ResourceScope.ResourceGroup:
                     return typeof(ResourceGroupResource);
@@ -121,11 +165,21 @@ namespace Azure.Generator.Management.Providers
                 case ResourceScope.Tenant:
                     return typeof(TenantResource);
                 default:
-                    throw new NotSupportedException($"Unsupported resource scope: {ResourceScope}");
+                    // TODO -- this is incorrect, but we put it here as a placeholder.
+                    return resource.Type;
             }
         }
 
-        protected override MethodProvider[] BuildMethods() => [BuildValidateResourceIdMethod(), .. BuildCreateOrUpdateMethods(), .. BuildGetMethods(), .. BuildGetAllMethods(), .. BuildExistsMethods(), .. BuildGetIfExistsMethods(), .. BuildEnumeratorMethods()];
+        protected override MethodProvider[] BuildMethods()
+            => [
+                BuildValidateResourceIdMethod(Static(GetParentResourceType(_resourceMetadata, _resource)).As<ArmResource>().ResourceType()),
+                .. BuildCreateOrUpdateMethods(),
+                .. BuildGetMethods(),
+                .. BuildGetAllMethods(),
+                .. BuildExistsMethods(),
+                .. BuildGetIfExistsMethods(),
+                .. BuildEnumeratorMethods()
+                ];
 
         private MethodProvider[] BuildGetAllMethods()
         {
@@ -176,7 +230,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_create!.Operation, isAsync);
-                result.Add(new ResourceOperationMethodProvider(this, _create, convenienceMethod, isAsync));
+                result.Add(new ResourceOperationMethodProvider(this, _resource, _restClientProvider, _create, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync));
             }
 
             return result;
@@ -185,7 +239,7 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildGetAllMethod(bool isAsync)
         {
             var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_getAll!.Operation, isAsync);
-            return new GetAllOperationMethodProvider(this, _getAll, convenienceMethod, isAsync);
+            return new GetAllOperationMethodProvider(this, _restClientProvider, _getAll, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync);
         }
 
         private List<MethodProvider> BuildGetMethods()
@@ -199,7 +253,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
-                result.Add(new ResourceOperationMethodProvider(this, _get, convenienceMethod, isAsync));
+                result.Add(new ResourceOperationMethodProvider(this, _resource, _restClientProvider, _get, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync));
             }
 
             return result;
@@ -216,7 +270,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
-                var existsMethodProvider = new ExistsOperationMethodProvider(this, _get, convenienceMethod, isAsync);
+                var existsMethodProvider = new ExistsOperationMethodProvider(this, _restClientProvider, _get, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync);
                 result.Add(existsMethodProvider);
             }
 
@@ -234,7 +288,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
-                var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _get, convenienceMethod, isAsync);
+                var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _resource, _restClientProvider, _get, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync);
                 result.Add(getIfExistsMethodProvider);
             }
 

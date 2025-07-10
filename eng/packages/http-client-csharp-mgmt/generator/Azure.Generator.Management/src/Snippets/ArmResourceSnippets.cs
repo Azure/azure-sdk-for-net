@@ -17,7 +17,7 @@ namespace Azure.Generator.Management.Snippets
             => resource.Property("Client").As<ArmClient>();
 
         public static ScopedApi<ResourceIdentifier> Id(this ScopedApi<ArmResource> resource)
-            => resource.Property("Id").As<ResourceIdentifier>();
+            => resource.Property(nameof(ArmResource.Id)).As<ResourceIdentifier>();
 
         public static ScopedApi<ClientDiagnostics> Diagnostics(this ScopedApi<ArmResource> resource)
             => resource.Property("Diagnostics").As<ClientDiagnostics>();
@@ -27,6 +27,15 @@ namespace Azure.Generator.Management.Snippets
 
         public static ScopedApi<Uri> Endpoint(this ScopedApi<ArmResource> resource)
             => resource.Property("Endpoint").As<Uri>();
+
+        /// <summary>
+        /// Returns the "ResourceType" property on an ArmResource.
+        /// Note: the abstract class ArmResource does not have a ResourceType property, but our generated ArmResource's derived classes will always have one.
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <returns></returns>
+        public static ScopedApi<ResourceType> ResourceType(this ScopedApi<ArmResource> resource)
+            => resource.Property("ResourceType").As<ResourceType>();
 
         public static ValueExpression GetCachedClient(this ScopedApi<ArmResource> resource, CodeWriterDeclaration client, Func<ScopedApi<ArmClient>, ValueExpression> factory)
         {

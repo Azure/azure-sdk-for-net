@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Pipeline;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.TagMethodProviders;
 using Azure.Generator.Management.Tests.Common;
@@ -147,11 +148,13 @@ namespace Azure.Generator.Management.Tests.Providers
             var resourceClientProvider = GetResourceClientProvider();
 
             // Get the appropriate tag method provider based on method name and async flag
+            var clientDiagnosticField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), "_clientDiagnostics", resourceClientProvider);
+            var restClientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(object), "_restClient", resourceClientProvider);
             BaseTagMethodProvider tagMethodProvider = methodName switch
             {
-                "AddTag" or "AddTagAsync" => new AddTagMethodProvider(resourceClientProvider, isAsync),
-                "RemoveTag" or "RemoveTagAsync" => new RemoveTagMethodProvider(resourceClientProvider, isAsync),
-                "SetTags" or "SetTagsAsync" => new SetTagsMethodProvider(resourceClientProvider, isAsync),
+                "AddTag" or "AddTagAsync" => new AddTagMethodProvider(resourceClientProvider, clientDiagnosticField, restClientField, isAsync),
+                "RemoveTag" or "RemoveTagAsync" => new RemoveTagMethodProvider(resourceClientProvider, clientDiagnosticField, restClientField, isAsync),
+                "SetTags" or "SetTagsAsync" => new SetTagsMethodProvider(resourceClientProvider, clientDiagnosticField, restClientField, isAsync),
                 _ => throw new ArgumentException($"Unknown tag method: {methodName}")
             };
 

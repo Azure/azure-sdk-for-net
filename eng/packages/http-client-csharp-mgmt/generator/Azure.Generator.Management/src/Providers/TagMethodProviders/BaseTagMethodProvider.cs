@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Extensions;
+using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Utilities;
+using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
-using Microsoft.TypeSpec.Generator.Expressions;
-using Microsoft.TypeSpec.Generator.Input;
-using Azure.Generator.Management.Snippets;
-using Azure.Generator.Management.Utilities;
-using Azure.Generator.Management.Extensions;
 using System.Collections.Generic;
-using System.Net.Http;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
-using System.Linq;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
 {
@@ -21,20 +20,26 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly MethodSignature _signature;
         protected readonly MethodBodyStatement[] _bodyStatements;
         protected readonly TypeProvider _enclosingType;
-        protected readonly ResourceClientProvider _resourceClientProvider;
+        protected readonly ResourceClientProvider _resource;
+        protected readonly FieldProvider _clientDiagnosticsField;
+        protected readonly FieldProvider _restClientField;
         protected readonly bool _isAsync;
         protected static readonly ParameterProvider _keyParameter = new ParameterProvider("key", $"The key for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
         protected static readonly ParameterProvider _valueParameter = new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
 
         protected BaseTagMethodProvider(
-            ResourceClientProvider resourceClientProvider,
+            ResourceClientProvider resource,
+            FieldProvider clientDiagnosticsField,
+            FieldProvider restClientField,
             bool isAsync,
             string methodName,
             string methodDescription)
         {
-            _resourceClientProvider = resourceClientProvider;
-            _enclosingType = resourceClientProvider;
+            _resource = resource;
+            _enclosingType = resource;
             _isAsync = isAsync;
+            _clientDiagnosticsField = clientDiagnosticsField;
+            _restClientField = restClientField;
 
             _signature = CreateMethodSignature(methodName, methodDescription);
             _bodyStatements = BuildBodyStatements();
@@ -45,7 +50,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
         protected MethodSignature CreateMethodSignature(string methodName, string description)
         {
-            var returnType = new CSharpType(typeof(Azure.Response<>), _resourceClientProvider.ResourceClientCSharpType).WrapAsync(_isAsync);
+            var returnType = new CSharpType(typeof(Response<>), _resource.Type).WrapAsync(_isAsync);
             var modifiers = MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual;
             if (_isAsync)
             {
@@ -103,7 +108,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var requestMethod = clientProvider.GetRequestMethodByOperation(getServiceMethod.Operation);
             var arguments = resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, getServiceMethod.Operation);
 
-            statements.Add(ResourceMethodSnippets.CreateHttpMessage(resourceClientProvider, "CreateGetRequest", arguments, out var messageVariable));
+            statements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, "CreateGetRequest", arguments, out var messageVariable));
 
             statements.AddRange(ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                 messageVariable,
@@ -116,15 +121,15 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         }
 
         protected static List<MethodBodyStatement> CreatePrimaryPathResponseStatements(
-            ResourceClientProvider resourceClientProvider,
+            ResourceClientProvider resource,
             VariableExpression responseVar)
         {
             return
             [
                 // return Response.FromValue(new ResourceType(Client, response.Value), response.GetRawResponse());
                 Return(Static(typeof(Response)).Invoke("FromValue", [
-                    New.Instance(resourceClientProvider.ResourceClientCSharpType, [
-                        This.Property("Client"),
+                    New.Instance(resource.Type, [
+                        This.As<ArmResource>().Client(),
                         responseVar.Property("Value")
                     ]),
                     responseVar.Invoke("GetRawResponse")

@@ -7,13 +7,13 @@ using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -25,11 +25,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     /// </summary>
     internal class ResourceOperationMethodProvider
     {
-        protected readonly ResourceClientProvider _resourceClientProvider;
+        protected readonly ContextualClientProvider _provider;
+        protected readonly ResourceClientProvider _resource;
+        protected readonly ClientProvider _restClient;
         protected readonly InputServiceMethod _serviceMethod;
         protected readonly MethodProvider _convenienceMethod;
         protected readonly bool _isAsync;
         protected readonly ValueExpression _clientDiagnosticsField;
+        protected readonly ValueExpression _restClientField;
         protected readonly MethodSignature _signature;
         protected readonly MethodBodyStatement[] _bodyStatements;
 
@@ -38,13 +41,30 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly bool _isLongRunningOperation;
         private readonly bool _isFakeLongRunningOperation;
 
+        /// <summary>
+        /// Creates a new instance of <see cref="ResourceOperationMethodProvider"/> which represents a method on a client
+        /// </summary>
+        /// <param name="provider">The carrier of this operation. </param>
+        /// <param name="resource">The corresponding resource of this operation. </param>
+        /// <param name="restClient">The client provider for this operation to send the request. </param>
+        /// <param name="method">The input service method that we are building from. </param>
+        /// <param name="convenienceMethod">The corresponding convenience method provided by the generator framework. </param>
+        /// <param name="clientDiagnosticsField">The field that holds the client diagnostics instance. </param>
+        /// <param name="restClientField">The field that holds the rest client instance. </param>
+        /// <param name="isAsync">Whether this method is an async method. </param>
         public ResourceOperationMethodProvider(
-            ResourceClientProvider resourceClientProvider,
+            ContextualClientProvider provider,
+            ResourceClientProvider resource,
+            ClientProvider restClient,
             InputServiceMethod method,
             MethodProvider convenienceMethod,
+            FieldProvider clientDiagnosticsField, // we must pass this field in because in mockable resources (holding the extension methods) have multiple such fields
+            FieldProvider restClientField,
             bool isAsync)
         {
-            _resourceClientProvider = resourceClientProvider;
+            _provider = provider;
+            _resource = resource;
+            _restClient = restClient;
             _serviceMethod = method;
             _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
@@ -52,7 +72,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _isGeneric = _responseGenericType != null;
             _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
             _isFakeLongRunningOperation = _serviceMethod.IsFakeLongRunningOperation();
-            _clientDiagnosticsField = resourceClientProvider.GetClientDiagnosticsField();
+            _clientDiagnosticsField = clientDiagnosticsField;
+            _restClientField = restClientField;
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
         }
@@ -62,12 +83,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return new MethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
-                resourceOperationMethodProvider._resourceClientProvider.Source);
+                resourceOperationMethodProvider._provider.Source);
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()
         {
-            var scopeStatements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resourceClientProvider, _signature.Name, out var scopeVariable);
+            var scopeStatements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_provider, _clientDiagnosticsField, _signature.Name, out var scopeVariable);
             return [
                 .. scopeStatements,
                 new TryCatchFinallyStatement(
@@ -83,7 +104,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.Name,
                 _convenienceMethod.Signature.Description,
                 _convenienceMethod.Signature.Modifiers,
-                _serviceMethod.GetOperationMethodReturnType(_isAsync, _resourceClientProvider.ResourceClientCSharpType, _resourceClientProvider.ResourceData.Type),
+                _serviceMethod.GetOperationMethodReturnType(_isAsync, _resource.Type, _resource.ResourceData.Type),
                 _convenienceMethod.Signature.ReturnDescription,
                 GetOperationMethodParameters(),
                 _convenienceMethod.Signature.Attributes,
@@ -97,16 +118,16 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             var cancellationTokenParameter = KnownParameters.CancellationTokenParameter;
 
-            var requestMethod = _resourceClientProvider.GetClientProvider().GetRequestMethodByOperation(_serviceMethod.Operation);
+            var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
             var tryStatements = new List<MethodBodyStatement>
             {
                 ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable)
             };
 
             // Populate arguments for the REST client method call
-            var arguments = _resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _serviceMethod.Operation);
+            var arguments = _provider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _serviceMethod.Operation);
 
-            tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_resourceClientProvider, requestMethod.Signature.Name, arguments, out var messageVariable));
+            tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
@@ -114,8 +135,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 tryStatements.AddRange(
                     _isFakeLongRunningOperation ?
-                    BuildFakeLroHandling(messageVariable,responseVariable,cancellationTokenParameter) :
-                    BuildLroHandling(messageVariable,responseVariable,cancellationTokenParameter));
+                    BuildFakeLroHandling(messageVariable, responseVariable, cancellationTokenParameter) :
+                    BuildLroHandling(messageVariable, responseVariable, cancellationTokenParameter));
             }
             else
             {
@@ -157,7 +178,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var armOperationType = _isGeneric
                 ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type
-                    .MakeGenericType([_resourceClientProvider.ResourceClientCSharpType])
+                    .MakeGenericType([_resource.Type])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 
             var uriDeclaration = ResourceMethodSnippets.CreateUriFromMessage(messageVariable, out var uriVariable);
@@ -168,7 +189,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var responseFromValueExpression = Static(typeof(Response)).Invoke(
                 nameof(Response.FromValue),
                 New.Instance(
-                    _resourceClientProvider.ResourceClientCSharpType,
+                    _resource.Type,
                     This.Property("Client"),
                     responseVariable.Property("Value")),
                 responseVariable.Invoke("GetRawResponse"));
@@ -196,7 +217,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var armOperationType = _isGeneric
                 ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type
-                    .MakeGenericType([_resourceClientProvider.ResourceClientCSharpType])
+                    .MakeGenericType([_resource.Type])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 
             ValueExpression[] armOperationArguments = [
@@ -209,7 +230,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var operationInstanceArguments = _isGeneric
                 ? [
-                    New.Instance(_resourceClientProvider.Source.Type, This.Property("Client")),
+                    New.Instance(_provider.Source.Type, This.Property("Client")),
                     .. armOperationArguments
                   ]
                 : armOperationArguments;
@@ -265,7 +286,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var resourceType = typeof(ArmResource);
             var returnValueExpression = New.Instance(
-                _resourceClientProvider.ResourceClientCSharpType,
+                _resource.Type,
                 This.Property("Client"),
                 responseVariable.Property("Value"));
 
@@ -295,7 +316,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                     continue;
                 }
 
-                if (!_resourceClientProvider.ContextualParameters.ContainsKey(parameter.Name))
+                if (!_provider.TryGetContextualParameter(parameter.Name, out _))
                 {
                     var outputParameter = ManagementClientGenerator.Instance.TypeFactory.CreateParameter(parameter)!;
                     if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))

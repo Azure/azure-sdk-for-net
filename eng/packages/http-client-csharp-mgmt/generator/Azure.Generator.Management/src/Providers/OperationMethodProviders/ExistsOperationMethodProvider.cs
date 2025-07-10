@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Utilities;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -13,10 +14,13 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class ExistsOperationMethodProvider(
-        ResourceClientProvider resourceClientProvider,
+        ResourceCollectionClientProvider collection,
+        ClientProvider restClient,
         InputServiceMethod method,
         MethodProvider convenienceMethod,
-        bool isAsync) : ResourceOperationMethodProvider(resourceClientProvider, method, convenienceMethod, isAsync)
+        FieldProvider clientDiagnosticsField,
+        FieldProvider restClientField,
+        bool isAsync) : ResourceOperationMethodProvider(collection, collection.Resource, restClient, method, convenienceMethod, clientDiagnosticsField, restClientField, isAsync)
     {
         protected override MethodSignature CreateSignature()
         {

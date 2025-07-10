@@ -20,7 +20,7 @@ namespace MgmtTypeSpec
     /// <summary></summary>
     public partial class FooSettingsResource : ArmResource
     {
-        private readonly ClientDiagnostics _foosettingsClientDiagnostics;
+        private readonly ClientDiagnostics _fooSettingsClientDiagnostics;
         private readonly FooSettingsOperations _foosettingsRestClient;
         private readonly FooSettingsData _data;
         /// <summary> Gets the resource type for the operations. </summary>
@@ -45,9 +45,9 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FooSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _foosettingsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string foosettingsApiVersion);
-            _foosettingsRestClient = new FooSettingsOperations(_foosettingsClientDiagnostics, Pipeline, Endpoint, foosettingsApiVersion);
+            _fooSettingsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string fooSettingsApiVersion);
+            _foosettingsRestClient = new FooSettingsOperations(_fooSettingsClientDiagnostics, Pipeline, Endpoint, fooSettingsApiVersion);
             ValidateResourceId(id);
         }
 
@@ -90,7 +90,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FooSettingsResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _foosettingsClientDiagnostics.CreateScope("FooSettingsResource.Get");
+            using DiagnosticScope scope = _fooSettingsClientDiagnostics.CreateScope("FooSettingsResource.Get");
             scope.Start();
             try
             {
@@ -119,7 +119,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FooSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _foosettingsClientDiagnostics.CreateScope("FooSettingsResource.GetAsync");
+            using DiagnosticScope scope = _fooSettingsClientDiagnostics.CreateScope("FooSettingsResource.GetAsync");
             scope.Start();
             try
             {
@@ -153,7 +153,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _foosettingsClientDiagnostics.CreateScope("FooSettingsResource.CreateOrUpdate");
+            using DiagnosticScope scope = _fooSettingsClientDiagnostics.CreateScope("FooSettingsResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -190,7 +190,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _foosettingsClientDiagnostics.CreateScope("FooSettingsResource.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _fooSettingsClientDiagnostics.CreateScope("FooSettingsResource.CreateOrUpdateAsync");
             scope.Start();
             try
             {
@@ -226,7 +226,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _foosettingsClientDiagnostics.CreateScope("FooSettingsResource.Update");
+            using DiagnosticScope scope = _fooSettingsClientDiagnostics.CreateScope("FooSettingsResource.Update");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _foosettingsClientDiagnostics.CreateScope("FooSettingsResource.UpdateAsync");
+            using DiagnosticScope scope = _fooSettingsClientDiagnostics.CreateScope("FooSettingsResource.UpdateAsync");
             scope.Start();
             try
             {
@@ -289,7 +289,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _foosettingsClientDiagnostics.CreateScope("FooSettingsResource.Delete");
+            using DiagnosticScope scope = _fooSettingsClientDiagnostics.CreateScope("FooSettingsResource.Delete");
             scope.Start();
             try
             {
@@ -321,7 +321,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _foosettingsClientDiagnostics.CreateScope("FooSettingsResource.DeleteAsync");
+            using DiagnosticScope scope = _fooSettingsClientDiagnostics.CreateScope("FooSettingsResource.DeleteAsync");
             scope.Start();
             try
             {

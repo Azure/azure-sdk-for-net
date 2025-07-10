@@ -34,18 +34,18 @@ namespace Azure.Generator.Management.Snippets
         }
 
         public static List<MethodBodyStatement> CreateDiagnosticScopeStatements(
-            ResourceClientProvider resourceClientProvider,
+            ContextualClientProvider provider,
+            ValueExpression clientDiagnostics,
             string operationName,
             out VariableExpression scopeVariable)
         {
             var statements = new List<MethodBodyStatement>();
 
             // using var scope = _clientDiagnostics.CreateScope("ResourceName.OperationName");
-            var clientDiagnosticsField = resourceClientProvider.GetClientDiagnosticsField();
             var scopeDeclaration = UsingDeclare(
                 "scope",
                 typeof(DiagnosticScope),
-                clientDiagnosticsField.Invoke("CreateScope", [Literal($"{resourceClientProvider.Name}.{operationName}")]),
+                clientDiagnostics.Invoke("CreateScope", [Literal($"{provider.Name}.{operationName}")]),
                 out scopeVariable);
             statements.Add(scopeDeclaration);
 
@@ -84,7 +84,7 @@ namespace Azure.Generator.Management.Snippets
         }
 
         public static MethodBodyStatement CreateHttpMessage(
-            ResourceClientProvider resourceClientProvider,
+            ValueExpression restClient,
             string methodName,
             IReadOnlyList<ValueExpression> arguments,
             out VariableExpression messageVariable)
@@ -93,7 +93,7 @@ namespace Azure.Generator.Management.Snippets
             return Declare(
                 "message",
                 typeof(HttpMessage),
-                resourceClientProvider.GetRestClientField().Invoke(methodName, arguments),
+                restClient.Invoke(methodName, arguments),
                 out messageVariable);
         }
 
