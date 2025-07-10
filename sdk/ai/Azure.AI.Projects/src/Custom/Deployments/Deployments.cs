@@ -4,6 +4,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -16,31 +18,29 @@ namespace Azure.AI.Projects
     /// <summary> The Deployments sub-client. </summary>
     public partial class Deployments
     {
-        public virtual ModelDeployment GetModelDeployment(string name, CancellationToken cancellationToken = default)
+        public virtual ModelDeployment GetModelDeployment(string name, string clientRequestId, RequestOptions options)
         {
-            Response<AIDeployment> response = GetDeployment(name, cancellationToken);
-            ModelDeployment deployment = (ModelDeployment)response.Value;
+            ClientResult response = Get(name, clientRequestId, options);
+            ModelDeployment deployment = (ModelDeployment)response;
+            return deployment;
+        }
+        public virtual ModelDeployment GetModelDeployment(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        {
+            ClientResult response = Get(name, clientRequestId, cancellationToken);
+            ModelDeployment deployment = (ModelDeployment)response;
+            return deployment;
+        }
+        public virtual async Task<ModelDeployment> GetModelDeploymentAsync(string name, string clientRequestId, RequestOptions options)
+        {
+            ClientResult response = await GetAsync(name, clientRequestId, options).ConfigureAwait(false);
+            ModelDeployment deployment = (ModelDeployment)response;
             return deployment;
         }
 
-        public virtual ModelDeployment GetModelDeployment(string name, RequestContext context)
+        public virtual async Task<ModelDeployment> GetModelDeploymentAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            Response response = GetDeployment(name, context);
-            ModelDeployment deployment = (ModelDeployment)AIDeployment.FromResponse(response);
-            return deployment;
-        }
-
-        public virtual async Task<ModelDeployment> GetModelDeploymentAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Response<AIDeployment> response = await GetDeploymentAsync(name, cancellationToken).ConfigureAwait(false);;
-            ModelDeployment deployment = (ModelDeployment)response.Value;
-            return deployment;
-        }
-
-        public virtual async Task<ModelDeployment> GetModelDeploymentAsync(string name, RequestContext context)
-        {
-            Response response = await GetDeploymentAsync(name, context).ConfigureAwait(false);
-            ModelDeployment deployment = (ModelDeployment)AIDeployment.FromResponse(response);
+            ClientResult response = await GetAsync(name, clientRequestId, cancellationToken).ConfigureAwait(false);
+            ModelDeployment deployment = (ModelDeployment)response;
             return deployment;
         }
     }

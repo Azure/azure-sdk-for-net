@@ -4,7 +4,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Threading;
 
 namespace Azure.AI.Projects
 {
@@ -24,43 +23,7 @@ namespace Azure.AI.Projects
         {
         }
 
-        /// <summary> Initializes a new instance of AIProjectClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        internal AIProjectClient(Uri endpoint, AIProjectClientOptions options)
-        {
-            options ??= new AIProjectClientOptions();
-
-            _endpoint = endpoint;
-            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), Array.Empty<PipelinePolicy>(), Array.Empty<PipelinePolicy>());
-            _apiVersion = options.Version;
-        }
-
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
-
-        /// <summary> Initializes a new instance of Connections. </summary>
-        public virtual Connections GetConnectionsClient()
-        {
-            return Volatile.Read(ref _cachedConnections) ?? Interlocked.CompareExchange(ref _cachedConnections, new Connections(Pipeline, _endpoint, _apiVersion), null) ?? _cachedConnections;
-        }
-
-        /// <summary> Initializes a new instance of Datasets. </summary>
-        public virtual Datasets GetDatasetsClient()
-        {
-            return Volatile.Read(ref _cachedDatasets) ?? Interlocked.CompareExchange(ref _cachedDatasets, new Datasets(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDatasets;
-        }
-
-        /// <summary> Initializes a new instance of Indexes. </summary>
-        public virtual Indexes GetIndexesClient()
-        {
-            return Volatile.Read(ref _cachedIndexes) ?? Interlocked.CompareExchange(ref _cachedIndexes, new Indexes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedIndexes;
-        }
-
-        /// <summary> Initializes a new instance of Deployments. </summary>
-        public virtual Deployments GetDeploymentsClient()
-        {
-            return Volatile.Read(ref _cachedDeployments) ?? Interlocked.CompareExchange(ref _cachedDeployments, new Deployments(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDeployments;
-        }
     }
 }

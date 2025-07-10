@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 using System.Runtime.InteropServices.ComTypes;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.ClientModel;
 
 namespace Azure.AI.Projects
 {
@@ -27,7 +28,7 @@ namespace Azure.AI.Projects
                 pendingUploadId: null,
                 connectionName: connectionName,
                 pendingUploadType: PendingUploadType.BlobReference,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
 
             PendingUploadResponse pendingUploadResponse = PendingUpload(
                 name: name,
@@ -76,11 +77,11 @@ namespace Azure.AI.Projects
                 var uriBuilder = new UriBuilder(blobClient.Uri) { Query = "" };
                 Uri dataUri = uriBuilder.Uri;
 
-                RequestContent content = new FileDatasetVersion(dataUri: dataUri).ToRequestContent();
-
+                FileDatasetVersion fileDatasetVersion = new FileDatasetVersion(dataUri: dataUri);
+                BinaryContent content = BinaryContent.Create(fileDatasetVersion);
                 CreateOrUpdate(name, outputVersion, content);
 
-                return GetDataset(name, outputVersion);
+                return Get(name, outputVersion);
             }
         }
 
@@ -122,10 +123,11 @@ namespace Azure.AI.Projects
             var uriBuilder = new UriBuilder(blobClient!.Uri) { Query = "" };
             Uri dataUri = uriBuilder.Uri;
 
-            RequestContent content = new FolderDatasetVersion(dataUri: dataUri).ToRequestContent();
+            FolderDatasetVersion folderDatasetVersion = new FolderDatasetVersion(dataUri: dataUri);
+            BinaryContent content = BinaryContent.Create(folderDatasetVersion);
             CreateOrUpdate(name, outputVersion, content);
 
-            return GetDataset(name, outputVersion);
+            return Get(name, outputVersion);
         }
 
         /// <summary>
@@ -137,7 +139,7 @@ namespace Azure.AI.Projects
                 pendingUploadId: null,
                 connectionName: connectionName,
                 pendingUploadType: PendingUploadType.BlobReference,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
 
             PendingUploadResponse pendingUploadResponse = await PendingUploadAsync(
                 name: name,
@@ -185,11 +187,11 @@ namespace Azure.AI.Projects
                 var uriBuilder = new UriBuilder(blobClient.Uri) { Query = "" };
                 Uri dataUri = uriBuilder.Uri;
 
-                RequestContent content = new FileDatasetVersion(dataUri: dataUri).ToRequestContent();
-
+                FileDatasetVersion fileDatasetVersion = new FileDatasetVersion(dataUri: dataUri);
+                BinaryContent content = BinaryContent.Create(fileDatasetVersion);
                 await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
 
-                return await GetDatasetAsync(name, outputVersion).ConfigureAwait(false);
+                return await GetAsync(name, outputVersion).ConfigureAwait(false);
             }
         }
 
@@ -231,10 +233,11 @@ namespace Azure.AI.Projects
             var uriBuilder = new UriBuilder(blobClient!.Uri) { Query = "" };
             Uri dataUri = uriBuilder.Uri;
 
-            RequestContent content = new FolderDatasetVersion(dataUri: dataUri).ToRequestContent();
+            FolderDatasetVersion folderDatasetVersion = new FolderDatasetVersion(dataUri: dataUri);
+            BinaryContent content = BinaryContent.Create(folderDatasetVersion);
             await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
 
-            return await GetDatasetAsync(name, outputVersion).ConfigureAwait(false);
+            return await GetAsync(name, outputVersion).ConfigureAwait(false);
         }
     }
 }
