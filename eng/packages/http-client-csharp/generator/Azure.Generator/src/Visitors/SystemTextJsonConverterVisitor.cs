@@ -89,7 +89,7 @@ namespace Azure.Generator.Visitors
                 var readerParameter = new ParameterProvider("reader", $"The reader.", typeof(Utf8JsonReader), isRef: true);
                 return new MethodProvider(new MethodSignature(
                         "Read",
-                        $"Reads the JSON representation into the model.",
+                        $"Reads the JSON representation and converts into the model.",
                         MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
                         _serializationProvider.Type,
                         null,
@@ -101,10 +101,10 @@ namespace Azure.Generator.Visitors
                     bodyStatements:
                         new[]
                         {
-                            UsingDeclare("document", typeof(JsonDocument), Static<JsonDocument>().Invoke("ParseValue", readerParameter), out var documentVariable),
+                            UsingDeclare("document", typeof(JsonDocument), Static<JsonDocument>().Invoke(nameof(JsonDocument.ParseValue), readerParameter), out var documentVariable),
                             Return(Static().Invoke(
                                 $"Deserialize{_serializationProvider.Name}",
-                                documentVariable.Property("RootElement"),
+                                documentVariable.Property(nameof(JsonDocument.RootElement)),
                                 WireOptions))
                         },
                     this);
