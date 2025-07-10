@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -21,11 +22,14 @@ namespace Azure.Generator.Visitors
 {
     internal class SystemTextJsonConverterVisitor : ScmLibraryVisitor
     {
+        private const string SystemTextJsonConverterDecoratorName = "Azure.ClientGenerator.Core.@useSystemTextJsonConverter";
+        private static ValueExpression WireOptions = Static(new ModelSerializationExtensionsDefinition().Type).Property("WireOptions");
+
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
-            if (model.Decorators.Any(d => d.Name == "Azure.ClientGenerator.Core.@useSystemTextJsonConverter"))
+            if (model.Decorators.Any(d => d.Name == SystemTextJsonConverterDecoratorName) && type?.SerializationProviders.Count > 0)
             {
-                var serializationProvider = type!.SerializationProviders[0];
+                var serializationProvider = type.SerializationProviders[0];
                 var converter = new ConverterTypeProvider(serializationProvider);
                 serializationProvider.Update(
                     attributes: [..serializationProvider.Attributes, new AttributeStatement(typeof(JsonConverter), TypeOf(converter.Type))],
@@ -74,10 +78,9 @@ namespace Azure.Generator.Visitors
                                 typeof(JsonSerializerOptions))
                         ]),
                     bodyStatements:
-                    writerParameter.As<Utf8JsonWriter>().WriteObjectValue(
-                        modelParameter.As(new CSharpType(typeof(IJsonModel<>), _serializationProvider.Type)),
-                        Static(new ModelSerializationExtensionsDefinition().Type)
-                            .Property("WireOptions")),
+                        writerParameter.As<Utf8JsonWriter>().WriteObjectValue(
+                            modelParameter.As(new CSharpType(typeof(IJsonModel<>), _serializationProvider.Type)),
+                            WireOptions),
                     this);
             }
 
@@ -96,15 +99,14 @@ namespace Azure.Generator.Visitors
                             new ParameterProvider("options", $"The serialization options.", typeof(JsonSerializerOptions))
                         ]),
                     bodyStatements:
-                    new[]
-                    {
-                        UsingDeclare("document", typeof(JsonDocument), Static<JsonDocument>().Invoke("ParseValue", readerParameter), out var documentVariable),
-                        Return(Static().Invoke(
-                            $"Deserialize{_serializationProvider.Name}",
-                            documentVariable.Property("RootElement"),
-                            Static(new ModelSerializationExtensionsDefinition().Type)
-                                .Property("WireOptions")))
-                    },
+                        new[]
+                        {
+                            UsingDeclare("document", typeof(JsonDocument), Static<JsonDocument>().Invoke("ParseValue", readerParameter), out var documentVariable),
+                            Return(Static().Invoke(
+                                $"Deserialize{_serializationProvider.Name}",
+                                documentVariable.Property("RootElement"),
+                                WireOptions))
+                        },
                     this);
             }
         }
