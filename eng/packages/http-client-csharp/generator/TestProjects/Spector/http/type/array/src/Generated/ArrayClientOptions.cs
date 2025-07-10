@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace _Type._Array
 {
+    /// <summary> Client options for <see cref="ArrayClient"/>. </summary>
     public partial class ArrayClientOptions : ClientOptions
     {
     }

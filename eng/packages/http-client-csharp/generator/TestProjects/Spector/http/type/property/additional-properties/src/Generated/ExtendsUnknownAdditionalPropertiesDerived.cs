@@ -10,22 +10,35 @@ using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
+    /// <summary> The model extends from a type that extends from Record&lt;unknown&gt;. </summary>
     public partial class ExtendsUnknownAdditionalPropertiesDerived : ExtendsUnknownAdditionalProperties
     {
-        public ExtendsUnknownAdditionalPropertiesDerived(string name, int index) : base(name) => throw null;
-
-        internal ExtendsUnknownAdditionalPropertiesDerived(string name, IDictionary<string, BinaryData> additionalProperties, int index, float? age) : base(name, additionalProperties) => throw null;
-
-        public int Index
+        /// <summary> Initializes a new instance of <see cref="ExtendsUnknownAdditionalPropertiesDerived"/>. </summary>
+        /// <param name="name"> The name property. </param>
+        /// <param name="index"> The index property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ExtendsUnknownAdditionalPropertiesDerived(string name, int index) : base(name)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(name, nameof(name));
+
+            Index = index;
         }
 
-        public float? Age
+        /// <summary> Initializes a new instance of <see cref="ExtendsUnknownAdditionalPropertiesDerived"/>. </summary>
+        /// <param name="name"> The name property. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="index"> The index property. </param>
+        /// <param name="age"> The age property. </param>
+        internal ExtendsUnknownAdditionalPropertiesDerived(string name, IDictionary<string, BinaryData> additionalProperties, int index, float? age) : base(name, additionalProperties)
         {
-            get => throw null;
-            set => throw null;
+            Index = index;
+            Age = age;
         }
+
+        /// <summary> The index property. </summary>
+        public int Index { get; set; }
+
+        /// <summary> The age property. </summary>
+        public float? Age { get; set; }
     }
 }

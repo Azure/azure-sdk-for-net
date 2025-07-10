@@ -5,22 +5,44 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Type.Property.Nullable
 {
+    /// <summary> Template type for testing models with nullable property. Pass in the type of the property you are looking for. </summary>
     public partial class StringProperty
     {
-        public StringProperty(string requiredProperty, string nullableProperty) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public string RequiredProperty
+        /// <summary> Initializes a new instance of <see cref="StringProperty"/>. </summary>
+        /// <param name="requiredProperty"> Required property. </param>
+        /// <param name="nullableProperty"> Property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requiredProperty"/> is null. </exception>
+        public StringProperty(string requiredProperty, string nullableProperty)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(requiredProperty, nameof(requiredProperty));
+
+            RequiredProperty = requiredProperty;
+            NullableProperty = nullableProperty;
         }
 
-        public string NullableProperty
+        /// <summary> Initializes a new instance of <see cref="StringProperty"/>. </summary>
+        /// <param name="requiredProperty"> Required property. </param>
+        /// <param name="nullableProperty"> Property. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StringProperty(string requiredProperty, string nullableProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            get => throw null;
-            set => throw null;
+            RequiredProperty = requiredProperty;
+            NullableProperty = nullableProperty;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Required property. </summary>
+        public string RequiredProperty { get; set; }
+
+        /// <summary> Property. </summary>
+        public string NullableProperty { get; set; }
     }
 }

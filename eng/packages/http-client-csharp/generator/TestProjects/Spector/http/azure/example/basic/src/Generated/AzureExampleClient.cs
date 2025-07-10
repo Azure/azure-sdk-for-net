@@ -15,20 +15,145 @@ using _Specs_.Azure.Example.Basic;
 
 namespace AzureExampleBasicClient
 {
+    /// <summary></summary>
     public partial class AzureExampleClient
     {
-        public AzureExampleClient() : this(new Uri("http://localhost:3000"), new AzureExampleClientOptions()) => throw null;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
-        public AzureExampleClient(Uri endpoint, AzureExampleClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of AzureExampleClient. </summary>
+        public AzureExampleClient() : this(new Uri("http://localhost:3000"), new AzureExampleClientOptions())
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of AzureExampleClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public AzureExampleClient(Uri endpoint, AzureExampleClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual Response BasicAction(string queryParam, string headerParam, RequestContent content, RequestContext context = null) => throw null;
+            options ??= new AzureExampleClientOptions();
 
-        public virtual Task<Response> BasicActionAsync(string queryParam, string headerParam, RequestContent content, RequestContext context = null) => throw null;
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
 
-        public virtual Response<ActionResponse> BasicAction(string queryParam, string headerParam, ActionRequest body, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Task<Response<ActionResponse>> BasicActionAsync(string queryParam, string headerParam, ActionRequest body, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
+        /// [Protocol Method] BasicAction
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="queryParam"></param>
+        /// <param name="headerParam"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queryParam"/>, <paramref name="headerParam"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryParam"/> or <paramref name="headerParam"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response BasicAction(string queryParam, string headerParam, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AzureExampleClient.BasicAction");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(queryParam, nameof(queryParam));
+                Argument.AssertNotNullOrEmpty(headerParam, nameof(headerParam));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateBasicActionRequest(queryParam, headerParam, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] BasicAction
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="queryParam"></param>
+        /// <param name="headerParam"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queryParam"/>, <paramref name="headerParam"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryParam"/> or <paramref name="headerParam"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> BasicActionAsync(string queryParam, string headerParam, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AzureExampleClient.BasicAction");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(queryParam, nameof(queryParam));
+                Argument.AssertNotNullOrEmpty(headerParam, nameof(headerParam));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateBasicActionRequest(queryParam, headerParam, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> BasicAction. </summary>
+        /// <param name="queryParam"></param>
+        /// <param name="headerParam"></param>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queryParam"/>, <paramref name="headerParam"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryParam"/> or <paramref name="headerParam"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ActionResponse> BasicAction(string queryParam, string headerParam, ActionRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(queryParam, nameof(queryParam));
+            Argument.AssertNotNullOrEmpty(headerParam, nameof(headerParam));
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = BasicAction(queryParam, headerParam, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((ActionResponse)result, result);
+        }
+
+        /// <summary> BasicAction. </summary>
+        /// <param name="queryParam"></param>
+        /// <param name="headerParam"></param>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queryParam"/>, <paramref name="headerParam"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryParam"/> or <paramref name="headerParam"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ActionResponse>> BasicActionAsync(string queryParam, string headerParam, ActionRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(queryParam, nameof(queryParam));
+            Argument.AssertNotNullOrEmpty(headerParam, nameof(headerParam));
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await BasicActionAsync(queryParam, headerParam, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((ActionResponse)result, result);
+        }
     }
 }

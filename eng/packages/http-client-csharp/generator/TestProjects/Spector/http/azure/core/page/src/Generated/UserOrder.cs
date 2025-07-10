@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Specs_.Azure.Core.Page
 {
+    /// <summary> UserOrder for testing list with expand. </summary>
     public partial class UserOrder
     {
-        public int Id => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public int UserId => throw null;
+        /// <summary> Initializes a new instance of <see cref="UserOrder"/>. </summary>
+        /// <param name="userId"> The user's id. </param>
+        /// <param name="detail"> The user's order detail. </param>
+        internal UserOrder(int userId, string detail)
+        {
+            UserId = userId;
+            Detail = detail;
+        }
 
-        public string Detail => throw null;
+        /// <summary> Initializes a new instance of <see cref="UserOrder"/>. </summary>
+        /// <param name="id"> The user's id. </param>
+        /// <param name="userId"> The user's id. </param>
+        /// <param name="detail"> The user's order detail. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UserOrder(int id, int userId, string detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Id = id;
+            UserId = userId;
+            Detail = detail;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The user's id. </summary>
+        public int Id { get; }
+
+        /// <summary> The user's id. </summary>
+        public int UserId { get; }
+
+        /// <summary> The user's order detail. </summary>
+        public string Detail { get; }
     }
 }

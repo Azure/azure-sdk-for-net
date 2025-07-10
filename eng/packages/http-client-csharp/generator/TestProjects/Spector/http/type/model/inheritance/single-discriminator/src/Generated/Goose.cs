@@ -10,10 +10,21 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
+    /// <summary> The second level model in polymorphic single level inheritance. </summary>
     public partial class Goose : Bird
     {
-        public Goose(int wingspan) : base("goose", wingspan) => throw null;
+        /// <summary> Initializes a new instance of <see cref="Goose"/>. </summary>
+        /// <param name="wingspan"></param>
+        public Goose(int wingspan) : base("goose", wingspan)
+        {
+        }
 
-        internal Goose(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, wingspan, additionalBinaryDataProperties) => throw null;
+        /// <summary> Initializes a new instance of <see cref="Goose"/>. </summary>
+        /// <param name="kind"></param>
+        /// <param name="wingspan"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal Goose(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, wingspan, additionalBinaryDataProperties)
+        {
+        }
     }
 }

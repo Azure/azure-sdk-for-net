@@ -5,22 +5,48 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
+    /// <summary> The model spread Record&lt;string | float32&gt;. </summary>
     public partial class SpreadRecordForUnion
     {
-        public SpreadRecordForUnion(bool flag) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private IDictionary<string, string> _additionalStringProperties;
+        private IDictionary<string, float> _additionalSingleProperties;
 
-        public bool Flag
+        /// <summary> Initializes a new instance of <see cref="SpreadRecordForUnion"/>. </summary>
+        /// <param name="flag"> The name property. </param>
+        public SpreadRecordForUnion(bool flag)
         {
-            get => throw null;
-            set => throw null;
+            Flag = flag;
+            _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
+            _additionalSingleProperties = new ChangeTrackingDictionary<string, float>();
         }
 
-        public IDictionary<string, string> AdditionalProperties => throw null;
+        /// <summary> Initializes a new instance of <see cref="SpreadRecordForUnion"/>. </summary>
+        /// <param name="flag"> The name property. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="additionalSingleProperties"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SpreadRecordForUnion(bool flag, IDictionary<string, string> additionalProperties, IDictionary<string, float> additionalSingleProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Flag = flag;
+            _additionalStringProperties = additionalProperties;
+            _additionalSingleProperties = additionalSingleProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
 
-        public IDictionary<string, float> AdditionalSingleProperties => throw null;
+        /// <summary> The name property. </summary>
+        public bool Flag { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, string> AdditionalProperties => _additionalStringProperties;
+
+        /// <summary> Gets the AdditionalSingleProperties. </summary>
+        public IDictionary<string, float> AdditionalSingleProperties => _additionalSingleProperties;
     }
 }

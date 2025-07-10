@@ -12,6 +12,12 @@ namespace _Type.Model.Inheritance.EnumDiscriminator
 {
     internal partial class UnknownDog : Dog
     {
-        internal UnknownDog(DogKind kind, int weight, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", weight, additionalBinaryDataProperties) => throw null;
+        /// <summary> Initializes a new instance of <see cref="UnknownDog"/>. </summary>
+        /// <param name="kind"> discriminator property. </param>
+        /// <param name="weight"> Weight of the dog. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDog(DogKind kind, int weight, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", weight, additionalBinaryDataProperties)
+        {
+        }
     }
 }

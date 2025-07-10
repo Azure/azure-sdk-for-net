@@ -5,24 +5,45 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace _Type.Property.Nullable
 {
+    /// <summary> Model with collection string properties. </summary>
     public partial class CollectionsStringProperty
     {
-        public CollectionsStringProperty(string requiredProperty, IEnumerable<string> nullableProperty) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public string RequiredProperty
+        /// <summary> Initializes a new instance of <see cref="CollectionsStringProperty"/>. </summary>
+        /// <param name="requiredProperty"> Required property. </param>
+        /// <param name="nullableProperty"> Property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requiredProperty"/> is null. </exception>
+        public CollectionsStringProperty(string requiredProperty, IEnumerable<string> nullableProperty)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(requiredProperty, nameof(requiredProperty));
+
+            RequiredProperty = requiredProperty;
+            NullableProperty = nullableProperty?.ToList();
         }
 
-        public IList<string> NullableProperty
+        /// <summary> Initializes a new instance of <see cref="CollectionsStringProperty"/>. </summary>
+        /// <param name="requiredProperty"> Required property. </param>
+        /// <param name="nullableProperty"> Property. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CollectionsStringProperty(string requiredProperty, IList<string> nullableProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            get => throw null;
-            set => throw null;
+            RequiredProperty = requiredProperty;
+            NullableProperty = nullableProperty;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Required property. </summary>
+        public string RequiredProperty { get; set; }
+
+        /// <summary> Property. </summary>
+        public IList<string> NullableProperty { get; set; }
     }
 }

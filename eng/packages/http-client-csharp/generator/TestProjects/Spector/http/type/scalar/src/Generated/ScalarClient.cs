@@ -6,30 +6,89 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace _Type.Scalar
 {
+    /// <summary></summary>
     public partial class ScalarClient
     {
-        public ScalarClient() : this(new Uri("http://localhost:3000"), new ScalarClientOptions()) => throw null;
+        private readonly Uri _endpoint;
+        private String _cachedString;
+        private Boolean _cachedBoolean;
+        private Unknown _cachedUnknown;
+        private DecimalType _cachedDecimalType;
+        private Decimal128Type _cachedDecimal128Type;
+        private DecimalVerify _cachedDecimalVerify;
+        private Decimal128Verify _cachedDecimal128Verify;
 
-        public ScalarClient(Uri endpoint, ScalarClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of ScalarClient. </summary>
+        public ScalarClient() : this(new Uri("http://localhost:3000"), new ScalarClientOptions())
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of ScalarClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public ScalarClient(Uri endpoint, ScalarClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual String GetStringClient() => throw null;
+            options ??= new ScalarClientOptions();
 
-        public virtual Boolean GetBooleanClient() => throw null;
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
 
-        public virtual Unknown GetUnknownClient() => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual DecimalType GetDecimalTypeClient() => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual Decimal128Type GetDecimal128TypeClient() => throw null;
+        /// <summary> Initializes a new instance of String. </summary>
+        public virtual String GetStringClient()
+        {
+            return Volatile.Read(ref _cachedString) ?? Interlocked.CompareExchange(ref _cachedString, new String(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedString;
+        }
 
-        public virtual DecimalVerify GetDecimalVerifyClient() => throw null;
+        /// <summary> Initializes a new instance of Boolean. </summary>
+        public virtual Boolean GetBooleanClient()
+        {
+            return Volatile.Read(ref _cachedBoolean) ?? Interlocked.CompareExchange(ref _cachedBoolean, new Boolean(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedBoolean;
+        }
 
-        public virtual Decimal128Verify GetDecimal128VerifyClient() => throw null;
+        /// <summary> Initializes a new instance of Unknown. </summary>
+        public virtual Unknown GetUnknownClient()
+        {
+            return Volatile.Read(ref _cachedUnknown) ?? Interlocked.CompareExchange(ref _cachedUnknown, new Unknown(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedUnknown;
+        }
+
+        /// <summary> Initializes a new instance of DecimalType. </summary>
+        public virtual DecimalType GetDecimalTypeClient()
+        {
+            return Volatile.Read(ref _cachedDecimalType) ?? Interlocked.CompareExchange(ref _cachedDecimalType, new DecimalType(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedDecimalType;
+        }
+
+        /// <summary> Initializes a new instance of Decimal128Type. </summary>
+        public virtual Decimal128Type GetDecimal128TypeClient()
+        {
+            return Volatile.Read(ref _cachedDecimal128Type) ?? Interlocked.CompareExchange(ref _cachedDecimal128Type, new Decimal128Type(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedDecimal128Type;
+        }
+
+        /// <summary> Initializes a new instance of DecimalVerify. </summary>
+        public virtual DecimalVerify GetDecimalVerifyClient()
+        {
+            return Volatile.Read(ref _cachedDecimalVerify) ?? Interlocked.CompareExchange(ref _cachedDecimalVerify, new DecimalVerify(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedDecimalVerify;
+        }
+
+        /// <summary> Initializes a new instance of Decimal128Verify. </summary>
+        public virtual Decimal128Verify GetDecimal128VerifyClient()
+        {
+            return Volatile.Read(ref _cachedDecimal128Verify) ?? Interlocked.CompareExchange(ref _cachedDecimal128Verify, new Decimal128Verify(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedDecimal128Verify;
+        }
     }
 }

@@ -12,14 +12,30 @@ using _Type.Model.Empty;
 
 namespace Microsoft.Extensions.Azure
 {
+    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class TypeModelEmptyClientBuilderExtensions
     {
+        /// <summary> Registers a <see cref="EmptyClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public static IAzureClientBuilder<EmptyClient, EmptyClientOptions> AddEmptyClient<TBuilder>(this TBuilder builder, Uri endpoint)
-            where TBuilder : IAzureClientFactoryBuilder => throw null;
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
+            return builder.RegisterClientFactory<EmptyClient, EmptyClientOptions>(options => new EmptyClient(endpoint, options));
+        }
+
+        /// <summary> Registers a <see cref="EmptyClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<EmptyClient, EmptyClientOptions> AddEmptyClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration> => throw null;
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<EmptyClient, EmptyClientOptions>(configuration);
+        }
     }
 }
