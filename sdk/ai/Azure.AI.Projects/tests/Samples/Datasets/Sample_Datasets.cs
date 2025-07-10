@@ -103,26 +103,26 @@ namespace Azure.AI.Projects.Tests
             AIProjectClient projectClient = CreateDebugClient(endpoint); // new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
             Console.WriteLine($"Uploading a single file to create Dataset version {datasetVersion1}:");
-            DatasetVersion dataset = projectClient.Datasets.UploadFile(
+            FileDatasetVersion fileDataset = projectClient.Datasets.UploadFile(
                 name: datasetName,
                 version: datasetVersion1,
                 filePath: filePath,
                 connectionName: connectionName
                 );
-            Console.WriteLine(dataset);
+            Console.WriteLine(fileDataset);
 
             Console.WriteLine($"Uploading folder to create Dataset version {datasetVersion2}:");
-            dataset = projectClient.Datasets.UploadFolder(
+            FolderDatasetVersion folderDataset = projectClient.Datasets.UploadFolder(
                 name: datasetName,
                 version: datasetVersion2,
                 folderPath: folderPath,
                 connectionName: connectionName,
                 filePattern: new Regex(".*\\.txt")
             );
-            Console.WriteLine(dataset);
+            Console.WriteLine(folderDataset);
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
-            dataset = projectClient.Datasets.Get(datasetName, datasetVersion1);
+            DatasetVersion dataset = projectClient.Datasets.Get(datasetName, datasetVersion1);
             Console.WriteLine(dataset);
 
             Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
@@ -189,26 +189,26 @@ namespace Azure.AI.Projects.Tests
             AIProjectClient projectClient = CreateDebugClient(endpoint); // new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
             Console.WriteLine($"Uploading a single file to create Dataset version {datasetVersion1}...");
-            DatasetVersion dataset = await projectClient.Datasets.UploadFileAsync(
+            FileDatasetVersion fileDataset = await projectClient.Datasets.UploadFileAsync(
                 name: datasetName,
                 version: datasetVersion1,
                 filePath: filePath,
                 connectionName: connectionName
                 );
-            Console.WriteLine(dataset);
+            Console.WriteLine(fileDataset);
 
             Console.WriteLine($"Uploading folder to create Dataset version {datasetVersion2}...");
-            dataset = await projectClient.Datasets.UploadFolderAsync(
+            FolderDatasetVersion folderDataset = await projectClient.Datasets.UploadFolderAsync(
                 name: datasetName,
                 version: datasetVersion2,
                 folderPath: folderPath,
                 connectionName: connectionName,
                 filePattern: new Regex(".*\\.txt")
             );
-            Console.WriteLine(dataset);
+            Console.WriteLine(folderDataset);
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion1}...");
-            dataset = await projectClient.Datasets.GetAsync(datasetName, datasetVersion1);
+            DatasetVersion dataset = await projectClient.Datasets.GetAsync(datasetName, datasetVersion1);
             Console.WriteLine(dataset);
 
             Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
