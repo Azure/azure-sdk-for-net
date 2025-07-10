@@ -28,8 +28,8 @@ namespace Azure.Generator.Visitors
                 var serializationProvider = type!.SerializationProviders[0];
                 var converter = new ConverterTypeProvider(serializationProvider);
                 serializationProvider.Update(
-                    attributes: [..type.Attributes, new AttributeStatement(typeof(JsonConverter), TypeOf(converter.Type))],
-                    nestedTypes: [..type.NestedTypes, converter]);
+                    attributes: [..serializationProvider.Attributes, new AttributeStatement(typeof(JsonConverter), TypeOf(converter.Type))],
+                    nestedTypes: [..serializationProvider.NestedTypes, converter]);
             }
 
             return type;
