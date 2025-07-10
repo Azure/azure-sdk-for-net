@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _mongodbatlasorganizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MongoDBAtlasOrganizationData.ToRequestContent(data), context);
+                HttpMessage message = _mongodbatlasorganizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, MongoDBAtlasOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource>(
                     new MongoDBAtlasOrganizationOperationSource(Client),
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _mongodbatlasorganizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MongoDBAtlasOrganizationData.ToRequestContent(data), context);
+                HttpMessage message = _mongodbatlasorganizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, MongoDBAtlasOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource>(
                     new MongoDBAtlasOrganizationOperationSource(Client),
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _mongodbatlasorganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
                 if (response.Value == null)

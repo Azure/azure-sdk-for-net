@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.OrganizationResourceUpdate"/> instance for mocking. </returns>
-        public static OrganizationResourceUpdate OrganizationResourceUpdate(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, OrganizationResourceUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.OrganizationResourcePatch"/> instance for mocking. </returns>
+        public static OrganizationResourcePatch OrganizationResourcePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, OrganizationResourceUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new OrganizationResourceUpdate(identity, tags, properties, additionalBinaryDataProperties: null);
+            return new OrganizationResourcePatch(identity, tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The updatable properties of the OrganizationResource. </summary>
