@@ -100,9 +100,6 @@ namespace Azure.Generator.Management.Providers
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
 
-        private protected override OperationSourceProvider BuildOperationSource()
-            => new OperationSourceProvider(_resource);
-
         protected override TypeProvider[] BuildSerializationProviders() => [];
 
         protected override string BuildName() => $"{ResourceName}Collection";

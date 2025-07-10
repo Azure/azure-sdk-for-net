@@ -42,11 +42,6 @@ namespace Azure.Generator.Management.Providers
             return _contextualParameterMap.TryGetValue(parameterName, out contextualParameter);
         }
 
-        private OperationSourceProvider? _source;
-        internal OperationSourceProvider Source => _source ??= BuildOperationSource();
-
-        private protected abstract OperationSourceProvider BuildOperationSource();
-
         private protected MethodProvider BuildValidateResourceIdMethod(ValueExpression resourceType)
         {
             var idParameter = new ParameterProvider("id", $"", typeof(ResourceIdentifier));

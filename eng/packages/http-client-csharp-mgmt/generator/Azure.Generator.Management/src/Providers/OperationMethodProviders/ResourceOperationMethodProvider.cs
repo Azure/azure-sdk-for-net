@@ -83,7 +83,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return new MethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
-                resourceOperationMethodProvider._provider.Source);
+                resourceOperationMethodProvider._provider);
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()
@@ -230,7 +230,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             var operationInstanceArguments = _isGeneric
                 ? [
-                    New.Instance(_provider.Source.Type, This.Property("Client")),
+                    New.Instance(_resource.Source.Type, This.Property("Client")), // TODO -- this is incorrect: https://github.com/Azure/azure-sdk-for-net/issues/51177
                     .. armOperationArguments
                   ]
                 : armOperationArguments;

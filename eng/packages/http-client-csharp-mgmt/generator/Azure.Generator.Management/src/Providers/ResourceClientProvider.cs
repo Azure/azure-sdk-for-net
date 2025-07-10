@@ -92,8 +92,8 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildName() => $"{ResourceName}Resource";
 
-        private protected override OperationSourceProvider BuildOperationSource()
-            => new OperationSourceProvider(this);
+        private OperationSourceProvider? _source;
+        internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(this);
 
         internal ModelProvider ResourceData { get; }
         internal string ResourceName { get; }
