@@ -1,17 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ClientModel.Primitives;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.TypeSpec.Generator.ClientModel;
-using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using JsonConverter = System.Text.Json.Serialization.JsonConverter;
 
 namespace Azure.Generator.Visitors
 {
@@ -21,8 +25,11 @@ namespace Azure.Generator.Visitors
         {
             if (model.Decorators.Any(d => d.Name == "Azure.ClientGenerator.Core.@useSystemTextJsonConverter"))
             {
-                var converter
-                type!.Update(attributes: [..type!.Attributes, new AttributeStatement(typeof(JsonConverter), TypeOf(typeof(int)))]);
+                var serializationProvider = type!.SerializationProviders[0];
+                var converter = new ConverterTypeProvider(serializationProvider);
+                serializationProvider.Update(
+                    attributes: [..type.Attributes, new AttributeStatement(typeof(JsonConverter), TypeOf(converter.Type))],
+                    nestedTypes: [..type.NestedTypes, converter]);
             }
 
             return type;
@@ -30,49 +37,30 @@ namespace Azure.Generator.Visitors
 
         private class ConverterTypeProvider : TypeProvider
         {
-            private readonly ModelProvider _modelProvider;
+            private readonly TypeProvider _serializationProvider;
 
-            public ConverterTypeProvider(ModelProvider modelProvider)
+            public ConverterTypeProvider(TypeProvider serializationProvider)
             {
-                _modelProvider = modelProvider;
+                _serializationProvider = serializationProvider;
+                AzureClientGenerator.Instance.AddTypeToKeep(this);
             }
 
-            protected override string BuildRelativeFilePath() => _modelProvider.RelativeFilePath;
+            protected override string BuildRelativeFilePath() => _serializationProvider.RelativeFilePath;
 
-            protected override string BuildName() => $"{_modelProvider.Name}Converter";
+            protected override string BuildName() => $"{_serializationProvider.Name}Converter";
 
-            protected override CSharpType GetBaseType() => new CSharpType(typeof(JsonConverter<>), _modelProvider.Type);
+            protected override string BuildNamespace() => $"{_serializationProvider.Type.Namespace}.{_serializationProvider.Name}";
 
-            protected override MethodProvider[] BuildMethods()
-            {
-                return new[]
-                {
-                    new MethodProvider(new MethodSignature(
-                            "Write",
-                            $"Writes the JSON representation of the model.",
-                            MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
-                            null,
-                                    null,
-                            [
-                                new ParameterProvider("writer",$"The writer.", typeof(Utf8JsonWriter)),
-                                new ParameterProvider("model", $"The model to write.", _modelProvider.Type),
-                                new ParameterProvider("options", $"The serialization options.", typeof(JsonSerializerOptions))
-                            ]),
-                        bodyStatements:
+            protected override CSharpType GetBaseType() => new CSharpType(typeof(JsonConverter<>), _serializationProvider.Type);
 
-                    new MethodProvider("Write", new[] { new ParameterProvider("writer", typeof(JsonWriter)), new ParameterProvider("value", _modelProvider.Type) })
-                    {
-                        Body = new MethodBodyStatement(
-                            Return())
-                    }
-                };
-            }
+            protected override TypeSignatureModifiers BuildDeclarationModifiers() => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial;
 
-            private void BuildWriteMethod()
+            protected override MethodProvider[] BuildMethods() => [BuildWriteMethod(), BuildReadMethod()];
+
+            private MethodProvider BuildWriteMethod()
             {
                 var writerParameter = new ParameterProvider("writer", $"The writer.", typeof(Utf8JsonWriter));
-                var modelParameter = new ParameterProvider("model", $"The model to write.", _modelProvider.Type);
-
+                var modelParameter = new ParameterProvider("model", $"The model to write.", _serializationProvider.Type);
                 return new MethodProvider(new MethodSignature(
                         "Write",
                         $"Writes the JSON representation of the model.",
@@ -85,10 +73,39 @@ namespace Azure.Generator.Visitors
                             new ParameterProvider("options", $"The serialization options.",
                                 typeof(JsonSerializerOptions))
                         ]),
-                    bodyStatements: [writerParameter.As<Utf8JsonWriter>()(),]);
-                        modelParameter.As(_modelProvider.Type).Invoke("WriteTo", writerParameter),
-                        writerParameter.As<Utf8JsonWriter>().WriteEndObject(),
-                        Return()]);
+                    bodyStatements:
+                    writerParameter.As<Utf8JsonWriter>().WriteObjectValue(
+                        modelParameter.As(new CSharpType(typeof(IJsonModel<>), _serializationProvider.Type)),
+                        Static(new ModelSerializationExtensionsDefinition().Type)
+                            .Property("WireOptions")),
+                    this);
+            }
+
+            private MethodProvider BuildReadMethod()
+            {
+                var readerParameter = new ParameterProvider("reader", $"The reader.", typeof(Utf8JsonReader), isRef: true);
+                return new MethodProvider(new MethodSignature(
+                        "Read",
+                        $"Reads the JSON representation into the model.",
+                        MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
+                        _serializationProvider.Type,
+                        null,
+                        [
+                            readerParameter,
+                            new ParameterProvider("typeToConvert", $"The type to convert.", typeof(Type)),
+                            new ParameterProvider("options", $"The serialization options.", typeof(JsonSerializerOptions))
+                        ]),
+                    bodyStatements:
+                    new[]
+                    {
+                        UsingDeclare("document", typeof(JsonDocument), Static<JsonDocument>().Invoke("ParseValue", readerParameter), out var documentVariable),
+                        Return(Static().Invoke(
+                            $"Deserialize{_serializationProvider.Name}",
+                            documentVariable.Property("RootElement"),
+                            Static(new ModelSerializationExtensionsDefinition().Type)
+                                .Property("WireOptions")))
+                    },
+                    this);
             }
         }
     }
