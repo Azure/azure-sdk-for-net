@@ -309,4 +309,156 @@ interface CurrentEmployees {
     );
     strictEqual(currentMetdataDecorator.arguments.methods.length, 3);
   });
+
+  it("resource with grandparent", async () => {
+    const program = await typeSpecCompile(
+      `
+/** A Company grandparent resource */
+model Company is TrackedResource<CompanyProperties> {
+  ...ResourceNameParameter<Company>;
+}
+
+/** Company properties */
+model CompanyProperties {
+  /** Name of company */
+  name?: string;
+}
+
+/** A Department parent resource */
+@parentResource(Company)
+model Department is TrackedResource<DepartmentProperties> {
+  ...ResourceNameParameter<Department>;
+}
+
+/** Department properties */
+model DepartmentProperties {
+  /** Name of department */
+  name?: string;
+}
+
+/** An Employee resource with grandparent */
+@parentResource(Department)
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+
+  /** City of employee */
+  city?: string;
+
+  /** Profile of employee */
+  @encode("base64url")
+  profile?: bytes;
+
+  /** The status of the last operation. */
+  @visibility(Lifecycle.Read)
+  provisioningState?: ProvisioningState;
+}
+
+/** The provisioning state of a resource. */
+@lroStatus
+union ProvisioningState {
+  string,
+
+  /** The resource create request has been accepted */
+  Accepted: "Accepted",
+
+  /** The resource is being provisioned */
+  Provisioning: "Provisioning",
+
+  /** The resource is updating */
+  Updating: "Updating",
+
+  /** Resource has been created. */
+  Succeeded: "Succeeded",
+
+  /** Resource creation failed. */
+  Failed: "Failed",
+
+  /** Resource creation was canceled. */
+  Canceled: "Canceled",
+
+  /** The resource is being deleted */
+  Deleting: "Deleting",
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Companies {
+  get is ArmResourceRead<Company>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Company>;
+}
+
+@armResourceOperations
+interface Departments {
+  get is ArmResourceRead<Department>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Department>;
+}
+
+@armResourceOperations
+interface Employees {
+  get is ArmResourceRead<Employee>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
+  update is ArmCustomPatchSync<
+    Employee,
+    Azure.ResourceManager.Foundations.ResourceUpdateModel<Employee, EmployeeProperties>
+  >;
+  delete is ArmResourceDeleteWithoutOkAsync<Employee>;
+  listByResourceGroup is ArmResourceListByParent<Employee>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
+    const employeeClient = getAllClients(root).find((c) => c.name === "Employees");
+    ok(employeeClient);
+    const employeeModel = root.models.find((m) => m.name === "Employee");
+    ok(employeeModel);
+    const departmentModel = root.models.find((m) => m.name === "Department");
+    ok(departmentModel);
+    const companyModel = root.models.find((m) => m.name === "Company");
+    ok(companyModel);
+    const employeeGetMethod = employeeClient.methods.find((m) => m.name === "get");
+    ok(employeeGetMethod);
+
+    const employeeMetadataDecorator = employeeModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    ok(employeeMetadataDecorator);
+    ok(employeeMetadataDecorator.arguments);
+    strictEqual(
+      employeeMetadataDecorator.arguments.resourceIdPattern,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
+    );
+    strictEqual(
+      employeeMetadataDecorator.arguments.resourceType,
+      "Microsoft.ContosoProviderHub/companies/departments/employees"
+    );
+    strictEqual(
+      employeeMetadataDecorator.arguments.singletonResourceName,
+      undefined
+    );
+    strictEqual(
+      employeeMetadataDecorator.arguments.resourceScope,
+      "ResourceGroup"
+    );
+    strictEqual(employeeMetadataDecorator.arguments.methods.length, 5);
+    strictEqual(
+      employeeMetadataDecorator.arguments.methods[0].id,
+      employeeGetMethod.crossLanguageDefinitionId
+    );
+    strictEqual(employeeMetadataDecorator.arguments.methods[0].kind, "Get");
+    strictEqual(
+      employeeMetadataDecorator.arguments.parentResourceId,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
+    );
+  });
 });
