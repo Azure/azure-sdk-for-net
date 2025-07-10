@@ -67,7 +67,7 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         ToolResources toolResources = mcpToolResource.ToToolResources();
 
         // Run the agent with MCP tool resources
-        ThreadRun run = await agentClient.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: toolResources);
+        ThreadRun run = await agentClient.Runs.CreateRunAsync(thread, agent, toolResources);
 
         // Handle run execution and tool approvals
         while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || run.Status == RunStatus.RequiresAction)
@@ -180,7 +180,7 @@ public partial class Sample_PersistentAgents_MCP : SamplesBase<AIAgentsTestEnvir
         ToolResources toolResources = mcpToolResource.ToToolResources();
 
         // Run the agent with MCP tool resources
-        ThreadRun run = agentClient.Runs.CreateRun(thread.Id, agent.Id, toolResources: toolResources);
+        ThreadRun run = agentClient.Runs.CreateRun(thread, agent, toolResources);
 
         // Handle run execution and tool approvals
         while (run.Status == RunStatus.Queued || run.Status == RunStatus.InProgress || run.Status == RunStatus.RequiresAction)

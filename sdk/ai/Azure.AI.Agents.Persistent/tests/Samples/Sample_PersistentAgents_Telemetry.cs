@@ -64,7 +64,6 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
             ThreadRun run = await client.Runs.CreateRunAsync(
                 thread.Id,
                 agent.Id,
-                toolResources: null,
                 additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
 
             do
@@ -158,7 +157,6 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
             ThreadRun run = client.Runs.CreateRun(
                 thread.Id,
                 agent.Id,
-                toolResources: null,
                 additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
 
             do
@@ -244,7 +242,6 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
             ThreadRun run = await client.Runs.CreateRunAsync(
                 thread.Id,
                 agent.Id,
-                toolResources: null,
                 additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
 
             do
@@ -331,7 +328,6 @@ public partial class Sample_PersistentAgents_Telemetry : SamplesBase<AIAgentsTes
             ThreadRun run = client.Runs.CreateRun(
                 thread.Id,
                 agent.Id,
-                toolResources: null,
                 additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
 
             do

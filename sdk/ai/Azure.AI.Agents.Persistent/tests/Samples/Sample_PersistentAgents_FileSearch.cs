@@ -76,7 +76,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             "Can you give me the documented codes for 'banana' and 'orange'?");
 
         // Run the agent
-        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
 
         do
         {
@@ -187,7 +187,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             "Can you give me the documented codes for 'banana' and 'orange'?");
 
         // Run the agent
-        ThreadRun run = client.Runs.CreateRun(thread.Id, agent.Id, toolResources: null);
+        ThreadRun run = client.Runs.CreateRun(thread.Id, agent.Id);
 
         do
         {

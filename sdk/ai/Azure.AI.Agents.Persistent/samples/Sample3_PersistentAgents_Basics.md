@@ -68,7 +68,6 @@ Synchronous sample:
 ThreadRun run = client.Runs.CreateRun(
     thread.Id,
     agent.Id,
-    toolResources: null,
     additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
 ```
 
@@ -77,7 +76,6 @@ Asynchronous sample:
 ThreadRun run = await client.Runs.CreateRunAsync(
     thread.Id,
     agent.Id,
-    toolResources: null,
     additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
 ```
 

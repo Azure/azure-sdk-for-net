@@ -45,7 +45,6 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
         ThreadRun agentRun = await agentClient.Runs.CreateRunAsync(
             threadId: thread.Id,
             agent.Id,
-            toolResources: null,
             additionalMessages: [
                 new ThreadMessageOptions(
                     role: MessageRole.Agent,
@@ -126,7 +125,6 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
         ThreadRun agentRun = agentClient.Runs.CreateRun(
             threadId: thread.Id,
             agent.Id,
-            toolResources: null,
             additionalMessages: [
                 new ThreadMessageOptions(
                     role: MessageRole.Agent,

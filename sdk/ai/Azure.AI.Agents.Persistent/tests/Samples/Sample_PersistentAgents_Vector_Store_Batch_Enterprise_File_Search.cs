@@ -70,8 +70,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
         #region Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_ThreadRun_Async
         ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
-            agent.Id,
-            toolResources: null
+            agent.Id
         );
 
         do
@@ -173,8 +172,7 @@ public partial class Sample_PersistentAgents_Vector_Store_Batch_Enterprise_File_
         #region Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_ThreadRun
         ThreadRun run = client.Runs.CreateRun(
             thread.Id,
-            agent.Id,
-            toolResources: null
+            agent.Id
         );
 
         do

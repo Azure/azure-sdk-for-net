@@ -64,8 +64,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
         #region Snippet:AgentsCodeInterpreterFileAttachment_CreateRun
         ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
-            agent.Id,
-            toolResources: null
+            agent.Id
         );
 
         do
@@ -142,8 +141,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
         #region Snippet:AgentsCodeInterpreterFileAttachmentSync_CreateRun
         ThreadRun run = client.Runs.CreateRun(
             thread.Id,
-            agent.Id,
-            toolResources: null
+            agent.Id
         );
 
         do

@@ -127,7 +127,6 @@ A run can then be started that evaluates the thread against an agent:
 ThreadRun run = await client.Runs.CreateRunAsync(
     thread.Id,
     agent.Id,
-    toolResources: null,
     additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
 ```
 
@@ -783,7 +782,7 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     MessageRole.User,
     "What is the most prevalent element in the universe? What would foo say?");
 
-ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
+ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
 
 do
 {
@@ -923,7 +922,7 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     MessageRole.User,
     "What's the weather in Seattle?");
 
-ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
+ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
 
 do
 {

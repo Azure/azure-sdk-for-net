@@ -150,7 +150,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "What's Mike's favourite word?");
 
-            ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
+            ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
             do
             {
                 await Task.Delay(500);

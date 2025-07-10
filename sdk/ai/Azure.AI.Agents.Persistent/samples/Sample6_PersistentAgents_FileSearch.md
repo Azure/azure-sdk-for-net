@@ -158,7 +158,7 @@ PersistentThreadMessage messageResponse = client.Messages.CreateMessage(
     "Can you give me the documented codes for 'banana' and 'orange'?");
 
 // Run the agent
-ThreadRun run = client.Runs.CreateRun(thread.Id, agent.Id, toolResources: null);
+ThreadRun run = client.Runs.CreateRun(thread.Id, agent.Id);
 
 do
 {
@@ -185,7 +185,7 @@ PersistentThreadMessage messageResponse = await client.Messages.CreateMessageAsy
     "Can you give me the documented codes for 'banana' and 'orange'?");
 
 // Run the agent
-ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
+ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
 
 do
 {

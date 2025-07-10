@@ -148,8 +148,7 @@ Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_ThreadRun
 ThreadRun run = client.Runs.CreateRun(
     thread.Id,
-    agent.Id,
-    toolResources: null
+    agent.Id
 );
 
 do
@@ -185,8 +184,7 @@ Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_ThreadRun_Async
 ThreadRun run = await client.Runs.CreateRunAsync(
     thread.Id,
-    agent.Id,
-    toolResources: null
+    agent.Id
 );
 
 do

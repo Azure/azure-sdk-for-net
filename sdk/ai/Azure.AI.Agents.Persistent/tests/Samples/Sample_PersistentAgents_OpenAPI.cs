@@ -65,7 +65,7 @@ public partial class Sample_PersistentAgents_OpenAPI : SamplesBase<AIAgentsTestE
             MessageRole.User,
             "What's the weather in Seattle?");
 
-        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
 
         do
         {
@@ -151,7 +151,7 @@ public partial class Sample_PersistentAgents_OpenAPI : SamplesBase<AIAgentsTestE
             MessageRole.User,
             "What's the weather in Seattle?");
 
-        ThreadRun run = client.Runs.CreateRun(thread.Id, agent.Id, toolResources: null);
+        ThreadRun run = client.Runs.CreateRun(thread.Id, agent.Id);
 
         do
         {

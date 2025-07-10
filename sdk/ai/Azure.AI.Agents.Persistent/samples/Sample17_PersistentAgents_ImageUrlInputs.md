@@ -92,8 +92,7 @@ Synchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCreateRun_Sync
 ThreadRun run = client.Runs.CreateRun(
     threadId: thread.Id,
-    assistantId: agent.Id,
-    toolResources: null
+    assistantId: agent.Id
 );
 ```
 
@@ -101,8 +100,7 @@ Asynchronous sample:
 ```C# Snippet:AgentImageUrlInMessageCreateRun
 ThreadRun run = await client.Runs.CreateRunAsync(
     threadId: thread.Id,
-    assistantId: agent.Id,
-    toolResources: null
+    assistantId: agent.Id
 );
 ```
 

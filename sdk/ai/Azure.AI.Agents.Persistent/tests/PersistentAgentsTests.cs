@@ -465,7 +465,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             ThreadRun result;
             if (argType == ArgumentType.Metadata)
             {
-                Response<ThreadRun> runResp = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
+                Response<ThreadRun> runResp = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
                 result = runResp.Value;
             }
             else
@@ -541,7 +541,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgent agent = await GetAgent(client);
             PersistentAgentThread thread = await GetThread(client);
             await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "Hello, tell me a joke");
-            ThreadRun  runResp = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
+            ThreadRun  runResp = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
             runResp = await WaitForRun(client, runResp);
             Assert.AreEqual(0, runResp.Metadata.Count);
             if (argType == ArgumentType.Metadata)
@@ -580,9 +580,9 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgent agent = await GetAgent(client);
             PersistentAgentThread thread = await GetThread(client);
             await client.Messages.CreateMessageAsync(thread.Id, MessageRole.User, "Hello, tell me a joke");
-            ThreadRun runResp1 = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
+            ThreadRun runResp1 = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
             runResp1 = await WaitForRun(client, runResp1);
-            ThreadRun runResp2 = await client.Runs.CreateRunAsync(thread.Id, agent.Id, toolResources: null);
+            ThreadRun runResp2 = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
             runResp2 = await WaitForRun(client, runResp2);
             AsyncPageable<ThreadRun> runsResp = client.Runs.GetRunsAsync(thread.Id, limit: 1);
             Assert.True(await runsResp.AnyAsync());
@@ -656,8 +656,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                 toolRun = await client.Runs.CreateRunAsync(
                     threadId: thread.Id,
                     assistantId: agent.Id,
-                    parallelToolCalls: parallelToolCalls,
-                    toolResources: null);
+                    parallelToolCalls: parallelToolCalls
+                    );
             }
             bool functionCalled = false;
             do
@@ -1069,7 +1069,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             else
             {
-                fileSearchRun = await client.Runs.CreateRunAsync(thread.Id, agent.Id, include: include, toolResources: null);
+                fileSearchRun = await client.Runs.CreateRunAsync(thread.Id, agent.Id, include: include);
 
                 fileSearchRun = await WaitForRun(client, fileSearchRun);
                 Assert.AreEqual(RunStatus.Completed, fileSearchRun.Status);

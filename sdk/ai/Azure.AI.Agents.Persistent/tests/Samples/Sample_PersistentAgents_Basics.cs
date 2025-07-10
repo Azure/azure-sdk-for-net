@@ -65,7 +65,6 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         ThreadRun run = await client.Runs.CreateRunAsync(
             thread.Id,
             agent.Id,
-            toolResources: null,
             additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
         #endregion
 
@@ -159,7 +158,6 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         ThreadRun run = client.Runs.CreateRun(
             thread.Id,
             agent.Id,
-            toolResources: null,
             additionalInstructions: "Please address the user as Jane Doe. The user has a premium account.");
         #endregion
 
