@@ -382,7 +382,11 @@ namespace Azure.AI.Agents.Persistent
         {
             // We hide this method because setting stream to true will result in streaming response,
             // which cannot be deserialized to ThreadRun.
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), toolApprovals.ToList(), stream, null);
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(
+                toolOutputs?.ToList() as IReadOnlyList<ToolOutput> ?? new ChangeTrackingList<ToolOutput>(),
+                toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(),
+                stream,
+                null);
             RequestContext context = FromCancellationToken(cancellationToken);
             return SubmitToolOutputsInternal(threadId, runId, !stream.HasValue || stream.Value, submitToolOutputsToRunRequest.ToRequestContent(), context);
         }
@@ -396,7 +400,8 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         internal virtual async Task<Response> SubmitToolOutputsToRunAsyncInternal(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, bool? stream = null, CancellationToken cancellationToken = default)
         {
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), toolApprovals.ToList(), stream, null);
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(
+                toolOutputs.ToList(), toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(), stream, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             return await SubmitToolOutputsInternalAsync(threadId, runId, !stream.HasValue || stream.Value, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
         }
