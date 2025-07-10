@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
@@ -228,7 +229,9 @@ namespace Azure.AI.Vision.Face
 #if NET6_0_OR_GREATER
             _multipartContent.CopyTo(stream, default, cancellationToken);
 #else
+            #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult()
             _multipartContent.CopyToAsync(stream).GetAwaiter().GetResult();
+            #pragma warning restore AZC0102
 #endif
         }
 
