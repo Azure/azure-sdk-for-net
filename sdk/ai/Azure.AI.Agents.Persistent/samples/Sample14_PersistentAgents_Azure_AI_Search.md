@@ -81,7 +81,7 @@ PersistentThreadMessage message = client.Messages.CreateMessage(
     "What is the temperature rating of the cozynights sleeping bag?");
 
 // Run the agent
-Response<ThreadRun> runResponse = client.Runs.CreateRun(thread.Id, agent.Id);
+Response<ThreadRun> runResponse = client.Runs.CreateRun(thread, agent);
 
 do
 {
@@ -109,7 +109,7 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     "What is the temperature rating of the cozynights sleeping bag?");
 
 // Run the agent
-ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
+ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
 do
 {

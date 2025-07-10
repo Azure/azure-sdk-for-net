@@ -141,7 +141,7 @@ client.Messages.CreateMessage(
     MessageRole.User,
     "What's the weather like in my favorite city?");
 
-ThreadRun run = client.Runs.CreateRun(thread.Id, agent.Id);
+ThreadRun run = client.Runs.CreateRun(thread, agent);
 ```
 
 Asynchronous sample:
@@ -153,7 +153,7 @@ await client.Messages.CreateMessageAsync(
     MessageRole.User,
     "What's the weather like in my favorite city?");
 
-ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
+ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 ```
 
 6. We will wait for the run to complete; if the local function call is required, run status will be set to `RunStatus.RequiresAction` and the run's `RequiredAction` property will be of `SubmitToolOutputsAction` type. In this case we will need to execute required functions locally and submit their outputs to the agent. The `RequiredAction` property contains a list of required calls in `ToolCalls` property.

@@ -139,7 +139,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
             MessageRole.User,
             "What's the weather like in my favorite city?");
 
-        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
         #endregion
         #region Snippet:AgentsFunctionsHandlePollingWithRequiredAction
         do
@@ -314,7 +314,7 @@ public partial class Sample_PersistentAgents_Functions : SamplesBase<AIAgentsTes
             MessageRole.User,
             "What's the weather like in my favorite city?");
 
-        ThreadRun run = client.Runs.CreateRun(thread.Id, agent.Id);
+        ThreadRun run = client.Runs.CreateRun(thread, agent);
         #endregion
         #region Snippet:AgentsFunctionsSyncHandlePollingWithRequiredAction
         do

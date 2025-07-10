@@ -90,7 +90,7 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
             MessageRole.User,
             "What is the most prevalent element in the universe? What would foo say?");
 
-        ThreadRun run = await client.Runs.CreateRunAsync(thread.Id, agent.Id);
+        ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
 
         do
         {
@@ -210,7 +210,7 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
             MessageRole.User,
             "What is the most prevalent element in the universe? What would foo say?");
 
-        ThreadRun run = client.Runs.CreateRun(thread.Id, agent.Id);
+        ThreadRun run = client.Runs.CreateRun(thread, agent);
 
         do
         {
