@@ -513,7 +513,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(run, nameof(run));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), null, true, null);
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), new ChangeTrackingList<ToolApproval>(), true, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response sendRequest() => SubmitToolOutputsInternal(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context);
             CollectionResult<StreamingUpdate> submitToolOutputsToStream(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, int currRetry) =>
@@ -560,7 +560,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(run, nameof(run));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), null, true, null);
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), new ChangeTrackingList<ToolApproval>(), true, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             async Task<Response> sendRequestAsync() => await SubmitToolOutputsInternalAsync(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
             AsyncCollectionResult<StreamingUpdate> submitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, int currRetry) =>
