@@ -61,7 +61,7 @@ For more information about customizing the redaction format, see [Tutorial: Use 
 
 ### String Encoding
 When using the `Tag` operation, the service will return the locations of PHI entities in the input text. These locations will be represented as offsets and lengths, each of which is a [StringIndex][string_index] containing
-three properties corresponding to three different test encodings. **.NET applications should use the `Utf16` property.**
+three properties corresponding to three different text encodings. **.NET applications should use the `Utf16` property.**
 
 For more on text encoding, see [Character encoding in .NET][character_encoding].
 
