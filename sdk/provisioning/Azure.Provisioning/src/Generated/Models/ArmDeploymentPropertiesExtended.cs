@@ -135,6 +135,15 @@ public partial class ArmDeploymentPropertiesExtended : ProvisionableConstruct
     private ArmDeploymentParametersLink? _parametersLink;
 
     /// <summary>
+    /// The extensions used in this deployment.
+    /// </summary>
+    public BicepList<ArmDeploymentExtensionDefinition> Extensions 
+    {
+        get { Initialize(); return _extensions!; }
+    }
+    private BicepList<ArmDeploymentExtensionDefinition>? _extensions;
+
+    /// <summary>
     /// The deployment mode. Possible values are Incremental and Complete.
     /// </summary>
     public BicepValue<ArmDeploymentMode> Mode 
@@ -164,20 +173,20 @@ public partial class ArmDeploymentPropertiesExtended : ProvisionableConstruct
     /// <summary>
     /// Array of provisioned resources.
     /// </summary>
-    public BicepList<SubResource> OutputResources 
+    public BicepList<ArmResourceReference> OutputResourceDetails 
     {
-        get { Initialize(); return _outputResources!; }
+        get { Initialize(); return _outputResourceDetails!; }
     }
-    private BicepList<SubResource>? _outputResources;
+    private BicepList<ArmResourceReference>? _outputResourceDetails;
 
     /// <summary>
     /// Array of validated resources.
     /// </summary>
-    public BicepList<SubResource> ValidatedResources 
+    public BicepList<ArmResourceReference> ValidatedResourceDetails 
     {
-        get { Initialize(); return _validatedResources!; }
+        get { Initialize(); return _validatedResourceDetails!; }
     }
-    private BicepList<SubResource>? _validatedResources;
+    private BicepList<ArmResourceReference>? _validatedResourceDetails;
 
     /// <summary>
     /// The deployment error.
@@ -220,6 +229,8 @@ public partial class ArmDeploymentPropertiesExtended : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _outputResources = DefineListProperty<SubResource>("OutputResources", ["outputResources"], isOutput: true);
+        _validatedResources = DefineListProperty<SubResource>("ValidatedResources", ["validatedResources"], isOutput: true);
         _provisioningState = DefineProperty<ResourcesProvisioningState>("ProvisioningState", ["provisioningState"], isOutput: true);
         _correlationId = DefineProperty<string>("CorrelationId", ["correlationId"], isOutput: true);
         _timestamp = DefineProperty<DateTimeOffset>("Timestamp", ["timestamp"], isOutput: true);
@@ -230,11 +241,12 @@ public partial class ArmDeploymentPropertiesExtended : ProvisionableConstruct
         _templateLink = DefineModelProperty<ArmDeploymentTemplateLink>("TemplateLink", ["templateLink"], isOutput: true);
         _parameters = DefineProperty<BinaryData>("Parameters", ["parameters"], isOutput: true);
         _parametersLink = DefineModelProperty<ArmDeploymentParametersLink>("ParametersLink", ["parametersLink"], isOutput: true);
+        _extensions = DefineListProperty<ArmDeploymentExtensionDefinition>("Extensions", ["extensions"], isOutput: true);
         _mode = DefineProperty<ArmDeploymentMode>("Mode", ["mode"], isOutput: true);
         _errorDeployment = DefineModelProperty<ErrorDeploymentExtended>("ErrorDeployment", ["onErrorDeployment"], isOutput: true);
         _templateHash = DefineProperty<string>("TemplateHash", ["templateHash"], isOutput: true);
-        _outputResources = DefineListProperty<SubResource>("OutputResources", ["outputResources"], isOutput: true);
-        _validatedResources = DefineListProperty<SubResource>("ValidatedResources", ["validatedResources"], isOutput: true);
+        _outputResourceDetails = DefineListProperty<ArmResourceReference>("OutputResourceDetails", ["outputResources"], isOutput: true);
+        _validatedResourceDetails = DefineListProperty<ArmResourceReference>("ValidatedResourceDetails", ["validatedResources"], isOutput: true);
         _error = DefineProperty<ResponseError>("Error", ["error"], isOutput: true);
         _diagnostics = DefineListProperty<DeploymentDiagnosticsDefinition>("Diagnostics", ["diagnostics"], isOutput: true);
         _validationLevel = DefineProperty<ValidationLevel>("ValidationLevel", ["validationLevel"], isOutput: true);

@@ -6,9 +6,10 @@ using System.Collections.Generic;
 namespace Azure.Generator.Management.Models
 {
     internal record ResourceMetadata(
+        string ResourceIdPattern,
         string ResourceType,
         ResourceScope ResourceScope,
         IReadOnlyList<ResourceMethod> Methods,
-        string? singletonResourceName,
-        string? ParentResource);
+        string? SingletonResourceName,
+        string? ParentResourceId);
 }
