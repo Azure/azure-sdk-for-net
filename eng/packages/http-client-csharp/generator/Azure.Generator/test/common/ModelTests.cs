@@ -73,17 +73,18 @@ namespace Azure.Generator.Tests.Common
             if (AssertFailures(strategy, format, serviceResponse, options))
                 return;
 
-            T model = (T)strategy.Read(serviceResponse, ModelInstance, options)!;
-
-            VerifyModel(model, format);
-            var data = strategy.Write(model, options);
+            var model = (T?)strategy.Read(serviceResponse, ModelInstance, options);
+            Assert.NotNull(model);
+            VerifyModel(model!, format);
+            var data = strategy.Write(model!, options);
             string roundTrip = data.ToString();
 
             // we validate those are equivalent element, representing the same json object (ignoring the spaces and orders, etc)
             AssertJsonEquivalency(expectedSerializedString, roundTrip);
 
-            T model2 = (T)strategy.Read(roundTrip, ModelInstance, options)!;
-            CompareModels(model, model2, format);
+            var model2 = (T?)strategy.Read(roundTrip, ModelInstance, options);
+            Assert.NotNull(model2);
+            CompareModels(model!, model2!, format);
         }
 
         private void AssertJsonEquivalency(string expected, string result)
