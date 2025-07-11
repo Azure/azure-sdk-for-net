@@ -77,6 +77,7 @@ namespace Azure.Generator.Management
                         if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != resourceModel)
                         {
                             map[updateModel] = resourceModel.Name;
+                            break;
                         }
                     }
                 }
