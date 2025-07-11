@@ -1,6 +1,8 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2025-07-25)
+
+- Upgraded API version of Policy Insights to 2024-10-01.
 
 ### Features Added
 
