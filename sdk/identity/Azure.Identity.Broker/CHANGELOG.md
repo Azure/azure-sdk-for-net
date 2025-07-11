@@ -1,5 +1,11 @@
 # Release History
 
+## 1.2.1 (2025-07-11)
+
+- Updated `Azure.Identity` to 1.14.2 to apply a security fix in the updated `Microsoft.Identity.Client` dependency.
+
+## Other Changes
+
 ## 1.2.0 (2024-11-18)
 
 ### Other Changes
