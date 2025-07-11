@@ -30,7 +30,7 @@ namespace Azure.Generator.Management.Providers
             _operationSourceInterface = new CSharpType(typeof(IOperationSource<>), _resource.Type);
         }
 
-        protected override string BuildName() => $"{_resource.SpecName}OperationSource";
+        protected override string BuildName() => $"{_resource.ResourceName}OperationSource";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "LongRunningOperation", $"{Name}.cs");
 

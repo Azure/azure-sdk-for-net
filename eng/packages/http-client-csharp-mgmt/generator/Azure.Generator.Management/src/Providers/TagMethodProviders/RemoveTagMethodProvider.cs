@@ -14,9 +14,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
     internal class RemoveTagMethodProvider : BaseTagMethodProvider
     {
         public RemoveTagMethodProvider(
-            ResourceClientProvider resourceClientProvider,
+            ResourceClientProvider resource,
+            FieldProvider clientDiagnosticsField,
+            FieldProvider restClientField,
             bool isAsync)
-            : base(resourceClientProvider, isAsync,
+            : base(resource, clientDiagnosticsField, restClientField, isAsync,
                    isAsync ? "RemoveTagAsync" : "RemoveTag",
                    "Removes a tag by key from the resource.")
         {
@@ -34,7 +36,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var keyParam = _keyParameter;
             var cancellationTokenParam = KnownParameters.CancellationTokenParameter;
 
-            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resourceClientProvider, "RemoveTag", out var scopeVariable);
+            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resource, _clientDiagnosticsField, "RemoveTag", out var scopeVariable);
 
             // Build try block
             var tryStatements = new List<MethodBodyStatement>();
@@ -84,12 +86,12 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             // Add RequestContext/HttpMessage/Pipeline processing statements
             statements.AddRange(CreateRequestContextAndProcessMessage(
-                _resourceClientProvider,
+                _resource,
                 _isAsync,
                 cancellationTokenParam,
                 out var responseVar));
 
-            statements.AddRange(CreatePrimaryPathResponseStatements(_resourceClientProvider, responseVar));
+            statements.AddRange(CreatePrimaryPathResponseStatements(_resource, responseVar));
 
             return statements;
         }
@@ -101,7 +103,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var statements = new List<MethodBodyStatement>();
 
             // Get current resource data
-            statements.AddRange(GetResourceDataStatements("current", _resourceClientProvider, _isAsync, cancellationTokenParam, out var currentVar));
+            statements.AddRange(GetResourceDataStatements("current", _resource, _isAsync, cancellationTokenParam, out var currentVar));
 
             statements.AddRange(
             [
@@ -111,7 +113,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 // var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                 Declare(
                     "result",
-                    new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), _resourceClientProvider.ResourceClientCSharpType),
+                    new CSharpType(typeof(ResourceManager.ArmOperation<>), _resource.Type),
                     This.Invoke(updateMethod, [
                         Static(typeof(WaitUntil)).Property("Completed"),
                         currentVar,

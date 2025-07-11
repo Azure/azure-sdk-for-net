@@ -1,4 +1,4 @@
-using global::Azure.Core.Pipeline.DiagnosticScope scope = _responsetypeClientDiagnostics.CreateScope("ResponseTypeCollection.GetAsync");
+using global::Azure.Core.Pipeline.DiagnosticScope scope = _responseTypeClientDiagnostics.CreateScope("ResponseTypeCollection.GetAsync");
 scope.Start();
 try
 {
@@ -7,7 +7,7 @@ try
         CancellationToken = cancellationToken
     }
     ;
-    global::Azure.Core.HttpMessage message = _responsetypeRestClient.CreateGetRequest(testName, global::System.Guid.Parse(this.Id.SubscriptionId), context);
+    global::Azure.Core.HttpMessage message = _testClientRestClient.CreateGetRequest(testName, global::System.Guid.Parse(this.Id.SubscriptionId), context);
     global::Azure.Response result = await this.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
     global::Azure.Response<global::Samples.Models.ResponseTypeData> response = global::Azure.Response.FromValue(global::Samples.Models.ResponseTypeData.FromResponse(result), result);
     if ((response.Value == null))
