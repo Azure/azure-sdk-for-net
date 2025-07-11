@@ -1,0 +1,1317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetFactorLibraryAsync(Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetFactorLibraryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<FactorLibrary> response = await client.GetFactorLibraryAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"));
+]]></code></example>
+    </member>
+    <member name="GetFactorLibrary(Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetFactorLibrary.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<FactorLibrary> response = client.GetFactorLibrary(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"));
+]]></code></example>
+    </member>
+    <member name="GetFactorLibraryAsync(Guid,RequestContext)">
+      <example>
+This sample shows how to call GetFactorLibraryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response response = await client.GetFactorLibraryAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("factorLibraryId").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("libraryType").ToString());
+]]></code></example>
+    </member>
+    <member name="GetFactorLibrary(Guid,RequestContext)">
+      <example>
+This sample shows how to call GetFactorLibrary and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response response = client.GetFactorLibrary(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("factorLibraryId").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("libraryType").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEstimationFactorAsync(Guid,Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetEstimationFactorAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<EstimationFactor> response = await client.GetEstimationFactorAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"));
+]]></code></example>
+    </member>
+    <member name="GetEstimationFactor(Guid,Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetEstimationFactor.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<EstimationFactor> response = client.GetEstimationFactor(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"));
+]]></code></example>
+    </member>
+    <member name="GetEstimationFactorAsync(Guid,Guid,RequestContext)">
+      <example>
+This sample shows how to call GetEstimationFactorAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response response = await client.GetEstimationFactorAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("entityName").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("estimationFactorId").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("rowVersion").ToString());
+Console.WriteLine(result.GetProperty("factorValue").ToString());
+Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("rowVersion").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("unit").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("unit").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("unit").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("unit").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("unit").GetProperty("rowVersion").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEstimationFactor(Guid,Guid,RequestContext)">
+      <example>
+This sample shows how to call GetEstimationFactor and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response response = client.GetEstimationFactor(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("entityName").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("estimationFactorId").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("rowVersion").ToString());
+Console.WriteLine(result.GetProperty("factorValue").ToString());
+Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("rowVersion").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("unit").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("unit").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("unit").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("unit").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("unit").GetProperty("rowVersion").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEmissionFactorAsync(Guid,Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetEmissionFactorAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<EmissionFactor> response = await client.GetEmissionFactorAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"));
+]]></code></example>
+    </member>
+    <member name="GetEmissionFactor(Guid,Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetEmissionFactor.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<EmissionFactor> response = client.GetEmissionFactor(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"));
+]]></code></example>
+    </member>
+    <member name="GetEmissionFactorAsync(Guid,Guid,RequestContext)">
+      <example>
+This sample shows how to call GetEmissionFactorAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response response = await client.GetEmissionFactorAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("entityName").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("rowVersion").ToString());
+Console.WriteLine(result.GetProperty("emissionFactorId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEmissionFactor(Guid,Guid,RequestContext)">
+      <example>
+This sample shows how to call GetEmissionFactor and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response response = client.GetEmissionFactor(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("entityName").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("rowVersion").ToString());
+Console.WriteLine(result.GetProperty("emissionFactorId").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetFactorMappingAsync(Guid,Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetFactorMappingAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<FactorMapping> response = await client.GetFactorMappingAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"));
+]]></code></example>
+    </member>
+    <member name="GetFactorMapping(Guid,Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetFactorMapping.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<FactorMapping> response = client.GetFactorMapping(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"));
+]]></code></example>
+    </member>
+    <member name="GetFactorMappingAsync(Guid,Guid,RequestContext)">
+      <example>
+This sample shows how to call GetFactorMappingAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response response = await client.GetFactorMappingAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("factorMappingId").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("rowVersion").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("factor").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("factor").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("factor").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("factor").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("factor").GetProperty("rowVersion").ToString());
+Console.WriteLine(result.GetProperty("referenceData1").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("referenceData1").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("referenceData1").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("referenceData1").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("referenceData1").GetProperty("rowVersion").ToString());
+]]></code></example>
+    </member>
+    <member name="GetFactorMapping(Guid,Guid,RequestContext)">
+      <example>
+This sample shows how to call GetFactorMapping and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response response = client.GetFactorMapping(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("factorMappingId").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("rowVersion").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("factor").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("factor").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("factor").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("factor").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("factor").GetProperty("rowVersion").ToString());
+Console.WriteLine(result.GetProperty("referenceData1").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("referenceData1").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("referenceData1").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("referenceData1").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("referenceData1").GetProperty("rowVersion").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCalculationModelAsync(Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetCalculationModelAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<CalculationModel> response = await client.GetCalculationModelAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"));
+]]></code></example>
+    </member>
+    <member name="GetCalculationModel(Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetCalculationModel.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<CalculationModel> response = client.GetCalculationModel(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"));
+]]></code></example>
+    </member>
+    <member name="GetCalculationModelAsync(Guid,RequestContext)">
+      <example>
+This sample shows how to call GetCalculationModelAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response response = await client.GetCalculationModelAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("entityName").ToString());
+Console.WriteLine(result.GetProperty("calculationModelId").ToString());
+Console.WriteLine(result.GetProperty("emissionCalculationId").ToString());
+Console.WriteLine(result.GetProperty("emissionSource").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("emissionSource").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("emissionSource").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("emissionSource").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("emissionSource").GetProperty("rowVersion").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCalculationModel(Guid,RequestContext)">
+      <example>
+This sample shows how to call GetCalculationModel and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response response = client.GetCalculationModel(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("entityName").ToString());
+Console.WriteLine(result.GetProperty("calculationModelId").ToString());
+Console.WriteLine(result.GetProperty("emissionCalculationId").ToString());
+Console.WriteLine(result.GetProperty("emissionSource").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("emissionSource").GetProperty("logicalName").ToString());
+Console.WriteLine(result.GetProperty("emissionSource").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("emissionSource").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("emissionSource").GetProperty("rowVersion").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("type").ToString());
+]]></code></example>
+    </member>
+    <member name="GetReferenceEntityDataAsync(string,Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetReferenceEntityDataAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<EntityRecord> response = await client.GetReferenceEntityDataAsync("ceh", Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"));
+]]></code></example>
+    </member>
+    <member name="GetReferenceEntityData(string,Guid,CancellationToken)">
+      <example>
+This sample shows how to call GetReferenceEntityData.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<EntityRecord> response = client.GetReferenceEntityData("ceh", Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"));
+]]></code></example>
+    </member>
+    <member name="GetReferenceEntityDataAsync(string,Guid,RequestContext)">
+      <example>
+This sample shows how to call GetReferenceEntityDataAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response response = await client.GetReferenceEntityDataAsync("ceh", Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("data").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetReferenceEntityData(string,Guid,RequestContext)">
+      <example>
+This sample shows how to call GetReferenceEntityData and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response response = client.GetReferenceEntityData("ceh", Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("data").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CalculateAsync(Guid,IEnumerable{EmissionActivity},DateTimeOffset?,ArVersions?,CancellationToken)">
+      <example>
+This sample shows how to call CalculateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<EmissionCalculationResult> response = await client.CalculateAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), new EmissionActivity[]
+{
+    new EmissionActivity(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), new Dictionary<string, BinaryData>())
+});
+]]></code>
+This sample shows how to call CalculateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<EmissionCalculationResult> response = await client.CalculateAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), new EmissionActivity[]
+{
+    new EmissionActivity(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), new Dictionary<string, BinaryData>())
+});
+]]></code></example>
+    </member>
+    <member name="Calculate(Guid,IEnumerable{EmissionActivity},DateTimeOffset?,ArVersions?,CancellationToken)">
+      <example>
+This sample shows how to call Calculate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<EmissionCalculationResult> response = client.Calculate(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), new EmissionActivity[]
+{
+    new EmissionActivity(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), new Dictionary<string, BinaryData>())
+});
+]]></code>
+This sample shows how to call Calculate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+Response<EmissionCalculationResult> response = client.Calculate(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), new EmissionActivity[]
+{
+    new EmissionActivity(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), new Dictionary<string, BinaryData>())
+});
+]]></code></example>
+    </member>
+    <member name="CalculateAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CalculateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    timeStamp = "2025-03-05T07:25:40.609Z",
+    calculationModelId = "b7baa418-08be-430b-ae46-769cfdf91949",
+    arVersion = "Custom",
+    activities = new object[]
+    {
+        new
+        {
+            id = "b7baa418-08be-430b-ae46-769cfdf91949",
+            activityData = new object(),
+        }
+    },
+});
+Response response = await client.CalculateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("successfulActivities").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("failedActivities").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("excludedActivities").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("processedActivities").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("activityId").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("activityName").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("activityEmissionOutput")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("activityEmissionOutput")[0].GetProperty("emissions")[0].ToString());
+]]></code>
+This sample shows how to call CalculateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    calculationModelId = "b7baa418-08be-430b-ae46-769cfdf91949",
+    activities = new object[]
+    {
+        new
+        {
+            id = "b7baa418-08be-430b-ae46-769cfdf91949",
+            activityData = new object(),
+        }
+    },
+});
+Response response = await client.CalculateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("successfulActivities").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("failedActivities").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("excludedActivities").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("processedActivities").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("activityId").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("activityName").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("activityEmissionOutput")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("activityEmissionOutput")[0].GetProperty("emissions")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="Calculate(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Calculate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    timeStamp = "2025-03-05T07:25:40.609Z",
+    calculationModelId = "b7baa418-08be-430b-ae46-769cfdf91949",
+    arVersion = "Custom",
+    activities = new object[]
+    {
+        new
+        {
+            id = "b7baa418-08be-430b-ae46-769cfdf91949",
+            activityData = new object(),
+        }
+    },
+});
+Response response = client.Calculate(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("successfulActivities").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("failedActivities").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("excludedActivities").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("processedActivities").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("activityId").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("activityName").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("activityEmissionOutput")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("activityEmissionOutput")[0].GetProperty("emissions")[0].ToString());
+]]></code>
+This sample shows how to call Calculate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    calculationModelId = "b7baa418-08be-430b-ae46-769cfdf91949",
+    activities = new object[]
+    {
+        new
+        {
+            id = "b7baa418-08be-430b-ae46-769cfdf91949",
+            activityData = new object(),
+        }
+    },
+});
+Response response = client.Calculate(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("successfulActivities").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("failedActivities").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("excludedActivities").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("processedActivities").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("activityId").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("activityName").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorDetails")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("activityEmissionOutput")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("activityEmissionOutput")[0].GetProperty("emissions")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetFactorLibrariesAsync(int?,CancellationToken)">
+      <example>
+This sample shows how to call GetFactorLibrariesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (FactorLibrary item in client.GetFactorLibrariesAsync())
+{
+}
+]]></code>
+This sample shows how to call GetFactorLibrariesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (FactorLibrary item in client.GetFactorLibrariesAsync())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetFactorLibraries(int?,CancellationToken)">
+      <example>
+This sample shows how to call GetFactorLibraries.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (FactorLibrary item in client.GetFactorLibraries())
+{
+}
+]]></code>
+This sample shows how to call GetFactorLibraries.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (FactorLibrary item in client.GetFactorLibraries())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetFactorLibrariesAsync(int?,RequestContext)">
+      <example>
+This sample shows how to call GetFactorLibrariesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetFactorLibrariesAsync(19, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("factorLibraryId").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("libraryType").ToString());
+}
+]]></code>
+This sample shows how to call GetFactorLibrariesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetFactorLibrariesAsync(null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("factorLibraryId").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("libraryType").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetFactorLibraries(int?,RequestContext)">
+      <example>
+This sample shows how to call GetFactorLibraries and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetFactorLibraries(19, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("factorLibraryId").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("libraryType").ToString());
+}
+]]></code>
+This sample shows how to call GetFactorLibraries and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetFactorLibraries(null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("factorLibraryId").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("libraryType").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetEstimationFactorsByFactorLibraryAsync(Guid,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetEstimationFactorsByFactorLibraryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (EstimationFactor item in client.GetEstimationFactorsByFactorLibraryAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949")))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetEstimationFactorsByFactorLibrary(Guid,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetEstimationFactorsByFactorLibrary.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (EstimationFactor item in client.GetEstimationFactorsByFactorLibrary(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949")))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetEstimationFactorsByFactorLibraryAsync(Guid,int?,RequestContext)">
+      <example>
+This sample shows how to call GetEstimationFactorsByFactorLibraryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetEstimationFactorsByFactorLibraryAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), 19, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("entityName").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("estimationFactorId").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("factorValue").ToString());
+    Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("unit").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("unit").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("unit").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("unit").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("unit").GetProperty("rowVersion").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetEstimationFactorsByFactorLibrary(Guid,int?,RequestContext)">
+      <example>
+This sample shows how to call GetEstimationFactorsByFactorLibrary and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetEstimationFactorsByFactorLibrary(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), 19, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("entityName").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("estimationFactorId").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("factorValue").ToString());
+    Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("factorValueUnit").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("unit").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("unit").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("unit").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("unit").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("unit").GetProperty("rowVersion").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetEmissionFactorsByFactorLibraryAsync(Guid,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetEmissionFactorsByFactorLibraryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (EmissionFactor item in client.GetEmissionFactorsByFactorLibraryAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949")))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetEmissionFactorsByFactorLibrary(Guid,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetEmissionFactorsByFactorLibrary.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (EmissionFactor item in client.GetEmissionFactorsByFactorLibrary(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949")))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetEmissionFactorsByFactorLibraryAsync(Guid,int?,RequestContext)">
+      <example>
+This sample shows how to call GetEmissionFactorsByFactorLibraryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetEmissionFactorsByFactorLibraryAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), 19, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("entityName").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("emissionFactorId").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetEmissionFactorsByFactorLibrary(Guid,int?,RequestContext)">
+      <example>
+This sample shows how to call GetEmissionFactorsByFactorLibrary and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetEmissionFactorsByFactorLibrary(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), 19, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("entityName").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("emissionFactorId").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetFactorMappingsAsync(Guid,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetFactorMappingsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (FactorMapping item in client.GetFactorMappingsAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949")))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetFactorMappings(Guid,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetFactorMappings.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (FactorMapping item in client.GetFactorMappings(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949")))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetFactorMappingsAsync(Guid,int?,RequestContext)">
+      <example>
+This sample shows how to call GetFactorMappingsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetFactorMappingsAsync(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), 19, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("factorMappingId").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("factor").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("factor").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("factor").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("factor").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("factor").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("referenceData1").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("referenceData1").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("referenceData1").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("referenceData1").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("referenceData1").GetProperty("rowVersion").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetFactorMappings(Guid,int?,RequestContext)">
+      <example>
+This sample shows how to call GetFactorMappings and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetFactorMappings(Guid.Parse("b7baa418-08be-430b-ae46-769cfdf91949"), 19, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("factorMappingId").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("factorLibrary").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("factor").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("factor").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("factor").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("factor").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("factor").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("referenceData1").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("referenceData1").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("referenceData1").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("referenceData1").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("referenceData1").GetProperty("rowVersion").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetCalculationModelsAsync(int?,CancellationToken)">
+      <example>
+This sample shows how to call GetCalculationModelsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (CalculationModel item in client.GetCalculationModelsAsync())
+{
+}
+]]></code>
+This sample shows how to call GetCalculationModelsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (CalculationModel item in client.GetCalculationModelsAsync())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetCalculationModels(int?,CancellationToken)">
+      <example>
+This sample shows how to call GetCalculationModels.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (CalculationModel item in client.GetCalculationModels())
+{
+}
+]]></code>
+This sample shows how to call GetCalculationModels.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (CalculationModel item in client.GetCalculationModels())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetCalculationModelsAsync(int?,RequestContext)">
+      <example>
+This sample shows how to call GetCalculationModelsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetCalculationModelsAsync(19, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("entityName").ToString());
+    Console.WriteLine(result.GetProperty("calculationModelId").ToString());
+    Console.WriteLine(result.GetProperty("emissionCalculationId").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+This sample shows how to call GetCalculationModelsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetCalculationModelsAsync(null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("entityName").ToString());
+    Console.WriteLine(result.GetProperty("calculationModelId").ToString());
+    Console.WriteLine(result.GetProperty("emissionCalculationId").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetCalculationModels(int?,RequestContext)">
+      <example>
+This sample shows how to call GetCalculationModels and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetCalculationModels(19, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("entityName").ToString());
+    Console.WriteLine(result.GetProperty("calculationModelId").ToString());
+    Console.WriteLine(result.GetProperty("emissionCalculationId").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code>
+This sample shows how to call GetCalculationModels and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetCalculationModels(null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("entityName").ToString());
+    Console.WriteLine(result.GetProperty("calculationModelId").ToString());
+    Console.WriteLine(result.GetProperty("emissionCalculationId").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("logicalName").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("keyAttributes").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("emissionSource").GetProperty("rowVersion").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("type").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetReferenceEntitiesAsync(int?,CancellationToken)">
+      <example>
+This sample shows how to call GetReferenceEntitiesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (ReferenceDataEntities item in client.GetReferenceEntitiesAsync())
+{
+}
+]]></code>
+This sample shows how to call GetReferenceEntitiesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (ReferenceDataEntities item in client.GetReferenceEntitiesAsync())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetReferenceEntities(int?,CancellationToken)">
+      <example>
+This sample shows how to call GetReferenceEntities.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (ReferenceDataEntities item in client.GetReferenceEntities())
+{
+}
+]]></code>
+This sample shows how to call GetReferenceEntities.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (ReferenceDataEntities item in client.GetReferenceEntities())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetReferenceEntitiesAsync(int?,RequestContext)">
+      <example>
+This sample shows how to call GetReferenceEntitiesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetReferenceEntitiesAsync(15, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("entityName").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("schemaName").ToString());
+}
+]]></code>
+This sample shows how to call GetReferenceEntitiesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetReferenceEntitiesAsync(null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("entityName").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("schemaName").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetReferenceEntities(int?,RequestContext)">
+      <example>
+This sample shows how to call GetReferenceEntities and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetReferenceEntities(15, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("entityName").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("schemaName").ToString());
+}
+]]></code>
+This sample shows how to call GetReferenceEntities and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetReferenceEntities(null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("entityName").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("schemaName").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetAllReferenceEntityDataAsync(string,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetAllReferenceEntityDataAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (EntityRecord item in client.GetAllReferenceEntityDataAsync("hiahquzdipmrxufnjgbfh"))
+{
+}
+]]></code>
+This sample shows how to call GetAllReferenceEntityDataAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (EntityRecord item in client.GetAllReferenceEntityDataAsync("jl"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetAllReferenceEntityData(string,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetAllReferenceEntityData.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (EntityRecord item in client.GetAllReferenceEntityData("hiahquzdipmrxufnjgbfh"))
+{
+}
+]]></code>
+This sample shows how to call GetAllReferenceEntityData.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (EntityRecord item in client.GetAllReferenceEntityData("jl"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetAllReferenceEntityDataAsync(string,int?,RequestContext)">
+      <example>
+This sample shows how to call GetAllReferenceEntityDataAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetAllReferenceEntityDataAsync("hiahquzdipmrxufnjgbfh", 19, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("data").GetProperty("<key>").ToString());
+}
+]]></code>
+This sample shows how to call GetAllReferenceEntityDataAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetAllReferenceEntityDataAsync("jl", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("data").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetAllReferenceEntityData(string,int?,RequestContext)">
+      <example>
+This sample shows how to call GetAllReferenceEntityData and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetAllReferenceEntityData("hiahquzdipmrxufnjgbfh", 19, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("data").GetProperty("<key>").ToString());
+}
+]]></code>
+This sample shows how to call GetAllReferenceEntityData and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+SustainabilityServiceClient client = new SustainabilityServiceClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetAllReferenceEntityData("jl", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("data").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>
