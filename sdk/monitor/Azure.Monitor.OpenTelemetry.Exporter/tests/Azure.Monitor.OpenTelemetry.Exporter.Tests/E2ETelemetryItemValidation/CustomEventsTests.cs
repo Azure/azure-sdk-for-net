@@ -162,7 +162,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertCustomEventTelemetry(
                 telemetryItem: telemetryItem!,
                 expectedName: "MyCustomEventName",
-                expectedProperties: new Dictionary<string, string> { { "client.address", "1.2.3.4" } },
+                expectedProperties: new Dictionary<string, string>(),
                 expectedSpanId: null,
                 expectedTraceId: null,
                 expectedClientIp: "1.2.3.4");
@@ -312,7 +312,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertCustomEventTelemetry(
                 telemetryItem: telemetryItem!,
                 expectedName: "MyCustomEventName",
-                expectedProperties: new Dictionary<string, string> { { "client.address", "1.2.3.4" }},
+                expectedProperties: new Dictionary<string, string>(),
                 expectedSpanId: null,
                 expectedTraceId: null,
                 expectedClientIp: "1.2.3.4");

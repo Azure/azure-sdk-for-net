@@ -58,11 +58,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 try
                 {
                     var properties = new ChangeTrackingDictionary<string, string>();
-                    ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName);
+                    ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out string? clientAddress);
 
                     if (logRecord.Exception is not null)
                     {
-                        telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey)
+                        telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey, clientAddress)
                         {
                             Data = new MonitorBase
                             {
@@ -73,7 +73,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else if (eventName is not null)
                     {
-                        telemetryItem = new TelemetryItem("Event", logRecord, resource, instrumentationKey)
+                        telemetryItem = new TelemetryItem("Event", logRecord, resource, instrumentationKey, clientAddress)
                         {
                             Data = new MonitorBase
                             {
@@ -84,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else
                     {
-                        telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey)
+                        telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey, clientAddress)
                         {
                             Data = new MonitorBase
                             {
@@ -105,16 +105,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return telemetryItems;
         }
 
-        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName)
+        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out string? clientAddress)
         {
             eventName = null;
             message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
+            clientAddress = null;
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
                 if (item.Key == CustomEventAttributeName)
                 {
                     eventName = item.Value?.ToString();
+                }
+
+                else if (item.Key == SemanticConventions.AttributeClientAddress)
+                {
+                    clientAddress = item.Value?.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength);
                 }
                 // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
                 else if (item.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && item.Value != null)

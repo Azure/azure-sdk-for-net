@@ -199,7 +199,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 telemetryItem: telemetryItem!,
                 expectedSeverityLevel: "Information",
                 expectedMessage: "Client address: {client.address}",
-                expectedMessageProperties: new Dictionary<string, string> { { "client.address", "1.2.3.4" }, { "CategoryName", logCategoryName } },
+                expectedMessageProperties: new Dictionary<string, string> { { "CategoryName", logCategoryName } },
                 expectedSpanId: null,
                 expectedTraceId: null,
                 expectedClientIp: "1.2.3.4");

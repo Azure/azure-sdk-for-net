@@ -92,7 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
         }
 
-        public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey) :
+        public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, string? clientAddress) :
             this(name, FormatUtcTimestamp(logRecord.Timestamp))
         {
             if (logRecord.TraceId != default)
@@ -105,8 +105,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
             }
 
-            var clientAddress = logRecord.Attributes?
-                .FirstOrDefault(kvp => kvp.Key == SemanticConventions.AttributeClientAddress).Value;
             if (clientAddress != null)
             {
                 Tags[ContextTagKeys.AiLocationIp.ToString()] = clientAddress.ToString();
