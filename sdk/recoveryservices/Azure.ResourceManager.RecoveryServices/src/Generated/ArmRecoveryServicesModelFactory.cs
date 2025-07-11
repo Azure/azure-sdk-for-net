@@ -292,6 +292,64 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesVaultExtendedInfoData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="integrityKey"> Integrity key. </param>
+        /// <param name="encryptionKey"> Encryption key. </param>
+        /// <param name="encryptionKeyThumbprint"> Encryption key thumbprint. </param>
+        /// <param name="algorithm"> Algorithm for Vault ExtendedInfo. </param>
+        /// <param name="etag"> etag for the resource. </param>
+        /// <returns> A new <see cref="RecoveryServices.RecoveryServicesVaultExtendedInfoData"/> instance for mocking. </returns>
+        public static RecoveryServicesVaultExtendedInfoData RecoveryServicesVaultExtendedInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string integrityKey = null, string encryptionKey = null, string encryptionKeyThumbprint = null, string algorithm = null, ETag? etag = null)
+        {
+            return new RecoveryServicesVaultExtendedInfoData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                integrityKey,
+                encryptionKey,
+                encryptionKeyThumbprint,
+                algorithm,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"></param>
+        /// <param name="reason"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="Models.RecoveryServicesNameAvailabilityResult"/> instance for mocking. </returns>
+        public static RecoveryServicesNameAvailabilityResult RecoveryServicesNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
+        {
+            return new RecoveryServicesNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CapabilitiesResult"/>. </summary>
+        /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
+        /// <param name="capabilitiesResponseDnsZones"> Capabilities properties in response. </param>
+        /// <returns> A new <see cref="Models.CapabilitiesResult"/> instance for mocking. </returns>
+        public static CapabilitiesResult CapabilitiesResult(ResourceType resourceCapabilitiesBaseType = default, IEnumerable<DnsZoneResult> capabilitiesResponseDnsZones = null)
+        {
+            capabilitiesResponseDnsZones ??= new List<DnsZoneResult>();
+
+            return new CapabilitiesResult(resourceCapabilitiesBaseType, serializedAdditionalRawData: null, capabilitiesResponseDnsZones != null ? new CapabilitiesResponseProperties(capabilitiesResponseDnsZones?.ToList(), serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DnsZoneResult"/>. </summary>
+        /// <param name="subResource"> Subresource type for vault AzureBackup, AzureBackup_secondary or AzureSiteRecovery. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone names. </param>
+        /// <returns> A new <see cref="Models.DnsZoneResult"/> instance for mocking. </returns>
+        public static DnsZoneResult DnsZoneResult(VaultSubResourceType? subResource = null, IEnumerable<string> requiredZoneNames = null)
+        {
+            requiredZoneNames ??= new List<string>();
+
+            return new DnsZoneResult(subResource, serializedAdditionalRawData: null, requiredZoneNames?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.VaultCertificateResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -487,64 +545,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static VaultUsageNameInfo VaultUsageNameInfo(string value = null, string localizedValue = null)
         {
             return new VaultUsageNameInfo(value, localizedValue, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesVaultExtendedInfoData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="integrityKey"> Integrity key. </param>
-        /// <param name="encryptionKey"> Encryption key. </param>
-        /// <param name="encryptionKeyThumbprint"> Encryption key thumbprint. </param>
-        /// <param name="algorithm"> Algorithm for Vault ExtendedInfo. </param>
-        /// <param name="etag"> etag for the resource. </param>
-        /// <returns> A new <see cref="RecoveryServices.RecoveryServicesVaultExtendedInfoData"/> instance for mocking. </returns>
-        public static RecoveryServicesVaultExtendedInfoData RecoveryServicesVaultExtendedInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string integrityKey = null, string encryptionKey = null, string encryptionKeyThumbprint = null, string algorithm = null, ETag? etag = null)
-        {
-            return new RecoveryServicesVaultExtendedInfoData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                integrityKey,
-                encryptionKey,
-                encryptionKeyThumbprint,
-                algorithm,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesNameAvailabilityResult"/>. </summary>
-        /// <param name="isNameAvailable"></param>
-        /// <param name="reason"></param>
-        /// <param name="message"></param>
-        /// <returns> A new <see cref="Models.RecoveryServicesNameAvailabilityResult"/> instance for mocking. </returns>
-        public static RecoveryServicesNameAvailabilityResult RecoveryServicesNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
-        {
-            return new RecoveryServicesNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CapabilitiesResult"/>. </summary>
-        /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
-        /// <param name="capabilitiesResponseDnsZones"> Capabilities properties in response. </param>
-        /// <returns> A new <see cref="Models.CapabilitiesResult"/> instance for mocking. </returns>
-        public static CapabilitiesResult CapabilitiesResult(ResourceType resourceCapabilitiesBaseType = default, IEnumerable<DnsZoneResult> capabilitiesResponseDnsZones = null)
-        {
-            capabilitiesResponseDnsZones ??= new List<DnsZoneResult>();
-
-            return new CapabilitiesResult(resourceCapabilitiesBaseType, serializedAdditionalRawData: null, capabilitiesResponseDnsZones != null ? new CapabilitiesResponseProperties(capabilitiesResponseDnsZones?.ToList(), serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DnsZoneResult"/>. </summary>
-        /// <param name="subResource"> Subresource type for vault AzureBackup, AzureBackup_secondary or AzureSiteRecovery. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone names. </param>
-        /// <returns> A new <see cref="Models.DnsZoneResult"/> instance for mocking. </returns>
-        public static DnsZoneResult DnsZoneResult(VaultSubResourceType? subResource = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            requiredZoneNames ??= new List<string>();
-
-            return new DnsZoneResult(subResource, serializedAdditionalRawData: null, requiredZoneNames?.ToList());
         }
     }
 }
