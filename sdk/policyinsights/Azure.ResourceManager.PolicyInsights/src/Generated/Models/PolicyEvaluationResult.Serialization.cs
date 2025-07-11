@@ -44,10 +44,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("evaluationResult"u8);
                 writer.WriteStringValue(EvaluationResult);
             }
-            if (options.Format != "W" && Optional.IsDefined(EvaluationDetails))
+            if (options.Format != "W" && Optional.IsDefined(CheckRestrictionEvaluationDetails))
             {
                 writer.WritePropertyName("evaluationDetails"u8);
-                writer.WriteObjectValue(EvaluationDetails, options);
+                writer.WriteObjectValue(CheckRestrictionEvaluationDetails, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EffectDetails))
+            {
+                writer.WritePropertyName("effectDetails"u8);
+                writer.WriteObjectValue(EffectDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +93,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             PolicyReference policyInfo = default;
             string evaluationResult = default;
-            PolicyEvaluationDetails evaluationDetails = default;
+            CheckRestrictionEvaluationDetails evaluationDetails = default;
+            PolicyEffectDetails effectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +119,16 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    evaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(property.Value, options);
+                    evaluationDetails = CheckRestrictionEvaluationDetails.DeserializeCheckRestrictionEvaluationDetails(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("effectDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    effectDetails = PolicyEffectDetails.DeserializePolicyEffectDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -122,7 +137,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails, serializedAdditionalRawData);
+            return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails, effectDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyEvaluationResult>.Write(ModelReaderWriterOptions options)
