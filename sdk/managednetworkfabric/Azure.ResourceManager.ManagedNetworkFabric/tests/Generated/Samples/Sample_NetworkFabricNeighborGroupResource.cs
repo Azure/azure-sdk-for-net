@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NeighborGroupsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NeighborGroups_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NeighborGroups_Get.json
             // this example is just showing the usage of "NeighborGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricNeighborGroupResource created on azure
             // for more information of creating NetworkFabricNeighborGroupResource, please refer to the document of NetworkFabricNeighborGroupResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string neighborGroupName = "example-neighborGroup";
             ResourceIdentifier networkFabricNeighborGroupResourceId = NetworkFabricNeighborGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, neighborGroupName);
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_NeighborGroupsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NeighborGroups_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NeighborGroups_Delete.json
             // this example is just showing the usage of "NeighborGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricNeighborGroupResource created on azure
             // for more information of creating NetworkFabricNeighborGroupResource, please refer to the document of NetworkFabricNeighborGroupResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string neighborGroupName = "example-neighborGroup";
             ResourceIdentifier networkFabricNeighborGroupResourceId = NetworkFabricNeighborGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, neighborGroupName);
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_NeighborGroupsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NeighborGroups_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NeighborGroups_Update.json
             // this example is just showing the usage of "NeighborGroups_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricNeighborGroupResource created on azure
             // for more information of creating NetworkFabricNeighborGroupResource, please refer to the document of NetworkFabricNeighborGroupResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string neighborGroupName = "example-neighborGroup";
             ResourceIdentifier networkFabricNeighborGroupResourceId = NetworkFabricNeighborGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, neighborGroupName);
@@ -96,16 +95,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             NetworkFabricNeighborGroupPatch patch = new NetworkFabricNeighborGroupPatch
             {
-                Annotation = "Updating",
-                Destination = new NeighborGroupDestination
-                {
-                    IPv4Addresses = { IPAddress.Parse("10.10.10.10"), IPAddress.Parse("20.10.10.10"), IPAddress.Parse("30.10.10.10"), IPAddress.Parse("40.10.10.10"), IPAddress.Parse("50.10.10.10"), IPAddress.Parse("60.10.10.10"), IPAddress.Parse("70.10.10.10"), IPAddress.Parse("80.10.10.10"), IPAddress.Parse("90.10.10.10") },
-                    IPv6Addresses = { "2F::/100" },
-                },
                 Tags =
 {
-["key8107"] = "2345"
+["KeyId"] = "KeyValue"
 },
+                Properties = new NeighborGroupPatchProperties
+                {
+                    Annotation = "Updating",
+                    Destination = new NeighborGroupDestinationPatch
+                    {
+                        IPv4Addresses = { "10.10.10.10", "20.10.10.10", "30.10.10.10", "40.10.10.10", "50.10.10.10", "60.10.10.10", "70.10.10.10", "80.10.10.10", "90.10.10.10" },
+                        IPv6Addresses = { "2F::/100" },
+                    },
+                },
             };
             ArmOperation<NetworkFabricNeighborGroupResource> lro = await networkFabricNeighborGroup.UpdateAsync(WaitUntil.Completed, patch);
             NetworkFabricNeighborGroupResource result = lro.Value;

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricInternalNetworkData data = new NetworkFabricInternalNetworkData(755)
+            var properties = new InternalNetworkProperties(755)
             {
                 Annotation = "annotation",
                 Mtu = 1500,
@@ -49,11 +49,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         Annotation = "annotation",
                     }
                 },
+                ConnectedIPv6Subnets =
+                {
+                    new ConnectedSubnet("3FFE:FFFF:0:CD30::a0/29")
+                    {
+                        Annotation = "annotation",
+                    }
+                },
+                ImportRoutePolicy = new ImportRoutePolicy
+                {
+                    ImportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                    ImportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                },
+                ExportRoutePolicy = new ExportRoutePolicy
+                {
+                    ExportIPv4RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                    ExportIPv6RoutePolicyId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/routePolicies/routePolicyName"),
+                },
+                IngressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
+                EgressAclId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl"),
                 IsMonitoringEnabled = IsMonitoringEnabled.True,
                 Extension = StaticRouteConfigurationExtension.NoExtension,
-                BgpConfiguration = new InternalNetworkBgpConfiguration()
+                BgpConfiguration = new BgpConfiguration(61234L)
                 {
-                    BfdConfiguration = new BfdConfiguration()
+                    Annotation = "annotation",
+                    BfdConfiguration = new BfdConfiguration
                     {
                         IntervalInMilliSeconds = 300,
                         Multiplier = 5,
@@ -61,34 +81,63 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     DefaultRouteOriginate = NetworkFabricBooleanValue.True,
                     AllowAS = 10,
                     AllowASOverride = AllowASOverride.Enable,
-                    PeerAsn = 61234,
-                    IPv4ListenRangePrefixes =
-                    {
-                        "100.0.0.0/25"
-                    },
+                    IPv4ListenRangePrefixes = { "100.0.0.0/25" },
+                    IPv6ListenRangePrefixes = { "2fff::/66" },
                     IPv4NeighborAddress =
                     {
-                        new NeighborAddress()
+                        new NeighborAddress
                         {
                             Address = "100.0.0.10",
                         }
                     },
-                    Annotation = "annotation",
+                    IPv6NeighborAddress =
+                    {
+                        new NeighborAddress
+                        {
+                            Address = "2fff::",
+                        }
+                    },
+                    BmpConfiguration = new InternalNetworkBmpProperties
+                    {
+                        NeighborIPExclusions = { "10.0.0.1/24" },
+                        BmpConfigurationState = BmpConfigurationState.Enabled,
+                    },
+                    V4OverV6BgpSession = V4OverV6BgpSessionState.Enabled,
+                    V6OverV4BgpSession = V6OverV4BgpSessionState.Enabled,
                 },
-                StaticRouteConfiguration = new InternalNetworkStaticRouteConfiguration()
+                StaticRouteConfiguration = new StaticRouteConfiguration
                 {
-                    Extension = StaticRouteConfigurationExtension.NoExtension,
-                    BfdConfiguration = new BfdConfiguration()
+                    BfdConfiguration = new BfdConfiguration
                     {
                         IntervalInMilliSeconds = 300,
                         Multiplier = 15,
                     },
-                    IPv4Routes =
-                    {
-                        new StaticRouteProperties("100.0.0.0/24",new string[] { "20.0.0.1" })
-                    },
+                    IPv4Routes = { new StaticRouteProperties("100.0.0.0/24", new string[] { "20.0.0.1" }) },
+                    IPv6Routes = { new StaticRouteProperties("2fff::/64", new string[] { "3ffe::1" }) },
+                    Extension = StaticRouteConfigurationExtension.NoExtension,
                 },
+                NativeIPv4PrefixLimits =
+                {
+                    new PrefixLimitProperties
+                    {
+                        MaximumRoutes = 23,
+                        Threshold = 7,
+                        IdleTimeExpiry = 28,
+                    }
+                },
+                NativeIPv6PrefixLimits =
+                {
+                    new PrefixLimitProperties
+                    {
+                        MaximumRoutes = 23,
+                        Threshold = 7,
+                        IdleTimeExpiry = 28,
+                    }
+                }
             };
+
+            NetworkFabricInternalNetworkData data = new NetworkFabricInternalNetworkData(properties);
+
             ArmOperation<NetworkFabricInternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.InternalNetworkName, data);
             NetworkFabricInternalNetworkResource createResult = lro.Value;
             Assert.AreEqual(createResult.Data.Name, TestEnvironment.InternalNetworkName);

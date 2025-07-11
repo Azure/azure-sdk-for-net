@@ -68,10 +68,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="interfaceType"> The Interface Type. Example: Management/Data. </param>
         /// <param name="ipv4Address"> IPv4Address of the interface. </param>
         /// <param name="ipv6Address"> IPv6Address of the interface. </param>
+        /// <param name="description"> Description of the interface. </param>
+        /// <param name="additionalDescription"> Additional description of the interface. </param>
+        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress ipv4Address, string ipv6Address, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress ipv4Address, string ipv6Address, string description, string additionalDescription, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Annotation = annotation;
             PhysicalIdentifier = physicalIdentifier;
@@ -79,6 +82,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             InterfaceType = interfaceType;
             IPv4Address = ipv4Address;
             IPv6Address = ipv6Address;
+            Description = description;
+            AdditionalDescription = additionalDescription;
+            LastOperation = lastOperation;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -96,6 +102,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public IPAddress IPv4Address { get; }
         /// <summary> IPv6Address of the interface. </summary>
         public string IPv6Address { get; }
+        /// <summary> Description of the interface. </summary>
+        public string Description { get; set; }
+        /// <summary> Additional description of the interface. </summary>
+        public string AdditionalDescription { get; set; }
+        /// <summary> Details of the last operation performed on the resource. </summary>
+        internal LastOperationProperties LastOperation { get; }
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get => LastOperation?.Details;
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
         public NetworkFabricProvisioningState? ProvisioningState { get; }
         /// <summary> Administrative state of the resource. </summary>

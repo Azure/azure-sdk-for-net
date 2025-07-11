@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NetworkTapRulesCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTapRules_Create_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkTapRules_Create.json
             // this example is just showing the usage of "NetworkTapRules_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -41,10 +41,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string networkTapRuleName = "example-tapRule";
-            NetworkTapRuleData data = new NetworkTapRuleData(new AzureLocation("eastus"))
+            NetworkTapRuleData data = new NetworkTapRuleData(new AzureLocation("eastuseuap"), new NetworkTapRuleProperties(NetworkFabricConfigurationType.File)
             {
                 Annotation = "annotation",
-                ConfigurationType = NetworkFabricConfigurationType.File,
                 TapRulesUri = new Uri("https://microsoft.com/a"),
                 MatchConfigurations = {new NetworkTapRuleMatchConfiguration
 {
@@ -53,26 +52,26 @@ SequenceNumber = 10L,
 IPAddressType = NetworkFabricIPAddressType.IPv4,
 MatchConditions = {new NetworkTapRuleMatchCondition
 {
+ProtocolTypes = {"TCP"},
+VlanMatchCondition = new VlanMatchCondition
+{
+Vlans = {"20-30"},
+InnerVlans = {"30"},
+VlanGroupNames = {"example-vlanGroup"},
+},
+IPCondition = new IPMatchCondition
+{
+SourceDestinationType = SourceDestinationType.SourceIP,
+PrefixType = IPMatchConditionPrefixType.Prefix,
+IPPrefixValues = {"10.20.20.20/12"},
+IPGroupNames = {"example-ipGroup"},
+},
 EncapsulationType = NetworkTapEncapsulationType.None,
 PortCondition = new NetworkFabricPortCondition(Layer4Protocol.Tcp)
 {
 PortType = NetworkFabricPortType.SourcePort,
 Ports = {"100"},
 PortGroupNames = {"example-portGroup1"},
-},
-ProtocolTypes = {"TCP"},
-VlanMatchCondition = new VlanMatchCondition
-{
-Vlans = {"10"},
-InnerVlans = {"11-20"},
-VlanGroupNames = {"exmaple-vlanGroup"},
-},
-IPCondition = new IPMatchCondition
-{
-SourceDestinationType = SourceDestinationType.SourceIP,
-PrefixType = IPMatchConditionPrefixType.Prefix,
-IPPrefixValues = {"10.10.10.10/20"},
-IPGroupNames = {"example-ipGroup"},
 },
 }},
 Actions = {new NetworkTapRuleAction
@@ -88,29 +87,32 @@ MatchConfigurationName = "match1",
 {
 IPGroups = {new MatchConfigurationIPGroupProperties
 {
-Name = "example-ipGroup1",
+Name = "example-ipGroup",
 IPAddressType = NetworkFabricIPAddressType.IPv4,
-IPPrefixes = {"10.10.10.10/30"},
+IPPrefixes = {"10.20.3.1/20"},
 }},
 VlanGroups = {new VlanGroupProperties
 {
-Name = "exmaple-vlanGroup",
-Vlans = {"10", "100-200"},
+Name = "example-vlanGroup",
+Vlans = {"20-30"},
 }},
 PortGroups = {new PortGroupProperties
 {
-Name = "example-portGroup1",
+Name = "example-portGroup",
 Ports = {"100-200"},
-}, new PortGroupProperties
-{
-Name = "example-portGroup2",
-Ports = {"900", "1000-2000"},
 }},
 }},
                 PollingIntervalInSeconds = PollingIntervalInSecond.Thirty,
+                GlobalNetworkTapRuleActions = new GlobalNetworkTapRuleActionProperties
+                {
+                    EnableCount = NetworkFabricBooleanValue.True,
+                    Truncate = "truncate-name",
+                },
+            })
+            {
                 Tags =
 {
-["keyID"] = "keyValue"
+["keyId"] = "keyValue"
 },
             };
             ArmOperation<NetworkTapRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkTapRuleName, data);
@@ -127,7 +129,7 @@ Ports = {"900", "1000-2000"},
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkTapRulesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTapRules_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkTapRules_Get.json
             // this example is just showing the usage of "NetworkTapRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +139,7 @@ Ports = {"900", "1000-2000"},
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -160,7 +162,7 @@ Ports = {"900", "1000-2000"},
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_NetworkTapRulesListByResourceGroupMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTapRules_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkTapRules_ListByResourceGroup.json
             // this example is just showing the usage of "NetworkTapRules_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +172,7 @@ Ports = {"900", "1000-2000"},
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -195,7 +197,7 @@ Ports = {"900", "1000-2000"},
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_NetworkTapRulesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTapRules_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkTapRules_Get.json
             // this example is just showing the usage of "NetworkTapRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -205,7 +207,7 @@ Ports = {"900", "1000-2000"},
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -224,7 +226,7 @@ Ports = {"900", "1000-2000"},
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NetworkTapRulesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkTapRules_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkTapRules_Get.json
             // this example is just showing the usage of "NetworkTapRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -234,7 +236,7 @@ Ports = {"900", "1000-2000"},
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
