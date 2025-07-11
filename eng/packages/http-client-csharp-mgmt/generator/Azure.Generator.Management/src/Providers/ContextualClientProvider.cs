@@ -23,6 +23,11 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
 {
+    /// <summary>
+    /// Represents a base type for providers that hold contextual operations with an associated Id.
+    /// This class provides functionality for managing contextual parameters, validating resource identifiers,
+    /// and populating arguments for requests based on the context of the operation.
+    /// </summary>
     internal abstract class ContextualClientProvider : TypeProvider
     {
         internal const string ValidateResourceIdMethodName = "ValidateResourceId";
