@@ -65,7 +65,7 @@ export async function updateClients(
         singletonResourceName: getSingletonResource(
           m.decorators?.find((d) => d.name == singleton)
         ),
-        resourceScope: getResourceScope(m, sdkContext, models),
+        resourceScope: getResourceScope(m),
         methods: [],
         parentResourceId: undefined // this will be populated later
       } as ResourceMetadata
@@ -264,8 +264,7 @@ function getSingletonResource(
   return singletonResource ?? "default";
 }
 
-function getResourceScope(model: InputModelType, sdkContext: CSharpEmitterContext, models: Map<string, SdkModelType>): ResourceScope {
-  // Check current model's decorators first
+function getResourceScope(model: InputModelType): ResourceScope {
   const decorators = model.decorators;
   if (decorators?.some((d) => d.name == tenantResource)) {
     return ResourceScope.Tenant;
@@ -274,21 +273,6 @@ function getResourceScope(model: InputModelType, sdkContext: CSharpEmitterContex
   } else if (decorators?.some((d) => d.name == resourceGroupResource)) {
     return ResourceScope.ResourceGroup;
   }
-  
-  // If no scope decorator found on current model, check parent hierarchy
-  const parentModelId = getParentResourceModelId(sdkContext, models.get(model.crossLanguageDefinitionId));
-  if (parentModelId) {
-    const parentModel = models.get(parentModelId);
-    if (parentModel) {
-      // Convert SdkModelType to InputModelType to recursively check parent
-      const parentInputModel = {
-        crossLanguageDefinitionId: parentModel.crossLanguageDefinitionId,
-        decorators: parentModel.decorators
-      } as InputModelType;
-      return getResourceScope(parentInputModel, sdkContext, models);
-    }
-  }
-  
   return ResourceScope.ResourceGroup; // all the templates work as if there is a resource group decorator when there is no such decorator
 }
 
