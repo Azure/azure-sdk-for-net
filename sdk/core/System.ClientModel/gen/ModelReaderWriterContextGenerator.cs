@@ -75,14 +75,16 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
 
         var mrwContextSymbol = GetMrwContextSymbol(contextSymbol);
 
-        var contextType = data.SymbolToTypeRefCache.Get(contextSymbol, data.SymbolToKindCache);
+        Dictionary<IAssemblySymbol, TypeRef> assemblyContextCache = new(SymbolEqualityComparer.Default);
+
+        var contextType = data.SymbolToTypeRefCache.Get(contextSymbol, data.SymbolToKindCache, assemblyContextCache);
 
         var builders = GetTypesFromAttributes(data.TypesWithAttribute[0].Attributes)
             .SelectMany(typeSymbol => GetRecursiveGenericTypes(typeSymbol, data.SymbolToKindCache))
             .Distinct(SymbolEqualityComparer.Default);
 
         var typeGenerationSpecs = builders
-            .Select(symbol => ConvertToTypeBuilderSpec(symbol, context, contextType, data.SymbolToKindCache, data.SymbolToTypeRefCache))
+            .Select(symbol => ConvertToTypeBuilderSpec(symbol, context, contextType, data.SymbolToKindCache, data.SymbolToTypeRefCache, assemblyContextCache))
             .Where(spec => spec is not null)
             .Select(spec => spec!);
 
@@ -112,7 +114,8 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         SourceProductionContext context,
         TypeRef contextType,
         TypeSymbolKindCache symbolKindCache,
-        TypeSymbolTypeRefCache symbolTypeRefCache)
+        TypeSymbolTypeRefCache symbolTypeRefCache,
+        Dictionary<IAssemblySymbol, TypeRef> assemblyContextCache)
     {
         if (symbol is not ITypeSymbol typeSymbol || typeSymbol.DeclaredAccessibility == Accessibility.Private)
             return null;
@@ -120,7 +123,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         if (symbolKindCache.Get(typeSymbol) == TypeBuilderKind.Unknown)
             return null;
 
-        var type = symbolTypeRefCache.Get(typeSymbol, symbolKindCache);
+        var type = symbolTypeRefCache.Get(typeSymbol, symbolKindCache, assemblyContextCache);
         if (type.ObsoleteLevel == ObsoleteLevel.Error)
         {
             // if its marked as error obsolete we can't create a builder for it
@@ -154,7 +157,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             Modifier = "internal",
             Type = type,
             Kind = symbolKindCache.Get(typeSymbol),
-            PersistableModelProxy = proxy is null ? null : symbolTypeRefCache.Get(proxy, symbolKindCache),
+            PersistableModelProxy = proxy is null ? null : symbolTypeRefCache.Get(proxy, symbolKindCache, assemblyContextCache),
             ContextType = (typeSymbol is IArrayTypeSymbol ? itemType.ContainingContext : type.ContainingContext) ?? contextType,
         };
     }

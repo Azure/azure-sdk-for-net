@@ -11,38 +11,38 @@ namespace System.ClientModel.SourceGeneration
         private readonly Dictionary<ITypeSymbol, TypeRef> _cache
             = new(SymbolEqualityComparer.Default);
 
-        public TypeRef Get(ITypeSymbol typeSymbol, TypeSymbolKindCache symbolToKindCache)
-            => Get(typeSymbol, symbolToKindCache, isContext: false);
+        public TypeRef Get(ITypeSymbol typeSymbol, TypeSymbolKindCache symbolToKindCache, Dictionary<IAssemblySymbol, TypeRef> assemblyContextCache)
+            => Get(typeSymbol, symbolToKindCache, assemblyContextCache, isContext: false);
 
-        private TypeRef Get(ITypeSymbol typeSymbol, TypeSymbolKindCache symbolToKindCache, bool isContext = false)
+        private TypeRef Get(ITypeSymbol typeSymbol, TypeSymbolKindCache symbolToKindCache, Dictionary<IAssemblySymbol, TypeRef> assemblyContextCache, bool isContext = false)
         {
             if (_cache.TryGetValue(typeSymbol, out var typeRef))
                 return typeRef;
 
-            typeRef = FromTypeSymbol(typeSymbol, symbolToKindCache, isContext);
+            typeRef = FromTypeSymbol(typeSymbol, symbolToKindCache, assemblyContextCache, isContext);
             _cache[typeSymbol] = typeRef;
             return typeRef;
         }
 
-        private TypeRef FromTypeSymbol(ITypeSymbol symbol, TypeSymbolKindCache symbolToKindCache, bool isContext)
+        private TypeRef FromTypeSymbol(ITypeSymbol symbol, TypeSymbolKindCache symbolToKindCache, Dictionary<IAssemblySymbol, TypeRef> assemblyContextCache, bool isContext)
         {
             if (symbol is INamedTypeSymbol namedTypeSymbol)
             {
                 var itemSymbol = namedTypeSymbol.GetItemSymbol(symbolToKindCache);
-                var itemType = itemSymbol is null ? null : Get(itemSymbol, symbolToKindCache);
+                var itemType = itemSymbol is null ? null : Get(itemSymbol, symbolToKindCache, assemblyContextCache);
 
                 return new TypeRef(
                     symbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat),
                     symbol.ContainingNamespace.ToDisplayString(),
                     symbol.ContainingAssembly.ToDisplayString(),
                     symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                    isContext ? null : GetContextType(symbol.ContainingAssembly, symbolToKindCache),
+                    isContext ? null : GetContextType(symbol.ContainingAssembly, symbolToKindCache, assemblyContextCache),
                     itemType,
                     obsoleteLevel: itemType is not null ? itemType.ObsoleteLevel : GetObsoleteLevel(symbol));
             }
             else if (symbol is IArrayTypeSymbol arrayTypeSymbol)
             {
-                var elementType = Get(arrayTypeSymbol.ElementType, symbolToKindCache);
+                var elementType = Get(arrayTypeSymbol.ElementType, symbolToKindCache, assemblyContextCache);
 
                 var assembly = GetArrayAssembly(arrayTypeSymbol);
 
@@ -51,7 +51,7 @@ namespace System.ClientModel.SourceGeneration
                     elementType.Namespace,
                     elementType.Assembly,
                     arrayTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                    isContext ? null : GetContextType(assembly, symbolToKindCache),
+                    isContext ? null : GetContextType(assembly, symbolToKindCache, assemblyContextCache),
                     elementType,
                     arrayTypeSymbol.Rank,
                     obsoleteLevel: elementType.ObsoleteLevel);
@@ -72,8 +72,15 @@ namespace System.ClientModel.SourceGeneration
             return arrayTypeSymbol.ElementType.ContainingAssembly;
         }
 
-        private TypeRef? GetContextType(IAssemblySymbol assembly, TypeSymbolKindCache symbolToKindCache)
+        private TypeRef? GetContextType(IAssemblySymbol assembly, TypeSymbolKindCache symbolToKindCache, Dictionary<IAssemblySymbol, TypeRef> assemblyContextCache)
         {
+            if (assemblyContextCache.TryGetValue(assembly, out var contextTypeRef))
+            {
+                return contextTypeRef;
+            }
+
+            TypeRef? contextType = null;
+
             foreach (var attribute in assembly.GetAttributes())
             {
                 if (attribute.AttributeClass is
@@ -98,10 +105,18 @@ namespace System.ClientModel.SourceGeneration
                     if (attribute.ConstructorArguments.Length > 0 &&
                         attribute.ConstructorArguments[0].Value is ITypeSymbol typeSymbol)
                     {
-                        return Get(typeSymbol, symbolToKindCache, true);
+                        contextType = Get(typeSymbol, symbolToKindCache, assemblyContextCache, true);
+                        break;
                     }
                 }
             }
+
+            if (contextType is not null)
+            {
+                assemblyContextCache[assembly] = contextType;
+                return contextType;
+            }
+
             return null;
         }
 
