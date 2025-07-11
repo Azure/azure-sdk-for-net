@@ -10,6 +10,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the response to a get database service objectives request. </summary>
+    [Obsolete]
     internal partial class ServiceObjectiveListResult
     {
         /// <summary>

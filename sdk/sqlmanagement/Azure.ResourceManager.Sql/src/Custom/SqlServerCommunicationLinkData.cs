@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Sql
     /// A class representing the SqlServerCommunicationLink data model.
     /// Server communication link.
     /// </summary>
+    [Obsolete]
     public partial class SqlServerCommunicationLinkData : ResourceData
     {
         /// <summary>

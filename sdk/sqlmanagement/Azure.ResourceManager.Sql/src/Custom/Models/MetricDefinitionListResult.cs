@@ -10,6 +10,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The response to a list database metric definitions request. </summary>
+    [Obsolete]
     internal partial class MetricDefinitionListResult
     {
         /// <summary>
