@@ -46,8 +46,7 @@ function IsSpecDir {
     param (
         [string]$dir
     )
-    $subdirs = Get-ChildItem -Path $dir -Directory
-    return -not ($subdirs) -and (Test-Path "$dir/main.tsp")
+    return (Test-Path "$dir/main.tsp")
 }
 
 $failingSpecs = @(
