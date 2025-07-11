@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="provisioningState"> State of Private Endpoint Connection. </param>
         /// <param name="privateEndpoint"> Represents a Private Endpoint that is connected to Notification Hubs namespace using Private Endpoint Connection. </param>
         /// <param name="groupIds"> List of group ids. For Notification Hubs, it always contains a single "namespace" element. </param>
-        /// <param name="connectionState"> State of the Private Link Service connection. </param>
+        /// <param name="privateLinkServiceConnectionState"> State of the Private Link Service connection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubPrivateEndpointConnectionProperties(NotificationHubsPrivateEndpointConnectionProvisioningState? provisioningState, SubResource privateEndpoint, IReadOnlyList<string> groupIds, RemotePrivateLinkServiceConnectionState connectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubPrivateEndpointConnectionProperties(NotificationHubsPrivateEndpointConnectionProvisioningState? provisioningState, SubResource privateEndpoint, IReadOnlyList<string> groupIds, RemotePrivateLinkServiceConnectionState privateLinkServiceConnectionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
-            ConnectionState = connectionState;
+            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> List of group ids. For Notification Hubs, it always contains a single "namespace" element. </summary>
         public IReadOnlyList<string> GroupIds { get; }
         /// <summary> State of the Private Link Service connection. </summary>
-        public RemotePrivateLinkServiceConnectionState ConnectionState { get; set; }
+        public RemotePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
     }
 }

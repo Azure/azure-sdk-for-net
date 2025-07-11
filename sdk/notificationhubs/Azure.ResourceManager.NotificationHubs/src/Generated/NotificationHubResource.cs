@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.NotificationHubs
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _notificationHubClientDiagnostics;
-        private readonly NotificationHubsRestOperations _notificationHubRestClient;
+        private readonly ClientDiagnostics _notificationHubNotificationHubResourcesClientDiagnostics;
+        private readonly NotificationHubResourcesRestOperations _notificationHubNotificationHubResourcesRestClient;
         private readonly NotificationHubData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NotificationHubResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _notificationHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string notificationHubApiVersion);
-            _notificationHubRestClient = new NotificationHubsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubApiVersion);
+            _notificationHubNotificationHubResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string notificationHubNotificationHubResourcesApiVersion);
+            _notificationHubNotificationHubResourcesRestClient = new NotificationHubResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubNotificationHubResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.NotificationHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of NotificationHubAuthorizationRuleResources in the NotificationHub. </summary>
-        /// <returns> An object representing collection of NotificationHubAuthorizationRuleResources and their operations over a NotificationHubAuthorizationRuleResource. </returns>
-        public virtual NotificationHubAuthorizationRuleCollection GetNotificationHubAuthorizationRules()
+        /// <summary> Gets a collection of NamespaceNotificationHubAuthorizationRuleResources in the NotificationHub. </summary>
+        /// <returns> An object representing collection of NamespaceNotificationHubAuthorizationRuleResources and their operations over a NamespaceNotificationHubAuthorizationRuleResource. </returns>
+        public virtual NamespaceNotificationHubAuthorizationRuleCollection GetNamespaceNotificationHubAuthorizationRules()
         {
-            return GetCachedClient(client => new NotificationHubAuthorizationRuleCollection(client, Id));
+            return GetCachedClient(client => new NamespaceNotificationHubAuthorizationRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_GetAuthorizationRule</description>
+        /// <description>SharedAccessAuthorizationRuleResource_GetAuthorizationRule</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
+        /// <description><see cref="NamespaceNotificationHubAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NotificationHubAuthorizationRuleResource>> GetNotificationHubAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NamespaceNotificationHubAuthorizationRuleResource>> GetNamespaceNotificationHubAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            return await GetNotificationHubAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetNamespaceNotificationHubAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_GetAuthorizationRule</description>
+        /// <description>SharedAccessAuthorizationRuleResource_GetAuthorizationRule</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NotificationHubAuthorizationRuleResource"/></description>
+        /// <description><see cref="NamespaceNotificationHubAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NotificationHubAuthorizationRuleResource> GetNotificationHubAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceNotificationHubAuthorizationRuleResource> GetNamespaceNotificationHubAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            return GetNotificationHubAuthorizationRules().Get(authorizationRuleName, cancellationToken);
+            return GetNamespaceNotificationHubAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NotificationHubResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.Get");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.Get");
             scope.Start();
             try
             {
-                var response = await _notificationHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubNotificationHubResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NotificationHubResource(Client, response.Value), response.GetRawResponse());
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NotificationHubResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.Get");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.Get");
             scope.Start();
             try
             {
-                var response = _notificationHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _notificationHubNotificationHubResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NotificationHubResource(Client, response.Value), response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Delete</description>
+        /// <description>NotificationHubResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.Delete");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.Delete");
             scope.Start();
             try
             {
-                var response = await _notificationHubRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _notificationHubRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _notificationHubNotificationHubResourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _notificationHubNotificationHubResourcesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new NotificationHubsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Delete</description>
+        /// <description>NotificationHubResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -308,12 +308,12 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.Delete");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.Delete");
             scope.Start();
             try
             {
-                var response = _notificationHubRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _notificationHubRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _notificationHubNotificationHubResourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _notificationHubNotificationHubResourcesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new NotificationHubsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -328,6 +328,90 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
+        /// Patch a NotificationHub in a namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NotificationHubResource_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> Request content. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<NotificationHubResource>> UpdateAsync(NotificationHubPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _notificationHubNotificationHubResourcesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new NotificationHubResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Patch a NotificationHub in a namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NotificationHubResource_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> Request content. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<NotificationHubResource> Update(NotificationHubPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _notificationHubNotificationHubResourcesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new NotificationHubResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Test send a push notification.
         /// <list type="bullet">
         /// <item>
@@ -336,7 +420,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_DebugSend</description>
+        /// <description>NotificationHubResources_DebugSend</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -351,11 +435,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NotificationHubTestSendResult>> DebugSendAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.DebugSend");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.DebugSend");
             scope.Start();
             try
             {
-                var response = await _notificationHubRestClient.DebugSendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubNotificationHubResourcesRestClient.DebugSendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -374,7 +458,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_DebugSend</description>
+        /// <description>NotificationHubResources_DebugSend</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -389,11 +473,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NotificationHubTestSendResult> DebugSend(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.DebugSend");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.DebugSend");
             scope.Start();
             try
             {
-                var response = _notificationHubRestClient.DebugSend(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _notificationHubNotificationHubResourcesRestClient.DebugSend(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -412,7 +496,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_GetPnsCredentials</description>
+        /// <description>NotificationHubResources_GetPnsCredentials</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -427,11 +511,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NotificationHubPnsCredentials>> GetPnsCredentialsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.GetPnsCredentials");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.GetPnsCredentials");
             scope.Start();
             try
             {
-                var response = await _notificationHubRestClient.GetPnsCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubNotificationHubResourcesRestClient.GetPnsCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -450,7 +534,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_GetPnsCredentials</description>
+        /// <description>NotificationHubResources_GetPnsCredentials</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -465,11 +549,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NotificationHubPnsCredentials> GetPnsCredentials(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.GetPnsCredentials");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.GetPnsCredentials");
             scope.Start();
             try
             {
-                var response = _notificationHubRestClient.GetPnsCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _notificationHubNotificationHubResourcesRestClient.GetPnsCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -488,7 +572,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -509,7 +593,7 @@ namespace Azure.ResourceManager.NotificationHubs
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.AddTag");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.AddTag");
             scope.Start();
             try
             {
@@ -518,13 +602,13 @@ namespace Azure.ResourceManager.NotificationHubs
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _notificationHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _notificationHubNotificationHubResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NotificationHubResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NotificationHubPatch(current.Location);
+                    var patch = new NotificationHubPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -550,7 +634,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -571,7 +655,7 @@ namespace Azure.ResourceManager.NotificationHubs
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.AddTag");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.AddTag");
             scope.Start();
             try
             {
@@ -580,13 +664,13 @@ namespace Azure.ResourceManager.NotificationHubs
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _notificationHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _notificationHubNotificationHubResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new NotificationHubResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NotificationHubPatch(current.Location);
+                    var patch = new NotificationHubPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -612,7 +696,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -631,7 +715,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.SetTags");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.SetTags");
             scope.Start();
             try
             {
@@ -641,13 +725,13 @@ namespace Azure.ResourceManager.NotificationHubs
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _notificationHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _notificationHubNotificationHubResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NotificationHubResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NotificationHubPatch(current.Location);
+                    var patch = new NotificationHubPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -669,7 +753,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -688,7 +772,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.SetTags");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.SetTags");
             scope.Start();
             try
             {
@@ -698,13 +782,13 @@ namespace Azure.ResourceManager.NotificationHubs
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _notificationHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _notificationHubNotificationHubResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new NotificationHubResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NotificationHubPatch(current.Location);
+                    var patch = new NotificationHubPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -726,7 +810,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -745,7 +829,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.RemoveTag");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.RemoveTag");
             scope.Start();
             try
             {
@@ -754,13 +838,13 @@ namespace Azure.ResourceManager.NotificationHubs
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _notificationHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _notificationHubNotificationHubResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NotificationHubResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NotificationHubPatch(current.Location);
+                    var patch = new NotificationHubPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -786,7 +870,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -805,7 +889,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _notificationHubClientDiagnostics.CreateScope("NotificationHubResource.RemoveTag");
+            using var scope = _notificationHubNotificationHubResourcesClientDiagnostics.CreateScope("NotificationHubResource.RemoveTag");
             scope.Start();
             try
             {
@@ -814,13 +898,13 @@ namespace Azure.ResourceManager.NotificationHubs
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _notificationHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _notificationHubNotificationHubResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new NotificationHubResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NotificationHubPatch(current.Location);
+                    var patch = new NotificationHubPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

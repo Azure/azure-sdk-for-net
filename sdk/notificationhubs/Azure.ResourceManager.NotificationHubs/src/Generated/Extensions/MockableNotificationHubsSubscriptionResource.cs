@@ -18,8 +18,10 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableNotificationHubsSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _notificationHubNamespaceNamespacesClientDiagnostics;
-        private NamespacesRestOperations _notificationHubNamespaceNamespacesRestClient;
+        private ClientDiagnostics _notificationHubNamespaceNamespaceResourcesClientDiagnostics;
+        private NamespaceResourcesRestOperations _notificationHubNamespaceNamespaceResourcesRestClient;
+        private ClientDiagnostics _namespacesOperationGroupClientDiagnostics;
+        private NamespacesOperationGroupRestOperations _namespacesOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableNotificationHubsSubscriptionResource"/> class for mocking. </summary>
         protected MockableNotificationHubsSubscriptionResource()
@@ -33,97 +35,15 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         {
         }
 
-        private ClientDiagnostics NotificationHubNamespaceNamespacesClientDiagnostics => _notificationHubNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubNamespaceResource.ResourceType.Namespace, Diagnostics);
-        private NamespacesRestOperations NotificationHubNamespaceNamespacesRestClient => _notificationHubNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NotificationHubNamespaceResource.ResourceType));
+        private ClientDiagnostics NotificationHubNamespaceNamespaceResourcesClientDiagnostics => _notificationHubNamespaceNamespaceResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubNamespaceResource.ResourceType.Namespace, Diagnostics);
+        private NamespaceResourcesRestOperations NotificationHubNamespaceNamespaceResourcesRestClient => _notificationHubNamespaceNamespaceResourcesRestClient ??= new NamespaceResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NotificationHubNamespaceResource.ResourceType));
+        private ClientDiagnostics NamespacesOperationGroupClientDiagnostics => _namespacesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private NamespacesOperationGroupRestOperations NamespacesOperationGroupRestClient => _namespacesOperationGroupRestClient ??= new NamespacesOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// Checks the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_CheckAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NotificationHubNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Request content. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<NotificationHubAvailabilityResult>> CheckNotificationHubNamespaceAvailabilityAsync(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("MockableNotificationHubsSubscriptionResource.CheckNotificationHubNamespaceAvailability");
-            scope.Start();
-            try
-            {
-                var response = await NotificationHubNamespaceNamespacesRestClient.CheckAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Namespaces_CheckAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NotificationHubNamespaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Request content. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<NotificationHubAvailabilityResult> CheckNotificationHubNamespaceAvailability(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("MockableNotificationHubsSubscriptionResource.CheckNotificationHubNamespaceAvailability");
-            scope.Start();
-            try
-            {
-                var response = NotificationHubNamespaceNamespacesRestClient.CheckAvailability(Id.SubscriptionId, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
@@ -135,7 +55,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_ListAll</description>
+        /// <description>NamespaceResource_ListAll</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -153,9 +73,9 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <returns> An async collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespacesRestClient.CreateListAllRequest(Id.SubscriptionId, skipToken, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NotificationHubNamespaceNamespacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, skipToken, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "MockableNotificationHubsSubscriptionResource.GetNotificationHubNamespaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespaceResourcesRestClient.CreateListAllRequest(Id.SubscriptionId, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NotificationHubNamespaceNamespaceResourcesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, skipToken, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespaceResourcesClientDiagnostics, Pipeline, "MockableNotificationHubsSubscriptionResource.GetNotificationHubNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +87,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_ListAll</description>
+        /// <description>NamespaceResource_ListAll</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -185,9 +105,85 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <returns> A collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NotificationHubNamespaceResource> GetNotificationHubNamespaces(string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespacesRestClient.CreateListAllRequest(Id.SubscriptionId, skipToken, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NotificationHubNamespaceNamespacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, skipToken, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "MockableNotificationHubsSubscriptionResource.GetNotificationHubNamespaces", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespaceResourcesRestClient.CreateListAllRequest(Id.SubscriptionId, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NotificationHubNamespaceNamespaceResourcesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, skipToken, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespaceResourcesClientDiagnostics, Pipeline, "MockableNotificationHubsSubscriptionResource.GetNotificationHubNamespaces", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NamespacesOperationGroup_CheckAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<NotificationHubAvailabilityResult>> CheckAvailabilityNamespacesOperationGroupAsync(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = NamespacesOperationGroupClientDiagnostics.CreateScope("MockableNotificationHubsSubscriptionResource.CheckAvailabilityNamespacesOperationGroup");
+            scope.Start();
+            try
+            {
+                var response = await NamespacesOperationGroupRestClient.CheckAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NotificationHubs/checkNamespaceAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NamespacesOperationGroup_CheckAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<NotificationHubAvailabilityResult> CheckAvailabilityNamespacesOperationGroup(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = NamespacesOperationGroupClientDiagnostics.CreateScope("MockableNotificationHubsSubscriptionResource.CheckAvailabilityNamespacesOperationGroup");
+            scope.Start();
+            try
+            {
+                var response = NamespacesOperationGroupRestClient.CheckAvailability(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NotificationHubBaiduCredential"/> for deserialization. </summary>
+        internal NotificationHubBaiduCredential()
+        {
+        }
+
         /// <summary> Gets or sets baidu Api Key. </summary>
         public string BaiduApiKey { get; set; }
         /// <summary> Gets or sets baidu Endpoint. </summary>

@@ -35,10 +35,8 @@ namespace Azure.ResourceManager.NotificationHubs
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _notificationHubNamespaceNamespacesClientDiagnostics;
-        private readonly NamespacesRestOperations _notificationHubNamespaceNamespacesRestClient;
-        private readonly ClientDiagnostics _notificationHubsClientDiagnostics;
-        private readonly NotificationHubsRestOperations _notificationHubsRestClient;
+        private readonly ClientDiagnostics _notificationHubNamespaceNamespaceResourcesClientDiagnostics;
+        private readonly NamespaceResourcesRestOperations _notificationHubNamespaceNamespaceResourcesRestClient;
         private readonly NotificationHubNamespaceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -63,11 +61,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NotificationHubNamespaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _notificationHubNamespaceNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string notificationHubNamespaceNamespacesApiVersion);
-            _notificationHubNamespaceNamespacesRestClient = new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubNamespaceNamespacesApiVersion);
-            _notificationHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _notificationHubsRestClient = new NotificationHubsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _notificationHubNamespaceNamespaceResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string notificationHubNamespaceNamespaceResourcesApiVersion);
+            _notificationHubNamespaceNamespaceResourcesRestClient = new NamespaceResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubNamespaceNamespaceResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -110,7 +106,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -141,7 +137,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_Get</description>
+        /// <description>NotificationHubResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -163,11 +159,11 @@ namespace Azure.ResourceManager.NotificationHubs
             return GetNotificationHubs().Get(notificationHubName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NotificationHubNamespaceAuthorizationRuleResources in the NotificationHubNamespace. </summary>
-        /// <returns> An object representing collection of NotificationHubNamespaceAuthorizationRuleResources and their operations over a NotificationHubNamespaceAuthorizationRuleResource. </returns>
-        public virtual NotificationHubNamespaceAuthorizationRuleCollection GetNotificationHubNamespaceAuthorizationRules()
+        /// <summary> Gets a collection of NamespaceAuthorizationRuleResources in the NotificationHubNamespace. </summary>
+        /// <returns> An object representing collection of NamespaceAuthorizationRuleResources and their operations over a NamespaceAuthorizationRuleResource. </returns>
+        public virtual NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
         {
-            return GetCachedClient(client => new NotificationHubNamespaceAuthorizationRuleCollection(client, Id));
+            return GetCachedClient(client => new NamespaceAuthorizationRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -179,7 +175,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_GetAuthorizationRule</description>
+        /// <description>SharedAccessAuthorizationRuleResource_GetAuthorizationRule</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -187,7 +183,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NotificationHubNamespaceAuthorizationRuleResource"/></description>
+        /// <description><see cref="NamespaceAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,9 +192,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NotificationHubNamespaceAuthorizationRuleResource>> GetNotificationHubNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NamespaceAuthorizationRuleResource>> GetNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            return await GetNotificationHubNamespaceAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetNamespaceAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -210,7 +206,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_GetAuthorizationRule</description>
+        /// <description>SharedAccessAuthorizationRuleResource_GetAuthorizationRule</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -218,7 +214,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NotificationHubNamespaceAuthorizationRuleResource"/></description>
+        /// <description><see cref="NamespaceAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,9 +223,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NotificationHubNamespaceAuthorizationRuleResource> GetNotificationHubNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<NamespaceAuthorizationRuleResource> GetNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            return GetNotificationHubNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
+            return GetNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NotificationHubPrivateEndpointConnectionResources in the NotificationHubNamespace. </summary>
@@ -249,7 +245,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnectionResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -281,7 +277,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnectionResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -303,11 +299,11 @@ namespace Azure.ResourceManager.NotificationHubs
             return GetNotificationHubPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NotificationHubsPrivateLinkResources in the NotificationHubNamespace. </summary>
-        /// <returns> An object representing collection of NotificationHubsPrivateLinkResources and their operations over a NotificationHubsPrivateLinkResource. </returns>
-        public virtual NotificationHubsPrivateLinkResourceCollection GetNotificationHubsPrivateLinkResources()
+        /// <summary> Gets a collection of NotificationHubsPrivateLinkResourceDataResources in the NotificationHubNamespace. </summary>
+        /// <returns> An object representing collection of NotificationHubsPrivateLinkResourceDataResources and their operations over a NotificationHubsPrivateLinkResourceDataResource. </returns>
+        public virtual NotificationHubsPrivateLinkResourceDataCollection GetAllNotificationHubsPrivateLinkResourceData()
         {
-            return GetCachedClient(client => new NotificationHubsPrivateLinkResourceCollection(client, Id));
+            return GetCachedClient(client => new NotificationHubsPrivateLinkResourceDataCollection(client, Id));
         }
 
         /// <summary>
@@ -320,7 +316,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_GetGroupId</description>
+        /// <description>PrivateLinkResource_GetGroupId</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,7 +324,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NotificationHubsPrivateLinkResource"/></description>
+        /// <description><see cref="NotificationHubsPrivateLinkResourceDataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,9 +333,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NotificationHubsPrivateLinkResource>> GetNotificationHubsPrivateLinkResourceAsync(string subResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationHubsPrivateLinkResourceDataResource>> GetNotificationHubsPrivateLinkResourceDataAsync(string subResourceName, CancellationToken cancellationToken = default)
         {
-            return await GetNotificationHubsPrivateLinkResources().GetAsync(subResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetAllNotificationHubsPrivateLinkResourceData().GetAsync(subResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -352,7 +348,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_GetGroupId</description>
+        /// <description>PrivateLinkResource_GetGroupId</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -360,7 +356,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NotificationHubsPrivateLinkResource"/></description>
+        /// <description><see cref="NotificationHubsPrivateLinkResourceDataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,9 +365,9 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="subResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NotificationHubsPrivateLinkResource> GetNotificationHubsPrivateLinkResource(string subResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationHubsPrivateLinkResourceDataResource> GetNotificationHubsPrivateLinkResourceData(string subResourceName, CancellationToken cancellationToken = default)
         {
-            return GetNotificationHubsPrivateLinkResources().Get(subResourceName, cancellationToken);
+            return GetAllNotificationHubsPrivateLinkResourceData().Get(subResourceName, cancellationToken);
         }
 
         /// <summary>
@@ -383,7 +379,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <description>NamespaceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -398,11 +394,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NotificationHubNamespaceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Get");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Get");
             scope.Start();
             try
             {
-                var response = await _notificationHubNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubNamespaceNamespaceResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -423,7 +419,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <description>NamespaceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -438,11 +434,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NotificationHubNamespaceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Get");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Get");
             scope.Start();
             try
             {
-                var response = _notificationHubNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _notificationHubNamespaceNamespaceResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
@@ -463,7 +459,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Delete</description>
+        /// <description>NamespaceResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -479,12 +475,12 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Delete");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _notificationHubNamespaceNamespacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _notificationHubNamespaceNamespacesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = await _notificationHubNamespaceNamespaceResourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _notificationHubNamespaceNamespaceResourcesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new NotificationHubsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -507,7 +503,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Delete</description>
+        /// <description>NamespaceResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -523,12 +519,12 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Delete");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Delete");
             scope.Start();
             try
             {
-                var response = _notificationHubNamespaceNamespacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var uri = _notificationHubNamespaceNamespacesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var response = _notificationHubNamespaceNamespaceResourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var uri = _notificationHubNamespaceNamespaceResourcesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new NotificationHubsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -551,7 +547,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Update</description>
+        /// <description>NamespaceResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -570,11 +566,11 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Update");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Update");
             scope.Start();
             try
             {
-                var response = await _notificationHubNamespaceNamespacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubNamespaceNamespaceResourcesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -593,7 +589,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Update</description>
+        /// <description>NamespaceResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -612,11 +608,11 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Update");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.Update");
             scope.Start();
             try
             {
-                var response = _notificationHubNamespaceNamespacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var response = _notificationHubNamespaceNamespaceResourcesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -635,11 +631,15 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_CheckNotificationHubAvailability</description>
+        /// <description>NamespaceResources_CheckNotificationHubAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubNamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -650,11 +650,11 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _notificationHubsClientDiagnostics.CreateScope("NotificationHubNamespaceResource.CheckNotificationHubAvailability");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.CheckNotificationHubAvailability");
             scope.Start();
             try
             {
-                var response = await _notificationHubsRestClient.CheckNotificationHubAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubNamespaceNamespaceResourcesRestClient.CheckNotificationHubAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -673,11 +673,15 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NotificationHubs_CheckNotificationHubAvailability</description>
+        /// <description>NamespaceResources_CheckNotificationHubAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubNamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -688,11 +692,11 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _notificationHubsClientDiagnostics.CreateScope("NotificationHubNamespaceResource.CheckNotificationHubAvailability");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.CheckNotificationHubAvailability");
             scope.Start();
             try
             {
-                var response = _notificationHubsRestClient.CheckNotificationHubAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var response = _notificationHubNamespaceNamespaceResourcesRestClient.CheckNotificationHubAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -711,7 +715,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_GetPnsCredentials</description>
+        /// <description>NamespaceResources_GetPnsCredentials</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -726,11 +730,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NotificationHubPnsCredentials>> GetPnsCredentialsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.GetPnsCredentials");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.GetPnsCredentials");
             scope.Start();
             try
             {
-                var response = await _notificationHubNamespaceNamespacesRestClient.GetPnsCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _notificationHubNamespaceNamespaceResourcesRestClient.GetPnsCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -749,7 +753,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_GetPnsCredentials</description>
+        /// <description>NamespaceResources_GetPnsCredentials</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -764,11 +768,11 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NotificationHubPnsCredentials> GetPnsCredentials(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.GetPnsCredentials");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.GetPnsCredentials");
             scope.Start();
             try
             {
-                var response = _notificationHubNamespaceNamespacesRestClient.GetPnsCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _notificationHubNamespaceNamespaceResourcesRestClient.GetPnsCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -787,7 +791,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <description>NamespaceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -808,7 +812,7 @@ namespace Azure.ResourceManager.NotificationHubs
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.AddTag");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.AddTag");
             scope.Start();
             try
             {
@@ -817,7 +821,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _notificationHubNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _notificationHubNamespaceNamespaceResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -849,7 +853,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <description>NamespaceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -870,7 +874,7 @@ namespace Azure.ResourceManager.NotificationHubs
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.AddTag");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.AddTag");
             scope.Start();
             try
             {
@@ -879,7 +883,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _notificationHubNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _notificationHubNamespaceNamespaceResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -911,7 +915,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <description>NamespaceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -930,7 +934,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.SetTags");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.SetTags");
             scope.Start();
             try
             {
@@ -940,7 +944,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _notificationHubNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _notificationHubNamespaceNamespaceResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -968,7 +972,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <description>NamespaceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -987,7 +991,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.SetTags");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.SetTags");
             scope.Start();
             try
             {
@@ -997,7 +1001,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _notificationHubNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _notificationHubNamespaceNamespaceResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -1025,7 +1029,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <description>NamespaceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1044,7 +1048,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.RemoveTag");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -1053,7 +1057,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _notificationHubNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _notificationHubNamespaceNamespaceResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -1085,7 +1089,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Namespaces_Get</description>
+        /// <description>NamespaceResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1104,7 +1108,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.RemoveTag");
+            using var scope = _notificationHubNamespaceNamespaceResourcesClientDiagnostics.CreateScope("NotificationHubNamespaceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -1113,7 +1117,7 @@ namespace Azure.ResourceManager.NotificationHubs
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _notificationHubNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _notificationHubNamespaceNamespaceResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new NotificationHubNamespaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

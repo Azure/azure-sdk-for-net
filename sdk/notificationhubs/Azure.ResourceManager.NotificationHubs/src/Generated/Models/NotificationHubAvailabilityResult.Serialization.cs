@@ -41,6 +41,22 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("isAvailiable"u8);
                 writer.WriteBooleanValue(IsAvailiable.Value);
             }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -69,9 +85,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 return null;
             }
             bool? isAvailiable = default;
+            string location = default;
+            IReadOnlyDictionary<string, string> tags = default;
             NotificationHubSku sku = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -89,13 +105,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     isAvailiable = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
+                if (property.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
+                    location = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -112,9 +124,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (property.NameEquals("sku"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -152,9 +168,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 isAvailiable,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 sku,
                 serializedAdditionalRawData);
         }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="clientSecret"> Gets or sets the credential secret access key. </param>
         /// <param name="authTokenUri"> Gets or sets the URL of the authorization token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/>, <paramref name="clientSecret"/> or <paramref name="authTokenUri"/> is null. </exception>
-        public NotificationHubAdmCredential(string clientId, string clientSecret, Uri authTokenUri)
+        public NotificationHubAdmCredential(string clientId, string clientSecret, string authTokenUri)
         {
             Argument.AssertNotNull(clientId, nameof(clientId));
             Argument.AssertNotNull(clientSecret, nameof(clientSecret));
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="clientSecret"> Gets or sets the credential secret access key. </param>
         /// <param name="authTokenUri"> Gets or sets the URL of the authorization token. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubAdmCredential(string clientId, string clientSecret, Uri authTokenUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubAdmCredential(string clientId, string clientSecret, string authTokenUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -74,11 +74,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NotificationHubAdmCredential"/> for deserialization. </summary>
+        internal NotificationHubAdmCredential()
+        {
+        }
+
         /// <summary> Gets or sets the client identifier. </summary>
         public string ClientId { get; set; }
         /// <summary> Gets or sets the credential secret access key. </summary>
         public string ClientSecret { get; set; }
         /// <summary> Gets or sets the URL of the authorization token. </summary>
-        public Uri AuthTokenUri { get; set; }
+        public string AuthTokenUri { get; set; }
     }
 }

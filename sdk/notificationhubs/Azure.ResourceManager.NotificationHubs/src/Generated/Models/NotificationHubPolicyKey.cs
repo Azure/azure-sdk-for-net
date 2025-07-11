@@ -47,21 +47,26 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubPolicyKey"/>. </summary>
         /// <param name="policyKey"> Type of Shared Access Policy Key (primary or secondary). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyKey"/> is null. </exception>
-        public NotificationHubPolicyKey(string policyKey)
+        public NotificationHubPolicyKey(PolicyKeyType policyKey)
         {
-            Argument.AssertNotNull(policyKey, nameof(policyKey));
-
             PolicyKey = policyKey;
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubPolicyKey"/>. </summary>
         /// <param name="policyKey"> Type of Shared Access Policy Key (primary or secondary). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubPolicyKey(string policyKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationHubPolicyKey(PolicyKeyType policyKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyKey = policyKey;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubPolicyKey"/> for deserialization. </summary>
+        internal NotificationHubPolicyKey()
+        {
+        }
+
+        /// <summary> Type of Shared Access Policy Key (primary or secondary). </summary>
+        public PolicyKeyType PolicyKey { get; }
     }
 }
