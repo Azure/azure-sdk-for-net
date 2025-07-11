@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppNfsAzureFileProperties"/>. </summary>
-        /// <param name="server"> Server for NFS azure file. Specify the Azure storage account server address. </param>
+        /// <param name="server"> Server for NFS azure file. </param>
         /// <param name="accessMode"> Access mode for storage. </param>
         /// <param name="shareName"> NFS Azure file share name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Server for NFS azure file. Specify the Azure storage account server address. </summary>
+        /// <summary> Server for NFS azure file. </summary>
         [WirePath("server")]
         public string Server { get; set; }
         /// <summary> Access mode for storage. </summary>

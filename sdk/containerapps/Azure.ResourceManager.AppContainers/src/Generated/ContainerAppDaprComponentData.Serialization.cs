@@ -96,6 +96,16 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ServiceComponentBind))
+            {
+                writer.WritePropertyName("serviceComponentBind"u8);
+                writer.WriteStartArray();
+                foreach (var item in ServiceComponentBind)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -131,6 +141,7 @@ namespace Azure.ResourceManager.AppContainers
             string secretStoreComponent = default;
             IList<ContainerAppDaprMetadata> metadata = default;
             IList<string> scopes = default;
+            IList<DaprComponentServiceBinding> serviceComponentBind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,6 +250,20 @@ namespace Azure.ResourceManager.AppContainers
                             scopes = array;
                             continue;
                         }
+                        if (property0.NameEquals("serviceComponentBind"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DaprComponentServiceBinding> array = new List<DaprComponentServiceBinding>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DaprComponentServiceBinding.DeserializeDaprComponentServiceBinding(item, options));
+                            }
+                            serviceComponentBind = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -261,6 +286,7 @@ namespace Azure.ResourceManager.AppContainers
                 secretStoreComponent,
                 metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>(),
                 scopes ?? new ChangeTrackingList<string>(),
+                serviceComponentBind ?? new ChangeTrackingList<DaprComponentServiceBinding>(),
                 serializedAdditionalRawData);
         }
 
@@ -514,6 +540,29 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 builder.AppendLine($"      '{item}'");
                             }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceComponentBind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serviceComponentBind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ServiceComponentBind))
+                {
+                    if (ServiceComponentBind.Any())
+                    {
+                        builder.Append("    serviceComponentBind: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ServiceComponentBind)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    serviceComponentBind: ");
                         }
                         builder.AppendLine("    ]");
                     }
