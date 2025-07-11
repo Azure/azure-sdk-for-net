@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Settings for Azure Monitor based alerts. </summary>
-    internal partial class AzureMonitorAlertSettings
+    public partial class AzureMonitorAlertSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,14 +52,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureMonitorAlertSettings"/>. </summary>
         /// <param name="alertsForAllJobFailures"></param>
+        /// <param name="alertsForAllReplicationIssues"></param>
+        /// <param name="alertsForAllFailoverIssues"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMonitorAlertSettings(RecoveryServicesAlertsState? alertsForAllJobFailures, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureMonitorAlertSettings(RecoveryServicesAlertsState? alertsForAllJobFailures, RecoveryServicesAlertsState? alertsForAllReplicationIssues, RecoveryServicesAlertsState? alertsForAllFailoverIssues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertsForAllJobFailures = alertsForAllJobFailures;
+            AlertsForAllReplicationIssues = alertsForAllReplicationIssues;
+            AlertsForAllFailoverIssues = alertsForAllFailoverIssues;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the alerts for all job failures. </summary>
         public RecoveryServicesAlertsState? AlertsForAllJobFailures { get; set; }
+        /// <summary> Gets or sets the alerts for all replication issues. </summary>
+        public RecoveryServicesAlertsState? AlertsForAllReplicationIssues { get; set; }
+        /// <summary> Gets or sets the alerts for all failover issues. </summary>
+        public RecoveryServicesAlertsState? AlertsForAllFailoverIssues { get; set; }
     }
 }

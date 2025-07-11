@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class PrivateLinkResources : IUtf8JsonSerializable, IJsonModel<PrivateLinkResources>
+    internal partial class ClientDiscoveryResponse : IUtf8JsonSerializable, IJsonModel<ClientDiscoveryResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkResources>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientDiscoveryResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PrivateLinkResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClientDiscoveryResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResources>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClientDiscoveryResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkResources)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientDiscoveryResponse)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
-        PrivateLinkResources IJsonModel<PrivateLinkResources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClientDiscoveryResponse IJsonModel<ClientDiscoveryResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResources>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClientDiscoveryResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkResources)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientDiscoveryResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateLinkResources(document.RootElement, options);
+            return DeserializeClientDiscoveryResponse(document.RootElement, options);
         }
 
-        internal static PrivateLinkResources DeserializePrivateLinkResources(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClientDiscoveryResponse DeserializeClientDiscoveryResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            IReadOnlyList<RecoveryServicesPrivateLinkResourceData> value = default;
+            IReadOnlyList<ClientDiscoveryValueForSingleApi> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<RecoveryServicesPrivateLinkResourceData> array = new List<RecoveryServicesPrivateLinkResourceData>();
+                    List<ClientDiscoveryValueForSingleApi> array = new List<ClientDiscoveryValueForSingleApi>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryServicesPrivateLinkResourceData.DeserializeRecoveryServicesPrivateLinkResourceData(item, options));
+                        array.Add(ClientDiscoveryValueForSingleApi.DeserializeClientDiscoveryValueForSingleApi(item, options));
                     }
                     value = array;
                     continue;
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PrivateLinkResources(value, nextLink, serializedAdditionalRawData);
+            return new ClientDiscoveryResponse(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PrivateLinkResources>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClientDiscoveryResponse>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResources>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClientDiscoveryResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkResources)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientDiscoveryResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PrivateLinkResources IPersistableModel<PrivateLinkResources>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClientDiscoveryResponse IPersistableModel<ClientDiscoveryResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResources>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClientDiscoveryResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePrivateLinkResources(document.RootElement, options);
+                        return DeserializeClientDiscoveryResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkResources)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientDiscoveryResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PrivateLinkResources>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClientDiscoveryResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

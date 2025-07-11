@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> Soft delete Settings of vault. </summary>
-    public partial class RecoveryServicesSoftDeleteSettings
+    /// <summary> Class to represent shoebox service specification in json client discovery. </summary>
+    internal partial class ClientDiscoveryForServiceSpecification
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSoftDeleteSettings"/>. </summary>
-        public RecoveryServicesSoftDeleteSettings()
+        /// <summary> Initializes a new instance of <see cref="ClientDiscoveryForServiceSpecification"/>. </summary>
+        internal ClientDiscoveryForServiceSpecification()
         {
+            LogSpecifications = new ChangeTrackingList<ClientDiscoveryForLogSpecification>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSoftDeleteSettings"/>. </summary>
-        /// <param name="softDeleteState"></param>
-        /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
-        /// <param name="enhancedSecurityState"></param>
+        /// <summary> Initializes a new instance of <see cref="ClientDiscoveryForServiceSpecification"/>. </summary>
+        /// <param name="logSpecifications"> List of log specifications of this operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesSoftDeleteSettings(RecoveryServicesSoftDeleteState? softDeleteState, int? softDeleteRetentionPeriodInDays, EnhancedSecurityState? enhancedSecurityState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClientDiscoveryForServiceSpecification(IReadOnlyList<ClientDiscoveryForLogSpecification> logSpecifications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SoftDeleteState = softDeleteState;
-            SoftDeleteRetentionPeriodInDays = softDeleteRetentionPeriodInDays;
-            EnhancedSecurityState = enhancedSecurityState;
+            LogSpecifications = logSpecifications;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the soft delete state. </summary>
-        public RecoveryServicesSoftDeleteState? SoftDeleteState { get; set; }
-        /// <summary> Soft delete retention period in days. </summary>
-        public int? SoftDeleteRetentionPeriodInDays { get; set; }
-        /// <summary> Gets or sets the enhanced security state. </summary>
-        public EnhancedSecurityState? EnhancedSecurityState { get; set; }
+        /// <summary> List of log specifications of this operation. </summary>
+        public IReadOnlyList<ClientDiscoveryForLogSpecification> LogSpecifications { get; }
     }
 }

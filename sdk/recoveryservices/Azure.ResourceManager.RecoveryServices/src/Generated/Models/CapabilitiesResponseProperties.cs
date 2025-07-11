@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Capabilities properties in response. </summary>
-    internal partial class CapabilitiesResultProperties
+    internal partial class CapabilitiesResponseProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CapabilitiesResultProperties"/>. </summary>
-        public CapabilitiesResultProperties()
+        /// <summary> Initializes a new instance of <see cref="CapabilitiesResponseProperties"/>. </summary>
+        internal CapabilitiesResponseProperties()
         {
             DnsZones = new ChangeTrackingList<DnsZoneResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapabilitiesResultProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilitiesResponseProperties"/>. </summary>
         /// <param name="dnsZones"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilitiesResultProperties(IList<DnsZoneResult> dnsZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CapabilitiesResponseProperties(IReadOnlyList<DnsZoneResult> dnsZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DnsZones = dnsZones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the dns zones. </summary>
-        public IList<DnsZoneResult> DnsZones { get; }
+        public IReadOnlyList<DnsZoneResult> DnsZones { get; }
     }
 }

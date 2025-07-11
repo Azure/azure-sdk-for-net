@@ -16,137 +16,24 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRecoveryServicesModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.VaultCertificateResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Certificate details representing the Vault credentials.
-        /// Please note <see cref="Models.ResourceCertificateDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ResourceCertificateAndAcsDetails"/> and <see cref="Models.ResourceCertificateAndAadDetails"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.VaultCertificateResult"/> instance for mocking. </returns>
-        public static VaultCertificateResult VaultCertificateResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceCertificateDetails properties = null)
+        /// <summary> Initializes a new instance of <see cref="Models.OperationResource"/>. </summary>
+        /// <param name="endOn"> End time of the operation. </param>
+        /// <param name="error"> Required if status == failed or status == canceled. This is the OData v4 error format, used by the RPC and will go into the v2.2 Azure REST API guidelines. </param>
+        /// <param name="id"> It should match what is used to GET the operation result. </param>
+        /// <param name="name"> It must match the last segment of the "id" field, and will typically be a GUID / system generated value. </param>
+        /// <param name="status"> The status of the operation. (InProgress/Success/Failed/Cancelled). </param>
+        /// <param name="startOn"> Start time of the operation. </param>
+        /// <returns> A new <see cref="Models.OperationResource"/> instance for mocking. </returns>
+        public static OperationResource OperationResource(DateTimeOffset? endOn = null, ResponseError error = null, string id = null, string name = null, string status = null, DateTimeOffset? startOn = null)
         {
-            return new VaultCertificateResult(
+            return new OperationResource(
+                endOn,
+                error,
                 id,
                 name,
-                resourceType,
-                systemData,
-                properties,
+                status,
+                startOn,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceCertificateDetails"/>. </summary>
-        /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
-        /// <param name="friendlyName"> Certificate friendly name. </param>
-        /// <param name="issuer"> Certificate issuer. </param>
-        /// <param name="resourceId"> Resource ID of the vault. </param>
-        /// <param name="subject"> Certificate Subject Name. </param>
-        /// <param name="thumbprint"> Certificate thumbprint. </param>
-        /// <param name="validStartOn"> Certificate Validity start Date time. </param>
-        /// <param name="validEndOn"> Certificate Validity End Date time. </param>
-        /// <returns> A new <see cref="Models.ResourceCertificateDetails"/> instance for mocking. </returns>
-        public static ResourceCertificateDetails ResourceCertificateDetails(string authType = null, byte[] certificate = null, string friendlyName = null, string issuer = null, long? resourceId = null, string subject = null, BinaryData thumbprint = null, DateTimeOffset? validStartOn = null, DateTimeOffset? validEndOn = null)
-        {
-            return new UnknownResourceCertificateDetails(
-                authType,
-                certificate,
-                friendlyName,
-                issuer,
-                resourceId,
-                subject,
-                thumbprint,
-                validStartOn,
-                validEndOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReplicationUsage"/>. </summary>
-        /// <param name="monitoringSummary"> Summary of the replication monitoring data for this vault. </param>
-        /// <param name="jobsSummary"> Summary of the replication jobs data for this vault. </param>
-        /// <param name="protectedItemCount"> Number of replication protected items for this vault. </param>
-        /// <param name="recoveryPlanCount"> Number of replication recovery plans for this vault. </param>
-        /// <param name="registeredServersCount"> Number of servers registered to this vault. </param>
-        /// <param name="recoveryServicesProviderAuthType"> The authentication type of recovery service providers in the vault. </param>
-        /// <returns> A new <see cref="Models.ReplicationUsage"/> instance for mocking. </returns>
-        public static ReplicationUsage ReplicationUsage(VaultMonitoringSummary monitoringSummary = null, ReplicationJobSummary jobsSummary = null, int? protectedItemCount = null, int? recoveryPlanCount = null, int? registeredServersCount = null, int? recoveryServicesProviderAuthType = null)
-        {
-            return new ReplicationUsage(
-                monitoringSummary,
-                jobsSummary,
-                protectedItemCount,
-                recoveryPlanCount,
-                registeredServersCount,
-                recoveryServicesProviderAuthType,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VaultMonitoringSummary"/>. </summary>
-        /// <param name="unHealthyVmCount"> Count of unhealthy VMs. </param>
-        /// <param name="unHealthyProviderCount"> Count of unhealthy replication providers. </param>
-        /// <param name="eventsCount"> Count of all critical warnings. </param>
-        /// <param name="deprecatedProviderCount"> Count of all deprecated recovery service providers. </param>
-        /// <param name="supportedProviderCount"> Count of all the supported recovery service providers. </param>
-        /// <param name="unsupportedProviderCount"> Count of all the unsupported recovery service providers. </param>
-        /// <returns> A new <see cref="Models.VaultMonitoringSummary"/> instance for mocking. </returns>
-        public static VaultMonitoringSummary VaultMonitoringSummary(int? unHealthyVmCount = null, int? unHealthyProviderCount = null, int? eventsCount = null, int? deprecatedProviderCount = null, int? supportedProviderCount = null, int? unsupportedProviderCount = null)
-        {
-            return new VaultMonitoringSummary(
-                unHealthyVmCount,
-                unHealthyProviderCount,
-                eventsCount,
-                deprecatedProviderCount,
-                supportedProviderCount,
-                unsupportedProviderCount,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ReplicationJobSummary"/>. </summary>
-        /// <param name="failedJobs"> Count of failed jobs. </param>
-        /// <param name="suspendedJobs"> Count of suspended jobs. </param>
-        /// <param name="inProgressJobs"> Count of in-progress jobs. </param>
-        /// <returns> A new <see cref="Models.ReplicationJobSummary"/> instance for mocking. </returns>
-        public static ReplicationJobSummary ReplicationJobSummary(int? failedJobs = null, int? suspendedJobs = null, int? inProgressJobs = null)
-        {
-            return new ReplicationJobSummary(failedJobs, suspendedJobs, inProgressJobs, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesPrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> e.g. f9ad6492-33d4-4690-9999-6bfd52a0d081 (Backup) or f9ad6492-33d4-4690-9999-6bfd52a0d082 (SiteRecovery). </param>
-        /// <param name="requiredMembers"> [backup-ecs1, backup-prot1, backup-prot1b, backup-prot1c, backup-id1]. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="RecoveryServices.RecoveryServicesPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static RecoveryServicesPrivateLinkResourceData RecoveryServicesPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
-
-            return new RecoveryServicesPrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupId,
-                requiredMembers?.ToList(),
-                requiredZoneNames?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesNameAvailabilityResult"/>. </summary>
-        /// <param name="isNameAvailable"></param>
-        /// <param name="reason"></param>
-        /// <param name="message"></param>
-        /// <returns> A new <see cref="Models.RecoveryServicesNameAvailabilityResult"/> instance for mocking. </returns>
-        public static RecoveryServicesNameAvailabilityResult RecoveryServicesNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
-        {
-            return new RecoveryServicesNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesVaultData"/>. </summary>
@@ -159,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="properties"> Properties of the vault. </param>
         /// <param name="sku"> Identifies the unique system identifier for each Azure resource. </param>
-        /// <param name="etag"> Optional ETag. </param>
+        /// <param name="etag"> etag for the resource. </param>
         /// <returns> A new <see cref="RecoveryServices.RecoveryServicesVaultData"/> instance for mocking. </returns>
         public static RecoveryServicesVaultData RecoveryServicesVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, RecoveryServicesVaultProperties properties = null, RecoveryServicesSku sku = null, ETag? etag = null)
         {
@@ -306,15 +193,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VaultPropertiesRedundancySettings"/>. </summary>
-        /// <param name="standardTierStorageRedundancy"> The storage redundancy setting of a vault. </param>
-        /// <param name="crossRegionRestore"> Flag to show if Cross Region Restore is enabled on the Vault or not. </param>
-        /// <returns> A new <see cref="Models.VaultPropertiesRedundancySettings"/> instance for mocking. </returns>
-        public static VaultPropertiesRedundancySettings VaultPropertiesRedundancySettings(StandardTierStorageRedundancy? standardTierStorageRedundancy = null, CrossRegionRestore? crossRegionRestore = null)
-        {
-            return new VaultPropertiesRedundancySettings(standardTierStorageRedundancy, crossRegionRestore, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesSecuritySettings"/>. </summary>
         /// <param name="immutabilityState"> Immutability Settings of a vault. </param>
         /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
@@ -323,6 +201,65 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState = null, RecoveryServicesSoftDeleteSettings softDeleteSettings = null, MultiUserAuthorization? multiUserAuthorization = null)
         {
             return new RecoveryServicesSecuritySettings(immutabilityState != null ? new ImmutabilitySettings(immutabilityState, serializedAdditionalRawData: null) : null, softDeleteSettings, multiUserAuthorization, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ClientDiscoveryValueForSingleApi"/>. </summary>
+        /// <param name="name"> Name of the Operation. </param>
+        /// <param name="display"> Contains the localized display information for this particular operation. </param>
+        /// <param name="origin"> The intended executor of the operation;governs the display of the operation in the RBAC UX and the audit logs UX. </param>
+        /// <param name="logSpecifications"> ShoeBox properties for the given operation. </param>
+        /// <returns> A new <see cref="Models.ClientDiscoveryValueForSingleApi"/> instance for mocking. </returns>
+        public static ClientDiscoveryValueForSingleApi ClientDiscoveryValueForSingleApi(string name = null, ClientDiscoveryDisplay display = null, string origin = null, IEnumerable<ClientDiscoveryForLogSpecification> logSpecifications = null)
+        {
+            logSpecifications ??= new List<ClientDiscoveryForLogSpecification>();
+
+            return new ClientDiscoveryValueForSingleApi(name, display, origin, logSpecifications != null ? new ClientDiscoveryForProperties(new ClientDiscoveryForServiceSpecification(logSpecifications?.ToList(), serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ClientDiscoveryDisplay"/>. </summary>
+        /// <param name="provider"> Name of the provider for display purposes. </param>
+        /// <param name="resource"> ResourceType for which this Operation can be performed. </param>
+        /// <param name="operation"> Operations Name itself. </param>
+        /// <param name="description"> Description of the operation having details of what operation is about. </param>
+        /// <returns> A new <see cref="Models.ClientDiscoveryDisplay"/> instance for mocking. </returns>
+        public static ClientDiscoveryDisplay ClientDiscoveryDisplay(string provider = null, string resource = null, string operation = null, string description = null)
+        {
+            return new ClientDiscoveryDisplay(provider, resource, operation, description, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ClientDiscoveryForLogSpecification"/>. </summary>
+        /// <param name="name"> Name of the log. </param>
+        /// <param name="displayName"> Localized display name. </param>
+        /// <param name="blobDuration"> Blobs created in customer storage account per hour. </param>
+        /// <returns> A new <see cref="Models.ClientDiscoveryForLogSpecification"/> instance for mocking. </returns>
+        public static ClientDiscoveryForLogSpecification ClientDiscoveryForLogSpecification(string name = null, string displayName = null, string blobDuration = null)
+        {
+            return new ClientDiscoveryForLogSpecification(name, displayName, blobDuration, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesPrivateLinkResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="groupId"> e.g. f9ad6492-33d4-4690-9999-6bfd52a0d081 (Backup) or f9ad6492-33d4-4690-9999-6bfd52a0d082 (SiteRecovery). </param>
+        /// <param name="requiredMembers"> [backup-ecs1, backup-prot1, backup-prot1b, backup-prot1c, backup-id1]. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <returns> A new <see cref="RecoveryServices.RecoveryServicesPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static RecoveryServicesPrivateLinkResourceData RecoveryServicesPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        {
+            requiredMembers ??= new List<string>();
+            requiredZoneNames ??= new List<string>();
+
+            return new RecoveryServicesPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesVaultPatch"/>. </summary>
@@ -355,59 +292,52 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesVaultExtendedInfoData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VaultCertificateResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="integrityKey"> Integrity key. </param>
-        /// <param name="encryptionKey"> Encryption key. </param>
-        /// <param name="encryptionKeyThumbprint"> Encryption key thumbprint. </param>
-        /// <param name="algorithm"> Algorithm for Vault ExtendedInfo. </param>
-        /// <param name="etag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServices.RecoveryServicesVaultExtendedInfoData"/> instance for mocking. </returns>
-        public static RecoveryServicesVaultExtendedInfoData RecoveryServicesVaultExtendedInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string integrityKey = null, string encryptionKey = null, string encryptionKeyThumbprint = null, string algorithm = null, ETag? etag = null)
+        /// <param name="properties">
+        /// Certificate details representing the Vault credentials.
+        /// Please note <see cref="Models.ResourceCertificateDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.ResourceCertificateAndAcsDetails"/> and <see cref="Models.ResourceCertificateAndAadDetails"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.VaultCertificateResult"/> instance for mocking. </returns>
+        public static VaultCertificateResult VaultCertificateResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceCertificateDetails properties = null)
         {
-            return new RecoveryServicesVaultExtendedInfoData(
+            return new VaultCertificateResult(
                 id,
                 name,
                 resourceType,
                 systemData,
-                integrityKey,
-                encryptionKey,
-                encryptionKeyThumbprint,
-                algorithm,
-                etag,
+                properties,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VaultUsage"/>. </summary>
-        /// <param name="unit"> Unit of the usage. </param>
-        /// <param name="quotaPeriod"> Quota period of usage. </param>
-        /// <param name="nextResetOn"> Next reset time of usage. </param>
-        /// <param name="currentValue"> Current value of usage. </param>
-        /// <param name="limit"> Limit of usage. </param>
-        /// <param name="name"> Name of usage. </param>
-        /// <returns> A new <see cref="Models.VaultUsage"/> instance for mocking. </returns>
-        public static VaultUsage VaultUsage(VaultUsageUnit? unit = null, string quotaPeriod = null, DateTimeOffset? nextResetOn = null, long? currentValue = null, long? limit = null, VaultUsageNameInfo name = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceCertificateDetails"/>. </summary>
+        /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
+        /// <param name="friendlyName"> Certificate friendly name. </param>
+        /// <param name="issuer"> Certificate issuer. </param>
+        /// <param name="resourceId"> Resource ID of the vault. </param>
+        /// <param name="subject"> Certificate Subject Name. </param>
+        /// <param name="thumbprint"> Certificate thumbprint. </param>
+        /// <param name="validStartOn"> Certificate Validity start Date time. </param>
+        /// <param name="validEndOn"> Certificate Validity End Date time. </param>
+        /// <returns> A new <see cref="Models.ResourceCertificateDetails"/> instance for mocking. </returns>
+        public static ResourceCertificateDetails ResourceCertificateDetails(string authType = null, byte[] certificate = null, string friendlyName = null, string issuer = null, long? resourceId = null, string subject = null, BinaryData thumbprint = null, DateTimeOffset? validStartOn = null, DateTimeOffset? validEndOn = null)
         {
-            return new VaultUsage(
-                unit,
-                quotaPeriod,
-                nextResetOn,
-                currentValue,
-                limit,
-                name,
+            return new UnknownResourceCertificateDetails(
+                authType,
+                certificate,
+                friendlyName,
+                issuer,
+                resourceId,
+                subject,
+                thumbprint,
+                validStartOn,
+                validEndOn,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VaultUsageNameInfo"/>. </summary>
-        /// <param name="value"> Value of usage. </param>
-        /// <param name="localizedValue"> Localized value of usage. </param>
-        /// <returns> A new <see cref="Models.VaultUsageNameInfo"/> instance for mocking. </returns>
-        public static VaultUsageNameInfo VaultUsageNameInfo(string value = null, string localizedValue = null)
-        {
-            return new VaultUsageNameInfo(value, localizedValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceCertificateAndAadDetails"/>. </summary>
@@ -478,6 +408,143 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 globalAcsNamespace,
                 globalAcsHostName,
                 globalAcsRPRealm);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationUsage"/>. </summary>
+        /// <param name="monitoringSummary"> Summary of the replication monitoring data for this vault. </param>
+        /// <param name="jobsSummary"> Summary of the replication jobs data for this vault. </param>
+        /// <param name="protectedItemCount"> Number of replication protected items for this vault. </param>
+        /// <param name="recoveryPlanCount"> Number of replication recovery plans for this vault. </param>
+        /// <param name="registeredServersCount"> Number of servers registered to this vault. </param>
+        /// <param name="recoveryServicesProviderAuthType"> The authentication type of recovery service providers in the vault. </param>
+        /// <returns> A new <see cref="Models.ReplicationUsage"/> instance for mocking. </returns>
+        public static ReplicationUsage ReplicationUsage(VaultMonitoringSummary monitoringSummary = null, ReplicationJobSummary jobsSummary = null, int? protectedItemCount = null, int? recoveryPlanCount = null, int? registeredServersCount = null, int? recoveryServicesProviderAuthType = null)
+        {
+            return new ReplicationUsage(
+                monitoringSummary,
+                jobsSummary,
+                protectedItemCount,
+                recoveryPlanCount,
+                registeredServersCount,
+                recoveryServicesProviderAuthType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VaultMonitoringSummary"/>. </summary>
+        /// <param name="unHealthyVmCount"> Count of unhealthy VMs. </param>
+        /// <param name="unHealthyProviderCount"> Count of unhealthy replication providers. </param>
+        /// <param name="eventsCount"> Count of all critical warnings. </param>
+        /// <param name="deprecatedProviderCount"> Count of all deprecated recovery service providers. </param>
+        /// <param name="supportedProviderCount"> Count of all the supported recovery service providers. </param>
+        /// <param name="unsupportedProviderCount"> Count of all the unsupported recovery service providers. </param>
+        /// <returns> A new <see cref="Models.VaultMonitoringSummary"/> instance for mocking. </returns>
+        public static VaultMonitoringSummary VaultMonitoringSummary(int? unHealthyVmCount = null, int? unHealthyProviderCount = null, int? eventsCount = null, int? deprecatedProviderCount = null, int? supportedProviderCount = null, int? unsupportedProviderCount = null)
+        {
+            return new VaultMonitoringSummary(
+                unHealthyVmCount,
+                unHealthyProviderCount,
+                eventsCount,
+                deprecatedProviderCount,
+                supportedProviderCount,
+                unsupportedProviderCount,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationJobSummary"/>. </summary>
+        /// <param name="failedJobs"> Count of failed jobs. </param>
+        /// <param name="suspendedJobs"> Count of suspended jobs. </param>
+        /// <param name="inProgressJobs"> Count of in-progress jobs. </param>
+        /// <returns> A new <see cref="Models.ReplicationJobSummary"/> instance for mocking. </returns>
+        public static ReplicationJobSummary ReplicationJobSummary(int? failedJobs = null, int? suspendedJobs = null, int? inProgressJobs = null)
+        {
+            return new ReplicationJobSummary(failedJobs, suspendedJobs, inProgressJobs, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VaultUsage"/>. </summary>
+        /// <param name="unit"> Unit of the usage. </param>
+        /// <param name="quotaPeriod"> Quota period of usage. </param>
+        /// <param name="nextResetOn"> Next reset time of usage. </param>
+        /// <param name="currentValue"> Current value of usage. </param>
+        /// <param name="limit"> Limit of usage. </param>
+        /// <param name="name"> Name of usage. </param>
+        /// <returns> A new <see cref="Models.VaultUsage"/> instance for mocking. </returns>
+        public static VaultUsage VaultUsage(VaultUsageUnit? unit = null, string quotaPeriod = null, DateTimeOffset? nextResetOn = null, long? currentValue = null, long? limit = null, VaultUsageNameInfo name = null)
+        {
+            return new VaultUsage(
+                unit,
+                quotaPeriod,
+                nextResetOn,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.VaultUsageNameInfo"/>. </summary>
+        /// <param name="value"> Value of usage. </param>
+        /// <param name="localizedValue"> Localized value of usage. </param>
+        /// <returns> A new <see cref="Models.VaultUsageNameInfo"/> instance for mocking. </returns>
+        public static VaultUsageNameInfo VaultUsageNameInfo(string value = null, string localizedValue = null)
+        {
+            return new VaultUsageNameInfo(value, localizedValue, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesVaultExtendedInfoData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="integrityKey"> Integrity key. </param>
+        /// <param name="encryptionKey"> Encryption key. </param>
+        /// <param name="encryptionKeyThumbprint"> Encryption key thumbprint. </param>
+        /// <param name="algorithm"> Algorithm for Vault ExtendedInfo. </param>
+        /// <param name="etag"> etag for the resource. </param>
+        /// <returns> A new <see cref="RecoveryServices.RecoveryServicesVaultExtendedInfoData"/> instance for mocking. </returns>
+        public static RecoveryServicesVaultExtendedInfoData RecoveryServicesVaultExtendedInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string integrityKey = null, string encryptionKey = null, string encryptionKeyThumbprint = null, string algorithm = null, ETag? etag = null)
+        {
+            return new RecoveryServicesVaultExtendedInfoData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                integrityKey,
+                encryptionKey,
+                encryptionKeyThumbprint,
+                algorithm,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecoveryServicesNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"></param>
+        /// <param name="reason"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="Models.RecoveryServicesNameAvailabilityResult"/> instance for mocking. </returns>
+        public static RecoveryServicesNameAvailabilityResult RecoveryServicesNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
+        {
+            return new RecoveryServicesNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CapabilitiesResult"/>. </summary>
+        /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
+        /// <param name="capabilitiesResponseDnsZones"> Capabilities properties in response. </param>
+        /// <returns> A new <see cref="Models.CapabilitiesResult"/> instance for mocking. </returns>
+        public static CapabilitiesResult CapabilitiesResult(ResourceType resourceCapabilitiesBaseType = default, IEnumerable<DnsZoneResult> capabilitiesResponseDnsZones = null)
+        {
+            capabilitiesResponseDnsZones ??= new List<DnsZoneResult>();
+
+            return new CapabilitiesResult(resourceCapabilitiesBaseType, serializedAdditionalRawData: null, capabilitiesResponseDnsZones != null ? new CapabilitiesResponseProperties(capabilitiesResponseDnsZones?.ToList(), serializedAdditionalRawData: null) : null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DnsZoneResult"/>. </summary>
+        /// <param name="subResource"> Subresource type for vault AzureBackup, AzureBackup_secondary or AzureSiteRecovery. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone names. </param>
+        /// <returns> A new <see cref="Models.DnsZoneResult"/> instance for mocking. </returns>
+        public static DnsZoneResult DnsZoneResult(VaultSubResourceType? subResource = null, IEnumerable<string> requiredZoneNames = null)
+        {
+            requiredZoneNames ??= new List<string>();
+
+            return new DnsZoneResult(subResource, serializedAdditionalRawData: null, requiredZoneNames?.ToList());
         }
     }
 }
