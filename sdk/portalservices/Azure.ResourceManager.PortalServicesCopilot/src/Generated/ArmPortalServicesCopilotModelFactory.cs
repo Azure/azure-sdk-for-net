@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
 
         /// <summary> The copilot settings tenant resource definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="name"> The default copilot settings, applying to entire tenant. </param>
         /// <returns> A new <see cref="PortalServicesCopilot.PortalServicesCopilotSettingData"/> instance for mocking. </returns>
-        public static PortalServicesCopilotSettingData PortalServicesCopilotSettingData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, PortalServicesCopilotSettingsProperties properties = default, string name = default)
+        public static PortalServicesCopilotSettingData PortalServicesCopilotSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PortalServicesCopilotSettingsProperties properties = default)
         {
             return new PortalServicesCopilotSettingData(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties,
-                name);
+                properties);
         }
 
         /// <summary> The Copilot Settings properties. </summary>
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
 
         /// <summary> The type used for update operations of the CopilotSettingsResource. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.CopilotSettingsResourcePatch"/> instance for mocking. </returns>
-        public static CopilotSettingsResourcePatch CopilotSettingsResourcePatch(CopilotSettingsResourceUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.PortalServicesCopilotSettingPatch"/> instance for mocking. </returns>
+        public static PortalServicesCopilotSettingPatch PortalServicesCopilotSettingPatch(CopilotSettingsResourceUpdateProperties properties = default)
         {
-            return new CopilotSettingsResourcePatch(properties, additionalBinaryDataProperties: null);
+            return new PortalServicesCopilotSettingPatch(properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The updatable properties of the CopilotSettingsResource. </summary>

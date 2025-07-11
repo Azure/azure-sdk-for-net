@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<PortalServicesCopilotSettingResource> Update(CopilotSettingsResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<PortalServicesCopilotSettingResource> Update(PortalServicesCopilotSettingPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(CopilotSettingsResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(PortalServicesCopilotSettingPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalServicesCopilotSettingData> response = Response.FromValue(PortalServicesCopilotSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<PortalServicesCopilotSettingResource>> UpdateAsync(CopilotSettingsResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PortalServicesCopilotSettingResource>> UpdateAsync(PortalServicesCopilotSettingPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(CopilotSettingsResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _portalservicescopilotsettingRestClient.CreateUpdateRequest(PortalServicesCopilotSettingPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalServicesCopilotSettingData> response = Response.FromValue(PortalServicesCopilotSettingData.FromResponse(result), result);
                 if (response.Value == null)

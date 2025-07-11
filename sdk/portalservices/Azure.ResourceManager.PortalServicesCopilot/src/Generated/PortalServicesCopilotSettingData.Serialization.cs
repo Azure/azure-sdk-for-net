@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PortalServicesCopilotSettingsProperties properties = default;
-            string name = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -117,11 +122,11 @@ namespace Azure.ResourceManager.PortalServicesCopilot
             }
             return new PortalServicesCopilotSettingData(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
-                name);
+                properties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
