@@ -177,7 +177,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ThreadRun> CreateRun(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
-            => InternalCreateRun(threadId, assistantId, overrideModelName, overrideInstructions, additionalInstructions, additionalMessages, overrideTools, null, stream, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, parallelToolCalls, metadata, include, cancellationToken);
+            => CreateRunInternal(threadId, assistantId, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
 
         /// <summary>
         /// Creates a new run of the specified thread using a specified agent.
@@ -190,7 +190,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A new <see cref="ThreadRun"/> instance. </returns>
         public virtual Response<ThreadRun> CreateRun(PersistentAgentThread thread, PersistentAgent agent, CancellationToken cancellationToken = default)
-            => InternalCreateRun(thread.Id, agent.Id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
+            => CreateRunInternal(thread.Id, agent.Id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
 
         /// <summary>
         /// Creates a new run of the specified thread using a specified agent.
@@ -204,7 +204,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A new <see cref="ThreadRun"/> instance. </returns>
         public virtual Response<ThreadRun> CreateRun(PersistentAgentThread thread, PersistentAgent agent, ToolResources toolResources, CancellationToken cancellationToken = default)
-            => InternalCreateRun(thread.Id, agent.Id, null, null, null, null, null, toolResources, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
+            => CreateRunInternal(thread.Id, agent.Id, null, null, null, null, null, toolResources, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
 
         /// <summary> Creates a new run for an agent thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
@@ -256,7 +256,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Task<Response<ThreadRun>> CreateRunAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
-            => InternalCreateRunAsync(threadId, assistantId, overrideModelName, overrideInstructions, additionalInstructions, additionalMessages, overrideTools, null, stream, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, parallelToolCalls, metadata, include, cancellationToken);
+            => CreateRunAsyncInternal(threadId, assistantId, overrideModelName, overrideInstructions, additionalInstructions, additionalMessages, overrideTools, null, stream, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, parallelToolCalls, metadata, include, cancellationToken);
 
         /// <summary>
         /// Creates a new run of the specified thread using a specified agent.
@@ -269,7 +269,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A new <see cref="ThreadRun"/> instance. </returns>
         public virtual Task<Response<ThreadRun>> CreateRunAsync(PersistentAgentThread thread, PersistentAgent agent, CancellationToken cancellationToken = default)
-             => InternalCreateRunAsync(thread.Id, agent.Id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
+             => CreateRunAsyncInternal(thread.Id, agent.Id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
 
         /// <summary>
         /// Creates a new run of the specified thread using a specified agent.
@@ -283,7 +283,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A new <see cref="ThreadRun"/> instance. </returns>
         public virtual Task<Response<ThreadRun>> CreateRunAsync(PersistentAgentThread thread, PersistentAgent agent, ToolResources toolResources, CancellationToken cancellationToken = default)
-             => InternalCreateRunAsync(thread.Id, agent.Id, null, null, null, null, null, toolResources, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
+             => CreateRunAsyncInternal(thread.Id, agent.Id, null, null, null, null, null, toolResources, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
 
         /// <summary>
         /// [Protocol Method] Gets an existing run from an existing thread.
@@ -797,6 +797,64 @@ namespace Azure.AI.Agents.Persistent
                 include: include,
                 cancellationToken: cancellationToken
             );
+        }
+
+        private Response<ThreadRun> CreateRunInternal(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, ToolResources toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
+            CreateRunRequest createRunRequest = new CreateRunRequest(
+                assistantId,
+                overrideModelName,
+                overrideInstructions,
+                additionalInstructions,
+                additionalMessages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
+                overrideTools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                toolResources,
+                stream: true,
+                temperature,
+                topP,
+                maxPromptTokens,
+                maxCompletionTokens,
+                truncationStrategy,
+                toolChoice,
+                responseFormat,
+                parallelToolCalls,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateRun(threadId, createRunRequest.ToRequestContent(), include, context);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
+        }
+
+        private async Task<Response<ThreadRun>> CreateRunAsyncInternal(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, ToolResources toolResources = null, bool? stream = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, IEnumerable<RunAdditionalFieldList> include = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
+
+            CreateRunRequest createRunRequest = new CreateRunRequest(
+                assistantId,
+                overrideModelName,
+                overrideInstructions,
+                additionalInstructions,
+                additionalMessages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
+                overrideTools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
+                toolResources,
+                stream: true,
+                temperature,
+                topP,
+                maxPromptTokens,
+                maxCompletionTokens,
+                truncationStrategy,
+                toolChoice,
+                responseFormat,
+                parallelToolCalls,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateRunAsync(threadId, createRunRequest.ToRequestContent(), include, context).ConfigureAwait(false);
+            return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
     }
 }
