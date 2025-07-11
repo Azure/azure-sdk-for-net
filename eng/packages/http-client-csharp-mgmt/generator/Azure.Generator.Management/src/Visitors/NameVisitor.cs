@@ -27,19 +27,22 @@ internal class NameVisitor : ScmLibraryVisitor
             type.Update(name: newName);
         }
 
-        if (type is not null && inputLibrary.IsResourceUpdateModel(model))
+        if (type is not null)
         {
             var enclosingResourceName = inputLibrary.FindEnclosingResourceNameForResourceUpdateModel(model);
-            var newModelName = $"{enclosingResourceName}Patch";
-
-            _resourceUpdateModelTypes.Add(type.Type);
-
-            type.Update(name: newModelName);
-
-            foreach (var serializationProvider in type.SerializationProviders)
+            if (enclosingResourceName is not null)
             {
-                serializationProvider.Update(name: newModelName);
-                _resourceUpdateModelTypes.Add(serializationProvider.Type);
+                var newModelName = $"{enclosingResourceName}Patch";
+
+                _resourceUpdateModelTypes.Add(type.Type);
+
+                type.Update(name: newModelName);
+
+                foreach (var serializationProvider in type.SerializationProviders)
+                {
+                    serializationProvider.Update(name: newModelName);
+                    _resourceUpdateModelTypes.Add(serializationProvider.Type);
+                }
             }
         }
 

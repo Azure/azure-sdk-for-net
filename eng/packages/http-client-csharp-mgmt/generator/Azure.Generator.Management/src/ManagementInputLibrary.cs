@@ -27,7 +27,7 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
 
-        private Dictionary<InputModelType, (bool IsUpdateModel, string? ResourceName)> _resourceUpdateModelToResourceNameMap = [];
+        private IReadOnlyDictionary<InputModelType, string>? _resourceUpdateModelToResourceNameMap;
 
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
@@ -40,38 +40,12 @@ namespace Azure.Generator.Management
 
         private InputNamespace BuildInputNamespaceInternal()
         {
-            foreach (InputModelType model in base.InputNamespace.Models)
-            {
-                if (!_resourceUpdateModelToResourceNameMap.ContainsKey(model))
-                {
-                    _resourceUpdateModelToResourceNameMap[model] = (IsResourceUpdateModel(model), null);
-                }
-            }
-
-            var hasResourceUpdateModel = _resourceUpdateModelToResourceNameMap.Values.Any(entry => entry.IsUpdateModel);
-
+            // For MPG, we always generate convenience methods for all operations.
             foreach (var client in base.InputNamespace.Clients)
             {
                 foreach (var method in client.Methods)
                 {
-                    // For MPG, we always generate convenience methods for all operations.
                     method.Operation.Update(generateConvenienceMethod: true);
-
-                    if (hasResourceUpdateModel)
-                    {
-                        foreach (var parameter in method.Operation.Parameters)
-                        {
-                            if (parameter.Type is InputModelType parameterModel && method.Operation.HttpMethod == "PATCH")
-                            {
-                                if (_resourceUpdateModelToResourceNameMap.TryGetValue(parameterModel, out var existingEntry) &&
-                                    existingEntry.IsUpdateModel && existingEntry.ResourceName == null)
-                                {
-                                    var resourceName = method.Operation.ResourceName ?? throw new InvalidOperationException($"Resource name cannot be null for resource update model '{parameterModel.Name}'");
-                                    _resourceUpdateModelToResourceNameMap[parameterModel] = (true, resourceName);
-                                }
-                            }
-                        }
-                    }
                 }
             }
 
@@ -85,6 +59,30 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<string, InputServiceMethod> InputMethodsByCrossLanguageDefinitionId => _inputServiceMethodsByCrossLanguageDefinitionId ??= InputNamespace.Clients.SelectMany(c => c.Methods).ToDictionary(m => m.CrossLanguageDefinitionId, m => m);
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> IntMethodClientMap => _intMethodClientMap ??= ConstructMethodClientMap();
+
+        private IReadOnlyDictionary<InputModelType, string> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
+
+        private IReadOnlyDictionary<InputModelType, string> BuildResourceUpdateModelToResourceNameMap()
+        {
+            var map = new Dictionary<InputModelType, string>();
+
+            foreach (var (resourceModel, metadata) in ResourceMetadata)
+            {
+                var id = metadata.Methods.Where(m => m.Kind == ResourceOperationKind.Update).FirstOrDefault()?.Id;
+                if (id != null && InputMethodsByCrossLanguageDefinitionId.GetValueOrDefault(id) is { Operation.HttpMethod: "PATCH" } method)
+                {
+                    foreach (var parameter in method.Parameters)
+                    {
+                        if (parameter.Type is InputModelType updateModel && updateModel != resourceModel)
+                        {
+                            map[updateModel] = resourceModel.Name;
+                        }
+                    }
+                }
+            }
+
+            return map;
+        }
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> ConstructMethodClientMap()
         {
@@ -203,34 +201,9 @@ namespace Azure.Generator.Management
             }
         }
 
-        internal bool IsResourceUpdateModel(InputModelType model)
+        internal string? FindEnclosingResourceNameForResourceUpdateModel(InputModelType model)
         {
-            if (_resourceUpdateModelToResourceNameMap.TryGetValue(model, out var resourceInfo))
-            {
-                return resourceInfo.IsUpdateModel;
-            }
-
-            var currentModel = model;
-            while (currentModel != null)
-            {
-                if (currentModel.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ResourceUpdateModelId, StringComparison.OrdinalIgnoreCase))
-                {
-                    return true;
-                }
-                currentModel = currentModel.BaseModel;
-            }
-
-            return false;
-        }
-
-        internal string FindEnclosingResourceNameForResourceUpdateModel(InputModelType model)
-        {
-            if (_resourceUpdateModelToResourceNameMap.TryGetValue(model, out var resourceInfo) &&  resourceInfo.IsUpdateModel && resourceInfo.ResourceName is not null)
-            {
-                return resourceInfo.ResourceName;
-            }
-
-            throw new InvalidOperationException($"Could not find enclosing resource name for resource update model '{model.Name}'");
+            return ResourceUpdateModelToResourceNameMap.TryGetValue(model, out var resourceName) ? resourceName : null;
         }
     }
 }
