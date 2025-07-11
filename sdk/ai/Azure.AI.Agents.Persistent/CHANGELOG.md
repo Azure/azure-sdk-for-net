@@ -1,24 +1,16 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.1.0-beta.4 (2025-07-11)
 
 ### Features Added
 
-<<<<<<< HEAD
 - Added support for Deep Research.
+- Added support for MCP.
 
 ### Sample updates
 
 - Added sample for Deep Research.
-=======
 - Expose the `GetVectorStoreFileBatchFiles` and `GetVectorStoreFileBatchFilesAsync` methods.
->>>>>>> 280b2d553ba8778e7f2de9d647667390523c5f23
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0-beta.3 (2025-06-27)
 
