@@ -8,7 +8,6 @@ using Microsoft.TypeSpec.Generator.ClientModel;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
-using Visitors;
 
 namespace Azure.Generator;
 
@@ -62,5 +61,6 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         AddVisitor(new PipelinePropertyVisitor());
         AddVisitor(new LroVisitor());
         AddVisitor(new SpecialHeadersVisitor());
+        AddVisitor(new RequestClientIdHeaderVisitor());
     }
 }

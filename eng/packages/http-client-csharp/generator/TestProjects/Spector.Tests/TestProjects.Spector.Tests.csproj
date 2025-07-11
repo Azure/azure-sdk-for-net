@@ -22,6 +22,7 @@
     <ProjectReference Include="..\Spector\http\azure\core\lro\rpc\src\_Specs_.Azure.Core.Lro.Rpc.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\basic\src\_Specs_.Azure.Core.Basic.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\page\src\_Specs_.Azure.Core.Page.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\example\basic\src\_Specs_.Azure.Example.Basic.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\model\src\_Specs_.Azure.Core.Model.csproj" />
     <ProjectReference Include="..\Spector\http\type\array\src\Type.Array.csproj" />
     <ProjectReference Include="..\Spector\http\type\enum\extensible\src\Type.Enum.Extensible.csproj" />

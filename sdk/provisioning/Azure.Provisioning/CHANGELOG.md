@@ -1,14 +1,19 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.2.1 (2025-07-09)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed the incorrect property name for discriminators in `AzureCliScript` and `AzurePowerShellScript` ([#51135](https://github.com/Azure/azure-sdk-for-net/issues/51135))
+- Fixed the incorrect format for `TimeSpan` properties in `AzureCliScript` and `AzurePowerShellScript` ([#51135](https://github.com/Azure/azure-sdk-for-net/issues/51135))
+
+## 1.2.0 (2025-07-02)
+
+### Features Added
+
+- Updated models to match the latest API version for ArmDeployment and ArmDeploymentScript.
+- Added derived types (`AzureCliScript` and `AzurePowerShellScript`) for `ArmDeploymentScript` to support different kind of deployment scripts.
+    - Please note that usually `ArmDeploymentScript` should not be constructed directly, but rather through the `AzureCliScript` or `AzurePowerShellScript` constructors.
 
 ## 1.1.0 (2025-06-16)
 

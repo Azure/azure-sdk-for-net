@@ -244,7 +244,8 @@ namespace Azure.Communication.CallAutomation
 
             if (options != null)
             {
-                request.PlayOptions = new PlayOptionsInternal(options.Loop, options.InterruptCallMediaOperation, options.InterruptHoldAudio);
+                request.PlayOptions = new PlayOptionsInternal(options.Loop);
+                request.InterruptCallMediaOperation = options.InterruptCallMediaOperation;
                 request.OperationContext = options.OperationContext;
                 request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
             }
@@ -672,7 +673,11 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                {
+                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
+                    OperationContext = options.OperationContext
+                };
 
                 return await CallMediaRestClient.UnholdAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -718,7 +723,11 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
+                {
+                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
+                    OperationContext = options.OperationContext
+                };
 
                 return CallMediaRestClient.Unhold(CallConnectionId, request, cancellationToken: cancellationToken);
             }
@@ -1269,7 +1278,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StartTranscriptionRequestInternal()
-                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext, OperationCallbackUri = options.OperationCallbackUri, SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId };
+                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext, OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri, SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId };
 
                 return CallMediaRestClient.StartTranscription(CallConnectionId, request, cancellationToken);
             }
@@ -1294,7 +1303,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StartTranscriptionRequestInternal()
-                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext, OperationCallbackUri = options.OperationCallbackUri, SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId };
+                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext, OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri, SpeechModelEndpointId = options.SpeechRecognitionModelEndpointId };
 
                 return await CallMediaRestClient.StartTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -1361,7 +1370,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="locale">Defines new locale for transcription.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
-        public virtual async Task<Response> UpdateTranscription(string locale, CancellationToken cancellationToken = default)
+        public virtual Response UpdateTranscription(string locale, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UpdateTranscription)}");
             scope.Start();
@@ -1372,7 +1381,7 @@ namespace Azure.Communication.CallAutomation
                     speechModelEndpointId: null,
                     operationContext: null,
                     operationCallbackUri: null);
-                return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+                return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -1393,7 +1402,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new(options.Locale, options.SpeechRecognitionModelEndpointId, options.OperationContext, options.OperationCallbackUri);
+                UpdateTranscriptionRequestInternal request = new(options.Locale, options.SpeechRecognitionModelEndpointId, options.OperationContext, options.OperationCallbackUri?.AbsoluteUri);
 
                 return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
             }
@@ -1442,7 +1451,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new(options.Locale, options.SpeechRecognitionModelEndpointId, options.OperationContext, options.OperationCallbackUri);
+                UpdateTranscriptionRequestInternal request = new(options.Locale, options.SpeechRecognitionModelEndpointId, options.OperationContext, options.OperationCallbackUri?.AbsoluteUri);
 
                 return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -1545,65 +1554,6 @@ namespace Azure.Communication.CallAutomation
                     : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri }; // OperationContext = options.OperationContext
 
                 return await CallMediaRestClient.StopMediaStreamingAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Interrupts current hold audio and plays the announcement passed as a parameter. Resumes the hold audio after announcement completes.
-        /// </summary>
-        /// <param name="announcementOptions"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>Returns <see cref="InterruptAudioAndAnnounceResult"/>, which can be used to wait for Play's related events.</returns>
-        public virtual Response<InterruptAudioAndAnnounceResult> InterruptAudioAndAnnounce(InterruptAudioAndAnnounceOptions announcementOptions, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(InterruptAudioAndAnnounce)}");
-            scope.Start();
-            try
-            {
-                InterruptAudioAndAnnounceRequestInternal request = new InterruptAudioAndAnnounceRequestInternal(
-                    announcementOptions.Announcement.Select(t => TranslatePlaySourceToInternal(t)).ToList(),
-                    CommunicationIdentifierSerializer.Serialize(announcementOptions.PlayTo),
-                    announcementOptions.OperationContext);
-
-                var response = CallMediaRestClient.InterruptAudioAndAnnounce(CallConnectionId, request, cancellationToken);
-                var result = new InterruptAudioAndAnnounceResult();
-
-                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
-                return Response.FromValue(result, response);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Plays a file.
-        /// </summary>
-        /// <param name="announcementOptions"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>Returns <see cref="InterruptAudioAndAnnounceResult"/>, which can be used to wait for Play's related events.</returns>
-        public async virtual Task<Response<InterruptAudioAndAnnounceResult>> InterruptAudioAndAnnounceAsync(InterruptAudioAndAnnounceOptions announcementOptions, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(InterruptAudioAndAnnounce)}");
-            scope.Start();
-            try
-            {
-                InterruptAudioAndAnnounceRequestInternal request = new InterruptAudioAndAnnounceRequestInternal(
-                    announcementOptions.Announcement.Select(t => TranslatePlaySourceToInternal(t)).ToList(),
-                    CommunicationIdentifierSerializer.Serialize(announcementOptions.PlayTo));
-
-                var response = await CallMediaRestClient.InterruptAudioAndAnnounceAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
-                var result = new InterruptAudioAndAnnounceResult();
-
-                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
-                return Response.FromValue(result, response);
             }
             catch (Exception ex)
             {
