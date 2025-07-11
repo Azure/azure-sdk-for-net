@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class Sku : IUtf8JsonSerializable, IJsonModel<Sku>
+    public partial class ModelDeploymentSku : IUtf8JsonSerializable, IJsonModel<ModelDeploymentSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Sku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelDeploymentSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Sku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ModelDeploymentSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Sku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ModelDeploymentSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Sku)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelDeploymentSku)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("capacity"u8);
@@ -61,19 +61,19 @@ namespace Azure.AI.Projects
             }
         }
 
-        Sku IJsonModel<Sku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelDeploymentSku IJsonModel<ModelDeploymentSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Sku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ModelDeploymentSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Sku)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelDeploymentSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSku(document.RootElement, options);
+            return DeserializeModelDeploymentSku(document.RootElement, options);
         }
 
-        internal static Sku DeserializeSku(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ModelDeploymentSku DeserializeModelDeploymentSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -121,7 +121,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Sku(
+            return new ModelDeploymentSku(
                 capacity,
                 family,
                 name,
@@ -130,43 +130,43 @@ namespace Azure.AI.Projects
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Sku>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ModelDeploymentSku>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Sku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ModelDeploymentSku>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Sku)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelDeploymentSku)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Sku IPersistableModel<Sku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ModelDeploymentSku IPersistableModel<ModelDeploymentSku>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Sku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ModelDeploymentSku>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSku(document.RootElement, options);
+                        return DeserializeModelDeploymentSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Sku)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelDeploymentSku)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Sku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ModelDeploymentSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Sku FromResponse(Response response)
+        internal static ModelDeploymentSku FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSku(document.RootElement);
+            return DeserializeModelDeploymentSku(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

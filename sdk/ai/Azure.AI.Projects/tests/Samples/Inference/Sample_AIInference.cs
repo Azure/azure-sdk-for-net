@@ -7,10 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.Inference;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.Core.Diagnostics;
-using System.Diagnostics.Tracing;
 
 namespace Azure.AI.Projects.Tests;
 
@@ -22,14 +22,21 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_ChatClientSync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
+        var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
+
+        AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+
+        var credential = new DefaultAzureCredential();
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
+
+        ChatCompletionsClient chatClient = new ChatCompletionsClient(new Uri(inferenceEndpoint), credential, clientOptions);
 
         var requestOptions = new ChatCompletionsOptions()
         {
@@ -51,14 +58,21 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_ChatClientAsync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
+        var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
+
+        AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+
+        var credential = new DefaultAzureCredential();
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
+
+        ChatCompletionsClient chatClient = new ChatCompletionsClient(new Uri(inferenceEndpoint), credential, clientOptions);
 
         var requestOptions = new ChatCompletionsOptions()
         {
@@ -80,14 +94,21 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_EmbeddingSync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
         var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
+        var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
+
+        AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+
+        var credential = new DefaultAzureCredential();
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
+
+        EmbeddingsClient embeddingsClient = new EmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
 
         var input = new List<string> { "first phrase", "second phrase", "third phrase" };
         var requestOptions = new EmbeddingsOptions(input)
@@ -110,14 +131,21 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_EmbeddingAsync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
         var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
+        var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
+
+        AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+
+        var credential = new DefaultAzureCredential();
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
+
+        EmbeddingsClient embeddingsClient = new EmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
 
         var input = new List<string> { "first phrase", "second phrase", "third phrase" };
         var requestOptions = new EmbeddingsOptions(input)
@@ -140,14 +168,21 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_ImageEmbeddingSync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
         var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        ImageEmbeddingsClient imageEmbeddingsClient = client.GetImageEmbeddingsClient();
+        var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
+
+        AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+
+        var credential = new DefaultAzureCredential();
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
+
+        ImageEmbeddingsClient imageEmbeddingsClient = new ImageEmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
 
         List<ImageEmbeddingInput> input = new List<ImageEmbeddingInput>
         {
@@ -190,14 +225,21 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_ImageEmbeddingAsync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var projectEndpoint = new Uri(TestEnvironment.PROJECTENDPOINT);
         var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        ImageEmbeddingsClient imageEmbeddingsClient = client.GetImageEmbeddingsClient();
+        var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
+
+        AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+
+        var credential = new DefaultAzureCredential();
+        BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+        clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
+
+        ImageEmbeddingsClient imageEmbeddingsClient = new ImageEmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
 
         List<ImageEmbeddingInput> input = new List<ImageEmbeddingInput>
         {
