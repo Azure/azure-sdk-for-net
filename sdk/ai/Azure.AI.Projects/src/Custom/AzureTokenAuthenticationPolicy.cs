@@ -18,6 +18,8 @@ internal partial class AzureTokenAuthenticationPolicy : PipelinePolicy
     private readonly TimeSpan _refreshOffset;
     private AccessToken? _currentToken;
 
+    private const string ClientRequestIdHeaderName = "x-ms-client-request-id";
+
     public AzureTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan? refreshOffset = null)
     {
         Argument.AssertNotNull(credential, nameof(credential));
@@ -74,7 +76,7 @@ internal partial class AzureTokenAuthenticationPolicy : PipelinePolicy
 
     private TokenRequestContext CreateRequestContext(PipelineRequest request)
     {
-        string clientRequestId = request.Headers.TryGetValue("x-ms-client-request-id", out string messageClientId) == true
+        string clientRequestId = request.Headers.TryGetValue(ClientRequestIdHeaderName, out string messageClientId) == true
             ? messageClientId
             : null;
         return new TokenRequestContext(_scopes, clientRequestId);

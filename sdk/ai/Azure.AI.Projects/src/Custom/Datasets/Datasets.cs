@@ -14,11 +14,25 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 
 namespace Azure.AI.Projects
 {
     public partial class Datasets
     {
+        private readonly TokenCredential _tokenCredential;
+
+        /// <summary> Initializes a new instance of Datasets with TokenCredential. </summary>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"> API version. </param>
+        /// <param name="tokenCredential"> Token credential for authentication. </param>
+        internal Datasets(ClientPipeline pipeline, Uri endpoint, string apiVersion, TokenCredential tokenCredential)
+            : this(pipeline, endpoint, apiVersion)
+        {
+            _tokenCredential = tokenCredential;
+        }
+
         /// <summary>
         /// Internal helper method to create a new dataset and return a BlobContainerClient to the dataset's blob storage.
         /// </summary>
@@ -81,7 +95,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
-        public Response<FileDatasetVersion> UploadFile(string name, string version, string filePath, string? connectionName = null)
+        public ClientResult<FileDatasetVersion> UploadFile(string name, string version, string filePath, string? connectionName = null)
         {
             if (!File.Exists(filePath))
             {
@@ -103,16 +117,15 @@ namespace Azure.AI.Projects
                 FileDatasetVersion fileDatasetVersion = new FileDatasetVersion(dataUri: dataUri);
                 BinaryContent content = BinaryContent.Create(fileDatasetVersion);
 
-                Response response = CreateOrUpdate(name, outputVersion, content);
-
-                return Response.FromValue(FileDatasetVersion.FromResponse(response), response);
+                ClientResult<FileDatasetVersion> result = (ClientResult<FileDatasetVersion>)CreateOrUpdate(name, outputVersion, content);
+                return result;
             }
         }
 
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public Response<FolderDatasetVersion> UploadFolder(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
+        public ClientResult<FolderDatasetVersion> UploadFolder(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -149,10 +162,9 @@ namespace Azure.AI.Projects
 
             FolderDatasetVersion folderDatasetVersion = new FolderDatasetVersion(dataUri: dataUri);
             BinaryContent content = BinaryContent.Create(folderDatasetVersion);
-            
-            Response response = CreateOrUpdate(name, outputVersion, content);
 
-            return Response.FromValue(FolderDatasetVersion.FromResponse(response), response);
+            ClientResult<FolderDatasetVersion> result = (ClientResult<FolderDatasetVersion>)CreateOrUpdate(name, outputVersion, content);
+            return result;
         }
 
         /// <summary>
@@ -180,7 +192,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
-        public async Task<FileDatasetVersion> UploadFileAsync(string name, string version, string filePath, string? connectionName = null)
+        public async Task<ClientResult<FileDatasetVersion>> UploadFileAsync(string name, string version, string filePath, string? connectionName = null)
         {
             if (!File.Exists(filePath))
             {
@@ -201,16 +213,16 @@ namespace Azure.AI.Projects
                 FileDatasetVersion fileDatasetVersion = new FileDatasetVersion(dataUri: dataUri);
                 BinaryContent content = BinaryContent.Create(fileDatasetVersion);
 
-                Response response = await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
+                ClientResult<FileDatasetVersion> result = (ClientResult<FileDatasetVersion>)await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
 
-                return Response.FromValue(FileDatasetVersion.FromResponse(response), response);
+                return result;
             }
         }
 
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public async Task<FolderDatasetVersion> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
+        public async Task<ClientResult<FolderDatasetVersion>> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null, Regex? filePattern = null)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -247,9 +259,9 @@ namespace Azure.AI.Projects
 
             FolderDatasetVersion folderDatasetVersion = new FolderDatasetVersion(dataUri: dataUri);
             BinaryContent content = BinaryContent.Create(folderDatasetVersion);
-            Response response = await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
+            ClientResult<FolderDatasetVersion> result = (ClientResult<FolderDatasetVersion>)await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
 
-            return Response.FromValue(FolderDatasetVersion.FromResponse(response), response);
+            return result;
         }
     }
 }

@@ -12,7 +12,10 @@ using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Threading;
+using System.ClientModel;
 
+// TODO: issue with UploadFile/UploadFolder: Error Message: System.ClientModel.ClientResultException : Service request failed. Status: 500 (Received 400 from a service request)
+// need to compare api calls with pre-SCM transition or figure out where there is an issue, possibly work with Josh Love for SCM issues
 // TODO: having issues with Get(datasetName, datasetVersion) and GetCredentials(datasetName, datasetVersion) methods -- not finding full ID
 // TODO: having issues with GetVersions(datasetName) and GetDatasetVersions() methods -- looping/excessive time in net462, works in net8.0 and 9.0
 // TODO: remove debugging code before releasing
@@ -136,6 +139,7 @@ namespace Azure.AI.Projects.Tests
                 Console.WriteLine(ds.Version);
             }
 
+            // TODO: delete this when Get() is fixed
             TimeSpan timeout = TimeSpan.FromSeconds(60);
             using var cancellationTokenSource = new CancellationTokenSource(timeout);
 
