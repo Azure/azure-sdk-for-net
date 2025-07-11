@@ -657,7 +657,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     threadId: thread.Id,
                     assistantId: agent.Id,
                     parallelToolCalls: parallelToolCalls
-                );
+                    );
             }
             bool functionCalled = false;
             do

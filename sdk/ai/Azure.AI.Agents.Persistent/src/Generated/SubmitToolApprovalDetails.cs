@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> The details describing tools that should be called to submit tool outputs. </summary>
-    internal partial class InternalSubmitToolOutputsDetails
+    /// <summary> The details describing tools that should be approved. </summary>
+    public partial class SubmitToolApprovalDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,40 +46,40 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="InternalSubmitToolOutputsDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubmitToolApprovalDetails"/>. </summary>
         /// <param name="toolCalls">
-        /// The list of tool calls that must be resolved for the agent thread run to continue.
+        /// The list of tool calls that must be approved for the agent thread run to continue.
         /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RequiredFunctionToolCall"/> and <see cref="RequiredMcpToolCall"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolCalls"/> is null. </exception>
-        internal InternalSubmitToolOutputsDetails(IEnumerable<RequiredToolCall> toolCalls)
+        internal SubmitToolApprovalDetails(IEnumerable<RequiredToolCall> toolCalls)
         {
             Argument.AssertNotNull(toolCalls, nameof(toolCalls));
 
             ToolCalls = toolCalls.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalSubmitToolOutputsDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubmitToolApprovalDetails"/>. </summary>
         /// <param name="toolCalls">
-        /// The list of tool calls that must be resolved for the agent thread run to continue.
+        /// The list of tool calls that must be approved for the agent thread run to continue.
         /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RequiredFunctionToolCall"/> and <see cref="RequiredMcpToolCall"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalSubmitToolOutputsDetails(IReadOnlyList<RequiredToolCall> toolCalls, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubmitToolApprovalDetails(IReadOnlyList<RequiredToolCall> toolCalls, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ToolCalls = toolCalls;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalSubmitToolOutputsDetails"/> for deserialization. </summary>
-        internal InternalSubmitToolOutputsDetails()
+        /// <summary> Initializes a new instance of <see cref="SubmitToolApprovalDetails"/> for deserialization. </summary>
+        internal SubmitToolApprovalDetails()
         {
         }
 
         /// <summary>
-        /// The list of tool calls that must be resolved for the agent thread run to continue.
+        /// The list of tool calls that must be approved for the agent thread run to continue.
         /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RequiredFunctionToolCall"/> and <see cref="RequiredMcpToolCall"/>.
         /// </summary>
