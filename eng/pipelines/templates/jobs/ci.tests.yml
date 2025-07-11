@@ -73,6 +73,11 @@ jobs:
           artifactName: "Crash Dump - $(System.JobName) - $(System.JobAttempt)"
           condition: eq(variables['uploadDump'], 'true')
           sbomEnabled: false
+        - output: pipelineArtifact
+          targetPath: '$(Build.ArtifactStagingDirectory)/llm-artifacts'
+          artifactName: "LLM Artifacts - $(System.JobName) - $(System.JobAttempt)"
+          condition: eq(variables['uploadTestResults'], 'true')
+          sbomEnabled: false
 
     steps:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
@@ -185,6 +190,7 @@ jobs:
           testResultsFormat: "VSTest"
           mergeTestResults: true
       - template: /eng/pipelines/templates/steps/upload-dumps.yml
+      - template: /eng/pipelines/templates/steps/upload-llm-artifacts.yml
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@5
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Generate Code Coverage Reports
