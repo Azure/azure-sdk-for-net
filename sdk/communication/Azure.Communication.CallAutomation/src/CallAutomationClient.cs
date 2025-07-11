@@ -664,7 +664,8 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
-                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id)
+                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId),
             };
 
             request.CallIntelligenceOptions = new()
@@ -688,7 +689,8 @@ namespace Azure.Communication.CallAutomation
                     ? null
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
-                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id)
+                Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId),
             };
 
             request.CallIntelligenceOptions = new()
