@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> Describes an available DMS SKU. </summary>
+    /// <summary> Describes an available DMS (classic) SKU. </summary>
     public partial class ResourceSku
     {
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
-        /// <param name="tier"> Specifies the tier of DMS in a scale set. </param>
+        /// <param name="tier"> Specifies the tier of DMS (classic) in a scale set. </param>
         /// <param name="size"> The Size of the SKU. </param>
         /// <param name="family"> The Family of this particular SKU. </param>
         /// <param name="kind"> The Kind of resources that are supported in this SKU. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string ResourceType { get; }
         /// <summary> The name of SKU. </summary>
         public string Name { get; }
-        /// <summary> Specifies the tier of DMS in a scale set. </summary>
+        /// <summary> Specifies the tier of DMS (classic) in a scale set. </summary>
         public string Tier { get; }
         /// <summary> The Size of the SKU. </summary>
         public string Size { get; }
