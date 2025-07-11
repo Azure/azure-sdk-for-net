@@ -29,7 +29,7 @@ namespace Azure.Generator.Management
         private HashSet<CSharpType>? _resourceTypes;
         private HashSet<CSharpType> ResourceTypes => _resourceTypes ??= BuildResourceModels();
 
-        // TODO: replace this with CSharpType to TypeProvider mapping
+        // TODO: replace this with CSharpType to TypeProvider mapping and move this logic to ModelFactoryVisitor
         private HashSet<CSharpType>? _modelFactoryModels;
         private HashSet<CSharpType> ModelFactoryModels => _modelFactoryModels ??= BuildModelFactoryModels();
         internal HashSet<CSharpType> BuildModelFactoryModels()
@@ -38,12 +38,35 @@ namespace Azure.Generator.Management
             foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
                 var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-                if (model is not null && model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && model.Properties.Any(prop => !prop.Body.HasSetter))
+                if (model is not null && IsModelFactoryModel(model))
                 {
                     result.Add(model.Type);
                 }
             }
             return result;
+        }
+
+        private static bool IsModelFactoryModel(ModelProvider model)
+        {
+            return model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && EnumerateAllProperties(model).Any(prop => !prop.Body.HasSetter);
+
+            IEnumerable<PropertyProvider> EnumerateAllProperties(ModelProvider current)
+            {
+                var currentModel = current;
+                foreach (var property in currentModel.Properties)
+                {
+                    yield return property;
+                }
+
+                while (currentModel.BaseModelProvider is not null)
+                {
+                    currentModel = currentModel.BaseModelProvider;
+                    foreach (var property in currentModel.Properties)
+                    {
+                        yield return property;
+                    }
+                }
+            }
         }
 
         internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type);
