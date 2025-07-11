@@ -27,7 +27,7 @@ namespace Azure.Generator.Visitors
 
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
-            if (model.Decorators.Any(d => d.Name == SystemTextJsonConverterDecoratorName) && type != null)
+            if (type != null && model.Decorators.Any(d => d.Name == SystemTextJsonConverterDecoratorName))
             {
                 if (!model.Usage.HasFlag(InputModelTypeUsage.Json))
                 {
