@@ -27,13 +27,27 @@ namespace Azure.Generator.Visitors
 
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
-            if (model.Decorators.Any(d => d.Name == SystemTextJsonConverterDecoratorName) && type?.SerializationProviders.Count > 0)
+            if (model.Decorators.Any(d => d.Name == SystemTextJsonConverterDecoratorName) && type != null)
             {
-                var serializationProvider = type.SerializationProviders[0];
-                var converter = new ConverterTypeProvider(serializationProvider);
-                serializationProvider.Update(
-                    attributes: [..serializationProvider.Attributes, new AttributeStatement(typeof(JsonConverter), TypeOf(converter.Type))],
-                    nestedTypes: [..serializationProvider.NestedTypes, converter]);
+                if (!model.Usage.HasFlag(InputModelTypeUsage.Json))
+                {
+                    var serializations = type.SerializationProviders.ToList();
+                    serializations.Add(new MrwSerializationTypeDefinition(model, type));
+                    type.Update(serializations: serializations);
+                }
+
+                if (type.SerializationProviders.Count > 0)
+                {
+                    var serializationProvider = type.SerializationProviders[0];
+                    var converter = new ConverterTypeProvider(serializationProvider);
+                    serializationProvider.Update(
+                        attributes:
+                        [
+                            ..serializationProvider.Attributes,
+                            new AttributeStatement(typeof(JsonConverter), TypeOf(converter.Type))
+                        ],
+                        nestedTypes: [..serializationProvider.NestedTypes, converter]);
+                }
             }
 
             return type;

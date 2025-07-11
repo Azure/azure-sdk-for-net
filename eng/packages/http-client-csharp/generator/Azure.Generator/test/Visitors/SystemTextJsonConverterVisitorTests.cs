@@ -17,13 +17,17 @@ namespace Azure.Generator.Tests.Visitors
 {
     public class SystemTextJsonConverterVisitorTests
     {
-        [Test]
-        public void AddsJsonConverterAttributeWhenDecoratorPresent()
+        [TestCase(InputModelTypeUsage.Input | InputModelTypeUsage.Json)]
+        [TestCase(InputModelTypeUsage.Output | InputModelTypeUsage.Json)]
+        [TestCase(InputModelTypeUsage.Json)]
+        [TestCase(InputModelTypeUsage.Input)]
+        [TestCase(InputModelTypeUsage.Output)]
+        public void AddsJsonConverterAttributeWhenDecoratorPresent(InputModelTypeUsage usage)
         {
             // Arrange
             var visitor = new TestSystemTextJsonConverterVisitor();
             var decorator = new InputDecoratorInfo("Azure.ClientGenerator.Core.@useSystemTextJsonConverter", null);
-            var inputModel = InputFactory.Model("TestModel", decorators: [decorator]);
+            var inputModel = InputFactory.Model("TestModel", decorators: [decorator], usage: usage);
             MockHelpers.LoadMockGenerator(inputModels: () => [inputModel]);
 
             var modelProvider = AzureClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
