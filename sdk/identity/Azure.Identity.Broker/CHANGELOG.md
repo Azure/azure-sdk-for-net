@@ -1,36 +1,5 @@
 # Release History
 
-## 1.3.0-beta.4 (2025-07-11)
-
-### Features Added
-
-- Support Microsoft Broker on macOS.
-
-### Other Changes
-
-- Updated `Azure.Identity` to 1.14.2 to apply a security fix in the updated `Microsoft.Identity.Client` dependency.
-
-## 1.3.0-beta.3 (2025-06-10)
-
-### Features Added
-
-- Support Microsoft Broker on Linux and WSL. This library relies on the Microsoft Authentication Library (MSAL) to handle the broker. For more information about prerequisites and how to utilize the broker, see [Enable SSO in native Linux apps using MSAL.NET](https://learn.microsoft.com/entra/msal/dotnet/acquiring-tokens/desktop-mobile/linux-dotnet-sdk)
-
-### Other Changes
-
-- Updated `Microsoft.Identity.Client.Broker` dependency to version 4.70.2
-
-## 1.3.0-beta.2 (2025-04-08)
-
-### Other Changes
-
-- Support for dynamic addition of the broker authentication to `DefaultAzureCredential` has been added. This allows the broker authentication to be used as part of the default credential chain by only adding a reference to this package to your application.
-
-## 1.3.0-beta.1 (2025-03-11)
-
-### Other Changes
-- Updated Microsoft.Identity.Client.Broker dependency to version 4.69.1.
-
 ## 1.2.0 (2024-11-18)
 
 ### Other Changes
