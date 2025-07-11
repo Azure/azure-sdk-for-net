@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -86,6 +88,59 @@ namespace Azure.Data.AppConfiguration
                 LastModified = lastModified,
                 IsReadOnly = isReadOnly
             };
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSnapshot"/> for mocking purposes.
+        /// </summary>
+        /// <param name="filters">A list of filters used to filter the key-values included in the snapshot.</param>
+        /// <param name="name">The name of the snapshot.</param>
+        /// <param name="status">The current status of the snapshot.</param>
+        /// <param name="snapshotComposition">The composition type describes how the key-values within the snapshot are composed.</param>
+        /// <param name="createdOn">The time that the snapshot was created.</param>
+        /// <param name="expiresOn">The time that the snapshot will expire.</param>
+        /// <param name="retentionPeriod">The amount of time that a snapshot will remain in the archived state before expiring.</param>
+        /// <param name="sizeInBytes">The size in bytes of the snapshot.</param>
+        /// <param name="itemCount">The amount of key-values in the snapshot.</param>
+        /// <param name="tags">The tags of the snapshot.</param>
+        /// <param name="eTag">A value representing the current state of the snapshot.</param>
+        public static ConfigurationSnapshot ConfigurationSnapshot(
+            IEnumerable<ConfigurationSettingsFilter> filters,
+            string name = null,
+            ConfigurationSnapshotStatus? status = null,
+            SnapshotComposition? snapshotComposition = null,
+            DateTimeOffset? createdOn = null,
+            DateTimeOffset? expiresOn = null,
+            TimeSpan? retentionPeriod = null,
+            long? sizeInBytes = null,
+            long? itemCount = null,
+            IDictionary<string, string> tags = null,
+            ETag eTag = default)
+        {
+            // Convert TimeSpan to long for the internal constructor
+            long? retentionPeriodSeconds = retentionPeriod?.TotalSeconds is double seconds ? (long)seconds : null;
+
+            return new ConfigurationSnapshot(
+                name,
+                status,
+                filters?.ToList(),
+                snapshotComposition,
+                createdOn,
+                expiresOn,
+                retentionPeriodSeconds,
+                sizeInBytes,
+                itemCount,
+                tags,
+                eTag);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="SettingLabel"/> for mocking purposes.
+        /// </summary>
+        /// <param name="name">The name of the label.</param>
+        public static SettingLabel SettingLabel(string name)
+        {
+            return new SettingLabel(name);
         }
     }
 }

@@ -12,6 +12,7 @@
     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
     <!-- Disable warning AZC0012: Single word class names -->
     <!-- Disable warning IDE0130: Namespace does not match folder structure-->
-    <NoWarn>CS1591;AZC0012;IDE0130;$(NoWarn)</NoWarn>
+    <!-- Disable warning AZC0036: Duplicate type names -->
+    <NoWarn>CS1591;AZC0012;IDE0130;AZC0034;$(NoWarn)</NoWarn>
   </PropertyGroup>
 </Project>

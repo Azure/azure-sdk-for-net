@@ -6,3 +6,5 @@ dotnet_diagnostic.AZC0030.severity = none
 dotnet_diagnostic.AZC0031.severity = none
 dotnet_diagnostic.AZC0032.severity = none
 dotnet_diagnostic.AZC0033.severity = none
+dotnet_diagnostic.AZC0034.severity = none
+dotnet_diagnostic.AZC0036.severity = none
