@@ -987,10 +987,10 @@
 # ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %Database Watcher
-/sdk/databasewatcher/Azure.ResourceManager.*/                      @Renyx1219
+/sdk/databasewatcher/Azure.ResourceManager.*/                      @ArthurMa1978
 
 # ServiceLabel: %Database Watcher %Mgmt
-# ServiceOwners:                                                   @Renyx1219
+# ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %Device Registry
 /sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
@@ -1053,7 +1053,7 @@
 # ServiceOwners:                                                   @alluri02
 
 # PRLabel: %Network - CDN
-/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
+/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Network - DNS Private Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
@@ -1062,10 +1062,10 @@
 # ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %Network - Front Door
-/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978 @Ptnan7
+/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978
 
 # ServiceLabel:  %Network - Front Door %Mgmt
-# ServiceOwners:                                                   @Ptnan7
+# ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %Network - Mobile
 /sdk/mobilenetwork/Azure.ResourceManager.*/                        @ArcturusZhang @ArthurMa1978
@@ -1181,6 +1181,9 @@
 
 #PRLabel: %CodeGen %Mgmt
 /eng/packages/http-client-csharp-mgmt/                             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
+
+#PRLabel: %CodeGen %Client
+/eng/packages/plugins/client/                                      @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes
 
 # ServiceLabel: %CodeGen
 # AzureSdkOwners:                                                  @JoshLove-msft

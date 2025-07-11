@@ -57,6 +57,7 @@ namespace Azure.Generator.Management
             AddVisitor(new TypeFilterVisitor());
             AddVisitor(new SerializationVisitor());
             AddVisitor(new PaginationVisitor());
+            AddVisitor(new SafeFlattenVisitor());
         }
     }
 }

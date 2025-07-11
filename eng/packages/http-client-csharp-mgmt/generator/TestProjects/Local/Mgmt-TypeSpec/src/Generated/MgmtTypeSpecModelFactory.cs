@@ -21,27 +21,27 @@ namespace MgmtTypeSpec.Models
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="name"> The name of the Foo. </param>
         /// <param name="extendedLocation"></param>
         /// <returns> A new <see cref="MgmtTypeSpec.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, string name = default, ExtendedLocation extendedLocation = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FooData(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
-                name,
                 extendedLocation);
         }
 
@@ -65,20 +65,20 @@ namespace MgmtTypeSpec.Models
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="name"> The default Foo settings. </param>
         /// <returns> A new <see cref="MgmtTypeSpec.FooSettingsData"/> instance for mocking. </returns>
-        public static FooSettingsData FooSettingsData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, FooSettingsProperties properties = default, string name = default)
+        public static FooSettingsData FooSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FooSettingsProperties properties = default)
         {
             return new FooSettingsData(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties,
-                name);
+                properties);
         }
 
         /// <summary> The FooSettingsProperties. </summary>
@@ -92,10 +92,10 @@ namespace MgmtTypeSpec.Models
 
         /// <summary> The type used for update operations of the FooSettings. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.FooSettingsUpdate"/> instance for mocking. </returns>
-        public static FooSettingsUpdate FooSettingsUpdate(FooSettingsUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.FooSettingsPatch"/> instance for mocking. </returns>
+        public static FooSettingsPatch FooSettingsPatch(FooSettingsUpdateProperties properties = default)
         {
-            return new FooSettingsUpdate(properties, additionalBinaryDataProperties: null);
+            return new FooSettingsPatch(properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The updatable properties of the FooSettings. </summary>
@@ -104,6 +104,74 @@ namespace MgmtTypeSpec.Models
         public static FooSettingsUpdateProperties FooSettingsUpdateProperties(bool? accessControlEnabled = default)
         {
             return new FooSettingsUpdateProperties(accessControlEnabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.BarData"/> instance for mocking. </returns>
+        public static BarData BarData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, BarProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BarData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <summary> The BarProperties. </summary>
+        /// <param name="serviceUri"> the service url. </param>
+        /// <param name="something"> something. </param>
+        /// <param name="boolValue"> boolean value. </param>
+        /// <param name="floatValue"> float value. </param>
+        /// <param name="doubleValue"> double value. </param>
+        /// <returns> A new <see cref="Models.BarProperties"/> instance for mocking. </returns>
+        public static BarProperties BarProperties(Uri serviceUri = default, string something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default)
+        {
+            return new BarProperties(
+                serviceUri,
+                something,
+                boolValue,
+                floatValue,
+                doubleValue,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsData"/> instance for mocking. </returns>
+        public static BarSettingsData BarSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BarSettingsProperties properties = default)
+        {
+            return new BarSettingsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The BarSettingsProperties. </summary>
+        /// <param name="isEnabled"> enabled. </param>
+        /// <returns> A new <see cref="Models.BarSettingsProperties"/> instance for mocking. </returns>
+        public static BarSettingsProperties BarSettingsProperties(bool? isEnabled = default)
+        {
+            return new BarSettingsProperties(isEnabled, additionalBinaryDataProperties: null);
         }
     }
 }

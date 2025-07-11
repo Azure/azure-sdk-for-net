@@ -27,7 +27,7 @@ namespace Azure.Generator.Management.Tests.Common
                         decorators: decorators);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
-            var subscriptionIdParameter = InputFactory.Parameter("subscriptionId", InputPrimitiveType.String, location: InputRequestLocation.Path, kind: InputParameterKind.Client);
+            var subscriptionIdParameter = InputFactory.Parameter("subscriptionId", new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid"), location: InputRequestLocation.Path, kind: InputParameterKind.Client);
             var resourceGroupParameter = InputFactory.Parameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path, kind: InputParameterKind.Client);
             var operation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var crossLanguageDefinitionId = Guid.NewGuid().ToString();

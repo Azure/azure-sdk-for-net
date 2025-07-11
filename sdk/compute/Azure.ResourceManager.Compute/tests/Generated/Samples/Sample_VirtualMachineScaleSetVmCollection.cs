@@ -553,7 +553,7 @@ DeleteOption = ComputeDeleteOption.Delete,
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
-            string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            string virtualMachineScaleSetName = "aaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
