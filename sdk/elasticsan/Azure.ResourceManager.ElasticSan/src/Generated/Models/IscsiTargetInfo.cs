@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IscsiTargetInfo"/>. </summary>
-        internal IscsiTargetInfo()
+        public IscsiTargetInfo()
         {
         }
 
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> State of the operation on the resource. </summary>
         public ElasticSanProvisioningState? ProvisioningState { get; }
         /// <summary> Operational status of the iSCSI Target. </summary>
-        public ResourceOperationalStatus? Status { get; }
+        public ResourceOperationalStatus? Status { get; set; }
     }
 }

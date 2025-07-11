@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ElasticSan
             }
             writer.WritePropertyName("sizeGiB"u8);
             writer.WriteNumberValue(SizeGiB);
-            if (options.Format != "W" && Optional.IsDefined(StorageTarget))
+            if (Optional.IsDefined(StorageTarget))
             {
                 writer.WritePropertyName("storageTarget"u8);
                 writer.WriteObjectValue(StorageTarget, options);
