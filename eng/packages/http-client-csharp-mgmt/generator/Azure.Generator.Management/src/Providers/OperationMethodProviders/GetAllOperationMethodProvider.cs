@@ -21,8 +21,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         FieldProvider restClientField,
         bool isAsync) : ResourceOperationMethodProvider(collection, collection.Resource, restClient, method, convenienceMethod, clientDiagnosticsField, restClientField, isAsync)
     {
-        private readonly ResourceCollectionClientProvider _resourceCollectionClientProvider = collection;
-
         protected override MethodSignature CreateSignature()
         {
             var resourceType = _resource.Type;
