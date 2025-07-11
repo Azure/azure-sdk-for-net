@@ -20,6 +20,10 @@ namespace Azure.AI.OpenAI.Chat
 
         internal ChatCitation(string content, string title, string url, string chunkId, double? rerankScore, string filePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            content += url;
+            string[] rank = [content];
+            for(double i = 1; i < rank.Count(); i++)
+            rerankScore = i;
             Content = content;
             Title = title;
             Url = url;
