@@ -39,7 +39,7 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
 #endif
         Console.WriteLine("Create the Azure OpenAI embedding client");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        EmbeddingClient embeddingsClient = projectClient.GetAzureOpenAIEmbeddingClient(deploymentName: modelDeploymentName, connectionName: null, apiVersion: null);
+        EmbeddingClient embeddingsClient = projectClient.GetAzureOpenAIEmbeddingClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
 
         Console.WriteLine("Generate an embedding");
         OpenAIEmbedding result = embeddingsClient.GenerateEmbedding("List all the rainbow colors");
@@ -72,7 +72,7 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
 #endif
         Console.WriteLine("Create the Azure OpenAI embedding client");
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        EmbeddingClient embeddingsClient = projectClient.GetAzureOpenAIEmbeddingClient(deploymentName: modelDeploymentName, connectionName: null, apiVersion: null);
+        EmbeddingClient embeddingsClient = projectClient.GetAzureOpenAIEmbeddingClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
 
         Console.WriteLine("Generate an embedding");
         OpenAIEmbedding result = await embeddingsClient.GenerateEmbeddingAsync("List all the rainbow colors");

@@ -12,13 +12,13 @@ using OpenAI.Chat;
 
 namespace Azure.AI.Projects.Tests;
 
-public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
+public class Sample_AzureOpenAI_Chat : SamplesBase<AIProjectsTestEnvironment>
 {
         [Test]
         [SyncOnly]
         public void AzureOpenAIChatCompletion()
         {
-                #region Snippet:AI_Projects_AzureOpenAIChatSync
+        #region Snippet:AI_Projects_AzureOpenAIChatSync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
