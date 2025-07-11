@@ -62,13 +62,15 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainingConfigVersion"> Represents training config version. By default, "latest" value is used which uses the latest released training config version. </param>
         /// <param name="trainingMode"> Represents the mode of the training operation. </param>
         /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
+        /// <param name="dataGenerationSettings"> For customers to populate if they wish to use data generation for their model training job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringTrainingJobDetails(string modelLabel, string trainingConfigVersion, ConversationAuthoringTrainingMode trainingMode, ConversationAuthoringEvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationAuthoringTrainingJobDetails(string modelLabel, string trainingConfigVersion, ConversationAuthoringTrainingMode trainingMode, ConversationAuthoringEvaluationDetails evaluationOptions, AnalyzeConversationAuthoringDataGenerationSettings dataGenerationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
             TrainingMode = trainingMode;
             EvaluationOptions = evaluationOptions;
+            DataGenerationSettings = dataGenerationSettings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -85,5 +87,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         public ConversationAuthoringTrainingMode TrainingMode { get; }
         /// <summary> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </summary>
         public ConversationAuthoringEvaluationDetails EvaluationOptions { get; set; }
+        /// <summary> For customers to populate if they wish to use data generation for their model training job. </summary>
+        public AnalyzeConversationAuthoringDataGenerationSettings DataGenerationSettings { get; set; }
     }
 }
