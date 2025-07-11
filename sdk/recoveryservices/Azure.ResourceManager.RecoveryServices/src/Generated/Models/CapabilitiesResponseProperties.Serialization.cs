@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class ReplicationUsageListResult : IUtf8JsonSerializable, IJsonModel<ReplicationUsageListResult>
+    internal partial class CapabilitiesResponseProperties : IUtf8JsonSerializable, IJsonModel<CapabilitiesResponseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationUsageListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapabilitiesResponseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ReplicationUsageListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CapabilitiesResponseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CapabilitiesResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationUsageListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CapabilitiesResponseProperties)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            if (Optional.IsCollectionDefined(DnsZones))
             {
-                writer.WritePropertyName("value"u8);
+                writer.WritePropertyName("dnsZones"u8);
                 writer.WriteStartArray();
-                foreach (var item in Value)
+                foreach (var item in DnsZones)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
-        ReplicationUsageListResult IJsonModel<ReplicationUsageListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CapabilitiesResponseProperties IJsonModel<CapabilitiesResponseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CapabilitiesResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationUsageListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CapabilitiesResponseProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReplicationUsageListResult(document.RootElement, options);
+            return DeserializeCapabilitiesResponseProperties(document.RootElement, options);
         }
 
-        internal static ReplicationUsageListResult DeserializeReplicationUsageListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CapabilitiesResponseProperties DeserializeCapabilitiesResponseProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,23 +81,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            IReadOnlyList<ReplicationUsage> value = default;
+            IReadOnlyList<DnsZoneResult> dnsZones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
+                if (property.NameEquals("dnsZones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ReplicationUsage> array = new List<ReplicationUsage>();
+                    List<DnsZoneResult> array = new List<DnsZoneResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationUsage.DeserializeReplicationUsage(item, options));
+                        array.Add(DnsZoneResult.DeserializeDnsZoneResult(item, options));
                     }
-                    value = array;
+                    dnsZones = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,38 +106,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ReplicationUsageListResult(value ?? new ChangeTrackingList<ReplicationUsage>(), serializedAdditionalRawData);
+            return new CapabilitiesResponseProperties(dnsZones ?? new ChangeTrackingList<DnsZoneResult>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ReplicationUsageListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CapabilitiesResponseProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CapabilitiesResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationUsageListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapabilitiesResponseProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ReplicationUsageListResult IPersistableModel<ReplicationUsageListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CapabilitiesResponseProperties IPersistableModel<CapabilitiesResponseProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CapabilitiesResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeReplicationUsageListResult(document.RootElement, options);
+                        return DeserializeCapabilitiesResponseProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationUsageListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapabilitiesResponseProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ReplicationUsageListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CapabilitiesResponseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

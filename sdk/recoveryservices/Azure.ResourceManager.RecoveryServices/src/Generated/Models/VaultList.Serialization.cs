@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class RecoveryServicesVaultListResult : IUtf8JsonSerializable, IJsonModel<RecoveryServicesVaultListResult>
+    internal partial class VaultList : IUtf8JsonSerializable, IJsonModel<VaultList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesVaultListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RecoveryServicesVaultListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VaultList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,26 +28,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VaultList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesVaultListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultList)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -66,19 +63,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
-        RecoveryServicesVaultListResult IJsonModel<RecoveryServicesVaultListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VaultList IJsonModel<VaultList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VaultList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesVaultListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRecoveryServicesVaultListResult(document.RootElement, options);
+            return DeserializeVaultList(document.RootElement, options);
         }
 
-        internal static RecoveryServicesVaultListResult DeserializeRecoveryServicesVaultListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VaultList DeserializeVaultList(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -87,17 +84,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             IReadOnlyList<RecoveryServicesVaultData> value = default;
-            string nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<RecoveryServicesVaultData> array = new List<RecoveryServicesVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -108,7 +101,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -117,38 +114,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RecoveryServicesVaultListResult(value ?? new ChangeTrackingList<RecoveryServicesVaultData>(), nextLink, serializedAdditionalRawData);
+            return new VaultList(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RecoveryServicesVaultListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VaultList>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VaultList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultList)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RecoveryServicesVaultListResult IPersistableModel<RecoveryServicesVaultListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VaultList IPersistableModel<VaultList>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VaultList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRecoveryServicesVaultListResult(document.RootElement, options);
+                        return DeserializeVaultList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultList)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RecoveryServicesVaultListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VaultList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

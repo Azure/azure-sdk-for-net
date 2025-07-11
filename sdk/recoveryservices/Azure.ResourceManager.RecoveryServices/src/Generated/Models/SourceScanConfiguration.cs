@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> Replication usages for vault. </summary>
-    internal partial class ReplicationUsageListResult
+    /// <summary> Source scan configuration of vault. </summary>
+    public partial class SourceScanConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,25 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReplicationUsageListResult"/>. </summary>
-        internal ReplicationUsageListResult()
+        /// <summary> Initializes a new instance of <see cref="SourceScanConfiguration"/>. </summary>
+        public SourceScanConfiguration()
         {
-            Value = new ChangeTrackingList<ReplicationUsage>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReplicationUsageListResult"/>. </summary>
-        /// <param name="value"> The list of replication usages for the given vault. </param>
+        /// <summary> Initializes a new instance of <see cref="SourceScanConfiguration"/>. </summary>
+        /// <param name="state"></param>
+        /// <param name="sourceScanIdentity"> Identity details to be used for an operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicationUsageListResult(IReadOnlyList<ReplicationUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SourceScanConfiguration(State? state, AssociatedIdentity sourceScanIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
+            State = state;
+            SourceScanIdentity = sourceScanIdentity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of replication usages for the given vault. </summary>
-        public IReadOnlyList<ReplicationUsage> Value { get; }
+        /// <summary> Gets or sets the state. </summary>
+        public State? State { get; set; }
+        /// <summary> Identity details to be used for an operation. </summary>
+        public AssociatedIdentity SourceScanIdentity { get; set; }
     }
 }

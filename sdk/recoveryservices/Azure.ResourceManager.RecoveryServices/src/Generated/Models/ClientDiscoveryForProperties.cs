@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> Capabilities properties in response. </summary>
-    internal partial class CapabilitiesResultProperties
+    /// <summary> Class to represent shoebox properties in json client discovery. </summary>
+    internal partial class ClientDiscoveryForProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,26 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CapabilitiesResultProperties"/>. </summary>
-        public CapabilitiesResultProperties()
+        /// <summary> Initializes a new instance of <see cref="ClientDiscoveryForProperties"/>. </summary>
+        internal ClientDiscoveryForProperties()
         {
-            DnsZones = new ChangeTrackingList<DnsZoneResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapabilitiesResultProperties"/>. </summary>
-        /// <param name="dnsZones"></param>
+        /// <summary> Initializes a new instance of <see cref="ClientDiscoveryForProperties"/>. </summary>
+        /// <param name="serviceSpecification"> Operation properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilitiesResultProperties(IList<DnsZoneResult> dnsZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClientDiscoveryForProperties(ClientDiscoveryForServiceSpecification serviceSpecification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DnsZones = dnsZones;
+            ServiceSpecification = serviceSpecification;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the dns zones. </summary>
-        public IList<DnsZoneResult> DnsZones { get; }
+        /// <summary> Operation properties. </summary>
+        internal ClientDiscoveryForServiceSpecification ServiceSpecification { get; }
+        /// <summary> List of log specifications of this operation. </summary>
+        public IReadOnlyList<ClientDiscoveryForLogSpecification> LogSpecifications
+        {
+            get => ServiceSpecification?.LogSpecifications;
+        }
     }
 }

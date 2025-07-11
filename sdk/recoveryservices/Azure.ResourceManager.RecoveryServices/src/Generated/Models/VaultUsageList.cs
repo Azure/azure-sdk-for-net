@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> The response model for a list of Vaults. </summary>
-    internal partial class RecoveryServicesVaultListResult
+    /// <summary> Usage for vault. </summary>
+    internal partial class VaultUsageList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,25 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultListResult"/>. </summary>
-        internal RecoveryServicesVaultListResult()
+        /// <summary> Initializes a new instance of <see cref="VaultUsageList"/>. </summary>
+        internal VaultUsageList()
         {
-            Value = new ChangeTrackingList<RecoveryServicesVaultData>();
+            Value = new ChangeTrackingList<VaultUsage>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultListResult"/>. </summary>
-        /// <param name="value"></param>
+        /// <summary> Initializes a new instance of <see cref="VaultUsageList"/>. </summary>
+        /// <param name="value"> The list of usages for the given vault. </param>
         /// <param name="nextLink"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesVaultListResult(IReadOnlyList<RecoveryServicesVaultData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VaultUsageList(IReadOnlyList<VaultUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<RecoveryServicesVaultData> Value { get; }
+        /// <summary> The list of usages for the given vault. </summary>
+        public IReadOnlyList<VaultUsage> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class VaultUsageListResult : IUtf8JsonSerializable, IJsonModel<VaultUsageListResult>
+    internal partial class ReplicationUsageList : IUtf8JsonSerializable, IJsonModel<ReplicationUsageList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultUsageListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationUsageList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VaultUsageListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReplicationUsageList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsageList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultUsageListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationUsageList)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Value))
@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,19 +66,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
         }
 
-        VaultUsageListResult IJsonModel<VaultUsageListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ReplicationUsageList IJsonModel<ReplicationUsageList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsageList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultUsageListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationUsageList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVaultUsageListResult(document.RootElement, options);
+            return DeserializeReplicationUsageList(document.RootElement, options);
         }
 
-        internal static VaultUsageListResult DeserializeVaultUsageListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ReplicationUsageList DeserializeReplicationUsageList(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,7 +86,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            IReadOnlyList<VaultUsage> value = default;
+            IReadOnlyList<ReplicationUsage> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,12 +98,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    List<VaultUsage> array = new List<VaultUsage>();
+                    List<ReplicationUsage> array = new List<ReplicationUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultUsage.DeserializeVaultUsage(item, options));
+                        array.Add(ReplicationUsage.DeserializeReplicationUsage(item, options));
                     }
                     value = array;
+                    continue;
+                }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,38 +117,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VaultUsageListResult(value ?? new ChangeTrackingList<VaultUsage>(), serializedAdditionalRawData);
+            return new ReplicationUsageList(value ?? new ChangeTrackingList<ReplicationUsage>(), nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VaultUsageListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ReplicationUsageList>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsageList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VaultUsageListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationUsageList)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VaultUsageListResult IPersistableModel<VaultUsageListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ReplicationUsageList IPersistableModel<ReplicationUsageList>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VaultUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsageList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVaultUsageListResult(document.RootElement, options);
+                        return DeserializeReplicationUsageList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VaultUsageListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationUsageList)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VaultUsageListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReplicationUsageList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
