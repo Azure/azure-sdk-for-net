@@ -74,7 +74,7 @@ namespace Azure.Communication.CallAutomation
             V2025_05_15 = 5,
 
             /// <summary>
-            /// The GA5 (1.4.0) of the CallAutomation service.
+            /// The GA5 (1.5.0) of the CallAutomation service.
             /// </summary>
             V2025_06_15 = 6,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
