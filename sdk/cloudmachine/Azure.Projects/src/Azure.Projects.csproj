@@ -15,7 +15,6 @@
   <ItemGroup>
     <PackageReference Include="Azure.Data.AppConfiguration" />
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Messaging.ServiceBus" />
     <PackageReference Include="Azure.Messaging.EventGrid" />
     <PackageReference Include="Azure.Storage.Blobs" />
