@@ -1,20 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Generator.Management.Snippets;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
-using Microsoft.TypeSpec.Generator.Primitives;
-using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
-using Microsoft.TypeSpec.Generator.Statements;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Utilities
@@ -25,6 +14,12 @@ namespace Azure.Generator.Management.Utilities
         {
             var fieldName = $"{resourceName}ClientDiagnostics".ToVariableName();
 
+            return $"_{fieldName}";
+        }
+
+        public static string GetRestClientFieldName(string restClientName)
+        {
+            var fieldName = $"{restClientName}RestClient".ToVariableName();
             return $"_{fieldName}";
         }
 
