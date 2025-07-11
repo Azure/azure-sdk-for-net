@@ -9,6 +9,7 @@ using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -25,6 +26,8 @@ namespace Azure.Generator.Management.Providers
     internal abstract class ContextualClientProvider : TypeProvider
     {
         internal const string ValidateResourceIdMethodName = "ValidateResourceId";
+        internal const string TryGetApiVersionMethodName = "TryGetApiVersion";
+
         private readonly RequestPathPattern _contextualRequestPattern;
 
         protected ContextualClientProvider(RequestPathPattern contextualRequestPattern) : base()

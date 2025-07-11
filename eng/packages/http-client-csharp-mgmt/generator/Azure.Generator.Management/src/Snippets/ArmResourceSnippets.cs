@@ -37,6 +37,14 @@ namespace Azure.Generator.Management.Snippets
         public static ScopedApi<ResourceType> ResourceType(this ScopedApi<ArmResource> resource)
             => resource.Property("ResourceType").As<ResourceType>();
 
+        public static ScopedApi<bool> TryGetApiVersion(this ScopedApi<ArmResource> resource, ValueExpression resourceType, string variableName, out ScopedApi<string> apiVersion)
+        {
+            var apiVersionVariable = new VariableExpression(typeof(string), variableName);
+            var invocation = resource.Invoke("TryGetApiVersion", resourceType, new DeclarationExpression(apiVersionVariable, IsOut: true));
+            apiVersion = apiVersionVariable.As<string>();
+            return invocation.As<bool>();
+        }
+
         public static ValueExpression GetCachedClient(this ScopedApi<ArmResource> resource, CodeWriterDeclaration client, Func<ScopedApi<ArmClient>, ValueExpression> factory)
         {
             var f = new FuncExpression([client], factory(new VariableExpression(typeof(ArmClient), client).As<ArmClient>()));

@@ -203,11 +203,13 @@ namespace Azure.Generator.Management.Providers
                 null,
                 initializer);
 
+            var thisResource = This.As<ArmResource>();
+
             var bodyStatements = new MethodBodyStatement[]
             {
-                _clientDiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeField.As<ResourceType>().Namespace(), This.As<ArmResource>().Diagnostics())).Terminate(),
-                ResourceHelpers.BuildTryGetApiVersionInvocation(ResourceName, _resourceTypeField, out var apiVersion).Terminate(),
-                _restClientField.Assign(New.Instance(_restClientProvider.Type, _clientDiagnosticsField, This.As<ArmResource>().Pipeline(), This.As<ArmResource>().Endpoint(), apiVersion)).Terminate(),
+                _clientDiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeField.As<ResourceType>().Namespace(), thisResource.Diagnostics())).Terminate(),
+                thisResource.TryGetApiVersion(_resourceTypeField, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate(),
+                _restClientField.Assign(New.Instance(_restClientProvider.Type, _clientDiagnosticsField, thisResource.Pipeline(), thisResource.Endpoint(), apiVersion)).Terminate(),
                 Static(Type).Invoke("ValidateResourceId", idParameter).Terminate()
             };
 

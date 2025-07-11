@@ -12,6 +12,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -20,6 +21,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -50,26 +52,7 @@ namespace Azure.Generator.Management.Providers
 
             _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
-            foreach (var method in resourceMetadata.Methods)
-            {
-                if (_getAll is not null && _create is not null && _get is not null)
-                {
-                    break; // we already have all methods we need
-                }
-
-                if (method.Kind == ResourceOperationKind.Get)
-                {
-                    _get = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
-                }
-                if (method.Kind == ResourceOperationKind.List)
-                {
-                    _getAll = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
-                }
-                if (method.Kind == ResourceOperationKind.Create)
-                {
-                    _create = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(method.Id);
-                }
-            }
+            InitializeMethods(resourceMetadata, ref _get, ref _create, ref _getAll);
         }
 
         /// <summary>
@@ -93,6 +76,50 @@ namespace Azure.Generator.Management.Providers
                 ResourceScope.Tenant => RequestPathPattern.Tenant,
                 _ => throw new NotSupportedException($"Unsupported resource scope: {resourceMetadata.ResourceScope}"),
             };
+        }
+
+        private static void InitializeMethods(
+            ResourceMetadata resourceMetadata,
+            ref InputServiceMethod? getMethod,
+            ref InputServiceMethod? createMethod,
+            ref InputServiceMethod? getAllMethod)
+        {
+            foreach (var method in resourceMetadata.Methods)
+            {
+                if (getAllMethod is not null && createMethod is not null && getMethod is not null)
+                {
+                    break; // we already have all methods we need
+                }
+
+                switch (method.Kind)
+                {
+                    case ResourceOperationKind.Get:
+                        AssignMethodKind(ref getMethod, resourceMetadata.ResourceIdPattern, method);
+                        break;
+                    case ResourceOperationKind.List:
+                        AssignMethodKind(ref getAllMethod, resourceMetadata.ResourceIdPattern, method);
+                        break;
+                    case ResourceOperationKind.Create:
+                        AssignMethodKind(ref createMethod, resourceMetadata.ResourceIdPattern, method);
+                        break;
+                }
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            static void AssignMethodKind(ref InputServiceMethod? method, string resourceIdPattern, ResourceMethod resourceMethod)
+            {
+                if (method is not null)
+                {
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        "general-warning", // TODO -- in the near future, we should have a resource-specific diagnostic ID
+                        $"Resource {resourceIdPattern} has multiple '{resourceMethod.Kind}' methods."
+                        );
+                }
+                else
+                {
+                    method = ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(resourceMethod.Id);
+                }
+            }
         }
 
         public ResourceClientProvider Resource => _resource;
@@ -138,11 +165,13 @@ namespace Azure.Generator.Management.Providers
                 null,
                 initializer);
 
+            var thisCollection = This.As<ArmCollection>();
+
             var bodyStatements = new MethodBodyStatement[]
             {
-                _clientDiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeExpression.Namespace(), This.As<ArmResource>().Diagnostics())).Terminate(),
-                ResourceHelpers.BuildTryGetApiVersionInvocation(ResourceName, _resourceTypeExpression, out var apiVersion).Terminate(),
-                _restClientField.Assign(New.Instance(_restClientProvider.Type, _clientDiagnosticsField, This.As<ArmResource>().Pipeline(), This.As<ArmResource>().Endpoint(), apiVersion)).Terminate(),
+                _clientDiagnosticsField.Assign(New.Instance(typeof(ClientDiagnostics), Literal(Type.Namespace), _resourceTypeExpression.Namespace(), thisCollection.Diagnostics())).Terminate(),
+                thisCollection.TryGetApiVersion(_resourceTypeExpression, $"{ResourceName}ApiVersion".ToVariableName(), out var apiVersion).Terminate(),
+                _restClientField.Assign(New.Instance(_restClientProvider.Type, _clientDiagnosticsField, thisCollection.Pipeline(), thisCollection.Endpoint(), apiVersion)).Terminate(),
                 Static(Type).Invoke("ValidateResourceId", idParameter).Terminate()
             };
 

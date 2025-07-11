@@ -4,14 +4,16 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
-using ProviderParameterProvider = Microsoft.TypeSpec.Generator.Providers.ParameterProvider;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
-using Azure.Generator.Management.Visitors;
+using ProviderParameterProvider = Microsoft.TypeSpec.Generator.Providers.ParameterProvider;
 
 namespace Azure.Generator.Management.Snippets
 {
