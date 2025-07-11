@@ -17,7 +17,7 @@ internal class NameVisitor : ScmLibraryVisitor
 {
     private const string ResourceTypeName = "ResourceType";
 
-    private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new HashSet<CSharpType>();
+    private readonly HashSet<CSharpType> _resourceUpdateModelTypes = new();
 
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
