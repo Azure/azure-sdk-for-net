@@ -432,8 +432,52 @@ interface Employees {
     ok(departmentMetadataDecorator);
     ok(departmentMetadataDecorator.arguments);
     strictEqual(
+      departmentMetadataDecorator.arguments.resourceIdPattern,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
+    );
+    strictEqual(
+      departmentMetadataDecorator.arguments.resourceType,
+      "Microsoft.ContosoProviderHub/companies/departments"
+    );
+    strictEqual(
+      departmentMetadataDecorator.arguments.singletonResourceName,
+      undefined
+    );
+    strictEqual(
+      departmentMetadataDecorator.arguments.resourceScope,
+      "ResourceGroup"
+    );
+    strictEqual(departmentMetadataDecorator.arguments.methods.length, 2);
+    strictEqual(
       departmentMetadataDecorator.arguments.parentResourceId,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
+    );
+
+    const companyMetadataDecorator = companyModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    ok(companyMetadataDecorator);
+    ok(companyMetadataDecorator.arguments);
+    strictEqual(
+      companyMetadataDecorator.arguments.resourceIdPattern,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
+    );
+    strictEqual(
+      companyMetadataDecorator.arguments.resourceType,
+      "Microsoft.ContosoProviderHub/companies"
+    );
+    strictEqual(
+      companyMetadataDecorator.arguments.singletonResourceName,
+      undefined
+    );
+    strictEqual(
+      companyMetadataDecorator.arguments.resourceScope,
+      "ResourceGroup"
+    );
+    strictEqual(companyMetadataDecorator.arguments.methods.length, 2);
+    strictEqual(
+      companyMetadataDecorator.arguments.parentResourceId,
+      undefined
     );
     
     strictEqual(
@@ -567,8 +611,52 @@ interface Employees {
     ok(departmentMetadataDecorator);
     ok(departmentMetadataDecorator.arguments);
     strictEqual(
+      departmentMetadataDecorator.arguments.resourceIdPattern,
+      "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
+    );
+    strictEqual(
+      departmentMetadataDecorator.arguments.resourceType,
+      "Microsoft.ContosoProviderHub/companies/departments"
+    );
+    strictEqual(
+      departmentMetadataDecorator.arguments.singletonResourceName,
+      undefined
+    );
+    strictEqual(
+      departmentMetadataDecorator.arguments.resourceScope,
+      "Subscription"
+    );
+    strictEqual(departmentMetadataDecorator.arguments.methods.length, 2);
+    strictEqual(
       departmentMetadataDecorator.arguments.parentResourceId,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
+    );
+
+    const companyMetadataDecorator = companyModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    ok(companyMetadataDecorator);
+    ok(companyMetadataDecorator.arguments);
+    strictEqual(
+      companyMetadataDecorator.arguments.resourceIdPattern,
+      "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
+    );
+    strictEqual(
+      companyMetadataDecorator.arguments.resourceType,
+      "Microsoft.ContosoProviderHub/companies"
+    );
+    strictEqual(
+      companyMetadataDecorator.arguments.singletonResourceName,
+      undefined
+    );
+    strictEqual(
+      companyMetadataDecorator.arguments.resourceScope,
+      "Subscription"
+    );
+    strictEqual(companyMetadataDecorator.arguments.methods.length, 2);
+    strictEqual(
+      companyMetadataDecorator.arguments.parentResourceId,
+      undefined
     );
     
     strictEqual(
@@ -702,8 +790,52 @@ interface Employees {
     ok(departmentMetadataDecorator);
     ok(departmentMetadataDecorator.arguments);
     strictEqual(
+      departmentMetadataDecorator.arguments.resourceIdPattern,
+      "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
+    );
+    strictEqual(
+      departmentMetadataDecorator.arguments.resourceType,
+      "Microsoft.ContosoProviderHub/companies/departments"
+    );
+    strictEqual(
+      departmentMetadataDecorator.arguments.singletonResourceName,
+      undefined
+    );
+    strictEqual(
+      departmentMetadataDecorator.arguments.resourceScope,
+      "Tenant"
+    );
+    strictEqual(departmentMetadataDecorator.arguments.methods.length, 2);
+    strictEqual(
       departmentMetadataDecorator.arguments.parentResourceId,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
+    );
+
+    const companyMetadataDecorator = companyModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    ok(companyMetadataDecorator);
+    ok(companyMetadataDecorator.arguments);
+    strictEqual(
+      companyMetadataDecorator.arguments.resourceIdPattern,
+      "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
+    );
+    strictEqual(
+      companyMetadataDecorator.arguments.resourceType,
+      "Microsoft.ContosoProviderHub/companies"
+    );
+    strictEqual(
+      companyMetadataDecorator.arguments.singletonResourceName,
+      undefined
+    );
+    strictEqual(
+      companyMetadataDecorator.arguments.resourceScope,
+      "Tenant"
+    );
+    strictEqual(companyMetadataDecorator.arguments.methods.length, 2);
+    strictEqual(
+      companyMetadataDecorator.arguments.parentResourceId,
+      undefined
     );
     
     strictEqual(
