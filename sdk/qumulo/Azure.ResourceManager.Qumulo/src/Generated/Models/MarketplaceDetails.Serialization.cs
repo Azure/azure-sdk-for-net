@@ -43,12 +43,20 @@ namespace Azure.ResourceManager.Qumulo.Models
             writer.WriteStringValue(PlanId);
             writer.WritePropertyName("offerId"u8);
             writer.WriteStringValue(OfferId);
-            writer.WritePropertyName("publisherId"u8);
-            writer.WriteStringValue(PublisherId);
-            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionStatus))
+            if (Optional.IsDefined(PublisherId))
+            {
+                writer.WritePropertyName("publisherId"u8);
+                writer.WriteStringValue(PublisherId);
+            }
+            if (Optional.IsDefined(TermUnit))
+            {
+                writer.WritePropertyName("termUnit"u8);
+                writer.WriteStringValue(TermUnit);
+            }
+            if (options.Format != "W" && Optional.IsDefined(QumuloMarketplaceSubscriptionStatus))
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
-                writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToSerialString());
+                writer.WriteStringValue(QumuloMarketplaceSubscriptionStatus.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -91,7 +99,8 @@ namespace Azure.ResourceManager.Qumulo.Models
             string planId = default;
             string offerId = default;
             string publisherId = default;
-            MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
+            string termUnit = default;
+            QumuloMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,13 +125,18 @@ namespace Azure.ResourceManager.Qumulo.Models
                     publisherId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("termUnit"u8))
+                {
+                    termUnit = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("marketplaceSubscriptionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marketplaceSubscriptionStatus = property.Value.GetString().ToMarketplaceSubscriptionStatus();
+                    marketplaceSubscriptionStatus = new QumuloMarketplaceSubscriptionStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,6 +150,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 planId,
                 offerId,
                 publisherId,
+                termUnit,
                 marketplaceSubscriptionStatus,
                 serializedAdditionalRawData);
         }
