@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.3.0-beta.1 (2025-07-11)
 
 ### Other Changes
+
+- Genearte SDK from typespec
 
 ## 1.2.1 (2025-03-11)
 
