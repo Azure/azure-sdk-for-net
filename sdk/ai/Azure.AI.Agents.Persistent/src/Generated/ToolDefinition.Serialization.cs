@@ -87,6 +87,7 @@ namespace Azure.AI.Agents.Persistent
                     case "fabric_dataagent": return MicrosoftFabricToolDefinition.DeserializeMicrosoftFabricToolDefinition(element, options);
                     case "file_search": return FileSearchToolDefinition.DeserializeFileSearchToolDefinition(element, options);
                     case "function": return FunctionToolDefinition.DeserializeFunctionToolDefinition(element, options);
+                    case "mcp": return MCPToolDefinition.DeserializeMCPToolDefinition(element, options);
                     case "openapi": return OpenApiToolDefinition.DeserializeOpenApiToolDefinition(element, options);
                     case "sharepoint_grounding": return SharepointToolDefinition.DeserializeSharepointToolDefinition(element, options);
                 }

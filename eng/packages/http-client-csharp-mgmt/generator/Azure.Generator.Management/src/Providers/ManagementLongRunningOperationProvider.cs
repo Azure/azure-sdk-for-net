@@ -140,7 +140,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildRehydrationConstructor(), BuildInitializationConstructor()];
+            => [ConstructorProviderHelpers.BuildMockingConstructor(this), BuildRehydrationConstructor(), BuildInitializationConstructor()];
 
         private ConstructorProvider BuildInitializationConstructor()
         {

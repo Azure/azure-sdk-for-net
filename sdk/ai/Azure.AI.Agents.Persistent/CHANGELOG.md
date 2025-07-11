@@ -4,11 +4,15 @@
 
 ### Features Added
 
+<<<<<<< HEAD
 - Added support for Deep Research.
 
 ### Sample updates
 
 - Added sample for Deep Research.
+=======
+- Expose the `GetVectorStoreFileBatchFiles` and `GetVectorStoreFileBatchFilesAsync` methods.
+>>>>>>> 280b2d553ba8778e7f2de9d647667390523c5f23
 
 ### Breaking Changes
 
@@ -67,3 +71,4 @@
 
 ### Features Added
 - Initial release
+- Please see the [agents migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/AGENTS_MIGRATION_GUIDE.md) on how to use `Azure.AI.Projects` with `Azure.AI.Agents.Persistent` package.

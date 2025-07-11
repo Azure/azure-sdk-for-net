@@ -6,38 +6,128 @@ To enable your Agent to use multiple other agents as tools (sub-agents), you use
 ```C# Snippet:AgentsMultipleConnectedAgents_CreateProject
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var storageQueueUri = System.Environment.GetEnvironmentVariable("STORAGE_QUEUE_URI");
 PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
-2. We will create multiple sub-agents first that will be used as connected agent tools.
+2. In the example below we will create two agents, one is returning the Microsoft stock price and another returns weather. Note that the `ConnectedAgentDetails` does not support local functions, we will use Azure function to return weather. The code of that function is given below; please see [Azure Function Call](#create-agent-with-azure-function-call) section for the instructions on how to deploy Azure Function. Here is the text of function we deployed to serve the toy weather forecast.
+**Note:** The Azure Function may be only used in standard agent setup. Please follow the [instruction](https://github.com/azure-ai-foundry/foundry-samples/tree/main/samples/microsoft/infrastructure-setup/41-standard-agent-setup) to deploy an agent, capable of calling Azure Functions.
+
+```C#
+namespace WeatherAzureFuncNet
+{
+    public class GetWeather
+    {
+        private readonly ILogger<GetWeather> _logger;
+
+        public GetWeather(ILogger<GetWeather> logger)
+        {
+            _logger = logger;
+        }
+
+        [Function("GetWeather")]
+        [QueueOutput("weather-output", Connection = "AzureWebJobsStorage")]
+        public string Run([QueueTrigger("weather-input", Connection = "AzureWebJobsStorage")] QueueMessage queueMessage, FunctionContext functionContext)
+        {
+            _logger.LogInformation("C# HTTP trigger function processed a request.");
+
+            var payload = JsonSerializer.Deserialize<WeatherPayload>(queueMessage.Body.ToString());
+            object result;
+            result = new
+            {
+                Value = payload.location.Equals("Seattle") ? "60 degrees and cloudy" : "10 degrees and sunny",
+                payload.CorrelationId
+            };
+            return JsonSerializer.Serialize(result);
+        }
+    }
+
+    public class WeatherPayload
+    {
+        public string CorrelationId { get; set; } = null!;
+        public string location { get; set; } = null!;
+    }
+}
+```
+
+We create the `AzureFunctionToolDefinition` in the method called `GetAzureFunction`. This method will be used by the `weatherAgent` in the next step.
+
+```C# Snippet:AgentsMultipleConnectedAgents_AzureFunction
+private static AzureFunctionToolDefinition GetAzureFunction(string storageQueueUri)
+{
+    return new AzureFunctionToolDefinition(
+        name: "GetWeather",
+        description: "Get answers from the weather bot.",
+        inputBinding: new AzureFunctionBinding(
+            new AzureFunctionStorageQueue(
+                queueName: "weather-input",
+                storageServiceEndpoint: storageQueueUri
+            )
+        ),
+        outputBinding: new AzureFunctionBinding(
+            new AzureFunctionStorageQueue(
+                queueName: "weather-output",
+                storageServiceEndpoint: storageQueueUri
+            )
+        ),
+        parameters: BinaryData.FromObjectAsJson(
+                new
+                {
+                    Type = "object",
+                    Properties = new
+                    {
+                        Location = new
+                        {
+                            Type = "string",
+                            Description = "The location to get the weather for.",
+                        }
+                    },
+                },
+            new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+        )
+    );
+}
+```
+
+3. We will create multiple sub-agents first that will be used as connected agent tools.
 
 Synchronous sample:
 ```C# Snippet:AgentsMultipleConnectedAgents_CreateSubAgents
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
+PersistentAgent weatherAgent = agentClient.Administration.CreateAgent(
+    model: modelDeploymentName,
+    name: "weather-bot",
+    instructions: "Your job is to get the weather for a given location. " +
+                  "Use the provided function to get the weather in the given location.",
+    tools: [GetAzureFunction(storageQueueUri)]
+);
+
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
 PersistentAgent stockPriceAgent = agentClient.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "stock-price-bot",
     instructions: "Your job is to get the stock price of a company. If asked for the Microsoft stock price, always return $350.");
-
-PersistentAgent weatherAgent = agentClient.Administration.CreateAgent(
-    model: modelDeploymentName,
-    name: "weather-bot",
-    instructions: "Your job is to get the weather for a given location. If asked for the weather in Seattle, always return 60 degrees and cloudy.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsMultipleConnectedAgentsAsync_CreateSubAgents
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
+PersistentAgent weatherAgent = await agentClient.Administration.CreateAgentAsync(
+    model: modelDeploymentName,
+    name: "weather-bot",
+    instructions: "Your job is to get the weather for a given location. " +
+                  "Use the provided function to get the weather in the given location.",
+    tools: [GetAzureFunction(storageQueueUri)]
+);
+
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
 PersistentAgent stockPriceAgent = await agentClient.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "stock-price-bot",
     instructions: "Your job is to get the stock price of a company. If asked for the Microsoft stock price, always return $350.");
-
-PersistentAgent weatherAgent = await agentClient.Administration.CreateAgentAsync(
-    model: modelDeploymentName,
-    name: "weather-bot",
-    instructions: "Your job is to get the weather for a given location. If asked for the weather in Seattle, always return 60 degrees and cloudy.");
 ```
 
-3. We will use the sub-agents details to initialize multiple `ConnectedAgentToolDefinition` instances.
+4. We will use the sub-agents details to initialize multiple `ConnectedAgentToolDefinition` instances.
 
 ```C# Snippet:AgentsMultipleConnectedAgents_GetConnectedAgents
 ConnectedAgentToolDefinition stockPriceConnectedAgentTool = new(
@@ -57,10 +147,11 @@ ConnectedAgentToolDefinition weatherConnectedAgentTool = new(
 );
 ```
 
-4. We will use both `ConnectedAgentToolDefinition` instances during the main agent initialization.
+5. We will use both `ConnectedAgentToolDefinition` instances during the main agent initialization.
 
 Synchronous sample:
 ```C# Snippet:AgentsMultipleConnectedAgents_CreateAgent
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
 PersistentAgent agent = agentClient.Administration.CreateAgent(
    model: modelDeploymentName,
    name: "my-assistant",
@@ -70,6 +161,7 @@ PersistentAgent agent = agentClient.Administration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsMultipleConnectedAgentsAsync_CreateAgent
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
 PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-assistant",
@@ -77,7 +169,7 @@ PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
    tools: [stockPriceConnectedAgentTool, weatherConnectedAgentTool]);
 ```
 
-5. Now we will create the thread, add the message containing a question for agent and start the run.
+6. Now we will create the thread, add the message containing a question for agent and start the run.
 
 Synchronous sample:
 ```C# Snippet:AgentsMultipleConnectedAgents_CreateThreadMessage
@@ -131,7 +223,7 @@ Assert.AreEqual(
     run.LastError?.Message);
 ```
 
-6. Print the agent messages to console in chronological order.
+7. Print the agent messages to console in chronological order.
 
 Synchronous sample:
 ```C# Snippet:AgentsMultipleConnectedAgents_Print
@@ -183,10 +275,11 @@ await foreach (PersistentThreadMessage threadMessage in messages)
 }
 ```
 
-7. Clean up resources by deleting thread, main agent, and all sub-agents.
+8. Clean up resources by deleting thread, main agent, and all sub-agents.
 
 Synchronous sample:
 ```C# Snippet:AgentsMultipleConnectedAgentsCleanup
+// NOTE: Comment out these four lines if you plan to reuse the agent later.
 agentClient.Threads.DeleteThread(threadId: thread.Id);
 agentClient.Administration.DeleteAgent(agentId: agent.Id);
 agentClient.Administration.DeleteAgent(agentId: stockPriceAgent.Id);
@@ -195,6 +288,7 @@ agentClient.Administration.DeleteAgent(agentId: weatherAgent.Id);
 
 Asynchronous sample:
 ```C# Snippet:AgentsMultipleConnectedAgentsCleanupAsync
+// NOTE: Comment out these four lines if you plan to reuse the agent later.
 await agentClient.Threads.DeleteThreadAsync(threadId: thread.Id);
 await agentClient.Administration.DeleteAgentAsync(agentId: agent.Id);
 await agentClient.Administration.DeleteAgentAsync(agentId: stockPriceAgent.Id);

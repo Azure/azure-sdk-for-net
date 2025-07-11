@@ -9,7 +9,9 @@ using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Providers.TagMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
+using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
+using Humanizer;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -24,8 +26,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
-using OperationKind = Azure.Generator.Management.Models.OperationKind;
 
 namespace Azure.Generator.Management.Providers
 {
@@ -34,7 +36,7 @@ namespace Azure.Generator.Management.Providers
     /// </summary>
     internal class ResourceClientProvider : TypeProvider
     {
-        public static ResourceClientProvider Create(InputModelType model, ResourceMetadata resourceMetadata)
+        internal static ResourceClientProvider Create(InputModelType model, ResourceMetadata resourceMetadata)
         {
             var resource = new ResourceClientProvider(model, resourceMetadata);
             if (!resource.IsSingleton)
@@ -46,31 +48,32 @@ namespace Azure.Generator.Management.Providers
             return resource;
         }
 
-        private IEnumerable<(OperationKind, InputServiceMethod)> _resourceServiceMethods;
+        private IEnumerable<(ResourceOperationKind, InputServiceMethod)> _resourceServiceMethods;
 
-        private FieldProvider _dataField;
-        private FieldProvider _resourceTypeField;
-        private bool _hasGetMethod = false;
-        private bool _shouldGenerateTagMethods = false;
+        private readonly FieldProvider _dataField;
+        private readonly FieldProvider _resourceTypeField;
+        private readonly bool _hasGetMethod;
+        private readonly bool _shouldGenerateTagMethods;
 
-        protected ClientProvider _restClientProvider;
-        protected FieldProvider _clientDiagnosticsField;
-        protected FieldProvider _clientField;
+        private readonly RequestPathPattern _contextualRequestPattern;
+        private readonly ResourceMetadata _resourceMetadata;
 
-        private protected ResourceClientProvider(InputModelType model, ResourceMetadata resourceMetadata)
+        private protected readonly ClientProvider _restClientProvider;
+        private protected readonly FieldProvider _clientDiagnosticsField;
+        private protected readonly FieldProvider _clientField;
+
+        private protected ResourceClientProvider(InputModelType model, ResourceMetadata resourceMetadata, RequestPathPattern contextualRequestPattern)
         {
-            IsSingleton = resourceMetadata.IsSingleton;
-            ResourceScope = resourceMetadata.ResourceScope;
-            var resourceType = resourceMetadata.ResourceType;
-            _hasGetMethod = resourceMetadata.Methods.Any(m => m.Kind == OperationKind.Get);
-            _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resourceType));
+            _resourceMetadata = resourceMetadata;
+            _hasGetMethod = resourceMetadata.Methods.Any(m => m.Kind == ResourceOperationKind.Get);
+            _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
             _shouldGenerateTagMethods = ShouldGenerateTagMethods(model);
 
             // TODO -- the name of a resource is not always the name of its model. Maybe the resource metadata should have a property for the name of the resource?
             SpecName = model.Name.ToIdentifierName();
 
             // We should be able to assume that all operations in the resource client are for the same resource
-            var requestPath = new RequestPath(ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(resourceMetadata.Methods.First().Id)!.Operation.Path);
+            _contextualRequestPattern = contextualRequestPattern;
             _resourceServiceMethods = resourceMetadata.Methods.Select(m => (m.Kind, ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!));
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
 
@@ -78,30 +81,20 @@ namespace Azure.Generator.Management.Providers
             var inputClients = resourceMetadata.Methods.Select(m => ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(ManagementClientGenerator.Instance.InputLibrary.GetMethodByCrossLanguageDefinitionId(m.Id)!)!).Distinct();
             _restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClients.First())!;
 
-            ContextualParameters = GetContextualParameters(requestPath);
-
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
             _clientDiagnosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), $"_{SpecName.ToLower()}ClientDiagnostics", this);
             _clientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, _restClientProvider.Type, $"_{SpecName.ToLower()}RestClient", this);
         }
 
-        internal ResourceScope ResourceScope { get; }
+        private ResourceClientProvider(InputModelType model, ResourceMetadata resourceMetadata)
+            : this(model, resourceMetadata, new RequestPathPattern(resourceMetadata.ResourceIdPattern))
+        {
+        }
+
+        internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
+        internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
 
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }
-
-        private IReadOnlyList<string> GetContextualParameters(string contextualRequestPath)
-        {
-            var contextualParametersList = new List<string>();
-            var contextualSegments = new RequestPath(contextualRequestPath);
-            foreach (var segment in contextualSegments)
-            {
-                if (segment.StartsWith("{"))
-                {
-                    contextualParametersList.Add(segment.TrimStart('{').TrimEnd('}'));
-                }
-            }
-            return contextualParametersList;
-        }
 
         protected override string BuildName() => $"{SpecName}Resource";
 
@@ -110,11 +103,38 @@ namespace Azure.Generator.Management.Providers
 
         internal ModelProvider ResourceData { get; }
         internal string SpecName { get; }
-        internal IEnumerable<(OperationKind Kind, InputServiceMethod Method)> ResourceServiceMethods => _resourceServiceMethods;
+        internal IEnumerable<(ResourceOperationKind Kind, InputServiceMethod Method)> ResourceServiceMethods => _resourceServiceMethods;
 
-        public bool IsSingleton { get; }
+        internal string? SingletonResourceName => _resourceMetadata.SingletonResourceName;
+
+        public bool IsSingleton => SingletonResourceName is not null;
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
+
+        private IReadOnlyList<ResourceClientProvider>? _childResources;
+        public IReadOnlyList<ResourceClientProvider> ChildResources => _childResources ??= BuildChildResources();
+
+        private protected virtual IReadOnlyList<ResourceClientProvider> BuildChildResources()
+        {
+            // first we find all the resources from the output library
+            var allResources = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                // we have to do this because the ResourceCollectionClientProvider inherits ResourceClientProvider, but they are not resources.
+                .Where(r => r is not ResourceCollectionClientProvider);
+
+            var childResources = new List<ResourceClientProvider>();
+            // TODO -- this is quite cumbersome that every time we have to iterate all the resources to find the child resources of this resource.
+            // maybe later we could maintain a map in the OutputLibrary so that we could get them directly.
+            foreach (var candidate in allResources)
+            {
+                // check if the request path of this resource, is the same as the parent resource request path of the candidate.
+                if (_resourceMetadata.ResourceIdPattern == candidate._resourceMetadata.ParentResourceId)
+                {
+                    childResources.Add(candidate);
+                }
+            }
+            return childResources;
+        }
 
         protected override FieldProvider[] BuildFields() => [_clientDiagnosticsField, _clientField, _dataField, _resourceTypeField];
 
@@ -149,7 +169,7 @@ namespace Azure.Generator.Management.Providers
         protected override TypeProvider[] BuildSerializationProviders() => [new ResourceSerializationProvider(this)];
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildResourceDataConstructor(), BuildResourceIdentifierConstructor()];
+            => [ConstructorProviderHelpers.BuildMockingConstructor(this), BuildResourceDataConstructor(), BuildResourceIdentifierConstructor()];
 
         private ConstructorProvider BuildResourceDataConstructor()
         {
@@ -225,6 +245,88 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(signature, bodyStatements, this);
         }
 
+        // TODO -- this is temporary. We should change this to find the corresponding parameters in ContextualParameters after it is refactored to consume parent resources.
+        private CSharpType GetPathParameterType(string parameterName)
+        {
+            foreach (var (kind, method) in _resourceServiceMethods)
+            {
+                if (!kind.IsCrudKind())
+                {
+                    continue; // Skip non-CRUD operations
+                }
+                // iterate through all parameters in this method to find a matching parameter
+                foreach (var parameter in method.Operation.Parameters)
+                {
+                    if (parameter.Location != InputRequestLocation.Path)
+                    {
+                        continue; // Skip parameters that are not in the path
+                    }
+                    if (parameter.Name == parameterName)
+                    {
+                        var csharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(parameter.Type) ?? typeof(string);
+                        return parameterName switch
+                        {
+                            "subscriptionId" when csharpType.Equals(typeof(Guid)) => typeof(string),
+                            // Cases will be added later
+                            _ => csharpType
+                        };
+                    }
+                }
+            }
+
+            // what if we did not find the parameter in any method?
+            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                "general-warning",
+                $"Cannot find parameter {parameterName} in any registered operations in resource {SpecName}."
+                );
+
+            return typeof(string); // Default to string if not found
+        }
+
+        private MethodProvider BuildCreateResourceIdentifierMethod()
+        {
+            var parameters = new List<ParameterProvider>();
+            var formatBuilder = new StringBuilder();
+            var refCount = 0;
+
+            foreach (var segment in _contextualRequestPattern)
+            {
+                if (segment.IsConstant)
+                {
+                    formatBuilder.Append($"/{segment}");
+                }
+                else
+                {
+                    if (formatBuilder.Length > 0)
+                    {
+                        formatBuilder.Append('/');
+                    }
+                    var variableName = segment.VariableName;
+                    var parameter = new ParameterProvider(variableName, $"The {variableName}", GetPathParameterType(variableName));
+                    parameters.Add(parameter);
+                    formatBuilder.Append($"{{{refCount++}}}");
+                }
+            }
+
+            var signature = new MethodSignature(
+                "CreateResourceIdentifier",
+                $"Generate the resource identifier for this resource.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                typeof(ResourceIdentifier),
+                null,
+                parameters);
+
+            var bodyStatements = new MethodBodyStatement[]
+            {
+                Declare("resourceId", typeof(string), new FormattableStringExpression(formatBuilder.ToString(), parameters.Select(p => p.AsExpression()).ToArray()), out var resourceIdVar),
+                Return(New.Instance(typeof(ResourceIdentifier), resourceIdVar))
+            };
+
+            return new MethodProvider(signature, bodyStatements, this);
+        }
+
+        internal string ResourceTypeValue => _resourceMetadata.ResourceType;
+
         protected virtual ScopedApi<ResourceType> ResourceTypeExpression => _resourceTypeField.As<ResourceType>();
 
         protected internal virtual CSharpType ResourceClientCSharpType => Type;
@@ -232,13 +334,10 @@ namespace Azure.Generator.Management.Providers
         internal ScopedApi<ClientDiagnostics> GetClientDiagnosticsField() => _clientDiagnosticsField.As<ClientDiagnostics>();
         internal ValueExpression GetRestClientField() => _clientField;
         internal ClientProvider GetClientProvider() => _restClientProvider;
-        internal IReadOnlyList<string> ContextualParameters { get; }
 
-        /// <summary>
-        /// Gets the collection of parameter names that are implicitly available from the resource context
-        /// and should be excluded from method parameters.
-        /// </summary>
-        internal virtual IReadOnlyList<string> ImplicitParameterNames => ContextualParameters;
+        private IReadOnlyDictionary<string, ContextualParameter>? _contextualParameters;
+        internal IReadOnlyDictionary<string, ContextualParameter> ContextualParameters => _contextualParameters ??= ContextualParameterBuilder.BuildContextualParameters(_contextualRequestPattern)
+            .ToDictionary(c => c.VariableName);
 
         protected override CSharpType? GetBaseType() => typeof(ArmResource);
 
@@ -256,13 +355,13 @@ namespace Azure.Generator.Management.Providers
                 }
 
                 // Skip Create operations for non-singleton resources
-                if (!IsSingleton && methodKind == OperationKind.Create)
+                if (!IsSingleton && methodKind == ResourceOperationKind.Create)
                 {
                     continue;
                 }
 
                 // Check if this is an update operation (PUT or Patch method for non-singleton resource)
-                var isUpdateOperation = (methodKind == OperationKind.Create || methodKind == OperationKind.Update) && !IsSingleton;
+                var isUpdateOperation = (methodKind == ResourceOperationKind.Create || methodKind == ResourceOperationKind.Update) && !IsSingleton;
 
                 if (isUpdateOperation)
                 {
@@ -283,6 +382,7 @@ namespace Azure.Generator.Management.Providers
 
             var methods = new List<MethodProvider>
             {
+                BuildCreateResourceIdentifierMethod(),
                 BuildValidateResourceIdMethod()
             };
             methods.AddRange(operationMethods);
@@ -300,7 +400,45 @@ namespace Azure.Generator.Management.Providers
                 ]);
             }
 
+            // add method to get the child resource collection from the current resource.
+            foreach (var childResource in ChildResources)
+            {
+                methods.Add(BuildGetChildResourceMethod(childResource));
+            }
+
             return [.. methods];
+        }
+
+        private MethodProvider BuildGetChildResourceMethod(ResourceClientProvider childResource)
+        {
+            var thisResource = This.As<ArmResource>();
+            if (childResource.IsSingleton)
+            {
+                var signature = new MethodSignature(
+                    $"Get{childResource.SpecName}",
+                    $"Gets an object representing a {childResource.SpecName} along with the instance operations that can be performed on it in the {SpecName}.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                    childResource.Type,
+                    $"Returns a {childResource.Type:C} object.",
+                    []);
+                var lastSegment = childResource.ResourceTypeValue.Split('/')[^1];
+                var bodyStatement = Return(New.Instance(childResource.Type, thisResource.Client(), thisResource.Id().AppendChildResource(Literal(lastSegment), Literal(childResource.SingletonResourceName!))));
+                return new MethodProvider(signature, bodyStatement, this);
+            }
+            else
+            {
+                Debug.Assert(childResource.ResourceCollection is not null, "Child resource collection should not be null for non-singleton resources.");
+                var pluralChildResourceName = childResource.SpecName.Pluralize();
+                var signature = new MethodSignature(
+                    $"Get{pluralChildResourceName}",
+                    $"Gets a collection of {pluralChildResourceName} in the {SpecName}.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                    childResource.ResourceCollection.Type,
+                    $"An object representing collection of {pluralChildResourceName} and their operations over a {SpecName}.",
+                    []);
+                var bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(childResource.ResourceCollection.Type, client, thisResource.Id())));
+                return new MethodProvider(signature, bodyStatement, this);
+            }
         }
 
         private bool ShouldGenerateTagMethods(InputModelType model)
@@ -315,16 +453,13 @@ namespace Azure.Generator.Management.Providers
             {
                 foreach (var property in currentModel.Properties)
                 {
-                    if (property.Name == "tags" && property.Type is not null)
+                    if (property.SerializedName == "tags" && property.Type is InputDictionaryType
+                        {
+                            KeyType: InputPrimitiveType { Kind: InputPrimitiveTypeKind.String },
+                            ValueType: InputPrimitiveType { Kind: InputPrimitiveTypeKind.String }
+                        })
                     {
-                       if (property.Type is InputDictionaryType dictType)
-                       {
-                            if (dictType.KeyType is InputPrimitiveType kt && kt.Kind == InputPrimitiveTypeKind.String &&
-                                dictType.ValueType is InputPrimitiveType vt && vt.Kind == InputPrimitiveTypeKind.String)
-                            {
-                                return true;
-                            }
-                       }
+                        return true;
                     }
                 }
                 currentModel = currentModel.BaseModel;
@@ -340,43 +475,29 @@ namespace Azure.Generator.Management.Providers
             return invocation.As<bool>();
         }
 
-        public ValueExpression[] PopulateArguments(
+        internal IReadOnlyList<ValueExpression> PopulateArguments(
             IReadOnlyList<ParameterProvider> requestParameters,
             VariableExpression contextVariable,
             IReadOnlyList<ParameterProvider> methodParameters,
             InputOperation operation)
         {
+            var idProperty = This.As<ArmResource>().Id();
             var arguments = new List<ValueExpression>();
+            // here we always assume that the parameter name matches the parameter name in the request path.
             foreach (var parameter in requestParameters)
             {
-                if (parameter.Name.Equals("subscriptionId", StringComparison.InvariantCultureIgnoreCase))
+                // find the corresponding contextual parameter in the contextual parameter list
+                if (ContextualParameters.TryGetValue(parameter.Name, out var contextualParameter))
                 {
-                    arguments.Add(
-                        Static(typeof(Guid)).Invoke(
-                            nameof(Guid.Parse),
-                            This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.SubscriptionId))));
-                }
-                else if (parameter.Name.Equals("resourceGroupName", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    arguments.Add(
-                        This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.ResourceGroupName)));
-                }
-                // TODO: handle parents
-                // Handle resource name - the last contextual parameter
-                else if (ContextualParameters.Any() && parameter.Name.Equals(ContextualParameters.Last(), StringComparison.InvariantCultureIgnoreCase))
-                {
-                    arguments.Add(
-                        This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.Name)));
+                    arguments.Add(Convert(contextualParameter.BuildValueExpression(idProperty), typeof(string), parameter.Type));
                 }
                 else if (parameter.Type.Equals(typeof(RequestContent)))
                 {
                     if (methodParameters.Count > 0)
                     {
-                        // Find the content parameter in the method parameters
-                        // TODO: need to revisit the filter here
-                        var contentInputParameter = operation.Parameters.First(p => !ImplicitParameterNames.Contains(p.Name) && p.Kind == InputParameterKind.Method && p.Type is not InputPrimitiveType);
-                        var resource = methodParameters.Single(p => p.Name == "data" || p.Name == contentInputParameter.Name);
-                        arguments.Add(resource);
+                        // find the body parameter in the method parameters
+                        var bodyParameter = methodParameters.Single(p => p.Location == ParameterLocation.Body);
+                        arguments.Add(Static(bodyParameter.Type).Invoke(SerializationVisitor.ToRequestContentMethodName, [bodyParameter]));
                     }
                 }
                 else if (parameter.Type.Equals(typeof(RequestContext)))
@@ -389,6 +510,22 @@ namespace Azure.Generator.Management.Providers
                 }
             }
             return [.. arguments];
+        }
+
+        private static ValueExpression Convert(ValueExpression expression, CSharpType fromType, CSharpType toType)
+        {
+            if (fromType.Equals(toType))
+            {
+                return expression; // No conversion needed
+            }
+
+            if (toType.IsFrameworkType && toType.FrameworkType == typeof(Guid))
+            {
+                return Static<Guid>().Invoke(nameof(Guid.Parse), expression);
+            }
+
+            // other unhandled cases, we will add when we need them in the future.
+            return expression;
         }
     }
 }

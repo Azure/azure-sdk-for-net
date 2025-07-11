@@ -5,6 +5,7 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -64,9 +65,9 @@ namespace Azure.Generator.Management
             [ResourceScope.ResourceGroup] = typeof(ResourceGroupResource),
             [ResourceScope.Subscription] = typeof(SubscriptionResource),
             [ResourceScope.Tenant] = typeof(TenantResource),
+            [ResourceScope.ManagementGroup] = typeof(ManagementGroupResource),
         };
 
-        // TODO -- build extensions and their corresponding mockable resources
         private IReadOnlyList<TypeProvider> BuildExtensions(IReadOnlyList<ResourceClientProvider> resources)
         {
             // walk through all resources to figure out their scopes
@@ -75,10 +76,14 @@ namespace Azure.Generator.Management
                 [ResourceScope.ResourceGroup] = [],
                 [ResourceScope.Subscription] = [],
                 [ResourceScope.Tenant] = [],
+                [ResourceScope.ManagementGroup] = [],
             };
             foreach (var resource in resources)
             {
-                scopeCandidates[resource.ResourceScope].Add(resource);
+                if (resource.ParentResourceIdPattern is null)
+                {
+                    scopeCandidates[resource.ResourceScope].Add(resource);
+                }
             }
 
             var mockableArmClientResource = new MockableArmClientProvider(typeof(ArmClient), resources);
