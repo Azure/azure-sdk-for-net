@@ -111,12 +111,10 @@ namespace Azure.Identity
                     chain.Add(CreateVisualStudioCredential());
                 }
 
-#pragma warning disable CS0618 // Type or member is obsolete
                 if (!Options.ExcludeVisualStudioCodeCredential)
                 {
                     chain.Add(CreateVisualStudioCodeCredential());
                 }
-#pragma warning restore CS0618 // Type or member is obsolete
 
                 if (!Options.ExcludeAzureCliCredential)
                 {
@@ -292,7 +290,7 @@ namespace Azure.Identity
             options.TenantId = Options.VisualStudioCodeTenantId;
             options.IsChainedCredential = true;
 
-            return new VisualStudioCodeCredential(options, Pipeline, default, default, default);
+            return new VisualStudioCodeCredential();
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
