@@ -6,14 +6,12 @@ using Azure.Core.Pipeline;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
-using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
-using Microsoft.TypeSpec.Generator.Snippets;
+using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
-using ProviderParameterProvider = Microsoft.TypeSpec.Generator.Providers.ParameterProvider;
 
 namespace Azure.Generator.Management.Snippets
 {
@@ -59,7 +57,7 @@ namespace Azure.Generator.Management.Snippets
 
         // TODO: The generated code has format issue https://github.com/microsoft/typespec/issues/7283
         public static MethodBodyStatement CreateRequestContext(
-            ProviderParameterProvider cancellationTokenParam,
+            ParameterProvider cancellationTokenParam,
             out VariableExpression contextVariable)
         {
             var requestContextParams = new Dictionary<ValueExpression, ValueExpression>
