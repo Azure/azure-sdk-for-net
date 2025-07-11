@@ -6,6 +6,7 @@ using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
 
@@ -64,7 +65,7 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<InputModelType, string> BuildResourceUpdateModelToResourceNameMap()
         {
-            var map = new Dictionary<InputModelType, string>();
+            Dictionary<InputModelType, string> map = new();
 
             foreach (var (resourceModel, metadata) in ResourceMetadata)
             {
@@ -73,7 +74,7 @@ namespace Azure.Generator.Management
                 {
                     foreach (var parameter in method.Parameters)
                     {
-                        if (parameter.Type is InputModelType updateModel && updateModel != resourceModel)
+                        if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != resourceModel)
                         {
                             map[updateModel] = resourceModel.Name;
                         }
@@ -201,9 +202,9 @@ namespace Azure.Generator.Management
             }
         }
 
-        internal string? FindEnclosingResourceNameForResourceUpdateModel(InputModelType model)
+        internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName)
         {
-            return ResourceUpdateModelToResourceNameMap.TryGetValue(model, out var resourceName) ? resourceName : null;
+            return ResourceUpdateModelToResourceNameMap.TryGetValue(model, out resourceName);
         }
     }
 }

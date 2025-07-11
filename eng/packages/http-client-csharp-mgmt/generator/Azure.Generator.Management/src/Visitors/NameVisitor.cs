@@ -29,8 +29,7 @@ internal class NameVisitor : ScmLibraryVisitor
 
         if (type is not null)
         {
-            var enclosingResourceName = inputLibrary.FindEnclosingResourceNameForResourceUpdateModel(model);
-            if (enclosingResourceName is not null)
+            if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
             {
                 var newModelName = $"{enclosingResourceName}Patch";
 
