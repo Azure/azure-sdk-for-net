@@ -1,4 +1,4 @@
-﻿using OpenAI.RealtimeConversation;
+﻿using OpenAI.Realtime;
 using System;
 using System.ClientModel.Primitives;
 using System.Linq;
@@ -12,15 +12,15 @@ namespace Azure.AI.OpenAI.Tests;
 #if !AZURE_OPENAI_GA
 [TestFixture(false)]
 [Category("Smoke")]
-public class ConversationSmokeTests : ConversationTestFixtureBase
+public class RealtimeSmokeTests : RealtimeTestFixtureBase
 {
-    public ConversationSmokeTests(bool isAsync) : base(isAsync)
+    public RealtimeSmokeTests(bool isAsync) : base(isAsync)
     { }
 
     [Test]
     public void ItemCreation()
     {
-        ConversationItem messageItem = ConversationItem.CreateUserMessage(["Hello, world!"]);
+        RealtimeItem messageItem = RealtimeItem.CreateUserMessage(["Hello, world!"]);
         Assert.That(messageItem?.MessageContentParts?.Count, Is.EqualTo(1));
         Assert.That(messageItem.MessageContentParts[0].Text, Is.EqualTo("Hello, world!"));
     }
@@ -30,15 +30,15 @@ public class ConversationSmokeTests : ConversationTestFixtureBase
     {
         ConversationSessionOptions options = new()
         {
-            ContentModalities = ConversationContentModalities.Text,
-            InputAudioFormat = ConversationAudioFormat.G711Alaw,
-            InputTranscriptionOptions = new ConversationInputTranscriptionOptions()
+            ContentModalities = RealtimeContentModalities.Text,
+            InputAudioFormat = RealtimeAudioFormat.G711Alaw,
+            InputTranscriptionOptions = new InputTranscriptionOptions()
             {
                 Model = "whisper-1",
             },
             Instructions = "test instructions",
             MaxOutputTokens = 42,
-            OutputAudioFormat = ConversationAudioFormat.G711Ulaw,
+            OutputAudioFormat = RealtimeAudioFormat.G711Ulaw,
             Temperature = 0.42f,
             ToolChoice = ConversationToolChoice.CreateFunctionToolChoice("test-function"),
             Tools =
@@ -53,7 +53,7 @@ public class ConversationSmokeTests : ConversationTestFixtureBase
                         }
                         """)),
             },
-            TurnDetectionOptions = ConversationTurnDetectionOptions.CreateServerVoiceActivityTurnDetectionOptions(
+            TurnDetectionOptions = TurnDetectionOptions.CreateServerVoiceActivityTurnDetectionOptions(
                            detectionThreshold: 0.42f,
                            prefixPaddingDuration: TimeSpan.FromMilliseconds(234),
                             silenceDuration: TimeSpan.FromMilliseconds(345)),
@@ -79,13 +79,13 @@ public class ConversationSmokeTests : ConversationTestFixtureBase
         Assert.That(jsonNode["turn_detection"]?["silence_duration_ms"]?.GetValue<int>(), Is.EqualTo(345));
         Assert.That(jsonNode["voice"]?.GetValue<string>(), Is.EqualTo("echo"));
         ConversationSessionOptions deserializedOptions = ModelReaderWriter.Read<ConversationSessionOptions>(serializedOptions);
-        Assert.That(deserializedOptions.ContentModalities.HasFlag(ConversationContentModalities.Text));
-        Assert.That(deserializedOptions.ContentModalities.HasFlag(ConversationContentModalities.Audio), Is.False);
-        Assert.That(deserializedOptions.InputAudioFormat, Is.EqualTo(ConversationAudioFormat.G711Alaw));
-        Assert.That(deserializedOptions.InputTranscriptionOptions?.Model, Is.EqualTo(ConversationTranscriptionModel.Whisper1));
+        Assert.That(deserializedOptions.ContentModalities.HasFlag(RealtimeContentModalities.Text));
+        Assert.That(deserializedOptions.ContentModalities.HasFlag(RealtimeContentModalities.Audio), Is.False);
+        Assert.That(deserializedOptions.InputAudioFormat, Is.EqualTo(RealtimeAudioFormat.G711Alaw));
+        Assert.That(deserializedOptions.InputTranscriptionOptions?.Model, Is.EqualTo(InputTranscriptionModel.Whisper1));
         Assert.That(deserializedOptions.Instructions, Is.EqualTo("test instructions"));
         Assert.That(deserializedOptions.MaxOutputTokens.NumericValue, Is.EqualTo(42));
-        Assert.That(deserializedOptions.OutputAudioFormat, Is.EqualTo(ConversationAudioFormat.G711Ulaw));
+        Assert.That(deserializedOptions.OutputAudioFormat, Is.EqualTo(RealtimeAudioFormat.G711Ulaw));
         Assert.That(deserializedOptions.Tools, Has.Count.EqualTo(1));
         Assert.That(deserializedOptions.Tools[0].Kind, Is.EqualTo(ConversationToolKind.Function));
         Assert.That((deserializedOptions.Tools[0] as ConversationFunctionTool)?.Name, Is.EqualTo("test-function-tool-name"));
@@ -93,15 +93,15 @@ public class ConversationSmokeTests : ConversationTestFixtureBase
         Assert.That((deserializedOptions.Tools[0] as ConversationFunctionTool)?.Parameters?.ToString(), Does.Contain("properties"));
         Assert.That(deserializedOptions.ToolChoice?.Kind, Is.EqualTo(ConversationToolChoiceKind.Function));
         Assert.That(deserializedOptions.ToolChoice?.FunctionName, Is.EqualTo("test-function"));
-        Assert.That(deserializedOptions.TurnDetectionOptions?.Kind, Is.EqualTo(ConversationTurnDetectionKind.ServerVoiceActivityDetection));
+        Assert.That(deserializedOptions.TurnDetectionOptions?.Kind, Is.EqualTo(TurnDetectionKind.ServerVoiceActivityDetection));
         Assert.That(deserializedOptions.Voice, Is.EqualTo(ConversationVoice.Echo));
 
         ConversationSessionOptions emptyOptions = new();
-        Assert.That(emptyOptions.ContentModalities.HasFlag(ConversationContentModalities.Audio), Is.False);
+        Assert.That(emptyOptions.ContentModalities.HasFlag(RealtimeContentModalities.Audio), Is.False);
         Assert.That(ModelReaderWriter.Write(emptyOptions).ToString(), Does.Not.Contain("modal"));
-        emptyOptions.ContentModalities |= ConversationContentModalities.Audio;
-        Assert.That(emptyOptions.ContentModalities.HasFlag(ConversationContentModalities.Audio), Is.True);
-        Assert.That(emptyOptions.ContentModalities.HasFlag(ConversationContentModalities.Text), Is.False);
+        emptyOptions.ContentModalities |= RealtimeContentModalities.Audio;
+        Assert.That(emptyOptions.ContentModalities.HasFlag(RealtimeContentModalities.Audio), Is.True);
+        Assert.That(emptyOptions.ContentModalities.HasFlag(RealtimeContentModalities.Text), Is.False);
         Assert.That(ModelReaderWriter.Write(emptyOptions).ToString(), Does.Contain("modal"));
     }
 
@@ -156,14 +156,14 @@ public class ConversationSmokeTests : ConversationTestFixtureBase
 
         sessionOptions = new()
         {
-            TurnDetectionOptions = ConversationTurnDetectionOptions.CreateDisabledTurnDetectionOptions(),
+            TurnDetectionOptions = TurnDetectionOptions.CreateDisabledTurnDetectionOptions(),
         };
         serializedOptions = ModelReaderWriter.Write(sessionOptions);
         Assert.That(serializedOptions.ToString(), Does.Contain(@"""turn_detection"":null"));
 
         sessionOptions = new()
         {
-            TurnDetectionOptions = ConversationTurnDetectionOptions.CreateServerVoiceActivityTurnDetectionOptions(
+            TurnDetectionOptions = TurnDetectionOptions.CreateServerVoiceActivityTurnDetectionOptions(
                 detectionThreshold: 0.42f)
         };
         serializedOptions = ModelReaderWriter.Write(sessionOptions);
@@ -180,7 +180,7 @@ public class ConversationSmokeTests : ConversationTestFixtureBase
           "type": "unknown_command_type_for_test"
         }
         """);
-        ConversationUpdate deserializedUpdate = ModelReaderWriter.Read<ConversationUpdate>(serializedUnknownCommand);
+        RealtimeUpdate deserializedUpdate = ModelReaderWriter.Read<RealtimeUpdate>(serializedUnknownCommand);
         Assert.That(deserializedUpdate, Is.Not.Null);
     }
 }

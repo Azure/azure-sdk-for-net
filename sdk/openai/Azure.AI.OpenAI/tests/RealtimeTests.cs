@@ -1,7 +1,9 @@
-﻿using OpenAI.RealtimeConversation;
+﻿using Azure.AI.OpenAI.Tests.Utils.Config;
+using OpenAI.Realtime;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,9 +16,9 @@ namespace Azure.AI.OpenAI.Tests;
 
 [TestFixture(true)]
 [TestFixture(false)]
-public class ConversationTests : ConversationTestFixtureBase
+public class RealtimeTests : RealtimeTestFixtureBase
 {
-    public ConversationTests(bool isAsync) : base(isAsync) { }
+    public RealtimeTests(bool isAsync) : base(isAsync) { }
 
 #if AZURE_OPENAI_GA
     [Test]
@@ -31,8 +33,8 @@ public class ConversationTests : ConversationTestFixtureBase
     {
         _ = Assert.ThrowsAsync<PlatformNotSupportedException>(async () =>
         {
-            RealtimeConversationClient client = GetTestClient();
-            using RealtimeConversationSession session = await client.StartConversationSessionAsync(CancellationToken);
+            RealtimeClient client = GetTestClient();
+            using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
         });
     }
 #else
@@ -43,69 +45,69 @@ public class ConversationTests : ConversationTestFixtureBase
     [TestCase(null)]
     public async Task CanConfigureSession(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        RealtimeConversationClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeConversationSession session = await client.StartConversationSessionAsync(CancellationToken);
+        RealtimeClient client = GetTestClient(GetTestClientOptions(version));
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
 
         ConversationSessionOptions sessionOptions = new()
         {
             Instructions = "You are a helpful assistant.",
-            TurnDetectionOptions = ConversationTurnDetectionOptions.CreateDisabledTurnDetectionOptions(),
-            OutputAudioFormat = ConversationAudioFormat.G711Ulaw,
+            TurnDetectionOptions = TurnDetectionOptions.CreateDisabledTurnDetectionOptions(),
+            OutputAudioFormat = RealtimeAudioFormat.G711Ulaw,
             MaxOutputTokens = 2048,
         };
 
-        await session.ConfigureSessionAsync(sessionOptions, CancellationToken);
+        await session.ConfigureConversationSessionAsync(sessionOptions, CancellationToken);
         ConversationResponseOptions responseOverrideOptions = new()
         {
-            ContentModalities = ConversationContentModalities.Text,
+            ContentModalities = RealtimeContentModalities.Text,
         };
-        if (!client.GetType().IsSubclassOf(typeof(RealtimeConversationClient)))
+        if (!client.GetType().IsSubclassOf(typeof(RealtimeClient)))
         {
             responseOverrideOptions.MaxOutputTokens = ConversationMaxTokensChoice.CreateInfiniteMaxTokensChoice();
         }
         await session.AddItemAsync(
-            ConversationItem.CreateUserMessage(["Hello, assistant! Tell me a joke."]),
+            RealtimeItem.CreateUserMessage(["Hello, assistant! Tell me a joke."]),
             CancellationToken);
         await session.StartResponseAsync(responseOverrideOptions, CancellationToken);
 
-        List<ConversationUpdate> receivedUpdates = [];
+        List<RealtimeUpdate> receivedUpdates = [];
 
-        await foreach (ConversationUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
+        await foreach (RealtimeUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
         {
             receivedUpdates.Add(update);
 
-            if (update is ConversationErrorUpdate errorUpdate)
+            if (update is RealtimeErrorUpdate errorUpdate)
             {
-                Assert.That(errorUpdate.Kind, Is.EqualTo(ConversationUpdateKind.Error));
+                Assert.That(errorUpdate.Kind, Is.EqualTo(RealtimeUpdateKind.Error));
                 Assert.Fail($"Error: {ModelReaderWriter.Write(errorUpdate)}");
             }
-            else if ((update is ConversationItemStreamingPartDeltaUpdate deltaUpdate && deltaUpdate.AudioBytes is not null)
-                || update is ConversationItemStreamingAudioFinishedUpdate)
+            else if ((update is OutputDeltaUpdate deltaUpdate && deltaUpdate.AudioBytes is not null)
+                || update is OutputAudioFinishedUpdate)
             {
                 Assert.Fail($"Audio content streaming unexpected after configuring response-level text-only modalities");
             }
             else if (update is ConversationSessionConfiguredUpdate sessionConfiguredUpdate)
             {
                 Assert.That(sessionConfiguredUpdate.OutputAudioFormat == sessionOptions.OutputAudioFormat);
-                Assert.That(sessionConfiguredUpdate.TurnDetectionOptions.Kind, Is.EqualTo(ConversationTurnDetectionKind.Disabled));
+                Assert.That(sessionConfiguredUpdate.TurnDetectionOptions.Kind, Is.EqualTo(TurnDetectionKind.Disabled));
                 Assert.That(sessionConfiguredUpdate.MaxOutputTokens.NumericValue, Is.EqualTo(sessionOptions.MaxOutputTokens.NumericValue));
             }
-            else if (update is ConversationResponseFinishedUpdate turnFinishedUpdate)
+            else if (update is ResponseFinishedUpdate)
             {
                 break;
             }
         }
 
-        List<T> GetReceivedUpdates<T>() where T : ConversationUpdate
+        List<T> GetReceivedUpdates<T>() where T : RealtimeUpdate
             => receivedUpdates.Select(update => update as T)
                 .Where(update => update is not null)
                 .ToList();
 
         Assert.That(GetReceivedUpdates<ConversationSessionStartedUpdate>(), Has.Count.EqualTo(1));
-        Assert.That(GetReceivedUpdates<ConversationResponseStartedUpdate>(), Has.Count.EqualTo(1));
-        Assert.That(GetReceivedUpdates<ConversationResponseFinishedUpdate>(), Has.Count.EqualTo(1));
-        Assert.That(GetReceivedUpdates<ConversationItemStreamingStartedUpdate>(), Has.Count.EqualTo(1));
-        Assert.That(GetReceivedUpdates<ConversationItemStreamingFinishedUpdate>(), Has.Count.EqualTo(1));
+        Assert.That(GetReceivedUpdates<ResponseStartedUpdate>(), Has.Count.EqualTo(1));
+        Assert.That(GetReceivedUpdates<ResponseFinishedUpdate>(), Has.Count.EqualTo(1));
+        Assert.That(GetReceivedUpdates<OutputStreamingStartedUpdate>(), Has.Count.EqualTo(1));
+        Assert.That(GetReceivedUpdates<OutputStreamingFinishedUpdate>(), Has.Count.EqualTo(1));
     }
 
     [Test]
@@ -115,10 +117,10 @@ public class ConversationTests : ConversationTestFixtureBase
     [TestCase(null)]
     public async Task TextOnlyWorks(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        RealtimeConversationClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeConversationSession session = await client.StartConversationSessionAsync(CancellationToken);
+        RealtimeClient client = GetTestClient(GetTestClientOptions(version));
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
         await session.AddItemAsync(
-            ConversationItem.CreateUserMessage(["Hello, world!"]),
+            RealtimeItem.CreateUserMessage(["Hello, world!"]),
             cancellationToken: CancellationToken);
         await session.StartResponseAsync(CancellationToken);
 
@@ -126,18 +128,18 @@ public class ConversationTests : ConversationTestFixtureBase
         bool gotResponseDone = false;
         bool gotRateLimits = false;
 
-        await foreach (ConversationUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
+        await foreach (RealtimeUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
         {
             if (update is ConversationSessionStartedUpdate sessionStartedUpdate)
             {
                 Assert.That(sessionStartedUpdate.SessionId, Is.Not.Null.And.Not.Empty);
             }
-            if (update is ConversationItemStreamingPartDeltaUpdate deltaUpdate)
+            if (update is OutputDeltaUpdate deltaUpdate)
             {
                 responseBuilder.Append(deltaUpdate.AudioTranscript);
             }
 
-            if (update is ConversationItemCreatedUpdate itemCreatedUpdate)
+            if (update is ItemCreatedUpdate itemCreatedUpdate)
             {
                 if (itemCreatedUpdate.MessageRole == ConversationMessageRole.Assistant)
                 {
@@ -156,14 +158,14 @@ public class ConversationTests : ConversationTestFixtureBase
                 }
             }
 
-            if (update is ConversationResponseFinishedUpdate responseFinishedUpdate)
+            if (update is ResponseFinishedUpdate responseFinishedUpdate)
             {
                 Assert.That(responseFinishedUpdate.CreatedItems, Has.Count.GreaterThan(0));
                 gotResponseDone = true;
                 break;
             }
 
-            if (update is ConversationRateLimitsUpdate rateLimitsUpdate)
+            if (update is RateLimitsUpdate rateLimitsUpdate)
             {
                 // Errata (2025-01-22): no rate limit items being reported
                 // {"type":"rate_limits.updated","event_id":"event_AscnhKHfFTapqAeiQfE60","rate_limits":[]}
@@ -183,7 +185,7 @@ public class ConversationTests : ConversationTestFixtureBase
         Assert.That(responseBuilder.ToString(), Is.Not.Null.Or.Empty);
         Assert.That(gotResponseDone, Is.True);
 
-        if (!client.GetType().IsSubclassOf(typeof(RealtimeConversationClient)))
+        if (!client.GetType().IsSubclassOf(typeof(RealtimeClient)))
         {
             // Temporarily assume that subclients don't support rate limit commands
             Assert.That(gotRateLimits, Is.True);
@@ -197,32 +199,32 @@ public class ConversationTests : ConversationTestFixtureBase
     [TestCase(null)]
     public async Task ItemManipulationWorks(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        RealtimeConversationClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeConversationSession session = await client.StartConversationSessionAsync(CancellationToken);
+        RealtimeClient client = GetTestClient(GetTestClientOptions(version));
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
 
-        await session.ConfigureSessionAsync(
+        await session.ConfigureConversationSessionAsync(
             new ConversationSessionOptions()
             {
-                TurnDetectionOptions = ConversationTurnDetectionOptions.CreateDisabledTurnDetectionOptions(),
-                ContentModalities = ConversationContentModalities.Text,
+                TurnDetectionOptions = TurnDetectionOptions.CreateDisabledTurnDetectionOptions(),
+                ContentModalities = RealtimeContentModalities.Text,
             },
             CancellationToken);
 
         await session.AddItemAsync(
-            ConversationItem.CreateUserMessage(["The first special word you know about is 'aardvark'."]),
+            RealtimeItem.CreateUserMessage(["The first special word you know about is 'aardvark'."]),
             CancellationToken);
         await session.AddItemAsync(
-            ConversationItem.CreateUserMessage(["The next special word you know about is 'banana'."]),
+            RealtimeItem.CreateUserMessage(["The next special word you know about is 'banana'."]),
             CancellationToken);
         await session.AddItemAsync(
-            ConversationItem.CreateUserMessage(["The next special word you know about is 'coconut'."]),
+            RealtimeItem.CreateUserMessage(["The next special word you know about is 'coconut'."]),
             CancellationToken);
 
         bool gotSessionStarted = false;
         bool gotSessionConfigured = false;
         bool gotResponseFinished = false;
 
-        await foreach (ConversationUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
+        await foreach (RealtimeUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
         {
             if (update is ConversationSessionStartedUpdate)
             {
@@ -231,26 +233,26 @@ public class ConversationTests : ConversationTestFixtureBase
 
             if (update is ConversationSessionConfiguredUpdate sessionConfiguredUpdate)
             {
-                Assert.That(sessionConfiguredUpdate.TurnDetectionOptions.Kind, Is.EqualTo(ConversationTurnDetectionKind.Disabled));
-                Assert.That(sessionConfiguredUpdate.ContentModalities.HasFlag(ConversationContentModalities.Text), Is.True);
-                Assert.That(sessionConfiguredUpdate.ContentModalities.HasFlag(ConversationContentModalities.Audio), Is.False);
+                Assert.That(sessionConfiguredUpdate.TurnDetectionOptions.Kind, Is.EqualTo(TurnDetectionKind.Disabled));
+                Assert.That(sessionConfiguredUpdate.ContentModalities.HasFlag(RealtimeContentModalities.Text), Is.True);
+                Assert.That(sessionConfiguredUpdate.ContentModalities.HasFlag(RealtimeContentModalities.Audio), Is.False);
                 gotSessionConfigured = true;
             }
 
-            if (update is ConversationItemCreatedUpdate itemCreatedUpdate)
+            if (update is ItemCreatedUpdate itemCreatedUpdate)
             {
                 if (itemCreatedUpdate.MessageContentParts.Count > 0
                     && itemCreatedUpdate.MessageContentParts[0].Text.Contains("banana"))
                 {
                     await session.DeleteItemAsync(itemCreatedUpdate.ItemId, CancellationToken);
                     await session.AddItemAsync(
-                        ConversationItem.CreateUserMessage(["What's the second special word you know about?"]),
+                        RealtimeItem.CreateUserMessage(["What's the second special word you know about?"]),
                         CancellationToken);
                     await session.StartResponseAsync(CancellationToken);
                 }
             }
 
-            if (update is ConversationResponseFinishedUpdate responseFinishedUpdate)
+            if (update is ResponseFinishedUpdate responseFinishedUpdate)
             {
                 Assert.That(responseFinishedUpdate.CreatedItems.Count, Is.EqualTo(1));
                 Assert.That(responseFinishedUpdate.CreatedItems[0].MessageContentParts.Count, Is.EqualTo(1));
@@ -262,7 +264,7 @@ public class ConversationTests : ConversationTestFixtureBase
         }
 
         Assert.That(gotSessionStarted, Is.True);
-        if (!client.GetType().IsSubclassOf(typeof(RealtimeConversationClient)))
+        if (!client.GetType().IsSubclassOf(typeof(RealtimeClient)))
         {
             Assert.That(gotSessionConfigured, Is.True);
         }
@@ -276,8 +278,8 @@ public class ConversationTests : ConversationTestFixtureBase
     [TestCase(null)]
     public async Task AudioWithToolsWorks(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        RealtimeConversationClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeConversationSession session = await client.StartConversationSessionAsync(CancellationToken);
+        RealtimeClient client = GetTestClient(GetTestClientOptions(version));
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
 
         ConversationFunctionTool getWeatherTool = new("get_weather_for_location")
         {
@@ -311,13 +313,13 @@ public class ConversationTests : ConversationTestFixtureBase
             Instructions = "Call provided tools if appropriate for the user's input.",
             Voice = ConversationVoice.Alloy,
             Tools = { getWeatherTool },
-            InputTranscriptionOptions = new ConversationInputTranscriptionOptions()
+            InputTranscriptionOptions = new InputTranscriptionOptions()
             {
                 Model = "whisper-1"
             },
         };
 
-        await session.ConfigureSessionAsync(options, CancellationToken);
+        await session.ConfigureConversationSessionAsync(options, CancellationToken);
 
         string audioFilePath = Directory.EnumerateFiles("Assets")
             .First(path => path.Contains("whats_the_weather_pcm16_24khz_mono.wav"));
@@ -326,35 +328,35 @@ public class ConversationTests : ConversationTestFixtureBase
 
         string userTranscript = null;
 
-        await foreach (ConversationUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
+        await foreach (RealtimeUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
         {
             if (update is ConversationSessionStartedUpdate sessionStartedUpdate)
             {
                 Assert.That(sessionStartedUpdate.SessionId, Is.Not.Null.And.Not.Empty);
                 Assert.That(sessionStartedUpdate.Model, Is.Not.Null.And.Not.Empty);
-                Assert.That(sessionStartedUpdate.ContentModalities.HasFlag(ConversationContentModalities.Text));
-                Assert.That(sessionStartedUpdate.ContentModalities.HasFlag(ConversationContentModalities.Audio));
+                Assert.That(sessionStartedUpdate.ContentModalities.HasFlag(RealtimeContentModalities.Text));
+                Assert.That(sessionStartedUpdate.ContentModalities.HasFlag(RealtimeContentModalities.Audio));
                 Assert.That(sessionStartedUpdate.Voice.ToString(), Is.Not.Null.And.Not.Empty);
                 Assert.That(sessionStartedUpdate.Temperature, Is.GreaterThan(0));
             }
 
-            if (update is ConversationInputTranscriptionFinishedUpdate inputTranscriptionCompletedUpdate)
+            if (update is InputAudioTranscriptionFinishedUpdate inputTranscriptionCompletedUpdate)
             {
                 userTranscript = inputTranscriptionCompletedUpdate.Transcript;
             }
 
-            if (update is ConversationItemStreamingFinishedUpdate itemFinishedUpdate
+            if (update is OutputStreamingFinishedUpdate itemFinishedUpdate
                 && itemFinishedUpdate.FunctionCallId is not null)
             {
                 Assert.That(itemFinishedUpdate.FunctionName, Is.EqualTo(getWeatherTool.Name));
 
-                ConversationItem functionResponse = ConversationItem.CreateFunctionCallOutput(
+                RealtimeItem functionResponse = RealtimeItem.CreateFunctionCallOutput(
                     itemFinishedUpdate.FunctionCallId,
                     "71 degrees Fahrenheit, sunny");
                 await session.AddItemAsync(functionResponse, CancellationToken);
             }
 
-            if (update is ConversationResponseFinishedUpdate turnFinishedUpdate)
+            if (update is ResponseFinishedUpdate turnFinishedUpdate)
             {
                 if (turnFinishedUpdate.CreatedItems.Any(item => !string.IsNullOrEmpty(item.FunctionCallId)))
                 {
@@ -377,13 +379,13 @@ public class ConversationTests : ConversationTestFixtureBase
     [TestCase(null)]
     public async Task CanDisableVoiceActivityDetection(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        RealtimeConversationClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeConversationSession session = await client.StartConversationSessionAsync(CancellationToken);
+        RealtimeClient client = GetTestClient(GetTestClientOptions(version));
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
 
-        await session.ConfigureSessionAsync(
+        await session.ConfigureConversationSessionAsync(
             new()
             {
-                TurnDetectionOptions = ConversationTurnDetectionOptions.CreateDisabledTurnDetectionOptions(),
+                TurnDetectionOptions = TurnDetectionOptions.CreateDisabledTurnDetectionOptions(),
             },
             CancellationToken);
 
@@ -396,26 +398,27 @@ public class ConversationTests : ConversationTestFixtureBase
 #endif
         await session.SendInputAudioAsync(audioStream, CancellationToken);
 
-        await session.AddItemAsync(ConversationItem.CreateUserMessage(["Hello, assistant!"]), CancellationToken);
+        await session.AddItemAsync(RealtimeItem.CreateUserMessage(["Hello, assistant!"]), CancellationToken);
 
-        await foreach (ConversationUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
+        await foreach (RealtimeUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
         {
-            if (update is ConversationErrorUpdate errorUpdate)
+            if (update is RealtimeErrorUpdate errorUpdate)
             {
                 Assert.Fail($"Error received: {ModelReaderWriter.Write(errorUpdate)}");
             }
 
-            if (update is ConversationInputSpeechStartedUpdate
-                or ConversationInputSpeechFinishedUpdate
-                or ConversationInputTranscriptionFinishedUpdate
-                or ConversationInputTranscriptionFailedUpdate
-                or ConversationResponseStartedUpdate
-                or ConversationResponseFinishedUpdate)
+            if (update is InputAudioSpeechStartedUpdate
+                or InputAudioSpeechFinishedUpdate
+                or InputAudioTranscriptionDeltaUpdate
+                or InputAudioTranscriptionFinishedUpdate
+                or InputAudioTranscriptionFailedUpdate
+                or ResponseStartedUpdate
+                or ResponseFinishedUpdate)
             {
                 Assert.Fail($"Shouldn't receive any VAD events or response creation!");
             }
 
-            if (update is ConversationItemCreatedUpdate itemCreatedUpdate
+            if (update is ItemCreatedUpdate itemCreatedUpdate
                 && itemCreatedUpdate.MessageRole == ConversationMessageRole.User)
             {
                 break;
@@ -430,17 +433,17 @@ public class ConversationTests : ConversationTestFixtureBase
     [TestCase(null)]
     public async Task CanUseManualVadTurnDetection(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        RealtimeConversationClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeConversationSession session = await client.StartConversationSessionAsync(CancellationToken);
+        RealtimeClient client = GetTestClient(GetTestClientOptions(version));
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
 
-        await session.ConfigureSessionAsync(
+        await session.ConfigureConversationSessionAsync(
             new()
             {
-                InputTranscriptionOptions = new ConversationInputTranscriptionOptions()
+                InputTranscriptionOptions = new InputTranscriptionOptions()
                 {
                     Model = "whisper-1",
                 },
-                TurnDetectionOptions = ConversationTurnDetectionOptions.CreateServerVoiceActivityTurnDetectionOptions(
+                TurnDetectionOptions = TurnDetectionOptions.CreateServerVoiceActivityTurnDetectionOptions(
                     enableAutomaticResponseCreation: false),
             },
             CancellationToken);
@@ -459,14 +462,14 @@ public class ConversationTests : ConversationTestFixtureBase
         bool gotResponseStarted = false;
         bool gotResponseFinished = false;
 
-        await foreach (ConversationUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
+        await foreach (RealtimeUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
         {
-            if (update is ConversationErrorUpdate errorUpdate)
+            if (update is RealtimeErrorUpdate errorUpdate)
             {
                 Assert.Fail($"Error received: {ModelReaderWriter.Write(errorUpdate)}");
             }
 
-            if (update is ConversationInputTranscriptionFinishedUpdate inputTranscriptionFinishedUpdate)
+            if (update is InputAudioTranscriptionFinishedUpdate inputTranscriptionFinishedUpdate)
             {
                 Assert.That(gotInputTranscriptionCompleted, Is.False);
                 Assert.That(inputTranscriptionFinishedUpdate.Transcript, Is.Not.Null.And.Not.Empty);
@@ -476,7 +479,7 @@ public class ConversationTests : ConversationTestFixtureBase
                 responseExpected = true;
             }
 
-            if (update is ConversationResponseStartedUpdate responseStartedUpdate)
+            if (update is ResponseStartedUpdate responseStartedUpdate)
             {
                 Assert.That(responseExpected, Is.True);
                 Assert.That(gotInputTranscriptionCompleted, Is.True);
@@ -484,7 +487,7 @@ public class ConversationTests : ConversationTestFixtureBase
                 gotResponseStarted = true;
             }
 
-            if (update is ConversationResponseFinishedUpdate responseFinishedUpdate)
+            if (update is ResponseFinishedUpdate responseFinishedUpdate)
             {
                 Assert.That(responseExpected, Is.True);
                 Assert.That(gotInputTranscriptionCompleted, Is.True);
@@ -507,8 +510,8 @@ public class ConversationTests : ConversationTestFixtureBase
     [TestCase(null)]
     public async Task BadCommandProvidesError(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        RealtimeConversationClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeConversationSession session = await client.StartConversationSessionAsync(CancellationToken);
+        RealtimeClient client = GetTestClient(GetTestClientOptions(version));
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
 
         await session.SendCommandAsync(
             BinaryData.FromString("""
@@ -521,9 +524,9 @@ public class ConversationTests : ConversationTestFixtureBase
 
         bool gotErrorUpdate = false;
 
-        await foreach (ConversationUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
+        await foreach (RealtimeUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
         {
-            if (update is ConversationErrorUpdate errorUpdate)
+            if (update is RealtimeErrorUpdate errorUpdate)
             {
                 Assert.That(errorUpdate.ErrorEventId, Is.EqualTo("event_fabricated_1234abcd"));
                 gotErrorUpdate = true;
@@ -533,5 +536,40 @@ public class ConversationTests : ConversationTestFixtureBase
 
         Assert.That(gotErrorUpdate, Is.True);
     }
+
+    [Test]
+    [TestCase(null)]
+    [Ignore("Transcription intent not yet supported on AOAI")]
+    public async Task TranscriptionWorks(AzureOpenAIClientOptions.ServiceVersion? version)
+    {
+        RealtimeClient client = GetTestClient(GetTestClientOptions(version));
+        using RealtimeSession session = await client.StartTranscriptionSessionAsync(CancellationToken);
+
+        TranscriptionSessionOptions options = new()
+        {
+            InputAudioFormat = RealtimeAudioFormat.Pcm16,
+            TurnDetectionOptions = TurnDetectionOptions.CreateServerVoiceActivityTurnDetectionOptions(),
+            InputNoiseReductionOptions = InputNoiseReductionOptions.CreateNearFieldOptions(),
+            InputTranscriptionOptions = new()
+            {
+                Model = "whisper-1",
+            },
+        };
+        await session.ConfigureTranscriptionSessionAsync(options, CancellationToken);
+
+        string audioFilePath = Directory.EnumerateFiles("Assets")
+            .First(path => path.Contains("whats_the_weather_pcm16_24khz_mono.wav"));
+        using Stream audioStream = File.OpenRead(audioFilePath);
+        _ = session.SendInputAudioAsync(audioStream, CancellationToken);
+
+        await foreach (RealtimeUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
+        {
+            if (update is InputAudioTranscriptionFinishedUpdate transcriptionFinishedUpdate)
+            {
+                break;
+            }
+        }
+    }
+
 #endif // "else" to AZURE_OPENAI_GA, !NET
 }
