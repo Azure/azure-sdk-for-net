@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The List Virtual Machine Images operation response. </summary>
-    internal partial class VirtualMachineImagesWithPropertiesListResult
+    /// <summary> In the case of an availability or connectivity issue with the data disk, specify the behavior of your VM. </summary>
+    internal partial class AvailabilityPolicy
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,21 @@ namespace Azure.ResourceManager.Compute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineImagesWithPropertiesListResult"/>. </summary>
-        internal VirtualMachineImagesWithPropertiesListResult()
+        /// <summary> Initializes a new instance of <see cref="AvailabilityPolicy"/>. </summary>
+        public AvailabilityPolicy()
         {
-            Value = new ChangeTrackingList<VirtualMachineImage>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineImagesWithPropertiesListResult"/>. </summary>
-        /// <param name="value"> The list of virtual machine images. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of virtual machine images. Call ListNext() with this URI to fetch the next page of virtual machine images. </param>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityPolicy"/>. </summary>
+        /// <param name="actionOnDiskDelay"> Determines on how to handle disks with slow I/O. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineImagesWithPropertiesListResult(IReadOnlyList<VirtualMachineImage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvailabilityPolicy(AvailabilityPolicyDiskDelay? actionOnDiskDelay, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            ActionOnDiskDelay = actionOnDiskDelay;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of virtual machine images. </summary>
-        public IReadOnlyList<VirtualMachineImage> Value { get; }
-        /// <summary> The URI to fetch the next page of virtual machine images. Call ListNext() with this URI to fetch the next page of virtual machine images. </summary>
-        public string NextLink { get; }
+        /// <summary> Determines on how to handle disks with slow I/O. </summary>
+        public AvailabilityPolicyDiskDelay? ActionOnDiskDelay { get; set; }
     }
 }
