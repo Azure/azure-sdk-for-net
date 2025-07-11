@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("evaluationResult"u8);
                 writer.WriteStringValue(EvaluationResult);
             }
-            if (options.Format != "W" && Optional.IsDefined(EvaluationDetails))
+            if (options.Format != "W" && Optional.IsDefined(CheckRestrictionEvaluationDetails))
             {
                 writer.WritePropertyName("evaluationDetails"u8);
-                writer.WriteObjectValue(EvaluationDetails, options);
+                writer.WriteObjectValue(CheckRestrictionEvaluationDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EffectDetails))
             {

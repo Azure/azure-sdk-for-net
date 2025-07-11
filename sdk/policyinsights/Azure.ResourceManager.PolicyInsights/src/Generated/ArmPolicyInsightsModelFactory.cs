@@ -634,12 +634,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of <see cref="Models.PolicyEvaluationResult"/>. </summary>
         /// <param name="policyInfo"> The details of the policy that was evaluated. </param>
         /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </param>
-        /// <param name="evaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
+        /// <param name="checkRestrictionEvaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
         /// <param name="policyEffect"> The details of the effect that was applied to the resource. </param>
         /// <returns> A new <see cref="Models.PolicyEvaluationResult"/> instance for mocking. </returns>
-        public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = null, string evaluationResult = null, CheckRestrictionEvaluationDetails evaluationDetails = null, string policyEffect = null)
+        public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = null, string evaluationResult = null, CheckRestrictionEvaluationDetails checkRestrictionEvaluationDetails = null, string policyEffect = null)
         {
-            return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails, policyEffect != null ? new PolicyEffectDetails(policyEffect, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new PolicyEvaluationResult(policyInfo, evaluationResult, checkRestrictionEvaluationDetails, policyEffect != null ? new PolicyEffectDetails(policyEffect, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CheckRestrictionEvaluationDetails"/>. </summary>
