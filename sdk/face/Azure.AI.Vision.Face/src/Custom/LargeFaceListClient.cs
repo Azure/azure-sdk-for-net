@@ -6,14 +6,15 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
+    // Data plane generated sub-client.
     /// <summary> The LargeFaceList sub-client. </summary>
+    [CodeGenType("LargeFaceListClientImpl")]
     public partial class LargeFaceListClient
     {
         /// <summary> Initializes a new instance of LargeFaceListClient for mocking. </summary>
         protected LargeFaceListClient()
         {
         }
-
         /// <summary> Initializes a new instance of LargeFaceListClient. </summary>
         /// <param name="endpoint">
         /// Supported Cognitive Services endpoints (protocol and hostname, for example:
@@ -52,7 +53,7 @@ namespace Azure.AI.Vision.Face
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FaceAdministrationClientOptions();
-            // Implementation will be completed when generator supports it properly
+            // Implementation will be provided by the generator via CodeGenType
         }
 
         /// <summary> Initializes a new instance of LargeFaceListClient. </summary>
@@ -69,7 +70,7 @@ namespace Azure.AI.Vision.Face
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new FaceAdministrationClientOptions();
-            // Implementation will be completed when generator supports it properly
+            // Implementation will be provided by the generator via CodeGenType
         }
     }
 }
