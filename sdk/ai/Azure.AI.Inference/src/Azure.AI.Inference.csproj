@@ -5,7 +5,7 @@
     <Version>1.0.0-beta.6</Version>
     <PackageTags>Azure Inference</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);CS1591;AZC0030;AZC0031</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AZC0030;AZC0031;AZC0035;AZC0034</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
