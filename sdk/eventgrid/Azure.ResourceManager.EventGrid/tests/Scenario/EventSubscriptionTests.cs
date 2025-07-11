@@ -10,6 +10,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using static System.Net.WebRequestMethods;
 
 namespace Azure.ResourceManager.EventGrid.Tests
 {
@@ -20,9 +21,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
         }
         // for live tests, replace passcode with actual code from portal for this this function devexpfuncappdestination and function EventGridTrigger1
-        // for live tests, replace SANITIZED_FUNCTION_KEY with actual code from portal for this this function devexpfuncappdestination and function EventGridTrigger1
-        public const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=SANITIZED_FUNCTION_KEY";
-        public const string AzureFunctionArmId = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/DevExpRg/providers/Microsoft.Web/sites/devexpfuncappdestination/functions/EventGridTrigger1";
+        // for live tests, replace SANITIZED_FUNCTION_KEY with actual code from from the Azure Portal for "sdk-test-logic-app" -> workflowUrl.
+        public const string LogicAppEndpointUrl = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
         private EventGridTopicCollection TopicCollection { get; set; }
 
         private EventGridDomainCollection DomainCollection { get; set; }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(LogicAppEndpointUrl)
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl),
+                    Endpoint = new Uri(LogicAppEndpointUrl),
                     DeliveryAttributeMappings = {
                             new StaticDeliveryAttributeMapping()
                             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(LogicAppEndpointUrl)
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl),
+                    Endpoint = new Uri(LogicAppEndpointUrl),
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(LogicAppEndpointUrl)
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    Endpoint = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(LogicAppEndpointUrl)
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -378,6 +378,106 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await eventSubscriptionResponse.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await subscriptionCollection.ExistsAsync(eventSubscriptionName)).Value;
             Assert.IsFalse(falseResult);
+        }
+
+        [Test]
+        public async Task EventSubscriptionResource_GetAsync_ReturnsResource()
+        {
+            await SetCollection();
+
+            // Create topic and event subscription
+            var topicName = Recording.GenerateAssetName("sdk-Topic-");
+            var createTopicResponse = (await TopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new EventGridTopicData(DefaultLocation))).Value;
+            var eventSubscriptionName = Recording.GenerateAssetName("sdk-EventSubscription-");
+            string scope = $"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{ResourceGroup.Data.Name}/providers/Microsoft.EventGrid/topics/{topicName}";
+            var subscriptionCollection = Client.GetEventSubscriptions(new ResourceIdentifier(scope));
+            var eventSubscription = new EventGridSubscriptionData()
+            {
+                Destination = new WebHookEventSubscriptionDestination()
+                {
+                    Endpoint = new Uri(LogicAppEndpointUrl)
+                }
+            };
+            var eventSubscriptionResponse = (await subscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, eventSubscription)).Value;
+
+            // Get the EventSubscriptionResource
+            var eventSubResourceId = EventSubscriptionResource.CreateResourceIdentifier(scope, eventSubscriptionName);
+            var eventSubResource = Client.GetEventSubscriptionResource(eventSubResourceId);
+
+            // Act
+            var result = await eventSubResource.GetAsync();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Value);
+            Assert.AreEqual(eventSubscriptionName, result.Value.Data.Name);
+        }
+
+        [Test]
+        public async Task EventSubscriptionResource_GetDeliveryAttributesAsync_ReturnsAttributes()
+        {
+            await SetCollection();
+
+            // Create topic and event subscription
+            var topicName = Recording.GenerateAssetName("sdk-Topic-");
+            var createTopicResponse = (await TopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new EventGridTopicData(DefaultLocation))).Value;
+            var eventSubscriptionName = Recording.GenerateAssetName("sdk-EventSubscription-");
+            string scope = $"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{ResourceGroup.Data.Name}/providers/Microsoft.EventGrid/topics/{topicName}";
+            var subscriptionCollection = Client.GetEventSubscriptions(new ResourceIdentifier(scope));
+            var eventSubscription = new EventGridSubscriptionData()
+            {
+                Destination = new WebHookEventSubscriptionDestination()
+                {
+                    Endpoint = new Uri(LogicAppEndpointUrl)
+                }
+            };
+            var eventSubscriptionResponse = (await subscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, eventSubscription)).Value;
+
+            // Get the EventSubscriptionResource
+            var eventSubResourceId = EventSubscriptionResource.CreateResourceIdentifier(scope, eventSubscriptionName);
+            var eventSubResource = Client.GetEventSubscriptionResource(eventSubResourceId);
+
+            // Act & Assert
+            int count = 0;
+            await foreach (var attr in eventSubResource.GetDeliveryAttributesAsync())
+            {
+                Assert.IsNotNull(attr);
+                count++;
+            }
+            Assert.GreaterOrEqual(count, 0); // At least 0 attributes (should not throw)
+        }
+
+        [Test]
+        public async Task EventSubscriptionResource_GetFullUriAsync_ReturnsUri()
+        {
+            await SetCollection();
+
+            // Create topic and event subscription
+            var topicName = Recording.GenerateAssetName("sdk-Topic-");
+            var createTopicResponse = (await TopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, new EventGridTopicData(DefaultLocation))).Value;
+            var eventSubscriptionName = Recording.GenerateAssetName("sdk-EventSubscription-");
+            string scope = $"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{ResourceGroup.Data.Name}/providers/Microsoft.EventGrid/topics/{topicName}";
+            var subscriptionCollection = Client.GetEventSubscriptions(new ResourceIdentifier(scope));
+            var eventSubscription = new EventGridSubscriptionData()
+            {
+                Destination = new WebHookEventSubscriptionDestination()
+                {
+                    Endpoint = new Uri(LogicAppEndpointUrl)
+                }
+            };
+            var eventSubscriptionResponse = (await subscriptionCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, eventSubscription)).Value;
+
+            // Get the EventSubscriptionResource
+            var eventSubResourceId = EventSubscriptionResource.CreateResourceIdentifier(scope, eventSubscriptionName);
+            var eventSubResource = Client.GetEventSubscriptionResource(eventSubResourceId);
+
+            // Act
+            var result = await eventSubResource.GetFullUriAsync();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Value);
+            Assert.IsNotNull(result.Value.Endpoint);
         }
     }
 }

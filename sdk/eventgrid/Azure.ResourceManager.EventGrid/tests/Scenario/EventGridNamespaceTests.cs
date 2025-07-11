@@ -29,10 +29,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
         // Go to Azure Portal -> Key Vault -> Select sdk-pre-generated-kv -> Certificates -> sdk-test-cert -> Properties -> Certificate URL
         private const string KeyVaultCertificateUrl = "https://sdk-pre-generated-kv.vault.azure.net/certificates/sdk-test-cert/SANITIZED_CERTIFICATE_URL";
 
-        // Azure Function Endpoint URL for testing purposes. This endpoint url is sanitized. To run the test cases in Live/Record mode,
-        // replace the SANITIZED_FUNCTION_KEY with the actual function key from the Azure Portal for the function "EventGridTrigger1" in "devexpfuncappdestination".
-        private const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=SANITIZED_FUNCTION_KEY";
-
         // AAD Application ID. This is sanitized in the test environment. To run the test cases in Live/Record mode,
         // replace the SANITIZED_APPLICATION_ID with the actual AAD Application ID used in your Azure Active Directory.
         // Go to Azure Portal -> Microsoft Entra ID -> App registrations -> EventGridWebhookAuthenticationApp -> Overview -> Application (client) ID
@@ -45,8 +41,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         // Event subscription destination endpoint. This endpoint URL is sanitized in the test environment. To run the test cases in Live/Record mode,
         // replace the sig parameter with the actual signature from your Azure Logic App.
-        // Go to Azure Portal -> Logic Apps -> mylogicappkish2 -> Overview -> Workflow URL
-        private const string EventSubscriptionDestinationEndpoint = "https://prod-71.eastus.logic.azure.com:443/workflows/b60c5432896846608c05de3a96be6de2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
+        // Go to Azure Portal -> Logic Apps -> sdk-test-logic-app -> Overview -> Workflow URL
+        private const string EventSubscriptionDestinationEndpoint = "https://prod-16.centraluseuap.logic.azure.com:443/workflows/9ace43ec97744a61acea5db9feaae8af/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=SANITIZED_FUNCTION_KEY&sig=SANITIZED_FUNCTION_KEY";
 
         private async Task SetCollection()
         {
@@ -67,7 +63,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {
@@ -208,7 +204,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
             var nameSpace = new EventGridNamespaceData(location)
             {
@@ -312,6 +308,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         // Enabling CustomJwtAuthenticationSettings feature for 2025-04-01-preview API version
+        [Ignore("This test is ignored because it requires a valid Key Vault certificate URL and user-assigned identity. Please update the KeyVaultCertificateUrl and user-assigned identity in the test before running it.")]
         [Test]
         public async Task NamespaceCustomJwtAuthCreateGetUpdateDelete()
         {
@@ -323,7 +320,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            AzureLocation location = new AzureLocation("eastus2", "eastus2");
 
             // Enable managed identity for the namespace
             var nameSpace = new EventGridNamespaceData(location)
@@ -339,7 +336,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Add the user-assigned identity
             nameSpace.Identity.UserAssignedIdentities.Add(
-                new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-test-uami"),
+                new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-eventgrid-test-userAssignedManagedIdentity"),
                 new UserAssignedIdentity()
             );
 
@@ -379,7 +376,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                         CertificateUri = new Uri(KeyVaultCertificateUrl),
                         Identity = new CustomJwtAuthenticationManagedIdentity(CustomJwtAuthenticationManagedIdentityType.UserAssigned)
                         {
-                            UserAssignedIdentity = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-test-uami")
+                            UserAssignedIdentity = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-eventgrid-test-userAssignedManagedIdentity")
                         }
                     }
                 }
@@ -410,6 +407,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         }
 
         // Test case for WebhookAuthentication. This feature is added in 2025-04-01-preview API version
+        [Ignore("This test is ignored because it requires a valid Azure Function endpoint URL and user-assigned identity. Please update the AzureFunctionEndpointUrl and user-assigned identity in the test before running it.")]
         [Test]
         public async Task NamespaceCustomWebhookAuthCreateGetUpdateDelete()
         {
@@ -421,9 +419,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            AzureLocation location = new AzureLocation("eastus2", "eastus2");
 
-            // Enable managed identity for the namespace
             var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {
@@ -437,7 +434,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Add the user-assigned identity
             nameSpace.Identity.UserAssignedIdentities.Add(
-                new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-test-uami"),
+                new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-eventgrid-test-userAssignedManagedIdentity"),
                 new UserAssignedIdentity()
             );
 
@@ -472,9 +469,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Identity = new CustomWebhookAuthenticationManagedIdentity()
                 {
                     IdentityType = CustomWebhookAuthenticationManagedIdentityType.UserAssigned,
-                    UserAssignedIdentity = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-test-uami")
+                    UserAssignedIdentity = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-eventgrid-test-userAssignedManagedIdentity")
                 },
-                EndpointUri = new Uri(AzureFunctionEndpointUrl),
+                EndpointUri = new Uri(EventSubscriptionDestinationEndpoint),
                 AzureActiveDirectoryApplicationIdOrUri = new Uri(AzureActiveDirectoryApplicationId),
                 AzureActiveDirectoryTenantId = AzureActiveDirectoryTenantId
             };
@@ -483,19 +480,16 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(updateNamespaceResponse);
             Assert.AreEqual(updateNamespaceResponse.Data.Name, namespaceName);
 
-            // Get the updated namespace
             var getUpdatedNamespaceResponse = (await NamespaceCollection.GetAsync(namespaceName)).Value;
             Assert.NotNull(getUpdatedNamespaceResponse);
             Assert.AreEqual(NamespaceProvisioningState.Succeeded, getUpdatedNamespaceResponse.Data.ProvisioningState);
 
-            // Verify custom Webhook authentication
             Assert.NotNull(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri, AzureFunctionEndpointUrl);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri, EventSubscriptionDestinationEndpoint);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri, AzureActiveDirectoryApplicationId);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryTenantId, AzureActiveDirectoryTenantId);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.IdentityType, CustomWebhookAuthenticationManagedIdentityType.UserAssigned);
 
-            // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
             var namespace1Exists = await NamespaceCollection.ExistsAsync(namespaceName);
             Assert.False(namespace1Exists);
@@ -520,7 +514,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
             var nameSpace = new EventGridNamespaceData(location)
             {
@@ -654,7 +648,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
             var nameSpace = new EventGridNamespaceData(location)
             {
@@ -799,7 +793,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity();
             var nameSpace = new EventGridNamespaceData(location)
             {
@@ -869,8 +863,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(getEventSubscription1.Data.Name, namespaceTopicSubscriptionName1);
             Assert.AreEqual(getEventSubscription1.Data.DeliveryConfiguration.DeliveryMode.ToString(), DeliveryMode.Push.ToString());
             // test for full uri of event subscription
-             var eventSubscription1FullUri = (await getEventSubscription1.GetFullUriAsync());
-             Assert.NotNull(eventSubscription1FullUri);
+            var eventSubscription1FullUri = (await getEventSubscription1.GetFullUriAsync());
+            Assert.NotNull(eventSubscription1FullUri);
 
             //update event subscription
             DeliveryConfiguration deliveryConfiguration2 = new DeliveryConfiguration()
@@ -938,7 +932,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 Name = namespaceSkuName,
                 Capacity = 1,
             };
-            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            AzureLocation location = new AzureLocation("eastus2", "eastus2");
             var nameSpace = new EventGridNamespaceData(location)
             {
                 Tags = {
@@ -1202,6 +1196,99 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(listTopicSpaceAfterAllDeleted.Count, 0);
 
             // delete namespace and resource group
+            await createNamespaceResponse.DeleteAsync(WaitUntil.Completed);
+            await ResourceGroup.DeleteAsync(WaitUntil.Completed);
+        }
+
+        // CaCertificate tests GetAsync, UpdateAsync
+        [Test]
+        public async Task CaCertificateResource_GetAsync_Works()
+        {
+            await SetCollection();
+            var namespaceName = Recording.GenerateAssetName("sdk-Namespace-");
+            var namespaceSku = new NamespaceSku() { Name = "Standard", Capacity = 1 };
+            AzureLocation location = new AzureLocation("eastus2", "eastus2");
+            var nameSpace = new EventGridNamespaceData(location)
+            {
+                Sku = namespaceSku,
+                IsZoneRedundant = true,
+                TopicSpacesConfiguration = new TopicSpacesConfiguration()
+                {
+                    State = TopicSpacesConfigurationState.Enabled
+                }
+            };
+            var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
+            var caCertificatesCollection = createNamespaceResponse.GetCaCertificates();
+
+            var encodedCertificate = "SANITIZED_ENCODED_CERTIFICATE";
+            var caCertificateData = new CaCertificateData()
+            {
+                Description = "TestCertificateGetAsync",
+                EncodedCertificate = encodedCertificate
+            };
+            var createCaCertificateResponse = (await caCertificatesCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testCertificateGetAsync", caCertificateData)).Value;
+
+            // Act
+            var getResponse = await createCaCertificateResponse.GetAsync();
+
+            // Assert
+            Assert.IsNotNull(getResponse);
+            Assert.IsNotNull(getResponse.Value);
+            Assert.AreEqual("TestCertificateGetAsync", getResponse.Value.Data.Description);
+            Assert.AreEqual(encodedCertificate, getResponse.Value.Data.EncodedCertificate);
+
+            // Cleanup
+            await createCaCertificateResponse.DeleteAsync(WaitUntil.Completed);
+            await createNamespaceResponse.DeleteAsync(WaitUntil.Completed);
+            await ResourceGroup.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        public async Task CaCertificateResource_UpdateAsync_Works()
+        {
+            await SetCollection();
+            var namespaceName = Recording.GenerateAssetName("sdk-Namespace-");
+            var namespaceSku = new NamespaceSku() { Name = "Standard", Capacity = 1 };
+            AzureLocation location = new AzureLocation("eastus2", "eastus2");
+            var nameSpace = new EventGridNamespaceData(location)
+            {
+                Sku = namespaceSku,
+                IsZoneRedundant = true,
+                TopicSpacesConfiguration = new TopicSpacesConfiguration()
+                {
+                    State = TopicSpacesConfigurationState.Enabled
+                }
+            };
+            var createNamespaceResponse = (await NamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, nameSpace)).Value;
+            var caCertificatesCollection = createNamespaceResponse.GetCaCertificates();
+
+            var encodedCertificate = "SANITIZED_ENCODED_CERTIFICATE";
+
+            var caCertificateData = new CaCertificateData()
+            {
+                Description = "InitialDescription",
+                EncodedCertificate = encodedCertificate
+            };
+
+            var createResponse = (await caCertificatesCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testCertificateUpdateAsync", caCertificateData)).Value;
+
+            // Delete the existing certificate
+            await createResponse.DeleteAsync(WaitUntil.Completed);
+
+            // Recreate with updated description
+            var updatedData = new CaCertificateData()
+            {
+                Description = "UpdatedDescription",
+                EncodedCertificate = encodedCertificate
+            };
+
+            var recreateResponse = (await caCertificatesCollection.CreateOrUpdateAsync(WaitUntil.Completed, "testCertificateUpdateAsync", updatedData)).Value;
+
+            Assert.IsNotNull(recreateResponse);
+            Assert.AreEqual("UpdatedDescription", recreateResponse.Data.Description);
+
+            // Cleanup
+            await recreateResponse.DeleteAsync(WaitUntil.Completed);
             await createNamespaceResponse.DeleteAsync(WaitUntil.Completed);
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
         }
