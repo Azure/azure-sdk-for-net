@@ -18,7 +18,8 @@ namespace Azure.Generator.Management
 {
     /// <inheritdoc/>
     public class ManagementOutputLibrary : AzureOutputLibrary
-    {   private ManagementLongRunningOperationProvider? _armOperation;
+    {
+        private ManagementLongRunningOperationProvider? _armOperation;
         internal ManagementLongRunningOperationProvider ArmOperation => _armOperation ??= new ManagementLongRunningOperationProvider(false);
 
         private ManagementLongRunningOperationProvider? _genericArmOperation;
@@ -27,6 +28,25 @@ namespace Azure.Generator.Management
         // TODO: replace this with CSharpType to TypeProvider mapping
         private HashSet<CSharpType>? _resourceTypes;
         private HashSet<CSharpType> ResourceTypes => _resourceTypes ??= BuildResourceModels();
+
+        // TODO: replace this with CSharpType to TypeProvider mapping
+        private HashSet<CSharpType>? _modelFactoryModels;
+        private HashSet<CSharpType> ModelFactoryModels => _modelFactoryModels ??= BuildModelFactoryModels();
+        internal HashSet<CSharpType> BuildModelFactoryModels()
+        {
+            var result = new HashSet<CSharpType>();
+            foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+            {
+                var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+                if (model is not null && model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && model.Properties.Any(prop => !prop.Body.HasSetter))
+                {
+                    result.Add(model.Type);
+                }
+            }
+            return result;
+        }
+
+        internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type);
 
         private HashSet<CSharpType> BuildResourceModels()
         {
