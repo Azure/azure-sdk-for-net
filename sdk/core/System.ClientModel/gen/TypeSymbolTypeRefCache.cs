@@ -11,6 +11,11 @@ namespace System.ClientModel.SourceGeneration
         private readonly Dictionary<ITypeSymbol, TypeRef> _cache
             = new(SymbolEqualityComparer.Default);
 
+        public static TypeRef Get(ITypeSymbol typeSymbol, bool isContext = false)
+        {
+            return FromTypeSymbol(typeSymbol, isContext);
+        }
+
         public TypeRef Get(ITypeSymbol typeSymbol, TypeSymbolKindCache symbolToKindCache)
             => Get(typeSymbol, symbolToKindCache, isContext: false);
 
@@ -19,30 +24,30 @@ namespace System.ClientModel.SourceGeneration
             if (_cache.TryGetValue(typeSymbol, out var typeRef))
                 return typeRef;
 
-            typeRef = FromTypeSymbol(typeSymbol, symbolToKindCache, isContext);
+            typeRef = FromTypeSymbol(typeSymbol, isContext);
             _cache[typeSymbol] = typeRef;
             return typeRef;
         }
 
-        private TypeRef FromTypeSymbol(ITypeSymbol symbol, TypeSymbolKindCache symbolToKindCache, bool isContext)
+        private static TypeRef FromTypeSymbol(ITypeSymbol symbol, bool isContext)
         {
             if (symbol is INamedTypeSymbol namedTypeSymbol)
             {
-                var itemSymbol = namedTypeSymbol.GetItemSymbol(symbolToKindCache);
-                var itemType = itemSymbol is null ? null : Get(itemSymbol, symbolToKindCache);
+                var itemSymbol = namedTypeSymbol.GetItemSymbol();
+                var itemType = itemSymbol is null ? null : Get(itemSymbol);
 
                 return new TypeRef(
                     symbol.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat),
                     symbol.ContainingNamespace.ToDisplayString(),
                     symbol.ContainingAssembly.ToDisplayString(),
                     symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                    isContext ? null : GetContextType(symbol.ContainingAssembly, symbolToKindCache),
+                    isContext ? null : GetContextType(symbol.ContainingAssembly),
                     itemType,
                     obsoleteLevel: itemType is not null ? itemType.ObsoleteLevel : GetObsoleteLevel(symbol));
             }
             else if (symbol is IArrayTypeSymbol arrayTypeSymbol)
             {
-                var elementType = Get(arrayTypeSymbol.ElementType, symbolToKindCache);
+                var elementType = Get(arrayTypeSymbol.ElementType);
 
                 var assembly = GetArrayAssembly(arrayTypeSymbol);
 
@@ -51,7 +56,7 @@ namespace System.ClientModel.SourceGeneration
                     elementType.Namespace,
                     elementType.Assembly,
                     arrayTypeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-                    isContext ? null : GetContextType(assembly, symbolToKindCache),
+                    isContext ? null : GetContextType(assembly),
                     elementType,
                     arrayTypeSymbol.Rank,
                     obsoleteLevel: elementType.ObsoleteLevel);
@@ -62,7 +67,7 @@ namespace System.ClientModel.SourceGeneration
             }
         }
 
-        private IAssemblySymbol GetArrayAssembly(IArrayTypeSymbol arrayTypeSymbol)
+        private static IAssemblySymbol GetArrayAssembly(IArrayTypeSymbol arrayTypeSymbol)
         {
             while (arrayTypeSymbol.ElementType is IArrayTypeSymbol innerArray)
             {
@@ -72,7 +77,7 @@ namespace System.ClientModel.SourceGeneration
             return arrayTypeSymbol.ElementType.ContainingAssembly;
         }
 
-        private TypeRef? GetContextType(IAssemblySymbol assembly, TypeSymbolKindCache symbolToKindCache)
+        private static TypeRef? GetContextType(IAssemblySymbol assembly)
         {
             foreach (var attribute in assembly.GetAttributes())
             {
@@ -98,7 +103,7 @@ namespace System.ClientModel.SourceGeneration
                     if (attribute.ConstructorArguments.Length > 0 &&
                         attribute.ConstructorArguments[0].Value is ITypeSymbol typeSymbol)
                     {
-                        return Get(typeSymbol, symbolToKindCache, true);
+                        return Get(typeSymbol, true);
                     }
                 }
             }

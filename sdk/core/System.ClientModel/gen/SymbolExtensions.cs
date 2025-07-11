@@ -7,12 +7,12 @@ namespace System.ClientModel.SourceGeneration;
 
 internal static class SymbolExtensions
 {
-    public static ITypeSymbol? GetItemSymbol(this ITypeSymbol typeSymbol, TypeSymbolKindCache cache)
+    public static ITypeSymbol? GetItemSymbol(this ITypeSymbol typeSymbol)
     {
         switch (typeSymbol)
         {
             case INamedTypeSymbol namedTypeSymbol:
-                switch (cache.Get(namedTypeSymbol))
+                switch (TypeSymbolKindCache.GetStatic(namedTypeSymbol))
                 {
                     case TypeBuilderKind.IList:
                     case TypeBuilderKind.ReadOnlyMemory:

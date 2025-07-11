@@ -122,7 +122,9 @@ public sealed class MustImplementIPersistableModelAnalyzer : DiagnosticAnalyzer
             if (!namedType.IsGenericType)
                 return namedType;
 
-            var index = IsDictionary(namedType) ? 1 : IsList(namedType) || IsReadOnlyMemory(namedType) ? 0 : -1;
+            var index = TypeSymbolKindCache.IsDictionary(namedType.ConstructedFrom)
+                ? 1
+                : TypeSymbolKindCache.IsList(namedType.ConstructedFrom) || TypeSymbolKindCache.IsReadOnlyMemory(namedType) ? 0 : -1;
             if (index >= 0)
             {
                 return GetInnermostElementType(namedType.TypeArguments[index]);
@@ -130,66 +132,5 @@ public sealed class MustImplementIPersistableModelAnalyzer : DiagnosticAnalyzer
         }
 
         return null;
-    }
-
-    private static bool IsDictionary(INamedTypeSymbol namedType)
-    {
-        return namedType.ConstructedFrom is
-        {
-            Arity: 2,
-            Name: "Dictionary",
-            ContainingType: null,
-            ContainingNamespace:
-            {
-                Name: "Generic",
-                ContainingNamespace:
-                {
-                    Name: "Collections",
-                    ContainingNamespace:
-                    {
-                        Name: "System",
-                        ContainingNamespace.IsGlobalNamespace: true
-                    }
-                }
-            }
-        };
-    }
-
-    private static bool IsList(INamedTypeSymbol namedType)
-    {
-        return namedType.ConstructedFrom is
-        {
-            Arity: 1,
-            Name: "List",
-            ContainingType: null,
-            ContainingNamespace:
-            {
-                Name: "Generic",
-                ContainingNamespace:
-                {
-                    Name: "Collections",
-                    ContainingNamespace:
-                    {
-                        Name: "System",
-                        ContainingNamespace.IsGlobalNamespace: true
-                    }
-                }
-            }
-        };
-    }
-
-    private static bool IsReadOnlyMemory(INamedTypeSymbol namedType)
-    {
-        return namedType.ConstructedFrom is
-        {
-            Arity: 1,
-            Name: "ReadOnlyMemory",
-            ContainingType: null,
-            ContainingNamespace:
-            {
-                Name: "System",
-                ContainingNamespace.IsGlobalNamespace: true
-            }
-        };
     }
 }

@@ -22,6 +22,11 @@ namespace System.ClientModel.SourceGeneration
             return kind;
         }
 
+        public static TypeBuilderKind GetStatic(ITypeSymbol typeSymbol)
+        {
+            return AnalyzeType(typeSymbol);
+        }
+
         private static TypeBuilderKind AnalyzeType(ITypeSymbol typeSymbol)
         {
             if (typeSymbol is INamedTypeSymbol namedTypeSymbol)
@@ -54,34 +59,88 @@ namespace System.ClientModel.SourceGeneration
             return TypeBuilderKind.Unknown;
         }
 
-        private static bool IsReadOnlyMemory(INamedTypeSymbol namedSymbol)
+        internal static bool IsReadOnlyMemory(INamedTypeSymbol namedSymbol)
         {
-            return namedSymbol.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).StartsWith("System.ReadOnlyMemory<", StringComparison.Ordinal);
+            return namedSymbol is
+            {
+                Arity: 1,
+                Name: "ReadOnlyMemory",
+                ContainingType: null,
+                ContainingNamespace:
+                {
+                    Name: "System",
+                    ContainingNamespace.IsGlobalNamespace: true
+                }
+            };
         }
 
-        private static bool IsList(INamedTypeSymbol typeSymbol)
+        internal static bool IsList(INamedTypeSymbol typeSymbol)
         {
-            return typeSymbol.AllInterfaces
-                .Any(i => i.OriginalDefinition.SpecialType == SpecialType.None &&
-                          i.ContainingNamespace?.ToDisplayString() == "System.Collections" &&
-                          i.Name == "IList") && typeSymbol.IsGenericType && typeSymbol.TypeArguments.Length == 1;
+            return typeSymbol is
+            {
+                Arity: 1,
+                Name: "List",
+                ContainingType: null,
+                ContainingNamespace:
+                {
+                    Name: "Generic",
+                    ContainingNamespace:
+                    {
+                        Name: "Collections",
+                        ContainingNamespace:
+                        {
+                            Name: "System",
+                            ContainingNamespace.IsGlobalNamespace: true
+                        }
+                    }
+                }
+            };
         }
 
-        private static bool IsPersistable(INamedTypeSymbol typeSymbol)
+        internal static bool IsPersistable(INamedTypeSymbol typeSymbol)
         {
             return typeSymbol.AllInterfaces
-                .Any(i => i.OriginalDefinition.SpecialType == SpecialType.None &&
-                          i.ContainingNamespace?.ToDisplayString() == "System.ClientModel.Primitives" &&
-                          i.Name == "IPersistableModel" &&
-                          i.IsGenericType);
+                .Any(i => i is {
+                    Arity: 1,
+                    Name: "IPersistableModel",
+                    ContainingType: null,
+                    ContainingNamespace:
+                    {
+                        Name: "Primitives",
+                        ContainingNamespace:
+                        {
+                            Name: "ClientModel",
+                            ContainingNamespace:
+                            {
+                                Name: "System",
+                                ContainingNamespace.IsGlobalNamespace: true
+                            }
+                        }
+                    }
+                });
         }
 
-        private static bool IsDictionary(INamedTypeSymbol typeSymbol)
+        internal static bool IsDictionary(INamedTypeSymbol typeSymbol)
         {
-            return typeSymbol.AllInterfaces
-                .Any(i => i.OriginalDefinition.SpecialType == SpecialType.None &&
-                          i.ContainingNamespace?.ToDisplayString() == "System.Collections.Generic" &&
-                          i.Name == "IDictionary") && typeSymbol.IsGenericType && typeSymbol.TypeArguments.Length == 2;
+            return typeSymbol is
+            {
+                Arity: 2,
+                Name: "Dictionary",
+                ContainingType: null,
+                ContainingNamespace:
+                {
+                    Name: "Generic",
+                    ContainingNamespace:
+                    {
+                        Name: "Collections",
+                        ContainingNamespace:
+                        {
+                            Name: "System",
+                            ContainingNamespace.IsGlobalNamespace: true
+                        }
+                    }
+                }
+            };
         }
     }
 }
