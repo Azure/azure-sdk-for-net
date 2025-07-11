@@ -106,6 +106,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                         InfrastructureEncryption = InfrastructureEncryptionState.Enabled,
                     },
                     PublicNetworkAccess = VaultPublicNetworkAccess.Enabled,
+                    ResourceGuardOperationRequests = { "/subscriptions/38304e13-357e-405e-9e9a-220351dcce8c/resourcegroups/ankurResourceGuard1/providers/Microsoft.DataProtection/resourceGuards/ResourceGuard38-1/modifyEncryptionSettings/default" },
                 },
                 Sku = new RecoveryServicesSku(RecoveryServicesSkuName.Standard),
             };
@@ -312,7 +313,17 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
                 Properties = new RecoveryServicesVaultProperties
                 {
                     PublicNetworkAccess = VaultPublicNetworkAccess.Enabled,
-                    SecuritySettings = new RecoveryServicesSecuritySettings(),
+                    SecuritySettings = new RecoveryServicesSecuritySettings
+                    {
+                        SourceScanConfiguration = new SourceScanConfiguration
+                        {
+                            State = State.Enabled,
+                            SourceScanIdentity = new AssociatedIdentity
+                            {
+                                OperationIdentityType = IdentityType.SystemAssigned,
+                            },
+                        },
+                    },
                 },
                 Sku = new RecoveryServicesSku(RecoveryServicesSkuName.Standard),
             };

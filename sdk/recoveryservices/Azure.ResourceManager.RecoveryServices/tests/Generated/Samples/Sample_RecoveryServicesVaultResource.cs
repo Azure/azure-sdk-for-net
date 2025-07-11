@@ -343,7 +343,18 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
             {
                 Properties = new RecoveryServicesVaultProperties
                 {
-                    SecuritySettings = new RecoveryServicesSecuritySettings(),
+                    SecuritySettings = new RecoveryServicesSecuritySettings
+                    {
+                        SourceScanConfiguration = new SourceScanConfiguration
+                        {
+                            State = State.Enabled,
+                            SourceScanIdentity = new AssociatedIdentity
+                            {
+                                OperationIdentityType = IdentityType.UserAssigned,
+                                UserAssignedIdentity = "/subscriptions/85bf5e8c-3084-4f42-add2-746ebb7e97b2/resourcegroups/defaultrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplemsi",
+                            },
+                        },
+                    },
                 },
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
