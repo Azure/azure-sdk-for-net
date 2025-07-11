@@ -180,3 +180,4 @@ TempTypeSpecFiles/
 
 # Common toolchain intermediate files
 temp
+/sdk/ai/Azure.AI.Projects/src/maas 1.runsettings

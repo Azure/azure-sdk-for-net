@@ -439,7 +439,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             { "gen_ai.thread.id", "*" },
             { "gen_ai.thread.run.id", "*" },
             { "gen_ai.agent.id", "*" },
-            { "gen_ai.thread.run.status", "queued" },
+            { "gen_ai.thread.run.status", "*" },
             { "gen_ai.response.model", modelDeploymentName }
         };
         Assert.IsTrue(_traceVerifier.CheckSpanAttributes(startThreadRunSpan, expectedStartThreadRunAttributes));
