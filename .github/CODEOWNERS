@@ -1100,6 +1100,12 @@
 # ServiceLabel: %Pinecone %Mgmt
 # ServiceOwners:                                                   @aggarwalsw
 
+# PRLabel: %Planetary Computer
+/sdk/planetarycomputer/Azure.ResourceManager.*/                    @shaktichetan23 @thisisdevanshu
+
+# ServiceLabel: %Planetary Computer %Mgmt
+# ServiceOwners:                                                   @shaktichetan23 @thisisdevanshu
+
 # PRLabel: %PureStorage
 /sdk/purestorageblock/Azure.ResourceManager.*/                     @deepakmauryams
 
