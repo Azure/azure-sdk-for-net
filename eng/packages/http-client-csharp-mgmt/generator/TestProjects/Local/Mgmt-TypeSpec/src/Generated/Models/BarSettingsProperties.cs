@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The BarSettingsProperties. </summary>
-    public partial class BarSettingsProperties
+    internal partial class BarSettingsProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
