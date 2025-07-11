@@ -487,6 +487,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HardwareSecurityModules.Models.CloudHsmClusterProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

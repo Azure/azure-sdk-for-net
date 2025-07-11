@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <summary> Specifies the identifier of the subnet. </summary>
         internal ApiEntityReference Subnet { get; set; }
         /// <summary> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        [WirePath("subnet.resourceId")]
         public ResourceIdentifier SubnetResourceId
         {
             get => Subnet is null ? default : Subnet.ResourceId;
@@ -79,7 +78,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Specifies the list of resource Ids for the network interfaces associated with the dedicated HSM. </summary>
-        [WirePath("networkInterfaces")]
         public IList<DedicatedHsmNetworkInterface> NetworkInterfaces { get; }
     }
 }
