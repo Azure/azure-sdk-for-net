@@ -74,7 +74,6 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'query'
     Join-Path 'http' 'azure' 'core' 'scalar'
     Join-Path 'http' 'azure' 'core' 'traits'
-    Join-Path 'http' 'azure' 'encode' 'duration'
     Join-Path 'http' 'azure' 'payload' 'pageable'
     # These scenarios will be covered in Azure.Generator.Management
     Join-Path 'http' 'azure' 'resource-manager' 'common-properties'
