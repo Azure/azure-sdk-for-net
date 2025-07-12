@@ -34,14 +34,11 @@ Microsoft accounts (MSA) are personal accounts created by users to access Micros
 
 ## Redirect URIs
 
-Microsoft Entra applications rely on redirect URIs to determine where to send the authentication response after a user has logged in. To enable brokered authentication, a redirect URI matching the following pattern should be registered to the application:
+Microsoft Entra applications rely on redirect URIs to determine where to send the authentication response after a user has logged in. To enable brokered authentication through WAM, a redirect URI matching the following pattern should be registered to the application:
 
-| Platform    | Redirect URI                                                                                                          |
-|-------------|-----------------------------------------------------------------------------------------------------------------------|
-| Windows 10+ | `ms-appx-web://Microsoft.AAD.BrokerPlugin/your_client_id`                                                             |
-| macOS       | `msauth.com.msauth.unsignedapp://auth` for unsigned applications<br>`msauth.BUNDLE_ID://auth` for signed applications |
-| WSL         | `ms-appx-web://Microsoft.AAD.BrokerPlugin/your_client_id`                                                             |
-| Linux       | `https://login.microsoftonline.com/common/oauth2/nativeclient`                                                        |
+```
+ms-appx-web://Microsoft.AAD.BrokerPlugin/{client_id}
+```
 
 ## Examples
 
@@ -168,3 +165,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [nuget]: https://www.nuget.org/
 [identity_api_docs]: https://learn.microsoft.com/dotnet/api/azure.identity?view=azure-dotnet
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fidentity%2FAzure.Identity%2FREADME.png)
