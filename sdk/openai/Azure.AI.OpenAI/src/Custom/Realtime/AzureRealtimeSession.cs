@@ -10,10 +10,10 @@ using System.Net;
 using System.Net.WebSockets;
 using Azure.Core;
 
-namespace Azure.AI.OpenAI.RealtimeConversation;
+namespace Azure.AI.OpenAI.Realtime;
 
 [Experimental("OPENAI002")]
-internal partial class AzureRealtimeConversationSession : RealtimeConversationSession
+internal partial class AzureRealtimeSession : RealtimeSession
 {
     private readonly Uri _endpoint;
     private readonly ApiKeyCredential _keyCredential;
@@ -21,29 +21,29 @@ internal partial class AzureRealtimeConversationSession : RealtimeConversationSe
     private readonly IEnumerable<string> _tokenAuthorizationScopes;
     private readonly string _userAgent;
 
-    protected internal AzureRealtimeConversationSession(
-        AzureRealtimeConversationClient parentClient,
+    protected internal AzureRealtimeSession(
+        AzureRealtimeClient parentClient,
         Uri endpoint,
         ApiKeyCredential credential,
         string userAgent)
-        : this(parentClient, endpoint, userAgent)
+            : this(parentClient, endpoint, userAgent)
     {
         _keyCredential = credential;
     }
 
-    protected internal AzureRealtimeConversationSession(
-        AzureRealtimeConversationClient parentClient,
+    protected internal AzureRealtimeSession(
+        AzureRealtimeClient parentClient,
         Uri endpoint,
         TokenCredential credential,
         IEnumerable<string> tokenAuthorizationScopes,
         string userAgent)
-        : this(parentClient, endpoint, userAgent)
+            : this(parentClient, endpoint, userAgent)
     {
         _tokenCredential = credential;
         _tokenAuthorizationScopes = tokenAuthorizationScopes;
     }
 
-    private AzureRealtimeConversationSession(AzureRealtimeConversationClient parentClient, Uri endpoint, string userAgent)
+    private AzureRealtimeSession(AzureRealtimeClient parentClient, Uri endpoint, string userAgent)
         : base(parentClient, endpoint, credential: new("placeholder"))
     {
         _endpoint = endpoint;

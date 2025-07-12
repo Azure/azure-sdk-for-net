@@ -1,5 +1,5 @@
 ﻿using Azure.AI.OpenAI.Tests.Utils.Config;
-using OpenAI.RealtimeConversation;
+using OpenAI.Realtime;
 using OpenAI.TestFramework;
 using System;
 using System.ClientModel;
@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI.Tests;
 [Parallelizable(ParallelScope.All)]
 [Category("Conversation")]
 [Category("Live")]
-public class ConversationTestFixtureBase
+public class RealtimeTestFixtureBase
 {
     internal TestConfig TestConfig { get; } = new(() => RecordedTestMode.Live);
     internal IConfiguration DefaultConfiguration { get; }
@@ -26,7 +26,7 @@ public class ConversationTestFixtureBase
     public CancellationToken CancellationToken => CancellationTokenSource?.Token ?? default;
     public RequestOptions CancellationOptions => new() { CancellationToken = CancellationToken };
 
-    public ConversationTestFixtureBase(bool isAsync)
+    public RealtimeTestFixtureBase(bool isAsync)
     {
         CancellationTokenSource = new();
         if (!Debugger.IsAttached)
@@ -45,9 +45,10 @@ public class ConversationTestFixtureBase
         return version is null ? new TestClientOptions() : new TestClientOptions(version.Value);
     }
 
-    public RealtimeConversationClient GetTestClient(TestClientOptions clientOptions = null) => GetTestClient(DefaultConfiguration, clientOptions);
-    public RealtimeConversationClient GetTestClient(string configurationName, TestClientOptions clientOptions = null) => GetTestClient(TestConfig.GetConfig(configurationName), clientOptions);
-    public RealtimeConversationClient GetTestClient(IConfiguration testConfig, TestClientOptions clientOptions = null)
+    public RealtimeClient GetTestClient(TestClientOptions clientOptions = null) => GetTestClient(DefaultConfiguration, clientOptions);
+    public string GetTestDeployment() => DefaultConfiguration.Deployment;
+    public RealtimeClient GetTestClient(string configurationName, TestClientOptions clientOptions = null) => GetTestClient(TestConfig.GetConfig(configurationName), clientOptions);
+    public RealtimeClient GetTestClient(IConfiguration testConfig, TestClientOptions clientOptions = null)
     {
         clientOptions ??= new();
 
@@ -58,7 +59,7 @@ public class ConversationTestFixtureBase
         Console.WriteLine($"--- Connecting to endpoint: {endpoint.AbsoluteUri}");
 
         AzureOpenAIClient topLevelClient = new(endpoint, key, clientOptions);
-        RealtimeConversationClient client = topLevelClient.GetRealtimeConversationClient(testConfig.Deployment);
+        RealtimeClient client = topLevelClient.GetRealtimeClient();
 
         client.OnSendingCommand += (_, data) => PrintMessageData(data, "> ");
         client.OnReceivingCommand += (_, data) => PrintMessageData(data, "  < ");

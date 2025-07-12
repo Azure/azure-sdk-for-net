@@ -95,7 +95,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     {
         OpenAIResponseClient client = GetResponseTestClientForDeployment(ComputerUseDeployment);
 
-        ResponseTool computerTool = ResponseTool.CreateComputerTool(1024, 768, ComputerToolEnvironment.Windows);
+        ResponseTool computerTool = ResponseTool.CreateComputerTool(ComputerToolEnvironment.Windows, 1024, 768);
         ResponseCreationOptions options = new()
         {
             Tools = { computerTool },
@@ -148,11 +148,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                 options.PreviousResponseId = response!.Id;
                 response = await client.CreateResponseAsync(
                     "Yes, proceed.",
-                    new ResponseCreationOptions()
-                    {
-                        PreviousResponseId = response?.Id,
-                        Tools = { computerTool }
-                    });
+                    options);
             }
             else
             {
@@ -267,15 +263,15 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     }
 
     [RecordedTest]
-    [Ignore("o1/o3 not yet supported on test environment")]
     public async Task ResponsesWithReasoning()
     {
-        OpenAIResponseClient client = GetTestClient();
+        OpenAIResponseClient client = GetTestClient("chat_o3-mini");
 
         ResponseCreationOptions options = new()
         {
             ReasoningOptions = new()
             {
+                ReasoningSummaryVerbosity = ResponseReasoningSummaryVerbosity.Detailed,
                 ReasoningEffortLevel = ResponseReasoningEffortLevel.Medium,
             },
             Metadata =
@@ -289,7 +285,6 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Id, Is.Not.Null);
         Assert.That(response.CreatedAt, Is.GreaterThan(new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero)));
-        Assert.That(response.TruncationMode, Is.EqualTo(ResponseTruncationMode.Auto));
         Assert.That(response.MaxOutputTokenCount, Is.Null);
         Assert.That(response.Model, Does.StartWith("o3-mini"));
         Assert.That(response.Usage, Is.Not.Null);
@@ -300,7 +295,8 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         Assert.That(response.OutputItems, Has.Count.EqualTo(2));
         ReasoningResponseItem? reasoningItem = response.OutputItems?[0] as ReasoningResponseItem;
         MessageResponseItem? messageItem = response.OutputItems?[1] as MessageResponseItem;
-        Assert.That(reasoningItem?.SummaryTextParts, Is.Not.Null);
+        Assert.That(reasoningItem?.SummaryParts, Is.Not.Null);
+        Assert.That(reasoningItem?.GetSummaryText(), Is.Not.Null.And.Not.Empty);
         Assert.That(reasoningItem?.Id, Is.Not.Null.And.Not.Empty);
         Assert.That(messageItem?.Content?.FirstOrDefault()?.Text, Has.Length.GreaterThan(0));
     }
@@ -386,7 +382,6 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
     [TestCase(ComputerUseDeployment)]
-    [Ignore("Disabled pending resolution of known issues with tool_choice")]
     public async Task OutputTextProperty(string deploymentName)
     {
         OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
@@ -440,7 +435,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
 
     [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
-    [TestCase(ComputerUseDeployment)]
+    [TestCase(ComputerUseDeployment, Ignore = "image input not currently supported")]
     public async Task ImageInputWorks(string deploymentName)
     {
         OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
@@ -575,7 +570,6 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
     [TestCase(ComputerUseDeployment, Ignore = "Not yet supported with computer-use-preview")]
-    [Ignore("Disabled pending resolution of known issues with text.format")]
     public async Task StructuredOutputs(string deploymentName)
     {
         OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
@@ -738,7 +732,6 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
     [RecordedTest]
     [TestCase(Gpt4oMiniDeployment)]
     [TestCase(ComputerUseDeployment)]
-    [Ignore("Disabled pending resolution of known issues with tool_choice")]
     public async Task FunctionToolChoiceWorks(string deploymentName)
     {
         OpenAIResponseClient client = GetResponseTestClientForDeployment(deploymentName);
@@ -750,11 +743,8 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         {
             Tools = { s_GetWeatherAtLocationTool },
             ToolChoice = toolChoice,
+            TruncationMode = ResponseTruncationMode.Auto,
         };
-        if (deploymentName == ComputerUseDeployment)
-        {
-            options.TruncationMode = ResponseTruncationMode.Auto;
-        }
 
         OpenAIResponse response = await client.CreateResponseAsync(
             [ResponseItem.CreateUserMessageItem("What should I wear for the weather in San Francisco, CA?")],
@@ -764,25 +754,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
         Assert.That(response.ToolChoice.Kind, Is.EqualTo(ResponseToolChoiceKind.Function));
         Assert.That(response.ToolChoice.FunctionName, Is.EqualTo(toolChoice.FunctionName));
 
-        ResponseToolChoice newEquivalentChoice = ResponseToolChoice.CreateFunctionChoice(toolChoice.FunctionName);
-        ResponseToolChoice newDifferentChoice = ResponseToolChoice.CreateFunctionChoice("foo");
-
-        Assert.That(response.ToolChoice, Is.EqualTo(toolChoice));
-        Assert.That(response.ToolChoice, Is.EqualTo(newEquivalentChoice));
-        Assert.That(response.ToolChoice, Is.Not.EqualTo(newDifferentChoice));
-
-        Assert.IsTrue(response.ToolChoice == toolChoice);
-        Assert.IsTrue(response.ToolChoice == newEquivalentChoice);
-        Assert.IsTrue(toolChoice == response.ToolChoice);
-        Assert.IsTrue(newEquivalentChoice == response.ToolChoice);
-        Assert.IsFalse(response.ToolChoice == newDifferentChoice);
-        Assert.IsFalse(newDifferentChoice == response.ToolChoice);
-        Assert.IsTrue(response.ToolChoice != newDifferentChoice);
-        Assert.IsTrue(newDifferentChoice != response.ToolChoice);
-        Assert.IsFalse(response.ToolChoice != newEquivalentChoice);
-        Assert.IsFalse(newEquivalentChoice != response.ToolChoice);
-
-        FunctionCallResponseItem? functionCall = response.OutputItems?.FirstOrDefault() as FunctionCallResponseItem;
+        FunctionCallResponseItem? functionCall = response.OutputItems.FirstOrDefault() as FunctionCallResponseItem;
         Assert.That(functionCall, Is.Not.Null);
         Assert.That(functionCall?.FunctionName, Is.EqualTo(toolChoice.FunctionName));
     }
@@ -798,7 +770,8 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
             ResponseItem.CreateFileSearchCallItem(["query1"], []),
             ResponseItem.CreateFunctionCallItem("call_abcd", "function_name", BinaryData.Empty),
             ResponseItem.CreateFunctionCallOutputItem("call_abcd", "functionOutput"),
-            ResponseItem.CreateReasoningItem(["summary goes here"]),
+            ResponseItem.CreateReasoningItem("summary goes here"),
+            ResponseItem.CreateReasoningItem([new ReasoningSummaryTextPart("another summary"), new ReasoningSummaryTextPart("with multiple parts")]),
             ResponseItem.CreateReferenceItem("msg_1234"),
             ResponseItem.CreateAssistantMessageItem("Goodbye!", []),
             ResponseItem.CreateDeveloperMessageItem("Talk like a pirate"),

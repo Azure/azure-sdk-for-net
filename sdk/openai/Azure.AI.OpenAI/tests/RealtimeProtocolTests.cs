@@ -1,4 +1,5 @@
-﻿using OpenAI.RealtimeConversation;
+﻿using Azure.AI.OpenAI.Tests.Utils.Config;
+using OpenAI.Realtime;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,9 +17,9 @@ namespace Azure.AI.OpenAI.Tests;
 
 [TestFixture(true)]
 [TestFixture(false)]
-public class ConversationProtocolTests : ConversationTestFixtureBase
+public class RealtimeProtocolTests : RealtimeTestFixtureBase
 {
-    public ConversationProtocolTests(bool isAsync) : base(isAsync)
+    public RealtimeProtocolTests(bool isAsync) : base(isAsync)
     { }
 
 #if NET6_0_OR_GREATER
@@ -27,8 +28,8 @@ public class ConversationProtocolTests : ConversationTestFixtureBase
     [TestCase(null)]
     public async Task ProtocolCanConfigureSession(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        RealtimeConversationClient client = GetTestClient(GetTestClientOptions(version));
-        using RealtimeConversationSession session = await client.StartConversationSessionAsync(CancellationToken);
+        RealtimeClient client = GetTestClient(GetTestClientOptions(version));
+        using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
 
         BinaryData configureSessionCommand = BinaryData.FromString("""
             {
@@ -42,7 +43,7 @@ public class ConversationProtocolTests : ConversationTestFixtureBase
 
         List<JsonNode> receivedCommands = [];
 
-        await foreach (ConversationUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
+        await foreach (RealtimeUpdate update in session.ReceiveUpdatesAsync(CancellationToken))
         {
             BinaryData rawContentBytes = update.GetRawContent();
             JsonNode jsonNode = JsonNode.Parse(rawContentBytes);

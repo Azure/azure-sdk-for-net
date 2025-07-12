@@ -13,6 +13,16 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="InternalMongoDBChatDataSourceParameters"/>. </summary>
+        /// <param name="endpoint"> The name of the MongoDB cluster endpoint. </param>
+        /// <param name="databaseName"> The name of the MongoDB database. </param>
+        /// <param name="collectionName"> The name of the MongoDB collection. </param>
+        /// <param name="appName"> The name of the MongoDB application. </param>
+        /// <param name="indexName"> The name of the MongoDB index. </param>
+        /// <param name="fieldMappings"> The index field mappings. This is required for MongoDB data sources. </param>
+        /// <param name="authentication"> The authentication options to use with the MongoDB data source. </param>
+        /// <param name="embeddingDependency"> The vectorization dependency used for embeddings. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="databaseName"/>, <paramref name="collectionName"/>, <paramref name="appName"/>, <paramref name="indexName"/>, <paramref name="fieldMappings"/>, <paramref name="authentication"/> or <paramref name="embeddingDependency"/> is null. </exception>
         public InternalMongoDBChatDataSourceParameters(string endpoint, string databaseName, string collectionName, string appName, string indexName, DataSourceFieldMappings fieldMappings, DataSourceAuthentication authentication, DataSourceVectorizer embeddingDependency)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -35,8 +45,34 @@ namespace Azure.AI.OpenAI.Chat
             _internalIncludeContexts = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="InternalMongoDBChatDataSourceParameters"/>. </summary>
+        /// <param name="topNDocuments"> The configured number of documents to feature in the query. </param>
+        /// <param name="inScope"> Whether queries should be restricted to use of the indexed data. </param>
+        /// <param name="strictness">
+        /// The configured strictness of the search relevance filtering.
+        /// Higher strictness will increase precision but lower recall of the answer.
+        /// </param>
+        /// <param name="maxSearchQueries">
+        /// The maximum number of rewritten queries that should be sent to the search provider for a single user message.
+        /// By default, the system will make an automatic determination.
+        /// </param>
+        /// <param name="allowPartialResult">
+        /// If set to true, the system will allow partial search results to be used and the request will fail if all
+        /// partial queries fail. If not specified or specified as false, the request will fail if any search query fails.
+        /// </param>
+        /// <param name="endpoint"> The name of the MongoDB cluster endpoint. </param>
+        /// <param name="databaseName"> The name of the MongoDB database. </param>
+        /// <param name="collectionName"> The name of the MongoDB collection. </param>
+        /// <param name="appName"> The name of the MongoDB application. </param>
+        /// <param name="indexName"> The name of the MongoDB index. </param>
+        /// <param name="fieldMappings"> The index field mappings. This is required for MongoDB data sources. </param>
+        /// <param name="authentication"> The authentication options to use with the MongoDB data source. </param>
+        /// <param name="embeddingDependency"> The vectorization dependency used for embeddings. </param>
+        /// <param name="internalIncludeContexts"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal InternalMongoDBChatDataSourceParameters(int? topNDocuments, bool? inScope, int? strictness, int? maxSearchQueries, bool? allowPartialResult, string endpoint, string databaseName, string collectionName, string appName, string indexName, DataSourceFieldMappings fieldMappings, DataSourceAuthentication authentication, DataSourceVectorizer embeddingDependency, IList<string> internalIncludeContexts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            // Plugin customization: ensure initialization of collections
             TopNDocuments = topNDocuments;
             InScope = inScope;
             Strictness = strictness;
@@ -50,7 +86,7 @@ namespace Azure.AI.OpenAI.Chat
             FieldMappings = fieldMappings;
             Authentication = authentication;
             EmbeddingDependency = embeddingDependency;
-            _internalIncludeContexts = internalIncludeContexts;
+            _internalIncludeContexts = internalIncludeContexts ?? new ChangeTrackingList<string>();
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

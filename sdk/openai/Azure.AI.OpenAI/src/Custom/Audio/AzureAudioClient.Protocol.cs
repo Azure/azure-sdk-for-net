@@ -28,7 +28,6 @@ internal partial class AzureAudioClient : AudioClient
             .WithMethod("POST")
             .WithPath("audio", "transcriptions")
             .WithContent(content, contentType)
-            .WithAccept("application/json")
             .WithOptions(options)
             .Build();
 
@@ -37,7 +36,6 @@ internal partial class AzureAudioClient : AudioClient
             .WithMethod("POST")
             .WithPath("audio", "translations")
             .WithContent(content, contentType)
-            .WithAccept("application/json")
             .WithOptions(options)
             .Build();
 
@@ -46,7 +44,6 @@ internal partial class AzureAudioClient : AudioClient
             .WithMethod("POST")
             .WithPath("audio", "speech")
             .WithContent(content, "application/json")
-            .WithAccept("application/octet-stream")
             .WithOptions(options)
             .Build();
 }

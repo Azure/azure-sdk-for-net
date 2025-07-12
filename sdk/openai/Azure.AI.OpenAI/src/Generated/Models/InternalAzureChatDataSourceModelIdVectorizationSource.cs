@@ -10,14 +10,21 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceModelIdVectorizationSource : DataSourceVectorizer
     {
-        public InternalAzureChatDataSourceModelIdVectorizationSource(string modelId) : base("model_id")
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceModelIdVectorizationSource"/>. </summary>
+        /// <param name="modelId"> The embedding model build ID to use for vectorization. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        public InternalAzureChatDataSourceModelIdVectorizationSource(string modelId) : base(InternalAzureChatDataSourceVectorizationSourceType.ModelId)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
 
             ModelId = modelId;
         }
 
-        internal InternalAzureChatDataSourceModelIdVectorizationSource(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string modelId) : base(@type, additionalBinaryDataProperties)
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceModelIdVectorizationSource"/>. </summary>
+        /// <param name="kind"> The differentiating identifier for the concrete vectorization source. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="modelId"> The embedding model build ID to use for vectorization. </param>
+        internal InternalAzureChatDataSourceModelIdVectorizationSource(InternalAzureChatDataSourceVectorizationSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string modelId) : base(kind, additionalBinaryDataProperties)
         {
             ModelId = modelId;
         }

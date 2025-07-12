@@ -16,12 +16,19 @@ namespace Azure.AI.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="ContentFilterSeverityResult"/>. </summary>
+        /// <param name="filtered"> Whether the content severity resulted in a content filtering action. </param>
+        /// <param name="severity"></param>
         internal ContentFilterSeverityResult(bool filtered, ContentFilterSeverity severity)
         {
             Filtered = filtered;
             Severity = severity;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContentFilterSeverityResult"/>. </summary>
+        /// <param name="filtered"> Whether the content severity resulted in a content filtering action. </param>
+        /// <param name="severity"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContentFilterSeverityResult(bool filtered, ContentFilterSeverity severity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Filtered = filtered;

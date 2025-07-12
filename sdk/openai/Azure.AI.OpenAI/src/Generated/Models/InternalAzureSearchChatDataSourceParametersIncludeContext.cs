@@ -15,6 +15,9 @@ namespace Azure.AI.OpenAI.Chat
         private const string IntentValue = "intent";
         private const string AllRetrievedDocumentsValue = "all_retrieved_documents";
 
+        /// <summary> Initializes a new instance of <see cref="InternalAzureSearchChatDataSourceParametersIncludeContext"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InternalAzureSearchChatDataSourceParametersIncludeContext(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
@@ -22,24 +25,34 @@ namespace Azure.AI.OpenAI.Chat
             _value = value;
         }
 
-        /// <summary> Gets the Citations. </summary>
-        public static InternalAzureSearchChatDataSourceParametersIncludeContext Citations { get; set; } = new InternalAzureSearchChatDataSourceParametersIncludeContext(CitationsValue);
+        /// <summary> Gets or sets the Citations. </summary>
+        internal static InternalAzureSearchChatDataSourceParametersIncludeContext Citations { get; set; } = new InternalAzureSearchChatDataSourceParametersIncludeContext(CitationsValue);
 
-        /// <summary> Gets the Intent. </summary>
-        public static InternalAzureSearchChatDataSourceParametersIncludeContext Intent { get; set; } = new InternalAzureSearchChatDataSourceParametersIncludeContext(IntentValue);
+        /// <summary> Gets or sets the Intent. </summary>
+        internal static InternalAzureSearchChatDataSourceParametersIncludeContext Intent { get; set; } = new InternalAzureSearchChatDataSourceParametersIncludeContext(IntentValue);
 
-        /// <summary> Gets the AllRetrievedDocuments. </summary>
-        public static InternalAzureSearchChatDataSourceParametersIncludeContext AllRetrievedDocuments { get; set; } = new InternalAzureSearchChatDataSourceParametersIncludeContext(AllRetrievedDocumentsValue);
+        /// <summary> Gets or sets the AllRetrievedDocuments. </summary>
+        internal static InternalAzureSearchChatDataSourceParametersIncludeContext AllRetrievedDocuments { get; set; } = new InternalAzureSearchChatDataSourceParametersIncludeContext(AllRetrievedDocumentsValue);
 
+        /// <summary> Determines if two <see cref="InternalAzureSearchChatDataSourceParametersIncludeContext"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InternalAzureSearchChatDataSourceParametersIncludeContext left, InternalAzureSearchChatDataSourceParametersIncludeContext right) => left.Equals(right);
 
+        /// <summary> Determines if two <see cref="InternalAzureSearchChatDataSourceParametersIncludeContext"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InternalAzureSearchChatDataSourceParametersIncludeContext left, InternalAzureSearchChatDataSourceParametersIncludeContext right) => !left.Equals(right);
 
+        /// <summary> Converts a string to a <see cref="InternalAzureSearchChatDataSourceParametersIncludeContext"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InternalAzureSearchChatDataSourceParametersIncludeContext(string value) => new InternalAzureSearchChatDataSourceParametersIncludeContext(value);
 
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InternalAzureSearchChatDataSourceParametersIncludeContext other && Equals(other);
 
+        /// <inheritdoc/>
         public bool Equals(InternalAzureSearchChatDataSourceParametersIncludeContext other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
