@@ -1,10 +1,26 @@
 # Release History
 
+## 1.3.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.3.0-beta.4 (2025-07-11)
 
 ### Features Added
 
 - Support Microsoft Broker on macOS.
+
+### Other Changes
+
+- Updated `Azure.Identity` to 1.14.2 to apply a security fix in the updated `Microsoft.Identity.Client` dependency.
+
+## 1.2.1 (2025-07-11)
 
 ### Other Changes
 
@@ -30,12 +46,6 @@
 
 ### Other Changes
 - Updated Microsoft.Identity.Client.Broker dependency to version 4.69.1.
-
-## 1.2.1 (2025-07-11)
-
-### Other Changes
-
-- Updated `Azure.Identity` to 1.14.2 to apply a security fix in the updated `Microsoft.Identity.Client` dependency.
 
 ## 1.2.0 (2024-11-18)
 
