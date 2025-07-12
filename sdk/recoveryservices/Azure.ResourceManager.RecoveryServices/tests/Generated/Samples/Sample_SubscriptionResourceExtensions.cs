@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetRecoveryServiceCapabilities_CapabilitiesForMicrosoftRecoveryServicesVaults()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/Capabilities.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/Capabilities.json
             // this example is just showing the usage of "RecoveryServices_Capabilities" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ SubResource = VaultSubResourceType.AzureSiteRecovery,
         [Ignore("Only validating compilation of examples")]
         public async Task GetRecoveryServicesVaults_ListOfRecoveryServicesResourcesInSubscriptionId()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/ListBySubscriptionIds.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2025-02-01/examples/ListBySubscriptionIds.json
             // this example is just showing the usage of "Vaults_ListBySubscriptionId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
