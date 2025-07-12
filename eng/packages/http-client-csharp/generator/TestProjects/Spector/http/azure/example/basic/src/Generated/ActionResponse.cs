@@ -5,18 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace _Specs_.Azure.Example.Basic
 {
+    /// <summary> The ActionResponse. </summary>
     public partial class ActionResponse
     {
-        public string StringProperty => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public Model ModelProperty => throw null;
+        /// <summary> Initializes a new instance of <see cref="ActionResponse"/>. </summary>
+        /// <param name="stringProperty"></param>
+        internal ActionResponse(string stringProperty)
+        {
+            StringProperty = stringProperty;
+            ArrayProperty = new ChangeTrackingList<string>();
+            RecordProperty = new ChangeTrackingDictionary<string, string>();
+        }
 
-        public IList<string> ArrayProperty => throw null;
+        /// <summary> Initializes a new instance of <see cref="ActionResponse"/>. </summary>
+        /// <param name="stringProperty"></param>
+        /// <param name="modelProperty"></param>
+        /// <param name="arrayProperty"></param>
+        /// <param name="recordProperty"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ActionResponse(string stringProperty, Model modelProperty, IList<string> arrayProperty, IDictionary<string, string> recordProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            StringProperty = stringProperty;
+            ModelProperty = modelProperty;
+            ArrayProperty = arrayProperty;
+            RecordProperty = recordProperty;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
 
-        public IDictionary<string, string> RecordProperty => throw null;
+        /// <summary> Gets the StringProperty. </summary>
+        public string StringProperty { get; }
+
+        /// <summary> Gets the ModelProperty. </summary>
+        public Model ModelProperty { get; }
+
+        /// <summary> Gets the ArrayProperty. </summary>
+        public IList<string> ArrayProperty { get; }
+
+        /// <summary> Gets the RecordProperty. </summary>
+        public IDictionary<string, string> RecordProperty { get; }
     }
 }

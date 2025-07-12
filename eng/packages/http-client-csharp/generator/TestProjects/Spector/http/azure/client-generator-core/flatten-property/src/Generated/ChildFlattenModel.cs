@@ -5,22 +5,45 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
 {
+    /// <summary> This is the child model to be flattened. And it has flattened property as well. </summary>
     public partial class ChildFlattenModel
     {
-        public ChildFlattenModel(string summary, ChildModel properties) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public string Summary
+        /// <summary> Initializes a new instance of <see cref="ChildFlattenModel"/>. </summary>
+        /// <param name="summary"></param>
+        /// <param name="properties"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="summary"/> or <paramref name="properties"/> is null. </exception>
+        public ChildFlattenModel(string summary, ChildModel properties)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(summary, nameof(summary));
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Summary = summary;
+            Properties = properties;
         }
 
-        public ChildModel Properties
+        /// <summary> Initializes a new instance of <see cref="ChildFlattenModel"/>. </summary>
+        /// <param name="summary"></param>
+        /// <param name="properties"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ChildFlattenModel(string summary, ChildModel properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            get => throw null;
-            set => throw null;
+            Summary = summary;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets or sets the Summary. </summary>
+        public string Summary { get; set; }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        public ChildModel Properties { get; set; }
     }
 }

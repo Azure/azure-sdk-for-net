@@ -7,14 +7,43 @@
 
 namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class _Specs_AzureClientGeneratorCoreFlattenPropertyModelFactory
     {
-        public static FlattenModel FlattenModel(string name = default, ChildModel properties = default) => throw null;
+        /// <summary> This is the model with one level of flattening. </summary>
+        /// <param name="name"></param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="FlattenProperty.FlattenModel"/> instance for mocking. </returns>
+        public static FlattenModel FlattenModel(string name = default, ChildModel properties = default)
+        {
+            return new FlattenModel(name, properties, additionalBinaryDataProperties: null);
+        }
 
-        public static ChildModel ChildModel(string description = default, int age = default) => throw null;
+        /// <summary> This is the child model to be flattened. </summary>
+        /// <param name="description"></param>
+        /// <param name="age"></param>
+        /// <returns> A new <see cref="FlattenProperty.ChildModel"/> instance for mocking. </returns>
+        public static ChildModel ChildModel(string description = default, int age = default)
+        {
+            return new ChildModel(description, age, additionalBinaryDataProperties: null);
+        }
 
-        public static NestedFlattenModel NestedFlattenModel(string name = default, ChildFlattenModel properties = default) => throw null;
+        /// <summary> This is the model with two levels of flattening. </summary>
+        /// <param name="name"></param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="FlattenProperty.NestedFlattenModel"/> instance for mocking. </returns>
+        public static NestedFlattenModel NestedFlattenModel(string name = default, ChildFlattenModel properties = default)
+        {
+            return new NestedFlattenModel(name, properties, additionalBinaryDataProperties: null);
+        }
 
-        public static ChildFlattenModel ChildFlattenModel(string summary = default, ChildModel properties = default) => throw null;
+        /// <summary> This is the child model to be flattened. And it has flattened property as well. </summary>
+        /// <param name="summary"></param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="FlattenProperty.ChildFlattenModel"/> instance for mocking. </returns>
+        public static ChildFlattenModel ChildFlattenModel(string summary = default, ChildModel properties = default)
+        {
+            return new ChildFlattenModel(summary, properties, additionalBinaryDataProperties: null);
+        }
     }
 }

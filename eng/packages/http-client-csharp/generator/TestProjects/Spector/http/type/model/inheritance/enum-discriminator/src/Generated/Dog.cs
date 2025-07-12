@@ -10,22 +10,39 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
+    /// <summary>
+    /// Test extensible enum type for discriminator
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Golden"/>.
+    /// </summary>
     public abstract partial class Dog
     {
-        private protected Dog(DogKind kind, int weight) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        internal Dog(DogKind kind, int weight, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
-
-        internal DogKind Kind
+        /// <summary> Initializes a new instance of <see cref="Dog"/>. </summary>
+        /// <param name="kind"> discriminator property. </param>
+        /// <param name="weight"> Weight of the dog. </param>
+        private protected Dog(DogKind kind, int weight)
         {
-            get => throw null;
-            set => throw null;
+            Kind = kind;
+            Weight = weight;
         }
 
-        public int Weight
+        /// <summary> Initializes a new instance of <see cref="Dog"/>. </summary>
+        /// <param name="kind"> discriminator property. </param>
+        /// <param name="weight"> Weight of the dog. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal Dog(DogKind kind, int weight, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            get => throw null;
-            set => throw null;
+            Kind = kind;
+            Weight = weight;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> discriminator property. </summary>
+        internal DogKind Kind { get; set; }
+
+        /// <summary> Weight of the dog. </summary>
+        public int Weight { get; set; }
     }
 }

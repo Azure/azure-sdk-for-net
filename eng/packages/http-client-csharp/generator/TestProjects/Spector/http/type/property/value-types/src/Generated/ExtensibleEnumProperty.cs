@@ -5,16 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Type.Property.ValueTypes
 {
+    /// <summary> Model with extensible enum properties. </summary>
     public partial class ExtensibleEnumProperty
     {
-        public ExtensibleEnumProperty(InnerEnum @property) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public InnerEnum Property
+        /// <summary> Initializes a new instance of <see cref="ExtensibleEnumProperty"/>. </summary>
+        /// <param name="property"> Property. </param>
+        public ExtensibleEnumProperty(InnerEnum @property)
         {
-            get => throw null;
-            set => throw null;
+            Property = @property;
         }
+
+        /// <summary> Initializes a new instance of <see cref="ExtensibleEnumProperty"/>. </summary>
+        /// <param name="property"> Property. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExtensibleEnumProperty(InnerEnum @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Property = @property;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Property. </summary>
+        public InnerEnum Property { get; set; }
     }
 }

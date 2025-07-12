@@ -10,22 +10,35 @@ using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
+    /// <summary> The model extends from a type that is Record&lt;unknown&gt; type. </summary>
     public partial class IsUnknownAdditionalPropertiesDerived : IsUnknownAdditionalProperties
     {
-        public IsUnknownAdditionalPropertiesDerived(string name, int index) : base(name) => throw null;
-
-        internal IsUnknownAdditionalPropertiesDerived(string name, IDictionary<string, BinaryData> additionalProperties, int index, float? age) : base(name, additionalProperties) => throw null;
-
-        public int Index
+        /// <summary> Initializes a new instance of <see cref="IsUnknownAdditionalPropertiesDerived"/>. </summary>
+        /// <param name="name"> The name property. </param>
+        /// <param name="index"> The index property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public IsUnknownAdditionalPropertiesDerived(string name, int index) : base(name)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(name, nameof(name));
+
+            Index = index;
         }
 
-        public float? Age
+        /// <summary> Initializes a new instance of <see cref="IsUnknownAdditionalPropertiesDerived"/>. </summary>
+        /// <param name="name"> The name property. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="index"> The index property. </param>
+        /// <param name="age"> The age property. </param>
+        internal IsUnknownAdditionalPropertiesDerived(string name, IDictionary<string, BinaryData> additionalProperties, int index, float? age) : base(name, additionalProperties)
         {
-            get => throw null;
-            set => throw null;
+            Index = index;
+            Age = age;
         }
+
+        /// <summary> The index property. </summary>
+        public int Index { get; set; }
+
+        /// <summary> The age property. </summary>
+        public float? Age { get; set; }
     }
 }

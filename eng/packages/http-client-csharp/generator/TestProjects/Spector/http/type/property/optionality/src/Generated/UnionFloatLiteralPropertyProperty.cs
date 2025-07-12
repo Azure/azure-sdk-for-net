@@ -7,6 +7,7 @@
 
 namespace _Type.Property.Optional
 {
+    /// <summary></summary>
     public enum UnionFloatLiteralPropertyProperty
     {
         /// <summary> _125. </summary>

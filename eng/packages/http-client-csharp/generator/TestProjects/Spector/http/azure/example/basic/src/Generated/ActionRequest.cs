@@ -5,24 +5,54 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace _Specs_.Azure.Example.Basic
 {
+    /// <summary> The ActionRequest. </summary>
     public partial class ActionRequest
     {
-        public ActionRequest(string stringProperty) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public string StringProperty => throw null;
-
-        public Model ModelProperty
+        /// <summary> Initializes a new instance of <see cref="ActionRequest"/>. </summary>
+        /// <param name="stringProperty"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="stringProperty"/> is null. </exception>
+        public ActionRequest(string stringProperty)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(stringProperty, nameof(stringProperty));
+
+            StringProperty = stringProperty;
+            ArrayProperty = new ChangeTrackingList<string>();
+            RecordProperty = new ChangeTrackingDictionary<string, string>();
         }
 
-        public IList<string> ArrayProperty => throw null;
+        /// <summary> Initializes a new instance of <see cref="ActionRequest"/>. </summary>
+        /// <param name="stringProperty"></param>
+        /// <param name="modelProperty"></param>
+        /// <param name="arrayProperty"></param>
+        /// <param name="recordProperty"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ActionRequest(string stringProperty, Model modelProperty, IList<string> arrayProperty, IDictionary<string, string> recordProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            StringProperty = stringProperty;
+            ModelProperty = modelProperty;
+            ArrayProperty = arrayProperty;
+            RecordProperty = recordProperty;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
 
-        public IDictionary<string, string> RecordProperty => throw null;
+        /// <summary> Gets the StringProperty. </summary>
+        public string StringProperty { get; }
+
+        /// <summary> Gets or sets the ModelProperty. </summary>
+        public Model ModelProperty { get; set; }
+
+        /// <summary> Gets the ArrayProperty. </summary>
+        public IList<string> ArrayProperty { get; }
+
+        /// <summary> Gets the RecordProperty. </summary>
+        public IDictionary<string, string> RecordProperty { get; }
     }
 }

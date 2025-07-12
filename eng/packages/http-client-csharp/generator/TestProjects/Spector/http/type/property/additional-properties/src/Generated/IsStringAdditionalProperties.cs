@@ -5,20 +5,44 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
+    /// <summary> The model is from Record&lt;string&gt; type. </summary>
     public partial class IsStringAdditionalProperties
     {
-        public IsStringAdditionalProperties(string name) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private IDictionary<string, string> _additionalStringProperties;
 
-        public string Name
+        /// <summary> Initializes a new instance of <see cref="IsStringAdditionalProperties"/>. </summary>
+        /// <param name="name"> The name property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public IsStringAdditionalProperties(string name)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
+            _additionalStringProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        public IDictionary<string, string> AdditionalProperties => throw null;
+        /// <summary> Initializes a new instance of <see cref="IsStringAdditionalProperties"/>. </summary>
+        /// <param name="name"> The name property. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IsStringAdditionalProperties(string name, IDictionary<string, string> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Name = name;
+            _additionalStringProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The name property. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, string> AdditionalProperties => _additionalStringProperties;
     }
 }

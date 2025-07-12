@@ -10,22 +10,39 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
+    /// <summary>
+    /// Test fixed enum type for discriminator
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Cobra"/>.
+    /// </summary>
     public abstract partial class Snake
     {
-        private protected Snake(SnakeKind kind, int length) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        internal Snake(SnakeKind kind, int length, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
-
-        internal SnakeKind Kind
+        /// <summary> Initializes a new instance of <see cref="Snake"/>. </summary>
+        /// <param name="kind"> discriminator property. </param>
+        /// <param name="length"> Length of the snake. </param>
+        private protected Snake(SnakeKind kind, int length)
         {
-            get => throw null;
-            set => throw null;
+            Kind = kind;
+            Length = length;
         }
 
-        public int Length
+        /// <summary> Initializes a new instance of <see cref="Snake"/>. </summary>
+        /// <param name="kind"> discriminator property. </param>
+        /// <param name="length"> Length of the snake. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal Snake(SnakeKind kind, int length, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            get => throw null;
-            set => throw null;
+            Kind = kind;
+            Length = length;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> discriminator property. </summary>
+        internal SnakeKind Kind { get; set; }
+
+        /// <summary> Length of the snake. </summary>
+        public int Length { get; set; }
     }
 }

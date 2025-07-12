@@ -5,16 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Type.Property.ValueTypes
 {
+    /// <summary> Model with a union of float literal as property. </summary>
     public partial class UnionFloatLiteralProperty
     {
-        public UnionFloatLiteralProperty(UnionFloatLiteralPropertyProperty @property) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public UnionFloatLiteralPropertyProperty Property
+        /// <summary> Initializes a new instance of <see cref="UnionFloatLiteralProperty"/>. </summary>
+        /// <param name="property"> Property. </param>
+        public UnionFloatLiteralProperty(UnionFloatLiteralPropertyProperty @property)
         {
-            get => throw null;
-            set => throw null;
+            Property = @property;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnionFloatLiteralProperty"/>. </summary>
+        /// <param name="property"> Property. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnionFloatLiteralProperty(UnionFloatLiteralPropertyProperty @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Property = @property;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Property. </summary>
+        public UnionFloatLiteralPropertyProperty Property { get; set; }
     }
 }

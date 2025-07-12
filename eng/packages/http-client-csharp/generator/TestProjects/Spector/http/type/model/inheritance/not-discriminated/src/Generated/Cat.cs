@@ -10,16 +10,30 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
+    /// <summary> The second level model in the normal multiple levels inheritance. </summary>
     public partial class Cat : Pet
     {
-        public Cat(string name, int age) : base(name) => throw null;
-
-        internal Cat(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int age) : base(name, additionalBinaryDataProperties) => throw null;
-
-        public int Age
+        /// <summary> Initializes a new instance of <see cref="Cat"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="age"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public Cat(string name, int age) : base(name)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(name, nameof(name));
+
+            Age = age;
         }
+
+        /// <summary> Initializes a new instance of <see cref="Cat"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="age"></param>
+        internal Cat(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int age) : base(name, additionalBinaryDataProperties)
+        {
+            Age = age;
+        }
+
+        /// <summary> Gets or sets the Age. </summary>
+        public int Age { get; set; }
     }
 }

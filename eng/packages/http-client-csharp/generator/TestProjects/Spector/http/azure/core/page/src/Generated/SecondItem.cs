@@ -5,10 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Specs_.Azure.Core.Page
 {
+    /// <summary> Second item. </summary>
     public partial class SecondItem
     {
-        public string Name => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="SecondItem"/>. </summary>
+        internal SecondItem()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecondItem"/>. </summary>
+        /// <param name="name"> The name of the item. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecondItem(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Name = name;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The name of the item. </summary>
+        public string Name { get; }
     }
 }

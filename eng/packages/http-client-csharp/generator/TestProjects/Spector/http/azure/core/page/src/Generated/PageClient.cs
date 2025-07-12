@@ -13,46 +13,360 @@ using Azure.Core.Pipeline;
 
 namespace _Specs_.Azure.Core.Page
 {
+    /// <summary> Illustrates bodies templated with Azure Core with paging support. </summary>
     public partial class PageClient
     {
-        public PageClient() : this(new Uri("http://localhost:3000"), new PageClientOptions()) => throw null;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
+        private TwoModelsAsPageItem _cachedTwoModelsAsPageItem;
 
-        public PageClient(Uri endpoint, PageClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of PageClient. </summary>
+        public PageClient() : this(new Uri("http://localhost:3000"), new PageClientOptions())
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of PageClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public PageClient(Uri endpoint, PageClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual Pageable<BinaryData> GetWithPage(RequestContext context) => throw null;
+            options ??= new PageClientOptions();
 
-        public virtual AsyncPageable<BinaryData> GetWithPageAsync(RequestContext context) => throw null;
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
 
-        public virtual Pageable<User> GetWithPage(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual AsyncPageable<User> GetWithPageAsync(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual Pageable<BinaryData> GetWithParameters(RequestContent content, string another = default, RequestContext context = null) => throw null;
+        /// <summary>
+        /// [Protocol Method] List with Azure.Core.Page&lt;&gt;.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetWithPage(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageClient.GetWithPage");
+            scope.Start();
+            try
+            {
+                return new PageClientGetWithPageCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual AsyncPageable<BinaryData> GetWithParametersAsync(RequestContent content, string another = default, RequestContext context = null) => throw null;
+        /// <summary>
+        /// [Protocol Method] List with Azure.Core.Page&lt;&gt;.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetWithPageAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageClient.GetWithPage");
+            scope.Start();
+            try
+            {
+                return new PageClientGetWithPageAsyncCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Pageable<User> GetWithParameters(ListItemInputBody bodyInput, ListItemInputExtensibleEnum? another = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> List with Azure.Core.Page&lt;&gt;. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<User> GetWithPage(CancellationToken cancellationToken = default)
+        {
+            return new PageClientGetWithPageCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual AsyncPageable<User> GetWithParametersAsync(ListItemInputBody bodyInput, ListItemInputExtensibleEnum? another = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> List with Azure.Core.Page&lt;&gt;. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<User> GetWithPageAsync(CancellationToken cancellationToken = default)
+        {
+            return new PageClientGetWithPageAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual Pageable<BinaryData> GetWithCustomPageModel(RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] List with extensible enum parameter Azure.Core.Page&lt;&gt;.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="another"> Another query parameter. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetWithParameters(RequestContent content, string another = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageClient.GetWithParameters");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-        public virtual AsyncPageable<BinaryData> GetWithCustomPageModelAsync(RequestContext context) => throw null;
+                return new PageClientGetWithParametersCollectionResult(this, content, another, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Pageable<User> GetWithCustomPageModel(CancellationToken cancellationToken = default) => throw null;
+        /// <summary>
+        /// [Protocol Method] List with extensible enum parameter Azure.Core.Page&lt;&gt;.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="another"> Another query parameter. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetWithParametersAsync(RequestContent content, string another = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageClient.GetWithParameters");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-        public virtual AsyncPageable<User> GetWithCustomPageModelAsync(CancellationToken cancellationToken = default) => throw null;
+                return new PageClientGetWithParametersAsyncCollectionResult(this, content, another, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Pageable<BinaryData> WithParameterizedNextLink(string @select, bool? includePending, RequestContext context) => throw null;
+        /// <summary> List with extensible enum parameter Azure.Core.Page&lt;&gt;. </summary>
+        /// <param name="bodyInput"> The body of the input. </param>
+        /// <param name="another"> Another query parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyInput"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<User> GetWithParameters(ListItemInputBody bodyInput, ListItemInputExtensibleEnum? another = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(bodyInput, nameof(bodyInput));
 
-        public virtual AsyncPageable<BinaryData> WithParameterizedNextLinkAsync(string @select, bool? includePending, RequestContext context) => throw null;
+            return new PageClientGetWithParametersCollectionResultOfT(this, bodyInput, another?.ToSerialString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual Pageable<User> WithParameterizedNextLink(string @select, bool? includePending = default, CancellationToken cancellationToken = default) => throw null;
+        /// <summary> List with extensible enum parameter Azure.Core.Page&lt;&gt;. </summary>
+        /// <param name="bodyInput"> The body of the input. </param>
+        /// <param name="another"> Another query parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bodyInput"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<User> GetWithParametersAsync(ListItemInputBody bodyInput, ListItemInputExtensibleEnum? another = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(bodyInput, nameof(bodyInput));
 
-        public virtual AsyncPageable<User> WithParameterizedNextLinkAsync(string @select, bool? includePending = default, CancellationToken cancellationToken = default) => throw null;
+            return new PageClientGetWithParametersAsyncCollectionResultOfT(this, bodyInput, another?.ToSerialString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual TwoModelsAsPageItem GetTwoModelsAsPageItemClient() => throw null;
+        /// <summary>
+        /// [Protocol Method] List with custom page model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetWithCustomPageModel(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageClient.GetWithCustomPageModel");
+            scope.Start();
+            try
+            {
+                return new PageClientGetWithCustomPageModelCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List with custom page model.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetWithCustomPageModelAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageClient.GetWithCustomPageModel");
+            scope.Start();
+            try
+            {
+                return new PageClientGetWithCustomPageModelAsyncCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List with custom page model. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<User> GetWithCustomPageModel(CancellationToken cancellationToken = default)
+        {
+            return new PageClientGetWithCustomPageModelCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> List with custom page model. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<User> GetWithCustomPageModelAsync(CancellationToken cancellationToken = default)
+        {
+            return new PageClientGetWithCustomPageModelAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List with parameterized next link that re-injects parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="select"></param>
+        /// <param name="includePending"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="select"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="select"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> WithParameterizedNextLink(string @select, bool? includePending, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageClient.WithParameterizedNextLink");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(@select, nameof(@select));
+
+                return new PageClientWithParameterizedNextLinkCollectionResult(this, @select, includePending, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List with parameterized next link that re-injects parameters.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="select"></param>
+        /// <param name="includePending"></param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="select"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="select"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> WithParameterizedNextLinkAsync(string @select, bool? includePending, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageClient.WithParameterizedNextLink");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(@select, nameof(@select));
+
+                return new PageClientWithParameterizedNextLinkAsyncCollectionResult(this, @select, includePending, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List with parameterized next link that re-injects parameters. </summary>
+        /// <param name="select"></param>
+        /// <param name="includePending"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="select"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="select"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<User> WithParameterizedNextLink(string @select, bool? includePending = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(@select, nameof(@select));
+
+            return new PageClientWithParameterizedNextLinkCollectionResultOfT(this, @select, includePending, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> List with parameterized next link that re-injects parameters. </summary>
+        /// <param name="select"></param>
+        /// <param name="includePending"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="select"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="select"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<User> WithParameterizedNextLinkAsync(string @select, bool? includePending = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(@select, nameof(@select));
+
+            return new PageClientWithParameterizedNextLinkAsyncCollectionResultOfT(this, @select, includePending, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> Initializes a new instance of TwoModelsAsPageItem. </summary>
+        public virtual TwoModelsAsPageItem GetTwoModelsAsPageItemClient()
+        {
+            return Volatile.Read(ref _cachedTwoModelsAsPageItem) ?? Interlocked.CompareExchange(ref _cachedTwoModelsAsPageItem, new TwoModelsAsPageItem(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedTwoModelsAsPageItem;
+        }
     }
 }

@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace _Type.Property.ValueTypes
 {
+    /// <summary> Client options for <see cref="ValueTypesClient"/>. </summary>
     public partial class ValueTypesClientOptions : ClientOptions
     {
     }

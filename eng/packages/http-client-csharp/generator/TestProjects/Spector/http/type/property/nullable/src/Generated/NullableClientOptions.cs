@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace _Type.Property.Nullable
 {
+    /// <summary> Client options for <see cref="NullableClient"/>. </summary>
     public partial class NullableClientOptions : ClientOptions
     {
     }

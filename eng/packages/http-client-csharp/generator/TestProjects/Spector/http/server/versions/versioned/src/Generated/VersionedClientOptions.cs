@@ -5,16 +5,32 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 
 namespace Server.Versions.Versioned
 {
+    /// <summary> Client options for <see cref="VersionedClient"/>. </summary>
     public partial class VersionedClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
 
-        public VersionedClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        /// <summary> Initializes a new instance of VersionedClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
+        public VersionedClientOptions(ServiceVersion version = LatestVersion)
+        {
+            Version = version switch
+            {
+                ServiceVersion.V2021_01_01_Preview => "2021-01-01-preview",
+                ServiceVersion.V2022_12_01_Preview => "2022-12-01-preview",
+                _ => throw new NotSupportedException()
+            };
+        }
 
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> The version 2022-12-01-preview. </summary>

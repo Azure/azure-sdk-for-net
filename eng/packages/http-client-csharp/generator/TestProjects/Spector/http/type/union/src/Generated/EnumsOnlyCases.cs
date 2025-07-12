@@ -5,22 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Type.Union
 {
+    /// <summary> The EnumsOnlyCases. </summary>
     public partial class EnumsOnlyCases
     {
-        public EnumsOnlyCases(EnumsOnlyCasesLr lr, EnumsOnlyCasesUd ud) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public EnumsOnlyCasesLr Lr
+        /// <summary> Initializes a new instance of <see cref="EnumsOnlyCases"/>. </summary>
+        /// <param name="lr"> This should be receive/send the left variant. </param>
+        /// <param name="ud"> This should be receive/send the up variant. </param>
+        public EnumsOnlyCases(EnumsOnlyCasesLr lr, EnumsOnlyCasesUd ud)
         {
-            get => throw null;
-            set => throw null;
+            Lr = lr;
+            Ud = ud;
         }
 
-        public EnumsOnlyCasesUd Ud
+        /// <summary> Initializes a new instance of <see cref="EnumsOnlyCases"/>. </summary>
+        /// <param name="lr"> This should be receive/send the left variant. </param>
+        /// <param name="ud"> This should be receive/send the up variant. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EnumsOnlyCases(EnumsOnlyCasesLr lr, EnumsOnlyCasesUd ud, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            get => throw null;
-            set => throw null;
+            Lr = lr;
+            Ud = ud;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> This should be receive/send the left variant. </summary>
+        public EnumsOnlyCasesLr Lr { get; set; }
+
+        /// <summary> This should be receive/send the up variant. </summary>
+        public EnumsOnlyCasesUd Ud { get; set; }
     }
 }

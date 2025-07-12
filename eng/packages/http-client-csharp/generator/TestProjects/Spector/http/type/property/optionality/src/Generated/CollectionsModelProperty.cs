@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace _Type.Property.Optional
 {
+    /// <summary> Model with collection models properties. </summary>
     public partial class CollectionsModelProperty
     {
-        public CollectionsModelProperty() => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public IList<StringProperty> Property => throw null;
+        /// <summary> Initializes a new instance of <see cref="CollectionsModelProperty"/>. </summary>
+        public CollectionsModelProperty()
+        {
+            Property = new ChangeTrackingList<StringProperty>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CollectionsModelProperty"/>. </summary>
+        /// <param name="property"> Property. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CollectionsModelProperty(IList<StringProperty> @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Property = @property;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Property. </summary>
+        public IList<StringProperty> Property { get; }
     }
 }

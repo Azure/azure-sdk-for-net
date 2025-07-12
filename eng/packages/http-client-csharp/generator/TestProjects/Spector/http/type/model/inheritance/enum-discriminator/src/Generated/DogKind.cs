@@ -10,28 +10,52 @@ using System.ComponentModel;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
+    /// <summary> extensible enum type for discriminator. </summary>
     internal readonly partial struct DogKind : IEquatable<DogKind>
     {
-        public DogKind(string value) => throw null;
+        private readonly string _value;
+        /// <summary> Species golden. </summary>
+        private const string GoldenValue = "golden";
 
-        public static DogKind Golden => throw null;
+        /// <summary> Initializes a new instance of <see cref="DogKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DogKind(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        public static bool operator ==(DogKind left, DogKind right) => throw null;
+            _value = value;
+        }
 
-        public static bool operator !=(DogKind left, DogKind right) => throw null;
+        /// <summary> Species golden. </summary>
+        public static DogKind Golden { get; } = new DogKind(GoldenValue);
+
+        /// <summary> Determines if two <see cref="DogKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(DogKind left, DogKind right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="DogKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(DogKind left, DogKind right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="DogKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DogKind(string value) => throw null;
+        public static implicit operator DogKind(string value) => new DogKind(value);
 
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => throw null;
+        public override bool Equals(object obj) => obj is DogKind other && Equals(other);
 
-        public bool Equals(DogKind other) => throw null;
+        /// <inheritdoc/>
+        public bool Equals(DogKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => throw null;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
-        public override string ToString() => throw null;
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

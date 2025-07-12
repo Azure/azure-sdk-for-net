@@ -9,8 +9,15 @@ using System;
 
 namespace _Specs_.Azure.Core.Model
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class _Specs_AzureCoreModelModelFactory
     {
-        public static AzureEmbeddingModel AzureEmbeddingModel(ReadOnlyMemory<int> embedding = default) => throw null;
+        /// <summary> The AzureEmbeddingModel. </summary>
+        /// <param name="embedding"></param>
+        /// <returns> A new <see cref="Model.AzureEmbeddingModel"/> instance for mocking. </returns>
+        public static AzureEmbeddingModel AzureEmbeddingModel(ReadOnlyMemory<int> embedding = default)
+        {
+            return new AzureEmbeddingModel(embedding, additionalBinaryDataProperties: null);
+        }
     }
 }

@@ -10,40 +10,82 @@ using System.ComponentModel;
 
 namespace _Type._Enum.Extensible
 {
+    /// <summary> Days of the week. </summary>
     public readonly partial struct DaysOfWeekExtensibleEnum : IEquatable<DaysOfWeekExtensibleEnum>
     {
-        public DaysOfWeekExtensibleEnum(string value) => throw null;
+        private readonly string _value;
+        /// <summary> Monday. </summary>
+        private const string MondayValue = "Monday";
+        /// <summary> Tuesday. </summary>
+        private const string TuesdayValue = "Tuesday";
+        /// <summary> Wednesday. </summary>
+        private const string WednesdayValue = "Wednesday";
+        /// <summary> Thursday. </summary>
+        private const string ThursdayValue = "Thursday";
+        /// <summary> Friday. </summary>
+        private const string FridayValue = "Friday";
+        /// <summary> Saturday. </summary>
+        private const string SaturdayValue = "Saturday";
+        /// <summary> Sunday. </summary>
+        private const string SundayValue = "Sunday";
 
-        public static DaysOfWeekExtensibleEnum Monday => throw null;
+        /// <summary> Initializes a new instance of <see cref="DaysOfWeekExtensibleEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DaysOfWeekExtensibleEnum(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        public static DaysOfWeekExtensibleEnum Tuesday => throw null;
+            _value = value;
+        }
 
-        public static DaysOfWeekExtensibleEnum Wednesday => throw null;
+        /// <summary> Monday. </summary>
+        public static DaysOfWeekExtensibleEnum Monday { get; } = new DaysOfWeekExtensibleEnum(MondayValue);
 
-        public static DaysOfWeekExtensibleEnum Thursday => throw null;
+        /// <summary> Tuesday. </summary>
+        public static DaysOfWeekExtensibleEnum Tuesday { get; } = new DaysOfWeekExtensibleEnum(TuesdayValue);
 
-        public static DaysOfWeekExtensibleEnum Friday => throw null;
+        /// <summary> Wednesday. </summary>
+        public static DaysOfWeekExtensibleEnum Wednesday { get; } = new DaysOfWeekExtensibleEnum(WednesdayValue);
 
-        public static DaysOfWeekExtensibleEnum Saturday => throw null;
+        /// <summary> Thursday. </summary>
+        public static DaysOfWeekExtensibleEnum Thursday { get; } = new DaysOfWeekExtensibleEnum(ThursdayValue);
 
-        public static DaysOfWeekExtensibleEnum Sunday => throw null;
+        /// <summary> Friday. </summary>
+        public static DaysOfWeekExtensibleEnum Friday { get; } = new DaysOfWeekExtensibleEnum(FridayValue);
 
-        public static bool operator ==(DaysOfWeekExtensibleEnum left, DaysOfWeekExtensibleEnum right) => throw null;
+        /// <summary> Saturday. </summary>
+        public static DaysOfWeekExtensibleEnum Saturday { get; } = new DaysOfWeekExtensibleEnum(SaturdayValue);
 
-        public static bool operator !=(DaysOfWeekExtensibleEnum left, DaysOfWeekExtensibleEnum right) => throw null;
+        /// <summary> Sunday. </summary>
+        public static DaysOfWeekExtensibleEnum Sunday { get; } = new DaysOfWeekExtensibleEnum(SundayValue);
+
+        /// <summary> Determines if two <see cref="DaysOfWeekExtensibleEnum"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(DaysOfWeekExtensibleEnum left, DaysOfWeekExtensibleEnum right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="DaysOfWeekExtensibleEnum"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(DaysOfWeekExtensibleEnum left, DaysOfWeekExtensibleEnum right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="DaysOfWeekExtensibleEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DaysOfWeekExtensibleEnum(string value) => throw null;
+        public static implicit operator DaysOfWeekExtensibleEnum(string value) => new DaysOfWeekExtensibleEnum(value);
 
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => throw null;
+        public override bool Equals(object obj) => obj is DaysOfWeekExtensibleEnum other && Equals(other);
 
-        public bool Equals(DaysOfWeekExtensibleEnum other) => throw null;
+        /// <inheritdoc/>
+        public bool Equals(DaysOfWeekExtensibleEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => throw null;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
-        public override string ToString() => throw null;
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

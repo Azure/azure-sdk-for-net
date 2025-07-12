@@ -7,6 +7,7 @@
 
 namespace _Specs_.Azure.Core.Page
 {
+    /// <summary> An extensible enum input parameter. </summary>
     public enum ListItemInputExtensibleEnum
     {
         /// <summary> The first enum value. </summary>

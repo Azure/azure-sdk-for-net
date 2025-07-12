@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Server.Versions.NotVersioned
 {
+    /// <summary> Client options for <see cref="NotVersionedClient"/>. </summary>
     public partial class NotVersionedClientOptions : ClientOptions
     {
     }

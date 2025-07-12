@@ -5,20 +5,41 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
+    /// <summary> The model spread Record&lt;float32&gt; with the same known property type. </summary>
     public partial class SpreadFloatRecord
     {
-        public SpreadFloatRecord(float id) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private IDictionary<string, float> _additionalSingleProperties;
 
-        public float Id
+        /// <summary> Initializes a new instance of <see cref="SpreadFloatRecord"/>. </summary>
+        /// <param name="id"> The id property. </param>
+        public SpreadFloatRecord(float id)
         {
-            get => throw null;
-            set => throw null;
+            Id = id;
+            _additionalSingleProperties = new ChangeTrackingDictionary<string, float>();
         }
 
-        public IDictionary<string, float> AdditionalProperties => throw null;
+        /// <summary> Initializes a new instance of <see cref="SpreadFloatRecord"/>. </summary>
+        /// <param name="id"> The id property. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SpreadFloatRecord(float id, IDictionary<string, float> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Id = id;
+            _additionalSingleProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The id property. </summary>
+        public float Id { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, float> AdditionalProperties => _additionalSingleProperties;
     }
 }

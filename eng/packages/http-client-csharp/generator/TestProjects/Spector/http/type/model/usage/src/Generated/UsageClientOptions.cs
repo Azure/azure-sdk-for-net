@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace _Type.Model.Usage
 {
+    /// <summary> Client options for <see cref="UsageClient"/>. </summary>
     public partial class UsageClientOptions : ClientOptions
     {
     }

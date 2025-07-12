@@ -7,37 +7,174 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace _Specs_.Azure.Core.Model
 {
+    /// <summary> The AzureEmbeddingModel. </summary>
     public partial class AzureEmbeddingModel : IJsonModel<AzureEmbeddingModel>
     {
-        internal AzureEmbeddingModel() => throw null;
+        /// <summary> Initializes a new instance of <see cref="AzureEmbeddingModel"/> for deserialization. </summary>
+        internal AzureEmbeddingModel()
+        {
+        }
 
-        void IJsonModel<AzureEmbeddingModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<AzureEmbeddingModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
 
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureEmbeddingModel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureEmbeddingModel)} does not support writing '{format}' format.");
+            }
+            writer.WritePropertyName("embedding"u8);
+            writer.WriteStartArray();
+            foreach (int item in Embedding.Span)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
 
-        AzureEmbeddingModel IJsonModel<AzureEmbeddingModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureEmbeddingModel IJsonModel<AzureEmbeddingModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
-        protected virtual AzureEmbeddingModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AzureEmbeddingModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureEmbeddingModel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureEmbeddingModel)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureEmbeddingModel(document.RootElement, options);
+        }
 
-        BinaryData IPersistableModel<AzureEmbeddingModel>.Write(ModelReaderWriterOptions options) => throw null;
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureEmbeddingModel DeserializeAzureEmbeddingModel(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ReadOnlyMemory<int> embedding = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("embedding"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    int index = 0;
+                    int[] array = new int[prop.Value.GetArrayLength()];
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array[index] = item.GetInt32();
+                        index++;
+                    }
+                    embedding = new ReadOnlyMemory<int>(array);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new AzureEmbeddingModel(embedding, additionalBinaryDataProperties);
+        }
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureEmbeddingModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        AzureEmbeddingModel IPersistableModel<AzureEmbeddingModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureEmbeddingModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, _Specs_AzureCoreModelContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureEmbeddingModel)} does not support writing '{options.Format}' format.");
+            }
+        }
 
-        protected virtual AzureEmbeddingModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureEmbeddingModel IPersistableModel<AzureEmbeddingModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        string IPersistableModel<AzureEmbeddingModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AzureEmbeddingModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureEmbeddingModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeAzureEmbeddingModel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureEmbeddingModel)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureEmbeddingModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="azureEmbeddingModel"> The <see cref="AzureEmbeddingModel"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AzureEmbeddingModel azureEmbeddingModel) => throw null;
+        public static implicit operator RequestContent(AzureEmbeddingModel azureEmbeddingModel)
+        {
+            if (azureEmbeddingModel == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(azureEmbeddingModel, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
-        public static explicit operator AzureEmbeddingModel(Response result) => throw null;
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="AzureEmbeddingModel"/> from. </param>
+        public static explicit operator AzureEmbeddingModel(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureEmbeddingModel(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }
