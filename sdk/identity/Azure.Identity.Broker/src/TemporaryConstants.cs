@@ -12,6 +12,6 @@ namespace Azure.Identity.Broker
         /// Redirect URI for macOS broker authentication.
         /// TODO: Remove this once Azure.Identity dependency includes Constants.MacBrokerRedirectUri
         /// </summary>
-        public const string MacBrokerRedirectUri = "msauth.com.msauth.unsignedapp://auth";
+        internal const string MacBrokerRedirectUri = "msauth.com.msauth.unsignedapp://auth";
     }
 }
