@@ -142,9 +142,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await using DisposingBlobContainer sourceContainer = await SourceClientBuilder.GetTestContainerAsync(serviceClient);
             await using DisposingBlobContainer destinationContainer = await DestinationClientBuilder.GetTestContainerAsync(serviceClient);
 
-            string sorucePrefix = usePrefix ? "source" : default;
+            string sourcePrefix = usePrefix ? "source" : default;
             string destinationPrefix = usePrefix ? "destination" : default;
-            await PopulateVirtualDirectoryContainer(sourceContainer.Container, 1024, prefix: sorucePrefix);
+            await PopulateVirtualDirectoryContainer(sourceContainer.Container, 1024, prefix: sourcePrefix);
 
             TransferManager transferManager = new();
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
@@ -153,7 +153,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TestEventsRaised testEventsRaised = new(transferOptions);
 
             TransferOperation transfer = await transferManager.StartTransferAsync(
-                GetSourceStorageResourceContainer(sourceContainer.Container, sorucePrefix),
+                GetSourceStorageResourceContainer(sourceContainer.Container, sourcePrefix),
                 GetSourceStorageResourceContainer(destinationContainer.Container, destinationPrefix),
                 transferOptions);
 
@@ -165,7 +165,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             testEventsRaised.AssertUnexpectedFailureCheck();
             await VerifyResultsAsync(
-                sourceContainer.Container, sorucePrefix,
+                sourceContainer.Container, sourcePrefix,
                 destinationContainer.Container, destinationPrefix);
         }
     }

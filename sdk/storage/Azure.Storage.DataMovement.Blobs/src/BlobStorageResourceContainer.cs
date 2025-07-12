@@ -204,7 +204,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     currentPath != sourcePrefix && // If doing an empty copy
                     destinationContainer is BlobStorageResourceContainer destBlobContainer)
                 {
-                    // Remove source prefix and add destiantion prefix
+                    // Remove source prefix and add destination prefix
                     BlockBlobStorageResource destinationDirectoryResource = destBlobContainer.GetBlobAsStorageResource(
                         destBlobContainer.ApplyOptionalPrefix(currentPath.Substring(sourcePrefix.Length)),
                         BlobType.Block) as BlockBlobStorageResource;
