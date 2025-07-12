@@ -44,14 +44,21 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="key">custom calling context sip X header's key.</param>
         /// <param name="value">custom calling context sip X header's value.</param>
-        public void AddSipX(string key, string value)
+        /// <param name="prefix">prefix to be used for SIP X headers.</param>
+        public void AddSipX(string key, string value, SipHeaderPrefix prefix = SipHeaderPrefix.XMSCustom)
         {
             if (SipHeaders == null)
             {
                 throw new InvalidOperationException("Cannot add sip X header, SipHeaders is null.");
             }
-
-            SipHeaders.Add("X-MS-Custom-" + key, value);
+            if (prefix == SipHeaderPrefix.XMSCustom)
+            {
+                SipHeaders.Add("X-MS-Custom-" + key, value);
+            }
+            else
+            {
+                SipHeaders.Add("X-" + key, value);
+            }
         }
 
         /// <summary>
