@@ -45,6 +45,8 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             writer.WritePropertyName("trainingStatus"u8);
             writer.WriteObjectValue(TrainingStatus, options);
+            writer.WritePropertyName("dataGenerationStatus"u8);
+            writer.WriteObjectValue(DataGenerationStatus, options);
             if (Optional.IsDefined(EvaluationStatus))
             {
                 writer.WritePropertyName("evaluationStatus"u8);
@@ -96,6 +98,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             string trainingConfigVersion = default;
             ConversationAuthoringTrainingMode? trainingMode = default;
             ConversationAuthoringSubTrainingState trainingStatus = default;
+            ConversationAuthoringSubTrainingState dataGenerationStatus = default;
             ConversationAuthoringSubTrainingState evaluationStatus = default;
             DateTimeOffset? estimatedEndDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -124,6 +127,11 @@ namespace Azure.AI.Language.Conversations.Authoring
                 if (property.NameEquals("trainingStatus"u8))
                 {
                     trainingStatus = ConversationAuthoringSubTrainingState.DeserializeConversationAuthoringSubTrainingState(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("dataGenerationStatus"u8))
+                {
+                    dataGenerationStatus = ConversationAuthoringSubTrainingState.DeserializeConversationAuthoringSubTrainingState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("evaluationStatus"u8))
@@ -155,6 +163,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 trainingConfigVersion,
                 trainingMode,
                 trainingStatus,
+                dataGenerationStatus,
                 evaluationStatus,
                 estimatedEndDateTime,
                 serializedAdditionalRawData);

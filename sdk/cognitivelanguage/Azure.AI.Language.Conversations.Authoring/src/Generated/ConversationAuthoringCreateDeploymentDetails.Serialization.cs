@@ -36,13 +36,13 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             writer.WritePropertyName("trainedModelLabel"u8);
             writer.WriteStringValue(TrainedModelLabel);
-            if (Optional.IsCollectionDefined(AssignedResourceIds))
+            if (Optional.IsCollectionDefined(AssignedResources))
             {
-                writer.WritePropertyName("assignedResourceIds"u8);
+                writer.WritePropertyName("assignedResources"u8);
                 writer.WriteStartArray();
-                foreach (var item in AssignedResourceIds)
+                foreach (var item in AssignedResources)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 return null;
             }
             string trainedModelLabel = default;
-            IList<string> assignedResourceIds = default;
+            IList<ConversationAuthoringDeploymentResource> assignedResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,18 +94,18 @@ namespace Azure.AI.Language.Conversations.Authoring
                     trainedModelLabel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("assignedResourceIds"u8))
+                if (property.NameEquals("assignedResources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ConversationAuthoringDeploymentResource> array = new List<ConversationAuthoringDeploymentResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(ConversationAuthoringDeploymentResource.DeserializeConversationAuthoringDeploymentResource(item, options));
                     }
-                    assignedResourceIds = array;
+                    assignedResources = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +114,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConversationAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResourceIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ConversationAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResources ?? new ChangeTrackingList<ConversationAuthoringDeploymentResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConversationAuthoringCreateDeploymentDetails>.Write(ModelReaderWriterOptions options)
