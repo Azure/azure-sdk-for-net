@@ -7,18 +7,19 @@
 - Management Plane (TSP-Old): 42
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
 - Data Plane (Swagger): 114
-- Data Plane (TSP-Old): 29
-- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 5
+- Data Plane (TSP-Old): 28
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 6
 - No generator: 40
 
 
 ## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 5
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 6
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
 | eventgrid | Azure.Messaging.EventGrid.Namespaces | sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces |
+| face | Azure.AI.Vision.Face | sdk/face/Azure.AI.Vision.Face |
 | healthdataaiservices | Azure.Health.Deidentification | sdk/healthdataaiservices/Azure.Health.Deidentification |
 | keyvault | Azure.Security.KeyVault.Administration | sdk/keyvault/Azure.Security.KeyVault.Administration |
 | openai | Azure.AI.OpenAI | sdk/openai/Azure.AI.OpenAI |
@@ -27,7 +28,7 @@ TypeSpec with @azure-typespec/http-client-csharp generator is detected by the pr
 
 ## Data Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 29
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 28
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -49,7 +50,6 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 | documentintelligence | Azure.AI.DocumentIntelligence | sdk/documentintelligence/Azure.AI.DocumentIntelligence |
 | easm | Azure.Analytics.Defender.Easm | sdk/easm/Azure.Analytics.Defender.Easm |
 | eventgrid | Azure.Messaging.EventGrid.SystemEvents | sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents |
-| face | Azure.AI.Vision.Face | sdk/face/Azure.AI.Vision.Face |
 | healthinsights | Azure.Health.Insights.CancerProfiling | sdk/healthinsights/Azure.Health.Insights.CancerProfiling |
 | healthinsights | Azure.Health.Insights.ClinicalMatching | sdk/healthinsights/Azure.Health.Insights.ClinicalMatching |
 | healthinsights | Azure.Health.Insights.RadiologyInsights | sdk/healthinsights/Azure.Health.Insights.RadiologyInsights |

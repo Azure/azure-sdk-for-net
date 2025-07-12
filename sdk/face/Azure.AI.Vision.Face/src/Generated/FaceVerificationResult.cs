@@ -13,37 +13,8 @@ namespace Azure.AI.Vision.Face
     /// <summary> Verify result. </summary>
     public partial class FaceVerificationResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FaceVerificationResult"/>. </summary>
         /// <param name="isIdentical"> True if the two faces belong to the same person or the face belongs to the person, otherwise false. </param>
@@ -57,21 +28,17 @@ namespace Azure.AI.Vision.Face
         /// <summary> Initializes a new instance of <see cref="FaceVerificationResult"/>. </summary>
         /// <param name="isIdentical"> True if the two faces belong to the same person or the face belongs to the person, otherwise false. </param>
         /// <param name="confidence"> A number indicates the similarity confidence of whether two faces belong to the same person, or whether the face belongs to the person. By default, isIdentical is set to True if similarity confidence is greater than or equal to 0.5. This is useful for advanced users to override 'isIdentical' and fine-tune the result on their own data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FaceVerificationResult(bool isIdentical, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FaceVerificationResult(bool isIdentical, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsIdentical = isIdentical;
             Confidence = confidence;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FaceVerificationResult"/> for deserialization. </summary>
-        internal FaceVerificationResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> True if the two faces belong to the same person or the face belongs to the person, otherwise false. </summary>
         public bool IsIdentical { get; }
+
         /// <summary> A number indicates the similarity confidence of whether two faces belong to the same person, or whether the face belongs to the person. By default, isIdentical is set to True if similarity confidence is greater than or equal to 0.5. This is useful for advanced users to override 'isIdentical' and fine-tune the result on their own data. </summary>
         public float Confidence { get; }
     }

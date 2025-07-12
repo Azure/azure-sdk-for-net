@@ -13,92 +13,50 @@ namespace Azure.AI.Vision.Face
     /// <summary> Session result of detect liveness with verify. </summary>
     public partial class LivenessWithVerifySession
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LivenessWithVerifySession"/>. </summary>
-        /// <param name="createdDateTime"> DateTime when this session was created. </param>
-        /// <param name="sessionExpired"> Whether or not the session is expired. </param>
+        /// <param name="authToken"> Bearer token to provide authentication for the Vision SDK running on a client application. This Bearer token has limited permissions to perform only the required action and expires after the TTL time. It is also auditable. </param>
         /// <param name="status"> The current status of the session. </param>
-        internal LivenessWithVerifySession(DateTimeOffset createdDateTime, bool sessionExpired, FaceSessionStatus status)
+        /// <param name="results"> The results of the liveness with verify session. </param>
+        internal LivenessWithVerifySession(string authToken, OperationState status, LivenessWithVerifySessionResults results)
         {
-            CreatedDateTime = createdDateTime;
-            SessionExpired = sessionExpired;
+            AuthToken = authToken;
             Status = status;
+            Results = results;
         }
 
         /// <summary> Initializes a new instance of <see cref="LivenessWithVerifySession"/>. </summary>
-        /// <param name="id"> The unique ID to reference this session. </param>
-        /// <param name="createdDateTime"> DateTime when this session was created. </param>
-        /// <param name="sessionStartDateTime"> DateTime when this session was started by the client. </param>
-        /// <param name="sessionExpired"> Whether or not the session is expired. </param>
-        /// <param name="deviceCorrelationId"> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </param>
-        /// <param name="authTokenTimeToLiveInSeconds"> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </param>
+        /// <param name="sessionId"> The unique ID to reference this session. </param>
+        /// <param name="authToken"> Bearer token to provide authentication for the Vision SDK running on a client application. This Bearer token has limited permissions to perform only the required action and expires after the TTL time. It is also auditable. </param>
         /// <param name="status"> The current status of the session. </param>
-        /// <param name="result"> The latest session audit result only populated if status == 'ResultAvailable'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LivenessWithVerifySession(string id, DateTimeOffset createdDateTime, DateTimeOffset? sessionStartDateTime, bool sessionExpired, string deviceCorrelationId, int? authTokenTimeToLiveInSeconds, FaceSessionStatus status, LivenessSessionAuditEntry result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="modelVersion"> The model version used for liveness classification. This is an optional parameter, and if this is not specified, then the latest supported model version will be chosen. </param>
+        /// <param name="results"> The results of the liveness with verify session. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LivenessWithVerifySession(string sessionId, string authToken, OperationState status, LivenessModel? modelVersion, LivenessWithVerifySessionResults results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
-            CreatedDateTime = createdDateTime;
-            SessionStartDateTime = sessionStartDateTime;
-            SessionExpired = sessionExpired;
-            DeviceCorrelationId = deviceCorrelationId;
-            AuthTokenTimeToLiveInSeconds = authTokenTimeToLiveInSeconds;
+            SessionId = sessionId;
+            AuthToken = authToken;
             Status = status;
-            Result = result;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifySession"/> for deserialization. </summary>
-        internal LivenessWithVerifySession()
-        {
+            ModelVersion = modelVersion;
+            Results = results;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique ID to reference this session. </summary>
-        public string Id { get; }
-        /// <summary> DateTime when this session was created. </summary>
-        public DateTimeOffset CreatedDateTime { get; }
-        /// <summary> DateTime when this session was started by the client. </summary>
-        public DateTimeOffset? SessionStartDateTime { get; }
-        /// <summary> Whether or not the session is expired. </summary>
-        public bool SessionExpired { get; }
-        /// <summary> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </summary>
-        public string DeviceCorrelationId { get; }
-        /// <summary> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </summary>
-        public int? AuthTokenTimeToLiveInSeconds { get; }
+        public string SessionId { get; }
+
+        /// <summary> Bearer token to provide authentication for the Vision SDK running on a client application. This Bearer token has limited permissions to perform only the required action and expires after the TTL time. It is also auditable. </summary>
+        public string AuthToken { get; }
+
         /// <summary> The current status of the session. </summary>
-        public FaceSessionStatus Status { get; }
-        /// <summary> The latest session audit result only populated if status == 'ResultAvailable'. </summary>
-        public LivenessSessionAuditEntry Result { get; }
+        public OperationState Status { get; }
+
+        /// <summary> The model version used for liveness classification. This is an optional parameter, and if this is not specified, then the latest supported model version will be chosen. </summary>
+        public LivenessModel? ModelVersion { get; }
+
+        /// <summary> The results of the liveness with verify session. </summary>
+        public LivenessWithVerifySessionResults Results { get; }
     }
 }

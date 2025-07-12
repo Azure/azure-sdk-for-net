@@ -13,37 +13,8 @@ namespace Azure.AI.Vision.Face
     /// <summary> Candidate for identify call. </summary>
     public partial class FaceIdentificationCandidate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FaceIdentificationCandidate"/>. </summary>
         /// <param name="personId"> personId of candidate person. </param>
@@ -57,21 +28,17 @@ namespace Azure.AI.Vision.Face
         /// <summary> Initializes a new instance of <see cref="FaceIdentificationCandidate"/>. </summary>
         /// <param name="personId"> personId of candidate person. </param>
         /// <param name="confidence"> Confidence value of the candidate. The higher confidence, the more similar. Range between [0,1]. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FaceIdentificationCandidate(Guid personId, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FaceIdentificationCandidate(Guid personId, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PersonId = personId;
             Confidence = confidence;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FaceIdentificationCandidate"/> for deserialization. </summary>
-        internal FaceIdentificationCandidate()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> personId of candidate person. </summary>
         public Guid PersonId { get; }
+
         /// <summary> Confidence value of the candidate. The higher confidence, the more similar. Range between [0,1]. </summary>
         public float Confidence { get; }
     }

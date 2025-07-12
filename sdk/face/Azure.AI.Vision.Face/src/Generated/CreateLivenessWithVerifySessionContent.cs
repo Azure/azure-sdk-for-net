@@ -10,95 +10,89 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Vision.Face
 {
-    /// <summary> Request for creating liveness with verify session. </summary>
+    /// <summary> Request of liveness with verify session creation. </summary>
     public partial class CreateLivenessWithVerifySessionContent
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionContent"/>. </summary>
+        /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
+        /// <param name="verifyImage"> The image stream for verify. Content-Disposition header field for this part must have filename. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="verifyImage"/> is null. </exception>
+        public CreateLivenessWithVerifySessionContent(LivenessOperationMode livenessOperationMode, BinaryData verifyImage)
+        {
+            Argument.AssertNotNull(verifyImage, nameof(verifyImage));
+
+            LivenessOperationMode = livenessOperationMode;
+            VerifyImage = verifyImage;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionContent"/>. </summary>
+        /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
+        /// <param name="deviceCorrelationIdSetInClient"> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </param>
+        /// <param name="enableSessionImage"> Whether or not store the session image. </param>
+        /// <param name="livenessModelVersion"> The model version used for liveness classification. This is an optional parameter, and if this is not specified, then the latest supported model version will be chosen. </param>
+        /// <param name="returnVerifyImageHash"> Whether or not return the verify image hash. </param>
+        /// <param name="verifyConfidenceThreshold"> Threshold for confidence of the face verification. Please refer to the documentation for more details. https://learn.microsoft.com/legal/cognitive-services/face/characteristics-and-limitations?context=%2Fazure%2Fai-services%2Fcomputer-vision%2Fcontext%2Fcontext#recognition-confidence-score. </param>
+        /// <param name="verifyImage"> The image stream for verify. Content-Disposition header field for this part must have filename. </param>
+        /// <param name="deviceCorrelationId"> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </param>
+        /// <param name="authTokenTimeToLiveInSeconds"> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CreateLivenessWithVerifySessionContent(LivenessOperationMode livenessOperationMode, bool? deviceCorrelationIdSetInClient, bool? enableSessionImage, LivenessModel? livenessModelVersion, bool? returnVerifyImageHash, float? verifyConfidenceThreshold, BinaryData verifyImage, string deviceCorrelationId, int? authTokenTimeToLiveInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            LivenessOperationMode = livenessOperationMode;
+            DeviceCorrelationIdSetInClient = deviceCorrelationIdSetInClient;
+            EnableSessionImage = enableSessionImage;
+            LivenessModelVersion = livenessModelVersion;
+            ReturnVerifyImageHash = returnVerifyImageHash;
+            VerifyConfidenceThreshold = verifyConfidenceThreshold;
+            VerifyImage = verifyImage;
+            DeviceCorrelationId = deviceCorrelationId;
+            AuthTokenTimeToLiveInSeconds = authTokenTimeToLiveInSeconds;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Type of liveness mode the client should follow. </summary>
+        public LivenessOperationMode LivenessOperationMode { get; }
+
+        /// <summary> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </summary>
+        public bool? DeviceCorrelationIdSetInClient { get; set; }
+
+        /// <summary> Whether or not store the session image. </summary>
+        public bool? EnableSessionImage { get; set; }
+
+        /// <summary> The model version used for liveness classification. This is an optional parameter, and if this is not specified, then the latest supported model version will be chosen. </summary>
+        public LivenessModel? LivenessModelVersion { get; set; }
+
+        /// <summary> Whether or not return the verify image hash. </summary>
+        public bool? ReturnVerifyImageHash { get; set; }
+
+        /// <summary> Threshold for confidence of the face verification. Please refer to the documentation for more details. https://learn.microsoft.com/legal/cognitive-services/face/characteristics-and-limitations?context=%2Fazure%2Fai-services%2Fcomputer-vision%2Fcontext%2Fcontext#recognition-confidence-score. </summary>
+        public float? VerifyConfidenceThreshold { get; set; }
+
         /// <summary>
-        /// Keeps track of any properties unknown to the library.
+        /// The image stream for verify. Content-Disposition header field for this part must have filename.
         /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
         /// </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        public BinaryData VerifyImage { get; }
 
-        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionContent"/>. </summary>
-        /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
-        public CreateLivenessWithVerifySessionContent(LivenessOperationMode livenessOperationMode)
-        {
-            LivenessOperationMode = livenessOperationMode;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionContent"/>. </summary>
-        /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
-        /// <param name="sendResultsToClient"> Whether or not to allow a '200 - Success' response body to be sent to the client, which may be undesirable for security reasons. Default is false, clients will receive a '204 - NoContent' empty body response. Regardless of selection, calling Session GetResult will always contain a response body enabling business logic to be implemented. </param>
-        /// <param name="deviceCorrelationIdSetInClient"> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </param>
-        /// <param name="enableSessionImage"> Whether or not store the session image. </param>
-        /// <param name="livenessSingleModalModel"> The model version used for liveness classification. This is an optional parameter, and if this is not specified, then the latest supported model version will be chosen. </param>
-        /// <param name="deviceCorrelationId"> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </param>
-        /// <param name="authTokenTimeToLiveInSeconds"> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </param>
-        /// <param name="returnVerifyImageHash"> Whether or not return the verify image hash. </param>
-        /// <param name="verifyConfidenceThreshold"> Threshold for confidence of the face verification. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateLivenessWithVerifySessionContent(LivenessOperationMode livenessOperationMode, bool? sendResultsToClient, bool? deviceCorrelationIdSetInClient, bool? enableSessionImage, LivenessModel? livenessSingleModalModel, string deviceCorrelationId, int? authTokenTimeToLiveInSeconds, bool? returnVerifyImageHash, float? verifyConfidenceThreshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            LivenessOperationMode = livenessOperationMode;
-            SendResultsToClient = sendResultsToClient;
-            DeviceCorrelationIdSetInClient = deviceCorrelationIdSetInClient;
-            EnableSessionImage = enableSessionImage;
-            LivenessSingleModalModel = livenessSingleModalModel;
-            DeviceCorrelationId = deviceCorrelationId;
-            AuthTokenTimeToLiveInSeconds = authTokenTimeToLiveInSeconds;
-            ReturnVerifyImageHash = returnVerifyImageHash;
-            VerifyConfidenceThreshold = verifyConfidenceThreshold;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CreateLivenessWithVerifySessionContent"/> for deserialization. </summary>
-        internal CreateLivenessWithVerifySessionContent()
-        {
-        }
-
-        /// <summary> Type of liveness mode the client should follow. </summary>
-        public LivenessOperationMode LivenessOperationMode { get; }
-        /// <summary> Whether or not to allow a '200 - Success' response body to be sent to the client, which may be undesirable for security reasons. Default is false, clients will receive a '204 - NoContent' empty body response. Regardless of selection, calling Session GetResult will always contain a response body enabling business logic to be implemented. </summary>
-        public bool? SendResultsToClient { get; set; }
-        /// <summary> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </summary>
-        public bool? DeviceCorrelationIdSetInClient { get; set; }
-        /// <summary> Whether or not store the session image. </summary>
-        public bool? EnableSessionImage { get; set; }
-        /// <summary> The model version used for liveness classification. This is an optional parameter, and if this is not specified, then the latest supported model version will be chosen. </summary>
-        public LivenessModel? LivenessSingleModalModel { get; set; }
         /// <summary> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </summary>
         public string DeviceCorrelationId { get; set; }
+
         /// <summary> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </summary>
         public int? AuthTokenTimeToLiveInSeconds { get; set; }
-        /// <summary> Whether or not return the verify image hash. </summary>
-        public bool? ReturnVerifyImageHash { get; set; }
-        /// <summary> Threshold for confidence of the face verification. </summary>
-        public float? VerifyConfidenceThreshold { get; set; }
     }
 }

@@ -14,41 +14,58 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct BlurLevel : IEquatable<BlurLevel>
     {
         private readonly string _value;
+        /// <summary> Low blur level. </summary>
+        private const string LowValue = "low";
+        /// <summary> Medium blur level. </summary>
+        private const string MediumValue = "medium";
+        /// <summary> High blur level. </summary>
+        private const string HighValue = "high";
 
         /// <summary> Initializes a new instance of <see cref="BlurLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BlurLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LowValue = "low";
-        private const string MediumValue = "medium";
-        private const string HighValue = "high";
+            _value = value;
+        }
 
         /// <summary> Low blur level. </summary>
         public static BlurLevel Low { get; } = new BlurLevel(LowValue);
+
         /// <summary> Medium blur level. </summary>
         public static BlurLevel Medium { get; } = new BlurLevel(MediumValue);
+
         /// <summary> High blur level. </summary>
         public static BlurLevel High { get; } = new BlurLevel(HighValue);
+
         /// <summary> Determines if two <see cref="BlurLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BlurLevel left, BlurLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BlurLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BlurLevel left, BlurLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BlurLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BlurLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BlurLevel(string value) => new BlurLevel(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BlurLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BlurLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

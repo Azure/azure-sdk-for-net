@@ -14,41 +14,58 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct ExposureLevel : IEquatable<ExposureLevel>
     {
         private readonly string _value;
+        /// <summary> Low exposure level. </summary>
+        private const string UnderExposureValue = "underExposure";
+        /// <summary> Good exposure level. </summary>
+        private const string GoodExposureValue = "goodExposure";
+        /// <summary> High exposure level. </summary>
+        private const string OverExposureValue = "overExposure";
 
         /// <summary> Initializes a new instance of <see cref="ExposureLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExposureLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnderExposureValue = "underExposure";
-        private const string GoodExposureValue = "goodExposure";
-        private const string OverExposureValue = "overExposure";
+            _value = value;
+        }
 
         /// <summary> Low exposure level. </summary>
         public static ExposureLevel UnderExposure { get; } = new ExposureLevel(UnderExposureValue);
+
         /// <summary> Good exposure level. </summary>
         public static ExposureLevel GoodExposure { get; } = new ExposureLevel(GoodExposureValue);
+
         /// <summary> High exposure level. </summary>
         public static ExposureLevel OverExposure { get; } = new ExposureLevel(OverExposureValue);
+
         /// <summary> Determines if two <see cref="ExposureLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExposureLevel left, ExposureLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExposureLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExposureLevel left, ExposureLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExposureLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExposureLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExposureLevel(string value) => new ExposureLevel(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExposureLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExposureLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

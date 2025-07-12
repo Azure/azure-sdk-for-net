@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    public partial class FacialHair : IUtf8JsonSerializable, IJsonModel<FacialHair>
+    /// <summary> Properties describing facial hair attributes. </summary>
+    public partial class FacialHair : IJsonModel<FacialHair>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FacialHair>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="FacialHair"/> for deserialization. </summary>
+        internal FacialHair()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FacialHair>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,27 +33,26 @@ namespace Azure.AI.Vision.Face
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FacialHair>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FacialHair>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FacialHair)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("moustache"u8);
             writer.WriteNumberValue(Moustache);
             writer.WritePropertyName("beard"u8);
             writer.WriteNumberValue(Beard);
             writer.WritePropertyName("sideburns"u8);
             writer.WriteNumberValue(Sideburns);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -57,22 +61,27 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        FacialHair IJsonModel<FacialHair>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FacialHair IJsonModel<FacialHair>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FacialHair JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FacialHair>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FacialHair>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FacialHair)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFacialHair(document.RootElement, options);
         }
 
-        internal static FacialHair DeserializeFacialHair(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FacialHair DeserializeFacialHair(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,38 +89,39 @@ namespace Azure.AI.Vision.Face
             float moustache = default;
             float beard = default;
             float sideburns = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("moustache"u8))
+                if (prop.NameEquals("moustache"u8))
                 {
-                    moustache = property.Value.GetSingle();
+                    moustache = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("beard"u8))
+                if (prop.NameEquals("beard"u8))
                 {
-                    beard = property.Value.GetSingle();
+                    beard = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("sideburns"u8))
+                if (prop.NameEquals("sideburns"u8))
                 {
-                    sideburns = property.Value.GetSingle();
+                    sideburns = prop.Value.GetSingle();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FacialHair(moustache, beard, sideburns, serializedAdditionalRawData);
+            return new FacialHair(moustache, beard, sideburns, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<FacialHair>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FacialHair>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FacialHair>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FacialHair>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -121,15 +131,20 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        FacialHair IPersistableModel<FacialHair>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FacialHair>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FacialHair IPersistableModel<FacialHair>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FacialHair PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FacialHair>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFacialHair(document.RootElement, options);
                     }
                 default:
@@ -137,22 +152,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FacialHair>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static FacialHair FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFacialHair(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

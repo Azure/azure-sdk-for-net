@@ -14,44 +14,63 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct GlassesType : IEquatable<GlassesType>
     {
         private readonly string _value;
+        /// <summary> No glasses on the face. </summary>
+        private const string NoGlassesValue = "noGlasses";
+        /// <summary> Normal glasses on the face. </summary>
+        private const string ReadingGlassesValue = "readingGlasses";
+        /// <summary> Sunglasses on the face. </summary>
+        private const string SunglassesValue = "sunglasses";
+        /// <summary> Swimming goggles on the face. </summary>
+        private const string SwimmingGogglesValue = "swimmingGoggles";
 
         /// <summary> Initializes a new instance of <see cref="GlassesType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GlassesType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoGlassesValue = "noGlasses";
-        private const string ReadingGlassesValue = "readingGlasses";
-        private const string SunglassesValue = "sunglasses";
-        private const string SwimmingGogglesValue = "swimmingGoggles";
+            _value = value;
+        }
 
         /// <summary> No glasses on the face. </summary>
         public static GlassesType NoGlasses { get; } = new GlassesType(NoGlassesValue);
+
         /// <summary> Normal glasses on the face. </summary>
         public static GlassesType ReadingGlasses { get; } = new GlassesType(ReadingGlassesValue);
+
         /// <summary> Sunglasses on the face. </summary>
         public static GlassesType Sunglasses { get; } = new GlassesType(SunglassesValue);
+
         /// <summary> Swimming goggles on the face. </summary>
         public static GlassesType SwimmingGoggles { get; } = new GlassesType(SwimmingGogglesValue);
+
         /// <summary> Determines if two <see cref="GlassesType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GlassesType left, GlassesType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GlassesType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GlassesType left, GlassesType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GlassesType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GlassesType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GlassesType(string value) => new GlassesType(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GlassesType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GlassesType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

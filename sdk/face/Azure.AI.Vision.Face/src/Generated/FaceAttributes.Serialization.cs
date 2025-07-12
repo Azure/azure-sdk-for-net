@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    public partial class FaceAttributes : IUtf8JsonSerializable, IJsonModel<FaceAttributes>
+    /// <summary> Face attributes for the detected face. </summary>
+    public partial class FaceAttributes : IJsonModel<FaceAttributes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FaceAttributes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FaceAttributes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +28,11 @@ namespace Azure.AI.Vision.Face
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FaceAttributes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FaceAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FaceAttributes)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Age))
             {
                 writer.WritePropertyName("age"u8);
@@ -73,7 +72,7 @@ namespace Azure.AI.Vision.Face
             {
                 writer.WritePropertyName("accessories"u8);
                 writer.WriteStartArray();
-                foreach (var item in Accessories)
+                foreach (AccessoryItem item in Accessories)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -104,15 +103,15 @@ namespace Azure.AI.Vision.Face
                 writer.WritePropertyName("qualityForRecognition"u8);
                 writer.WriteStringValue(QualityForRecognition.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,22 +120,27 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        FaceAttributes IJsonModel<FaceAttributes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FaceAttributes IJsonModel<FaceAttributes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FaceAttributes JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FaceAttributes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FaceAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FaceAttributes)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFaceAttributes(document.RootElement, options);
         }
 
-        internal static FaceAttributes DeserializeFaceAttributes(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FaceAttributes DeserializeFaceAttributes(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -148,144 +152,142 @@ namespace Azure.AI.Vision.Face
             HeadPose headPose = default;
             HairProperties hair = default;
             OcclusionProperties occlusion = default;
-            IReadOnlyList<AccessoryItem> accessories = default;
+            IList<AccessoryItem> accessories = default;
             BlurProperties blur = default;
             ExposureProperties exposure = default;
             NoiseProperties noise = default;
             MaskProperties mask = default;
             QualityForRecognition? qualityForRecognition = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("age"u8))
+                if (prop.NameEquals("age"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    age = property.Value.GetSingle();
+                    age = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("smile"u8))
+                if (prop.NameEquals("smile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    smile = property.Value.GetSingle();
+                    smile = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("facialHair"u8))
+                if (prop.NameEquals("facialHair"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    facialHair = FacialHair.DeserializeFacialHair(property.Value, options);
+                    facialHair = FacialHair.DeserializeFacialHair(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("glasses"u8))
+                if (prop.NameEquals("glasses"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    glasses = new GlassesType(property.Value.GetString());
+                    glasses = new GlassesType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("headPose"u8))
+                if (prop.NameEquals("headPose"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    headPose = HeadPose.DeserializeHeadPose(property.Value, options);
+                    headPose = HeadPose.DeserializeHeadPose(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("hair"u8))
+                if (prop.NameEquals("hair"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hair = HairProperties.DeserializeHairProperties(property.Value, options);
+                    hair = HairProperties.DeserializeHairProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("occlusion"u8))
+                if (prop.NameEquals("occlusion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    occlusion = OcclusionProperties.DeserializeOcclusionProperties(property.Value, options);
+                    occlusion = OcclusionProperties.DeserializeOcclusionProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("accessories"u8))
+                if (prop.NameEquals("accessories"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AccessoryItem> array = new List<AccessoryItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AccessoryItem.DeserializeAccessoryItem(item, options));
                     }
                     accessories = array;
                     continue;
                 }
-                if (property.NameEquals("blur"u8))
+                if (prop.NameEquals("blur"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    blur = BlurProperties.DeserializeBlurProperties(property.Value, options);
+                    blur = BlurProperties.DeserializeBlurProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("exposure"u8))
+                if (prop.NameEquals("exposure"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    exposure = ExposureProperties.DeserializeExposureProperties(property.Value, options);
+                    exposure = ExposureProperties.DeserializeExposureProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("noise"u8))
+                if (prop.NameEquals("noise"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    noise = NoiseProperties.DeserializeNoiseProperties(property.Value, options);
+                    noise = NoiseProperties.DeserializeNoiseProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("mask"u8))
+                if (prop.NameEquals("mask"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mask = MaskProperties.DeserializeMaskProperties(property.Value, options);
+                    mask = MaskProperties.DeserializeMaskProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("qualityForRecognition"u8))
+                if (prop.NameEquals("qualityForRecognition"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    qualityForRecognition = new QualityForRecognition(property.Value.GetString());
+                    qualityForRecognition = new QualityForRecognition(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FaceAttributes(
                 age,
                 smile,
@@ -300,13 +302,16 @@ namespace Azure.AI.Vision.Face
                 noise,
                 mask,
                 qualityForRecognition,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<FaceAttributes>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FaceAttributes>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FaceAttributes>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FaceAttributes>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -316,15 +321,20 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        FaceAttributes IPersistableModel<FaceAttributes>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FaceAttributes>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FaceAttributes IPersistableModel<FaceAttributes>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FaceAttributes PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FaceAttributes>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFaceAttributes(document.RootElement, options);
                     }
                 default:
@@ -332,22 +342,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FaceAttributes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static FaceAttributes FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFaceAttributes(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }
