@@ -10,7 +10,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     {
         protected override List<List<AvailabilitySetData>> GetModelInstance()
         {
-            return [[ModelInstances.s_testAs_3375, ModelInstances.s_testAs_3376], null, [ModelInstances.s_testAs_3377, ModelInstances.s_testAs_3378]];
+            return [[ModelInstances.s_testAs_3375, ModelInstances.s_testAs_3376], null!, [ModelInstances.s_testAs_3377, ModelInstances.s_testAs_3378]];
         }
     }
 }

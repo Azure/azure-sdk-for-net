@@ -22,6 +22,25 @@ namespace Azure.AI.Vision.ImageAnalysis
         public static Azure.AI.Vision.ImageAnalysis.SmartCropsResult SmartCropsResult(System.Collections.Generic.IEnumerable<Azure.AI.Vision.ImageAnalysis.CropRegion> values = null) { throw null; }
         public static Azure.AI.Vision.ImageAnalysis.TagsResult TagsResult(System.Collections.Generic.IEnumerable<Azure.AI.Vision.ImageAnalysis.DetectedTag> values = null) { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.CaptionResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.CropRegion))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DenseCaption))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DenseCaptionsResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DetectedObject))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DetectedPerson))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DetectedTag))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DetectedTextBlock))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DetectedTextLine))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.DetectedTextWord))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.ImageBoundingBox))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.ImageMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.ImagePoint))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.ObjectsResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.PeopleResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.ReadResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.SmartCropsResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Vision.ImageAnalysis.TagsResult))]
     public partial class AzureAIVisionImageAnalysisContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAIVisionImageAnalysisContext() { }

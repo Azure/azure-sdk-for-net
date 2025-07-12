@@ -1,5 +1,7 @@
 namespace Azure.ResourceManager.EdgeZones
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.EdgeZones.ExtendedZoneData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.EdgeZones.ExtendedZoneResource))]
     public partial class AzureResourceManagerEdgeZonesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerEdgeZonesContext() { }

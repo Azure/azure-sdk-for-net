@@ -1,5 +1,14 @@
 namespace Azure.ResourceManager.LambdaTestHyperExecute
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LambdaTestHyperExecute.LambdaTestHyperExecuteOrganizationData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LambdaTestHyperExecute.LambdaTestHyperExecuteOrganizationResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferPartnerProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails))]
     public partial class AzureResourceManagerLambdaTestHyperExecuteContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerLambdaTestHyperExecuteContext() { }
