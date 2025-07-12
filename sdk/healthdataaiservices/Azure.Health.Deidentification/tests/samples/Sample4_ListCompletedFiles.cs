@@ -16,7 +16,7 @@ namespace Azure.Health.Deidentification.Samples
         [Test]
         public void ListCompletedFiles()
         {
-            const string serviceEndpoint = TestEnvironment.Endpoint;
+            string serviceEndpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
 
             DeidentificationClient client = new(

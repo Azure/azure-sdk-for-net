@@ -16,7 +16,7 @@ namespace Azure.Health.Deidentification.Samples
         [Test]
         public async void HelloWorldAsync()
         {
-            const string serviceEndpoint = TestEnvironment.Endpoint;
+            string serviceEndpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
 
             #region Snippet:AzHealthDeidSample1Async_HelloWorld
