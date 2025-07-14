@@ -48,14 +48,6 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(vaultName, true);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -72,14 +64,6 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
-            uri.AppendPath(vaultName, true);
-            uri.AppendPath("/certificates/", false);
-            uri.AppendPath(certificateName, true);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/", false);
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);

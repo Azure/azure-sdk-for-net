@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/certificates/{certificateName}/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/{vaultName}/certificates/{certificateName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/certificates/{certificateName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/certificates/{certificateName}/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/{vaultName}/certificates/{certificateName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/certificates/{certificateName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
