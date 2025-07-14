@@ -48,14 +48,18 @@ namespace Azure.Generator.Management
 
         private static bool IsModelFactoryModel(ModelProvider model)
         {
-            return model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && EnumerateAllProperties(model).Any(prop => !prop.Body.HasSetter);
+            // A model is a model factory model if it is public and it has at least one public property without a setter.
+            return model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && EnumerateAllPublicProperties(model).Any(prop => !prop.Body.HasSetter);
 
-            IEnumerable<PropertyProvider> EnumerateAllProperties(ModelProvider current)
+            IEnumerable<PropertyProvider> EnumerateAllPublicProperties(ModelProvider current)
             {
                 var currentModel = current;
                 foreach (var property in currentModel.Properties)
                 {
-                    yield return property;
+                    if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                    {
+                        yield return property;
+                    }
                 }
 
                 while (currentModel.BaseModelProvider is not null)
@@ -63,7 +67,10 @@ namespace Azure.Generator.Management
                     currentModel = currentModel.BaseModelProvider;
                     foreach (var property in currentModel.Properties)
                     {
-                        yield return property;
+                        if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                        {
+                            yield return property;
+                        }
                     }
                 }
             }

@@ -125,10 +125,13 @@ namespace Azure.Generator.Management.Visitors
             if (updated)
             {
                 method.Signature.Update(parameters: updatedParameters);
+
+                // The model factory method return a new instance of the model type, update the constructor arguments with the flattened properties of internalized properties.
                 var instanceExpression = (method.BodyStatements?.OfType<ExpressionStatement>().Single()?.Expression as KeywordExpression)?.Expression as NewInstanceExpression;
                 var updatedInstanceParamters = new List<ValueExpression>(instanceExpression!.Parameters.Count);
                 foreach (var instanceParemter in instanceExpression!.Parameters)
                 {
+                    // If the instance parameter is a variable expression, we can check if it is a flattened property and update it accordingly.
                     if (instanceParemter is VariableExpression variable && propertyMap.TryGetValue(variable.Type, out var flattenedProperty))
                     {
                         updatedInstanceParamters.Add(
