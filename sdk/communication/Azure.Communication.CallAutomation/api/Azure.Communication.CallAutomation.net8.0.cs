@@ -711,7 +711,8 @@ namespace Azure.Communication.CallAutomation
         public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> VoipHeaders { get { throw null; } }
         public void AddSipUui(string value) { }
-        public void AddSipX(string key, string value, Azure.Communication.CallAutomation.SipHeaderPrefix prefix = Azure.Communication.CallAutomation.SipHeaderPrefix.XmsCustom) { }
+        public void AddSipX(string key, string value) { }
+        public void AddSipX(string key, string value, Azure.Communication.CallAutomation.SipHeaderPrefix prefix = Azure.Communication.CallAutomation.SipHeaderPrefix.X) { }
         public void AddVoip(string key, string value) { }
     }
     public partial class DtmfData : Azure.Communication.CallAutomation.StreamingData

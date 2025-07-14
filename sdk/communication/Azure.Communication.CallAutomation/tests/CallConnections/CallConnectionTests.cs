@@ -497,7 +497,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         private static IEnumerable<object?[]> TestData_TransferCallToParticipant_PhoneNumberIdentifier_MS()
         {
             var callInvite = new CallInvite(new PhoneNumberIdentifier(PhoneNumber), new PhoneNumberIdentifier("+17654321"));
-            callInvite.CustomCallingContext.AddSipX("key1", "value1", SipHeaderPrefix.XMSCustom);
+            callInvite.CustomCallingContext.AddSipX("key1", "value1", SipHeaderPrefix.XmsCustom);
             return new[]
             {
                 new object?[]
