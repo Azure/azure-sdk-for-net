@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Capabilities properties in response. </param>
-        internal CapabilitiesResult(ResourceType resourceCapabilitiesBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, CapabilitiesResponseProperties properties) : base(resourceCapabilitiesBaseType, serializedAdditionalRawData)
+        internal CapabilitiesResult(ResourceType resourceCapabilitiesBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, CapabilitiesResultProperties properties) : base(resourceCapabilitiesBaseType, serializedAdditionalRawData)
         {
             Properties = properties;
         }
@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Capabilities properties in response. </summary>
-        internal CapabilitiesResponseProperties Properties { get; set; }
-        /// <summary> Gets the capabilities response dns zones. </summary>
-        public IList<DnsZoneResult> CapabilitiesResponseDnsZones
+        internal CapabilitiesResultProperties Properties { get; set; }
+        /// <summary> Gets the capabilities result dns zones. </summary>
+        public IList<DnsZoneResult> CapabilitiesResultDnsZones
         {
             get
             {
                 if (Properties is null)
-                    Properties = new CapabilitiesResponseProperties();
+                    Properties = new CapabilitiesResultProperties();
                 return Properties.DnsZones;
             }
         }

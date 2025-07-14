@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public partial class CapabilitiesResult : Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilitiesBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>
     {
         public CapabilitiesResult(Azure.Core.ResourceType resourceCapabilitiesBaseType) : base (default(Azure.Core.ResourceType)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult> CapabilitiesResponseDnsZones { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult> CapabilitiesResultDnsZones { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
