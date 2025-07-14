@@ -292,7 +292,7 @@ namespace System.ClientModel.Primitives
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Assembly)]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class ModelReaderWriterContextTypeAttribute : System.Attribute
+    public sealed partial class ModelReaderWriterContextTypeAttribute : System.Attribute
     {
         public ModelReaderWriterContextTypeAttribute(System.Type contextType) { }
     }
