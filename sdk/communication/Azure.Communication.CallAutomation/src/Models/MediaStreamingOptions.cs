@@ -9,14 +9,15 @@ namespace Azure.Communication.CallAutomation
     public class MediaStreamingOptions
     {
         /// <summary> Initializes a new instance of MediaStreamingOptions. </summary>
-        public MediaStreamingOptions(Uri transportUri,
-            MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, MediaStreamingTransport transportType = default, bool? startMediaStreaming = null)
+        /// <summary> Initializes a new instance of MediaStreamingOptions. </summary>
+        /// <param name="transportUri">Transport URL for media streaming</param>
+        /// <param name="audioChannelType"> The audio channel type to stream, e.g., unmixed audio, mixed audio. </param>
+        public MediaStreamingOptions(Uri transportUri, MediaStreamingAudioChannel audioChannelType)
         {
-            TransportUri = transportUri;
-            MediaStreamingTransport = transportType;
-            MediaStreamingContent = contentType;
             MediaStreamingAudioChannel = audioChannelType;
-            StartMediaStreaming = startMediaStreaming;
+            TransportUri = transportUri ?? throw new ArgumentNullException(nameof(transportUri));
+            MediaStreamingTransport = MediaStreamingTransport.Websocket;
+            MediaStreamingContent = MediaStreamingContent.Audio;
         }
 
         /// <summary> Transport URL for media streaming. </summary>
@@ -24,7 +25,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The type of tranport to be used for media streaming, eg. Websocket. </summary>
         public MediaStreamingTransport MediaStreamingTransport { get; }
         /// <summary> Content type to stream, eg. audio, audio/video. </summary>
-        public MediaStreamingContent MediaStreamingContent { get; }
+        public MediaStreamingContent MediaStreamingContent { get; set; }
         /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
         public MediaStreamingAudioChannel MediaStreamingAudioChannel { get; }
         /// <summary> Determines if the media streaming should be started immediately after call is answered or not. </summary>
