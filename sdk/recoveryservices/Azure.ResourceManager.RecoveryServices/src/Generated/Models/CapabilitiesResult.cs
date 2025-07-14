@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         /// <summary> Initializes a new instance of <see cref="CapabilitiesResult"/>. </summary>
         /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
-        internal CapabilitiesResult(ResourceType resourceCapabilitiesBaseType) : base(resourceCapabilitiesBaseType)
+        public CapabilitiesResult(ResourceType resourceCapabilitiesBaseType) : base(resourceCapabilitiesBaseType)
         {
         }
 
@@ -35,11 +35,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Capabilities properties in response. </summary>
-        internal CapabilitiesResponseProperties Properties { get; }
+        internal CapabilitiesResponseProperties Properties { get; set; }
         /// <summary> Gets the capabilities response dns zones. </summary>
-        public IReadOnlyList<DnsZoneResult> CapabilitiesResponseDnsZones
+        public IList<DnsZoneResult> CapabilitiesResponseDnsZones
         {
-            get => Properties?.DnsZones;
+            get
+            {
+                if (Properties is null)
+                    Properties = new CapabilitiesResponseProperties();
+                return Properties.DnsZones;
+            }
         }
     }
 }

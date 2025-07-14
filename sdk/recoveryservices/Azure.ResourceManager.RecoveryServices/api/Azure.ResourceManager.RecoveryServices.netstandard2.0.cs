@@ -210,11 +210,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public static partial class ArmRecoveryServicesModelFactory
     {
-        public static Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult CapabilitiesResult(Azure.Core.ResourceType resourceCapabilitiesBaseType = default(Azure.Core.ResourceType), System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult> capabilitiesResponseDnsZones = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay ClientDiscoveryDisplay(string provider = null, string resource = null, string operation = null, string description = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification ClientDiscoveryForLogSpecification(string name = null, string displayName = null, string blobDuration = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryValueForSingleApi ClientDiscoveryValueForSingleApi(string name = null, Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryDisplay display = null, string origin = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServices.Models.ClientDiscoveryForLogSpecification> logSpecifications = null) { throw null; }
-        public static Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult DnsZoneResult(Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType? subResource = default(Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType?), System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.OperationResource OperationResource(System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResponseError error = null, string id = null, string name = null, string status = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult RecoveryServicesNameAvailabilityResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnection RecoveryServicesPrivateEndpointConnection(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateEndpointConnectionProvisioningState?), Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServices.Models.VaultSubResourceType> groupIds = null) { throw null; }
@@ -308,8 +306,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     }
     public partial class CapabilitiesResult : Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilitiesBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>
     {
-        internal CapabilitiesResult() : base (default(Azure.Core.ResourceType)) { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult> CapabilitiesResponseDnsZones { get { throw null; } }
+        public CapabilitiesResult(Azure.Core.ResourceType resourceCapabilitiesBaseType) : base (default(Azure.Core.ResourceType)) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult> CapabilitiesResponseDnsZones { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -432,8 +430,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     }
     public partial class DnsZoneResult : Azure.ResourceManager.RecoveryServices.Models.DnsZone, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult>
     {
-        internal DnsZoneResult() { }
-        public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        public DnsZoneResult() { }
+        public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServices.Models.DnsZoneResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

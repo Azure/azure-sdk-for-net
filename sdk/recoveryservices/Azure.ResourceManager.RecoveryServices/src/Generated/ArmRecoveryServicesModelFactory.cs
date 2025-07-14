@@ -335,28 +335,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CapabilitiesResult"/>. </summary>
-        /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
-        /// <param name="capabilitiesResponseDnsZones"> Capabilities properties in response. </param>
-        /// <returns> A new <see cref="Models.CapabilitiesResult"/> instance for mocking. </returns>
-        public static CapabilitiesResult CapabilitiesResult(ResourceType resourceCapabilitiesBaseType = default, IEnumerable<DnsZoneResult> capabilitiesResponseDnsZones = null)
-        {
-            capabilitiesResponseDnsZones ??= new List<DnsZoneResult>();
-
-            return new CapabilitiesResult(resourceCapabilitiesBaseType, serializedAdditionalRawData: null, capabilitiesResponseDnsZones != null ? new CapabilitiesResponseProperties(capabilitiesResponseDnsZones?.ToList(), serializedAdditionalRawData: null) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DnsZoneResult"/>. </summary>
-        /// <param name="subResource"> Subresource type for vault AzureBackup, AzureBackup_secondary or AzureSiteRecovery. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone names. </param>
-        /// <returns> A new <see cref="Models.DnsZoneResult"/> instance for mocking. </returns>
-        public static DnsZoneResult DnsZoneResult(VaultSubResourceType? subResource = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            requiredZoneNames ??= new List<string>();
-
-            return new DnsZoneResult(subResource, serializedAdditionalRawData: null, requiredZoneNames?.ToList());
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.VaultCertificateResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

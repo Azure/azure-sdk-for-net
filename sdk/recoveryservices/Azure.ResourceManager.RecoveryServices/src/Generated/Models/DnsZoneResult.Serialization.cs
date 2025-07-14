@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            IReadOnlyList<string> requiredZoneNames = default;
+            IList<string> requiredZoneNames = default;
             VaultSubResourceType? subResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();

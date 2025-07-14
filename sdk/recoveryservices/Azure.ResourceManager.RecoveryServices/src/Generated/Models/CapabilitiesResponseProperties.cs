@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CapabilitiesResponseProperties"/>. </summary>
-        internal CapabilitiesResponseProperties()
+        public CapabilitiesResponseProperties()
         {
             DnsZones = new ChangeTrackingList<DnsZoneResult>();
         }
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of <see cref="CapabilitiesResponseProperties"/>. </summary>
         /// <param name="dnsZones"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilitiesResponseProperties(IReadOnlyList<DnsZoneResult> dnsZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CapabilitiesResponseProperties(IList<DnsZoneResult> dnsZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DnsZones = dnsZones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the dns zones. </summary>
-        public IReadOnlyList<DnsZoneResult> DnsZones { get; }
+        public IList<DnsZoneResult> DnsZones { get; }
     }
 }
