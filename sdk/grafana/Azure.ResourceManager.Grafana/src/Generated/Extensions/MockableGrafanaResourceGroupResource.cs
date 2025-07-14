@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Grafana_Get</description>
+        /// <description>ManagedGrafana_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Grafana_Get</description>
+        /// <description>ManagedGrafana_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -100,6 +100,75 @@ namespace Azure.ResourceManager.Grafana.Mocking
         public virtual Response<ManagedGrafanaResource> GetManagedGrafana(string workspaceName, CancellationToken cancellationToken = default)
         {
             return GetManagedGrafanas().Get(workspaceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedDashboardResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ManagedDashboardResources and their operations over a ManagedDashboardResource. </returns>
+        public virtual ManagedDashboardCollection GetManagedDashboards()
+        {
+            return GetCachedClient(client => new ManagedDashboardCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the properties of a specific dashboard for grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dashboardName"> The name of the Azure Managed Dashboard. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dashboardName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedDashboardResource>> GetManagedDashboardAsync(string dashboardName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedDashboards().GetAsync(dashboardName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of a specific dashboard for grafana resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dashboardName"> The name of the Azure Managed Dashboard. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dashboardName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedDashboardResource> GetManagedDashboard(string dashboardName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedDashboards().Get(dashboardName, cancellationToken);
         }
     }
 }

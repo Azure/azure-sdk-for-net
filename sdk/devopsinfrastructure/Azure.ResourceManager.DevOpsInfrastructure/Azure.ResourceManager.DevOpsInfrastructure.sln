@@ -7,8 +7,6 @@ Project("{01A9F61F-DFCE-4234-AA9C-3576F92E1557}") = "Azure.ResourceManager.DevOp
 EndProject
 Project("{01A9F61F-DFCE-4234-AA9C-3576F92E1557}") = "Azure.ResourceManager.DevOpsInfrastructure.Tests", "tests\Azure.ResourceManager.DevOpsInfrastructure.Tests.csproj", "{4F97FBC0-13F8-4D9A-9A4E-3E38A720E3CF}"
 EndProject
-Project("{01A9F61F-DFCE-4234-AA9C-3576F92E1557}") = "Azure.ResourceManager.DevOpsInfrastructure.Samples", "samples\Azure.ResourceManager.DevOpsInfrastructure.Samples.csproj", "{7E91D3E9-33A7-4127-9579-A59BB92D03B7}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

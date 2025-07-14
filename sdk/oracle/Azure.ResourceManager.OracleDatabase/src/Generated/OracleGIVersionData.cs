@@ -52,11 +52,6 @@ namespace Azure.ResourceManager.OracleDatabase
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OracleGIVersionData"/>. </summary>
-        public OracleGIVersionData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OracleGIVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -70,12 +65,6 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal OracleGIVersionProperties Properties { get; set; }
-        /// <summary> A valid Oracle Grid Infrastructure (GI) software version. </summary>
-        public string OracleGIVersion
-        {
-            get => Properties is null ? default : Properties.Version;
-            set => Properties = new OracleGIVersionProperties(value);
-        }
+        internal OracleGIVersionProperties Properties { get; }
     }
 }

@@ -53,25 +53,37 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("encodingType", streamingAudioMetadata.Encoding);
             Assert.AreEqual(8, streamingAudioMetadata.SampleRate);
             Assert.AreEqual(2, (int)streamingAudioMetadata.Channels);
-            Assert.AreEqual(640, streamingAudioMetadata.Length);
         }
 
         private static void ValidateAudioData(AudioData streamingAudio)
         {
             Assert.IsNotNull(streamingAudio);
-            Assert.AreEqual(Convert.FromBase64String("AQIDBAU="), streamingAudio.Data);
+            CollectionAssert.AreEqual(Convert.FromBase64String("AQIDBAU="), streamingAudio.Data.ToArray());
             Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
             Assert.IsTrue(streamingAudio.Participant is CommunicationIdentifier);
             Assert.AreEqual("participantId", streamingAudio.Participant.RawId);
             Assert.IsFalse(streamingAudio.IsSilent);
         }
-        private static void ValidateAudioDataNoParticipant(AudioData streamingAudio)
+        #endregion
+
+        #region DTMF
+        [Test]
+        public void ParseDtmfData_Test()
         {
-            Assert.IsNotNull(streamingAudio);
-            Assert.AreEqual(Convert.FromBase64String("AQIDBAU="), streamingAudio.Data);
-            Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
-            Assert.IsNull(streamingAudio.Participant);
-            Assert.IsFalse(streamingAudio.IsSilent);
+            string dtmfJson = "{"
+                + "\"kind\": \"DtmfData\","
+                + "\"dtmfData\": {"
+                + "\"data\": \"5\""
+                + "}"
+                + "}";
+
+            DtmfData streamingDtmf = (DtmfData)StreamingData.Parse(dtmfJson);
+            ValidateDtmfData(streamingDtmf);
+        }
+        private static void ValidateDtmfData(DtmfData streamingDtmf)
+        {
+            Assert.IsNotNull(streamingDtmf);
+            Assert.AreEqual("5", streamingDtmf.Data);
         }
         #endregion
 
@@ -88,7 +100,8 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                     "\"subscriptionId\":\"subscriptionId\"," +
                     "\"locale\":\"en-US\"," +
                     "\"callConnectionId\":\"callConnectionId\"," +
-                    "\"correlationId\":\"correlationId\"" +
+                    "\"correlationId\":\"correlationId\"," +
+                    "\"speechRecognitionModelEndpointId\":\"speechRecognitionModelEndpointId\"" +
                 "}" +
             "}";
 
@@ -154,13 +167,14 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("en-US", transcriptionMetadata.Locale);
             Assert.AreEqual("callConnectionId", transcriptionMetadata.CallConnectionId);
             Assert.AreEqual("correlationId", transcriptionMetadata.CorrelationId);
+            Assert.AreEqual("speechRecognitionModelEndpointId", transcriptionMetadata.SpeechRecognitionModelEndpointId);
         }
 
         private static void ValidateTranscriptionDataWithWordsNull(TranscriptionData transcription)
         {
             Assert.IsNotNull(transcription);
             Assert.AreEqual("store hours", transcription.Text);
-            Assert.AreEqual(TextFormat.Display, transcription.Format);
+            Assert.AreEqual("display", transcription.Format);
             Assert.AreEqual(49876484, transcription.Offset.Ticks);
             Assert.AreEqual(9200000, transcription.Duration.Ticks);
 
@@ -174,7 +188,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         {
             Assert.IsNotNull(transcription);
             Assert.AreEqual("Hello World!", transcription.Text);
-            Assert.AreEqual(TextFormat.Display, transcription.Format);
+            Assert.AreEqual("display", transcription.Format);
             Assert.AreEqual(0.98d, transcription.Confidence);
             Assert.AreEqual(1, transcription.Offset.Ticks);
             Assert.AreEqual(2, transcription.Duration.Ticks);

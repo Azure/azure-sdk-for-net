@@ -46,8 +46,7 @@ function IsSpecDir {
     param (
         [string]$dir
     )
-    $subdirs = Get-ChildItem -Path $dir -Directory
-    return -not ($subdirs) -and (Test-Path "$dir/main.tsp")
+    return (Test-Path "$dir/main.tsp")
 }
 
 $failingSpecs = @(
@@ -73,8 +72,6 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'header'
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'path'
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'query'
-    Join-Path 'http' 'azure' 'core' 'basic'
-    Join-Path 'http' 'azure' 'core' 'page'
     Join-Path 'http' 'azure' 'core' 'scalar'
     Join-Path 'http' 'azure' 'core' 'traits'
     Join-Path 'http' 'azure' 'encode' 'duration'
@@ -84,6 +81,7 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'resource-manager' 'non-resource'
     Join-Path 'http' 'azure' 'resource-manager' 'operation-templates'
     Join-Path 'http' 'azure' 'resource-manager' 'resources'
+    Join-Path 'http' 'azure' 'resource-manager' 'large-header'
 
 )
 

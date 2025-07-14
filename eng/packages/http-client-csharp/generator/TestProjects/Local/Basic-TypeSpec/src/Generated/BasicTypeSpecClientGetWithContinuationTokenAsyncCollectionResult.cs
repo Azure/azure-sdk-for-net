@@ -62,17 +62,12 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateListWithContinuationTokenRequest(continuationToken, _context);
+            HttpMessage message = _client.CreateGetWithContinuationTokenRequest(continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationToken");
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -5,6 +5,7 @@
 
 #nullable enable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
@@ -36,7 +37,8 @@ public partial class CognitiveServicesAccountDeploymentProperties : Provisionabl
     private CognitiveServicesAccountDeploymentModel? _model;
 
     /// <summary>
-    /// Properties of Cognitive Services account deployment model.
+    /// Properties of Cognitive Services account deployment model. (Deprecated,
+    /// please use Deployment.sku instead.).
     /// </summary>
     public CognitiveServicesAccountDeploymentScaleSettings ScaleSettings 
     {
@@ -93,6 +95,45 @@ public partial class CognitiveServicesAccountDeploymentProperties : Provisionabl
     private BicepValue<DeploymentModelVersionUpgradeOption>? _versionUpgradeOption;
 
     /// <summary>
+    /// If the dynamic throttling is enabled.
+    /// </summary>
+    public BicepValue<bool> IsDynamicThrottlingEnabled 
+    {
+        get { Initialize(); return _isDynamicThrottlingEnabled!; }
+    }
+    private BicepValue<bool>? _isDynamicThrottlingEnabled;
+
+    /// <summary>
+    /// The current capacity.
+    /// </summary>
+    public BicepValue<int> CurrentCapacity 
+    {
+        get { Initialize(); return _currentCapacity!; }
+        set { Initialize(); _currentCapacity!.Assign(value); }
+    }
+    private BicepValue<int>? _currentCapacity;
+
+    /// <summary>
+    /// Internal use only.
+    /// </summary>
+    public DeploymentCapacitySettings CapacitySettings 
+    {
+        get { Initialize(); return _capacitySettings!; }
+        set { Initialize(); AssignOrReplace(ref _capacitySettings, value); }
+    }
+    private DeploymentCapacitySettings? _capacitySettings;
+
+    /// <summary>
+    /// The name of parent deployment.
+    /// </summary>
+    public BicepValue<string> ParentDeploymentName 
+    {
+        get { Initialize(); return _parentDeploymentName!; }
+        set { Initialize(); _parentDeploymentName!.Assign(value); }
+    }
+    private BicepValue<string>? _parentDeploymentName;
+
+    /// <summary>
     /// Creates a new CognitiveServicesAccountDeploymentProperties.
     /// </summary>
     public CognitiveServicesAccountDeploymentProperties()
@@ -114,5 +155,9 @@ public partial class CognitiveServicesAccountDeploymentProperties : Provisionabl
         _callRateLimit = DefineModelProperty<ServiceAccountCallRateLimit>("CallRateLimit", ["callRateLimit"], isOutput: true);
         _rateLimits = DefineListProperty<ServiceAccountThrottlingRule>("RateLimits", ["rateLimits"], isOutput: true);
         _versionUpgradeOption = DefineProperty<DeploymentModelVersionUpgradeOption>("VersionUpgradeOption", ["versionUpgradeOption"]);
+        _isDynamicThrottlingEnabled = DefineProperty<bool>("IsDynamicThrottlingEnabled", ["dynamicThrottlingEnabled"], isOutput: true);
+        _currentCapacity = DefineProperty<int>("CurrentCapacity", ["currentCapacity"]);
+        _capacitySettings = DefineModelProperty<DeploymentCapacitySettings>("CapacitySettings", ["capacitySettings"]);
+        _parentDeploymentName = DefineProperty<string>("ParentDeploymentName", ["parentDeploymentName"]);
     }
 }

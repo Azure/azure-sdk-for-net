@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ManagedPrivateEndpointGet()
         {
-            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/ManagedPrivateEndpoints_Get.json
-            // this example is just showing the usage of "ManagedPrivateEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/ManagedPrivateEndpoints_Get.json
+            // this example is just showing the usage of "ManagedPrivateEndpointModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ManagedPrivateEndpointDelete()
         {
-            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/ManagedPrivateEndpoints_Delete.json
-            // this example is just showing the usage of "ManagedPrivateEndpoints_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/ManagedPrivateEndpoints_Delete.json
+            // this example is just showing the usage of "ManagedPrivateEndpointModel_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ManagedPrivateEndpointsPatch()
         {
-            // Generated from example definition: specification/dashboard/resource-manager/Microsoft.Dashboard/stable/2023-09-01/examples/ManagedPrivateEndpoints_Patch.json
-            // this example is just showing the usage of "ManagedPrivateEndpoints_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/ManagedPrivateEndpoints_Patch.json
+            // this example is just showing the usage of "ManagedPrivateEndpointModel_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

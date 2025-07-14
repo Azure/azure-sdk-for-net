@@ -7,8 +7,6 @@ Project("{57104F4E-33D2-4712-89D0-35A4165C1BA1}") = "Azure.ResourceManager.Terra
 EndProject
 Project("{57104F4E-33D2-4712-89D0-35A4165C1BA1}") = "Azure.ResourceManager.Terraform.Tests", "tests\Azure.ResourceManager.Terraform.Tests.csproj", "{DC07DC97-58C7-4345-B915-29DF7739ABD5}"
 EndProject
-Project("{57104F4E-33D2-4712-89D0-35A4165C1BA1}") = "Azure.ResourceManager.Terraform.Samples", "samples\Azure.ResourceManager.Terraform.Samples.csproj", "{0C87CC4B-8863-41FC-8704-20CC6F8A58E1}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
@@ -26,10 +27,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var strategy = new EventHubTriggerBindingStrategy();
             var contract = strategy.GetBindingContract();
 
-            Assert.AreEqual(8, contract.Count);
+            Assert.AreEqual(9, contract.Count);
             Assert.AreEqual(typeof(TriggerPartitionContext), contract["TriggerPartitionContext"]);
             Assert.AreEqual(typeof(PartitionContext), contract["PartitionContext"]);
             Assert.AreEqual(typeof(string), contract["Offset"]);
+            Assert.AreEqual(typeof(string), contract["OffsetString"]);
             Assert.AreEqual(typeof(long), contract["SequenceNumber"]);
             Assert.AreEqual(typeof(DateTime), contract["EnqueuedTimeUtc"]);
             Assert.AreEqual(typeof(IDictionary<string, object>), contract["Properties"]);
@@ -42,10 +44,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var strategy = new EventHubTriggerBindingStrategy();
             var contract = strategy.GetBindingContract(true);
 
-            Assert.AreEqual(8, contract.Count);
+            Assert.AreEqual(9, contract.Count);
             Assert.AreEqual(typeof(TriggerPartitionContext), contract["TriggerPartitionContext"]);
             Assert.AreEqual(typeof(PartitionContext), contract["PartitionContext"]);
             Assert.AreEqual(typeof(string), contract["Offset"]);
+            Assert.AreEqual(typeof(string), contract["OffsetString"]);
             Assert.AreEqual(typeof(long), contract["SequenceNumber"]);
             Assert.AreEqual(typeof(DateTime), contract["EnqueuedTimeUtc"]);
             Assert.AreEqual(typeof(IDictionary<string, object>), contract["Properties"]);
@@ -58,11 +61,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var strategy = new EventHubTriggerBindingStrategy();
             var contract = strategy.GetBindingContract(false);
 
-            Assert.AreEqual(8, contract.Count);
+            Assert.AreEqual(9, contract.Count);
             Assert.AreEqual(typeof(TriggerPartitionContext), contract["TriggerPartitionContext"]);
             Assert.AreEqual(typeof(PartitionContext), contract["PartitionContext"]);
             Assert.AreEqual(typeof(string[]), contract["PartitionKeyArray"]);
             Assert.AreEqual(typeof(string[]), contract["OffsetArray"]);
+            Assert.AreEqual(typeof(string[]), contract["OffsetStringArray"]);
             Assert.AreEqual(typeof(long[]), contract["SequenceNumberArray"]);
             Assert.AreEqual(typeof(DateTime[]), contract["EnqueuedTimeUtcArray"]);
             Assert.AreEqual(typeof(IDictionary<string, object>[]), contract["PropertiesArray"]);
@@ -80,18 +84,24 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var strategy = new EventHubTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
-            Assert.AreEqual(8, bindingData.Count);
+            if (!long.TryParse(evt.OffsetString, NumberStyles.Integer, CultureInfo.InvariantCulture, out long offsetLong))
+            {
+                offsetLong = -1;
+            }
+
+            Assert.AreEqual(9, bindingData.Count);
             Assert.AreSame(input.ProcessorPartition.PartitionContext, bindingData["TriggerPartitionContext"]);
             Assert.AreSame(input.ProcessorPartition.PartitionContext, bindingData["PartitionContext"]);
             Assert.AreEqual(evt.PartitionKey, bindingData["PartitionKey"]);
-            Assert.AreEqual(evt.OffsetString, bindingData["Offset"]);
+            Assert.AreEqual(offsetLong.ToString(CultureInfo.InvariantCulture), bindingData["Offset"]);
+            Assert.AreEqual(evt.OffsetString, bindingData["OffsetString"]);
             Assert.AreEqual(evt.SequenceNumber, bindingData["SequenceNumber"]);
             Assert.AreEqual(evt.EnqueuedTime.DateTime, bindingData["EnqueuedTimeUtc"]);
             Assert.AreSame(evt.Properties, bindingData["Properties"]);
             IDictionary<string, object> bindingDataSysProps = bindingData["SystemProperties"] as Dictionary<string, object>;
             Assert.NotNull(bindingDataSysProps);
             Assert.AreEqual(bindingDataSysProps["PartitionKey"], bindingData["PartitionKey"]);
-            Assert.AreEqual(bindingDataSysProps["Offset"], bindingData["Offset"]);
+            Assert.AreEqual(offsetLong.ToString(CultureInfo.InvariantCulture), bindingData["Offset"]);
             Assert.AreEqual(bindingDataSysProps["SequenceNumber"], bindingData["SequenceNumber"]);
             Assert.AreEqual(bindingDataSysProps["EnqueuedTimeUtc"], bindingData["EnqueuedTimeUtc"]);
             Assert.AreEqual(bindingDataSysProps["iothub-connection-device-id"], "testDeviceId");
@@ -123,13 +133,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var strategy = new EventHubTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
-            Assert.AreEqual(8, bindingData.Count);
+            Assert.AreEqual(9, bindingData.Count);
             Assert.AreSame(input.ProcessorPartition.PartitionContext, bindingData["TriggerPartitionContext"]);
             Assert.AreSame(input.ProcessorPartition.PartitionContext, bindingData["PartitionContext"]);
 
             // verify an array was created for each binding data type
             Assert.AreEqual(events.Length, ((string[])bindingData["PartitionKeyArray"]).Length);
             Assert.AreEqual(events.Length, ((string[])bindingData["OffsetArray"]).Length);
+            Assert.AreEqual(events.Length, ((string[])bindingData["OffsetStringArray"]).Length);
             Assert.AreEqual(events.Length, ((long[])bindingData["SequenceNumberArray"]).Length);
             Assert.AreEqual(events.Length, ((DateTime[])bindingData["EnqueuedTimeUtcArray"]).Length);
             Assert.AreEqual(events.Length, ((IDictionary<string, object>[])bindingData["PropertiesArray"]).Length);

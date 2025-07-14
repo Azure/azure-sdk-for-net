@@ -5,32 +5,32 @@
     },
     "matrix": {
         "Agent": {
-            "Ubuntu-20.04_NET8.0": {
-                "OSVmImage": "MMSUbuntu20.04",
-                "Pool": "azsdk-pool-mms-ubuntu-2004-general",
+            "Ubuntu-24.04_NET8.0": {
+                "OSVmImage": "env:LINUXVMIMAGE",
+                "Pool": "env:LINUXPOOL",
                 "TestTargetFramework": "net8.0",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
-            "Ubuntu-20.04_NET6.0": {
-                "OSVmImage": "MMSUbuntu20.04",
-                "Pool": "azsdk-pool-mms-ubuntu-2004-general",
+            "Ubuntu-24.04_NET6.0": {
+                "OSVmImage": "env:LINUXVMIMAGE",
+                "Pool": "env:LINUXPOOL",
                 "TestTargetFramework": "net6.0",
-                "AZURE_TEST_AGENT": "UBUNTU_2004_NET60",
+                "AZURE_TEST_AGENT": "UBUNTU_2404_NET60",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
 
             "windows2022_NET6.0": {
-                "OSVmImage": "windows-2022",
-                "Pool": "azsdk-pool-mms-win-2022-general",
+                "OSVmImage": "env:WINDOWSVMIMAGE",
+                "Pool": "env:WINDOWSPOOL",
                 "TestTargetFramework": "net6.0",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
             "windows2022_NET462": {
-                "OSVmImage": "windows-2022",
-                "Pool": "azsdk-pool-mms-win-2022-general",
+                "OSVmImage": "env:WINDOWSVMIMAGE",
+                "Pool": "env:WINDOWSPOOL",
                 "TestTargetFramework": "net462",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
@@ -62,8 +62,8 @@
         {
             "Agent": {
                 "Windows2022": {
-                    "OSVmImage": "windows-2022",
-                    "Pool": "azsdk-pool-mms-win-2022-general",
+                    "OSVmImage": "env:WINDOWSVMIMAGE",
+                    "Pool": "env:WINDOWSPOOL",
                     "TestTargetFramework": "net8.0"
                 }
             },

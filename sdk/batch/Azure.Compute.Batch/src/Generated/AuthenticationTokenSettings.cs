@@ -51,19 +51,19 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="AuthenticationTokenSettings"/>. </summary>
         public AuthenticationTokenSettings()
         {
-            Access = new ChangeTrackingList<AccessScope>();
+            Access = new ChangeTrackingList<BatchAccessScope>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthenticationTokenSettings"/>. </summary>
         /// <param name="access"> The Batch resources to which the token grants access. The authentication token grants access to a limited set of Batch service operations. Currently the only supported value for the access property is 'job', which grants access to all operations related to the Job which contains the Task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthenticationTokenSettings(IList<AccessScope> access, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AuthenticationTokenSettings(IList<BatchAccessScope> access, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Access = access;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Batch resources to which the token grants access. The authentication token grants access to a limited set of Batch service operations. Currently the only supported value for the access property is 'job', which grants access to all operations related to the Job which contains the Task. </summary>
-        public IList<AccessScope> Access { get; }
+        public IList<BatchAccessScope> Access { get; }
     }
 }

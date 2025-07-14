@@ -172,6 +172,7 @@ model ModelWithClientName {
 }
 
 @doc("this is a roundtrip model")
+@useSystemTextJsonConverter()
 model RoundTripModel {
   @doc("Required string, illustrating a reference type property.")
   requiredString: string;
@@ -387,6 +388,28 @@ op ListWithNextLink(): {
   things: ThingModel[];
 
   @nextLink next?: url;
+};
+
+@route("/linkString")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithStringNextLink(): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink next?: string;
+};
+
+@route("/linkHeader")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithHeaderNextLink(): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink @header next?: string;
 };
 
 @route("/continuation")

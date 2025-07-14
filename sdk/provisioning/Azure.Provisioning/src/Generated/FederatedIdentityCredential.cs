@@ -10,6 +10,7 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
+using System.ComponentModel;
 
 namespace Azure.Provisioning.Roles;
 
@@ -97,7 +98,7 @@ public partial class FederatedIdentityCredential : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the FederatedIdentityCredential.</param>
     public FederatedIdentityCredential(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials", resourceVersion ?? "2023-01-31")
+        : base(bicepIdentifier, "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials", resourceVersion ?? "2024-11-30")
     {
     }
 
@@ -106,6 +107,7 @@ public partial class FederatedIdentityCredential : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _audiences = DefineListProperty<string>("Audiences", ["properties", "audiences"]);
         _issuerUri = DefineProperty<Uri>("IssuerUri", ["properties", "issuer"]);
@@ -121,9 +123,9 @@ public partial class FederatedIdentityCredential : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2023-07-31-PREVIEW.
+        /// 2024-11-30.
         /// </summary>
-        public static readonly string V2023_07_31_PREVIEW = "2023-07-31-PREVIEW";
+        public static readonly string V2024_11_30 = "2024-11-30";
 
         /// <summary>
         /// 2023-01-31.
@@ -131,8 +133,21 @@ public partial class FederatedIdentityCredential : ProvisionableResource
         public static readonly string V2023_01_31 = "2023-01-31";
 
         /// <summary>
+        /// 2025-01-31-PREVIEW.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2025_01_31_PREVIEW = "2025-01-31-PREVIEW";
+
+        /// <summary>
+        /// 2023-07-31-PREVIEW.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2023_07_31_PREVIEW = "2023-07-31-PREVIEW";
+
+        /// <summary>
         /// 2022-01-31-PREVIEW.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static readonly string V2022_01_31_PREVIEW = "2022-01-31-PREVIEW";
     }
 

@@ -34,11 +34,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(OracleGIVersionProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
+            writer.WritePropertyName("version"u8);
+            writer.WriteStringValue(Version);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

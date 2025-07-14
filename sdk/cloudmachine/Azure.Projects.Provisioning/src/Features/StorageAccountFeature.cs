@@ -80,7 +80,7 @@ public class BlobServiceFeature : AzureProjectFeature
         }
         StorageAccount storageAccount = infrastructure.GetConstruct<StorageAccount>(Account.Id);
 
-        BlobService blobService = new("storageBlobService")
+        BlobService blobService = new("storageBlobService", BlobService.ResourceVersions.V2024_01_01)
         {
             Parent = storageAccount
         };
@@ -146,7 +146,7 @@ public class BlobContainerFeature : AzureProjectFeature
         }
 
         BlobService blobService = infrastructure.GetConstruct<BlobService>(Service.Id);
-        BlobContainer blobContainer = new($"storageBlobContainer_{ContainerName}", "2023-01-01")
+        BlobContainer blobContainer = new($"storageBlobContainer_{ContainerName}", BlobContainer.ResourceVersions.V2023_01_01)
         {
             Parent = blobService,
             Name = ContainerName

@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string IPv4Value = "IPv4";
         private const string IPv6Value = "IPv6";
 
-        /// <summary> IPv4. </summary>
+        /// <summary> The IP configuration's private IP is IPv4. </summary>
         public static ServiceFabricManagedClusterPrivateIPAddressVersion IPv4 { get; } = new ServiceFabricManagedClusterPrivateIPAddressVersion(IPv4Value);
-        /// <summary> IPv6. </summary>
+        /// <summary> The IP configuration's private IP is IPv6. </summary>
         public static ServiceFabricManagedClusterPrivateIPAddressVersion IPv6 { get; } = new ServiceFabricManagedClusterPrivateIPAddressVersion(IPv6Value);
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterPrivateIPAddressVersion"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedClusterPrivateIPAddressVersion left, ServiceFabricManagedClusterPrivateIPAddressVersion right) => left.Equals(right);

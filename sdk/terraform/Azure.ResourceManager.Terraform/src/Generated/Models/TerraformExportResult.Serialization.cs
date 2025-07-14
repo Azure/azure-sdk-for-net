@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteStringValue(Configuration);
             }
+            if (Optional.IsDefined(Import))
+            {
+                writer.WritePropertyName("import"u8);
+                writer.WriteStringValue(Import);
+            }
             if (Optional.IsCollectionDefined(SkippedResourceIds))
             {
                 writer.WritePropertyName("skippedResources"u8);
@@ -102,6 +107,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 return null;
             }
             string configuration = default;
+            string import = default;
             IReadOnlyList<ResourceIdentifier> skippedResources = default;
             IReadOnlyList<ResponseError> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -111,6 +117,11 @@ namespace Azure.ResourceManager.Terraform.Models
                 if (property.NameEquals("configuration"u8))
                 {
                     configuration = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("import"u8))
+                {
+                    import = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("skippedResources"u8))
@@ -154,7 +165,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TerraformExportResult(configuration, skippedResources ?? new ChangeTrackingList<ResourceIdentifier>(), errors ?? new ChangeTrackingList<ResponseError>(), serializedAdditionalRawData);
+            return new TerraformExportResult(configuration, import, skippedResources ?? new ChangeTrackingList<ResourceIdentifier>(), errors ?? new ChangeTrackingList<ResponseError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TerraformExportResult>.Write(ModelReaderWriterOptions options)

@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("secureValue"u8);
                 writer.WriteStringValue(SecureValue);
             }
+            if (Optional.IsDefined(SecureValueReference))
+            {
+                writer.WritePropertyName("secureValueReference"u8);
+                writer.WriteStringValue(SecureValueReference);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -86,6 +91,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string name = default;
             string value = default;
             string secureValue = default;
+            string secureValueReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,13 +111,18 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     secureValue = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("secureValueReference"u8))
+                {
+                    secureValueReference = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerEnvironmentVariable(name, value, secureValue, serializedAdditionalRawData);
+            return new ContainerEnvironmentVariable(name, value, secureValue, secureValueReference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerEnvironmentVariable>.Write(ModelReaderWriterOptions options)
