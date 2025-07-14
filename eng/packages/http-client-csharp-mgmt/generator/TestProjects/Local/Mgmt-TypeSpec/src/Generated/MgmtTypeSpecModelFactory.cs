@@ -101,16 +101,20 @@ namespace MgmtTypeSpec.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="isEnabled"> enabled. </param>
+        /// <param name="stringArray"></param>
         /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsData"/> instance for mocking. </returns>
-        public static BarSettingsData BarSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default)
+        public static BarSettingsData BarSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default)
         {
+            stringArray ??= new ChangeTrackingList<string>();
+
             return new BarSettingsData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                isEnabled is null ? default : new BarSettingsProperties(isEnabled, new Dictionary<string, BinaryData>()));
+                isEnabled is null ? default : new BarSettingsProperties(isEnabled, new Dictionary<string, BinaryData>()),
+                stringArray?.ToList());
         }
     }
 }
