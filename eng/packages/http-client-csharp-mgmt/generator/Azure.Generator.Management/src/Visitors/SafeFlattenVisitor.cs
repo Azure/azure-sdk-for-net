@@ -150,10 +150,10 @@ namespace Azure.Generator.Management.Visitors
                                 }
                                 else
                                 {
-                                    updatedInstanceParamters.Add(parameter);
+                                    updatedInstanceParameters.Add(parameter);
                                 }
                             }
-                            updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedInstanceParamters)));
+                            updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedInstanceParameters)));
                         }
                         else
                         {
