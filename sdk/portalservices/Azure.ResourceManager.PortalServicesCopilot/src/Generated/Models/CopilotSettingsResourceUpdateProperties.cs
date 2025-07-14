@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PortalServicesCopilot.Models
 {
     /// <summary> The updatable properties of the CopilotSettingsResource. </summary>
-    public partial class CopilotSettingsResourceUpdateProperties
+    internal partial class CopilotSettingsResourceUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

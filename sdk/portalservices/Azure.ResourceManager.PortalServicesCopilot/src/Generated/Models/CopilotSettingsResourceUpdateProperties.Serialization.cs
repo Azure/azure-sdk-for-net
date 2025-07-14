@@ -14,7 +14,7 @@ using Azure.ResourceManager.PortalServicesCopilot;
 namespace Azure.ResourceManager.PortalServicesCopilot.Models
 {
     /// <summary> The updatable properties of the CopilotSettingsResource. </summary>
-    public partial class CopilotSettingsResourceUpdateProperties : IJsonModel<CopilotSettingsResourceUpdateProperties>
+    internal partial class CopilotSettingsResourceUpdateProperties : IJsonModel<CopilotSettingsResourceUpdateProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
