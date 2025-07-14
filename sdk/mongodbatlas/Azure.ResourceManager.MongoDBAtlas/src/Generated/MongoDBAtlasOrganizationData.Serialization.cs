@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             string location = default;
             MongoDBAtlasOrganizationProperties properties = default;
-            string name = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.MongoDBAtlas
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -165,13 +170,13 @@ namespace Azure.ResourceManager.MongoDBAtlas
             }
             return new MongoDBAtlasOrganizationData(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                name,
                 identity);
         }
 

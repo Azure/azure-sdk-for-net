@@ -20,27 +20,27 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <summary> The resource model definition for an Azure Organization. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="name"> Name of the Organization resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasOrganizationData"/> instance for mocking. </returns>
-        public static MongoDBAtlasOrganizationData MongoDBAtlasOrganizationData(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, MongoDBAtlasOrganizationProperties properties = default, string name = default, ManagedServiceIdentity identity = default)
+        public static MongoDBAtlasOrganizationData MongoDBAtlasOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, MongoDBAtlasOrganizationProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new MongoDBAtlasOrganizationData(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
-                name,
                 identity);
         }
 
@@ -65,75 +65,16 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             return new MongoDBAtlasMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
-        /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
-        /// <param name="offerId"> Offer Id for the marketplace offer. </param>
-        /// <param name="planId"> Plan Id for the marketplace offer. </param>
-        /// <param name="planName"> Plan Name for the marketplace offer. </param>
-        /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
-        /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
-        /// <returns> A new <see cref="Models.MongoDBAtlasOfferDetails"/> instance for mocking. </returns>
-        public static MongoDBAtlasOfferDetails MongoDBAtlasOfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default)
-        {
-            return new MongoDBAtlasOfferDetails(
-                publisherId,
-                offerId,
-                planId,
-                planName,
-                termUnit,
-                termId,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> User details for an organization. </summary>
-        /// <param name="firstName"> First name of the user. </param>
-        /// <param name="lastName"> Last name of the user. </param>
-        /// <param name="emailAddress"> Email address of the user. </param>
-        /// <param name="upn"> User's principal name. </param>
-        /// <param name="phoneNumber"> User's phone number. </param>
-        /// <param name="companyName"> Company Name. </param>
-        /// <returns> A new <see cref="Models.MongoDBAtlasUserDetails"/> instance for mocking. </returns>
-        public static MongoDBAtlasUserDetails MongoDBAtlasUserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default, string companyName = default)
-        {
-            return new MongoDBAtlasUserDetails(
-                firstName,
-                lastName,
-                emailAddress,
-                upn,
-                phoneNumber,
-                companyName,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> MongoDB specific Properties. </summary>
-        /// <param name="organizationId"> Organization Id in MongoDB system. </param>
-        /// <param name="redirectUri"> Redirect URL for the MongoDB. </param>
-        /// <param name="organizationName"> Organization name in MongoDB system. </param>
-        /// <returns> A new <see cref="Models.MongoDBAtlasPartnerProperties"/> instance for mocking. </returns>
-        public static MongoDBAtlasPartnerProperties MongoDBAtlasPartnerProperties(string organizationId = default, string redirectUri = default, string organizationName = default)
-        {
-            return new MongoDBAtlasPartnerProperties(organizationId, redirectUri, organizationName, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The type used for update operations of the OrganizationResource. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.OrganizationResourcePatch"/> instance for mocking. </returns>
-        public static OrganizationResourcePatch OrganizationResourcePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, OrganizationResourceUpdateProperties properties = default)
+        /// <returns> A new <see cref="Models.MongoDBAtlasOrganizationPatch"/> instance for mocking. </returns>
+        public static MongoDBAtlasOrganizationPatch MongoDBAtlasOrganizationPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, OrganizationResourceUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new OrganizationResourcePatch(identity, tags, properties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The updatable properties of the OrganizationResource. </summary>
-        /// <param name="user"> Details of the user. </param>
-        /// <param name="partnerProperties"> MongoDB properties. </param>
-        /// <returns> A new <see cref="Models.OrganizationResourceUpdateProperties"/> instance for mocking. </returns>
-        public static OrganizationResourceUpdateProperties OrganizationResourceUpdateProperties(MongoDBAtlasUserDetails user = default, MongoDBAtlasPartnerProperties partnerProperties = default)
-        {
-            return new OrganizationResourceUpdateProperties(user, partnerProperties, additionalBinaryDataProperties: null);
+            return new MongoDBAtlasOrganizationPatch(identity, tags, properties, additionalBinaryDataProperties: null);
         }
     }
 }

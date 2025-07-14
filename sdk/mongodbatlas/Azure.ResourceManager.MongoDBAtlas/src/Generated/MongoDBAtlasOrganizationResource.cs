@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<MongoDBAtlasOrganizationResource> Update(WaitUntil waitUntil, OrganizationResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MongoDBAtlasOrganizationResource> Update(WaitUntil waitUntil, MongoDBAtlasOrganizationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _mongodbatlasorganizationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OrganizationResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _mongodbatlasorganizationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MongoDBAtlasOrganizationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource>(
                     new MongoDBAtlasOrganizationOperationSource(Client),
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<MongoDBAtlasOrganizationResource>> UpdateAsync(WaitUntil waitUntil, OrganizationResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MongoDBAtlasOrganizationResource>> UpdateAsync(WaitUntil waitUntil, MongoDBAtlasOrganizationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     CancellationToken = cancellationToken
                 }
                 ;
-                HttpMessage message = _mongodbatlasorganizationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OrganizationResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _mongodbatlasorganizationRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MongoDBAtlasOrganizationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource>(
                     new MongoDBAtlasOrganizationOperationSource(Client),
