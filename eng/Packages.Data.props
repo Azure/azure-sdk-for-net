@@ -197,7 +197,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
-    <PackageReference Update="OpenAI" Version="2.2.0-beta.4" />
+    <PackageReference Update="OpenAI" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Developer.MicrosoftPlaywrightTesting')) or $(MSBuildProjectName.StartsWith('Azure.Developer.Playwright'))">

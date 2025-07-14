@@ -8,28 +8,29 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenType("AzureSearchChatDataSource")]
+[CodeGenSuppress(nameof(AzureSearchChatDataSource), typeof(InternalAzureSearchChatDataSourceParameters))]
 [Experimental("AOAI001")]
-public partial class AzureSearchChatDataSource : ChatDataSource
+public partial class AzureSearchChatDataSource
 {
     [CodeGenMember("Parameters")]
     internal InternalAzureSearchChatDataSourceParameters InternalParameters { get; }
 
     /// <inheritdoc cref="InternalAzureSearchChatDataSourceParameters.Endpoint"/>
-    required public Uri Endpoint
+    public Uri Endpoint
     {
         get => InternalParameters.Endpoint;
         set => InternalParameters.Endpoint = value;
     }
 
     /// <inheritdoc cref="InternalAzureSearchChatDataSourceParameters.IndexName"/>
-    required public string IndexName
+    public string IndexName
     {
         get => InternalParameters.IndexName;
         set => InternalParameters.IndexName = value;
     }
 
     /// <inheritdoc cref="InternalAzureSearchChatDataSourceParameters.Authentication"/>
-    required public DataSourceAuthentication Authentication
+    public DataSourceAuthentication Authentication
     {
         get => InternalParameters.Authentication;
         set => InternalParameters.Authentication = value;
@@ -113,31 +114,21 @@ public partial class AzureSearchChatDataSource : ChatDataSource
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="AzureSearchChatDataSource"/>.
+    /// Initializes a new instance of <see cref="AzureSearchChatDataSource"/>.
     /// </summary>
-    public AzureSearchChatDataSource() : base(type: "azure_search", additionalBinaryDataProperties: null)
+    public AzureSearchChatDataSource() : base(InternalAzureChatDataSourceKind.AzureSearch, null)
     {
         InternalParameters = new();
     }
 
-    // CUSTOM: Made internal.
     /// <summary> Initializes a new instance of <see cref="AzureSearchChatDataSource"/>. </summary>
-    /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="internalParameters"/> is null. </exception>
-    internal AzureSearchChatDataSource(InternalAzureSearchChatDataSourceParameters internalParameters) : this()
-    {
-        Argument.AssertNotNull(internalParameters, nameof(internalParameters));
-        InternalParameters = internalParameters;
-    }
-
-    /// <summary> Initializes a new instance of <see cref="AzureSearchChatDataSource"/>. </summary>
-    /// <param name="type"></param>
+    /// <param name="kind"></param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal AzureSearchChatDataSource(string type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalAzureSearchChatDataSourceParameters internalParameters)
-        : base(type, additionalBinaryDataProperties)
+    internal AzureSearchChatDataSource(InternalAzureChatDataSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalAzureSearchChatDataSourceParameters internalParameters)
+        : base(kind, additionalBinaryDataProperties)
     {
-        InternalParameters = internalParameters;
+        InternalParameters = internalParameters ?? new();
     }
 }
