@@ -711,7 +711,7 @@ namespace Azure.Communication.CallAutomation
         public System.Collections.Generic.IDictionary<string, string> SipHeaders { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> VoipHeaders { get { throw null; } }
         public void AddSipUui(string value) { }
-        public void AddSipX(string key, string value, Azure.Communication.CallAutomation.SipHeaderPrefix prefix = Azure.Communication.CallAutomation.SipHeaderPrefix.XMSCustom) { }
+        public void AddSipX(string key, string value, Azure.Communication.CallAutomation.SipHeaderPrefix prefix = Azure.Communication.CallAutomation.SipHeaderPrefix.XmsCustom) { }
         public void AddVoip(string key, string value) { }
     }
     public partial class DtmfData : Azure.Communication.CallAutomation.StreamingData
@@ -1381,7 +1381,7 @@ namespace Azure.Communication.CallAutomation
     [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
     public enum SipHeaderPrefix
     {
-        XMSCustom = 0,
+        XmsCustom = 0,
         X = 1,
     }
     public partial class SpeechResult : Azure.Communication.CallAutomation.RecognizeResult

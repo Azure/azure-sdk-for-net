@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Use the legacy "X-MS-Custom-" prefix.
         /// </summary>
-        XMSCustom = 0,
+        XmsCustom = 0,
 
         /// <summary>
         /// Use the generic "X-" prefix.
