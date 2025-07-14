@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using NUnit.Framework;
 
 namespace Azure.Health.Deidentification.Tests
@@ -22,6 +24,17 @@ namespace Azure.Health.Deidentification.Tests
 
         public JobOperationsTest(bool isAsync) : base(isAsync)
         {
+        }
+
+        [Test]
+        public async Task CheckStorage()
+        {
+            BlobContainerClient containerClient = new BlobContainerClient(new Uri(TestEnvironment.GetStorageAccountLocation()), TestEnvironment.Credential);
+
+            await foreach (BlobItem blobItem in containerClient.GetBlobsAsync())
+            {
+                NUnit.Framework.TestContext.Progress.WriteLine($"Initial blob: {blobItem.Name}");
+            }
         }
 
         [Test]
@@ -105,6 +118,13 @@ namespace Azure.Health.Deidentification.Tests
         [Test]
         public async Task JobE2E_WaitUntil_Success()
         {
+            BlobContainerClient containerClient = new BlobContainerClient(new Uri(TestEnvironment.GetStorageAccountLocation()), TestEnvironment.Credential);
+
+            await foreach (BlobItem blobItem in containerClient.GetBlobsAsync())
+            {
+                NUnit.Framework.TestContext.Progress.WriteLine($"JobE2E blob: {blobItem.Name}");
+            }
+
             DeidentificationClient client = GetDeidClient();
 
             string jobName = GenerateJobName();
