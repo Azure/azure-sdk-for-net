@@ -8,9 +8,9 @@ using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Net.WebSockets;
 
-namespace Azure.AI.OpenAI.RealtimeConversation;
+namespace Azure.AI.OpenAI.Realtime;
 
-internal partial class AzureRealtimeConversationSession : RealtimeConversationSession
+internal partial class AzureRealtimeSession : RealtimeSession
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     protected internal override async Task ConnectAsync(RequestOptions options)
@@ -66,7 +66,7 @@ internal partial class AzureRealtimeConversationSession : RealtimeConversationSe
         catch (ArgumentException argumentException)
         {
             throw new PlatformNotSupportedException(
-                $"{nameof(RealtimeConversationClient)} is not yet supported on older .NET framework targets.",
+                $"{nameof(RealtimeClient)} is not yet supported on older .NET framework targets.",
                 argumentException);
         }
 
