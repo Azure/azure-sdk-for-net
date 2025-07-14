@@ -18,7 +18,8 @@ namespace Azure.Generator.Management
 {
     /// <inheritdoc/>
     public class ManagementOutputLibrary : AzureOutputLibrary
-    {   private ManagementLongRunningOperationProvider? _armOperation;
+    {
+        private ManagementLongRunningOperationProvider? _armOperation;
         internal ManagementLongRunningOperationProvider ArmOperation => _armOperation ??= new ManagementLongRunningOperationProvider(false);
 
         private ManagementLongRunningOperationProvider? _genericArmOperation;
@@ -27,6 +28,55 @@ namespace Azure.Generator.Management
         // TODO: replace this with CSharpType to TypeProvider mapping
         private HashSet<CSharpType>? _resourceTypes;
         private HashSet<CSharpType> ResourceTypes => _resourceTypes ??= BuildResourceModels();
+
+        // TODO: replace this with CSharpType to TypeProvider mapping and move this logic to ModelFactoryVisitor
+        private HashSet<CSharpType>? _modelFactoryModels;
+        private HashSet<CSharpType> ModelFactoryModels => _modelFactoryModels ??= BuildModelFactoryModels();
+        internal HashSet<CSharpType> BuildModelFactoryModels()
+        {
+            var result = new HashSet<CSharpType>();
+            foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+            {
+                var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+                if (model is not null && IsModelFactoryModel(model))
+                {
+                    result.Add(model.Type);
+                }
+            }
+            return result;
+        }
+
+        private static bool IsModelFactoryModel(ModelProvider model)
+        {
+            // A model is a model factory model if it is public and it has at least one public property without a setter.
+            return model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && EnumerateAllPublicProperties(model).Any(prop => !prop.Body.HasSetter);
+
+            IEnumerable<PropertyProvider> EnumerateAllPublicProperties(ModelProvider current)
+            {
+                var currentModel = current;
+                foreach (var property in currentModel.Properties)
+                {
+                    if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                    {
+                        yield return property;
+                    }
+                }
+
+                while (currentModel.BaseModelProvider is not null)
+                {
+                    currentModel = currentModel.BaseModelProvider;
+                    foreach (var property in currentModel.Properties)
+                    {
+                        if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                        {
+                            yield return property;
+                        }
+                    }
+                }
+            }
+        }
+
+        internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type);
 
         private HashSet<CSharpType> BuildResourceModels()
         {

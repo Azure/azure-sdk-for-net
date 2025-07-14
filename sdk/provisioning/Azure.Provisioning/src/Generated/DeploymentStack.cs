@@ -357,7 +357,7 @@ public partial class DeploymentStack : ProvisionableResource
         _deletedResources = DefineListProperty<SubResource>("DeletedResources", ["properties", "deletedResources"], isOutput: true);
         _deploymentId = DefineProperty<string>("DeploymentId", ["properties", "deploymentId"], isOutput: true);
         _detachedResources = DefineListProperty<SubResource>("DetachedResources", ["properties", "detachedResources"], isOutput: true);
-        _duration = DefineProperty<TimeSpan>("Duration", ["properties", "duration"], isOutput: true);
+        _duration = DefineProperty<TimeSpan>("Duration", ["properties", "duration"], isOutput: true, format: "P");
         _failedResources = DefineListProperty<ResourceReferenceExtended>("FailedResources", ["properties", "failedResources"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _outputs = DefineProperty<BinaryData>("Outputs", ["properties", "outputs"], isOutput: true);
