@@ -135,12 +135,12 @@ namespace Azure.Generator.Management.Visitors
                         // If the statement is returning a NewInstanceExpression, we need to update its parameters with the flattened properties.
                         if (statement is ExpressionStatement expressionStatement && (expressionStatement.Expression as KeywordExpression)?.Expression is NewInstanceExpression newInstanceExpression)
                         {
-                            var updatedInstanceParamters = new List<ValueExpression>(newInstanceExpression.Parameters.Count);
+                            var updatedInstanceParameters = new List<ValueExpression>(newInstanceExpression.Parameters.Count);
                             foreach (var parameter in newInstanceExpression.Parameters)
                             {
                                 if (parameter is VariableExpression variable && propertyMap.TryGetValue(variable.Type, out var flattenedProperty))
                                 {
-                                    updatedInstanceParamters.Add(
+                                    updatedInstanceParameters.Add(
                                         new TernaryConditionalExpression(
                                             flattenedProperty.AsParameter.Is(Null),
                                             Default,
