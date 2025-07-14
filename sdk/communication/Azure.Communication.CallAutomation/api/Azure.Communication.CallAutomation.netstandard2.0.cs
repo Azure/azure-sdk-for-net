@@ -1419,7 +1419,6 @@ namespace Azure.Communication.CallAutomation
     public partial class StartRecordingFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal StartRecordingFailed() { }
-        public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
         public string RecordingId { get { throw null; } }
         public static Azure.Communication.CallAutomation.StartRecordingFailed Deserialize(string content) { throw null; }
     }
