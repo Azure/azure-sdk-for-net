@@ -14,41 +14,58 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct QualityForRecognition : IEquatable<QualityForRecognition>
     {
         private readonly string _value;
+        /// <summary> Low quality. </summary>
+        private const string LowValue = "low";
+        /// <summary> Medium quality. </summary>
+        private const string MediumValue = "medium";
+        /// <summary> High quality. </summary>
+        private const string HighValue = "high";
 
         /// <summary> Initializes a new instance of <see cref="QualityForRecognition"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QualityForRecognition(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LowValue = "low";
-        private const string MediumValue = "medium";
-        private const string HighValue = "high";
+            _value = value;
+        }
 
         /// <summary> Low quality. </summary>
         public static QualityForRecognition Low { get; } = new QualityForRecognition(LowValue);
+
         /// <summary> Medium quality. </summary>
         public static QualityForRecognition Medium { get; } = new QualityForRecognition(MediumValue);
+
         /// <summary> High quality. </summary>
         public static QualityForRecognition High { get; } = new QualityForRecognition(HighValue);
+
         /// <summary> Determines if two <see cref="QualityForRecognition"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QualityForRecognition left, QualityForRecognition right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QualityForRecognition"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QualityForRecognition left, QualityForRecognition right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QualityForRecognition"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QualityForRecognition"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QualityForRecognition(string value) => new QualityForRecognition(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QualityForRecognition other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QualityForRecognition other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

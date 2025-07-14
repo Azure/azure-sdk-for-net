@@ -14,44 +14,63 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct FaceOperationStatus : IEquatable<FaceOperationStatus>
     {
         private readonly string _value;
+        /// <summary> The operation is not started. </summary>
+        private const string NotStartedValue = "notStarted";
+        /// <summary> The operation is still running. </summary>
+        private const string RunningValue = "running";
+        /// <summary> The operation is succeeded. </summary>
+        private const string SucceededValue = "succeeded";
+        /// <summary> The operation is failed. </summary>
+        private const string FailedValue = "failed";
 
         /// <summary> Initializes a new instance of <see cref="FaceOperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FaceOperationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "notStarted";
-        private const string RunningValue = "running";
-        private const string SucceededValue = "succeeded";
-        private const string FailedValue = "failed";
+            _value = value;
+        }
 
         /// <summary> The operation is not started. </summary>
         public static FaceOperationStatus NotStarted { get; } = new FaceOperationStatus(NotStartedValue);
+
         /// <summary> The operation is still running. </summary>
         public static FaceOperationStatus Running { get; } = new FaceOperationStatus(RunningValue);
+
         /// <summary> The operation is succeeded. </summary>
         public static FaceOperationStatus Succeeded { get; } = new FaceOperationStatus(SucceededValue);
+
         /// <summary> The operation is failed. </summary>
         public static FaceOperationStatus Failed { get; } = new FaceOperationStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="FaceOperationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FaceOperationStatus left, FaceOperationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FaceOperationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FaceOperationStatus left, FaceOperationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FaceOperationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FaceOperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FaceOperationStatus(string value) => new FaceOperationStatus(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FaceOperationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FaceOperationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

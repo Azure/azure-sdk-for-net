@@ -13,47 +13,15 @@ namespace Azure.AI.Vision.Face
     /// <summary> The VerifyFromLargePersonGroupRequest. </summary>
     internal partial class VerifyFromLargePersonGroupRequest
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VerifyFromLargePersonGroupRequest"/>. </summary>
         /// <param name="faceId"> The faceId of the face, come from "Detect". </param>
         /// <param name="largePersonGroupId"> Using existing largePersonGroupId and personId for fast loading a specified person. largePersonGroupId is created in "Create Large Person Group". </param>
         /// <param name="personId"> Specify a certain person in Large Person Group. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
         internal VerifyFromLargePersonGroupRequest(Guid faceId, string largePersonGroupId, Guid personId)
         {
-            Argument.AssertNotNull(largePersonGroupId, nameof(largePersonGroupId));
-
             FaceId = faceId;
             LargePersonGroupId = largePersonGroupId;
             PersonId = personId;
@@ -63,24 +31,21 @@ namespace Azure.AI.Vision.Face
         /// <param name="faceId"> The faceId of the face, come from "Detect". </param>
         /// <param name="largePersonGroupId"> Using existing largePersonGroupId and personId for fast loading a specified person. largePersonGroupId is created in "Create Large Person Group". </param>
         /// <param name="personId"> Specify a certain person in Large Person Group. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VerifyFromLargePersonGroupRequest(Guid faceId, string largePersonGroupId, Guid personId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VerifyFromLargePersonGroupRequest(Guid faceId, string largePersonGroupId, Guid personId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FaceId = faceId;
             LargePersonGroupId = largePersonGroupId;
             PersonId = personId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VerifyFromLargePersonGroupRequest"/> for deserialization. </summary>
-        internal VerifyFromLargePersonGroupRequest()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The faceId of the face, come from "Detect". </summary>
         public Guid FaceId { get; }
+
         /// <summary> Using existing largePersonGroupId and personId for fast loading a specified person. largePersonGroupId is created in "Create Large Person Group". </summary>
         public string LargePersonGroupId { get; }
+
         /// <summary> Specify a certain person in Large Person Group. </summary>
         public Guid PersonId { get; }
     }

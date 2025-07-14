@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 
 namespace Azure.AI.Vision.Face
 {
-    public partial class LivenessWithVerifySession : IUtf8JsonSerializable, IJsonModel<LivenessWithVerifySession>
+    /// <summary> Session result of detect liveness with verify. </summary>
+    public partial class LivenessWithVerifySession : IJsonModel<LivenessWithVerifySession>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LivenessWithVerifySession>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifySession"/> for deserialization. </summary>
+        internal LivenessWithVerifySession()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LivenessWithVerifySession>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,52 +34,36 @@ namespace Azure.AI.Vision.Face
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessWithVerifySession>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LivenessWithVerifySession>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LivenessWithVerifySession)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W")
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("sessionId"u8);
+                writer.WriteStringValue(SessionId);
             }
-            writer.WritePropertyName("createdDateTime"u8);
-            writer.WriteStringValue(CreatedDateTime, "O");
-            if (Optional.IsDefined(SessionStartDateTime))
-            {
-                writer.WritePropertyName("sessionStartDateTime"u8);
-                writer.WriteStringValue(SessionStartDateTime.Value, "O");
-            }
-            writer.WritePropertyName("sessionExpired"u8);
-            writer.WriteBooleanValue(SessionExpired);
-            if (Optional.IsDefined(DeviceCorrelationId))
-            {
-                writer.WritePropertyName("deviceCorrelationId"u8);
-                writer.WriteStringValue(DeviceCorrelationId);
-            }
-            if (Optional.IsDefined(AuthTokenTimeToLiveInSeconds))
-            {
-                writer.WritePropertyName("authTokenTimeToLiveInSeconds"u8);
-                writer.WriteNumberValue(AuthTokenTimeToLiveInSeconds.Value);
-            }
+            writer.WritePropertyName("authToken"u8);
+            writer.WriteStringValue(AuthToken);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(Result))
+            if (Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
+                writer.WritePropertyName("modelVersion"u8);
+                writer.WriteStringValue(ModelVersion.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            writer.WritePropertyName("results"u8);
+            writer.WriteObjectValue(Results, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,112 +72,89 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        LivenessWithVerifySession IJsonModel<LivenessWithVerifySession>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LivenessWithVerifySession IJsonModel<LivenessWithVerifySession>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LivenessWithVerifySession JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessWithVerifySession>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LivenessWithVerifySession>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LivenessWithVerifySession)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLivenessWithVerifySession(document.RootElement, options);
         }
 
-        internal static LivenessWithVerifySession DeserializeLivenessWithVerifySession(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LivenessWithVerifySession DeserializeLivenessWithVerifySession(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string id = default;
-            DateTimeOffset createdDateTime = default;
-            DateTimeOffset? sessionStartDateTime = default;
-            bool sessionExpired = default;
-            string deviceCorrelationId = default;
-            int? authTokenTimeToLiveInSeconds = default;
-            FaceSessionStatus status = default;
-            LivenessSessionAuditEntry result = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string sessionId = default;
+            string authToken = default;
+            OperationState status = default;
+            LivenessModel? modelVersion = default;
+            LivenessWithVerifySessionResults results = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("sessionId"u8))
                 {
-                    id = property.Value.GetString();
+                    sessionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"u8))
+                if (prop.NameEquals("authToken"u8))
                 {
-                    createdDateTime = property.Value.GetDateTimeOffset("O");
+                    authToken = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sessionStartDateTime"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    status = new OperationState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("modelVersion"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sessionStartDateTime = property.Value.GetDateTimeOffset("O");
+                    modelVersion = new LivenessModel(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sessionExpired"u8))
+                if (prop.NameEquals("results"u8))
                 {
-                    sessionExpired = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("deviceCorrelationId"u8))
-                {
-                    deviceCorrelationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("authTokenTimeToLiveInSeconds"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    authTokenTimeToLiveInSeconds = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("status"u8))
-                {
-                    status = new FaceSessionStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("result"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result = LivenessSessionAuditEntry.DeserializeLivenessSessionAuditEntry(property.Value, options);
+                    results = LivenessWithVerifySessionResults.DeserializeLivenessWithVerifySessionResults(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new LivenessWithVerifySession(
-                id,
-                createdDateTime,
-                sessionStartDateTime,
-                sessionExpired,
-                deviceCorrelationId,
-                authTokenTimeToLiveInSeconds,
+                sessionId,
+                authToken,
                 status,
-                result,
-                serializedAdditionalRawData);
+                modelVersion,
+                results,
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<LivenessWithVerifySession>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessWithVerifySession>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LivenessWithVerifySession>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LivenessWithVerifySession>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -197,15 +164,20 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        LivenessWithVerifySession IPersistableModel<LivenessWithVerifySession>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessWithVerifySession>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LivenessWithVerifySession IPersistableModel<LivenessWithVerifySession>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LivenessWithVerifySession PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LivenessWithVerifySession>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLivenessWithVerifySession(document.RootElement, options);
                     }
                 default:
@@ -213,22 +185,15 @@ namespace Azure.AI.Vision.Face
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LivenessWithVerifySession>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static LivenessWithVerifySession FromResponse(Response response)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="LivenessWithVerifySession"/> from. </param>
+        public static explicit operator LivenessWithVerifySession(Response result)
         {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLivenessWithVerifySession(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeLivenessWithVerifySession(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

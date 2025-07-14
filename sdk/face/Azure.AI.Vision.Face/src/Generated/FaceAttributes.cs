@@ -13,37 +13,8 @@ namespace Azure.AI.Vision.Face
     /// <summary> Face attributes for the detected face. </summary>
     public partial class FaceAttributes
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FaceAttributes"/>. </summary>
         internal FaceAttributes()
@@ -65,8 +36,8 @@ namespace Azure.AI.Vision.Face
         /// <param name="noise"> Properties describing noise level of the image. </param>
         /// <param name="mask"> Properties describing the presence of a mask on a given face. </param>
         /// <param name="qualityForRecognition"> Properties describing the overall image quality regarding whether the image being used in the detection is of sufficient quality to attempt face recognition on. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FaceAttributes(float? age, float? smile, FacialHair facialHair, GlassesType? glasses, HeadPose headPose, HairProperties hair, OcclusionProperties occlusion, IReadOnlyList<AccessoryItem> accessories, BlurProperties blur, ExposureProperties exposure, NoiseProperties noise, MaskProperties mask, QualityForRecognition? qualityForRecognition, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FaceAttributes(float? age, float? smile, FacialHair facialHair, GlassesType? glasses, HeadPose headPose, HairProperties hair, OcclusionProperties occlusion, IList<AccessoryItem> accessories, BlurProperties blur, ExposureProperties exposure, NoiseProperties noise, MaskProperties mask, QualityForRecognition? qualityForRecognition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Age = age;
             Smile = smile;
@@ -81,33 +52,45 @@ namespace Azure.AI.Vision.Face
             Noise = noise;
             Mask = mask;
             QualityForRecognition = qualityForRecognition;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Age in years. </summary>
         public float? Age { get; }
+
         /// <summary> Smile intensity, a number between [0,1]. </summary>
         public float? Smile { get; }
+
         /// <summary> Properties describing facial hair attributes. </summary>
         public FacialHair FacialHair { get; }
+
         /// <summary> Glasses type if any of the face. </summary>
         public GlassesType? Glasses { get; }
+
         /// <summary> 3-D roll/yaw/pitch angles for face direction. </summary>
         public HeadPose HeadPose { get; }
+
         /// <summary> Properties describing hair attributes. </summary>
         public HairProperties Hair { get; }
+
         /// <summary> Properties describing occlusions on a given face. </summary>
         public OcclusionProperties Occlusion { get; }
+
         /// <summary> Properties describing any accessories on a given face. </summary>
-        public IReadOnlyList<AccessoryItem> Accessories { get; }
+        public IList<AccessoryItem> Accessories { get; }
+
         /// <summary> Properties describing any presence of blur within the image. </summary>
         public BlurProperties Blur { get; }
+
         /// <summary> Properties describing exposure level of the image. </summary>
         public ExposureProperties Exposure { get; }
+
         /// <summary> Properties describing noise level of the image. </summary>
         public NoiseProperties Noise { get; }
+
         /// <summary> Properties describing the presence of a mask on a given face. </summary>
         public MaskProperties Mask { get; }
+
         /// <summary> Properties describing the overall image quality regarding whether the image being used in the detection is of sufficient quality to attempt face recognition on. </summary>
         public QualityForRecognition? QualityForRecognition { get; }
     }

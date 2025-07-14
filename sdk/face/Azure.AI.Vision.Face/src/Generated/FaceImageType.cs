@@ -14,41 +14,58 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct FaceImageType : IEquatable<FaceImageType>
     {
         private readonly string _value;
+        /// <summary> Color image. </summary>
+        private const string ColorValue = "Color";
+        /// <summary> Infrared image. </summary>
+        private const string InfraredValue = "Infrared";
+        /// <summary> Depth image. </summary>
+        private const string DepthValue = "Depth";
 
         /// <summary> Initializes a new instance of <see cref="FaceImageType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FaceImageType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ColorValue = "Color";
-        private const string InfraredValue = "Infrared";
-        private const string DepthValue = "Depth";
+            _value = value;
+        }
 
         /// <summary> Color image. </summary>
         public static FaceImageType Color { get; } = new FaceImageType(ColorValue);
+
         /// <summary> Infrared image. </summary>
         public static FaceImageType Infrared { get; } = new FaceImageType(InfraredValue);
+
         /// <summary> Depth image. </summary>
         public static FaceImageType Depth { get; } = new FaceImageType(DepthValue);
+
         /// <summary> Determines if two <see cref="FaceImageType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FaceImageType left, FaceImageType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FaceImageType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FaceImageType left, FaceImageType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FaceImageType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FaceImageType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FaceImageType(string value) => new FaceImageType(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FaceImageType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FaceImageType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

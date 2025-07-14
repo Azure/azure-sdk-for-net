@@ -14,44 +14,63 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct MaskType : IEquatable<MaskType>
     {
         private readonly string _value;
+        /// <summary> Face mask. </summary>
+        private const string FaceMaskValue = "faceMask";
+        /// <summary> No mask. </summary>
+        private const string NoMaskValue = "noMask";
+        /// <summary> Other types of mask or occlusion. </summary>
+        private const string OtherMaskOrOcclusionValue = "otherMaskOrOcclusion";
+        /// <summary> Uncertain. </summary>
+        private const string UncertainValue = "uncertain";
 
         /// <summary> Initializes a new instance of <see cref="MaskType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MaskType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FaceMaskValue = "faceMask";
-        private const string NoMaskValue = "noMask";
-        private const string OtherMaskOrOcclusionValue = "otherMaskOrOcclusion";
-        private const string UncertainValue = "uncertain";
+            _value = value;
+        }
 
         /// <summary> Face mask. </summary>
         public static MaskType FaceMask { get; } = new MaskType(FaceMaskValue);
+
         /// <summary> No mask. </summary>
         public static MaskType NoMask { get; } = new MaskType(NoMaskValue);
+
         /// <summary> Other types of mask or occlusion. </summary>
         public static MaskType OtherMaskOrOcclusion { get; } = new MaskType(OtherMaskOrOcclusionValue);
+
         /// <summary> Uncertain. </summary>
         public static MaskType Uncertain { get; } = new MaskType(UncertainValue);
+
         /// <summary> Determines if two <see cref="MaskType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MaskType left, MaskType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MaskType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MaskType left, MaskType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MaskType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MaskType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MaskType(string value) => new MaskType(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MaskType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MaskType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

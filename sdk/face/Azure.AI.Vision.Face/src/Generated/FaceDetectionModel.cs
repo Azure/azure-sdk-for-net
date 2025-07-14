@@ -14,41 +14,58 @@ namespace Azure.AI.Vision.Face
     public readonly partial struct FaceDetectionModel : IEquatable<FaceDetectionModel>
     {
         private readonly string _value;
+        /// <summary> The default detection model. Recommend for near frontal face detection. For scenarios with exceptionally large angle (head-pose) faces, occluded faces or wrong image orientation, the faces in such cases may not be detected. </summary>
+        private const string Detection01Value = "detection_01";
+        /// <summary> Detection model released in 2019 May with improved accuracy especially on small, side and blurry faces. </summary>
+        private const string Detection02Value = "detection_02";
+        /// <summary> Detection model released in 2021 February with improved accuracy especially on small faces. </summary>
+        private const string Detection03Value = "detection_03";
 
         /// <summary> Initializes a new instance of <see cref="FaceDetectionModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FaceDetectionModel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Detection01Value = "detection_01";
-        private const string Detection02Value = "detection_02";
-        private const string Detection03Value = "detection_03";
+            _value = value;
+        }
 
         /// <summary> The default detection model. Recommend for near frontal face detection. For scenarios with exceptionally large angle (head-pose) faces, occluded faces or wrong image orientation, the faces in such cases may not be detected. </summary>
         public static FaceDetectionModel Detection01 { get; } = new FaceDetectionModel(Detection01Value);
+
         /// <summary> Detection model released in 2019 May with improved accuracy especially on small, side and blurry faces. </summary>
         public static FaceDetectionModel Detection02 { get; } = new FaceDetectionModel(Detection02Value);
+
         /// <summary> Detection model released in 2021 February with improved accuracy especially on small faces. </summary>
         public static FaceDetectionModel Detection03 { get; } = new FaceDetectionModel(Detection03Value);
+
         /// <summary> Determines if two <see cref="FaceDetectionModel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FaceDetectionModel left, FaceDetectionModel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FaceDetectionModel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FaceDetectionModel left, FaceDetectionModel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FaceDetectionModel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FaceDetectionModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FaceDetectionModel(string value) => new FaceDetectionModel(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FaceDetectionModel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FaceDetectionModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

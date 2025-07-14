@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    public partial class FaceLandmarks : IUtf8JsonSerializable, IJsonModel<FaceLandmarks>
+    /// <summary> A collection of 27-point face landmarks pointing to the important positions of face components. </summary>
+    public partial class FaceLandmarks : IJsonModel<FaceLandmarks>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FaceLandmarks>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="FaceLandmarks"/> for deserialization. </summary>
+        internal FaceLandmarks()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FaceLandmarks>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.AI.Vision.Face
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FaceLandmarks>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FaceLandmarks>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FaceLandmarks)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("pupilLeft"u8);
             writer.WriteObjectValue(PupilLeft, options);
             writer.WritePropertyName("pupilRight"u8);
@@ -88,15 +92,15 @@ namespace Azure.AI.Vision.Face
             writer.WriteObjectValue(UnderLipTop, options);
             writer.WritePropertyName("underLipBottom"u8);
             writer.WriteObjectValue(UnderLipBottom, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -105,22 +109,27 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        FaceLandmarks IJsonModel<FaceLandmarks>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FaceLandmarks IJsonModel<FaceLandmarks>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FaceLandmarks JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FaceLandmarks>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FaceLandmarks>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FaceLandmarks)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFaceLandmarks(document.RootElement, options);
         }
 
-        internal static FaceLandmarks DeserializeFaceLandmarks(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FaceLandmarks DeserializeFaceLandmarks(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -152,151 +161,149 @@ namespace Azure.AI.Vision.Face
             LandmarkCoordinate upperLipBottom = default;
             LandmarkCoordinate underLipTop = default;
             LandmarkCoordinate underLipBottom = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("pupilLeft"u8))
+                if (prop.NameEquals("pupilLeft"u8))
                 {
-                    pupilLeft = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    pupilLeft = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("pupilRight"u8))
+                if (prop.NameEquals("pupilRight"u8))
                 {
-                    pupilRight = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    pupilRight = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("noseTip"u8))
+                if (prop.NameEquals("noseTip"u8))
                 {
-                    noseTip = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseTip = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("mouthLeft"u8))
+                if (prop.NameEquals("mouthLeft"u8))
                 {
-                    mouthLeft = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    mouthLeft = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("mouthRight"u8))
+                if (prop.NameEquals("mouthRight"u8))
                 {
-                    mouthRight = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    mouthRight = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eyebrowLeftOuter"u8))
+                if (prop.NameEquals("eyebrowLeftOuter"u8))
                 {
-                    eyebrowLeftOuter = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyebrowLeftOuter = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eyebrowLeftInner"u8))
+                if (prop.NameEquals("eyebrowLeftInner"u8))
                 {
-                    eyebrowLeftInner = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyebrowLeftInner = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eyeLeftOuter"u8))
+                if (prop.NameEquals("eyeLeftOuter"u8))
                 {
-                    eyeLeftOuter = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeLeftOuter = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eyeLeftTop"u8))
+                if (prop.NameEquals("eyeLeftTop"u8))
                 {
-                    eyeLeftTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeLeftTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eyeLeftBottom"u8))
+                if (prop.NameEquals("eyeLeftBottom"u8))
                 {
-                    eyeLeftBottom = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeLeftBottom = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eyeLeftInner"u8))
+                if (prop.NameEquals("eyeLeftInner"u8))
                 {
-                    eyeLeftInner = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeLeftInner = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eyebrowRightInner"u8))
+                if (prop.NameEquals("eyebrowRightInner"u8))
                 {
-                    eyebrowRightInner = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyebrowRightInner = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eyebrowRightOuter"u8))
+                if (prop.NameEquals("eyebrowRightOuter"u8))
                 {
-                    eyebrowRightOuter = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyebrowRightOuter = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eyeRightInner"u8))
+                if (prop.NameEquals("eyeRightInner"u8))
                 {
-                    eyeRightInner = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeRightInner = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eyeRightTop"u8))
+                if (prop.NameEquals("eyeRightTop"u8))
                 {
-                    eyeRightTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeRightTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eyeRightBottom"u8))
+                if (prop.NameEquals("eyeRightBottom"u8))
                 {
-                    eyeRightBottom = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeRightBottom = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eyeRightOuter"u8))
+                if (prop.NameEquals("eyeRightOuter"u8))
                 {
-                    eyeRightOuter = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    eyeRightOuter = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("noseRootLeft"u8))
+                if (prop.NameEquals("noseRootLeft"u8))
                 {
-                    noseRootLeft = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseRootLeft = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("noseRootRight"u8))
+                if (prop.NameEquals("noseRootRight"u8))
                 {
-                    noseRootRight = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseRootRight = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("noseLeftAlarTop"u8))
+                if (prop.NameEquals("noseLeftAlarTop"u8))
                 {
-                    noseLeftAlarTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseLeftAlarTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("noseRightAlarTop"u8))
+                if (prop.NameEquals("noseRightAlarTop"u8))
                 {
-                    noseRightAlarTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseRightAlarTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("noseLeftAlarOutTip"u8))
+                if (prop.NameEquals("noseLeftAlarOutTip"u8))
                 {
-                    noseLeftAlarOutTip = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseLeftAlarOutTip = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("noseRightAlarOutTip"u8))
+                if (prop.NameEquals("noseRightAlarOutTip"u8))
                 {
-                    noseRightAlarOutTip = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    noseRightAlarOutTip = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("upperLipTop"u8))
+                if (prop.NameEquals("upperLipTop"u8))
                 {
-                    upperLipTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    upperLipTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("upperLipBottom"u8))
+                if (prop.NameEquals("upperLipBottom"u8))
                 {
-                    upperLipBottom = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    upperLipBottom = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("underLipTop"u8))
+                if (prop.NameEquals("underLipTop"u8))
                 {
-                    underLipTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    underLipTop = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("underLipBottom"u8))
+                if (prop.NameEquals("underLipBottom"u8))
                 {
-                    underLipBottom = LandmarkCoordinate.DeserializeLandmarkCoordinate(property.Value, options);
+                    underLipBottom = LandmarkCoordinate.DeserializeLandmarkCoordinate(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FaceLandmarks(
                 pupilLeft,
                 pupilRight,
@@ -325,13 +332,16 @@ namespace Azure.AI.Vision.Face
                 upperLipBottom,
                 underLipTop,
                 underLipBottom,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<FaceLandmarks>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FaceLandmarks>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FaceLandmarks>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FaceLandmarks>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -341,15 +351,20 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        FaceLandmarks IPersistableModel<FaceLandmarks>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FaceLandmarks>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FaceLandmarks IPersistableModel<FaceLandmarks>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FaceLandmarks PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FaceLandmarks>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFaceLandmarks(document.RootElement, options);
                     }
                 default:
@@ -357,22 +372,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FaceLandmarks>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static FaceLandmarks FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeFaceLandmarks(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

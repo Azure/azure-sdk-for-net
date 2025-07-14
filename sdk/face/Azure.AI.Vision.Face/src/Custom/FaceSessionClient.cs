@@ -7,6 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
+// Type alias to maintain backward compatibility
+using CreateLivenessWithVerifySessionResult = Azure.AI.Vision.Face.LivenessWithVerifySession;
+
 namespace Azure.AI.Vision.Face
 {
     /// <summary> The FaceSession service client. </summary>
@@ -25,11 +28,29 @@ namespace Azure.AI.Vision.Face
 
             if (verifyImage == null)
             {
-                return await CreateLivenessWithVerifySessionAsync(jsonContent, cancellationToken).ConfigureAwait(false);
+                // Create without verify image using protocol method
+                using var simpleRequestContent = RequestContent.Create(jsonContent);
+                Response result = await CreateLivenessWithVerifySessionAsync(simpleRequestContent, "application/json", cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+                return Response.FromValue((CreateLivenessWithVerifySessionResult)result, result);
             }
 
-            CreateLivenessWithVerifySessionMultipartContent multipartContent = new CreateLivenessWithVerifySessionMultipartContent(jsonContent, verifyImage);
-            return await CreateLivenessWithVerifySessionWithVerifyImageAsync(multipartContent, cancellationToken).ConfigureAwait(false);
+            // Create multipart content with verify image
+            using var multipartContent = new MultiPartFormDataBinaryContent();
+
+            // Add the JSON parameters - serialize to JSON string
+            var jsonString = System.Text.Json.JsonSerializer.Serialize(jsonContent);
+            multipartContent.Add(jsonString, "Parameters");
+
+            // Add the verify image
+            multipartContent.Add(verifyImage, "VerifyImage", "VerifyImage", "application/octet-stream");
+
+            // Convert multipart content to RequestContent
+            using var memoryStream = new MemoryStream();
+            multipartContent.WriteTo(memoryStream, CancellationToken.None);
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(memoryStream.ToArray()));
+
+            Response resultWithImage = await CreateLivenessWithVerifySessionAsync(requestContent, multipartContent.ContentType, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((CreateLivenessWithVerifySessionResult)resultWithImage, resultWithImage);
         }
 
         /// <summary> Create a new liveness session with verify. Provide the verify image during session creation. </summary>
@@ -45,11 +66,29 @@ namespace Azure.AI.Vision.Face
 
             if (verifyImage == null)
             {
-                return CreateLivenessWithVerifySession(jsonContent, cancellationToken);
+                // Create without verify image using protocol method
+                using var simpleRequestContent = RequestContent.Create(jsonContent);
+                Response result = CreateLivenessWithVerifySession(simpleRequestContent, "application/json", cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+                return Response.FromValue((CreateLivenessWithVerifySessionResult)result, result);
             }
 
-            CreateLivenessWithVerifySessionMultipartContent multipartContent = new CreateLivenessWithVerifySessionMultipartContent(jsonContent, verifyImage);
-            return CreateLivenessWithVerifySessionWithVerifyImage(multipartContent, cancellationToken);
+            // Create multipart content with verify image
+            using var multipartContent = new MultiPartFormDataBinaryContent();
+
+            // Add the JSON parameters - serialize to JSON string
+            var jsonString = System.Text.Json.JsonSerializer.Serialize(jsonContent);
+            multipartContent.Add(jsonString, "Parameters");
+
+            // Add the verify image
+            multipartContent.Add(verifyImage, "VerifyImage", "VerifyImage", "application/octet-stream");
+
+            // Convert multipart content to RequestContent
+            using var memoryStream = new MemoryStream();
+            multipartContent.WriteTo(memoryStream, CancellationToken.None);
+            var requestContent = RequestContent.Create(BinaryData.FromBytes(memoryStream.ToArray()));
+
+            Response resultWithImage = CreateLivenessWithVerifySession(requestContent, multipartContent.ContentType, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((CreateLivenessWithVerifySessionResult)resultWithImage, resultWithImage);
         }
     }
 }
