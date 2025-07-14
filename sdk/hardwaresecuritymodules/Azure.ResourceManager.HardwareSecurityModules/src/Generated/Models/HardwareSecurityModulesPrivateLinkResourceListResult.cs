@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> List of private endpoint connections associated with the specified resource. </summary>
-    internal partial class CloudHsmClusterPrivateEndpointConnectionListResult
+    /// <summary> A list of private link resources. </summary>
+    internal partial class HardwareSecurityModulesPrivateLinkResourceListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,26 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointConnectionListResult"/>. </summary>
-        internal CloudHsmClusterPrivateEndpointConnectionListResult()
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkResourceListResult"/>. </summary>
+        internal HardwareSecurityModulesPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<CloudHsmClusterPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<CloudHsmClusterPrivateLinkData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value"> Array of private endpoint connections. </param>
-        /// <param name="nextLink"> The URL to get the next set of private endpoint connections. </param>
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkResourceListResult"/>. </summary>
+        /// <param name="value"> Array of private link resources. </param>
+        /// <param name="nextLink"> URL to get the next set of operation list results (if there are any). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudHsmClusterPrivateEndpointConnectionListResult(IReadOnlyList<CloudHsmClusterPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HardwareSecurityModulesPrivateLinkResourceListResult(IReadOnlyList<CloudHsmClusterPrivateLinkData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of private endpoint connections. </summary>
-        public IReadOnlyList<CloudHsmClusterPrivateEndpointConnectionData> Value { get; }
-        /// <summary> The URL to get the next set of private endpoint connections. </summary>
-        public string NextLink { get; }
+        /// <summary> Array of private link resources. </summary>
+        public IReadOnlyList<CloudHsmClusterPrivateLinkData> Value { get; }
+        /// <summary> URL to get the next set of operation list results (if there are any). </summary>
+        public Uri NextLink { get; }
     }
 }

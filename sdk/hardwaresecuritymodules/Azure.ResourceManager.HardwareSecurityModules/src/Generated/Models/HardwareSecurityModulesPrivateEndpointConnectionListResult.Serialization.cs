@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    internal partial class DedicatedHsmEgressEndpointListResult : IUtf8JsonSerializable, IJsonModel<DedicatedHsmEgressEndpointListResult>
+    internal partial class HardwareSecurityModulesPrivateEndpointConnectionListResult : IUtf8JsonSerializable, IJsonModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHsmEgressEndpointListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DedicatedHsmEgressEndpointListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEgressEndpointListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHsmEgressEndpointListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareSecurityModulesPrivateEndpointConnectionListResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
         }
 
-        DedicatedHsmEgressEndpointListResult IJsonModel<DedicatedHsmEgressEndpointListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HardwareSecurityModulesPrivateEndpointConnectionListResult IJsonModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEgressEndpointListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHsmEgressEndpointListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareSecurityModulesPrivateEndpointConnectionListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDedicatedHsmEgressEndpointListResult(document.RootElement, options);
+            return DeserializeHardwareSecurityModulesPrivateEndpointConnectionListResult(document.RootElement, options);
         }
 
-        internal static DedicatedHsmEgressEndpointListResult DeserializeDedicatedHsmEgressEndpointListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HardwareSecurityModulesPrivateEndpointConnectionListResult DeserializeHardwareSecurityModulesPrivateEndpointConnectionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            IReadOnlyList<DedicatedHsmEgressEndpoint> value = default;
+            IReadOnlyList<CloudHsmClusterPrivateEndpointConnectionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DedicatedHsmEgressEndpoint> array = new List<DedicatedHsmEgressEndpoint>();
+                    List<CloudHsmClusterPrivateEndpointConnectionData> array = new List<CloudHsmClusterPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHsmEgressEndpoint.DeserializeDedicatedHsmEgressEndpoint(item, options));
+                        array.Add(CloudHsmClusterPrivateEndpointConnectionData.DeserializeCloudHsmClusterPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DedicatedHsmEgressEndpointListResult(value, nextLink, serializedAdditionalRawData);
+            return new HardwareSecurityModulesPrivateEndpointConnectionListResult(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DedicatedHsmEgressEndpointListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEgressEndpointListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHsmEgressEndpointListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareSecurityModulesPrivateEndpointConnectionListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DedicatedHsmEgressEndpointListResult IPersistableModel<DedicatedHsmEgressEndpointListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HardwareSecurityModulesPrivateEndpointConnectionListResult IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEgressEndpointListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDedicatedHsmEgressEndpointListResult(document.RootElement, options);
+                        return DeserializeHardwareSecurityModulesPrivateEndpointConnectionListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHsmEgressEndpointListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareSecurityModulesPrivateEndpointConnectionListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DedicatedHsmEgressEndpointListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
