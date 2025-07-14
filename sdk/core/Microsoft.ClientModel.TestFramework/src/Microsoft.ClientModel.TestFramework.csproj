@@ -16,8 +16,4 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SyncAsync\" />
-  </ItemGroup>
 </Project>

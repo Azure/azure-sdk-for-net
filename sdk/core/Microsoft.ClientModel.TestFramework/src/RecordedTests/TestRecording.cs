@@ -19,65 +19,69 @@ namespace Microsoft.ClientModel.TestFramework;
 public class TestRecording : IAsyncDisposable
 {
     private const string RandomSeedVariableKey = "RandomSeed";
+    private readonly TestProxyProcess _proxy;
+    //private TestRandom? _random;
+    private TestFramework.TestProxy.StartInformation? _startInformation;
+    private SortedDictionary<string, string> _variables = new();
+
     private const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     // cspell: disable-next-line
     private const string charsLower = "abcdefghijklmnopqrstuvwxyz0123456789";
     private const string Sanitized = "Sanitized";
-    private SortedDictionary<string, string> _variables = new();
     internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
-    private TestRecording()
+    private TestRecording(TestFramework.TestProxy.StartInformation startInformation, RecordedTestMode mode, TestProxyProcess process)
     {
-        throw new NotImplementedException();
+        _startInformation = startInformation;
+        TestMode = mode;
+        _proxy = process;
     }
 
     /// <summary>
-    /// TODO.
+    /// Stores key-value pairs that need to be consistent between recording and playback.
     /// </summary>
     public SortedDictionary<string, string> Variables => _variables;
 
     /// <summary>
-    /// TODO.
+    /// Gets the current test mode (Live, Record, Playback).
     /// </summary>
-    public RecordedTestMode Mode { get; }
+    public RecordedTestMode TestMode { get; }
 
     /// <summary>
-    /// TODO.
+    /// Gets the unique identifier for the current recording session.
     /// </summary>
-    public TestRandom Random { get; }
+    public string? RecordingId { get; }
 
     /// <summary>
-    /// TODO.
-    /// </summary>
-    public string RecordingId { get; private set; }
-
-    /// <summary>
-    /// TODO.
+    /// Gets the current local date and time to provide consistent time values across
+    /// test modes.
     /// </summary>
     public DateTimeOffset Now { get; }
 
     /// <summary>
-    /// TODO.
+    /// Gets the current date and time in Coordinated Universal Time (UTC) to provide
+    /// consistent time values across test modes.
     /// </summary>
     public DateTimeOffset UtcNow { get; }
 
     /// <summary>
-    /// TODO.
+    /// Tracks whether HTTP requests were made during the test recording session.
     /// </summary>
     public bool HasRequests { get; internal set; }
 
     /// <summary>
-    /// TODO.
+    /// Gets a value indicating whether the test recording has been created successfully.
     /// </summary>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public static async Task<TestRecording> CreateAsync()
+    public static async Task<TestRecording> CreateAsync(TestProxyProcess proxy, RecordedTestMode mode, TestFramework.TestProxy.StartInformation startInformation, TestRecordingOptions? options = default)
     {
-        await Task.Yield();
-        throw new NotImplementedException();
+        TestRecording recording = new(startInformation, mode, proxy);
+        await recording.InitializeProxySettingsAsync(options).ConfigureAwait(false);
+        return recording;
     }
 
-    internal async Task InitializeProxySettingsAsync()
+    internal async Task InitializeProxySettingsAsync(TestRecordingOptions? options)
     {
         await Task.Yield();
         throw new NotImplementedException();
