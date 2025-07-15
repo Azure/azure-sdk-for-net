@@ -127,27 +127,41 @@ namespace Azure.Generator.Management.Visitors
                 method.Signature.Update(parameters: updatedParameters);
 
                 // The model factory method return a new instance of the model type, update the constructor arguments with the flattened properties of internalized properties.
-                var instanceExpression = (method.BodyStatements?.OfType<ExpressionStatement>().Single()?.Expression as KeywordExpression)?.Expression as NewInstanceExpression;
-                var updatedInstanceParamters = new List<ValueExpression>(instanceExpression!.Parameters.Count);
-                foreach (var instanceParemter in instanceExpression!.Parameters)
+                if (method.BodyStatements is not null)
                 {
-                    // If the instance parameter is a variable expression, we can check if it is a flattened property and update it accordingly.
-                    if (instanceParemter is VariableExpression variable && propertyMap.TryGetValue(variable.Type, out var flattenedProperty))
+                    var updatedBodyStatements = new List<MethodBodyStatement>();
+                    foreach (var statement in method.BodyStatements)
                     {
-                        updatedInstanceParamters.Add(
-                            new TernaryConditionalExpression(
-                                flattenedProperty.AsParameter.Is(Null),
-                                Default,
-                                New.Instance(
-                                    variable.Type,
-                                    [flattenedProperty.AsParameter, New.Instance(new CSharpType(typeof(Dictionary<,>), typeof(string), typeof(BinaryData)))]))); // TODO: handle additional parameters properly or should it be nullable?
+                        // If the statement is returning a NewInstanceExpression, we need to update its parameters with the flattened properties.
+                        if (statement is ExpressionStatement expressionStatement && (expressionStatement.Expression as KeywordExpression)?.Expression is NewInstanceExpression newInstanceExpression)
+                        {
+                            var updatedInstanceParameters = new List<ValueExpression>(newInstanceExpression.Parameters.Count);
+                            foreach (var parameter in newInstanceExpression.Parameters)
+                            {
+                                if (parameter is VariableExpression variable && propertyMap.TryGetValue(variable.Type, out var flattenedProperty))
+                                {
+                                    updatedInstanceParameters.Add(
+                                        new TernaryConditionalExpression(
+                                            flattenedProperty.AsParameter.Is(Null),
+                                            Default,
+                                            New.Instance(
+                                                variable.Type,
+                                                [flattenedProperty.AsParameter, New.Instance(new CSharpType(typeof(Dictionary<,>), typeof(string), typeof(BinaryData)))]))); // TODO: handle additional parameters properly or should it be nullable?
+                                }
+                                else
+                                {
+                                    updatedInstanceParameters.Add(parameter);
+                                }
+                            }
+                            updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedInstanceParameters)));
+                        }
+                        else
+                        {
+                            updatedBodyStatements.Add(statement);
+                        }
                     }
-                    else
-                    {
-                        updatedInstanceParamters.Add(instanceParemter);
-                    }
+                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
                 }
-                method.Update(signature: method.Signature, bodyStatements: Return(New.Instance(instanceExpression.Type!, updatedInstanceParamters)));
             }
         }
 
