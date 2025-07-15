@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace _Type.Model.Empty
 {
+    /// <summary> Client options for <see cref="EmptyClient"/>. </summary>
     public partial class EmptyClientOptions : ClientOptions
     {
     }

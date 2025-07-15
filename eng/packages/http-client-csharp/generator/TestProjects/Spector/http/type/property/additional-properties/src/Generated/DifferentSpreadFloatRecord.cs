@@ -10,18 +10,39 @@ using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
+    /// <summary> The model spread Record&lt;float32&gt; with the different known property type. </summary>
     public partial class DifferentSpreadFloatRecord
     {
-        public DifferentSpreadFloatRecord(string name) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private IDictionary<string, float> _additionalSingleProperties;
 
-        internal DifferentSpreadFloatRecord(string name, IDictionary<string, float> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
-
-        public string Name
+        /// <summary> Initializes a new instance of <see cref="DifferentSpreadFloatRecord"/>. </summary>
+        /// <param name="name"> The id property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public DifferentSpreadFloatRecord(string name)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
+            _additionalSingleProperties = new ChangeTrackingDictionary<string, float>();
         }
 
-        public IDictionary<string, float> AdditionalProperties => throw null;
+        /// <summary> Initializes a new instance of <see cref="DifferentSpreadFloatRecord"/>. </summary>
+        /// <param name="name"> The id property. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DifferentSpreadFloatRecord(string name, IDictionary<string, float> additionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Name = name;
+            _additionalSingleProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The id property. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, float> AdditionalProperties => _additionalSingleProperties;
     }
 }

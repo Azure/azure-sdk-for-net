@@ -7,34 +7,239 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace _Specs_.Azure.Example.Basic
 {
+    /// <summary> The ActionRequest. </summary>
     public partial class ActionRequest : IJsonModel<ActionRequest>
     {
-        internal ActionRequest() => throw null;
+        /// <summary> Initializes a new instance of <see cref="ActionRequest"/> for deserialization. </summary>
+        internal ActionRequest()
+        {
+        }
 
-        void IJsonModel<ActionRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<ActionRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
 
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ActionRequest)} does not support writing '{format}' format.");
+            }
+            writer.WritePropertyName("stringProperty"u8);
+            writer.WriteStringValue(StringProperty);
+            if (Optional.IsDefined(ModelProperty))
+            {
+                writer.WritePropertyName("modelProperty"u8);
+                writer.WriteObjectValue(ModelProperty, options);
+            }
+            if (Optional.IsCollectionDefined(ArrayProperty))
+            {
+                writer.WritePropertyName("arrayProperty"u8);
+                writer.WriteStartArray();
+                foreach (string item in ArrayProperty)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RecordProperty))
+            {
+                writer.WritePropertyName("recordProperty"u8);
+                writer.WriteStartObject();
+                foreach (var item in RecordProperty)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
 
-        ActionRequest IJsonModel<ActionRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ActionRequest IJsonModel<ActionRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
-        protected virtual ActionRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ActionRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ActionRequest)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeActionRequest(document.RootElement, options);
+        }
 
-        BinaryData IPersistableModel<ActionRequest>.Write(ModelReaderWriterOptions options) => throw null;
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ActionRequest DeserializeActionRequest(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string stringProperty = default;
+            Model modelProperty = default;
+            IList<string> arrayProperty = default;
+            IDictionary<string, string> recordProperty = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("stringProperty"u8))
+                {
+                    stringProperty = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("modelProperty"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    modelProperty = Model.DeserializeModel(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("arrayProperty"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    arrayProperty = array;
+                    continue;
+                }
+                if (prop.NameEquals("recordProperty"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    recordProperty = dictionary;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new ActionRequest(stringProperty, modelProperty, arrayProperty ?? new ChangeTrackingList<string>(), recordProperty ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+        }
 
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ActionRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        ActionRequest IPersistableModel<ActionRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, _Specs_AzureExampleBasicContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ActionRequest)} does not support writing '{options.Format}' format.");
+            }
+        }
 
-        protected virtual ActionRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ActionRequest IPersistableModel<ActionRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        string IPersistableModel<ActionRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ActionRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeActionRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ActionRequest)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ActionRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="actionRequest"> The <see cref="ActionRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ActionRequest actionRequest) => throw null;
+        public static implicit operator RequestContent(ActionRequest actionRequest)
+        {
+            if (actionRequest == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(actionRequest, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

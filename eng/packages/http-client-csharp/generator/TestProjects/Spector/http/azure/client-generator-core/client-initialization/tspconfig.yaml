@@ -1,0 +1,6 @@
+emit:
+  - "@azure-typespec/http-client-csharp"
+options:
+  "@azure-typespec/http-client-csharp":
+    model-namespace: true
+    namespace: "_Specs_.Azure.ClientGenerator.Core.ClientInitialization"

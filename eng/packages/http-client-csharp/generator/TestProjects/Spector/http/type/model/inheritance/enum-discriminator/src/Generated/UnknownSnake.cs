@@ -12,6 +12,12 @@ namespace _Type.Model.Inheritance.EnumDiscriminator
 {
     internal partial class UnknownSnake : Snake
     {
-        internal UnknownSnake(SnakeKind kind, int length, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, length, additionalBinaryDataProperties) => throw null;
+        /// <summary> Initializes a new instance of <see cref="UnknownSnake"/>. </summary>
+        /// <param name="kind"> discriminator property. </param>
+        /// <param name="length"> Length of the snake. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSnake(SnakeKind kind, int length, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, length, additionalBinaryDataProperties)
+        {
+        }
     }
 }

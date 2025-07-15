@@ -5,16 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Type.Property.Nullable
 {
+    /// <summary> Inner model used in collections model property. </summary>
     public partial class InnerModel
     {
-        public InnerModel(string @property) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        public string Property
+        /// <summary> Initializes a new instance of <see cref="InnerModel"/>. </summary>
+        /// <param name="property"> Inner model property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="property"/> is null. </exception>
+        public InnerModel(string @property)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(@property, nameof(@property));
+
+            Property = @property;
         }
+
+        /// <summary> Initializes a new instance of <see cref="InnerModel"/>. </summary>
+        /// <param name="property"> Inner model property. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InnerModel(string @property, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Property = @property;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Inner model property. </summary>
+        public string Property { get; set; }
     }
 }

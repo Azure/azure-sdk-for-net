@@ -9,50 +9,329 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Server.Versions.Versioned
 {
+    /// <summary> Illustrates versioned server. </summary>
     public partial class VersionedClient
     {
-        protected VersionedClient() => throw null;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
-        public VersionedClient(Uri endpoint) : this(endpoint, new VersionedClientOptions()) => throw null;
+        /// <summary> Initializes a new instance of VersionedClient for mocking. </summary>
+        protected VersionedClient()
+        {
+        }
 
-        public VersionedClient(Uri endpoint, VersionedClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of VersionedClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public VersionedClient(Uri endpoint) : this(endpoint, new VersionedClientOptions())
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of VersionedClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public VersionedClient(Uri endpoint, VersionedClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual Response WithoutApiVersion(RequestContext context) => throw null;
+            options ??= new VersionedClientOptions();
 
-        public virtual Task<Response> WithoutApiVersionAsync(RequestContext context) => throw null;
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
 
-        public virtual Response WithoutApiVersion(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Task<Response> WithoutApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual Response WithQueryApiVersion(RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] WithoutApiVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response WithoutApiVersion(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VersionedClient.WithoutApiVersion");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateWithoutApiVersionRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> WithQueryApiVersionAsync(RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] WithoutApiVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> WithoutApiVersionAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VersionedClient.WithoutApiVersion");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateWithoutApiVersionRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Response WithQueryApiVersion(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> WithoutApiVersion. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response WithoutApiVersion(CancellationToken cancellationToken = default)
+        {
+            return WithoutApiVersion(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual Task<Response> WithQueryApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> WithoutApiVersion. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> WithoutApiVersionAsync(CancellationToken cancellationToken = default)
+        {
+            return await WithoutApiVersionAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
 
-        public virtual Response WithPathApiVersion(RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] WithQueryApiVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response WithQueryApiVersion(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VersionedClient.WithQueryApiVersion");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateWithQueryApiVersionRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> WithPathApiVersionAsync(RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] WithQueryApiVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> WithQueryApiVersionAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VersionedClient.WithQueryApiVersion");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateWithQueryApiVersionRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Response WithPathApiVersion(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> WithQueryApiVersion. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response WithQueryApiVersion(CancellationToken cancellationToken = default)
+        {
+            return WithQueryApiVersion(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual Task<Response> WithPathApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> WithQueryApiVersion. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> WithQueryApiVersionAsync(CancellationToken cancellationToken = default)
+        {
+            return await WithQueryApiVersionAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
 
-        public virtual Response WithQueryOldApiVersion(RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] WithPathApiVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response WithPathApiVersion(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VersionedClient.WithPathApiVersion");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateWithPathApiVersionRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Task<Response> WithQueryOldApiVersionAsync(RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] WithPathApiVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> WithPathApiVersionAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VersionedClient.WithPathApiVersion");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateWithPathApiVersionRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Response WithQueryOldApiVersion(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> WithPathApiVersion. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response WithPathApiVersion(CancellationToken cancellationToken = default)
+        {
+            return WithPathApiVersion(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual Task<Response> WithQueryOldApiVersionAsync(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> WithPathApiVersion. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> WithPathApiVersionAsync(CancellationToken cancellationToken = default)
+        {
+            return await WithPathApiVersionAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] WithQueryOldApiVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response WithQueryOldApiVersion(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VersionedClient.WithQueryOldApiVersion");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateWithQueryOldApiVersionRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] WithQueryOldApiVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> WithQueryOldApiVersionAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VersionedClient.WithQueryOldApiVersion");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateWithQueryOldApiVersionRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> WithQueryOldApiVersion. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response WithQueryOldApiVersion(CancellationToken cancellationToken = default)
+        {
+            return WithQueryOldApiVersion(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> WithQueryOldApiVersion. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> WithQueryOldApiVersionAsync(CancellationToken cancellationToken = default)
+        {
+            return await WithQueryOldApiVersionAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+        }
     }
 }

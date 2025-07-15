@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace _Type.Model.Visibility
 {
+    /// <summary> Client options for <see cref="VisibilityClient"/>. </summary>
     public partial class VisibilityClientOptions : ClientOptions
     {
     }

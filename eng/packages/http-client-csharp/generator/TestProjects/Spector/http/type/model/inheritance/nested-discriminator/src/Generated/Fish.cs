@@ -10,22 +10,39 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
+    /// <summary>
+    /// This is base model for polymorphic multiple levels inheritance with a discriminator.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Shark"/> and <see cref="Salmon"/>.
+    /// </summary>
     public abstract partial class Fish
     {
-        private protected Fish(string kind, int age) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        internal Fish(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
-
-        internal string Kind
+        /// <summary> Initializes a new instance of <see cref="Fish"/>. </summary>
+        /// <param name="kind"> Discriminator property for Fish. </param>
+        /// <param name="age"></param>
+        private protected Fish(string kind, int age)
         {
-            get => throw null;
-            set => throw null;
+            Kind = kind;
+            Age = age;
         }
 
-        public int Age
+        /// <summary> Initializes a new instance of <see cref="Fish"/>. </summary>
+        /// <param name="kind"> Discriminator property for Fish. </param>
+        /// <param name="age"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal Fish(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            get => throw null;
-            set => throw null;
+            Kind = kind;
+            Age = age;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Discriminator property for Fish. </summary>
+        internal string Kind { get; set; }
+
+        /// <summary> Gets or sets the Age. </summary>
+        public int Age { get; set; }
     }
 }

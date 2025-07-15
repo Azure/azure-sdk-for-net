@@ -6,18 +6,47 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure.Core.Pipeline;
 
 namespace _Specs_.Azure.Core.Model
 {
+    /// <summary></summary>
     public partial class ModelClient
     {
-        public ModelClient() : this(new Uri("http://localhost:3000"), new ModelClientOptions()) => throw null;
+        private readonly Uri _endpoint;
+        private AzureCoreEmbeddingVector _cachedAzureCoreEmbeddingVector;
 
-        public ModelClient(Uri endpoint, ModelClientOptions options) => throw null;
+        /// <summary> Initializes a new instance of ModelClient. </summary>
+        public ModelClient() : this(new Uri("http://localhost:3000"), new ModelClientOptions())
+        {
+        }
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of ModelClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public ModelClient(Uri endpoint, ModelClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-        public virtual AzureCoreEmbeddingVector GetAzureCoreEmbeddingVectorClient() => throw null;
+            options ??= new ModelClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> Initializes a new instance of AzureCoreEmbeddingVector. </summary>
+        public virtual AzureCoreEmbeddingVector GetAzureCoreEmbeddingVectorClient()
+        {
+            return Volatile.Read(ref _cachedAzureCoreEmbeddingVector) ?? Interlocked.CompareExchange(ref _cachedAzureCoreEmbeddingVector, new AzureCoreEmbeddingVector(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedAzureCoreEmbeddingVector;
+        }
     }
 }

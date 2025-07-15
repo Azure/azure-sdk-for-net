@@ -10,18 +10,39 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
+    /// <summary>
+    /// Define a base class in the legacy way. Discriminator property is not explicitly defined in the model.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TRex"/>.
+    /// </summary>
     public abstract partial class Dinosaur
     {
-        private protected Dinosaur(string kind, int size) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        internal Dinosaur(string kind, int size, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
-
-        internal string Kind
+        /// <summary> Initializes a new instance of <see cref="Dinosaur"/>. </summary>
+        /// <param name="kind"> Discriminator property for Dinosaur. </param>
+        /// <param name="size"></param>
+        private protected Dinosaur(string kind, int size)
         {
-            get => throw null;
-            set => throw null;
+            Kind = kind;
+            Size = size;
         }
 
-        public int Size => throw null;
+        /// <summary> Initializes a new instance of <see cref="Dinosaur"/>. </summary>
+        /// <param name="kind"> Discriminator property for Dinosaur. </param>
+        /// <param name="size"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal Dinosaur(string kind, int size, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Kind = kind;
+            Size = size;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Discriminator property for Dinosaur. </summary>
+        internal string Kind { get; set; }
+
+        /// <summary> Gets the Size. </summary>
+        public int Size { get; }
     }
 }

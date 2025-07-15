@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace _Type._Enum.Extensible
 {
+    /// <summary> Client options for <see cref="ExtensibleClient"/>. </summary>
     public partial class ExtensibleClientOptions : ClientOptions
     {
     }

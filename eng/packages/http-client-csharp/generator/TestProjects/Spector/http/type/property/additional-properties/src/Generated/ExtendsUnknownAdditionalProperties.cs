@@ -10,18 +10,36 @@ using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
+    /// <summary> The model extends from Record&lt;unknown&gt; type. </summary>
     public partial class ExtendsUnknownAdditionalProperties
     {
-        public ExtendsUnknownAdditionalProperties(string name) => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        internal ExtendsUnknownAdditionalProperties(string name, IDictionary<string, BinaryData> additionalProperties) => throw null;
-
-        public string Name
+        /// <summary> Initializes a new instance of <see cref="ExtendsUnknownAdditionalProperties"/>. </summary>
+        /// <param name="name"> The name property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ExtendsUnknownAdditionalProperties(string name)
         {
-            get => throw null;
-            set => throw null;
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        public IDictionary<string, BinaryData> AdditionalProperties => throw null;
+        /// <summary> Initializes a new instance of <see cref="ExtendsUnknownAdditionalProperties"/>. </summary>
+        /// <param name="name"> The name property. </param>
+        /// <param name="additionalProperties"></param>
+        internal ExtendsUnknownAdditionalProperties(string name, IDictionary<string, BinaryData> additionalProperties)
+        {
+            Name = name;
+            _additionalBinaryDataProperties = additionalProperties;
+        }
+
+        /// <summary> The name property. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

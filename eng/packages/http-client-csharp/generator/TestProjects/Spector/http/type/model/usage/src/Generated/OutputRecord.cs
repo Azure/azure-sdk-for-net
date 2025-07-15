@@ -5,10 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace _Type.Model.Usage
 {
+    /// <summary> Record used in operation return type. </summary>
     public partial class OutputRecord
     {
-        public string RequiredProp => throw null;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="OutputRecord"/>. </summary>
+        /// <param name="requiredProp"></param>
+        internal OutputRecord(string requiredProp)
+        {
+            RequiredProp = requiredProp;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OutputRecord"/>. </summary>
+        /// <param name="requiredProp"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OutputRecord(string requiredProp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            RequiredProp = requiredProp;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Gets the RequiredProp. </summary>
+        public string RequiredProp { get; }
     }
 }

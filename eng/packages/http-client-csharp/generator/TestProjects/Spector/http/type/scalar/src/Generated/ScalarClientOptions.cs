@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace _Type.Scalar
 {
+    /// <summary> Client options for <see cref="ScalarClient"/>. </summary>
     public partial class ScalarClientOptions : ClientOptions
     {
     }

@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
+    /// <summary> Client options for <see cref="NotDiscriminatedClient"/>. </summary>
     public partial class NotDiscriminatedClientOptions : ClientOptions
     {
     }

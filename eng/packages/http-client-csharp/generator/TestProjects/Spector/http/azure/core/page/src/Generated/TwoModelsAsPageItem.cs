@@ -12,26 +12,170 @@ using Azure.Core.Pipeline;
 
 namespace _Specs_.Azure.Core.Page
 {
+    /// <summary></summary>
     public partial class TwoModelsAsPageItem
     {
-        protected TwoModelsAsPageItem() => throw null;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        /// <summary> Initializes a new instance of TwoModelsAsPageItem for mocking. </summary>
+        protected TwoModelsAsPageItem()
+        {
+        }
 
-        public virtual Pageable<BinaryData> GetFirstItem(RequestContext context) => throw null;
+        /// <summary> Initializes a new instance of TwoModelsAsPageItem. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal TwoModelsAsPageItem(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
+        }
 
-        public virtual AsyncPageable<BinaryData> GetFirstItemAsync(RequestContext context) => throw null;
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-        public virtual Pageable<FirstItem> GetFirstItem(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        public virtual AsyncPageable<FirstItem> GetFirstItemAsync(CancellationToken cancellationToken = default) => throw null;
+        /// <summary>
+        /// [Protocol Method] Two operations with two different page item types should be successfully generated. Should generate model for FirstItem.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetFirstItem(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TwoModelsAsPageItem.GetFirstItem");
+            scope.Start();
+            try
+            {
+                return new TwoModelsAsPageItemGetFirstItemCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual Pageable<BinaryData> GetSecondItem(RequestContext context) => throw null;
+        /// <summary>
+        /// [Protocol Method] Two operations with two different page item types should be successfully generated. Should generate model for FirstItem.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetFirstItemAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TwoModelsAsPageItem.GetFirstItem");
+            scope.Start();
+            try
+            {
+                return new TwoModelsAsPageItemGetFirstItemAsyncCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-        public virtual AsyncPageable<BinaryData> GetSecondItemAsync(RequestContext context) => throw null;
+        /// <summary> Two operations with two different page item types should be successfully generated. Should generate model for FirstItem. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<FirstItem> GetFirstItem(CancellationToken cancellationToken = default)
+        {
+            return new TwoModelsAsPageItemGetFirstItemCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual Pageable<SecondItem> GetSecondItem(CancellationToken cancellationToken = default) => throw null;
+        /// <summary> Two operations with two different page item types should be successfully generated. Should generate model for FirstItem. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<FirstItem> GetFirstItemAsync(CancellationToken cancellationToken = default)
+        {
+            return new TwoModelsAsPageItemGetFirstItemAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
 
-        public virtual AsyncPageable<SecondItem> GetSecondItemAsync(CancellationToken cancellationToken = default) => throw null;
+        /// <summary>
+        /// [Protocol Method] Two operations with two different page item types should be successfully generated. Should generate model for SecondItem.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetSecondItem(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TwoModelsAsPageItem.GetSecondItem");
+            scope.Start();
+            try
+            {
+                return new TwoModelsAsPageItemGetSecondItemCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Two operations with two different page item types should be successfully generated. Should generate model for SecondItem.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetSecondItemAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TwoModelsAsPageItem.GetSecondItem");
+            scope.Start();
+            try
+            {
+                return new TwoModelsAsPageItemGetSecondItemAsyncCollectionResult(this, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Two operations with two different page item types should be successfully generated. Should generate model for SecondItem. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<SecondItem> GetSecondItem(CancellationToken cancellationToken = default)
+        {
+            return new TwoModelsAsPageItemGetSecondItemCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
+
+        /// <summary> Two operations with two different page item types should be successfully generated. Should generate model for SecondItem. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<SecondItem> GetSecondItemAsync(CancellationToken cancellationToken = default)
+        {
+            return new TwoModelsAsPageItemGetSecondItemAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+        }
     }
 }

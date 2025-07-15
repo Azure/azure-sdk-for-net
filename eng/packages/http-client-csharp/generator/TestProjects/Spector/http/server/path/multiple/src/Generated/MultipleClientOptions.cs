@@ -5,16 +5,31 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 
 namespace Server.Path.Multiple
 {
+    /// <summary> Client options for <see cref="MultipleClient"/>. </summary>
     public partial class MultipleClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
-        public MultipleClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        /// <summary> Initializes a new instance of MultipleClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
+        public MultipleClientOptions(ServiceVersion version = LatestVersion)
+        {
+            Version = version switch
+            {
+                ServiceVersion.V1_0 => "v1.0",
+                _ => throw new NotSupportedException()
+            };
+        }
 
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Version 1.0. </summary>
