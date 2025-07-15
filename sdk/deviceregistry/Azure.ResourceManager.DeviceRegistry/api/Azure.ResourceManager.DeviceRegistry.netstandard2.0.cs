@@ -1,5 +1,32 @@
 namespace Azure.ResourceManager.DeviceRegistry
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.DeviceRegistryAssetData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.DeviceRegistryAssetEndpointProfileData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.DeviceRegistryAssetEndpointProfileResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.DeviceRegistryAssetResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.DeviceRegistryBillingContainerData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.DeviceRegistryBillingContainerResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.AssetEndpointProfileStatusError))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.AssetEndpointProfileUpdateProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.AssetProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.AssetUpdateProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetEndpointProfilePatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetEndpointProfileProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatus))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatusDataset))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatusError))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatusEvent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAuthentication))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataPoint))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataPointBase))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataset))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryEvent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryEventBase))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryExtendedLocation))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUsernamePasswordCredentials))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.DeviceRegistry.Models.MessageSchemaReference))]
     public partial class AzureResourceManagerDeviceRegistryContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerDeviceRegistryContext() { }

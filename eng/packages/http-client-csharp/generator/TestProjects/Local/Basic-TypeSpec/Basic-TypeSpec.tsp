@@ -172,6 +172,7 @@ model ModelWithClientName {
 }
 
 @doc("this is a roundtrip model")
+@useSystemTextJsonConverter()
 model RoundTripModel {
   @doc("Required string, illustrating a reference type property.")
   requiredString: string;

@@ -12,12 +12,19 @@ namespace Azure.AI.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="InternalAzureContentFilterBlocklistIdResult"/>. </summary>
+        /// <param name="id"> The ID of the custom blocklist associated with the filtered status. </param>
+        /// <param name="filtered"> Whether the associated blocklist resulted in the content being filtered. </param>
         internal InternalAzureContentFilterBlocklistIdResult(string id, bool filtered)
         {
             Id = id;
             Filtered = filtered;
         }
 
+        /// <summary> Initializes a new instance of <see cref="InternalAzureContentFilterBlocklistIdResult"/>. </summary>
+        /// <param name="id"> The ID of the custom blocklist associated with the filtered status. </param>
+        /// <param name="filtered"> Whether the associated blocklist resulted in the content being filtered. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal InternalAzureContentFilterBlocklistIdResult(string id, bool filtered, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;

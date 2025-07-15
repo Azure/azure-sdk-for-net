@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
 
@@ -19,12 +21,14 @@ namespace Azure.Generator.Management
         private const string SingletonResourceName = "singletonResourceName";
         private const string ResourceScope = "resourceScope";
         private const string Methods = "methods";
-        private const string ParentResource = "parentResource";
+        private const string ParentResourceId = "parentResourceId";
 
         private IReadOnlyDictionary<InputModelType, ResourceMetadata>? _resourceMetadata;
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
+
+        private IReadOnlyDictionary<InputModelType, string>? _resourceUpdateModelToResourceNameMap;
 
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
@@ -56,6 +60,31 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<string, InputServiceMethod> InputMethodsByCrossLanguageDefinitionId => _inputServiceMethodsByCrossLanguageDefinitionId ??= InputNamespace.Clients.SelectMany(c => c.Methods).ToDictionary(m => m.CrossLanguageDefinitionId, m => m);
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> IntMethodClientMap => _intMethodClientMap ??= ConstructMethodClientMap();
+
+        private IReadOnlyDictionary<InputModelType, string> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
+
+        private IReadOnlyDictionary<InputModelType, string> BuildResourceUpdateModelToResourceNameMap()
+        {
+            Dictionary<InputModelType, string> map = new();
+
+            foreach (var (resourceModel, metadata) in ResourceMetadata)
+            {
+                var id = metadata.Methods.Where(m => m.Kind == ResourceOperationKind.Update).FirstOrDefault()?.Id;
+                if (id != null && InputMethodsByCrossLanguageDefinitionId.GetValueOrDefault(id) is { Operation.HttpMethod: "PATCH" } method)
+                {
+                    foreach (var parameter in method.Parameters)
+                    {
+                        if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != resourceModel)
+                        {
+                            map[updateModel] = resourceModel.Name;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return map;
+        }
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> ConstructMethodClientMap()
         {
@@ -158,7 +187,7 @@ namespace Azure.Generator.Management
                     }
                 }
 
-                if (args.TryGetValue(ParentResource, out var parentResourceData))
+                if (args.TryGetValue(ParentResourceId, out var parentResourceData))
                 {
                     parentResource = parentResourceData.ToObjectFromJson<string>();
                 }
@@ -172,6 +201,11 @@ namespace Azure.Generator.Management
                     singletonResourceName,
                     parentResource);
             }
+        }
+
+        internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName)
+        {
+            return ResourceUpdateModelToResourceNameMap.TryGetValue(model, out resourceName);
         }
     }
 }

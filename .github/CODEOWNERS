@@ -319,9 +319,11 @@
 # ServiceLabel: %Communication
 # ServiceOwners:                                                   @Azure/azure-sdk-write-communication
 
+# PRLabel: %Communication - Call Automation
+/sdk/communication/Azure.Communication.CallAutomation/             @juntuchen-msft @minwoolee-msft @fhaghbin-msft @v-dharmarajv
+
 # PRLabel: %Communication - Calling Server
 /sdk/communication/Azure.Communication.CallingServer/              @minwoolee-msft
-
 # PRLabel: %Communication - Chat
 /sdk/communication/Azure.Communication.Chat/                       @LuChen-Microsoft
 
@@ -987,10 +989,10 @@
 # ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %Database Watcher
-/sdk/databasewatcher/Azure.ResourceManager.*/                      @Renyx1219
+/sdk/databasewatcher/Azure.ResourceManager.*/                      @ArthurMa1978
 
 # ServiceLabel: %Database Watcher %Mgmt
-# ServiceOwners:                                                   @Renyx1219
+# ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %Device Registry
 /sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
@@ -1053,7 +1055,7 @@
 # ServiceOwners:                                                   @alluri02
 
 # PRLabel: %Network - CDN
-/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
+/sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Network - DNS Private Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
@@ -1062,10 +1064,10 @@
 # ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %Network - Front Door
-/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978 @Ptnan7
+/sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978
 
 # ServiceLabel:  %Network - Front Door %Mgmt
-# ServiceOwners:                                                   @Ptnan7
+# ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %Network - Mobile
 /sdk/mobilenetwork/Azure.ResourceManager.*/                        @ArcturusZhang @ArthurMa1978
@@ -1099,6 +1101,12 @@
 
 # ServiceLabel: %Pinecone %Mgmt
 # ServiceOwners:                                                   @aggarwalsw
+
+# PRLabel: %Planetary Computer
+/sdk/planetarycomputer/Azure.ResourceManager.*/                    @shaktichetan23 @thisisdevanshu
+
+# ServiceLabel: %Planetary Computer %Mgmt
+# ServiceOwners:                                                   @shaktichetan23 @thisisdevanshu
 
 # PRLabel: %PureStorage
 /sdk/purestorageblock/Azure.ResourceManager.*/                     @deepakmauryams
