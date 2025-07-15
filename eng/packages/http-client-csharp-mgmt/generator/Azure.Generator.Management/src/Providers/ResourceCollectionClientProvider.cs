@@ -29,7 +29,6 @@ namespace Azure.Generator.Management.Providers
     internal sealed class ResourceCollectionClientProvider : TypeProvider
     {
         private readonly ResourceMetadata _resourceMetadata;
-        private readonly RequestPathPattern _contextualPath;
 
         private readonly ResourceClientProvider _resource;
         private readonly InputServiceMethod? _getAll;
@@ -46,7 +45,7 @@ namespace Azure.Generator.Management.Providers
         internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, InputClient inputClient, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            _contextualPath = GetContextualRequestPattern(resourceMetadata);
+            ContextualPath = GetContextualRequestPattern(resourceMetadata);
             _resource = resource;
 
             _restClientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
@@ -126,6 +125,8 @@ namespace Azure.Generator.Management.Providers
         }
 
         public ResourceClientProvider Resource => _resource;
+
+        public RequestPathPattern ContextualPath { get; }
 
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
@@ -259,7 +260,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_create!.Operation, isAsync);
-                result.Add(new ResourceOperationMethodProvider(this, _contextualPath, _restClientProvider, _create, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync));
+                result.Add(new ResourceOperationMethodProvider(this, ContextualPath, _restClientProvider, _create, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync));
             }
 
             return result;
@@ -268,7 +269,7 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildGetAllMethod(bool isAsync)
         {
             var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_getAll!.Operation, isAsync);
-            return new GetAllOperationMethodProvider(this, _contextualPath, _restClientProvider, _getAll, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync);
+            return new GetAllOperationMethodProvider(this, _restClientProvider, _getAll, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync);
         }
 
         private List<MethodProvider> BuildGetMethods()
@@ -282,7 +283,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
-                result.Add(new ResourceOperationMethodProvider(this, _contextualPath, _restClientProvider, _get, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync));
+                result.Add(new ResourceOperationMethodProvider(this, ContextualPath, _restClientProvider, _get, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync));
             }
 
             return result;
@@ -299,7 +300,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
-                var existsMethodProvider = new ExistsOperationMethodProvider(this, _contextualPath, _restClientProvider, _get, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync);
+                var existsMethodProvider = new ExistsOperationMethodProvider(this, _restClientProvider, _get, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync);
                 result.Add(existsMethodProvider);
             }
 
@@ -317,7 +318,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var isAsync in new List<bool> { true, false })
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
-                var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _contextualPath, _restClientProvider, _get, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync);
+                var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _restClientProvider, _get, convenienceMethod, _clientDiagnosticsField, _restClientField, isAsync);
                 result.Add(getIfExistsMethodProvider);
             }
 

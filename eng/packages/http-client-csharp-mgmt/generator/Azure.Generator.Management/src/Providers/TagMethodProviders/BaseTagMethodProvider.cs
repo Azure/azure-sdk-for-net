@@ -35,7 +35,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected BaseTagMethodProvider(
             ResourceClientProvider resource,
             MethodProvider updateMethodProvider,
-            RequestPathPattern contextualPath,
             ClientProvider restClient,
             FieldProvider clientDiagnosticsField,
             FieldProvider restClientField,
@@ -45,7 +44,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         {
             _resource = resource;
             _updateMethodProvider = updateMethodProvider;
-            _contextualPath = contextualPath;
+            _contextualPath = resource.ContextualPath;
             _enclosingType = resource;
             _restClient = restClient;
             _isAsync = isAsync;

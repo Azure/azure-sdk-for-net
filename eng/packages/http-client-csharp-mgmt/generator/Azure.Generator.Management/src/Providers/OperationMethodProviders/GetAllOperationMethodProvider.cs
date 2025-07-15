@@ -15,13 +15,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class GetAllOperationMethodProvider(
         ResourceCollectionClientProvider collection,
-        RequestPathPattern contextualPath,
         ClientProvider restClient,
         InputServiceMethod method,
         MethodProvider convenienceMethod,
         FieldProvider clientDiagnosticsField,
         FieldProvider restClientField,
-        bool isAsync) : ResourceOperationMethodProvider(collection, contextualPath, restClient, method, convenienceMethod, clientDiagnosticsField, restClientField, isAsync)
+        bool isAsync) : ResourceOperationMethodProvider(collection, collection.ContextualPath, restClient, method, convenienceMethod, clientDiagnosticsField, restClientField, isAsync)
     {
         protected override MethodSignature CreateSignature()
         {

@@ -1,16 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Snippets;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
-using Microsoft.TypeSpec.Generator.Expressions;
-using Azure.Generator.Management.Snippets;
 using System.Collections.Generic;
-using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
-using Azure.ResourceManager;
-using Azure.Generator.Management.Models;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
 {
@@ -19,12 +16,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         public AddTagMethodProvider(
             ResourceClientProvider resource,
             MethodProvider updateMethodProvider,
-            RequestPathPattern contextualPath,
             ClientProvider restClient,
             FieldProvider clientDiagnosticsField,
             FieldProvider restClientField,
             bool isAsync)
-            : base(resource, updateMethodProvider, contextualPath, restClient, clientDiagnosticsField, restClientField, isAsync,
+            : base(resource, updateMethodProvider, restClient, clientDiagnosticsField, restClientField, isAsync,
                    isAsync ? "AddTagAsync" : "AddTag",
                    "Add a tag to the current resource.")
         {

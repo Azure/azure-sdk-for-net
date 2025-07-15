@@ -15,7 +15,7 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Utilities
 {
-    internal static class ContextualParameterExtensions
+    internal static class RequestPathPatternExtensions
     {
         public static IReadOnlyList<ValueExpression> PopulateArguments(
             this RequestPathPattern contextualPath,
@@ -52,7 +52,7 @@ namespace Azure.Generator.Management.Utilities
                 }
                 else
                 {
-                    arguments.Add(methodParameters.Single(p => p.Name == parameter.Name));
+                    arguments.Add(methodParameters.Single(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName));
                 }
             }
             return arguments;

@@ -52,8 +52,6 @@ namespace Azure.Generator.Management.Providers
 
         private IEnumerable<(ResourceOperationKind, InputServiceMethod)> _resourceServiceMethods;
 
-        private readonly RequestPathPattern _contextualPath;
-
         private readonly FieldProvider _dataField;
         private readonly FieldProvider _resourceTypeField;
         private readonly InputModelType _inputModel;
@@ -67,7 +65,7 @@ namespace Azure.Generator.Management.Providers
         private ResourceClientProvider(string resourceName, InputModelType model, InputClient inputClient, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            _contextualPath = new RequestPathPattern(resourceMetadata.ResourceIdPattern);
+            ContextualPath = new RequestPathPattern(resourceMetadata.ResourceIdPattern);
             _inputModel = model;
 
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
@@ -84,6 +82,8 @@ namespace Azure.Generator.Management.Providers
             _clientDiagnosticsField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ClientDiagnostics), ResourceHelpers.GetClientDiagnosticFieldName(ResourceName), this);
             _restClientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, _restClientProvider.Type, ResourceHelpers.GetRestClientFieldName(_restClientProvider.Name), this);
         }
+
+        public RequestPathPattern ContextualPath { get; }
 
         internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
         internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
@@ -261,7 +261,7 @@ namespace Azure.Generator.Management.Providers
             var formatBuilder = new StringBuilder();
             var refCount = 0;
 
-            foreach (var segment in _contextualPath)
+            foreach (var segment in ContextualPath)
             {
                 if (segment.IsConstant)
                 {
@@ -327,18 +327,18 @@ namespace Azure.Generator.Management.Providers
 
                 if (isUpdateOperation)
                 {
-                    updateMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, _restClientProvider, method, convenienceMethod, _clientDiagnosticsField, _restClientField, false);
+                    updateMethodProvider = new UpdateOperationMethodProvider(this, _restClientProvider, method, convenienceMethod, _clientDiagnosticsField, _restClientField, false);
                     operationMethods.Add(updateMethodProvider);
 
                     var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, _restClientProvider, method, asyncConvenienceMethod, _clientDiagnosticsField, _restClientField, true);
+                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _restClientProvider, method, asyncConvenienceMethod, _clientDiagnosticsField, _restClientField, true);
                     operationMethods.Add(updateAsyncMethodProvider);
                 }
                 else
                 {
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, _restClientProvider, method, convenienceMethod, _clientDiagnosticsField, _restClientField, false));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, _restClientProvider, method, convenienceMethod, _clientDiagnosticsField, _restClientField, false));
                     var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, _restClientProvider, method, asyncConvenienceMethod, _clientDiagnosticsField, _restClientField, true));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, ContextualPath, _restClientProvider, method, asyncConvenienceMethod, _clientDiagnosticsField, _restClientField, true));
                 }
             }
 
@@ -353,12 +353,12 @@ namespace Azure.Generator.Management.Providers
             if (HasTags() && _resourceMetadata.Methods.Any(m => m.Kind == ResourceOperationKind.Get) && updateMethodProvider is not null)
             {
                 methods.AddRange([
-                    new AddTagMethodProvider(this, updateMethodProvider, _contextualPath, _restClientProvider, _clientDiagnosticsField, _restClientField, true),
-                    new AddTagMethodProvider(this, updateMethodProvider, _contextualPath, _restClientProvider, _clientDiagnosticsField, _restClientField, false),
-                    new SetTagsMethodProvider(this, updateMethodProvider, _contextualPath, _restClientProvider, _clientDiagnosticsField, _restClientField, true),
-                    new SetTagsMethodProvider(this, updateMethodProvider, _contextualPath, _restClientProvider, _clientDiagnosticsField, _restClientField, false),
-                    new RemoveTagMethodProvider(this, updateMethodProvider, _contextualPath, _restClientProvider, _clientDiagnosticsField, _restClientField, true),
-                    new RemoveTagMethodProvider(this, updateMethodProvider, _contextualPath, _restClientProvider, _clientDiagnosticsField, _restClientField, false)
+                    new AddTagMethodProvider(this, updateMethodProvider, _restClientProvider, _clientDiagnosticsField, _restClientField, true),
+                    new AddTagMethodProvider(this, updateMethodProvider, _restClientProvider, _clientDiagnosticsField, _restClientField, false),
+                    new SetTagsMethodProvider(this, updateMethodProvider, _restClientProvider, _clientDiagnosticsField, _restClientField, true),
+                    new SetTagsMethodProvider(this, updateMethodProvider, _restClientProvider, _clientDiagnosticsField, _restClientField, false),
+                    new RemoveTagMethodProvider(this, updateMethodProvider, _restClientProvider, _clientDiagnosticsField, _restClientField, true),
+                    new RemoveTagMethodProvider(this, updateMethodProvider, _restClientProvider, _clientDiagnosticsField, _restClientField, false)
                 ]);
             }
 
