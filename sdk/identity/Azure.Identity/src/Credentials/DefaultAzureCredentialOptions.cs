@@ -277,7 +277,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Specifies whether the <see cref="VisualStudioCodeCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
-        /// By default, VisualStudioCodeCredential is enabled to support SSO with VS Code on supported platforms.
+        /// By default, VisualStudioCodeCredential is enabled to support SSO with VS Code on supported platforms when Azure.Identity.Broker is referenced.
         /// </summary>
         public bool ExcludeVisualStudioCodeCredential { get; set; }
 
