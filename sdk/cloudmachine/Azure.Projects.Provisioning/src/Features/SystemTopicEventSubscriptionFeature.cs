@@ -31,7 +31,7 @@ internal class SystemTopicEventSubscriptionFeature : AzureProjectFeature
         ServiceBusTopic destinationTopic = infrastructure.GetConstruct<ServiceBusTopic>(_destination.Id);
 
         ServiceBusBuiltInRole role = ServiceBusBuiltInRole.AzureServiceBusDataSender;
-        var roleAssignment = new RoleAssignment($"cm_servicebus_{parentTopic.Name.Value}_role")
+        var roleAssignment = new RoleAssignment($"cm_servicebus_{parentTopic.Name.Value}_role", RoleAssignment.ResourceVersions.V2022_04_01)
         {
             Name = BicepFunction.CreateGuid(serviceBusNamespace.Id, infrastructure.Identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(serviceBusNamespace.BicepIdentifier),
@@ -40,7 +40,7 @@ internal class SystemTopicEventSubscriptionFeature : AzureProjectFeature
             PrincipalId = infrastructure.Identity.PrincipalId,
         };
 
-        var subscription = new SystemTopicEventSubscription("cm_eventgrid_subscription_blob", "2022-06-15")
+        var subscription = new SystemTopicEventSubscription("cm_eventgrid_subscription_blob", SystemTopicEventSubscription.ResourceVersions.V2022_06_15)
         {
             Name = _name,
             Parent = parentTopic,

@@ -60,31 +60,22 @@ The software may collect information about you and your use of the software and 
 
 Telemetry collection is on by default.
 
-To opt out, you can disable telemetry at client construction. Creating a [synchronous policy](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Pipeline.md#implementing-a-synchronous-policy) in your application gives you access to the headers sent with each request, allowing you to remove the `User-Agent` header containing client telemetry.  To use the policy, you will add it to the options for your specific client as part of client creation.  This will disable Azure SDK telemetry for all methods in the client. You will need to register the policy with each client created.
-
 > NOTE: `HttpClient` may set default user agent headers as part of the .NET platform behavior.  This value does not contain any Azure SDK telemetry information.
 
-An example policy implementation looks like:
-```C# Snippet:RemoveUserAgentPolicy
-public class RemoveUserAgentPolicy : HttpPipelineSynchronousPolicy
-{
-    public override void OnSendingRequest(HttpMessage message)
-    {
-        message.Request.Headers.Remove(HttpHeader.Names.UserAgent);
-    }
-}
-```
-
-To use it with a client, you would register it to run for every retry attempt as part of your client options:
-```C#  Snippet:RemoveUserAgentPolicyUse
+You can disable telemetry when creating a client by setting the `IsTelemetryEnabled` property in the diagnostics options:
+```C#
 Uri serviceEndpoint = new Uri("https://example.contoso.com");
 TokenCredential credential = new DefaultAzureCredential();
-           
-SampleClientOptions clientOptions = new SampleClientOptions();
-clientOptions.AddPolicy(new RemoveUserAgentPolicy(), HttpPipelinePosition.PerRetry);
+
+SampleClientOptions clientOptions = new SampleClientOptions()
+{
+    Diagnostics = { IsTelemetryEnabled = false }
+};
 
 SampleClient client = new SampleClient(serviceEndpoint, credential, clientOptions);
 ```
+
+Alternatively, you can disable telemetry globally by setting the `AZURE_TELEMETRY_DISABLED` environment variable to `true` before creating any clients.
 
 ### Community
 

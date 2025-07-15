@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.OperationalInsights;
 
 /// <summary>
-/// The name of the SKU.
+/// The SKU (tier) of a cluster.
 /// </summary>
 public enum OperationalInsightsClusterSkuName
 {

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -29,14 +30,9 @@ namespace Azure.Identity
 
         public TokenCredential[] CreateCredentialChain()
         {
-            string credentialSelection = EnvironmentVariables.CredentialSelection?.Trim();
+            string credentialSelection = EnvironmentVariables.CredentialSelection?.Trim().ToLower();
             bool _useDevCredentials = Constants.DevCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
             bool _useProdCredentials = Constants.ProdCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
-
-            if (credentialSelection != null && !_useDevCredentials && !_useProdCredentials)
-            {
-                throw new InvalidOperationException($"Invalid value for environment variable AZURE_TOKEN_CREDENTIALS: {credentialSelection}. Valid values are '{Constants.DevCredentials}' or '{Constants.ProdCredentials}'.");
-            }
 
             if (_useDefaultCredentialChain)
             {
@@ -58,6 +54,27 @@ namespace Azure.Identity
                         CreateWorkloadIdentityCredential(),
                         CreateManagedIdentityCredential()
                     ];
+                }
+                else if (credentialSelection != null)
+                {
+                    string validCredentials = $"'{Constants.DevCredentials}', '{Constants.ProdCredentials}', '{Constants.VisualStudioCredential}', '{Constants.VisualStudioCodeCredential}', '{Constants.AzureCliCredential}', '{Constants.AzurePowerShellCredential}', '{Constants.AzureDeveloperCliCredential}', '{Constants.EnvironmentCredential}', '{Constants.WorkloadIdentityCredential}', '{Constants.ManagedIdentityCredential}', '{Constants.InteractiveBrowserCredential}', '{Constants.BrokerAuthenticationCredential}'";
+                    return credentialSelection switch
+                    {
+                        Constants.VisualStudioCredential => [CreateVisualStudioCredential()],
+                        Constants.VisualStudioCodeCredential => [CreateVisualStudioCodeCredential()],
+                        Constants.AzureCliCredential => [CreateAzureCliCredential()],
+                        Constants.AzurePowerShellCredential => [CreateAzurePowerShellCredential()],
+                        Constants.AzureDeveloperCliCredential => [CreateAzureDeveloperCliCredential()],
+                        Constants.EnvironmentCredential => [CreateEnvironmentCredential()],
+                        Constants.WorkloadIdentityCredential => [CreateWorkloadIdentityCredential()],
+                        Constants.ManagedIdentityCredential => [CreateManagedIdentityCredential()],
+                        Constants.InteractiveBrowserCredential => [CreateInteractiveBrowserCredential()],
+                        Constants.BrokerAuthenticationCredential =>
+                            TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions)
+                                ? [CreateBrokerAuthenticationCredential(brokerOptions)]
+                                : throw new CredentialUnavailableException("BrokerAuthenticationCredential is not available without a reference to Azure.Identity.Broker."),
+                        _ => throw new InvalidOperationException($"Invalid value for environment variable AZURE_TOKEN_CREDENTIALS: {credentialSelection}. Valid values are {validCredentials}. See https://aka.ms/azsdk/net/identity/defaultazurecredential/troubleshoot for more information.")
+                    };
                 }
                 return s_defaultCredentialChain;
             }
@@ -224,6 +241,7 @@ namespace Azure.Identity
         {
             var options = Options.Clone<DevelopmentBrokerOptions>();
             ((IMsalSettablePublicClientInitializerOptions)options).BeforeBuildClient = ((IMsalSettablePublicClientInitializerOptions)brokerOptions).BeforeBuildClient;
+            options.RedirectUri = brokerOptions.RedirectUri;
 
             options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
 
@@ -306,6 +324,12 @@ namespace Azure.Identity
                 ConstructorInfo optionsCtor = optionsType?.GetConstructor(Type.EmptyTypes);
                 object optionsInstance = optionsCtor?.Invoke(null);
                 options = optionsInstance as InteractiveBrowserCredentialOptions;
+                options.IsChainedCredential = true;
+                // Set default value for UseDefaultBrokerAccount on macOS
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    options.RedirectUri = new(Constants.MacBrokerRedirectUri);
+                }
 
                 return options != null;
             }

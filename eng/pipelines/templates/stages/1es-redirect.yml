@@ -52,8 +52,8 @@ extends:
         exclude:
           - repository: azure-sdk-build-tools
       sourceAnalysisPool:
-        name: azsdk-pool-mms-win-2022-general
-        image: azsdk-pool-mms-win-2022-1espt
+        name: azsdk-pool
+        image: windows-2022
         os: windows
       binskim:
         # Exclude aot checking project, and imported azure-sdk-build-tools gpg/azcopy binaries

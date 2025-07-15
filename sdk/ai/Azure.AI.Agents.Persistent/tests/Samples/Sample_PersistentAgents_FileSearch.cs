@@ -56,6 +56,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
         // Create an agent with toolResources and process agent run
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: modelDeploymentName,
                 name: "SDK Test Agent - Retrieval",
@@ -88,6 +89,30 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
+        #endregion
+        #region Snippet:AgentsFilesSearchExample_RunSteps_Reference
+        await foreach (RunStep runStep in client.Runs.GetRunStepsAsync(
+            runId: run.Id,
+            threadId: thread.Id,
+            include: [RunAdditionalFieldList.FileSearchContents]
+            ))
+        {
+            if (runStep.StepDetails is RunStepToolCallDetails toolCallDetails)
+            {
+                foreach (RunStepToolCall toolCall in toolCallDetails.ToolCalls)
+                {
+                    if (toolCall is RunStepFileSearchToolCall fileSearh)
+                    {
+                        Console.WriteLine($"The search tool has found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
+                        Console.WriteLine(fileSearh.FileSearch.Results[0].Content[0].Text);
+                        Console.WriteLine("===============================================================");
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region Snippet:AgentsFilesSearchExample_ShowMessages
         List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
@@ -95,6 +120,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         WriteMessages(messages, fileIds);
         #endregion
         #region Snippet:AgentsFilesSearchExample_Cleanup
+        // NOTE: Comment out these four lines if you plan to reuse the agent later.
         await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
         await client.Files.DeleteFileAsync(uploadedAgentFile.Id);
         await client.Threads.DeleteThreadAsync(thread.Id);
@@ -141,6 +167,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
         // Create an agent with toolResources and process agent run
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = client.Administration.CreateAgent(
                 model: modelDeploymentName,
                 name: "SDK Test Agent - Retrieval",
@@ -173,6 +200,29 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
+        #endregion
+        #region Snippet:AgentsFilesSearchExample_RunSteps_Reference_Sync
+        foreach (RunStep runStep in client.Runs.GetRunSteps(
+            runId: run.Id,
+            threadId: thread.Id,
+            include: [RunAdditionalFieldList.FileSearchContents]
+            ))
+        {
+            if (runStep.StepDetails is RunStepToolCallDetails toolCallDetails)
+            {
+                foreach (RunStepToolCall toolCall in toolCallDetails.ToolCalls)
+                {
+                    if (toolCall is RunStepFileSearchToolCall fileSearh)
+                    {
+                        Console.WriteLine($"The search tool has found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
+                        Console.WriteLine(fileSearh.FileSearch.Results[0].Content[0].Text);
+                        Console.WriteLine("===============================================================");
+                    }
+                }
+            }
+        }
+        #endregion
+        #region Snippet:AgentsFilesSearchExample_ShowMessages_Sync
         Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
@@ -180,6 +230,7 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         WriteMessages(messages, fileIds);
         #endregion
         #region Snippet:AgentsFilesSearchExample_Cleanup_Sync
+        // NOTE: Comment out these four lines if you plan to reuse the agent later.
         client.VectorStores.DeleteVectorStore(vectorStore.Id);
         client.Files.DeleteFile(uploadedAgentFile.Id);
         client.Threads.DeleteThread(thread.Id);

@@ -44,15 +44,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Url))
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
@@ -225,10 +225,10 @@ namespace Azure.Compute.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Stats))
+            if (options.Format != "W" && Optional.IsDefined(PoolStatistics))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(Stats, options);
+                writer.WriteObjectValue(PoolStatistics, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MountConfiguration))
             {
@@ -299,8 +299,8 @@ namespace Azure.Compute.Batch
             }
             string id = default;
             string displayName = default;
-            string url = default;
-            string eTag = default;
+            Uri url = default;
+            ETag? eTag = default;
             DateTimeOffset? lastModified = default;
             DateTimeOffset? creationTime = default;
             BatchPoolState? state = default;
@@ -328,7 +328,7 @@ namespace Azure.Compute.Batch
             int? taskSlotsPerNode = default;
             BatchTaskSchedulingPolicy taskSchedulingPolicy = default;
             IReadOnlyList<UserAccount> userAccounts = default;
-            IReadOnlyList<MetadataItem> metadata = default;
+            IReadOnlyList<BatchMetadataItem> metadata = default;
             BatchPoolStatistics stats = default;
             IReadOnlyList<MountConfiguration> mountConfiguration = default;
             BatchPoolIdentity identity = default;
@@ -351,12 +351,20 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    eTag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastModified"u8))
@@ -625,10 +633,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<MetadataItem> array = new List<MetadataItem>();
+                    List<BatchMetadataItem> array = new List<BatchMetadataItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataItem.DeserializeMetadataItem(item, options));
+                        array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
@@ -730,7 +738,7 @@ namespace Azure.Compute.Batch
                 taskSlotsPerNode,
                 taskSchedulingPolicy,
                 userAccounts ?? new ChangeTrackingList<UserAccount>(),
-                metadata ?? new ChangeTrackingList<MetadataItem>(),
+                metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
                 stats,
                 mountConfiguration ?? new ChangeTrackingList<MountConfiguration>(),
                 identity,

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskReportInstance"/>. </summary>
-        public StorageTaskReportInstance()
+        internal StorageTaskReportInstance()
         {
         }
 
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.StorageActions.Models
         }
 
         /// <summary> Storage task execution report for a run instance. </summary>
-        public StorageTaskReportProperties Properties { get; set; }
+        public StorageTaskReportProperties Properties { get; }
     }
 }

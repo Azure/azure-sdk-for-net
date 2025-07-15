@@ -55,6 +55,36 @@ public partial class GeoReplicationStatistics : ProvisionableConstruct
     private BicepValue<bool>? _canFailover;
 
     /// <summary>
+    /// A boolean flag which indicates whether or not planned account failover
+    /// is supported for the account.
+    /// </summary>
+    public BicepValue<bool> CanPlannedFailover 
+    {
+        get { Initialize(); return _canPlannedFailover!; }
+    }
+    private BicepValue<bool>? _canPlannedFailover;
+
+    /// <summary>
+    /// The redundancy type of the account after an account failover is
+    /// performed.
+    /// </summary>
+    public BicepValue<PostFailoverRedundancy> PostFailoverRedundancy 
+    {
+        get { Initialize(); return _postFailoverRedundancy!; }
+    }
+    private BicepValue<PostFailoverRedundancy>? _postFailoverRedundancy;
+
+    /// <summary>
+    /// The redundancy type of the account after a planned account failover is
+    /// performed.
+    /// </summary>
+    public BicepValue<PostPlannedFailoverRedundancy> PostPlannedFailoverRedundancy 
+    {
+        get { Initialize(); return _postPlannedFailoverRedundancy!; }
+    }
+    private BicepValue<PostPlannedFailoverRedundancy>? _postPlannedFailoverRedundancy;
+
+    /// <summary>
     /// Creates a new GeoReplicationStatistics.
     /// </summary>
     public GeoReplicationStatistics()
@@ -70,5 +100,8 @@ public partial class GeoReplicationStatistics : ProvisionableConstruct
         _status = DefineProperty<GeoReplicationStatus>("Status", ["status"], isOutput: true);
         _lastSyncOn = DefineProperty<DateTimeOffset>("LastSyncOn", ["lastSyncTime"], isOutput: true);
         _canFailover = DefineProperty<bool>("CanFailover", ["canFailover"], isOutput: true);
+        _canPlannedFailover = DefineProperty<bool>("CanPlannedFailover", ["canPlannedFailover"], isOutput: true);
+        _postFailoverRedundancy = DefineProperty<PostFailoverRedundancy>("PostFailoverRedundancy", ["postFailoverRedundancy"], isOutput: true);
+        _postPlannedFailoverRedundancy = DefineProperty<PostPlannedFailoverRedundancy>("PostPlannedFailoverRedundancy", ["postPlannedFailoverRedundancy"], isOutput: true);
     }
 }

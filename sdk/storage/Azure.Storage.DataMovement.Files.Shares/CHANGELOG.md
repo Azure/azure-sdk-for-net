@@ -1,6 +1,18 @@
 # Release History
 
-## 12.2.0-beta.1 (Unreleased)
+## 12.2.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fixed an issue with Copy transfers where if the source file/directory name contained certain special characters, the destination file name would incorrectly contain the encoded version of these characters.
+- Fixed an issue with Upload transfers where file/directory names containing certain URL-encoded characters could cause the transfer to fail.
+
+### Other Changes
+
+## 12.2.0-beta.1 (2025-06-17)
 
 ### Features Added
 - Added support for preserving NFS properties and permissions in Share Files and Share Directories for Share-to-Share copy transfers.
@@ -9,10 +21,6 @@
 
 ### Breaking Changes
 - Added protocol validation for Share-to-Share copy transfers. Validation is enabled by default and will fail the transfer if there are no share-level permissions. To bypass this, please enable `SkipProtocolValidation`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 12.1.0 (2025-02-27)
 

@@ -13,7 +13,7 @@ using Azure;
 
 namespace BasicTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> The ReturnsAnonymousModelResponse. </summary>
     public partial class ReturnsAnonymousModelResponse : IJsonModel<ReturnsAnonymousModelResponse>
     {
         /// <param name="writer"> The JSON writer. </param>

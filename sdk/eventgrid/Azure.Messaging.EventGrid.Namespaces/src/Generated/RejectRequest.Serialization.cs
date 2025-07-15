@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> The RejectRequest. </summary>
     internal partial class RejectRequest : IJsonModel<RejectRequest>
     {
         /// <summary> Initializes a new instance of <see cref="RejectRequest"/> for deserialization. </summary>
@@ -169,7 +169,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(rejectRequest, ModelSerializationExtensions.WireOptions);
             return content;
         }

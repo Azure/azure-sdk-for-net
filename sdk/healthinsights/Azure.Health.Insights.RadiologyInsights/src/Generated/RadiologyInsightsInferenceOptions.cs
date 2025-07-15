@@ -53,11 +53,15 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="RadiologyInsightsInferenceOptions"/>. </summary>
         /// <param name="followupRecommendationOptions"> Follow-up recommendation options. </param>
         /// <param name="findingOptions"> Finding options. </param>
+        /// <param name="guidanceOptions"> Guidance options. </param>
+        /// <param name="qualityMeasureOptions"> QualityMeasureOptions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RadiologyInsightsInferenceOptions(FollowupRecommendationOptions followupRecommendationOptions, FindingOptions findingOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RadiologyInsightsInferenceOptions(FollowupRecommendationOptions followupRecommendationOptions, FindingOptions findingOptions, GuidanceOptions guidanceOptions, QualityMeasureOptions qualityMeasureOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FollowupRecommendationOptions = followupRecommendationOptions;
             FindingOptions = findingOptions;
+            GuidanceOptions = guidanceOptions;
+            QualityMeasureOptions = qualityMeasureOptions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +69,9 @@ namespace Azure.Health.Insights.RadiologyInsights
         public FollowupRecommendationOptions FollowupRecommendationOptions { get; set; }
         /// <summary> Finding options. </summary>
         public FindingOptions FindingOptions { get; set; }
+        /// <summary> Guidance options. </summary>
+        public GuidanceOptions GuidanceOptions { get; set; }
+        /// <summary> QualityMeasureOptions. </summary>
+        public QualityMeasureOptions QualityMeasureOptions { get; set; }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

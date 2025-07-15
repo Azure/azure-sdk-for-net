@@ -13,7 +13,7 @@ using Azure;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> Failed LockToken information. </summary>
     public partial class FailedLockToken : IJsonModel<FailedLockToken>
     {
         /// <summary> Initializes a new instance of <see cref="FailedLockToken"/> for deserialization. </summary>

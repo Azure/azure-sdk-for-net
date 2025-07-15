@@ -342,6 +342,146 @@ namespace Azure.AI.Language.Text
         public static bool operator !=(Azure.AI.Language.Text.AreaUnit left, Azure.AI.Language.Text.AreaUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AbstractiveSummarizationActionContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AbstractiveSummarizationOperationAction))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AbstractiveSummarizationOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AbstractiveSummarizationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AbstractiveSummary))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AbstractiveSummaryActionResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AgeMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AllowOverlapEntityPolicyType))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AnalyzeTextEntitiesResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AnalyzeTextEntityLinkingResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AnalyzeTextError))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AnalyzeTextInput))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AnalyzeTextKeyPhraseResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AnalyzeTextLanguageDetectionResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AnalyzeTextOperationAction))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AnalyzeTextOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AnalyzeTextOperationState))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AnalyzeTextPiiResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AnalyzeTextResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AnalyzeTextSentimentResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.AreaMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.BaseMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.BaseRedactionPolicy))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CharacterMaskPolicyType))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.ClassificationActionResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.ClassificationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CurrencyMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CustomEntitiesActionContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CustomEntitiesOperationAction))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CustomEntitiesResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CustomEntityActionResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CustomEntityRecognitionOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CustomLabelClassificationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CustomMultiLabelClassificationActionContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CustomMultiLabelClassificationOperationAction))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CustomSingleLabelClassificationActionContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CustomSingleLabelClassificationOperationAction))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.CustomSingleLabelClassificationOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.DateMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.DateTimeMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.DateValue))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.DetectedLanguage))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.DocumentError))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.DocumentStatistics))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.DocumentWarning))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntitiesActionContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntitiesOperationAction))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntitiesResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntitiesWithMetadataAutoResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntityActionResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntityActionResultWithMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntityInferenceConfig))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntityLinkingActionContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntityLinkingActionResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntityLinkingMatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntityLinkingOperationAction))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntityLinkingOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntityLinkingResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntityMaskPolicyType))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntityOverlapPolicy))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntityRecognitionOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntitySynonym))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntitySynonyms))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.EntityTag))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.ExtractedSummaryActionResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.ExtractedSummarySentence))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.ExtractiveSummarizationActionContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.ExtractiveSummarizationOperationAction))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.ExtractiveSummarizationOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.ExtractiveSummarizationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.FhirBundle))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.HealthcareActionContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.HealthcareActionResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.HealthcareAssertion))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.HealthcareEntity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.HealthcareEntityLink))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.HealthcareOperationAction))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.HealthcareOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.HealthcareRelation))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.HealthcareRelationEntity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.HealthcareResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.InformationMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.InnerErrorModel))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.KeyPhraseActionContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.KeyPhraseExtractionOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.KeyPhraseOperationAction))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.KeyPhraseResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.KeyPhrasesActionResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.LanguageDetectionActionContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.LanguageDetectionDocumentResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.LanguageDetectionResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.LanguageDetectionTextInput))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.LanguageInput))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.LengthMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.LinkedEntity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.MatchLongestEntityPolicyType))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.MultiLanguageInput))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.MultiLanguageTextInput))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.NamedEntity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.NamedEntityWithMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.NoMaskPolicyType))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.NumberMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.NumericRangeMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.OrdinalMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.PiiActionContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.PiiActionResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.PiiEntity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.PiiEntityRecognitionOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.PiiOperationAction))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.PiiResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.RequestStatistics))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.SentenceAssessment))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.SentenceSentiment))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.SentenceTarget))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.SentimentActionResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.SentimentAnalysisActionContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.SentimentAnalysisOperationAction))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.SentimentConfidenceScores))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.SentimentOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.SentimentResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.SpeedMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.SummaryContext))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TargetConfidenceScoreLabel))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TargetRelation))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TemperatureMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TemporalSetMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TemporalSpanMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TemporalSpanValues))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TextActions))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TextEntityLinkingInput))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TextEntityRecognitionInput))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TextKeyPhraseExtractionInput))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TextLanguageDetectionInput))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TextPiiEntitiesRecognitionInput))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TextSentimentAnalysisInput))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.TimeMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.ValueExclusionPolicy))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.VolumeMetadata))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Language.Text.WeightMetadata))]
     public partial class AzureAILanguageTextContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAILanguageTextContext() { }
@@ -936,6 +1076,30 @@ namespace Azure.AI.Language.Text
         Azure.AI.Language.Text.EntityRecognitionOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityRecognitionOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityRecognitionOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityRecognitionOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EntitySynonym : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitySynonym>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitySynonym>
+    {
+        public EntitySynonym(string synonym) { }
+        public string Language { get { throw null; } set { } }
+        public string Synonym { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.EntitySynonym System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitySynonym>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitySynonym>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.EntitySynonym System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitySynonym>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitySynonym>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitySynonym>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EntitySynonyms : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitySynonyms>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitySynonyms>
+    {
+        public EntitySynonyms(Azure.AI.Language.Text.EntityCategory entityType, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntitySynonym> synonyms) { }
+        public Azure.AI.Language.Text.EntityCategory EntityType { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Text.EntitySynonym> Synonyms { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.EntitySynonyms System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitySynonyms>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitySynonyms>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.EntitySynonyms System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitySynonyms>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitySynonyms>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitySynonyms>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EntityTag : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntityTag>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityTag>
     {
@@ -1734,12 +1898,14 @@ namespace Azure.AI.Language.Text
     {
         public PiiActionContent() { }
         public Azure.AI.Language.Text.PiiDomain? Domain { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Text.EntitySynonyms> EntitySynonyms { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.PiiCategoriesExclude> ExcludePiiCategories { get { throw null; } }
         public bool? LoggingOptOut { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.PiiCategory> PiiCategories { get { throw null; } }
         public Azure.AI.Language.Text.BaseRedactionPolicy RedactionPolicy { get { throw null; } set { } }
         public Azure.AI.Language.Text.StringIndexType? StringIndexType { get { throw null; } set { } }
+        public Azure.AI.Language.Text.ValueExclusionPolicy ValueExclusionPolicy { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.PiiActionContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.PiiActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.PiiActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1792,6 +1958,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategoriesExclude AzureServiceBusString { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude AzureStorageAccountGeneric { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude AzureStorageAccountKey { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategoriesExclude BankAccountNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude BeNationalNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude BeNationalNumberV2 { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude BeValueAddedTaxNumber { get { throw null; } }
@@ -1814,6 +1981,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategoriesExclude CzPersonalIdentityNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude CzPersonalIdentityV2 { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude Date { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategoriesExclude DateOfBirth { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude DeDriversLicenseNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude DeIdentityCardNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude DePassportNumber { get { throw null; } }
@@ -1821,6 +1989,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategoriesExclude DeValueAddedNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude DkPersonalIdentificationNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude DkPersonalIdentificationV2 { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategoriesExclude DriversLicenseNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude DrugEnforcementAgencyNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude EePersonalIdentificationCode { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude Email { get { throw null; } }
@@ -1877,6 +2046,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategoriesExclude JpResidentRegistrationNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude JpSocialInsuranceNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude KrResidentRegistrationNumber { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategoriesExclude LicensePlate { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude LtPersonalCode { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude LuNationalIdentificationNumberNatural { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude LuNationalIdentificationNumberNonNatural { get { throw null; } }
@@ -1884,6 +2054,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategoriesExclude MtIdentityCardNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude MtTaxIdNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude MyIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategoriesExclude Neighborhood { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude NlCitizensServiceNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude NlCitizensServiceNumberV2 { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude NlTaxIdentificationNumber { get { throw null; } }
@@ -1895,9 +2066,11 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategoriesExclude NzMinistryOfHealthNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude NzSocialWelfareNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude Organization { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategoriesExclude PassportNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude Person { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude PhoneNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude PhUnifiedMultiPurposeIdNumber { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategoriesExclude PIN { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude PlIdentityCard { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude PlNationalId { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude PlNationalIdV2 { get { throw null; } }
@@ -1919,6 +2092,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategoriesExclude SiTaxIdentificationNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude SiUniqueMasterCitizenNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude SkPersonalNumber { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategoriesExclude SortCode { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude SqlServerConnectionString { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude SwiftCode { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude ThPopulationIdentificationCode { get { throw null; } }
@@ -1939,6 +2113,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategoriesExclude UsIndividualTaxpayerIdentification { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude UsSocialSecurityNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude UsUkPassportNumber { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategoriesExclude VIN { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategoriesExclude ZaIdentificationNumber { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.PiiCategoriesExclude other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1980,6 +2155,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategory AzureServiceBusString { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory AzureStorageAccountGeneric { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory AzureStorageAccountKey { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategory BankAccountNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory BeNationalNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory BeNationalNumberV2 { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory BeValueAddedTaxNumber { get { throw null; } }
@@ -2002,6 +2178,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategory CzPersonalIdentityNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory CzPersonalIdentityV2 { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory Date { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategory DateOfBirth { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory DeDriversLicenseNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory Default { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory DeIdentityCardNumber { get { throw null; } }
@@ -2010,6 +2187,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategory DeValueAddedNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory DkPersonalIdentificationNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory DkPersonalIdentificationV2 { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategory DriversLicenseNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory DrugEnforcementAgencyNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory EePersonalIdentificationCode { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory Email { get { throw null; } }
@@ -2066,6 +2244,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategory JpResidentRegistrationNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory JpSocialInsuranceNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory KrResidentRegistrationNumber { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategory LicensePlate { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory LtPersonalCode { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory LuNationalIdentificationNumberNatural { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory LuNationalIdentificationNumberNonNatural { get { throw null; } }
@@ -2073,6 +2252,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategory MtIdentityCardNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory MtTaxIdNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory MyIdentityCardNumber { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategory Neighborhood { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory NlCitizensServiceNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory NlCitizensServiceNumberV2 { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory NlTaxIdentificationNumber { get { throw null; } }
@@ -2084,9 +2264,11 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategory NzMinistryOfHealthNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory NzSocialWelfareNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory Organization { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategory PassportNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory Person { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory PhoneNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory PhUnifiedMultiPurposeIdNumber { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategory PIN { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory PlIdentityCard { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory PlNationalId { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory PlNationalIdV2 { get { throw null; } }
@@ -2108,6 +2290,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategory SiTaxIdentificationNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory SiUniqueMasterCitizenNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory SkPersonalNumber { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategory SortCode { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory SqlServerConnectionString { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory SwiftCode { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory ThPopulationIdentificationCode { get { throw null; } }
@@ -2128,6 +2311,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.PiiCategory UsIndividualTaxpayerIdentification { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory UsSocialSecurityNumber { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory UsUkPassportNumber { get { throw null; } }
+        public static Azure.AI.Language.Text.PiiCategory VIN { get { throw null; } }
         public static Azure.AI.Language.Text.PiiCategory ZaIdentificationNumber { get { throw null; } }
         public bool Equals(Azure.AI.Language.Text.PiiCategory other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -2892,9 +3076,9 @@ namespace Azure.AI.Language.Text
         public virtual Azure.Response<Azure.AI.Language.Text.AnalyzeTextOperationState> AnalyzeTextOperationStatus(System.Guid jobId, bool? showStats = default(bool?), int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeTextOperationStatusAsync(System.Guid jobId, bool? showStats, int? top, int? skip, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Text.AnalyzeTextOperationState>> AnalyzeTextOperationStatusAsync(System.Guid jobId, bool? showStats = default(bool?), int? top = default(int?), int? skip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation AnalyzeTextSubmitOperation(Azure.WaitUntil waitUntil, Azure.AI.Language.Text.MultiLanguageTextInput textInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation AnalyzeTextSubmitOperation(Azure.WaitUntil waitUntil, Azure.AI.Language.Text.MultiLanguageTextInput textInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, float? cancelAfter = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation AnalyzeTextSubmitOperation(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation> AnalyzeTextSubmitOperationAsync(Azure.WaitUntil waitUntil, Azure.AI.Language.Text.MultiLanguageTextInput textInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> AnalyzeTextSubmitOperationAsync(Azure.WaitUntil waitUntil, Azure.AI.Language.Text.MultiLanguageTextInput textInput, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, float? cancelAfter = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> AnalyzeTextSubmitOperationAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public static partial class TextAnalysisClientBuilderExtensions
@@ -2906,13 +3090,14 @@ namespace Azure.AI.Language.Text
     }
     public partial class TextAnalysisClientOptions : Azure.Core.ClientOptions
     {
-        public TextAnalysisClientOptions(Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion version = Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion.V2024_11_15_Preview) { }
+        public TextAnalysisClientOptions(Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion version = Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview) { }
         public enum ServiceVersion
         {
             V2022_05_01 = 1,
             V2023_04_01 = 2,
             V2024_11_01 = 3,
             V2024_11_15_Preview = 4,
+            V2025_05_15_Preview = 5,
         }
     }
     public static partial class TextAnalysisModelFactory
@@ -2960,6 +3145,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.EntityLinkingOperationResult EntityLinkingOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string name = null, Azure.AI.Language.Text.EntityLinkingResult results = null) { throw null; }
         public static Azure.AI.Language.Text.EntityLinkingResult EntityLinkingResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string modelVersion = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntityLinkingActionResult> documents = null) { throw null; }
         public static Azure.AI.Language.Text.EntityRecognitionOperationResult EntityRecognitionOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string name = null, Azure.AI.Language.Text.EntitiesResult results = null) { throw null; }
+        public static Azure.AI.Language.Text.EntitySynonym EntitySynonym(string synonym = null, string language = null) { throw null; }
         public static Azure.AI.Language.Text.EntityTag EntityTag(string name = null, double? confidenceScore = default(double?)) { throw null; }
         public static Azure.AI.Language.Text.ExtractedSummaryActionResult ExtractedSummaryActionResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.ExtractedSummarySentence> sentences = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
         public static Azure.AI.Language.Text.ExtractedSummarySentence ExtractedSummarySentence(string text = null, double rankScore = 0, int offset = 0, int length = 0) { throw null; }
@@ -3103,6 +3289,18 @@ namespace Azure.AI.Language.Text
         Positive = 0,
         Mixed = 1,
         Negative = 2,
+    }
+    public partial class ValueExclusionPolicy : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.ValueExclusionPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ValueExclusionPolicy>
+    {
+        public ValueExclusionPolicy(bool caseSensitive, System.Collections.Generic.IEnumerable<string> excludedValues) { }
+        public bool CaseSensitive { get { throw null; } }
+        public System.Collections.Generic.IList<string> ExcludedValues { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.ValueExclusionPolicy System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.ValueExclusionPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.ValueExclusionPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.ValueExclusionPolicy System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ValueExclusionPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ValueExclusionPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ValueExclusionPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VolumeMetadata : Azure.AI.Language.Text.BaseMetadata, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.VolumeMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.VolumeMetadata>
     {

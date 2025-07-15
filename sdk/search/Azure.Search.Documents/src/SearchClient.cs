@@ -1394,6 +1394,7 @@ namespace Azure.Search.Documents
                 switch (message.Response.Status)
                 {
                     case 200:
+                    case 206:
                         {
                             // Deserialize the results
                             SearchResults<T> results = await SearchResults<T>.DeserializeAsync(

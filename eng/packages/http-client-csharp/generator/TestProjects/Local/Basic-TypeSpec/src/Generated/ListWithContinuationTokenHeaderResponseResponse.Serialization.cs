@@ -13,7 +13,7 @@ using Azure;
 
 namespace BasicTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> The ListWithContinuationTokenHeaderResponseResponse. </summary>
     internal partial class ListWithContinuationTokenHeaderResponseResponse : IJsonModel<ListWithContinuationTokenHeaderResponseResponse>
     {
         /// <summary> Initializes a new instance of <see cref="ListWithContinuationTokenHeaderResponseResponse"/> for deserialization. </summary>

@@ -15,6 +15,11 @@ public class KeyVaultSpecification() :
         // Patch models
         CustomizeModel<KeyVaultResource>(m => m.Name = "KeyVaultService");
         CustomizeEnum<ManagedHsmCreateMode>(e => { foreach (EnumValue member in e.Values) { member.Value = member.Name.ToLowerInvariant(); } });
+        IncludeHiddenVersions<KeyVaultPrivateEndpointConnectionResource>("2023-08-01-PREVIEW");
+        IncludeHiddenVersions<KeyVaultSecretResource>("2023-08-01-PREVIEW");
+        IncludeHiddenVersions<KeyVaultResource>("2023-08-01-PREVIEW");
+        IncludeHiddenVersions<ManagedHsmResource>("2023-08-01-PREVIEW");
+        IncludeHiddenVersions<ManagedHsmPrivateEndpointConnectionResource>("2023-08-01-PREVIEW");
 
         // Naming requirements
         AddNameRequirements<KeyVaultResource>(min: 3, max: 24, lower: true, upper: true, digits: true, hyphen: true);

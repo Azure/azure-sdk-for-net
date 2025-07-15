@@ -13,7 +13,7 @@ using Azure;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> Details of the Receive operation response. </summary>
     public partial class ReceiveResult : IJsonModel<ReceiveResult>
     {
         /// <param name="writer"> The JSON writer. </param>

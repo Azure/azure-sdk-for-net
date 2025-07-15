@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> The AcknowledgeRequest. </summary>
     internal partial class AcknowledgeRequest : IJsonModel<AcknowledgeRequest>
     {
         /// <summary> Initializes a new instance of <see cref="AcknowledgeRequest"/> for deserialization. </summary>
@@ -169,7 +169,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(acknowledgeRequest, ModelSerializationExtensions.WireOptions);
             return content;
         }

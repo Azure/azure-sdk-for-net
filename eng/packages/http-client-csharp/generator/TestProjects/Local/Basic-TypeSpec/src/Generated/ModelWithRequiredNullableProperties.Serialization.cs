@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace BasicTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> A model with a few required nullable properties. </summary>
     public partial class ModelWithRequiredNullableProperties : IJsonModel<ModelWithRequiredNullableProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ModelWithRequiredNullableProperties"/> for deserialization. </summary>

@@ -194,7 +194,7 @@ namespace Microsoft.Extensions.Azure
 
                 if (!string.IsNullOrWhiteSpace(resourceId))
                 {
-                    return new ManagedFederatedIdentityCredential(tenantId, clientId, new ResourceIdentifier(resourceId), azureCloud, additionallyAllowedTenantsList);
+                    return new ManagedFederatedIdentityCredential(tenantId, clientId, ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(resourceId)), azureCloud, additionallyAllowedTenantsList);
                 }
 
                 if (!string.IsNullOrWhiteSpace(objectId))
@@ -204,7 +204,7 @@ namespace Microsoft.Extensions.Azure
 
                 if (!string.IsNullOrWhiteSpace(managedIdentityClientId))
                 {
-                    return new ManagedFederatedIdentityCredential(tenantId, clientId, managedIdentityClientId, azureCloud, additionallyAllowedTenantsList);
+                    return new ManagedFederatedIdentityCredential(tenantId, clientId, ManagedIdentityId.FromUserAssignedClientId(managedIdentityClientId), azureCloud, additionallyAllowedTenantsList);
                 }
             }
 

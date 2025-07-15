@@ -19,17 +19,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// for authentication. This case-sensitive string can be up to 128 characters
         /// long, and supports UTF-8 characters.
         /// </param>
-        /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
         /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
         /// <param name="clientSessionName">
         /// Unique identifier for the MQTT client's session. This case-sensitive string can
         /// be up to 128 characters long, and supports UTF-8 characters.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientAuthenticationName"/>, <paramref name="clientName"/>, <paramref name="namespaceName"/> or <paramref name="clientSessionName"/> is null. </exception>
-        internal EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName, string clientName, string namespaceName, string clientSessionName) : base(clientAuthenticationName, clientName, namespaceName)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientAuthenticationName"/>, <paramref name="namespaceName"/> or <paramref name="clientSessionName"/> is null. </exception>
+        internal EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName, string namespaceName, string clientSessionName) : base(clientAuthenticationName, namespaceName)
         {
             Argument.AssertNotNull(clientAuthenticationName, nameof(clientAuthenticationName));
-            Argument.AssertNotNull(clientName, nameof(clientName));
             Argument.AssertNotNull(namespaceName, nameof(namespaceName));
             Argument.AssertNotNull(clientSessionName, nameof(clientSessionName));
 

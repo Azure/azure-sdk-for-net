@@ -268,6 +268,103 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentScriptResource> Update(Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentScriptResource>> UpdateAsync(Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.ArmApplicationData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.ArmApplicationDefinitionData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.ArmApplicationDefinitionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.ArmApplicationResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.ArmDeploymentData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.ArmDeploymentResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.ArmDeploymentScriptData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.ArmDeploymentScriptResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.DataBoundaryData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.DataBoundaryResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.DeploymentStackData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.DeploymentStackResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.JitRequestData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.JitRequestResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ActionOnUnmanage))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationArtifact))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationAuthorization))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifact))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationDetails))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationJitAccessPolicy))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationNotificationEndpoint))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationPackageContact))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationPackageLockingPolicy))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationPolicy))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationResourceData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationSku))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDependency))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentExportResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentExtensionConfigItem))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentExtensionDefinition))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentExternalInput))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentExternalInputDefinition))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentOperation))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ArmResourceReference))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.AzureCliScript))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.AzurePowerShellScript))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.BasicArmDependency))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.DataBoundaryProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.DecompiledFileDefinition))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.DecompileOperationContent))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.DecompileOperationSuccessResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.DenySettings))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.DeploymentDiagnosticsDefinition))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.DeploymentParameter))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.DeploymentStacksParametersLink))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.DeploymentStacksTemplateLink))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.DeploymentStackTemplateDefinition))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.DeploymentStackValidateProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.DeploymentStackValidateResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ErrorAdditionalInfo))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ErrorDeployment))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.JitApprover))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.JitAuthorizationPolicies))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.JitRequestPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.JitSchedulingPolicy))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.KeyVaultParameterReference))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ManagedResourceReference))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ResourceReferenceAutoGenerated))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ResourceReferenceExtended))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ScriptStatus))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.StatusMessage))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.TargetResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.TemplateHashResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.TemplateSpecPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WhatIfChange))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WhatIfOperationResult))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.Models.WhatIfPropertyChange))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.ScriptLogData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.ScriptLogResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.TemplateSpecData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.TemplateSpecResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.TemplateSpecVersionData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.TemplateSpecVersionResource))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.Resources.TenantDataBoundaryResource))]
     public partial class AzureResourceManagerResourcesContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerResourcesContext() { }
@@ -1448,8 +1545,12 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(System.BinaryData template, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink, System.BinaryData parameters, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink, Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode, string debugSettingDetailLevel, Azure.ResourceManager.Resources.Models.ErrorDeployment errorDeployment, Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope? expressionEvaluationScope, Azure.ResourceManager.Resources.Models.WhatIfResultFormat? whatIfResultFormat) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(System.BinaryData template = null, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink = null, System.BinaryData parameters = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmDeploymentExternalInput> externalInputs = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmDeploymentExternalInputDefinition> externalInputDefinitions = null, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink = null, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmDeploymentExtensionConfigItem>> extensionConfigs = null, Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode = Azure.ResourceManager.Resources.Models.ArmDeploymentMode.Incremental, string debugSettingDetailLevel = null, Azure.ResourceManager.Resources.Models.ErrorDeployment errorDeployment = null, Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope? expressionEvaluationScope = default(Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope?), Azure.ResourceManager.Resources.Models.ValidationLevel? validationLevel = default(Azure.ResourceManager.Resources.Models.ValidationLevel?), Azure.ResourceManager.Resources.Models.WhatIfResultFormat? whatIfResultFormat = default(Azure.ResourceManager.Resources.Models.WhatIfResultFormat?)) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmResourceReference ArmResourceReference(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.Resources.Models.ArmDeploymentExtensionDefinition extension = null, string resourceType = null, System.BinaryData identifiers = null, string apiVersion = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.AzureCliScript AzureCliScript(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration containerSettings = null, Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration storageAccountSettings = null, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? cleanupPreference = default(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions?), Azure.ResourceManager.Resources.Models.ScriptProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.ScriptProvisioningState?), Azure.ResourceManager.Resources.Models.ScriptStatus status = null, System.BinaryData outputs = null, System.Uri primaryScriptUri = null, System.Collections.Generic.IEnumerable<System.Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, System.TimeSpan retentionInterval = default(System.TimeSpan), System.TimeSpan? timeout = default(System.TimeSpan?), string azCliVersion = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Resources.Models.AzureCliScript AzureCliScript(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, string containerGroupName = null, Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration storageAccountSettings = null, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? cleanupPreference = default(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions?), Azure.ResourceManager.Resources.Models.ScriptProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.ScriptProvisioningState?), Azure.ResourceManager.Resources.Models.ScriptStatus status = null, System.BinaryData outputs = null, System.Uri primaryScriptUri = null, System.Collections.Generic.IEnumerable<System.Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, System.TimeSpan retentionInterval = default(System.TimeSpan), System.TimeSpan? timeout = default(System.TimeSpan?), string azCliVersion = null) { throw null; }
-        public static Azure.ResourceManager.Resources.Models.AzurePowerShellScript AzurePowerShellScript(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, string containerGroupName = null, Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration storageAccountSettings = null, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? cleanupPreference = default(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions?), Azure.ResourceManager.Resources.Models.ScriptProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.ScriptProvisioningState?), Azure.ResourceManager.Resources.Models.ScriptStatus status = null, System.BinaryData outputs = null, System.Uri primaryScriptUri = null, System.Collections.Generic.IEnumerable<System.Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, System.TimeSpan retentionInterval = default(System.TimeSpan), System.TimeSpan? timeout = default(System.TimeSpan?), string azPowerShellVersion = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.AzurePowerShellScript AzurePowerShellScript(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration containerSettings = null, Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration storageAccountSettings = null, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? cleanupPreference = default(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions?), Azure.ResourceManager.Resources.Models.ScriptProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.ScriptProvisioningState?), Azure.ResourceManager.Resources.Models.ScriptStatus status = null, System.BinaryData outputs = null, System.Uri primaryScriptUri = null, System.Collections.Generic.IEnumerable<System.Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, System.TimeSpan retentionInterval = default(System.TimeSpan), System.TimeSpan? timeout = default(System.TimeSpan?), string azPowerShellVersion = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Resources.Models.AzurePowerShellScript AzurePowerShellScript(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity, Azure.Core.AzureLocation location, System.Collections.Generic.IDictionary<string, string> tags, string containerGroupName, Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration storageAccountSettings = null, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? cleanupPreference = default(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions?), Azure.ResourceManager.Resources.Models.ScriptProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.ScriptProvisioningState?), Azure.ResourceManager.Resources.Models.ScriptStatus status = null, System.BinaryData outputs = null, System.Uri primaryScriptUri = null, System.Collections.Generic.IEnumerable<System.Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, System.TimeSpan retentionInterval = default(System.TimeSpan), System.TimeSpan? timeout = default(System.TimeSpan?), string azPowerShellVersion = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.BasicArmDependency BasicArmDependency(string id = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string resourceName = null) { throw null; }
         public static Azure.ResourceManager.Resources.DataBoundaryData DataBoundaryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.DataBoundaryProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.DataBoundaryProperties DataBoundaryProperties(Azure.ResourceManager.Resources.Models.DataBoundaryRegion? dataBoundary = default(Azure.ResourceManager.Resources.Models.DataBoundaryRegion?), Azure.ResourceManager.Resources.Models.DataBoundaryProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.DataBoundaryProvisioningState?)) { throw null; }
@@ -1493,7 +1594,9 @@ namespace Azure.ResourceManager.Resources.Models
         public string Arguments { get { throw null; } set { } }
         public string AzCliVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? CleanupPreference { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ContainerGroupName { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration ContainerSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public System.BinaryData Outputs { get { throw null; } }
@@ -1518,7 +1621,9 @@ namespace Azure.ResourceManager.Resources.Models
         public string Arguments { get { throw null; } set { } }
         public string AzPowerShellVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? CleanupPreference { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ContainerGroupName { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration ContainerSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public System.BinaryData Outputs { get { throw null; } }
@@ -2222,6 +2327,30 @@ namespace Azure.ResourceManager.Resources.Models
         public static implicit operator Azure.ResourceManager.Resources.Models.ScriptCleanupOptions (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions left, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ScriptContainerConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration>
+    {
+        public ScriptContainerConfiguration() { }
+        public string ContainerGroupName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet> SubnetIds { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ScriptContainerGroupSubnet : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>
+    {
+        public ScriptContainerGroupSubnet(Azure.Core.ResourceIdentifier id) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptContainerGroupSubnet>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScriptEnvironmentVariable : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable>
     {

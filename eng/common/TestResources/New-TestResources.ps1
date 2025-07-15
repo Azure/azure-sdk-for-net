@@ -163,7 +163,7 @@ try {
     $root = $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
 
     if($ServiceDirectory) {
-        $root = "$repositoryRoot/sdk/$ServiceDirectory" | Resolve-Path
+        $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
     }
 
     if ($TestResourcesDirectory) {

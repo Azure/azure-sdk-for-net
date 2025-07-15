@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> The RenewLocksRequest. </summary>
     internal partial class RenewLocksRequest : IJsonModel<RenewLocksRequest>
     {
         /// <summary> Initializes a new instance of <see cref="RenewLocksRequest"/> for deserialization. </summary>
@@ -169,7 +169,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(renewLocksRequest, ModelSerializationExtensions.WireOptions);
             return content;
         }
