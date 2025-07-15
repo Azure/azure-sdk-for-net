@@ -1,0 +1,190 @@
+{
+  "name": "_Specs_.Azure.ClientGenerator.Core.DeserializeEmptyStringAsNull",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
+    {
+      "$id": "1",
+      "kind": "constant",
+      "name": "getContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "3",
+      "kind": "model",
+      "name": "ResponseModel",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.DeserializeEmptyStringAsNull",
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.DeserializeEmptyStringAsNull.ResponseModel",
+      "usage": "Output,Json",
+      "doc": "This is a Model contains a string-like property of type url.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "4",
+          "kind": "property",
+          "name": "sampleUrl",
+          "serializedName": "sampleUrl",
+          "type": {
+            "$id": "5",
+            "kind": "url",
+            "name": "url",
+            "crossLanguageDefinitionId": "TypeSpec.url",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.DeserializeEmptyStringAsNull.ResponseModel.sampleUrl",
+          "serializationOptions": {
+            "json": {
+              "name": "sampleUrl"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "6",
+      "kind": "client",
+      "name": "DeserializeEmptyStringAsNullClient",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.DeserializeEmptyStringAsNull",
+      "doc": "Test decorator @deserializeEmptyStringAsNull.",
+      "methods": [
+        {
+          "$id": "7",
+          "kind": "basic",
+          "name": "get",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "8",
+            "name": "get",
+            "resourceName": "DeserializeEmptyStringAsNull",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "9",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "1"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "3"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/azure/client-generator-core/deserialize-empty-string-as-null/responseModel",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.DeserializeEmptyStringAsNull.get",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "10",
+              "name": "accept",
+              "nameInRequest": "accept",
+              "type": {
+                "$ref": "1"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "3"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.DeserializeEmptyStringAsNull.get"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "11",
+          "name": "endpoint",
+          "nameInRequest": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "12",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "location": "Uri",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isRequired": true,
+          "isEndpoint": true,
+          "skipUrlEncoding": false,
+          "explode": false,
+          "kind": "Client",
+          "defaultValue": {
+            "type": {
+              "$id": "13",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.DeserializeEmptyStringAsNull",
+      "apiVersions": []
+    }
+  ]
+}
