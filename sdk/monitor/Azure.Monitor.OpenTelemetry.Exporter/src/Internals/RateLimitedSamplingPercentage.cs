@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading;
@@ -37,8 +39,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (targetSpansPerSecondLimit < 0.0)
                 throw new ArgumentOutOfRangeException(nameof(targetSpansPerSecondLimit), "Limit for sampled spans per second must be nonnegative!");
-            if (AdaptationTimeSeconds < 0.0)
-                throw new ArgumentOutOfRangeException(nameof(AdaptationTimeSeconds), "Adaptation rate must be nonnegative!");
 
             _nanoTimeSupplier = nanoTimeSupplier ?? throw new ArgumentNullException(nameof(nanoTimeSupplier));
             _inverseAdaptationTimeNanos = 1e-9 / AdaptationTimeSeconds;
@@ -107,4 +107,3 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
     }
 }
-        

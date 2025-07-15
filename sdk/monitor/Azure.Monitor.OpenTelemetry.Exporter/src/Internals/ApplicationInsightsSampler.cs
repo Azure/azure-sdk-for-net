@@ -43,7 +43,7 @@ internal sealed class ApplicationInsightsSampler : Sampler
     /// <param name="samplingParameters">Parameters of telemetry item used to make sampling decision.</param>
     /// <returns>Returns whether or not we should sample telemetry in the form of a <see cref="SamplingResult"/> class.</returns>
     public override SamplingResult ShouldSample(in SamplingParameters samplingParameters)
-    { 
+    {
         if (samplingRatio == 1)
         {
             return RecordAndSampleSamplingResult;
