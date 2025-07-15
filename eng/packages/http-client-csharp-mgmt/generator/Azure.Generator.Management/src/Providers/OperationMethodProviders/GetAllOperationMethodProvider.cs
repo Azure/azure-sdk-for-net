@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -14,16 +15,17 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class GetAllOperationMethodProvider(
         ResourceCollectionClientProvider collection,
+        RequestPathPattern contextualPath,
         ClientProvider restClient,
         InputServiceMethod method,
         MethodProvider convenienceMethod,
         FieldProvider clientDiagnosticsField,
         FieldProvider restClientField,
-        bool isAsync) : ResourceOperationMethodProvider(collection, collection.Resource, restClient, method, convenienceMethod, clientDiagnosticsField, restClientField, isAsync)
+        bool isAsync) : ResourceOperationMethodProvider(collection, contextualPath, restClient, method, convenienceMethod, clientDiagnosticsField, restClientField, isAsync)
     {
         protected override MethodSignature CreateSignature()
         {
-            var resourceType = _resource.Type;
+            var resourceType = _resource!.Type;
             var returnType = _isAsync
                 ? new CSharpType(typeof(AsyncPageable<>), resourceType)
                 : new CSharpType(typeof(Pageable<>), resourceType);

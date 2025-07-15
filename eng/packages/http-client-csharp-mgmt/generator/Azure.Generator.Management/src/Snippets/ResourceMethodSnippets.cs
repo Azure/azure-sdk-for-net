@@ -8,9 +8,11 @@ using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Snippets
@@ -34,7 +36,7 @@ namespace Azure.Generator.Management.Snippets
         }
 
         public static List<MethodBodyStatement> CreateDiagnosticScopeStatements(
-            ContextualClientProvider provider,
+            TypeProvider enclosingType,
             ValueExpression clientDiagnostics,
             string operationName,
             out VariableExpression scopeVariable)
@@ -45,7 +47,7 @@ namespace Azure.Generator.Management.Snippets
             var scopeDeclaration = UsingDeclare(
                 "scope",
                 typeof(DiagnosticScope),
-                clientDiagnostics.Invoke("CreateScope", [Literal($"{provider.Name}.{operationName}")]),
+                clientDiagnostics.Invoke("CreateScope", [Literal($"{enclosingType.Name}.{operationName}")]),
                 out scopeVariable);
             statements.Add(scopeDeclaration);
 
@@ -146,6 +148,24 @@ namespace Azure.Generator.Management.Snippets
             statements.Add(responseDeclaration);
 
             return statements;
+        }
+
+        public static MethodProvider BuildValidateResourceIdMethod(TypeProvider enclosingType, ValueExpression resourceType)
+        {
+            var idParameter = new ParameterProvider("id", $"", typeof(ResourceIdentifier));
+            var signature = new MethodSignature(
+                "ValidateResourceId",
+                null,
+                MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
+                null,
+                null,
+                [idParameter],
+                [new AttributeStatement(typeof(ConditionalAttribute), Literal("DEBUG"))]);
+            var bodyStatements = new IfStatement(idParameter.As<ResourceIdentifier>().ResourceType().NotEqual(resourceType))
+            {
+                Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.As<ResourceIdentifier>().ResourceType(), resourceType), false))
+            };
+            return new MethodProvider(signature, bodyStatements, enclosingType);
         }
     }
 }

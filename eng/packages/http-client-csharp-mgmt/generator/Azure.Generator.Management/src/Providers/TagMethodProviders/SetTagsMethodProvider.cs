@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Azure.Generator.Management.Snippets;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using Azure.Generator.Management.Models;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
 {
@@ -15,10 +16,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
     {
         public SetTagsMethodProvider(
             ResourceClientProvider resource,
+            RequestPathPattern contextualPath,
             FieldProvider clientDiagnosticsField,
             FieldProvider restClientField,
             bool isAsync)
-            : base(resource, clientDiagnosticsField, restClientField, isAsync,
+            : base(resource, contextualPath, clientDiagnosticsField, restClientField, isAsync,
                    isAsync ? "SetTagsAsync" : "SetTags",
                    "Replace the tags on the resource with the given set.")
         {

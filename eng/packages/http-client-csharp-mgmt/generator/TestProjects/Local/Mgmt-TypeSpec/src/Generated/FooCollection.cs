@@ -54,14 +54,14 @@ namespace MgmtTypeSpec
         /// <summary> Create a Foo. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> or <paramref name="data"/> is null. </exception>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<FooResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fooName, FooData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FooResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fooName, FooData resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(resource, nameof(resource));
 
             using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.CreateOrUpdateAsync");
             scope.Start();
@@ -69,10 +69,10 @@ namespace MgmtTypeSpec
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken
+                    CancellationToken = cancellationToken0
                 }
                 ;
-                HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, FooData.ToRequestContent(data), context);
+                HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, FooData.ToRequestContent(resource), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
@@ -83,7 +83,7 @@ namespace MgmtTypeSpec
                     OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken0).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -97,14 +97,14 @@ namespace MgmtTypeSpec
         /// <summary> Create a Foo. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> or <paramref name="data"/> is null. </exception>
+        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<FooResource> CreateOrUpdate(WaitUntil waitUntil, string fooName, FooData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FooResource> CreateOrUpdate(WaitUntil waitUntil, string fooName, FooData resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(resource, nameof(resource));
 
             using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("FooCollection.CreateOrUpdate");
             scope.Start();
@@ -112,10 +112,10 @@ namespace MgmtTypeSpec
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken
+                    CancellationToken = cancellationToken0
                 }
                 ;
-                HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, FooData.ToRequestContent(data), context);
+                HttpMessage message = _foosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, FooData.ToRequestContent(resource), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
                     new FooOperationSource(Client),
@@ -126,7 +126,7 @@ namespace MgmtTypeSpec
                     OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken0);
                 }
                 return operation;
             }
@@ -139,7 +139,7 @@ namespace MgmtTypeSpec
 
         /// <summary> Get a Foo. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<FooResource>> GetAsync(string fooName, CancellationToken cancellationToken = default)
@@ -152,7 +152,7 @@ namespace MgmtTypeSpec
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken
+                    CancellationToken = cancellationToken0
                 }
                 ;
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
@@ -173,7 +173,7 @@ namespace MgmtTypeSpec
 
         /// <summary> Get a Foo. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<FooResource> Get(string fooName, CancellationToken cancellationToken = default)
@@ -186,7 +186,7 @@ namespace MgmtTypeSpec
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken
+                    CancellationToken = cancellationToken0
                 }
                 ;
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
@@ -206,14 +206,14 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> List Foo resources by resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual AsyncPageable<FooResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
         /// <summary> List Foo resources by resource group. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -221,7 +221,7 @@ namespace MgmtTypeSpec
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fooName, CancellationToken cancellationToken = default)
@@ -234,7 +234,7 @@ namespace MgmtTypeSpec
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken
+                    CancellationToken = cancellationToken0
                 }
                 ;
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
@@ -251,7 +251,7 @@ namespace MgmtTypeSpec
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string fooName, CancellationToken cancellationToken = default)
@@ -264,7 +264,7 @@ namespace MgmtTypeSpec
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken
+                    CancellationToken = cancellationToken0
                 }
                 ;
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
@@ -281,7 +281,7 @@ namespace MgmtTypeSpec
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<FooResource>> GetIfExistsAsync(string fooName, CancellationToken cancellationToken = default)
@@ -294,7 +294,7 @@ namespace MgmtTypeSpec
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken
+                    CancellationToken = cancellationToken0
                 }
                 ;
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);
@@ -315,7 +315,7 @@ namespace MgmtTypeSpec
 
         /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="fooName"> The name of the Foo. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<FooResource> GetIfExists(string fooName, CancellationToken cancellationToken = default)
@@ -328,7 +328,7 @@ namespace MgmtTypeSpec
             {
                 RequestContext context = new RequestContext
                 {
-                    CancellationToken = cancellationToken
+                    CancellationToken = cancellationToken0
                 }
                 ;
                 HttpMessage message = _foosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fooName, context);

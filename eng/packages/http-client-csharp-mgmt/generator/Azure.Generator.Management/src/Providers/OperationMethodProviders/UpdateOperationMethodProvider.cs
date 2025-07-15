@@ -6,17 +6,19 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Azure.Generator.Management.Models;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class UpdateOperationMethodProvider(
         ResourceClientProvider resource,
+        RequestPathPattern contextualPath,
         ClientProvider restClient,
         InputServiceMethod method,
         MethodProvider convenienceMethod,
         FieldProvider clientDiagnosticsField,
         FieldProvider restClientField,
-        bool isAsync) : ResourceOperationMethodProvider(resource, resource, restClient, method, convenienceMethod, clientDiagnosticsField, restClientField, isAsync)
+        bool isAsync) : ResourceOperationMethodProvider(resource, contextualPath, restClient, method, convenienceMethod, clientDiagnosticsField, restClientField, isAsync)
     {
         protected override MethodSignature CreateSignature()
         {

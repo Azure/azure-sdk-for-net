@@ -33,7 +33,7 @@ namespace Azure.Generator.Management.Providers
     /// <summary>
     /// Provides a resource client type.
     /// </summary>
-    internal sealed class ResourceClientProvider : ContextualClientProvider
+    internal sealed class ResourceClientProvider : TypeProvider
     {
         internal static ResourceClientProvider Create(InputModelType model, ResourceMetadata resourceMetadata)
         {
@@ -52,6 +52,8 @@ namespace Azure.Generator.Management.Providers
 
         private IEnumerable<(ResourceOperationKind, InputServiceMethod)> _resourceServiceMethods;
 
+        private readonly RequestPathPattern _contextualPath;
+
         private readonly FieldProvider _dataField;
         private readonly FieldProvider _resourceTypeField;
         private readonly bool _hasGetMethod;
@@ -64,9 +66,9 @@ namespace Azure.Generator.Management.Providers
         private readonly FieldProvider _restClientField;
 
         private ResourceClientProvider(string resourceName, InputModelType model, InputClient inputClient, ResourceMetadata resourceMetadata)
-            : base(new RequestPathPattern(resourceMetadata.ResourceIdPattern))
         {
             _resourceMetadata = resourceMetadata;
+            _contextualPath = new RequestPathPattern(resourceMetadata.ResourceIdPattern);
             _hasGetMethod = resourceMetadata.Methods.Any(m => m.Kind == ResourceOperationKind.Get);
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
             _shouldGenerateTagMethods = ShouldGenerateTagMethods(model);
@@ -329,25 +331,25 @@ namespace Azure.Generator.Management.Providers
 
                 if (isUpdateOperation)
                 {
-                    var updateMethodProvider = new UpdateOperationMethodProvider(this, _restClientProvider, method, convenienceMethod, _clientDiagnosticsField, _restClientField, false);
+                    var updateMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, _restClientProvider, method, convenienceMethod, _clientDiagnosticsField, _restClientField, false);
                     operationMethods.Add(updateMethodProvider);
 
                     var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _restClientProvider, method, asyncConvenienceMethod, _clientDiagnosticsField, _restClientField, true);
+                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, _contextualPath, _restClientProvider, method, asyncConvenienceMethod, _clientDiagnosticsField, _restClientField, true);
                     operationMethods.Add(updateAsyncMethodProvider);
                 }
                 else
                 {
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, this, _restClientProvider, method, convenienceMethod, _clientDiagnosticsField, _restClientField, false));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, _restClientProvider, method, convenienceMethod, _clientDiagnosticsField, _restClientField, false));
                     var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, this, _restClientProvider, method, asyncConvenienceMethod, _clientDiagnosticsField, _restClientField, true));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, _restClientProvider, method, asyncConvenienceMethod, _clientDiagnosticsField, _restClientField, true));
                 }
             }
 
             var methods = new List<MethodProvider>
             {
                 BuildCreateResourceIdentifierMethod(),
-                BuildValidateResourceIdMethod(_resourceTypeField)
+                ResourceMethodSnippets.BuildValidateResourceIdMethod(this, _resourceTypeField)
             };
             methods.AddRange(operationMethods);
 
@@ -355,12 +357,12 @@ namespace Azure.Generator.Management.Providers
             if (_shouldGenerateTagMethods)
             {
                 methods.AddRange([
-                    new AddTagMethodProvider(this, _clientDiagnosticsField, _restClientField, true),
-                    new AddTagMethodProvider(this, _clientDiagnosticsField, _restClientField, false),
-                    new SetTagsMethodProvider(this, _clientDiagnosticsField, _restClientField, true),
-                    new SetTagsMethodProvider(this, _clientDiagnosticsField, _restClientField, false),
-                    new RemoveTagMethodProvider(this, _clientDiagnosticsField, _restClientField, true),
-                    new RemoveTagMethodProvider(this, _clientDiagnosticsField, _restClientField, false)
+                    new AddTagMethodProvider(this, _contextualPath, _clientDiagnosticsField, _restClientField, true),
+                    new AddTagMethodProvider(this, _contextualPath, _clientDiagnosticsField, _restClientField, false),
+                    new SetTagsMethodProvider(this, _contextualPath, _clientDiagnosticsField, _restClientField, true),
+                    new SetTagsMethodProvider(this, _contextualPath, _clientDiagnosticsField, _restClientField, false),
+                    new RemoveTagMethodProvider(this, _contextualPath, _clientDiagnosticsField, _restClientField, true),
+                    new RemoveTagMethodProvider(this, _contextualPath, _clientDiagnosticsField, _restClientField, false)
                 ]);
             }
 
