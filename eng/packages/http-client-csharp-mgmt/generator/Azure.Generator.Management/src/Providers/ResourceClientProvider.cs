@@ -262,7 +262,7 @@ namespace Azure.Generator.Management.Providers
             var formatBuilder = new StringBuilder();
             var refCount = 0;
 
-            foreach (var segment in new RequestPathPattern(_resourceMetadata.ResourceIdPattern))
+            foreach (var segment in _contextualPath)
             {
                 if (segment.IsConstant)
                 {
@@ -299,11 +299,6 @@ namespace Azure.Generator.Management.Providers
         }
 
         internal string ResourceTypeValue => _resourceMetadata.ResourceType;
-
-        //TODO -- these fields should be removed
-        internal ScopedApi<ClientDiagnostics> GetClientDiagnosticsField() => _clientDiagnosticsField.As<ClientDiagnostics>();
-        internal ValueExpression GetRestClientField() => _restClientField;
-        internal ClientProvider GetClientProvider() => _restClientProvider;
 
         protected override CSharpType? GetBaseType() => typeof(ArmResource);
 
@@ -357,12 +352,12 @@ namespace Azure.Generator.Management.Providers
             if (_shouldGenerateTagMethods)
             {
                 methods.AddRange([
-                    new AddTagMethodProvider(this, _contextualPath, _clientDiagnosticsField, _restClientField, true),
-                    new AddTagMethodProvider(this, _contextualPath, _clientDiagnosticsField, _restClientField, false),
-                    new SetTagsMethodProvider(this, _contextualPath, _clientDiagnosticsField, _restClientField, true),
-                    new SetTagsMethodProvider(this, _contextualPath, _clientDiagnosticsField, _restClientField, false),
-                    new RemoveTagMethodProvider(this, _contextualPath, _clientDiagnosticsField, _restClientField, true),
-                    new RemoveTagMethodProvider(this, _contextualPath, _clientDiagnosticsField, _restClientField, false)
+                    new AddTagMethodProvider(this, _contextualPath, _restClientProvider, _clientDiagnosticsField, _restClientField, true),
+                    new AddTagMethodProvider(this, _contextualPath, _restClientProvider, _clientDiagnosticsField, _restClientField, false),
+                    new SetTagsMethodProvider(this, _contextualPath, _restClientProvider, _clientDiagnosticsField, _restClientField, true),
+                    new SetTagsMethodProvider(this, _contextualPath, _restClientProvider, _clientDiagnosticsField, _restClientField, false),
+                    new RemoveTagMethodProvider(this, _contextualPath, _restClientProvider, _clientDiagnosticsField, _restClientField, true),
+                    new RemoveTagMethodProvider(this, _contextualPath, _restClientProvider, _clientDiagnosticsField, _restClientField, false)
                 ]);
             }
 

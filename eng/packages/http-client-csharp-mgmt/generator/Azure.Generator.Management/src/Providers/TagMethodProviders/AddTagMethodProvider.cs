@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 using Azure.ResourceManager;
 using Azure.Generator.Management.Models;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
 {
@@ -18,10 +19,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         public AddTagMethodProvider(
             ResourceClientProvider resource,
             RequestPathPattern contextualPath,
+            ClientProvider restClient,
             FieldProvider clientDiagnosticsField,
             FieldProvider restClientField,
             bool isAsync)
-            : base(resource, contextualPath, clientDiagnosticsField, restClientField, isAsync,
+            : base(resource, contextualPath, restClient, clientDiagnosticsField, restClientField, isAsync,
                    isAsync ? "AddTagAsync" : "AddTag",
                    "Add a tag to the current resource.")
         {

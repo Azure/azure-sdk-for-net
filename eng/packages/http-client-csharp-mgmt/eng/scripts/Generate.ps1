@@ -8,8 +8,6 @@ param(
 
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
 
-Write-Host $Debug
-
 $mgmtPackageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
 Write-Host "Mgmt Package root: $packageRoot" -ForegroundColor Cyan
 $mgmtSolutionDir = Join-Path $mgmtPackageRoot 'generator'

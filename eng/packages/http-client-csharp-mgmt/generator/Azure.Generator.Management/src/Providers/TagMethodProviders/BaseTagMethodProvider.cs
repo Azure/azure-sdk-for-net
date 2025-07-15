@@ -6,6 +6,7 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -22,6 +23,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly MethodBodyStatement[] _bodyStatements;
         protected readonly TypeProvider _enclosingType;
         protected readonly ResourceClientProvider _resource;
+        protected readonly ClientProvider _restClient;
         protected readonly RequestPathPattern _contextualPath;
         protected readonly FieldProvider _clientDiagnosticsField;
         protected readonly FieldProvider _restClientField;
@@ -32,6 +34,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected BaseTagMethodProvider(
             ResourceClientProvider resource,
             RequestPathPattern contextualPath,
+            ClientProvider restClient,
             FieldProvider clientDiagnosticsField,
             FieldProvider restClientField,
             bool isAsync,
@@ -41,6 +44,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _resource = resource;
             _contextualPath = contextualPath;
             _enclosingType = resource;
+            _restClient = restClient;
             _isAsync = isAsync;
             _clientDiagnosticsField = clientDiagnosticsField;
             _restClientField = restClientField;
@@ -107,9 +111,8 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 }
             }
 
-            var clientProvider = resourceClientProvider.GetClientProvider();
-            var convenienceMethod = clientProvider.GetConvenienceMethodByOperation(getServiceMethod!.Operation, isAsync);
-            var requestMethod = clientProvider.GetRequestMethodByOperation(getServiceMethod.Operation);
+            var convenienceMethod = _restClient.GetConvenienceMethodByOperation(getServiceMethod!.Operation, isAsync);
+            var requestMethod = _restClient.GetRequestMethodByOperation(getServiceMethod.Operation);
             var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
             statements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, "CreateGetRequest", arguments, out var messageVariable));
