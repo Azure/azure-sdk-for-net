@@ -34,7 +34,7 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     public MultiPartFormDataBinaryContent(string boundary)
     {
         _multipartContent = new MultipartFormDataContent(boundary);
-        MediaType = _multipartContent.Headers.ContentType!.ToString();
+        MediaType = _multipartContent.Headers.ContentType?.ToString();
     }
 
     // CUSTOM: Add filepart to the multipart content.
@@ -48,7 +48,7 @@ public class MultiPartFormDataBinaryContent : BinaryContent
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(fileContent, nameof(fileContent));
 
-        HttpContent content = new HttpContentAdapter(fileContent);
+        HttpContent content = new FileHttpContentAdapter(fileContent);
         if (fileContent.MediaType != null)
         {
             content.Headers.ContentType = MediaTypeHeaderValue.Parse(fileContent.MediaType);
@@ -301,7 +301,7 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     /// <param name="cancellationToken"></param>
     public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
     {
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
         _multipartContent.CopyTo(stream, default, cancellationToken);
 #else
         Internal.TaskExtensions.EnsureCompleted(_multipartContent.CopyToAsync(stream));
@@ -316,7 +316,7 @@ public class MultiPartFormDataBinaryContent : BinaryContent
     /// <returns></returns>
     public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
     {
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
         await _multipartContent.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
 #else
         await _multipartContent.CopyToAsync(stream).ConfigureAwait(false);
@@ -332,11 +332,11 @@ public class MultiPartFormDataBinaryContent : BinaryContent
         GC.SuppressFinalize(this);
     }
 
-    private sealed class HttpContentAdapter : HttpContent
+    private sealed class FileHttpContentAdapter : HttpContent
     {
         private readonly BinaryContent _content;
 
-        public HttpContentAdapter(BinaryContent content)
+        public FileHttpContentAdapter(BinaryContent content)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -349,7 +349,7 @@ public class MultiPartFormDataBinaryContent : BinaryContent
         protected override bool TryComputeLength(out long length)
             => _content.TryComputeLength(out length);
 
-#if NET5_0_OR_GREATER
+#if NET6_0_OR_GREATER
         protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
             => await _content!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
 

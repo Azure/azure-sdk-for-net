@@ -8,7 +8,7 @@ namespace System.ClientModel;
 /// <summary>
 /// FileBinaryContent
 /// </summary>
-public sealed partial class FileBinaryContent : BinaryContent
+public partial class FileBinaryContent : BinaryContent
 {
     private readonly BinaryContent _content;
 
