@@ -83,6 +83,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _bodyStatements = BuildBodyStatements();
         }
 
+        // TODO -- we should not need to do this. We need the resource only because sometimes we need to wrap the return type into its corresponding resource.
+        // We should have a cache in the outputlibrary for it.
         private static ResourceClientProvider InitializeResource(TypeProvider enclosingType)
             => enclosingType switch
             {
