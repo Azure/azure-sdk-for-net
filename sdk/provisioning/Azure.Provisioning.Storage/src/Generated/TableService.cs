@@ -86,6 +86,7 @@ public partial class TableService : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _corsRules = DefineListProperty<StorageCorsRule>("CorsRules", ["properties", "cors", "corsRules"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
