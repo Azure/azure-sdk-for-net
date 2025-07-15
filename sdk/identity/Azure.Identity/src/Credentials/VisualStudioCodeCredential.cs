@@ -154,16 +154,22 @@ namespace Azure.Identity
         internal static AuthenticationRecord GetAuthenticationRecord(IFileSystemService _fileSystem)
         {
             var homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            var authRecordPath = Path.Combine(homeDir, ".azure", "ms-azuretools.vscode-azureresourcegroups", "authRecord.json");
-            if (!_fileSystem.FileExists(authRecordPath))
+
+            var authRecordPathLowerCase = Path.Combine(homeDir, ".azure", "ms-azuretools.vscode-azureresourcegroups", "authRecord.json");
+            var authRecordPathUpperCase = Path.Combine(homeDir, ".Azure", "ms-azuretools.vscode-azureresourcegroups", "authRecord.json");
+
+            var authRecordPath = _fileSystem.FileExists(authRecordPathLowerCase) ? authRecordPathLowerCase :
+                                 _fileSystem.FileExists(authRecordPathUpperCase) ? authRecordPathUpperCase : null;
+
+            if (authRecordPath == null)
             {
                 return null;
             }
+
             try
             {
-                var content = _fileSystem.ReadAllText(authRecordPath); // No need to read all text, look at the sample
-                var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(content));
-                var authRecord = AuthenticationRecord.Deserialize(stream);
+                using var authRecordStream = new FileStream(authRecordPath, FileMode.Open, FileAccess.Read);
+                var authRecord = AuthenticationRecord.Deserialize(authRecordStream);
                 if (authRecord != null && !string.IsNullOrEmpty(authRecord.TenantId) && !string.IsNullOrEmpty(authRecord.HomeAccountId))
                 {
                     return authRecord;
