@@ -1,5 +1,9 @@
 namespace Azure.ResourceManager.PlanetaryComputer
 {
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlanetaryComputer.Models.PlanetaryComputerGeoCatalogPatch))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlanetaryComputer.Models.PlanetaryComputerGeoCatalogProperties))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlanetaryComputer.PlanetaryComputerGeoCatalogData))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.PlanetaryComputer.PlanetaryComputerGeoCatalogResource))]
     public partial class AzureResourceManagerPlanetaryComputerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerPlanetaryComputerContext() { }
