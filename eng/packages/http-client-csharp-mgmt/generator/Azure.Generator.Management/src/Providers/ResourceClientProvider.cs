@@ -344,6 +344,7 @@ namespace Azure.Generator.Management.Providers
         protected override MethodProvider[] BuildMethods()
         {
             var operationMethods = new List<MethodProvider>();
+            UpdateOperationMethodProvider? updateMethodProvider = null;
             foreach (var (methodKind, method) in _resourceServiceMethods)
             {
                 var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
@@ -365,12 +366,14 @@ namespace Azure.Generator.Management.Providers
 
                 if (isUpdateOperation)
                 {
-                    var updateMethodProvider = new UpdateOperationMethodProvider(this, method, convenienceMethod, false);
-                    operationMethods.Add(updateMethodProvider);
+                    var provider = new UpdateOperationMethodProvider(this, method, convenienceMethod, false);
+                    operationMethods.Add(provider);
+
+                    updateMethodProvider = provider;
 
                     var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, method, asyncConvenienceMethod, true);
-                    operationMethods.Add(updateAsyncMethodProvider);
+                    var asyncProvider = new UpdateOperationMethodProvider(this, method, asyncConvenienceMethod, true);
+                    operationMethods.Add(asyncProvider);
                 }
                 else
                 {
@@ -390,13 +393,18 @@ namespace Azure.Generator.Management.Providers
             // Only generate tag methods if the resource model has tag properties
             if (_shouldGenerateTagMethods)
             {
+                if (updateMethodProvider is null)
+                {
+                    throw new InvalidOperationException($"Update method provider is required for tag methods but was not found for resource {SpecName}.");
+                }
+
                 methods.AddRange([
-                    new AddTagMethodProvider(this, true),
-                    new AddTagMethodProvider(this, false),
-                    new SetTagsMethodProvider(this, true),
-                    new SetTagsMethodProvider(this, false),
-                    new RemoveTagMethodProvider(this, true),
-                    new RemoveTagMethodProvider(this, false)
+                    new AddTagMethodProvider(this, updateMethodProvider, true),
+                    new AddTagMethodProvider(this, updateMethodProvider, false),
+                    new SetTagsMethodProvider(this, updateMethodProvider, true),
+                    new SetTagsMethodProvider(this, updateMethodProvider, false),
+                    new RemoveTagMethodProvider(this, updateMethodProvider, true),
+                    new RemoveTagMethodProvider(this, updateMethodProvider, false)
                 ]);
             }
 

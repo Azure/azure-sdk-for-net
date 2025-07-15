@@ -10,7 +10,6 @@ using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Extensions;
 using System.Collections.Generic;
-using System.Net.Http;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 using System.Linq;
 
@@ -22,17 +21,20 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly MethodBodyStatement[] _bodyStatements;
         protected readonly TypeProvider _enclosingType;
         protected readonly ResourceClientProvider _resourceClientProvider;
+        protected readonly MethodProvider _updateMethodProvider;
         protected readonly bool _isAsync;
         protected static readonly ParameterProvider _keyParameter = new ParameterProvider("key", $"The key for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
         protected static readonly ParameterProvider _valueParameter = new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
 
         protected BaseTagMethodProvider(
             ResourceClientProvider resourceClientProvider,
+            MethodProvider updateMethodProvider,
             bool isAsync,
             string methodName,
             string methodDescription)
         {
             _resourceClientProvider = resourceClientProvider;
+            _updateMethodProvider = updateMethodProvider;
             _enclosingType = resourceClientProvider;
             _isAsync = isAsync;
 
@@ -99,8 +101,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             }
 
             var clientProvider = resourceClientProvider.GetClientProvider();
-            var convenienceMethod = clientProvider.GetConvenienceMethodByOperation(getServiceMethod!.Operation, isAsync);
-            var requestMethod = clientProvider.GetRequestMethodByOperation(getServiceMethod.Operation);
+            var requestMethod = clientProvider.GetRequestMethodByOperation(getServiceMethod!.Operation);
             var arguments = resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, getServiceMethod.Operation);
 
             statements.Add(ResourceMethodSnippets.CreateHttpMessage(resourceClientProvider, "CreateGetRequest", arguments, out var messageVariable));
@@ -171,6 +172,122 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 new CSharpType(typeof(Response<>), typeof(ResourceManager.Resources.TagResource)),
                 This.Invoke("GetTagResource").Invoke(getMethod, [cancellationTokenParam], null, isAsync),
                 out originalTagsVar);
+        }
+
+        protected MethodBodyStatement UpdateResourceStatement(
+            VariableExpression dataVar,
+            ParameterProvider cancellationTokenParam,
+            out VariableExpression resultVar)
+        {
+            var updateMethod = _isAsync ? "UpdateAsync" : "Update";
+
+            return Declare(
+                "result",
+                new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), _resourceClientProvider.ResourceClientCSharpType),
+                This.Invoke(updateMethod, [
+                    Static(typeof(WaitUntil)).Property("Completed"),
+                    dataVar,
+                    cancellationTokenParam
+                ], null, _isAsync),
+                out resultVar);
+        }
+
+        protected List<MethodBodyStatement> BuildElseStatements(
+            ParameterProvider cancellationTokenParam,
+            System.Func<ValueExpression, MethodBodyStatement> tagOperation,
+            bool copyExistingTags)
+        {
+            var statements = new List<MethodBodyStatement>();
+
+            // Get current resource data
+            statements.Add(GetResourceDataStatements("current", _resourceClientProvider, _isAsync, cancellationTokenParam, out var resourceDataVar));
+
+            var updateParam = _updateMethodProvider.Signature.Parameters[1];
+
+            VariableExpression resultVar;
+            if (!updateParam.Type.Equals(_resourceClientProvider.ResourceData.Type)) // patch case
+            {
+                // Create a new instance of the update patch type
+                statements.Add(Declare(
+                    "patch",
+                    updateParam.Type,
+                    New.Instance(updateParam.Type),
+                    out var patchVar));
+
+                if (copyExistingTags)
+                {
+                    // Generate foreach loop: foreach (var tag in current.Tags) { patch.Tags.Add(tag); }
+                    var foreachStatement = new ForEachStatement(
+                        typeof(KeyValuePair<string, string>), // item type
+                        "tag", // item name
+                        resourceDataVar.Property("Tags"), // enumerable
+                        false, // isAsync
+                        out var tagVariable);
+                    foreachStatement.Add(patchVar.Property("Tags").Invoke("Add", tagVariable).Terminate());
+                    statements.Add(foreachStatement);
+                }
+
+                // Apply the specific tag operation to the patch
+                statements.Add(tagOperation(patchVar.Property("Tags")));
+                statements.Add(UpdateResourceStatement(patchVar, cancellationTokenParam, out resultVar));
+            }
+            else
+            {
+                statements.Add(tagOperation(resourceDataVar.Property("Tags")));
+                statements.Add(UpdateResourceStatement(resourceDataVar, cancellationTokenParam, out resultVar));
+            }
+
+            statements.Add(CreateSecondaryPathResponseStatement(resultVar));
+            return statements;
+        }
+
+        protected List<MethodBodyStatement> BuildIfStatements(
+            ParameterProvider cancellationTokenParam,
+            System.Func<ValueExpression, MethodBodyStatement> tagOperation,
+            bool includeDeleteOperation)
+        {
+            var createMethod = _isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate";
+            var deleteMethod = _isAsync ? "DeleteAsync" : "Delete";
+
+            var statements = new List<MethodBodyStatement>();
+
+            // Add delete operation if requested (for SetTags operation)
+            if (includeDeleteOperation)
+            {
+                statements.Add(
+                    // GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    This.Invoke("GetTagResource").Invoke(deleteMethod, [
+                        Static(typeof(WaitUntil)).Property("Completed"),
+                        cancellationTokenParam
+                    ], null, _isAsync).Terminate()
+                );
+            }
+
+            statements.Add(GetOriginalTagsStatement(_isAsync, cancellationTokenParam, out var originalTagsVar));
+
+            // Apply the specific tag operation (add, remove, set, etc.)
+            statements.Add(tagOperation(originalTagsVar.Property("Value").Property("Data").Property("TagValues")));
+
+            statements.Add(
+                // GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                This.Invoke("GetTagResource").Invoke(createMethod, [
+                    Static(typeof(WaitUntil)).Property("Completed"),
+                    originalTagsVar.Property("Value").Property("Data"),
+                    cancellationTokenParam
+                ], null, _isAsync).Terminate()
+            );
+
+            // Add RequestContext/HttpMessage/Pipeline processing statements
+            statements.AddRange(CreateRequestContextAndProcessMessage(
+                _resourceClientProvider,
+                _isAsync,
+                cancellationTokenParam,
+                out var responseVar));
+
+            // Add primary path response creation statements
+            statements.AddRange(CreatePrimaryPathResponseStatements(_resourceClientProvider, responseVar));
+
+            return statements;
         }
 
         public static implicit operator MethodProvider(BaseTagMethodProvider tagMethodProvider)
