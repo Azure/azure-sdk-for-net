@@ -14,7 +14,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The updatable properties of the Zoo. </summary>
-    public partial class ZooUpdateProperties : IJsonModel<ZooUpdateProperties>
+    internal partial class ZooUpdateProperties : IJsonModel<ZooUpdateProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

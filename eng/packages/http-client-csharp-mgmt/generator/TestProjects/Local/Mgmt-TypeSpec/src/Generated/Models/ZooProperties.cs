@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The ZooProperties. </summary>
-    public partial class ZooProperties
+    internal partial class ZooProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
