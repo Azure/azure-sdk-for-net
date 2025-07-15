@@ -1,14 +1,14 @@
 # Release History
 
-## 12.24.0-beta.2 (Unreleased)
+## 12.24.0 (unreleased)
 
 ### Features Added
+- Includes all features from 12.24.0-beta.1
 
-### Breaking Changes
+## 12.23.0 (2025-07-14)
 
-### Bugs Fixed
-
-### Other Changes
+### Features Added
+- Includes all features from 12.23.0-beta.1
 
 ## 12.24.0-beta.1 (2025-06-09)
 
@@ -31,6 +31,7 @@
 ### Bugs Fixed
 - Fixed bug where a `QueueServiceClient`, `QueueClient` created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
 - Fixed bug where a `QueueServiceClient`, `QueueClient` created with a `StorageSharedKeyCredential`, the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
+
 
 ## 12.22.0-beta.1 (2025-02-11)
 
